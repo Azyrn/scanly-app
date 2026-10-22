@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Merge -->
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">%d file</item>
+        <item quantity="other">%d files</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · %2$s in total</string>
+    <string name="pdf_tool_merge_body">Files are joined in the order listed above. The merged copy has no password, even if some of the files had one.</string>
+    <string name="pdf_tool_merge_need_more">Add at least one more PDF to merge.</string>
+    <string name="pdf_tool_merge_action">Merge</string>
+
+    <!-- Split: modes -->
+    <string name="pdf_tool_split_mode_ranges">Split by ranges</string>
+    <string name="pdf_tool_split_mode_ranges_body">One new file for each range you type</string>
+    <string name="pdf_tool_split_mode_every">Split every few pages</string>
+    <string name="pdf_tool_split_mode_every_body">A new file every set number of pages</string>
+    <string name="pdf_tool_split_mode_extract">Extract pages</string>
+    <string name="pdf_tool_split_mode_extract_body">The pages you pick, together in one file</string>
+    <string name="pdf_tool_split_mode_delete">Delete pages</string>
+    <string name="pdf_tool_split_mode_delete_body">A copy without the pages you pick</string>
+    <string name="pdf_tool_split_mode_size">Split by file size</string>
+    <string name="pdf_tool_split_mode_size_body">Files no bigger than the size you set</string>
+
+    <!-- Split: fields -->
+    <string name="pdf_tool_split_ranges_label">Pages</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">For example 1-3, 5, 8-10</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Type the pages you want, for example 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s” isn’t a page or a range</string>
+    <string name="pdf_tool_split_range_out">“%1$s” is outside pages 1–%2$d</string>
+    <string name="pdf_tool_split_range_reversed">“%1$s” runs backwards; write the smaller page first</string>
+    <string name="pdf_tool_split_delete_all">That’s every page. Leave at least one.</string>
+    <string name="pdf_tool_split_every_label">Pages per file</string>
+    <string name="pdf_tool_split_every_invalid">Enter a number from 1 to %1$d</string>
+    <string name="pdf_tool_split_every_less">Fewer pages per file</string>
+    <string name="pdf_tool_split_every_more">More pages per file</string>
+    <string name="pdf_tool_split_size_label">Largest file size (MB)</string>
+    <string name="pdf_tool_split_size_invalid">Enter a size above 0 MB</string>
+    <string name="pdf_tool_split_size_body">Pages stay whole, so a single page bigger than this gets a file of its own.</string>
+    <string name="pdf_tool_split_locked">This file has a password, and the new files keep it.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">Makes %d file</item>
+        <item quantity="other">Makes %d files</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">Keeps %d page</item>
+        <item quantity="other">Keeps %d pages</item>
+    </plurals>
+
+    <!-- Split: actions -->
+    <string name="pdf_tool_split_action">Split</string>
+    <string name="pdf_tool_split_extract_action">Extract pages</string>
+    <string name="pdf_tool_split_delete_action">Delete pages</string>
+
+    <!-- Split: result notes -->
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">%d page is bigger than the size limit on its own, so it has a file to itself.</item>
+        <item quantity="other">%d pages are bigger than the size limit on their own, so each has a file to itself.</item>
+    </plurals>
+</resources>

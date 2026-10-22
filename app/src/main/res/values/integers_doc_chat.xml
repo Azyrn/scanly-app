@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The document agent's log (docchat/data/AgentLog.kt). A working reply stays on this phone; a
+         finished one is synced, at most 16 KB a message with its words (worker/src/chats.ts MAX_BODY_CHARS). -->
+    <integer name="agent_log_live_chars">200000</integer>
+    <integer name="agent_log_kept_chars">9000</integer>
+    <!-- How an expanded row shows its output: lines before "Show more", and the height (in lines) of a
+         fetched whole output, which scrolls inside its own box. -->
+    <integer name="agent_output_preview_lines">12</integer>
+    <integer name="agent_output_full_lines">24</integer>
+</resources>

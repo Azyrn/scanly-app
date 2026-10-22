@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Repair</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">Recovered %d page. Check it before you delete the original.</item>
+        <item quantity="other">Recovered %d pages. Check them before you delete the original.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Mark where each page starts</string>
+    <string name="pdf_tool_extract_text_separators_body">Adds a line such as \"Page 3\" before each page\'s text.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Page %d -----</string>
+    <string name="pdf_tool_extract_text_action">Extract</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d page had no selectable text (a scan). Use PDF to Text on the home screen to read it.</item>
+        <item quantity="other">%d pages had no selectable text (scans). Use PDF to Text on the home screen to read them.</item>
+    </plurals>
+</resources>

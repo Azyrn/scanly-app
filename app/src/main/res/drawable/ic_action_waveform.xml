@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="?attr/colorControlNormal"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Seven rounded bars of speech, matching the stroke weight of the other action icons. -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@android:color/white"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M3,11 L3,13 M6,8 L6,16 M9,4.5 L9,19.5 M12,9 L12,15 M15,6 L15,18 M18,8.5 L18,15.5 M21,11 L21,13" />
+</vector>

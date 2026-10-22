@@ -1,0 +1,82 @@
+package com.skeler.scanely.settings.presentation.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.settings.data.SettingsKeys
+import com.skeler.scanely.settings.domain.model.SettingsState
+import com.skeler.scanely.settings.domain.repository.SettingsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    private val settingsRepository: SettingsRepository
+) : ViewModel() {
+
+    val settingsUiState: StateFlow<SettingsState?> = combine(
+        settingsRepository.getInt(SettingsKeys.THEME_MODE),
+        settingsRepository.getBoolean(SettingsKeys.IS_OLED_MODE_ENABLED),
+        settingsRepository.getStringSet(SettingsKeys.OCR_LANGUAGES),
+        settingsRepository.getBoolean(SettingsKeys.USE_DYNAMIC_COLORS),
+        settingsRepository.getInt(SettingsKeys.SEED_COLOR_INDEX)
+    ) { themeMode, isOled, langs, dynamic, seedIndex ->
+        SettingsState(
+            themeMode = themeMode,
+            isOledModeEnabled = isOled,
+            ocrLanguages = langs,
+            useDynamicColors = dynamic,
+            seedColorIndex = seedIndex
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = null
+    )
+
+    fun setBoolean(key: SettingsKeys, value: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsRepository.setBoolean(key, value)
+        }
+    }
+
+    fun getBoolean(key: SettingsKeys): Flow<Boolean> = settingsRepository.getBoolean(key)
+
+    fun setInt(key: SettingsKeys, value: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsRepository.setInt(key, value)
+        }
+    }
+
+    fun getInt(key: SettingsKeys): Flow<Int> = settingsRepository.getInt(key)
+
+    fun setFloat(key: SettingsKeys, value: Float) {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsRepository.setFloat(key, value)
+        }
+    }
+
+    fun getFloat(key: SettingsKeys): Flow<Float> = settingsRepository.getFloat(key)
+
+    fun setString(key: SettingsKeys, value: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsRepository.setString(key, value)
+        }
+    }
+
+    fun getString(key: SettingsKeys): Flow<String> = settingsRepository.getString(key)
+
+    fun setStringSet(key: SettingsKeys, value: Set<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            settingsRepository.setStringSet(key, value)
+        }
+    }
+
+    fun getStringSet(key: SettingsKeys): Flow<Set<String>> = settingsRepository.getStringSet(key)
+}

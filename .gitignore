@@ -1,0 +1,44 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.apk
+*.jks
+*.keystore
+release_log*.txt
+/.kotlin
+
+# Local dev artifacts
+/ai-audit-fixes/
+*.patch
+..bfg-report/
+
+# Cloudflare Wrangler local state / account cache
+.wrangler/
+node_modules/
+
+# Firebase
+google-services.json
+firebase.json
+.firebaserc
+.firebase/
+dataconnect/
+app/src/main/kotlin/com/google/firebase/dataconnect/generated/
+
+# Release build outputs copied by Studio
+/app/release/
+
+.env.local
+
+.testdata/
+
+# Local generated artifacts (design runs, audio experiments)
+/output/
+/tmp/
+runner/.typst-packages-cache/

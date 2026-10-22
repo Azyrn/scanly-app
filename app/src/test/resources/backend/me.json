@@ -1,0 +1,38 @@
+{
+  "tier": "free",
+  "billingSource": "none",
+  "pagesRemainingMonth": 10,
+  "pagesRemainingDay": 5,
+  "bonusPagesMonth": 0,
+  "bonusPagesDay": 0,
+  "rewardPagesPerAd": 1,
+  "rewardsRemainingToday": 2,
+  "pagesPerMonth": 10,
+  "maxPagesPerDoc": 3,
+  "maxUploadBytes": 5242880,
+  "allowsOffice": false,
+  "allowsTranslation": false,
+  "allowsExtraction": false,
+  "allowsCompose": false,
+  "composePageCost": 2,
+  "allowsDesign": false,
+  "designPageCost": 2,
+  "designMaxPageCost": 16,
+  "designCompilePageCost": 1,
+  "periodResetsAt": 1790812800000,
+  "extractionPresets": [],
+  "extractionPageCost": 2,
+  "plans": [
+    {
+      "id": "free",
+      "priceUsd": 0,
+      "pagesPerMonth": 10,
+      "maxPagesPerDoc": 3,
+      "allowsOffice": false,
+      "allowsTranslation": false,
+      "allowsExtraction": false,
+      "allowsCompose": false,
+      "allowsDesign": false
+    }
+  ]
+}

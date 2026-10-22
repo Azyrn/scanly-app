@@ -1,0 +1,230 @@
+[
+  {
+    "status": 401,
+    "body": {
+      "error": {
+        "code": "unauthenticated",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 402,
+    "body": {
+      "error": {
+        "code": "quota_exceeded",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 429,
+    "body": {
+      "error": {
+        "code": "rate_limited",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 413,
+    "body": {
+      "error": {
+        "code": "doc_too_large",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 402,
+    "body": {
+      "error": {
+        "code": "format_not_in_plan",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 415,
+    "body": {
+      "error": {
+        "code": "unsupported_format",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 503,
+    "body": {
+      "error": {
+        "code": "budget_exhausted",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 502,
+    "body": {
+      "error": {
+        "code": "provider_error",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 422,
+    "body": {
+      "error": {
+        "code": "design_failed",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 404,
+    "body": {
+      "error": {
+        "code": "license_invalid",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 402,
+    "body": {
+      "error": {
+        "code": "license_inactive",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "activation_limit",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 404,
+    "body": {
+      "error": {
+        "code": "claim_invalid",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "claim_used",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 410,
+    "body": {
+      "error": {
+        "code": "claim_expired",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 400,
+    "body": {
+      "error": {
+        "code": "bad_request",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 500,
+    "body": {
+      "error": {
+        "code": "internal",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "upgrade_unavailable",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  },
+  {
+    "status": 409,
+    "body": {
+      "error": {
+        "code": "quote_changed",
+        "message": "fixture",
+        "requiredTier": "pro",
+        "retryAfterSeconds": 30,
+        "reason": "fixture"
+      }
+    }
+  }
+]

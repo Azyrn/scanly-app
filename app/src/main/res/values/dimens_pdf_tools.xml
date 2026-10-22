@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF tools grid. Icons are layered 24-unit glyphs at stroke 1.5: at 48dp a unit is 2dp, so the
+         stroke is 3dp and the letters on the small overlapping file (4.5 units tall) stay readable. -->
+    <dimen name="pdf_tool_icon_size">40dp</dimen>
+</resources>

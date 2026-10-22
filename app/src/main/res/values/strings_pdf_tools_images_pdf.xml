@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">Pages to JPG</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Every page becomes one picture.</string>
+    <string name="pdf_tool_jpg_mode_extract">Extract images</string>
+    <string name="pdf_tool_jpg_mode_extract_body">Save the photos and pictures inside the PDF at their original quality.</string>
+    <string name="pdf_tool_jpg_quality">Quality</string>
+    <string name="pdf_tool_jpg_quality_normal">Normal · 150 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">High · 300 dpi</string>
+    <string name="pdf_tool_jpg_action_pages">Convert to JPG</string>
+    <string name="pdf_tool_jpg_action_extract">Extract images</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">%d image in a format Scanly can\'t export was skipped</item>
+        <item quantity="other">%d images in formats Scanly can\'t export were skipped</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">One image per page, in the order shown.</string>
+    <string name="pdf_tool_img2pdf_page_size">Page size</string>
+    <string name="pdf_tool_img2pdf_size_fit">Fit to image</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Letter</string>
+    <string name="pdf_tool_img2pdf_orientation">Orientation</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Auto</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Portrait</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">Landscape</string>
+    <string name="pdf_tool_img2pdf_margin">Margin</string>
+    <string name="pdf_tool_img2pdf_margin_none">None</string>
+    <string name="pdf_tool_img2pdf_margin_small">Small</string>
+    <string name="pdf_tool_img2pdf_margin_big">Big</string>
+    <string name="pdf_tool_img2pdf_action">Create PDF</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">%d file couldn\'t be read as an image and was left out</item>
+        <item quantity="other">%d files couldn\'t be read as images and were left out</item>
+    </plurals>
+</resources>

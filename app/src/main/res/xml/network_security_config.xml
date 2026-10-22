@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cleartext is permitted by default because the custom-endpoint feature lets a Pro user point
+  Scanly at a self-hosted model server on their own LAN (Ollama, LM Studio, vLLM), and such a
+  server almost never has a certificate. Android's config cannot express "private IP ranges", so
+  a blanket permit is the only way to reach 192.168.x.x at all.
+
+  The trade is bounded by inverting the usual pattern: every host Scanly itself talks to is pinned
+  back to HTTPS-only below, so no amount of user configuration can downgrade Scanly's own traffic,
+  the licence calls, or Firebase auth. Only a URL the user typed themselves can be cleartext.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- Scanly's own backend and site. Never cleartext, regardless of the base config. -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">scanlyocr.com</domain>
+        <domain includeSubdomains="true">webforge-skeler.workers.dev</domain>
+    </domain-config>
+
+    <!-- Firebase auth and Google sign-in. -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">googleapis.com</domain>
+        <domain includeSubdomains="true">google.com</domain>
+        <domain includeSubdomains="true">firebaseio.com</domain>
+        <domain includeSubdomains="true">firebaseapp.com</domain>
+    </domain-config>
+</network-security-config>

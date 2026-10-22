@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF tools grid: each tool wears the colour of the format it works on, a light and a dark tone
+         each (LocalDarkMode picks). Word, Excel and PowerPoint are Microsoft's Office brand ramps
+         (fluentui-react-native applyBrand.ts): AppPrimary in light, AppTint20 in dark. PDF is Adobe's
+         Acrobat red #FA0F00, darkened in light until it clears 3:1. JPG has no brand colour; it keeps gold.
+         Every tone keeps at least 3:1 (WCAG non-text) against its own 16% tint on surfaceContainer, and
+         the PDF tone keeps 3:1 on every other format's tile, where it draws the conversion arrow. -->
+    <color name="pdf_format_pdf_light">#FFE00E00</color>
+    <color name="pdf_format_pdf_dark">#FFFF5A4F</color>
+    <color name="pdf_format_word_light">#FF185ABD</color>
+    <color name="pdf_format_word_dark">#FF6794D7</color>
+    <color name="pdf_format_excel_light">#FF107C41</color>
+    <color name="pdf_format_excel_dark">#FF55B17E</color>
+    <color name="pdf_format_powerpoint_light">#FFC43E1C</color>
+    <color name="pdf_format_powerpoint_dark">#FFDC816A</color>
+    <color name="pdf_format_image_light">#FF8A6C33</color>
+    <color name="pdf_format_image_dark">#FFD8B878</color>
+</resources>

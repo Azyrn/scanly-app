@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">Converts the document on your phone. Charts, text boxes and equations can\'t be shown yet and are left out.</string>
+    <string name="pdf_tool_word_to_pdf_action">Convert to PDF</string>
+
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">%d chart was left out.</item>
+        <item quantity="other">%d charts were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">%d SmartArt diagram was left out.</item>
+        <item quantity="other">%d SmartArt diagrams were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">%d text box or shape was left out.</item>
+        <item quantity="other">%d text boxes or shapes were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">%d equation was left out.</item>
+        <item quantity="other">%d equations were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">%d embedded object was left out.</item>
+        <item quantity="other">%d embedded objects were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">%d picture is in a format that can\'t be shown and was left out.</item>
+        <item quantity="other">%d pictures are in a format that can\'t be shown and were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">%d table row was taller than a page and was cut off.</item>
+        <item quantity="other">%d table rows were taller than a page and were cut off.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">Only the first %d page was converted.</item>
+        <item quantity="other">Only the first %d pages were converted.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Some fonts were replaced with similar ones.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Headers and footers were left out.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Footnotes were left out.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Text in columns was laid out as a single column.</string>
+</resources>

@@ -1,0 +1,31 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "markdown": "Receipt",
+      "images": {
+        "figure": "data:image/png;base64,AA=="
+      },
+      "links": [
+        "https://example.invalid"
+      ],
+      "unclear": [
+        "Total"
+      ]
+    }
+  ],
+  "extraction": {
+    "preset": "receipt",
+    "label": "Receipt",
+    "fields": [
+      {
+        "label": "Total",
+        "value": "10"
+      }
+    ],
+    "json": "{\"total\":10}"
+  },
+  "usage": {
+    "pages": 2
+  }
+}

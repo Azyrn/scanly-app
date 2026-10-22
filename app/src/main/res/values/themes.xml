@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Scanely" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- splash_logo includes its own adaptive-icon mask; an icon background would clip the wordmark. -->
+    <style name="Theme.Scanely.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Scanely</item>
+    </style>
+</resources>

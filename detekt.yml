@@ -1,0 +1,204 @@
+# detekt 2: there is no build.maxIssues; the run fails on any issue (fail-on-severity defaults to error).
+# Thresholds below are "allowed" limits, one under the 1.x "threshold" that triggered at that value.
+config:
+  validation: true
+  warningsAsErrors: true
+
+complexity:
+  active: true
+  LongMethod:
+    active: true
+    allowedLines: 39
+    ignoreAnnotated: ["Composable"]
+  LongParameterList:
+    active: true
+    allowedFunctionParameters: 7
+    allowedConstructorParameters: 9
+    ignoreDefaultParameters: true
+    ignoreDataClasses: true
+    ignoreAnnotatedParameter: ["Composable"]
+  CyclomaticComplexMethod:
+    active: true
+    allowedComplexity: 9
+    ignoreAnnotated: ["Composable"]
+  TooManyFunctions:
+    active: true
+    allowedFunctionsPerFile: 14
+    allowedFunctionsPerClass: 14
+    # ScanlyApi is a Retrofit interface: one function per backend route, and nothing else. Splitting
+    # it to satisfy a count would scatter the API surface across files to no one's benefit. 20 since
+    # the chat's design call and job events (3.6.0); chat sync has its own interface.
+    allowedFunctionsPerInterface: 19
+    allowedFunctionsPerObject: 9
+    allowedFunctionsPerEnum: 4
+    ignoreDeprecated: true
+    ignorePrivate: false
+    ignoreOverridden: true
+    ignoreAnnotatedFunctions: ["Composable"]
+  LargeClass:
+    active: true
+    allowedLines: 299
+
+style:
+  active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: true
+  WildcardImport:
+    active: true
+  ReturnCount:
+    active: true
+    max: 3
+    excludedFunctions: ["equals"]
+    excludeGuardClauses: true
+  ForbiddenComment:
+    active: true
+    comments:
+      - reason: "Use issue tracker for tracking todos"
+        value: "TODO:"
+      - reason: "Use issue tracker for tracking todos"
+        value: "FIXME:"
+      - reason: "Use issue tracker for tracking todos"
+        value: "STOPSHIP:"
+  MagicNumber:
+    active: true
+    # Numeric literals are the domain in these: HCT tone tables, tensor
+    # normalization means/stds, geometry. Naming each one obscures the math.
+    excludes:
+      - "**/test/**"
+      - "**/androidTest/**"
+      - "**/*.kts"
+      - "**/ui/theme/**"
+      - "**/core/ocr/paddle/**"
+      - "**/core/image/**"
+    ignoreNumbers: ["-1", "0", "1", "2", "60", "100", "1000"]
+    ignoreHashCodeFunction: true
+    ignorePropertyDeclaration: true
+    ignoreLocalVariableDeclaration: true
+    ignoreConstantDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignoreRanges: true
+    # Compose layout literals (dp/sp/weights) are self-describing at the call site.
+    ignoreAnnotated: ["Composable"]
+
+empty-blocks:
+  active: true
+  EmptyCatchBlock:
+    active: true
+    allowedExceptionNameRegex: "_|(ignore|expected).*"
+  EmptyFunctionBlock:
+    active: true
+    ignoreOverridden: true
+
+naming:
+  active: true
+  FunctionNaming:
+    active: true
+    functionPattern: "[a-z][a-zA-Z0-9]*"
+    excludes: ["**/test/**", "**/androidTest/**"]
+    ignoreAnnotated: ["Composable"]
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: "[A-Z][_A-Z0-9]*"
+  PackageNaming:
+    active: true
+    packagePattern: "[a-z]+(\\.[a-z][A-Za-z0-9]*)*"
+
+performance:
+  active: true
+  SpreadOperator:
+    active: false
+
+exceptions:
+  active: true
+  TooGenericExceptionCaught:
+    active: true
+    exceptionNames:
+      - ArrayIndexOutOfBoundsException
+      - Error
+      - IllegalMonitorStateException
+      - IndexOutOfBoundsException
+      - NullPointerException
+      - RuntimeException
+      - Throwable
+    allowedExceptionNameRegex: "(_|(ignore|expected).*)"
+  SwallowedException:
+    active: true
+    ignoredExceptionTypes:
+      - InterruptedException
+      - MalformedURLException
+      - NumberFormatException
+      - ParseException
+    allowedExceptionNameRegex: "(_|(ignore|expected).*)"
+
+# ktlint, through detekt-rules-ktlint-wrapper (detekt 2's name for detekt-formatting).
+ktlint:
+  active: true
+  MaximumLineLength:
+    active: true
+    maxLineLength: 120
+  # Off, as they were by default under detekt 1.23.8's formatting plugin: detekt 2's ktlint wrapper
+  # turns them on, and adopting them is a reformat of the whole app to decide on its own.
+  BackingPropertyNaming:
+    active: false
+  BinaryExpressionWrapping:
+    active: false
+  BlankLineBetweenWhenConditions:
+    active: false
+  ClassSignature:
+    active: false
+  ConditionWrapping:
+    active: false
+  ContextReceiverListWrapping:
+    active: false
+  ContextReceiverMapping:
+    active: false
+  EnumWrapping:
+    active: false
+  FunctionExpressionBody:
+    active: false
+  FunctionLiteral:
+    active: false
+  FunctionSignature:
+    active: false
+  FunctionTypeModifierSpacing:
+    active: false
+  Kdoc:
+    active: false
+  MixedConditionOperators:
+    active: false
+  MultilineLoop:
+    active: false
+  NoEmptyFile:
+    active: false
+  ParameterListSpacing:
+    active: false
+  PropertyName:
+    active: false
+  SpacingAroundSquareBrackets:
+    active: false
+  StatementWrapping:
+    active: false
+  ThenSpacing:
+    active: false
+  TrailingCommaOnCallSite:
+    active: false
+  TrailingCommaOnDeclarationSite:
+    active: false
+  TypeArgumentComment:
+    active: false
+  TypeArgumentListSpacing:
+    active: false
+  TypeParameterComment:
+    active: false
+  TypeParameterListSpacing:
+    active: false
+  ValueArgumentComment:
+    active: false
+  ValueParameterComment:
+    active: false

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typed signatures (page editor Sign tool) -->
+    <string name="signature_typed_open">Type a signature</string>
+    <string name="signature_typed_title">Type your signature</string>
+    <string name="signature_typed_name_label">Your name</string>
+    <string name="signature_typed_preview_empty">Your signature appears here.</string>
+    <string name="signature_typed_colour">Ink colour</string>
+    <string name="signature_typed_colour_option">Ink colour %1$d</string>
+    <string name="signature_typed_save">Save</string>
+    <string name="signature_typed_cancel">Cancel</string>
+    <string name="signature_typed_font_missing">The signature font could not be loaded.</string>
+
+    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
+    <string name="font_licenses_title">Open-source licences</string>
+    <string name="font_licenses_subtitle">Fonts and icons bundled with Scanly</string>
+    <string name="font_licenses_close">Close</string>
+    <string name="font_licenses_unreadable">This licence file could not be read.</string>
+</resources>

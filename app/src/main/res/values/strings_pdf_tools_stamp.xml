@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">Page %1$d</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">Page %1$d of %2$d</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">Numbers are added on top of each page. The original content isn\'t changed.</string>
+    <string name="pdf_stamp_numbers_position">Position</string>
+    <string name="pdf_stamp_numbers_top_left">Top left</string>
+    <string name="pdf_stamp_numbers_top_center">Top center</string>
+    <string name="pdf_stamp_numbers_top_right">Top right</string>
+    <string name="pdf_stamp_numbers_bottom_left">Bottom left</string>
+    <string name="pdf_stamp_numbers_bottom_center">Bottom center</string>
+    <string name="pdf_stamp_numbers_bottom_right">Bottom right</string>
+    <string name="pdf_stamp_numbers_format">Format</string>
+    <string name="pdf_stamp_numbers_start">Start at number</string>
+    <string name="pdf_stamp_numbers_first_page">Number from page</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Pages before it, like a cover, stay unnumbered.</string>
+    <string name="pdf_stamp_numbers_start_invalid">Enter a number from 0 to 99999.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">Enter a page from 1 to %1$d.</string>
+    <string name="pdf_stamp_numbers_text_size">Text size</string>
+    <string name="pdf_stamp_numbers_margin">Distance from edge</string>
+    <string name="pdf_stamp_numbers_margin_narrow">Close</string>
+    <string name="pdf_stamp_numbers_margin_normal">Normal</string>
+    <string name="pdf_stamp_numbers_margin_wide">Far</string>
+    <string name="pdf_stamp_numbers_action">Add page numbers</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">Small</string>
+    <string name="pdf_stamp_size_medium">Medium</string>
+    <string name="pdf_stamp_size_large">Large</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">The watermark is added to every page.</string>
+    <string name="pdf_stamp_watermark_kind">Watermark</string>
+    <string name="pdf_stamp_watermark_kind_text">Text</string>
+    <string name="pdf_stamp_watermark_kind_image">Image</string>
+    <string name="pdf_stamp_watermark_text_label">Watermark text</string>
+    <string name="pdf_stamp_watermark_text_default">CONFIDENTIAL</string>
+    <string name="pdf_stamp_watermark_text_empty">Type the text to stamp.</string>
+    <string name="pdf_stamp_watermark_pick_image">Choose image</string>
+    <string name="pdf_stamp_watermark_change_image">Change image</string>
+    <string name="pdf_stamp_watermark_image_chosen">Image chosen: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">No image chosen yet.</string>
+    <string name="pdf_stamp_watermark_placement">Position</string>
+    <string name="pdf_stamp_watermark_center">Center</string>
+    <string name="pdf_stamp_watermark_top">Top</string>
+    <string name="pdf_stamp_watermark_bottom">Bottom</string>
+    <string name="pdf_stamp_watermark_tiled">Tiled</string>
+    <string name="pdf_stamp_watermark_rotation">Angle</string>
+    <string name="pdf_stamp_watermark_rotation_none">Level</string>
+    <string name="pdf_stamp_watermark_rotation_rising">Rising 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">Falling 45°</string>
+    <string name="pdf_stamp_watermark_opacity">Opacity</string>
+    <string name="pdf_stamp_watermark_opacity_light">25%</string>
+    <string name="pdf_stamp_watermark_opacity_medium">50%</string>
+    <string name="pdf_stamp_watermark_opacity_strong">75%</string>
+    <string name="pdf_stamp_watermark_size">Size</string>
+    <string name="pdf_stamp_watermark_layer">Layer</string>
+    <string name="pdf_stamp_watermark_layer_over">Over the content</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Always visible. May cover some text.</string>
+    <string name="pdf_stamp_watermark_layer_under">Under the content</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Text stays on top. On scanned pages the image hides it completely.</string>
+    <string name="pdf_stamp_watermark_action">Add watermark</string>
+</resources>

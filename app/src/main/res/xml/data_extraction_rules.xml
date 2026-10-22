@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   The settings DataStore holds credentials in plaintext — the Scanly licence
+   key and the user's own AI-provider API key. This exclusion is what keeps
+   them off Google's servers and out of device-to-device transfer; nothing
+   else does. Only cosmetic prefs ride along in the same file, so nothing of
+   value is lost by excluding it.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="datastore/settings.preferences_pb" />
+        <!-- The doc chat cache: the server holds the chats, and a restored cache would carry another install's request keys. -->
+        <exclude domain="database" path="doc_chat.db" />
+        <exclude domain="file" path="docchat/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="datastore/settings.preferences_pb" />
+        <!-- The doc chat cache: the server holds the chats, and a restored cache would carry another install's request keys. -->
+        <exclude domain="database" path="doc_chat.db" />
+        <exclude domain="file" path="docchat/" />
+    </device-transfer>
+</data-extraction-rules>

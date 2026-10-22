@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Every visible sheet becomes pages of the PDF, in workbook order. Wide sheets continue on the following pages.</string>
+    <string name="excel2pdf_convert">Convert to PDF</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d hidden sheet was left out.</item>
+        <item quantity="other">%d hidden sheets were left out.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d chart was left out.</item>
+        <item quantity="other">%d charts were left out.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d picture was left out.</item>
+        <item quantity="other">%d pictures were left out.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">Formulas show their last saved result.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d formula had no saved result and is blank.</item>
+        <item quantity="other">%d formulas had no saved result and are blank.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">Conditional formatting wasn\'t applied.</string>
+    <string name="excel2pdf_note_pivots">Pivot tables show their last saved values.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Very large sheets were cut at %d row.</item>
+        <item quantity="other">Very large sheets were cut at %d rows.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">The PDF stops at %d page; the rest was left out.</item>
+        <item quantity="other">The PDF stops at %d pages; the rest was left out.</item>
+    </plurals>
+</resources>

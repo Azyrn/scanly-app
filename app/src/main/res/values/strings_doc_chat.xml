@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Build Documents with AI, the document chat. English only for now; every string the chat shows is here. -->
+<resources>
+    <!-- Top bar -->
+    <string name="chat_title_empty">Scanly AI</string>
+    <string name="chat_menu">Chats and plan</string>
+    <string name="chat_untitled">Untitled document</string>
+    <string name="chat_file_default_name">Document</string>
+    <string name="chat_new">New chat</string>
+    <string name="chat_rename_action">Rename chat</string>
+    <string name="chat_rename_title">Rename chat</string>
+    <string name="chat_rename_label">Name</string>
+    <string name="chat_save">Save</string>
+    <string name="chat_cancel">Cancel</string>
+
+    <!-- History -->
+    <string name="chat_group_today">Today</string>
+    <string name="chat_group_yesterday">Yesterday</string>
+    <string name="chat_group_week">Previous 7 days</string>
+    <string name="chat_group_older">Older</string>
+    <string name="chat_search_hint">Search chats</string>
+    <string name="chat_search_clear">Clear search</string>
+    <string name="chat_search_empty">No chats match your search.</string>
+    <string name="chat_history_empty">No chats yet. Documents you build appear here.</string>
+    <string name="chat_more_actions">More actions</string>
+    <string name="chat_delete_title">Delete this chat?</string>
+    <string name="chat_delete_body">“%1$s” and its files will be removed from this phone and your account. Copies you saved to Downloads stay.</string>
+    <string name="chat_delete_confirm">Delete</string>
+
+    <!-- Empty state -->
+    <string name="chat_greeting_title">What should we build?</string>
+    <!-- Example requests in a new chat; each fills the composer. Delete items to remove them. -->
+    <string-array name="chat_example_prompts">
+        <item>Make a one-page CV</item>
+        <item>Create a budget spreadsheet</item>
+        <item>Write a formal letter in Word</item>
+    </string-array>
+    <string name="chat_ask_answered">You answered.</string>
+    <string name="chat_greeting_body">Describe it, or attach a file to rebuild.</string>
+
+    <!-- Composer -->
+    <string name="chat_composer_hint">Describe a document…</string>
+    <string name="chat_composer_hint_revise">Ask for a change…</string>
+    <string name="chat_attach">Attach</string>
+    <string name="chat_send">Send</string>
+    <string name="chat_stop">Stop waiting</string>
+    <plurals name="chat_cost_hint">
+        <item quantity="one">~%d credit</item>
+        <item quantity="other">~%d credits</item>
+    </plurals>
+    <string name="chat_cost_agent">Chat is free · files use credits</string>
+    <string name="chat_remove">Remove %1$s</string>
+    <string name="chat_preparing_file">Preparing…</string>
+    <string name="chat_preset_clean_up">Clean it up</string>
+    <string name="chat_preset_one_page">Fit on one page</string>
+    <plurals name="chat_pages">
+        <item quantity="one">%d page</item>
+        <item quantity="other">%d pages</item>
+    </plurals>
+    <string name="chat_preparing_picture">Preparing picture…</string>
+    <string name="chat_picture_role">Placed on the page</string>
+    <string name="chat_scan_role">From my scans</string>
+    <string name="chat_image_pending">Rebuild or place?</string>
+    <string name="chat_role_rebuild">Rebuild this document</string>
+    <string name="chat_role_place">Put this image on the page</string>
+    <string name="chat_role_rebuild_prompt">Rebuild this document as a clean PDF. Keep every word, name and number.</string>
+    <string name="chat_role_place_prompt">Put this picture on the page as a portrait or logo.</string>
+    <string name="chat_role_question">Rebuild it or place it on the page?</string>
+    <string name="chat_role_question_body">Rebuild turns the picture into a new document. Place keeps it as a picture, like a portrait or a logo.</string>
+    <string name="chat_role_answer_rebuild">Rebuild it</string>
+    <string name="chat_role_answer_place">Place it</string>
+    <string name="chat_attach_error_dismiss">Dismiss</string>
+
+
+    <!-- Attach sheet -->
+    <string name="chat_attach_title">Add a file</string>
+    <string name="chat_attach_camera">Camera</string>
+    <string name="chat_attach_photos">Photos</string>
+    <string name="chat_attach_files">Files</string>
+    <string name="chat_attach_scans">My scans</string>
+    <string name="chat_no_scans">No scans yet. Scan a document from Home first.</string>
+    <string name="chat_scans_title">Your recent scans</string>
+
+
+    <!-- Message list -->
+    <string name="chat_jump_latest">Jump to latest</string>
+    <string name="chat_unknown_message">This message needs a newer version of Scanly.</string>
+    <string name="chat_you_attached">Attached: %1$s</string>
+
+    <!-- Turn outcomes written into the chat -->
+    <string name="chat_stopped_waiting">Stopped waiting. The server may still finish and use credits. Retry to collect the same result without paying twice.</string>
+    <string name="chat_interrupted">This request was interrupted. Send your message again.</string>
+    <string name="chat_reconnecting">Reconnecting to your design…</string>
+    <string name="chat_design_failed">Couldn\'t finish the design. Your message is kept; try again.</string>
+
+    <!-- Attaching -->
+    <string name="chat_photo_unusable">That image couldn\'t be used. Try another.</string>
+    <string name="chat_file_too_many_pages">The designer rebuilds up to %1$d pages. That file has %2$d.</string>
+    <string name="chat_file_too_large">That file is too large to rebuild.</string>
+    <string name="chat_file_unreadable">That file couldn\'t be read. Try another.</string>
+
+    <!-- File actions -->
+    <string name="chat_open_with">Open with…</string>
+    <string name="chat_no_viewer">No app on this phone can open this file.</string>
+    <string name="chat_save_failed">Couldn\'t save the file.</string>
+    <string name="chat_share_failed">Couldn\'t share the file.</string>
+    <string name="chat_saved_to_downloads">Saved to Downloads.</string>
+    <plurals name="chat_images_saved">
+        <item quantity="one">Saved %d image to Pictures/Scanly.</item>
+        <item quantity="other">Saved %d images to Pictures/Scanly.</item>
+    </plurals>
+    <string name="chat_images_failed">Couldn\'t save the images.</string>
+    <string name="chat_file_missing">Couldn\'t get this file. Check your connection and try again.</string>
+    <string name="chat_file_expired">This design is no longer kept. Rebuild it to get the file again.</string>
+
+    <!-- Reply cards -->
+    <string name="chat_not_charged">Not charged</string>
+    <string name="chat_retry">Retry</string>
+    <string name="chat_see_plans">See plans</string>
+    <string name="chat_ask_title">Check your file</string>
+    <string name="chat_ask_reason">This looks like %1$s.</string>
+    <string name="chat_ask_fallback">This file doesn\'t look like the document you asked for.</string>
+    <string name="chat_ask_continue">Continue anyway</string>
+    <string name="chat_ask_dismiss">Not now</string>
+    <string name="chat_ask_answered_continue">You chose to continue anyway.</string>
+    <string name="chat_ask_answered_dismiss">You chose not to continue.</string>
+    <string name="chat_fields_title">A few details first</string>
+    <string name="chat_fields_body">Add these so nothing in your document has to be made up.</string>
+    <string name="chat_fields_submit">Create document</string>
+    <string name="chat_fields_open">Fill in details</string>
+    <string name="chat_file_open">Open</string>
+    <string name="chat_file_share">Share</string>
+    <string name="chat_file_download">Download</string>
+    <string name="chat_file_more">More actions</string>
+    <string name="chat_file_save_images">Save pages as images</string>
+    <string name="chat_file_revise">Change this version</string>
+    <string name="chat_file_editing">Editing</string>
+    <plurals name="chat_credits_used">
+        <item quantity="one">%d credit</item>
+        <item quantity="other">%d credits</item>
+    </plurals>
+    <string name="chat_expired">Expired: rebuild</string>
+    <string name="chat_expired_hint">The server no longer keeps this design, so it can\'t be changed. Rebuild it to keep editing.</string>
+    <string name="chat_thumbnail_description">First page of %1$s</string>
+
+    <!-- Background job notification -->
+    <string name="chat_notification_channel">Documents</string>
+    <string name="chat_notification_channel_description">When a document built in the background is ready</string>
+    <string name="chat_notification_ready">Your PDF is ready. Tap to open the chat.</string>
+    <string name="chat_notification_not_charged">You were not charged.</string>
+
+    <!-- Working reply: the live status line and Show thinking -->
+    <string name="chat_status_elapsed">%1$s · %2$ds</string>
+    <string name="chat_step_reading">Reading your file</string>
+    <string name="chat_step_extracting">Extracting text</string>
+    <string name="chat_step_planning">Planning the layout</string>
+    <string name="chat_step_writing">Writing content</string>
+    <string name="chat_step_building">Building the PDF</string>
+    <string name="chat_step_checking">Checking quality</string>
+    <string name="chat_step_fixing">Fixing layout</string>
+    <string name="chat_step_done">Done</string>
+    <string name="chat_step_thinking">Thinking</string>
+    <string name="chat_step_reading_guide">Reading the guide</string>
+    <string name="chat_step_coding">Writing code</string>
+    <string name="chat_step_previewing">Looking at the pages</string>
+    <string name="chat_step_delivering">Delivering the file</string>
+    <string name="chat_agent_done">Done. Your files are below.</string>
+    <string name="chat_agent_failed">The assistant couldn\'t finish. Your message is kept; try again.</string>
+    <string name="chat_agent_about_file">(About the file %1$s.)</string>
+    <string name="chat_agent_delivered">Delivered %1$s</string>
+    <string name="chat_approval_title">Open this website?</string>
+    <string name="chat_approval_new_url">This link isn\'t in your message or the search results, so the assistant needs your OK to open it.</string>
+    <string name="chat_approval_page_link">The assistant found this link on a page it opened and needs your OK to open it.</string>
+    <string name="chat_approval_warn_query">This link carries extra data after the \"?\". If you don\'t trust this site, tap Deny: it could receive part of this chat.</string>
+    <string name="chat_approval_warn_long">This link is unusually long. If you don\'t trust this site, tap Deny: it could receive part of this chat.</string>
+    <string name="chat_approval_countdown">No answer in %1$s means no.</string>
+    <string name="chat_approval_allow_once">Allow once</string>
+    <string name="chat_approval_deny">Deny</string>
+    <string name="chat_show_thinking">Show thinking</string>
+    <string name="chat_hide_thinking">Hide thinking</string>
+    <string name="chat_took">Took %1$ds</string>
+    <string name="chat_seconds">%1$ds</string>
+    <string name="chat_under_a_second">under 1s</string>
+    <string name="chat_background_note">Running in the background. You\'ll get a notification, and the file will appear here.</string>
+    <string name="chat_stopped_note">Stopped waiting. The file will still appear here when it\'s ready.</string>
+
+    <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
+         Tool names and their arguments are the agent's own and are not translated. -->
+    <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
+    <plurals name="chat_log_steps">
+        <item quantity="one">%d step</item>
+        <item quantity="other">%d steps</item>
+    </plurals>
+    <string name="chat_log_minutes">%1$dm %2$ds</string>
+    <string name="chat_log_seconds">%1$ds</string>
+    <string name="chat_log_worked">Worked for %1$s · %2$s</string>
+    <string name="chat_log_show_steps">Show steps</string>
+    <string name="chat_log_hide_steps">Hide steps</string>
+    <string name="chat_log_thought">Thought for %1$s</string>
+    <string name="chat_log_thinking">Thinking</string>
+    <plurals name="chat_log_read">
+        <item quantity="one">Read %d line</item>
+        <item quantity="other">Read %d lines</item>
+    </plurals>
+    <plurals name="chat_log_wrote">
+        <item quantity="one">Wrote %d line</item>
+        <item quantity="other">Wrote %d lines</item>
+    </plurals>
+    <string name="chat_log_read_image">Read image (%1$s)</string>
+    <string name="chat_log_no_output">(No output)</string>
+    <string name="chat_log_denied">Denied: not allowed in this job</string>
+    <string name="chat_log_running">Running…</string>
+    <plurals name="chat_log_more_lines">
+        <item quantity="one">+%d line</item>
+        <item quantity="other">+%d lines</item>
+    </plurals>
+    <string name="chat_log_show_more">Show more</string>
+    <string name="chat_log_show_less">Show less</string>
+    <plurals name="chat_log_not_shown">
+        <item quantity="one">%1$d more line (%2$d characters) not shown</item>
+        <item quantity="other">%1$d more lines (%2$d characters) not shown</item>
+    </plurals>
+    <plurals name="chat_log_not_kept">
+        <item quantity="one">%1$d line (%2$d characters) not kept</item>
+        <item quantity="other">%1$d lines (%2$d characters) not kept</item>
+    </plurals>
+    <string name="chat_log_show_all">Show all</string>
+    <string name="chat_log_loading">Loading the full output…</string>
+    <string name="chat_log_expired">Full output expired</string>
+    <string name="chat_log_unavailable">Couldn\'t load the full output. Tap to try again.</string>
+    <string name="chat_log_past_limit">%1$d more characters were past the limit and not kept</string>
+    <plurals name="chat_log_dropped">
+        <item quantity="one">%d earlier row not kept on this phone</item>
+        <item quantity="other">%d earlier rows not kept on this phone</item>
+    </plurals>
+</resources>

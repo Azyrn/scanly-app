@@ -1,0 +1,279 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:BarcodeScannerScreen.kt:actions.isNotEmpty() &amp;&amp; !showActionsSheet &amp;&amp; textToShow == null &amp;&amp; !showProductSheet</ID>
+    <ID>ComplexCondition:DbPostProcessor.kt:DbPostProcessor$nx &lt; 0 || ny &lt; 0 || nx &gt;= w || ny &gt;= h</ID>
+    <ID>ComplexCondition:MarkdownParser.kt:MarkdownParser$bold || italic || (closes("**", i + 3) &amp;&amp; closes("*", i + 3))</ID>
+    <ID>ComplexCondition:ResultsScreen.kt:isAiResult &amp;&amp; historyText == null &amp;&amp; runInfo != null &amp;&amp; aiState.result is AiResult.Success</ID>
+    <ID>ComplexCondition:SignatureValidator.kt:SignatureValidator$start1 &lt; 0 || length1 &lt; 0 || start2 &lt; 0 || length2 &lt; 0</ID>
+    <ID>CyclomaticComplexMethod:ActionExecutor.kt:ActionExecutor$fun execute</ID>
+    <ID>CyclomaticComplexMethod:BackendClient.kt:internal fun backendFailure: Exception</ID>
+    <ID>CyclomaticComplexMethod:BackendExecutor.kt:BackendExecutor$suspend fun &lt;T&gt; run: AiOutcome&lt;T&gt;</ID>
+    <ID>CyclomaticComplexMethod:BarcodeAnalyzer.kt:BarcodeAnalyzer$private fun getActionKey: String</ID>
+    <ID>CyclomaticComplexMethod:BarcodeAnalyzer.kt:BarcodeAnalyzer$private fun mapBarcodeToActions: List&lt;ScanAction&gt;</ID>
+    <ID>CyclomaticComplexMethod:BarcodeContentParser.kt:BarcodeContentParser$fun parse: List&lt;ScanAction&gt;</ID>
+    <ID>CyclomaticComplexMethod:BarcodeContentParser.kt:BarcodeContentParser$private fun parseVCard</ID>
+    <ID>CyclomaticComplexMethod:BarcodeContentParser.kt:BarcodeContentParser$private fun splitQrFields: Map&lt;String, String&gt;</ID>
+    <ID>CyclomaticComplexMethod:ConnectionDiagnosis.kt:ConnectionDiagnosis$fun extractErrorDetail: String?</ID>
+    <ID>CyclomaticComplexMethod:ConnectionDiagnosis.kt:ConnectionDiagnosis$fun fromSuccessBody: ConnectionFailure?</ID>
+    <ID>CyclomaticComplexMethod:DbPostProcessor.kt:DbPostProcessor$fun extract: List&lt;Quad&gt;</ID>
+    <ID>CyclomaticComplexMethod:DesignViewModel.kt:DesignViewModel$fun exportImages</ID>
+    <ID>CyclomaticComplexMethod:DesignViewModel.kt:DesignViewModel$private fun start</ID>
+    <ID>CyclomaticComplexMethod:DocToolsViewModel.kt:DocToolsViewModel$fun signDocument</ID>
+    <ID>CyclomaticComplexMethod:DocToolsViewModel.kt:SigningState$override fun equals: Boolean</ID>
+    <ID>CyclomaticComplexMethod:DocumentJson.kt:DocumentJson$private fun element: JSONObject</ID>
+    <ID>CyclomaticComplexMethod:DocumentScanViewModel.kt:DocumentScanViewModel$private fun applyExifRotation: Bitmap</ID>
+    <ID>CyclomaticComplexMethod:DocumentStructure.kt:DocumentStructure$private fun render: String?</ID>
+    <ID>CyclomaticComplexMethod:DocumentStructure.kt:DocumentStructure$private fun tableMarkdown: String?</ID>
+    <ID>CyclomaticComplexMethod:EraseGeometry.kt:fun PdfEdit.Marking.eraseWith: List&lt;PdfEdit.Marking&gt;?</ID>
+    <ID>CyclomaticComplexMethod:EraseGeometry.kt:private fun List&lt;Offset&gt;.cutAround: List&lt;List&lt;Offset&gt;&gt;</ID>
+    <ID>CyclomaticComplexMethod:FirebaseAuthRepository.kt:FirebaseAuthRepository$private fun Exception.toUserMessage: String</ID>
+    <ID>CyclomaticComplexMethod:FoodProduct.kt:fun ProductDto.toDomain: FoodProduct?</ID>
+    <ID>CyclomaticComplexMethod:Geometry.kt:Geometry$fun convexHull: FloatArray</ID>
+    <ID>CyclomaticComplexMethod:Geometry.kt:Geometry$fun minAreaRect: RotatedRect</ID>
+    <ID>CyclomaticComplexMethod:GridReorder.kt:GridReorderState$fun onDrag</ID>
+    <ID>CyclomaticComplexMethod:HistoryScreen.kt:private fun LazyListState.shouldFabExpand: Boolean</ID>
+    <ID>CyclomaticComplexMethod:ImageOps.kt:ImageOps$private fun solve8: DoubleArray</ID>
+    <ID>CyclomaticComplexMethod:MarkdownHtml.kt:MarkdownHtml$fun render: String</ID>
+    <ID>CyclomaticComplexMethod:MarkdownParser.kt:MarkdownParser$fun looksLikeMarkdown: Boolean</ID>
+    <ID>CyclomaticComplexMethod:MarkdownParser.kt:MarkdownParser$fun parse: List&lt;MdBlock&gt;</ID>
+    <ID>CyclomaticComplexMethod:MarkdownParser.kt:MarkdownParser$fun parseInline: List&lt;MdSpan&gt;</ID>
+    <ID>CyclomaticComplexMethod:MarkdownParser.kt:MarkdownParser$fun toPlainText: String</ID>
+    <ID>CyclomaticComplexMethod:MarkdownPdf.kt:MarkdownPdf$private fun draw</ID>
+    <ID>CyclomaticComplexMethod:MarkdownPdf.kt:MarkdownPdf$private fun spans: CharSequence</ID>
+    <ID>CyclomaticComplexMethod:MlKitOcrService.kt:MlKitOcrService$suspend fun recognizeFromPdf: OcrResult</ID>
+    <ID>CyclomaticComplexMethod:OpenFDAEngine.kt:OpenFDAEngine$override suspend fun lookup: LookupResult</ID>
+    <ID>CyclomaticComplexMethod:PaddleModelStore.kt:PaddleModelStore.Companion$fun parseYamlDict: List&lt;String&gt;</ID>
+    <ID>CyclomaticComplexMethod:PaddleOcrService.kt:PaddleOcrService$suspend fun recognize: OcrResult</ID>
+    <ID>CyclomaticComplexMethod:PaddleOcrService.kt:PaddleOcrService$suspend fun recognizeFromPdf: OcrResult</ID>
+    <ID>CyclomaticComplexMethod:PageCanvas.kt:fun DrawScope.drawMarking</ID>
+    <ID>CyclomaticComplexMethod:PageEditorScreen.kt:private fun DrawScope.drawLivePreview</ID>
+    <ID>CyclomaticComplexMethod:PageEditorScreen.kt:private suspend fun PointerInputScope.pageGestures</ID>
+    <ID>CyclomaticComplexMethod:PageTextSnapshot.kt:PageTextSnapshot$fun lineAt: IntRange</ID>
+    <ID>CyclomaticComplexMethod:PayloadFactory.kt:PayloadFactory$fun create: Payload</ID>
+    <ID>CyclomaticComplexMethod:PdfEditorEngine.kt:PdfEditorEngine$suspend fun apply: PdfEditResult</ID>
+    <ID>CyclomaticComplexMethod:PdfEditorSession.kt:PdfEditorSession$suspend fun searchForTargetSize: CompressionResult?</ID>
+    <ID>CyclomaticComplexMethod:PdfSigner.kt:PdfSigner$suspend fun sign: SignResult</ID>
+    <ID>CyclomaticComplexMethod:ReadingOrder.kt:ReadingOrder$private fun order: List&lt;List&lt;Int&gt;&gt;</ID>
+    <ID>CyclomaticComplexMethod:RetryUtils.kt:fun Exception.isRetryable: Boolean</ID>
+    <ID>CyclomaticComplexMethod:RtlText.kt:RtlText$fun visualToLogical: String</ID>
+    <ID>CyclomaticComplexMethod:ScanActionDetector.kt:ScanActionDetector$private fun detectFromPatterns: List&lt;ScanAction&gt;</ID>
+    <ID>CyclomaticComplexMethod:ScanActionDetector.kt:ScanActionDetector$private fun getActionKey: String</ID>
+    <ID>CyclomaticComplexMethod:ScanExporter.kt:ScanExporter$internal fun wordMarkdownDocument: String</ID>
+    <ID>CyclomaticComplexMethod:ScanExporter.kt:ScanExporter$private fun escapeXml: String</ID>
+    <ID>CyclomaticComplexMethod:ScanExporter.kt:ScanExporter$private fun exportToDownloads: Uri</ID>
+    <ID>CyclomaticComplexMethod:ScanExporter.kt:ScanExporter$private fun saveOneToGallery: Boolean</ID>
+    <ID>CyclomaticComplexMethod:SignatureExtractor.kt:SignatureExtractor$private fun despeckle</ID>
+    <ID>CyclomaticComplexMethod:SignatureExtractor.kt:SignatureExtractor$private fun inkBounds: IntArray?</ID>
+    <ID>CyclomaticComplexMethod:SignatureValidator.kt:SignatureValidator$private fun inspect: CmsOutcome</ID>
+    <ID>CyclomaticComplexMethod:TableDecoder.kt:TableDecoder$fun decode: TableStructure</ID>
+    <ID>CyclomaticComplexMethod:TableGrid.kt:TableGrid$private fun foldStrandedHeadings: List&lt;List&lt;String&gt;&gt;</ID>
+    <ID>CyclomaticComplexMethod:UnifiedScanService.kt:UnifiedScanService$private fun mapBarcodeToActions: List&lt;ScanAction&gt;</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:SignatureExtractor.kt:SignatureExtractor$val (left, top, right, bottom) = bounds</ID>
+    <ID>Filename:GridReorder.kt:com.skeler.scanely.ui.pdfeditor.GridReorder.kt</ID>
+    <ID>Filename:StudioPages.kt:com.skeler.scanely.ui.pdfeditor.StudioPages.kt</ID>
+    <ID>Filename:_DrawableVectors.kt:com.skeler.scanely.core.presentation.components.svg._DrawableVectors.kt</ID>
+    <ID>FunctionOnlyReturningConstant:ScanExporter.kt:ScanExporter$private fun packageRelationships: String</ID>
+    <ID>FunctionOnlyReturningConstant:ScanExporter.kt:ScanExporter$private fun wordContentTypes: String</ID>
+    <ID>LargeClass:DesignViewModel.kt:DesignViewModel : ViewModel</ID>
+    <ID>LargeClass:DocToolsViewModel.kt:DocToolsViewModel : ViewModel</ID>
+    <ID>LargeClass:GenerativeAiService.kt:GenerativeAiService</ID>
+    <ID>LargeClass:MarkdownParser.kt:MarkdownParser</ID>
+    <ID>LargeClass:MarkdownPdf.kt:MarkdownPdf</ID>
+    <ID>LargeClass:PaddleOcrEngine.kt:PaddleOcrEngine</ID>
+    <ID>LargeClass:PageEditorViewModel.kt:PageEditorViewModel : ViewModel</ID>
+    <ID>LargeClass:ScanExporter.kt:ScanExporter</ID>
+    <ID>LargeClass:UnifiedScanService.kt:UnifiedScanService</ID>
+    <ID>LongMethod:AiScanViewModel.kt:AiScanViewModel$fun processMultipleFiles</ID>
+    <ID>LongMethod:BackendExecutor.kt:BackendExecutor$suspend fun &lt;T&gt; run: AiOutcome&lt;T&gt;</ID>
+    <ID>LongMethod:BarcodeAnalyzer.kt:BarcodeAnalyzer$private fun mapBarcodeToActions: List&lt;ScanAction&gt;</ID>
+    <ID>LongMethod:ColorSchemes.kt:private fun darkSeedScheme: ColorScheme</ID>
+    <ID>LongMethod:ColorSchemes.kt:private fun lightSeedScheme: ColorScheme</ID>
+    <ID>LongMethod:CustomProviderTester.kt:CustomProviderTester$suspend fun test: ConnectionTestResult</ID>
+    <ID>LongMethod:DbPostProcessor.kt:DbPostProcessor$fun extract: List&lt;Quad&gt;</ID>
+    <ID>LongMethod:DesignViewModel.kt:DesignViewModel$private fun start</ID>
+    <ID>LongMethod:DocToolsViewModel.kt:DocToolsViewModel$fun signDocument</ID>
+    <ID>LongMethod:DocumentFilters.kt:DocumentFilters$private fun binarize: Bitmap</ID>
+    <ID>LongMethod:DocumentJson.kt:DocumentJson$private fun element: JSONObject</ID>
+    <ID>LongMethod:GenerativeAiService.kt:GenerativeAiService$@AiEntryPoint(AiFeature.DESIGN) fun designDocumentEvents: Flow&lt;DesignEvent&gt;</ID>
+    <ID>LongMethod:Geometry.kt:Geometry$fun minAreaRect: RotatedRect</ID>
+    <ID>LongMethod:Geometry.kt:Geometry$fun orderQuad: Quad</ID>
+    <ID>LongMethod:Geometry.kt:Geometry$fun unclip: FloatArray</ID>
+    <ID>LongMethod:MarkdownParser.kt:MarkdownParser$fun parse: List&lt;MdBlock&gt;</ID>
+    <ID>LongMethod:MarkdownParser.kt:MarkdownParser$fun parseInline: List&lt;MdSpan&gt;</ID>
+    <ID>LongMethod:MarkdownParser.kt:MarkdownParser$fun toPlainText: String</ID>
+    <ID>LongMethod:MlKitOcrService.kt:MlKitOcrService$suspend fun recognizeFromBitmap: OcrResult</ID>
+    <ID>LongMethod:MlKitOcrService.kt:MlKitOcrService$suspend fun recognizeFromPdf: OcrResult</ID>
+    <ID>LongMethod:PaddleOcrService.kt:PaddleOcrService$suspend fun recognize: OcrResult</ID>
+    <ID>LongMethod:PageEditorScreen.kt:private fun DrawScope.drawLivePreview</ID>
+    <ID>LongMethod:PdfEditorEngine.kt:PdfEditorEngine$suspend fun apply: PdfEditResult</ID>
+    <ID>LongMethod:PdfSigner.kt:PdfSigner$suspend fun sign: SignResult</ID>
+    <ID>LongMethod:ProviderPayloads.kt:ProviderRequest$fun completion: JsonObject</ID>
+    <ID>LongMethod:ReadingOrder.kt:ReadingOrder$private fun order: List&lt;List&lt;Int&gt;&gt;</ID>
+    <ID>LongMethod:ScanExporter.kt:ScanExporter$internal fun buildJson: String</ID>
+    <ID>LongMethod:ScanExporter.kt:ScanExporter$internal fun wordMarkdownDocument: String</ID>
+    <ID>LongMethod:ScanExporter.kt:ScanExporter$private fun buildTextPdfDocument: PdfDocument</ID>
+    <ID>LongMethod:ScanExporter.kt:ScanExporter$private fun exportToDownloads: Uri</ID>
+    <ID>LongMethod:ScanExporter.kt:ScanExporter$private fun saveOneToGallery: Boolean</ID>
+    <ID>LongMethod:TableDecoder.kt:TableDecoder$fun decode: TableStructure</ID>
+    <ID>LongMethod:UnifiedScanService.kt:UnifiedScanService$private fun mapBarcodeToActions: List&lt;ScanAction&gt;</ID>
+    <ID>LongMethod:UnifiedScanViewModel.kt:UnifiedScanViewModel$fun processImages</ID>
+    <ID>LongParameterList:GenerativeAiService.kt:GenerativeAiService$( private val payloadFactory: PayloadFactory, private val client: BackendClient, private val executor: BackendExecutor, private val networkObserver: NetworkObserver, private val customProviderResolver: CustomProviderResolver, private val customScanner: CustomScanner, private val customDesigner: CustomDesigner, private val extractionCatalog: ExtractionCatalog, private val designStore: DesignStore, private val entitlementRepository: com.skeler.scanely.core.billing.EntitlementRepository )</ID>
+    <ID>LongParameterList:LanguageChipRow.kt:( cachedLanguages: List&lt;String&gt;, currentLanguage: String?, showLanguageMenu: Boolean, onShowLanguageMenu: () -&gt; Unit, onDismissLanguageMenu: () -&gt; Unit, onSelectOriginal: () -&gt; Unit, onSelectCached: (String) -&gt; Unit, allLanguages: List&lt;String&gt;, onNewLanguageSelected: (String) -&gt; Unit, onComposeText: () -&gt; Unit, modifier: Modifier = Modifier, showMarkdown: Boolean = false, markdownSelected: Boolean = false, onSelectMarkdown: () -&gt; Unit = {}, showJson: Boolean = false, jsonSelected: Boolean = false, onSelectJson: () -&gt; Unit = {}, /** False while translation is switched off server-side; cached translations still show. */ showTranslate: Boolean = true )</ID>
+    <ID>LongParameterList:PageCanvas.kt:( box: Rect, text: String, font: OfficialFont, sizePt: Float, color: Color, baselinePt: Float?, measurer: TextMeasurer, fonts: Map&lt;OfficialFont, FontFamily&gt;, fontSizeOf: (Float) -&gt; TextUnit, fitWidthPt: Float = box.width )</ID>
+    <ID>LongParameterList:PageEditorScreen.kt:( page: StudioPage, bitmap: Bitmap?, markings: List&lt;PdfEdit.Marking&gt;, selectionQuads: List&lt;Rect&gt;, tool: EditorTool?, color: Color, strokeWidthPt: Float, eraserRadiusPt: Float, whiteoutColor: Color, whiteoutWidthPt: Float, shape: ShapeKind, stampFor: (String) -&gt; Bitmap?, onInk: (List&lt;Offset&gt;) -&gt; Unit, onTextMark: (Offset, Offset) -&gt; Unit, onShape: (Rect) -&gt; Unit, onWhiteout: (List&lt;Offset&gt;) -&gt; Unit, onEraseStart: () -&gt; Unit, onErase: (Offset) -&gt; Unit, onEraseEnd: () -&gt; Unit, onSelectionDrag: (Offset, Offset) -&gt; Unit, onSelectionEnd: (Offset, Offset) -&gt; Unit, onTap: (Offset) -&gt; Unit )</ID>
+    <ID>LongParameterList:PageEditorScreen.kt:( points: List&lt;Offset&gt;, tool: EditorTool?, color: Color, strokeWidthPt: Float, eraserRadiusPt: Float, whiteoutColor: Color, whiteoutWidthPt: Float, shape: ShapeKind )</ID>
+    <ID>LongParameterList:PageEditorScreen.kt:( state: PageEditorUiState, onColor: (Color) -&gt; Unit, onWidth: (Float) -&gt; Unit, onEraserRadius: (Float) -&gt; Unit, onWhiteoutColor: (Color) -&gt; Unit, onWhiteoutWidth: (Float) -&gt; Unit, onShape: (ShapeKind) -&gt; Unit, onLineStyle: (LineStyle) -&gt; Unit, onFont: (OfficialFont) -&gt; Unit, onTextSize: (Float) -&gt; Unit, onTextColor: (Color) -&gt; Unit, onSignature: (String?) -&gt; Unit, onCaptureSignature: () -&gt; Unit, onDeleteSignature: (String) -&gt; Unit, canGoBack: Boolean, canGoForward: Boolean, onPrevious: () -&gt; Unit, onNext: () -&gt; Unit )</ID>
+    <ID>LongParameterList:PdfStudioScreen.kt:( pages: List&lt;StudioPage&gt;, selection: Set&lt;Int&gt;, thumbnails: Map&lt;Int, PageThumbnail&gt;, onRequestThumbnail: (Int, Int) -&gt; Unit, onOpen: (Int) -&gt; Unit, onToggle: (Int) -&gt; Unit, onReorder: (List&lt;Int&gt;) -&gt; Unit, onClearSelection: () -&gt; Unit )</ID>
+    <ID>LoopWithTooManyJumpStatements:BackendClient.kt:BackendClient$while</ID>
+    <ID>LoopWithTooManyJumpStatements:DbPostProcessor.kt:DbPostProcessor$for</ID>
+    <ID>LoopWithTooManyJumpStatements:ImageOps.kt:ImageOps$for</ID>
+    <ID>LoopWithTooManyJumpStatements:OpenFDAEngine.kt:OpenFDAEngine$for</ID>
+    <ID>LoopWithTooManyJumpStatements:PaddleModelStore.kt:PaddleModelStore.Companion$for</ID>
+    <ID>LoopWithTooManyJumpStatements:PageEditorScreen.kt:while</ID>
+    <ID>LoopWithTooManyJumpStatements:PageTextSnapshot.kt:PageTextSnapshot$while</ID>
+    <ID>LoopWithTooManyJumpStatements:Pkcs12Identity.kt:Pkcs12Loader$while</ID>
+    <ID>LoopWithTooManyJumpStatements:SignatureExtractor.kt:SignatureExtractor$for</ID>
+    <ID>LoopWithTooManyJumpStatements:TableDecoder.kt:TableDecoder$while</ID>
+    <ID>MagicNumber:App.kt:App$0.25</ID>
+    <ID>MagicNumber:AppearancePlacement.kt:AppearancePlacement$180</ID>
+    <ID>MagicNumber:AppearancePlacement.kt:AppearancePlacement$270</ID>
+    <ID>MagicNumber:AppearancePlacement.kt:AppearancePlacement$360</ID>
+    <ID>MagicNumber:AppearancePlacement.kt:AppearancePlacement$90</ID>
+    <ID>MagicNumber:BackendAuthInterceptor.kt:401</ID>
+    <ID>MagicNumber:BackendClient.kt:300_000L</ID>
+    <ID>MagicNumber:BackendClient.kt:5</ID>
+    <ID>MagicNumber:BarcodeAnalyzer.kt:BarcodeAnalyzer$10</ID>
+    <ID>MagicNumber:BarcodeAnalyzer.kt:BarcodeAnalyzer$50</ID>
+    <ID>MagicNumber:BarcodeContentParser.kt:BarcodeContentParser$10</ID>
+    <ID>MagicNumber:BarcodeContentParser.kt:BarcodeContentParser$4</ID>
+    <ID>MagicNumber:BarcodeMatch.kt:10</ID>
+    <ID>MagicNumber:BarcodeMatch.kt:13</ID>
+    <ID>MagicNumber:BarcodeMatch.kt:9</ID>
+    <ID>MagicNumber:CompositionLocals.kt:ReadingTextScale$10</ID>
+    <ID>MagicNumber:CompositionLocals.kt:ReadingTextScale$10f</ID>
+    <ID>MagicNumber:ConnectionDiagnosis.kt:ConnectionDiagnosis$401</ID>
+    <ID>MagicNumber:ConnectionDiagnosis.kt:ConnectionDiagnosis$403</ID>
+    <ID>MagicNumber:ConnectionDiagnosis.kt:ConnectionDiagnosis$404</ID>
+    <ID>MagicNumber:ConnectionDiagnosis.kt:ConnectionDiagnosis$429</ID>
+    <ID>MagicNumber:DocToolsSheet.kt:0.01</ID>
+    <ID>MagicNumber:DocToolsSheet.kt:0.1</ID>
+    <ID>MagicNumber:DocToolsSheet.kt:10</ID>
+    <ID>MagicNumber:DocToolsSheet.kt:1_000_000.0</ID>
+    <ID>MagicNumber:DocToolsSheet.kt:1_000_000L</ID>
+    <ID>MagicNumber:DocumentScanViewModel.kt:DocumentScanViewModel$90f</ID>
+    <ID>MagicNumber:FilePreviewOverlay.kt:26</ID>
+    <ID>MagicNumber:GenerativeAiModule.kt:GenerativeAiModule$120</ID>
+    <ID>MagicNumber:GenerativeAiModule.kt:GenerativeAiModule$30</ID>
+    <ID>MagicNumber:GenerativeAiModule.kt:GenerativeAiModule$300</ID>
+    <ID>MagicNumber:HistoryManager.kt:HistoryManager$50</ID>
+    <ID>MagicNumber:LookupModule.kt:LookupModule$15</ID>
+    <ID>MagicNumber:MarkdownParser.kt:MarkdownParser$3</ID>
+    <ID>MagicNumber:MarkdownParser.kt:MarkdownParser$4</ID>
+    <ID>MagicNumber:MarkdownPdf.kt:MarkdownPdf$6f</ID>
+    <ID>MagicNumber:OpenFDAEngine.kt:OpenFDAEngine$500</ID>
+    <ID>MagicNumber:PageCanvas.kt:PageProjection$90f</ID>
+    <ID>MagicNumber:PageEditorViewModel.kt:PageEditorViewModel$0xFF</ID>
+    <ID>MagicNumber:PageEditorViewModel.kt:PageEditorViewModel$16</ID>
+    <ID>MagicNumber:PageEditorViewModel.kt:PageEditorViewModel$595f</ID>
+    <ID>MagicNumber:PageEditorViewModel.kt:PageEditorViewModel$8</ID>
+    <ID>MagicNumber:PageEditorViewModel.kt:PageEditorViewModel$842f</ID>
+    <ID>MagicNumber:PdfSigner.kt:PdfSigner$360</ID>
+    <ID>MagicNumber:ProviderPayloads.kt:ProviderRequest$0.1</ID>
+    <ID>MagicNumber:QpdfEngine.kt:QpdfEngine$3</ID>
+    <ID>MagicNumber:QpdfEngine.kt:QpdfEngine$4</ID>
+    <ID>MagicNumber:ScanActionDetector.kt:ScanActionDetector$10</ID>
+    <ID>MagicNumber:ScanActionDetector.kt:ScanActionDetector$15</ID>
+    <ID>MagicNumber:ScanActionDetector.kt:ScanActionDetector$3</ID>
+    <ID>MagicNumber:ScanActionDetector.kt:ScanActionDetector$5</ID>
+    <ID>MagicNumber:ScanActionDetector.kt:ScanActionDetector$50</ID>
+    <ID>MagicNumber:ScanExporter.kt:ScanExporter$360</ID>
+    <ID>MagicNumber:SharedComponents.kt:0xFF038141</ID>
+    <ID>MagicNumber:SharedComponents.kt:0xFF85BB2F</ID>
+    <ID>MagicNumber:SharedComponents.kt:0xFFE63E11</ID>
+    <ID>MagicNumber:SharedComponents.kt:0xFFEE8100</ID>
+    <ID>MagicNumber:SharedComponents.kt:0xFFFECB02</ID>
+    <ID>MagicNumber:SharedComponents.kt:3</ID>
+    <ID>MagicNumber:SharedComponents.kt:4</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$0x00FFFFFF</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$0xFF</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$11</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$16</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$24</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$255</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$255f</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$30</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$59</ID>
+    <ID>MagicNumber:SignatureExtractor.kt:SignatureExtractor$8</ID>
+    <ID>MagicNumber:SignatureStore.kt:SignatureStore$3.0</ID>
+    <ID>MagicNumber:SignatureValidator.kt:SignatureValidator$16</ID>
+    <ID>MagicNumber:SignatureValidator.kt:SignatureValidator$4</ID>
+    <ID>MagicNumber:SignatureValidator.kt:SignatureValidator$8</ID>
+    <ID>MatchingDeclarationName:GridReorder.kt:GridReorderState</ID>
+    <ID>MatchingDeclarationName:PageCanvas.kt:PageProjection</ID>
+    <ID>MatchingDeclarationName:ResultsComponents.kt:ExtractedTextState</ID>
+    <ID>MatchingDeclarationName:RetryUtils.kt:RetryConfig</ID>
+    <ID>MatchingDeclarationName:SettingsListGroup.kt:SettingsItem</ID>
+    <ID>MatchingDeclarationName:StudioPages.kt:StudioPage</ID>
+    <ID>MatchingDeclarationName:_DrawableVectors.kt:DynamicColorImageVectors</ID>
+    <ID>MaxLineLength:DesignViewModel.kt:DesignViewModel$source = draft.sourceId?.let { DesignSource(it, draft.sourceLabel.orEmpty(), draft.sourceText.orEmpty()) }</ID>
+    <ID>MaxLineLength:NoSearchResult.kt:"M164 100H336A14 14 0 0 1 350 114V206A14 14 0 0 1 336 220H164A14 14 0 0 1 150 206V114A14 14 0 0 1 164 100Z"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$"&lt;Relationship Id=\"rId${index + 1}\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/image\" Target=\"media/image${index + 1}.jpg\"/&gt;"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$"&lt;w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:pic=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"&gt;&lt;w:body&gt;"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$"&lt;w:p&gt;&lt;w:r&gt;&lt;w:drawing&gt;&lt;wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\"&gt;&lt;wp:extent cx=\"$cx\" cy=\"$cy\"/&gt;&lt;wp:docPr id=\"$id\" name=\"Scan $id\"/&gt;&lt;a:graphic&gt;&lt;a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"&gt;&lt;pic:pic&gt;&lt;pic:nvPicPr&gt;&lt;pic:cNvPr id=\"0\" name=\"Scan $id\"/&gt;&lt;pic:cNvPicPr/&gt;&lt;/pic:nvPicPr&gt;&lt;pic:blipFill&gt;&lt;a:blip r:embed=\"rId$id\"/&gt;&lt;a:stretch&gt;&lt;a:fillRect/&gt;&lt;/a:stretch&gt;&lt;/pic:blipFill&gt;&lt;pic:spPr&gt;&lt;a:xfrm&gt;&lt;a:off x=\"0\" y=\"0\"/&gt;&lt;a:ext cx=\"$cx\" cy=\"$cy\"/&gt;&lt;/a:xfrm&gt;&lt;a:prstGeom prst=\"rect\"&gt;&lt;a:avLst/&gt;&lt;/a:prstGeom&gt;&lt;/pic:spPr&gt;&lt;/pic:pic&gt;&lt;/a:graphicData&gt;&lt;/a:graphic&gt;&lt;/wp:inline&gt;&lt;/w:drawing&gt;&lt;/w:r&gt;&lt;/w:p&gt;"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$"&lt;w:sectPr&gt;&lt;w:pgSz w:w=\"11906\" w:h=\"16838\"/&gt;&lt;w:pgMar w:top=\"720\" w:right=\"720\" w:bottom=\"720\" w:left=\"720\"/&gt;&lt;/w:sectPr&gt;&lt;/w:body&gt;&lt;/w:document&gt;"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$properties = "&lt;w:pBdr&gt;&lt;w:bottom w:val=\"single\" w:sz=\"6\" w:space=\"1\" w:color=\"999999\"/&gt;&lt;/w:pBdr&gt;"</ID>
+    <ID>MaxLineLength:ScanExporter.kt:ScanExporter$properties = "&lt;w:pBdr&gt;&lt;w:left w:val=\"single\" w:sz=\"12\" w:space=\"6\" w:color=\"888888\"/&gt;&lt;/w:pBdr&gt;"</ID>
+    <ID>MaximumLineLength:DesignViewModel.kt:DesignViewModel$ </ID>
+    <ID>MaximumLineLength:NoSearchResult.kt: </ID>
+    <ID>MaximumLineLength:ScanExporter.kt:ScanExporter$ </ID>
+    <ID>NestedBlockDepth:DbPostProcessor.kt:DbPostProcessor$fun extract: List&lt;Quad&gt;</ID>
+    <ID>NestedBlockDepth:MarkdownParser.kt:MarkdownParser$fun parse: List&lt;MdBlock&gt;</ID>
+    <ID>NestedBlockDepth:PaddleModelStore.kt:PaddleModelStore$private fun downloadVerified</ID>
+    <ID>NestedBlockDepth:PayloadFactory.kt:PayloadFactory$private fun loadFileBytes: ByteArray?</ID>
+    <ID>NestedBlockDepth:SignatureExtractor.kt:SignatureExtractor$private fun buildMatte: Bitmap</ID>
+    <ID>NestedBlockDepth:SignatureExtractor.kt:SignatureExtractor$private fun despeckle</ID>
+    <ID>NestedBlockDepth:TableDecoder.kt:TableDecoder$fun decode: TableStructure</ID>
+    <ID>RethrowCaughtException:BackendClient.kt:BackendClient$throw e</ID>
+    <ID>ReturnCount:BackendExecutor.kt:BackendExecutor$suspend fun &lt;T&gt; run: AiOutcome&lt;T&gt;</ID>
+    <ID>ReturnCount:ConnectionDiagnosis.kt:ConnectionDiagnosis$fun fromSuccessBody: ConnectionFailure?</ID>
+    <ID>ReturnCount:ConnectionDiagnosis.kt:ConnectionDiagnosis$fun validate: ConnectionFailure?</ID>
+    <ID>ReturnCount:CustomScanner.kt:CustomScanner$private suspend fun complete: CustomScanResult</ID>
+    <ID>ReturnCount:EndpointUrl.kt:EndpointUrl$fun normalize: String?</ID>
+    <ID>ReturnCount:GridReorder.kt:GridReorderState$fun onDrag</ID>
+    <ID>ReturnCount:ImageOps.kt:ImageOps$private fun axisAlignedCrop: Bitmap?</ID>
+    <ID>ReturnCount:MarkdownParser.kt:MarkdownParser$fun unwrapAddedFence: String</ID>
+    <ID>ReturnCount:PageRange.kt:PageRange$fun parse: List&lt;Int&gt;?</ID>
+    <ID>ReturnCount:PdfEditorEngine.kt:PdfEditorEngine$private suspend fun applyMarkings: File?</ID>
+    <ID>ReturnCount:ScanExporter.kt:ScanExporter$private fun saveOneToGallery: Boolean</ID>
+    <ID>ThrowsCount:BackendClient.kt:BackendClient$private suspend fun stream: String</ID>
+    <ID>ThrowsCount:PayloadFactory.kt:PayloadFactory$fun create: Payload</ID>
+    <ID>ThrowsCount:ScanExporter.kt:ScanExporter$private fun exportToDownloads: Uri</ID>
+    <ID>TooGenericExceptionCaught:InterceptorTokens.kt:e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:MarkdownPdf.kt:MarkdownPdf$t: Throwable</ID>
+    <ID>TooGenericExceptionCaught:PaddleOcrService.kt:PaddleOcrService$e: Throwable</ID>
+    <ID>TooGenericExceptionCaught:ScanExporter.kt:ScanExporter$t: Throwable</ID>
+    <ID>TooManyFunctions:ActionExecutor.kt:ActionExecutor</ID>
+    <ID>TooManyFunctions:AiScanViewModel.kt:AiScanViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:BarcodeContentParser.kt:BarcodeContentParser</ID>
+    <ID>TooManyFunctions:DocToolsViewModel.kt:DocToolsViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:DocumentScanViewModel.kt:DocumentScanViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:DocumentStructure.kt:DocumentStructure</ID>
+    <ID>TooManyFunctions:GenerativeAiService.kt:GenerativeAiService</ID>
+    <ID>TooManyFunctions:ImageOps.kt:ImageOps</ID>
+    <ID>TooManyFunctions:MarkdownParser.kt:MarkdownParser</ID>
+    <ID>TooManyFunctions:MarkdownPdf.kt:MarkdownPdf</ID>
+    <ID>TooManyFunctions:PaddleModelStore.kt:PaddleModelStore</ID>
+    <ID>TooManyFunctions:PaddleOcrEngine.kt:PaddleOcrEngine</ID>
+    <ID>TooManyFunctions:PageEditorViewModel.kt:PageEditorViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:PageTextSnapshot.kt:PageTextSnapshot</ID>
+    <ID>TooManyFunctions:PdfEditorSession.kt:PdfEditorSession</ID>
+    <ID>TooManyFunctions:PdfStudioViewModel.kt:PdfStudioViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:QpdfEngine.kt:QpdfEngine</ID>
+    <ID>TooManyFunctions:ScanExporter.kt:ScanExporter</ID>
+    <ID>TooManyFunctions:SettingsDataStore.kt:SettingsDataStore</ID>
+    <ID>TopLevelPropertyNaming:ColorSchemes.kt:private const val HarmonizeFraction = 0.1f</ID>
+    <ID>TopLevelPropertyNaming:ThemeMotion.kt:const val ThemeSwitchDurationMillis = 220</ID>
+  </CurrentIssues>
+</SmellBaseline>

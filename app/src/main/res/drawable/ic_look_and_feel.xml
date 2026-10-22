@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Three stacked colour swatches, graded by alpha so a single tint still reads as a palette. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillAlpha="0.45"
+        android:fillColor="#000000"
+        android:pathData="M5.66,9.78A5.6,5.6 0,1 0,12.93 14.23A6.7,6.7 0,0 1,5.66 9.78z" />
+    <path
+        android:fillAlpha="0.7"
+        android:fillColor="#000000"
+        android:pathData="M18.34,9.78A5.6,5.6 0,1 1,12.74 19.15A6.7,6.7 0,0 0,14.01 13.99A6.7,6.7 0,0 0,18.34 9.78z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M12,2a5.6,5.6 0,1 1,0 11.2a5.6,5.6 0,1 1,0 -11.2z" />
+</vector>

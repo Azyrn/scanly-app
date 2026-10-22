@@ -1,0 +1,12 @@
+{
+  "licenses": [
+    {
+      "key": "fixture-key",
+      "tier": "pro",
+      "status": "active",
+      "grantsAccess": true,
+      "currentPeriodEnd": null
+    }
+  ],
+  "emailUnverified": false
+}

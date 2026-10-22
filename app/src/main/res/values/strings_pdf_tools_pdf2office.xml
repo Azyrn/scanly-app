@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">Text, headings, lists and tables become editable in Word. Scanned pages are added as pictures.</string>
+    <string name="pdf2office_word_action">Convert to Word</string>
+    <string name="pdf2office_powerpoint_body">Each page becomes a slide, with its text in editable boxes where it was on the page. Scanned pages are added as pictures.</string>
+    <string name="pdf2office_powerpoint_action">Convert to PowerPoint</string>
+    <string name="pdf2office_excel_body">Tables become rows and cells, one sheet per page that has them. Numbers stay numbers, so you can sum them.</string>
+    <string name="pdf2office_excel_action">Convert to Excel</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">Layout was simplified: text, headings, lists and tables are editable, but fonts, columns, drawings and pictures were not carried over.</string>
+    <string name="pdf2office_simplified_powerpoint">Layout was simplified: text is editable where it was on the page, but fonts, drawings and pictures were not carried over.</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">%d scanned page was added as an image.</item>
+        <item quantity="other">%d scanned pages were added as images.</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">%d very dense page was converted as plain lines.</item>
+        <item quantity="other">%d very dense pages were converted as plain lines.</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">%d page couldn\'t be read and was left out.</item>
+        <item quantity="other">%d pages couldn\'t be read and were left out.</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">%d scanned page has no text and was skipped.</item>
+        <item quantity="other">%d scanned pages have no text and were skipped.</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">No tables were found; text was placed one line per row.</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">Page %1$d</string>
+    <string name="pdf2office_excel_sheet_text">Text</string>
+</resources>

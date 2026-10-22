@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
+<resources>
+    <string name="pdf_tool_ppt2pdf_action">Convert to PDF</string>
+    <string name="pdf_tool_ppt2pdf_shapes">Some shapes were simplified.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">Some fonts were replaced with similar ones.</string>
+    <plurals name="pdf_tool_ppt2pdf_charts">
+        <item quantity="one">%d chart was left out.</item>
+        <item quantity="other">%d charts were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_diagrams">
+        <item quantity="one">%d SmartArt graphic was left out.</item>
+        <item quantity="other">%d SmartArt graphics were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_objects">
+        <item quantity="one">%d embedded object was left out.</item>
+        <item quantity="other">%d embedded objects were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_media">
+        <item quantity="one">%d video or sound can\'t play in a PDF; only its preview picture is shown.</item>
+        <item quantity="other">%d videos or sounds can\'t play in a PDF; only their preview pictures are shown.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_images">
+        <item quantity="one">%d picture couldn\'t be shown.</item>
+        <item quantity="other">%d pictures couldn\'t be shown.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_hidden">
+        <item quantity="one">%d hidden slide was skipped.</item>
+        <item quantity="other">%d hidden slides were skipped.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_unreadable">
+        <item quantity="one">%d slide couldn\'t be read and was left out.</item>
+        <item quantity="other">%d slides couldn\'t be read and were left out.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_truncated">
+        <item quantity="one">Only the first %d slide was converted.</item>
+        <item quantity="other">Only the first %d slides were converted.</item>
+    </plurals>
+</resources>

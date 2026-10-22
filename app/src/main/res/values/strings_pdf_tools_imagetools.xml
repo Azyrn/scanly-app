@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d file couldn\'t be read and was skipped</item>
+        <item quantity="other">%d files couldn\'t be read and were skipped</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d image was already as small as it gets, so it\'s unchanged</item>
+        <item quantity="other">%d images were already as small as they get, so they\'re unchanged</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">Recommended</string>
+    <string name="pdf_tool_img_compress_recommended_body">Much smaller, still looks the same.</string>
+    <string name="pdf_tool_img_compress_strong">Strong</string>
+    <string name="pdf_tool_img_compress_strong_body">Smallest files. Fine details may soften.</string>
+    <string name="pdf_tool_img_compress_light">Light</string>
+    <string name="pdf_tool_img_compress_light_body">Best quality, a smaller saving.</string>
+    <string name="pdf_tool_img_png_to_jpg">Convert PNG to JPG for a smaller file</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNG can only lose its hidden details. Transparent areas turn white.</string>
+    <string name="pdf_tool_img_compress_action">Compress images</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">Each image becomes a JPG. Transparent areas turn white; a GIF keeps its first frame.</string>
+    <string name="pdf_tool_img_to_jpg_action">Convert to JPG</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Exact pixels, larger files.</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">Looks the same, usually smaller than the JPG.</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 colors. Good for graphics, photos may look banded.</string>
+    <string name="pdf_tool_img_from_jpg_action">Convert images</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">By percentage</string>
+    <string name="pdf_tool_img_resize_by_size">By size</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">Max width (px)</string>
+    <string name="pdf_tool_img_resize_height">Max height (px)</string>
+    <string name="pdf_tool_img_resize_size_hint">Enter a width, a height, or both.</string>
+    <string name="pdf_tool_img_resize_size_invalid">Use a number from 1 to %d.</string>
+    <string name="pdf_tool_img_resize_keep_aspect">Keep proportions</string>
+    <string name="pdf_tool_img_resize_no_enlarge">Don\'t make images bigger</string>
+    <string name="pdf_tool_img_resize_action">Resize images</string>
+</resources>

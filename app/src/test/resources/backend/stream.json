@@ -1,0 +1,12 @@
+{
+  "id": "fixture",
+  "choices": [
+    {
+      "index": 0,
+      "delta": {
+        "content": "Bonjour"
+      },
+      "finish_reason": null
+    }
+  ]
+}

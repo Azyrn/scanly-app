@@ -1,0 +1,44 @@
+Scanly
+Copyright 2026 Azyrn — https://github.com/Azyrn/scanly-app
+
+This product includes software developed by Azyrn.
+Redistributions of this software or derivative works must retain this
+notice in accordance with Section 4(d) of the Apache License, Version 2.0.
+
+--------------------------------------------------------------------------
+Third-party components bundled in the PDF editor
+--------------------------------------------------------------------------
+
+qpdf — Apache License 2.0
+  Copyright Jay Berkenbilt
+  https://github.com/qpdf/qpdf
+  Built from source into libscanlypdf.so.
+
+libjpeg-turbo — IJG / BSD-3-Clause / zlib
+  Copyright The libjpeg-turbo Project and contributors
+  https://github.com/libjpeg-turbo/libjpeg-turbo
+  Static dependency of qpdf.
+
+PDFium, via PdfiumAndroidKt — Apache License 2.0 / BSD-3-Clause
+  Copyright John Gray; PDFium copyright The Chromium Authors
+  https://github.com/johngray1965/PdfiumAndroidKt
+
+Bouncy Castle — MIT-style Bouncy Castle Licence
+  Copyright The Legion of the Bouncy Castle Inc.
+  https://www.bouncycastle.org
+
+Fonts in app/src/main/assets/fonts, all under the SIL Open Font License 1.1.
+Full licence texts ship alongside them.
+
+  Liberation Sans, Liberation Serif, Liberation Mono
+    Copyright The Liberation Fonts contributors; Copyright Red Hat, Inc.
+    https://github.com/liberationfonts/liberation-fonts
+
+  Carlito
+    Copyright The Carlito Project Authors
+    Reserved Font Name "Carlito"
+    https://github.com/googlefonts/carlito
+
+  Caladea
+    Copyright The Caladea Project Authors (Huerta Tipografica)
+    https://github.com/huertatipografica/Caladea

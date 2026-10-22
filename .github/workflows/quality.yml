@@ -1,0 +1,141 @@
+name: Quality Gate
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detekt:
+    name: Static Analysis (Detekt)
+    runs-on: ubuntu-latest
+    # The repo's default token is read-only, and a push event — unlike a pull_request one — is
+    # not granted this implicitly, so the SARIF upload was failing main on every merge while
+    # Detekt itself passed.
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      # 2.x: supports the current Kotlin; the formatting plugin is now detekt-rules-ktlint-wrapper.
+      DETEKT_VERSION: 2.0.0-alpha.6
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Download Detekt
+        run: |
+          BASE="https://github.com/detekt/detekt/releases/download/v${DETEKT_VERSION}"
+          curl -sSfL -o detekt-cli.jar "$BASE/detekt-cli-${DETEKT_VERSION}-all.jar"
+          curl -sSfL -o detekt-ktlint.jar "$BASE/detekt-rules-ktlint-wrapper-${DETEKT_VERSION}.jar"
+
+      - name: Run Detekt
+        run: |
+          java -jar detekt-cli.jar \
+            --config detekt.yml \
+            --build-upon-default-config \
+            --plugins detekt-ktlint.jar \
+            --baseline detekt-baseline.xml \
+            --input app/src/main/java \
+            --report sarif:results.sarif
+
+      # Code scanning needs GitHub Advanced Security, which this private repo does not have, so
+      # the upload answers "Resource not accessible by integration" and failed the job even when
+      # Detekt itself passed. Detekt's own exit code is what gates.
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v4
+        if: always()
+        continue-on-error: true
+        with:
+          sarif_file: results.sarif
+
+  lint:
+    name: Android Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      
+      - name: Run Android Lint
+        run: ./gradlew lint --no-daemon
+      
+      - name: Upload Lint Report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-*.html
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --no-daemon
+      
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: test-results
+          path: app/build/reports/tests/
+
+  build:
+    name: Build Debug APK
+    runs-on: ubuntu-latest
+    needs: [detekt, lint, unit-tests]
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Create local.properties
+        run: |
+          echo "GEMINI_API_KEY=" >> local.properties
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon
+      
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk

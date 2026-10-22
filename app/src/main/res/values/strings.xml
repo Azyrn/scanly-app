@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">Build Documents with AI</string>
+    <string name="ai_build_documents_subtitle">Describe it or attach a file: invoices, CVs, reports, slides</string>
+    <string name="design_paywall_fallback">Building documents with AI is part of Pro.</string>
+    <string name="custom_provider_build_documents_note">Building documents with AI is split: your model writes the document, Scanly typesets it. A stronger model gives you a better design, and Scanly charges one credit for the typesetting instead of the usual cost.</string>
+    <string name="plan_feature_build_documents">Build documents with AI — layouts, tables and styling</string>
+    <string name="custom_provider_on_your_endpoint_note">Scanning, extracting data and translating all go straight from this device to your provider. They don\'t use your Scanly credits, and they\'re billed by your provider.</string>
+</resources>

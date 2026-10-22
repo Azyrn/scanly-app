@@ -1,0 +1,201 @@
+[
+  {
+    "endpoint": "ocr",
+    "case": "success",
+    "status": 200,
+    "body": {
+      "pages": [
+        {
+          "index": 0,
+          "markdown": "Hello 文😀",
+          "images": {},
+          "links": [],
+          "unclear": []
+        }
+      ],
+      "extraction": null,
+      "usage": {
+        "pages": 1
+      }
+    }
+  },
+  {
+    "endpoint": "ocr",
+    "case": "replay",
+    "status": 200,
+    "body": {
+      "pages": [
+        {
+          "index": 0,
+          "markdown": "Hello 文😀",
+          "images": {},
+          "links": [],
+          "unclear": []
+        }
+      ],
+      "extraction": null,
+      "usage": {
+        "pages": 1
+      }
+    }
+  },
+  {
+    "endpoint": "ocr",
+    "case": "too_large",
+    "status": 413,
+    "body": {
+      "error": {
+        "code": "doc_too_large",
+        "message": "This upload exceeds the size limit."
+      }
+    }
+  },
+  {
+    "endpoint": "ocr",
+    "case": "rate_limited",
+    "status": 429,
+    "body": {
+      "error": {
+        "code": "rate_limited",
+        "message": "Too many scans in a row. Wait a moment and try again.",
+        "retryAfterSeconds": 60
+      }
+    }
+  },
+  {
+    "endpoint": "ocr",
+    "case": "provider_failure",
+    "status": 502,
+    "body": {
+      "error": {
+        "code": "provider_error",
+        "message": "AI scanning failed. Try again."
+      }
+    }
+  },
+  {
+    "endpoint": "ocr",
+    "case": "provider_auth",
+    "status": 503,
+    "body": {
+      "error": {
+        "code": "ocr_unavailable",
+        "message": "AI scanning is unavailable right now. Nothing was charged."
+      }
+    }
+  },
+  {
+    "endpoint": "translate",
+    "case": "success",
+    "status": 200,
+    "body": "data: {\"choices\":[{\"delta\":{\"content\":\"Hello 文😀\"}}]}\n\ndata: [DONE]\n\n"
+  },
+  {
+    "endpoint": "translate",
+    "case": "replay",
+    "status": 200,
+    "body": "data: {\"choices\":[{\"delta\":{\"content\":\"Hello 文😀\"}}]}\n\ndata: [DONE]\n\n"
+  },
+  {
+    "endpoint": "translate",
+    "case": "too_large",
+    "status": 413,
+    "body": {
+      "error": {
+        "code": "doc_too_large",
+        "message": "This upload exceeds the size limit."
+      }
+    }
+  },
+  {
+    "endpoint": "translate",
+    "case": "rate_limited",
+    "status": 429,
+    "body": {
+      "error": {
+        "code": "rate_limited",
+        "message": "Too many scans in a row. Wait a moment and try again.",
+        "retryAfterSeconds": 60
+      }
+    }
+  },
+  {
+    "endpoint": "translate",
+    "case": "provider_failure",
+    "status": 502,
+    "body": {
+      "error": {
+        "code": "provider_error",
+        "message": "AI scanning failed. Try again."
+      }
+    }
+  },
+  {
+    "endpoint": "translate",
+    "case": "provider_auth",
+    "status": 503,
+    "body": {
+      "error": {
+        "code": "ocr_unavailable",
+        "message": "AI scanning is unavailable right now. Nothing was charged."
+      }
+    }
+  },
+  {
+    "endpoint": "compose",
+    "case": "success",
+    "status": 200,
+    "body": "data: {\"choices\":[{\"delta\":{\"content\":\"Hello 文😀\"}}]}\n\ndata: [DONE]\n\n"
+  },
+  {
+    "endpoint": "compose",
+    "case": "replay",
+    "status": 200,
+    "body": "data: {\"choices\":[{\"delta\":{\"content\":\"Hello 文😀\"}}]}\n\ndata: [DONE]\n\n"
+  },
+  {
+    "endpoint": "compose",
+    "case": "too_large",
+    "status": 413,
+    "body": {
+      "error": {
+        "code": "doc_too_large",
+        "message": "This upload exceeds the size limit."
+      }
+    }
+  },
+  {
+    "endpoint": "compose",
+    "case": "rate_limited",
+    "status": 429,
+    "body": {
+      "error": {
+        "code": "rate_limited",
+        "message": "Too many scans in a row. Wait a moment and try again.",
+        "retryAfterSeconds": 60
+      }
+    }
+  },
+  {
+    "endpoint": "compose",
+    "case": "provider_failure",
+    "status": 502,
+    "body": {
+      "error": {
+        "code": "provider_error",
+        "message": "AI scanning failed. Try again."
+      }
+    }
+  },
+  {
+    "endpoint": "compose",
+    "case": "provider_auth",
+    "status": 503,
+    "body": {
+      "error": {
+        "code": "ocr_unavailable",
+        "message": "AI scanning is unavailable right now. Nothing was charged."
+      }
+    }
+  }
+]
