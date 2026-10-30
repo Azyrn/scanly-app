@@ -3,6 +3,7 @@ package com.skeler.scanely.core.ai
 import android.os.SystemClock
 import android.util.Log
 import com.skeler.scanely.core.network.NetworkObserver
+import com.skeler.scanely.testing.EnglishStrings
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -16,7 +17,7 @@ class BackendExecutorTest {
                 val network = mock(NetworkObserver::class.java)
                 `when`(network.isCurrentlyOnline()).thenReturn(true)
                 var calls = 0
-                val outcome = BackendExecutor(network).run(emit = {}, retrySafe = false) {
+                val outcome = BackendExecutor(EnglishStrings.context(), network).run(emit = {}, retrySafe = false) {
                     calls++
                     throw IOException("response lost after billing")
                 }
@@ -32,7 +33,7 @@ class BackendExecutorTest {
                 val network = mock(NetworkObserver::class.java)
                 `when`(network.isCurrentlyOnline()).thenReturn(true)
                 var calls = 0
-                val outcome = BackendExecutor(network).run(emit = {}) {
+                val outcome = BackendExecutor(EnglishStrings.context(), network).run(emit = {}) {
                     if (++calls == 1) throw IOException("offline briefly")
                     "result"
                 }

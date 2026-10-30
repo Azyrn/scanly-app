@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_repair_action">रिपेयर करें</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">%d पेज वापस मिला। मूल फ़ाइल हटाने से पहले उसे जाँच लें।</item>
+        <item quantity="other">%d पेज वापस मिले। मूल फ़ाइल हटाने से पहले उन्हें जाँच लें।</item>
+    </plurals>
+    <string name="pdf_tool_extract_text_separators">हर पेज की शुरुआत चिह्नित करें</string>
+    <string name="pdf_tool_extract_text_separators_body">हर पेज के टेक्स्ट से पहले \"पेज 3\" जैसी एक लाइन जोड़ता है।</string>
+    <string name="pdf_tool_extract_text_page_separator">----- पेज %d -----</string>
+    <string name="pdf_tool_extract_text_action">निकालें</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d पेज पर चुनने लायक टेक्स्ट नहीं है (स्कैन)। होम स्क्रीन के PDF से टेक्स्ट टूल से इसे पढ़ें।</item>
+        <item quantity="other">%d पेजों पर चुनने लायक टेक्स्ट नहीं है (स्कैन)। होम स्क्रीन के PDF से टेक्स्ट टूल से उन्हें पढ़ें।</item>
+    </plurals>
+</resources>

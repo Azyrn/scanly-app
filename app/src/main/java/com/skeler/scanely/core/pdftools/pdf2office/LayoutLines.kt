@@ -29,9 +29,13 @@ internal object LayoutLines {
                 height = word.box.height
             }
         }
-        return groups.map { group -> buildLine(group.sortedBy { it.box.left }) }
+        return groups.map { group -> buildLine(inReadingOrder(group)) }
             .sortedWith(compareBy<LayoutLine> { it.box.top }.thenBy { it.box.left })
     }
+
+    /** Left to right, or right to left for a line that reads that way (Arabic, Hebrew). */
+    private fun inReadingOrder(words: List<LayoutWord>): List<LayoutWord> =
+        if (TextDirection.isRtl(words)) words.sortedByDescending { it.box.right } else words.sortedBy { it.box.left }
 
     private fun buildLine(words: List<LayoutWord>): LayoutLine {
         val box = words.map { it.box }.reduce { a, b -> a.union(b) }
@@ -39,8 +43,7 @@ internal object LayoutLines {
         val cells = mutableListOf<LayoutCell>()
         var start = 0
         for (index in 1..words.size) {
-            val split = index == words.size ||
-                words[index].box.left - words[index - 1].box.right > size * CELL_GAP_EM
+            val split = index == words.size || gapBetween(words[index - 1], words[index]) > size * CELL_GAP_EM
             if (split) {
                 val run = words.subList(start, index)
                 cells += LayoutCell(
@@ -53,6 +56,10 @@ internal object LayoutLines {
         }
         return LayoutLine(words, box, size, cells)
     }
+
+    /** Space between neighbours in reading order, whichever side the next one is on. */
+    private fun gapBetween(previous: LayoutWord, next: LayoutWord): Float =
+        max(next.box.left - previous.box.right, previous.box.left - next.box.right)
 
     /** The size most of the page's characters are set in; headings are measured against it. */
     fun bodySize(lines: List<LayoutLine>): Float =

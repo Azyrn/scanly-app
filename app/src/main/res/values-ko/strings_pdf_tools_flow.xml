@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_flow_add_files">파일 추가</string>
+    <string name="pdf_tool_flow_remove">%1$s 삭제</string>
+    <string name="pdf_tool_flow_move_up">%1$s 위로 이동</string>
+    <string name="pdf_tool_flow_move_down">%1$s 아래로 이동</string>
+    <plurals name="pdf_tool_flow_min_inputs">
+        <item quantity="one">계속하려면 파일을 %d개 이상 추가하세요.</item>
+        <item quantity="other">계속하려면 파일을 %d개 이상 추가하세요.</item>
+    </plurals>
+    <string name="pdf_tool_flow_skipped">열 수 없는 파일은 제외됐어요.</string>
+    <plurals name="pdf_tool_flow_working_files">
+        <item quantity="one">파일 %d개 처리 중…</item>
+        <item quantity="other">파일 %d개 처리 중…</item>
+    </plurals>
+    <string name="pdf_tool_flow_open_output">%1$s 열기</string>
+    <string name="pdf_tool_flow_share_all">모두 공유</string>
+</resources>

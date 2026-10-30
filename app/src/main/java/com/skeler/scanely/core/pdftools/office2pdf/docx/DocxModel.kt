@@ -40,7 +40,10 @@ internal data object DocxPageBreak : DocxBlock
 internal data class DocxTable(
     /** tblGrid widths in twips; may be empty or disagree with the rows, which the layout tolerates. */
     val columns: List<Int>,
-    val rows: List<DocxRow>
+    val rows: List<DocxRow>,
+    /** tblCellMar left and right in twips; null where the table doesn't set them (Word: 108). */
+    val cellMarginLeft: Int? = null,
+    val cellMarginRight: Int? = null
 ) : DocxBlock
 
 internal data class DocxRow(val cells: List<DocxCell>, val heightTwips: Int, val exactHeight: Boolean)

@@ -10,8 +10,10 @@ object RtlText {
     // A blank run wider than this many times the line's own letter pitch is a word gap, not the
     // space between two joined letters. Arabic is cursive: letters within a word sit a pitch apart,
     // words a multiple of it — the inverse of Latin, where the intra-word gaps are the wide ones,
-    // which is why this runs only between two Arabic-script neighbours.
-    private const val WORD_GAP_FACTOR = 2.3f
+    // which is why this runs only between two Arabic-script neighbours. 2.3 split words inside typed
+    // Arabic pages ("عر ض", "مف صل"): 3.0 measured +0.02-0.03 word precision on the Arabic scans, recall
+    // unchanged, and the camera paragraph sample unchanged (host sweep, scripts/fidelity/ocr_compare.py).
+    private const val WORD_GAP_FACTOR = 3.0f
 
     private const val ARABIC_BLOCK_START = 0x0600
     private const val ARABIC_BLOCK_END = 0x06FF

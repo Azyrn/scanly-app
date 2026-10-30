@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.network
 
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.serialization.json.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -35,7 +36,7 @@ class SharedScanContractTest {
                 // Busy (429) and failed (502) are retried; a refused provider key (503) is final.
                 assertEquals(
                     status == 429 || status == 502,
-                    com.skeler.scanely.core.ai.backendFailure(status, error) is com.skeler.scanely.core.ai.TransientAiException
+                    com.skeler.scanely.core.ai.backendFailure(EnglishStrings.context(), status, error) is com.skeler.scanely.core.ai.TransientAiException
                 )
                 assertNull(error.requiredTier)
                 assertEquals(if (status == 429) 60 else null, error.retryAfterSeconds)

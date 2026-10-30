@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">الإعدادات</string>
+    <string name="set_section_account">الحساب</string>
+    <string name="set_sign_in">تسجيل الدخول</string>
+    <string name="set_sign_in_subtitle">مطلوب للمسح بالذكاء الاصطناعي</string>
+    <string name="set_signed_in">تم تسجيل الدخول</string>
+    <string name="set_pro_key_title">مفتاح Scanly Pro</string>
+    <string name="set_pro_key_active_devices">نشط · %1$d من أصل %2$d أجهزة</string>
+    <string name="set_pro_key_active_here">نشط على هذا الجهاز</string>
+    <string name="set_delete_account_title">حذف الحساب</string>
+    <string name="set_delete_account_subtitle">محو حسابك وبياناتك نهائيًا</string>
+    <string name="set_section_customize">تخصيص</string>
+    <string name="set_look_and_feel_title">المظهر</string>
+    <string name="set_look_and_feel_subtitle">لوحة الألوان، والوضع الداكن، والأسود الخالص</string>
+    <string name="set_text_recognition_title">التعرف على النص</string>
+    <string name="set_text_recognition_subtitle">%1$s · الكتابات والمعالجة المسبقة</string>
+    <string name="set_barcode_engine_title">محرك مسح الباركود</string>
+    <string name="set_custom_endpoint_title">نقطة اتصال مخصصة</string>
+    <string name="set_custom_endpoint_subtitle">اربط مزوّد الذكاء الاصطناعي الخاص بك · Pro</string>
+    <string name="set_section_about">حول</string>
+    <string name="set_privacy_options_title">خيارات الخصوصية</string>
+    <string name="set_privacy_options_subtitle">إدارة خيارات الموافقة على الإعلانات</string>
+    <string name="set_rate_title">قيّم Scanly</string>
+    <string name="set_rate_subtitle">أخبر الآخرين برأيك على Google Play</string>
+    <string name="set_privacy_policy_title">سياسة الخصوصية</string>
+    <string name="set_privacy_policy_subtitle">ما الذي تحتفظ به Scanly ومن يعالجه</string>
+    <string name="set_terms_title">شروط الخدمة</string>
+    <string name="set_developer_subtitle">\@Azyrn · المطوّر</string>
+    <string name="set_telegram_subtitle">الإبلاغ عن الأخطاء أو طلب الميزات</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">هل تريد إزالة مفتاحك؟</string>
+    <string name="set_remove_key_message">سيعود هذا الجهاز إلى الخطة المجانية وتُحرَّر مساحته، لتتمكن من استخدام المفتاح على جهاز آخر. ويبقى المفتاح نفسه صالحًا.</string>
+    <string name="set_remove_key_confirm">إزالة</string>
+    <string name="set_delete_account_dialog_title">هل تريد حذف الحساب؟</string>
+    <string name="set_delete_account_dialog_message">سيؤدي هذا إلى محو حسابك في Scanly وبيانات تسجيل الدخول وسجلات الاستخدام على خوادمنا نهائيًا. ولا يمكن التراجع عن ذلك.\n\nالمسوحات المحفوظة على هذا الجهاز لن تتأثر، ويجب إلغاء اشتراك Pro النشط بشكل منفصل من خلال Paddle.</string>
+    <string name="set_sign_out_dialog_title">هل تريد تسجيل الخروج؟</string>
+    <string name="set_sign_out_dialog_message">ستتوقف عمليات المسح بالذكاء الاصطناعي حتى تسجّل الدخول مرة أخرى. يبقى سجلّ مسحك والتعرف على النص دون اتصال على هذا الجهاز.</string>
+    <string name="set_sign_out">تسجيل الخروج</string>
+    <string name="set_account_options">خيارات الحساب</string>
+    <string name="set_account_id_label">معرّف الحساب</string>
+    <string name="set_account_id_copied">تم نسخ معرّف الحساب</string>
+    <string name="set_barcode_mlkit_description">ماسح Google المدمج على الجهاز مع تكبير تلقائي</string>
+    <string name="set_barcode_zxing_description">مفكّك ترميز مفتوح المصدر، يعمل بدون GMS</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">ألوان الخلفية</string>
+    <string name="set_palette_subtitle">اختر لوحة لإعادة تلوين التطبيق بالكامل</string>
+    <string name="set_section_color_palette">لوحة الألوان</string>
+    <string name="set_palette_dynamic">ديناميكية</string>
+    <string name="set_section_personalize">تخصيص</string>
+    <string name="set_dark_theme">الوضع الداكن</string>
+    <string name="set_on">تشغيل</string>
+    <string name="set_off">إيقاف</string>
+    <string name="set_pure_black_title">أسود خالص M3</string>
+    <string name="set_pure_black_subtitle">يوفّر البطارية على شاشات OLED</string>
+    <string name="set_palette_cerulean_wave">موجة زرقاء</string>
+    <string name="set_palette_lavender_volt">لافندر فولت</string>
+    <string name="set_palette_amethyst_haze">ضباب بنفسجي</string>
+    <string name="set_palette_emerald_grove">بستان زمردي</string>
+    <string name="set_palette_sunset_coral">مرجان الغروب</string>
+    <string name="set_palette_rose_blush">وردي ناعم</string>
+    <string name="set_palette_monochrome">أحادي اللون</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">المحرك</string>
+    <string name="set_section_script">الكتابة</string>
+    <string name="set_section_preprocessing">المعالجة المسبقة</string>
+    <string name="set_auto_rotate_title">تدوير الصفحة تلقائيًا</string>
+    <string name="set_auto_rotate_subtitle">يكتشف الصفحات المائلة والمقلوبة</string>
+    <string name="set_fix_flipped_title">إصلاح الأسطر المقلوبة</string>
+    <string name="set_fix_flipped_subtitle">للصفحات التي تجمع أسطرًا مستقيمة وأخرى مقلوبة. غير موثوق في العربية</string>
+    <string name="set_flatten_curved_title">تسوية الصفحات المنحنية</string>
+    <string name="set_downloading_percent">جارٍ التنزيل %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">تصحيح انحناء UVDoc · تنزيل 30 ميغابايت</string>
+    <string name="set_uvdoc_ready_subtitle">تصحيح انحناء UVDoc: أبطأ، ومناسب للكتب والطيات</string>
+    <string name="set_section_document_structure">بنية المستند</string>
+    <string name="set_detect_layout_title">اكتشاف التخطيط</string>
+    <string name="set_detect_layout_subtitle">العناوين والفقرات وترتيب القراءة في عرض Markdown</string>
+    <string name="set_recognize_tables_title">التعرف على الجداول</string>
+    <string name="set_tables_missing_subtitle">جداول SLANet · تنزيل 8 ميغابايت</string>
+    <string name="set_tables_ready_subtitle">يعيد بناء الجداول كشبكات قابلة للتصدير إلى CSV</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d ميغابايت</string>
+    <string name="set_script_delete_description">حذف %1$s</string>
+    <string name="set_script_download_description">تنزيل %1$s</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">ميزة Pro</string>
+    <string name="set_pro_required_message">ربط مزوّد الذكاء الاصطناعي الخاص بك جزء من Scanly Pro. تُظهر الحقول أدناه ما ستقوم بإعداده بالضبط، وتُفتح بمجرد أن تكون على Pro. رقِّ اشتراكك، أو استرد مفتاحًا تملكه بالفعل، من قسم الحساب في الإعدادات.</string>
+    <string name="set_custom_intro_body">اربط أي مزوّد للذكاء الاصطناعي. اختر البروتوكول الذي يستخدمه، والصق رابط نقطة الاتصال واسم النموذج ومفتاح API، ثم اختبر الاتصال.</string>
+    <string name="set_custom_intro_hosts">معظم المضيفين متوافقون مع OpenAI: Groq وOpenAI وOpenRouter وNVIDIA NIM وTogether وFireworks. ولكل من Claude وGemini بروتوكولاتهما الخاصة، ويعمل الخادم المستضاف ذاتيًا على شبكتك عبر http العادي.</string>
+    <string name="set_custom_intro_pdf_pages">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</string>
+    <string name="set_section_protocol">البروتوكول</string>
+    <string name="set_section_endpoint">نقطة الاتصال</string>
+    <string name="set_endpoint_url_label">رابط نقطة الاتصال</string>
+    <string name="set_endpoint_hint_cloudflare">يضع Cloudflare Workers AI معرّف حسابك في المسار: الصق الرابط الكامل بما فيه المعرّف.</string>
+    <string name="set_endpoint_hint_openai">ينتهي عادةً بـ /v1/chat/completions.</string>
+    <string name="set_endpoint_hint_anthropic">ينتهي عادةً بـ /v1/messages.</string>
+    <string name="set_endpoint_hint_gemini">يكفي اسم المضيف، فالنموذج والمسار يُضافان تلقائيًا.</string>
+    <string name="set_model_label">النموذج</string>
+    <string name="set_model_hint">يُكتب تمامًا كما يعرضه مزوّدك.</string>
+    <string name="set_api_key_label">مفتاح API</string>
+    <string name="set_api_key_hint">يُخزَّن على هذا الجهاز فقط. لا يُرسل أبدًا إلى خوادم Scanly.</string>
+    <string name="set_header_name_label">اسم الترويسة</string>
+    <string name="set_header_name_hint">الترويسة التي تتوقع بوابتك وجود المفتاح فيها.</string>
+    <string name="set_auth_style_label">إرسال المفتاح كـ</string>
+    <string name="set_endpoint_verified">تم التحقق: ردّت نقطة الاتصال بشكل صحيح.</string>
+    <string name="set_endpoint_unverified">لم يتم التحقق: اختبر الاتصال قبل الحفظ.</string>
+    <string name="set_testing">جارٍ الاختبار…</string>
+    <string name="set_test_connection">اختبار الاتصال</string>
+    <string name="set_remove_endpoint">إزالة نقطة الاتصال</string>
+    <string name="set_use_for_ai_title">استخدام لميزات الذكاء الاصطناعي</string>
+    <string name="set_use_for_ai_verified">تستخدم عمليات المسح واستخراج البيانات والترجمة والمسودات والتصاميم نقطة الاتصال الخاصة بك بدلًا من Scanly AI. ويستخدم الصوت إلى نص دائمًا Scanly AI، لأن نقطة اتصال الدردشة لا تقبل الصوت.</string>
+    <string name="set_use_for_ai_unverified">تحقّق من نقطة الاتصال أولًا.</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">أنشئ حسابك</string>
+    <string name="set_auth_welcome_title">مرحبًا بعودتك</string>
+    <string name="set_auth_intro">سجّل الدخول لاستخدام المسح بالذكاء الاصطناعي. يبقى التعرف على النص ومسح الباركود يعملان دون اتصال ودون حساب.</string>
+    <string name="set_auth_email_label">البريد الإلكتروني</string>
+    <string name="set_auth_password_hint">6 أحرف على الأقل</string>
+    <string name="set_auth_forgot_password">نسيت كلمة المرور؟</string>
+    <string name="set_auth_create_account">إنشاء حساب</string>
+    <string name="set_auth_or">أو</string>
+    <string name="set_auth_continue_google">المتابعة باستخدام Google</string>
+    <string name="set_auth_have_account">لديك حساب بالفعل؟</string>
+    <string name="set_auth_no_account">ليس لديك حساب بعد؟</string>
+    <string name="set_auth_create_one">أنشئ حسابًا</string>
+    <string name="set_account_deleted">تم حذف حسابك.</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">السجل</string>
+    <string name="set_history_clear">مسح السجل</string>
+    <string name="set_history_clear_all">مسح الكل</string>
+    <string name="set_history_clear_message">هل أنت متأكد أنك تريد حذف كل السجل؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="set_history_delete_all">حذف الكل</string>
+    <string name="set_history_empty">لا يوجد سجل بعد</string>
+</resources>

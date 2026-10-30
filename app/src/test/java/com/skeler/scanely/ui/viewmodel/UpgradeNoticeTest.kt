@@ -1,6 +1,7 @@
 package com.skeler.scanely.ui.viewmodel
 
 import com.skeler.scanely.core.network.PlanDto
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -31,7 +32,7 @@ class UpgradeNoticeTest {
 
     @Test
     fun `a Pro subscriber is told a Max purchase would be a second subscription`() {
-        val notice = upgradeNotice("pro", plans("pro"))
+        val notice = upgradeNotice(EnglishStrings.context(), "pro", plans("pro"))
 
         assertNotNull(notice)
         assertTrue(notice!!, notice.contains("second subscription"))
@@ -40,7 +41,7 @@ class UpgradeNoticeTest {
 
     @Test
     fun `a Pro subscriber is sent to the in-place upgrade, which the portal cannot do`() {
-        val notice = upgradeNotice("pro", plans("pro"))!!
+        val notice = upgradeNotice(EnglishStrings.context(), "pro", plans("pro"))!!
 
         assertTrue(notice, notice.contains("$SCANLY_SITE/upgrade"))
         assertTrue(notice, notice.contains("same account"))
@@ -48,7 +49,7 @@ class UpgradeNoticeTest {
 
     @Test
     fun `the notice names the site in plain text and never as a link`() {
-        val notice = upgradeNotice("pro", plans("pro"))!!
+        val notice = upgradeNotice(EnglishStrings.context(), "pro", plans("pro"))!!
 
         assertTrue(notice, !notice.contains("http"))
         assertTrue(notice, !notice.contains("/v1/license/portal"))
@@ -56,17 +57,17 @@ class UpgradeNoticeTest {
 
     @Test
     fun `a free user has nothing to double-buy`() {
-        assertNull(upgradeNotice("free", plans("free")))
+        assertNull(upgradeNotice(EnglishStrings.context(), "free", plans("free")))
     }
 
     @Test
     fun `a Max subscriber has no bigger plan to be warned about`() {
-        assertNull(upgradeNotice("max", plans("max")))
+        assertNull(upgradeNotice(EnglishStrings.context(), "max", plans("max")))
     }
 
     /** Checked by size like the paywall's own top-plan check, so a future tier needs no change. */
     @Test
     fun `an unloaded plan list shows no notice rather than a guess`() {
-        assertNull(upgradeNotice("pro", emptyList()))
+        assertNull(upgradeNotice(EnglishStrings.context(), "pro", emptyList()))
     }
 }

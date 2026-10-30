@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
+<resources>
+    <string name="pdf_tool_ppt2pdf_action">تحويل إلى PDF</string>
+    <string name="pdf_tool_ppt2pdf_shapes">تم تبسيط بعض الأشكال.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">تم استبدال بعض الخطوط بخطوط مشابهة.</string>
+    <plurals name="pdf_tool_ppt2pdf_charts">
+        <item quantity="zero">تم استبعاد %d مخطط.</item>
+        <item quantity="one">تم استبعاد %d مخطط.</item>
+        <item quantity="two">تم استبعاد %d مخططين.</item>
+        <item quantity="few">تم استبعاد %d مخططات.</item>
+        <item quantity="many">تم استبعاد %d مخططًا.</item>
+        <item quantity="other">تم استبعاد %d مخطط.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_diagrams">
+        <item quantity="zero">تم استبعاد %d رسم SmartArt.</item>
+        <item quantity="one">تم استبعاد %d رسم SmartArt.</item>
+        <item quantity="two">تم استبعاد %d رسمين SmartArt.</item>
+        <item quantity="few">تم استبعاد %d رسومات SmartArt.</item>
+        <item quantity="many">تم استبعاد %d رسمًا SmartArt.</item>
+        <item quantity="other">تم استبعاد %d رسم SmartArt.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_objects">
+        <item quantity="zero">تم استبعاد %d كائن مضمّن.</item>
+        <item quantity="one">تم استبعاد %d كائن مضمّن.</item>
+        <item quantity="two">تم استبعاد %d كائنين مضمّنين.</item>
+        <item quantity="few">تم استبعاد %d كائنات مضمّنة.</item>
+        <item quantity="many">تم استبعاد %d كائنًا مضمّنًا.</item>
+        <item quantity="other">تم استبعاد %d كائن مضمّن.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_media">
+        <item quantity="zero">لا يمكن تشغيل %d مقطع فيديو أو صوت في ملف PDF، وتُعرض صورة معاينته فقط.</item>
+        <item quantity="one">لا يمكن تشغيل %d مقطع فيديو أو صوت في ملف PDF، وتُعرض صورة معاينته فقط.</item>
+        <item quantity="two">لا يمكن تشغيل %d مقطعين من الفيديو أو الصوت في ملف PDF، وتُعرض صور معاينتهما فقط.</item>
+        <item quantity="few">لا يمكن تشغيل %d مقاطع فيديو أو صوت في ملف PDF، وتُعرض صور معاينتها فقط.</item>
+        <item quantity="many">لا يمكن تشغيل %d مقطعًا من الفيديو أو الصوت في ملف PDF، وتُعرض صور معاينتها فقط.</item>
+        <item quantity="other">لا يمكن تشغيل %d مقطع فيديو أو صوت في ملف PDF، وتُعرض صورة معاينته فقط.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_images">
+        <item quantity="zero">تعذّر عرض %d صورة.</item>
+        <item quantity="one">تعذّر عرض %d صورة.</item>
+        <item quantity="two">تعذّر عرض %d صورتين.</item>
+        <item quantity="few">تعذّر عرض %d صور.</item>
+        <item quantity="many">تعذّر عرض %d صورة.</item>
+        <item quantity="other">تعذّر عرض %d صورة.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_hidden">
+        <item quantity="zero">تم تخطي %d شريحة مخفية.</item>
+        <item quantity="one">تم تخطي %d شريحة مخفية.</item>
+        <item quantity="two">تم تخطي %d شريحتين مخفيتين.</item>
+        <item quantity="few">تم تخطي %d شرائح مخفية.</item>
+        <item quantity="many">تم تخطي %d شريحة مخفية.</item>
+        <item quantity="other">تم تخطي %d شريحة مخفية.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_unreadable">
+        <item quantity="zero">تعذّرت قراءة %d شريحة، فاستُبعدت.</item>
+        <item quantity="one">تعذّرت قراءة %d شريحة، فاستُبعدت.</item>
+        <item quantity="two">تعذّرت قراءة %d شريحتين، فاستُبعدتا.</item>
+        <item quantity="few">تعذّرت قراءة %d شرائح، فاستُبعدت.</item>
+        <item quantity="many">تعذّرت قراءة %d شريحة، فاستُبعدت.</item>
+        <item quantity="other">تعذّرت قراءة %d شريحة، فاستُبعدت.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_truncated">
+        <item quantity="zero">تم تحويل أول %d شريحة فقط.</item>
+        <item quantity="one">تم تحويل %d شريحة فقط.</item>
+        <item quantity="two">تم تحويل أول %d شريحتين فقط.</item>
+        <item quantity="few">تم تحويل أول %d شرائح فقط.</item>
+        <item quantity="many">تم تحويل أول %d شريحة فقط.</item>
+        <item quantity="other">تم تحويل أول %d شريحة فقط.</item>
+    </plurals>
+</resources>

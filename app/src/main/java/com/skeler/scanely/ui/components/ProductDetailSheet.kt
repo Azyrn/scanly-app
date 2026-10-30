@@ -36,10 +36,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.skeler.scanely.R
 import com.skeler.scanely.core.lookup.LookupResult
 import com.skeler.scanely.core.lookup.ProductCategory
 import com.skeler.scanely.core.lookup.ProductInfo
@@ -73,7 +75,7 @@ fun ProductDetailSheet(
                 result is LookupResult.Found -> ProductContent(result.product)
                 result is LookupResult.NotFound -> NotFoundContent(result.source)
                 result is LookupResult.Error -> ErrorContent(result.exception.message)
-                else -> NotFoundContent("Unknown")
+                else -> NotFoundContent(stringResource(R.string.cmp_product_unknown_source))
             }
         }
     }
@@ -90,7 +92,7 @@ private fun LoadingContent() {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             LoadingIndicator()
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Looking up product...")
+            Text(stringResource(R.string.cmp_product_looking_up))
         }
     }
 }
@@ -105,7 +107,7 @@ private fun NotFoundContent(source: String) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Product Not Found",
+                text = stringResource(R.string.cmp_product_not_found),
                 style = MaterialTheme.typography.titleLarge
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -134,11 +136,11 @@ private fun ErrorContent(message: String?) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Lookup Failed",
+                text = stringResource(R.string.cmp_product_lookup_failed),
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = message ?: "Unknown error",
+                text = message ?: stringResource(R.string.cmp_product_unknown_error),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -196,7 +198,7 @@ private fun ProductHeader(product: ProductInfo) {
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = product.name ?: "Unknown Product",
+                text = product.name ?: stringResource(R.string.cmp_product_unknown_name),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 maxLines = 2,
@@ -235,7 +237,7 @@ private fun SourceBadge(source: String, category: ProductCategory) {
 
     AssistChip(
         onClick = { },
-        label = { Text("via $source") },
+        label = { Text(stringResource(R.string.cmp_product_via_source, source)) },
         leadingIcon = { Icon(icon, null, Modifier.size(18.dp)) }
     )
 }

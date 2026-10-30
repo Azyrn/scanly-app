@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.ocr.paddle.PaddleOcrService
 import com.skeler.scanely.settings.data.SettingsKeys
@@ -38,7 +39,7 @@ class TextOcrService @Inject constructor(
         TextOcrEngine.PADDLE -> {
             val bitmap = loadBitmap(uri)
             if (bitmap == null) {
-                OcrResult.Error("Failed to load image")
+                OcrResult.Error(context.getString(R.string.ocr_err_load_image))
             } else {
                 paddle.recognize(bitmap).orFallback { mlKit.recognizeFromBitmap(bitmap) }
                     .also { bitmap.recycle() }

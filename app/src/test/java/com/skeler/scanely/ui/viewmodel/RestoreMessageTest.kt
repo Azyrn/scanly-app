@@ -3,6 +3,7 @@ package com.skeler.scanely.ui.viewmodel
 import com.skeler.scanely.core.license.RestoreOutcome
 import com.skeler.scanely.core.network.LicenseRecoveryResponse
 import kotlinx.serialization.json.Json
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -13,7 +14,7 @@ class RestoreMessageTest {
 
     @Test
     fun `a restored key names the tier it turned out to be`() {
-        assertEquals("Your Pro key is back.", restoreMessage(RestoreOutcome.Restored("pro")))
+        assertEquals("Your Pro key is back.", restoreMessage(EnglishStrings.context(), RestoreOutcome.Restored("pro")))
     }
 
     /** The activation call can succeed without the entitlement having been read back. */
@@ -21,7 +22,7 @@ class RestoreMessageTest {
     fun `a restored key with no tier still confirms the restore`() {
         assertEquals(
             "Your key is back on this device.",
-            restoreMessage(RestoreOutcome.Restored(null))
+            restoreMessage(EnglishStrings.context(), RestoreOutcome.Restored(null))
         )
     }
 
@@ -31,15 +32,15 @@ class RestoreMessageTest {
      */
     @Test
     fun `finding nothing points at the email address rather than declaring it gone`() {
-        val message = restoreMessage(RestoreOutcome.NothingFound).orEmpty()
+        val message = restoreMessage(EnglishStrings.context(), RestoreOutcome.NothingFound).orEmpty()
         assertTrue(message.contains("email address"))
         assertFalse(message.contains("nothing to restore"))
     }
 
     @Test
     fun `the outcomes the sheet already explains say nothing twice`() {
-        assertNull(restoreMessage(RestoreOutcome.NeedsEmailConfirmation))
-        assertNull(restoreMessage(RestoreOutcome.Failed("No connection.")))
+        assertNull(restoreMessage(EnglishStrings.context(), RestoreOutcome.NeedsEmailConfirmation))
+        assertNull(restoreMessage(EnglishStrings.context(), RestoreOutcome.Failed("No connection.")))
     }
 }
 

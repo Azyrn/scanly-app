@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.docx
 
+import android.content.Context
 import android.util.Log
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdftools.ImportedFile
@@ -12,6 +13,7 @@ import com.skeler.scanely.core.pdftools.ToolOutput
 import com.skeler.scanely.core.pdftools.ToolResult
 import com.skeler.scanely.core.pdftools.ToolWorkspace
 import com.skeler.scanely.core.pdftools.isOutOfSpace
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -33,7 +35,10 @@ private const val TAG = "DocxToPdfJob"
  * result says so, rather than being guessed at or failing the whole document.
  */
 @Singleton
-class DocxToPdfJob @Inject constructor(private val workspace: ToolWorkspace) {
+class DocxToPdfJob @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val workspace: ToolWorkspace
+) {
 
     private val reader = DocxReader()
 
@@ -79,13 +84,13 @@ class DocxToPdfJob @Inject constructor(private val workspace: ToolWorkspace) {
      * case — a document of huge pictures on a small phone.
      */
     private suspend fun render(input: File, output: File, onProgress: (Float?) -> Unit): DocxNotes {
-        val context = currentCoroutineContext()
+        val job = currentCoroutineContext()
         val zip = openZip(input)
         return try {
             zip.use {
-                val document = reader.read(zip) { context.ensureActive() }
+                val document = reader.read(zip) { job.ensureActive() }
                 FileOutputStream(output).use { stream ->
-                    DocxLayout(zip, document.notes).render(document, stream, onProgress)
+                    DocxLayout(zip, context.assets, document.notes).render(document, stream, onProgress)
                 }
                 logSummary(document)
                 document.notes

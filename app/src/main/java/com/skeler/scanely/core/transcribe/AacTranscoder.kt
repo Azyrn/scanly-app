@@ -8,6 +8,7 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.media.MediaMuxer
 import android.net.Uri
+import com.skeler.scanely.R
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import java.io.File
@@ -70,7 +71,7 @@ internal class AacTranscoder(
         extractor.setDataSource(context, uri, null)
         val track = (0 until extractor.trackCount).firstOrNull {
             extractor.getTrackFormat(it).getString(MediaFormat.KEY_MIME)?.startsWith("audio/") == true
-        } ?: throw AudioPreparer.PrepareException("This file has no audio to transcribe.")
+        } ?: throw AudioPreparer.PrepareException(context.getString(R.string.au_err_no_audio))
         extractor.selectTrack(track)
         val inFormat = extractor.getTrackFormat(track)
         val inRate = inFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)

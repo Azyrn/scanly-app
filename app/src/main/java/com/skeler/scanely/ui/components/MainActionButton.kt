@@ -29,9 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 
 @Composable
 fun MainActionButton(
@@ -117,7 +119,7 @@ fun HistoryPillButton(
             )
             Spacer(modifier = Modifier.size(8.dp))
             Text(
-                text = "View Previous Extracts",
+                text = stringResource(R.string.cmp_view_previous_extracts),
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Medium,
                 color = MaterialTheme.colorScheme.onSurface

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d arquivo não pôde ser lido e foi ignorado</item>
+        <item quantity="many">%d arquivos não puderam ser lidos e foram ignorados</item>
+        <item quantity="other">%d arquivos não puderam ser lidos e foram ignorados</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d imagem já estava no menor tamanho possível, então não foi alterada</item>
+        <item quantity="many">%d imagens já estavam no menor tamanho possível, então não foram alteradas</item>
+        <item quantity="other">%d imagens já estavam no menor tamanho possível, então não foram alteradas</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">Recomendado</string>
+    <string name="pdf_tool_img_compress_recommended_body">Bem menor, e continua com a mesma aparência.</string>
+    <string name="pdf_tool_img_compress_strong">Forte</string>
+    <string name="pdf_tool_img_compress_strong_body">Arquivos menores. Detalhes finos podem perder nitidez.</string>
+    <string name="pdf_tool_img_compress_light">Leve</string>
+    <string name="pdf_tool_img_compress_light_body">Melhor qualidade, com uma economia menor.</string>
+    <string name="pdf_tool_img_png_to_jpg">Converter PNG para JPG para um arquivo menor</string>
+    <string name="pdf_tool_img_png_to_jpg_body">Um PNG só pode perder detalhes ocultos. Áreas transparentes ficam brancas.</string>
+    <string name="pdf_tool_img_compress_action">Comprimir imagens</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">Cada imagem se torna um JPG. Áreas transparentes ficam brancas; um GIF mantém o primeiro quadro.</string>
+    <string name="pdf_tool_img_to_jpg_action">Converter para JPG</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Pixels exatos, arquivos maiores.</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">Tem a mesma aparência, geralmente menor que o JPG.</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 cores. Bom para gráficos; fotos podem aparecer com faixas.</string>
+    <string name="pdf_tool_img_from_jpg_action">Converter imagens</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">Por porcentagem</string>
+    <string name="pdf_tool_img_resize_by_size">Por tamanho</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">Largura máxima (px)</string>
+    <string name="pdf_tool_img_resize_height">Altura máxima (px)</string>
+    <string name="pdf_tool_img_resize_size_hint">Digite uma largura, uma altura ou ambas.</string>
+    <string name="pdf_tool_img_resize_size_invalid">Use um número de 1 a %d.</string>
+    <string name="pdf_tool_img_resize_keep_aspect">Manter proporções</string>
+    <string name="pdf_tool_img_resize_no_enlarge">Não aumentar as imagens</string>
+    <string name="pdf_tool_img_resize_action">Redimensionar imagens</string>
+</resources>

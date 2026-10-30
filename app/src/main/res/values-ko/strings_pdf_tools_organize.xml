@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">파일 %d개</item>
+        <item quantity="other">파일 %d개</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · 총 %2$s</string>
+    <string name="pdf_tool_merge_body">파일은 위에 나열된 순서대로 합쳐져요. 일부 파일에 비밀번호가 있어도 합쳐진 사본에는 비밀번호가 없어요.</string>
+    <string name="pdf_tool_merge_need_more">합치려면 PDF를 한 개 이상 더 추가하세요.</string>
+    <string name="pdf_tool_merge_action">합치기</string>
+    <string name="pdf_tool_split_mode_ranges">범위로 나누기</string>
+    <string name="pdf_tool_split_mode_ranges_body">입력한 범위마다 새 파일 하나</string>
+    <string name="pdf_tool_split_mode_every">몇 페이지마다 나누기</string>
+    <string name="pdf_tool_split_mode_every_body">정해진 페이지 수마다 새 파일 생성</string>
+    <string name="pdf_tool_split_mode_extract">페이지 추출</string>
+    <string name="pdf_tool_split_mode_extract_body">선택한 페이지를 한 파일에 모아요</string>
+    <string name="pdf_tool_split_mode_delete">페이지 삭제</string>
+    <string name="pdf_tool_split_mode_delete_body">선택한 페이지를 뺀 사본</string>
+    <string name="pdf_tool_split_mode_size">파일 크기로 나누기</string>
+    <string name="pdf_tool_split_mode_size_body">설정한 크기를 넘지 않는 파일</string>
+    <string name="pdf_tool_split_ranges_label">페이지</string>
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">예: 1-3, 5, 8-10</string>
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">원하는 페이지를 입력하세요. 예: 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s”은(는) 페이지나 범위가 아니에요</string>
+    <string name="pdf_tool_split_range_out">“%1$s”은(는) 1–%2$d 페이지 범위를 벗어나요</string>
+    <string name="pdf_tool_split_range_reversed">“%1$s”은(는) 거꾸로 입력됐어요. 작은 페이지를 먼저 쓰세요</string>
+    <string name="pdf_tool_split_delete_all">모든 페이지를 선택했어요. 최소 한 페이지는 남겨 두세요.</string>
+    <string name="pdf_tool_split_every_label">파일당 페이지 수</string>
+    <string name="pdf_tool_split_every_invalid">1에서 %1$d 사이의 숫자를 입력하세요</string>
+    <string name="pdf_tool_split_every_less">파일당 페이지 수 줄이기</string>
+    <string name="pdf_tool_split_every_more">파일당 페이지 수 늘리기</string>
+    <string name="pdf_tool_split_size_label">가장 큰 파일 크기(MB)</string>
+    <string name="pdf_tool_split_size_invalid">0MB보다 큰 크기를 입력하세요</string>
+    <string name="pdf_tool_split_size_body">페이지는 쪼개지지 않아요. 그래서 이 크기보다 큰 페이지 하나는 자체 파일이 돼요.</string>
+    <string name="pdf_tool_split_locked">이 파일에는 비밀번호가 있고, 새 파일에도 그대로 유지돼요.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">파일 %d개가 만들어져요</item>
+        <item quantity="other">파일 %d개가 만들어져요</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">페이지 %d개를 유지해요</item>
+        <item quantity="other">페이지 %d개를 유지해요</item>
+    </plurals>
+    <string name="pdf_tool_split_action">나누기</string>
+    <string name="pdf_tool_split_extract_action">페이지 추출</string>
+    <string name="pdf_tool_split_delete_action">페이지 삭제</string>
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">크기 제한을 넘는 페이지 %d개는 각각 별도의 파일이 돼요.</item>
+        <item quantity="other">크기 제한을 넘는 페이지 %d개는 각각 별도의 파일이 돼요.</item>
+    </plurals>
+</resources>

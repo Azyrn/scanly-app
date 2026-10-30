@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d dosya okunamadı ve atlandı</item>
+        <item quantity="other">%d dosya okunamadı ve atlandı</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d resim zaten en küçük haliyle olduğu için değiştirilmedi</item>
+        <item quantity="other">%d resim zaten en küçük haliyle olduğu için değiştirilmedi</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">Önerilen</string>
+    <string name="pdf_tool_img_compress_recommended_body">Çok daha küçük, görünümü aynı kalır.</string>
+    <string name="pdf_tool_img_compress_strong">Güçlü</string>
+    <string name="pdf_tool_img_compress_strong_body">En küçük dosyalar. İnce ayrıntılar yumuşayabilir.</string>
+    <string name="pdf_tool_img_compress_light">Hafif</string>
+    <string name="pdf_tool_img_compress_light_body">En iyi kalite, daha az tasarruf.</string>
+    <string name="pdf_tool_img_png_to_jpg">Daha küçük dosya için PNG\'yi JPG\'ye dönüştür</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNG yalnızca gizli ayrıntılarını kaybedebilir. Saydam alanlar beyaza döner.</string>
+    <string name="pdf_tool_img_compress_action">Resimleri sıkıştır</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">Her resim bir JPG olur. Saydam alanlar beyaza döner; GIF ilk karesini korur.</string>
+    <string name="pdf_tool_img_to_jpg_action">JPG\'e dönüştür</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Birebir pikseller, daha büyük dosyalar.</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">Görünümü aynı, genellikle JPG\'den daha küçük.</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 renk. Grafikler için iyi, fotoğraflarda renk bantlanması görülebilir.</string>
+    <string name="pdf_tool_img_from_jpg_action">Resimleri dönüştür</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">Yüzdeye göre</string>
+    <string name="pdf_tool_img_resize_by_size">Boyuta göre</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">En büyük genişlik (px)</string>
+    <string name="pdf_tool_img_resize_height">En büyük yükseklik (px)</string>
+    <string name="pdf_tool_img_resize_size_hint">Bir genişlik, bir yükseklik ya da ikisini birden girin.</string>
+    <string name="pdf_tool_img_resize_size_invalid">1 ile %d arasında bir sayı kullanın.</string>
+    <string name="pdf_tool_img_resize_keep_aspect">Oranları koru</string>
+    <string name="pdf_tool_img_resize_no_enlarge">Resimleri büyütme</string>
+    <string name="pdf_tool_img_resize_action">Resimleri boyutlandır</string>
+</resources>

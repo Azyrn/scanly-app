@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Merge -->
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">%d fichier</item>
+        <item quantity="many">%d fichiers</item>
+        <item quantity="other">%d fichiers</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · %2$s au total</string>
+    <string name="pdf_tool_merge_body">Les fichiers sont assemblés dans l\'ordre indiqué ci-dessus. La copie fusionnée n\'a pas de mot de passe, même si certains fichiers en avaient un.</string>
+    <string name="pdf_tool_merge_need_more">Ajoutez au moins un PDF de plus pour fusionner.</string>
+    <string name="pdf_tool_merge_action">Fusionner</string>
+
+    <!-- Split: modes -->
+    <string name="pdf_tool_split_mode_ranges">Diviser par plages</string>
+    <string name="pdf_tool_split_mode_ranges_body">Un nouveau fichier pour chaque plage saisie</string>
+    <string name="pdf_tool_split_mode_every">Diviser toutes les quelques pages</string>
+    <string name="pdf_tool_split_mode_every_body">Un nouveau fichier à chaque nombre de pages défini</string>
+    <string name="pdf_tool_split_mode_extract">Extraire des pages</string>
+    <string name="pdf_tool_split_mode_extract_body">Les pages choisies, réunies dans un seul fichier</string>
+    <string name="pdf_tool_split_mode_delete">Supprimer des pages</string>
+    <string name="pdf_tool_split_mode_delete_body">Une copie sans les pages choisies</string>
+    <string name="pdf_tool_split_mode_size">Diviser selon la taille</string>
+    <string name="pdf_tool_split_mode_size_body">Fichiers qui ne dépassent pas la taille définie</string>
+
+    <!-- Split: fields -->
+    <string name="pdf_tool_split_ranges_label">Pages</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Par exemple 1-3, 5, 8-10</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Saisissez les pages voulues, par exemple 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">« %1$s » n’est ni une page ni une plage</string>
+    <string name="pdf_tool_split_range_out">« %1$s » est en dehors des pages 1 à %2$d</string>
+    <string name="pdf_tool_split_range_reversed">« %1$s » est inversé ; indiquez d’abord la plus petite page</string>
+    <string name="pdf_tool_split_delete_all">Ce sont toutes les pages. Gardez-en au moins une.</string>
+    <string name="pdf_tool_split_every_label">Pages par fichier</string>
+    <string name="pdf_tool_split_every_invalid">Saisissez un nombre de 1 à %1$d</string>
+    <string name="pdf_tool_split_every_less">Moins de pages par fichier</string>
+    <string name="pdf_tool_split_every_more">Plus de pages par fichier</string>
+    <string name="pdf_tool_split_size_label">Taille maximale du fichier (Mo)</string>
+    <string name="pdf_tool_split_size_invalid">Saisissez une taille supérieure à 0 Mo</string>
+    <string name="pdf_tool_split_size_body">Les pages restent entières : une page seule plus grande que cette taille aura son propre fichier.</string>
+    <string name="pdf_tool_split_locked">Ce fichier a un mot de passe, et les nouveaux fichiers le conservent.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">Crée %d fichier</item>
+        <item quantity="many">Crée %d fichiers</item>
+        <item quantity="other">Crée %d fichiers</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">Conserve %d page</item>
+        <item quantity="many">Conserve %d pages</item>
+        <item quantity="other">Conserve %d pages</item>
+    </plurals>
+
+    <!-- Split: actions -->
+    <string name="pdf_tool_split_action">Diviser</string>
+    <string name="pdf_tool_split_extract_action">Extraire des pages</string>
+    <string name="pdf_tool_split_delete_action">Supprimer des pages</string>
+
+    <!-- Split: result notes -->
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">%d page dépasse à elle seule la limite de taille, elle a donc un fichier à elle seule.</item>
+        <item quantity="many">%d pages dépassent chacune la limite de taille, chacune a donc un fichier à elle seule.</item>
+        <item quantity="other">%d pages dépassent chacune la limite de taille, chacune a donc un fichier à elle seule.</item>
+    </plurals>
+</resources>

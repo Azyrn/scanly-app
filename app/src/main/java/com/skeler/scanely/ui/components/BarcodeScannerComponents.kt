@@ -57,11 +57,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.skeler.scanely.R
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.barcode.BarcodeAnalyzer
 import kotlinx.coroutines.delay
@@ -331,7 +333,7 @@ fun BarcodeActionsSheet(
 ) {
     Column(modifier = modifier.padding(bottom = 32.dp)) {
         Text(
-            text = "Barcode Detected",
+            text = stringResource(R.string.cmp_barcode_detected),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
@@ -363,7 +365,7 @@ fun TextDetailSheet(
             .padding(bottom = 32.dp)
     ) {
         Text(
-            text = "Barcode Content",
+            text = stringResource(R.string.cmp_barcode_content),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -397,7 +399,7 @@ fun TextDetailSheet(
         ) {
             Icon(Icons.Rounded.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Copy to Clipboard")
+            Text(stringResource(R.string.cmp_copy_to_clipboard))
         }
     }
 }

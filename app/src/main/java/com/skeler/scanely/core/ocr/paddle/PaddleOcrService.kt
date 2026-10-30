@@ -1,15 +1,18 @@
 package com.skeler.scanely.core.ocr.paddle
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ocr.OcrResult
 import com.skeler.scanely.core.ocr.OcrSource
 import com.skeler.scanely.core.ocr.PdfRendererHelper
 import com.skeler.scanely.core.ocr.TextBlockData
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.domain.repository.SettingsRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -47,6 +50,7 @@ private const val MIN_RTL_FRACTION = 0.6f
 /** Offline PP-OCR pipeline: orient -> dewarp -> detect -> deskew lines -> recognize. */
 @Singleton
 class PaddleOcrService @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val engine: PaddleOcrEngine,
     private val settings: SettingsRepository,
     private val pdfRendererHelper: PdfRendererHelper
@@ -154,7 +158,7 @@ class PaddleOcrService @Inject constructor(
             )
         } catch (e: Throwable) {
             Log.e(TAG, "Paddle recognition failed", e)
-            OcrResult.Error(e.message ?: "Recognition failed")
+            OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition))
         } finally {
             // Never recycles [bitmap] itself: the caller owns it.
             crops.forEach { it.recycle() }
@@ -191,11 +195,11 @@ class PaddleOcrService @Inject constructor(
 
             if (pageIndex != null) {
                 val bitmap = pdfRendererHelper.renderPage(pdfUri, pageIndex)
-                    ?: return@withContext OcrResult.Error("Failed to render PDF")
+                    ?: return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pdf))
                 process(pageIndex, bitmap)
             } else {
                 val opened = pdfRendererHelper.forEachPage(pdfUri) { i, bmp -> process(i, bmp) }
-                if (!opened) return@withContext OcrResult.Error("Failed to render PDF")
+                if (!opened) return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pdf))
             }
 
             if (text.isEmpty()) {
@@ -268,18 +272,7 @@ class PaddleOcrService @Inject constructor(
         crops: List<Bitmap>,
         used: ScriptPack,
         primary: List<RecLine>
-    ): List<RecLine> {
-        if (crops.isEmpty() || isDenseLatinRead(primary, crops.size)) return primary
-        var best = primary
-        for (pack in ScriptPack.entries.filter { it.isBundled && it != used }) {
-            val candidate = engine.recognizeWithLatin(crops, pack)
-            if (isBetterScriptRead(best, candidate)) {
-                best = candidate
-                Log.d(TAG, "Script switch: ${used.id} -> ${pack.id}")
-            }
-        }
-        return best
-    }
+    ): List<RecLine> = preferBundledScript(engine, crops, used, primary)
 
     /**
      * The PP-StructureV3 subset that fits on a phone: layout regions from PP-DocLayout-S,
@@ -365,6 +358,25 @@ class PaddleOcrService @Inject constructor(
         }
         return sb.toString()
     }
+}
+
+/** See [PaddleOcrService.preferBundledScript]'s contract above: shared with [PaddleLineReader]. */
+internal fun preferBundledScript(
+    engine: PaddleOcrEngine,
+    crops: List<Bitmap>,
+    used: ScriptPack,
+    primary: List<RecLine>
+): List<RecLine> {
+    if (crops.isEmpty() || isDenseLatinRead(primary, crops.size)) return primary
+    var best = primary
+    for (pack in ScriptPack.entries.filter { it.isBundled && it != used }) {
+        val candidate = engine.recognizeWithLatin(crops, pack)
+        if (isBetterScriptRead(best, candidate)) {
+            best = candidate
+            Log.d(TAG, "Script switch: ${used.id} -> ${pack.id}")
+        }
+    }
+    return best
 }
 
 internal class OrientationRead(val upright: Float, val flipped: Float)

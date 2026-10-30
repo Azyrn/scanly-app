@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.skeler.scanely.core.ads.RewardedAdManager
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.billing.ProEntitlementGate
+import com.skeler.scanely.core.common.AppLanguage
 import com.skeler.scanely.core.common.CompositionLocals
 import com.skeler.scanely.core.license.LicenseRepository
 import com.skeler.scanely.navigation.ScanelyNavHost
@@ -54,6 +55,10 @@ class MainActivity : ComponentActivity() {
 
             rewardedAdManager.initialize(this@MainActivity)
         }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLanguage.wrap(newBase))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

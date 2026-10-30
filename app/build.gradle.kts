@@ -135,7 +135,7 @@ android {
         applicationId = "com.skeler.scanely"
         minSdk = 24
         targetSdk = 37
-        versionCode = 23
+        versionCode = 24
         versionName = "3.6.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -164,6 +164,11 @@ android {
             // Must name a version present in $sdk.dir/cmake. Keep in step with CI's installed SDK.
             version = "3.31.6"
         }
+    }
+
+    // Lists the app's languages for Android 13+ system settings, from the values-* folders.
+    androidResources {
+        generateLocaleConfig = true
     }
 
     sourceSets.getByName("test").resources.srcDir(rootProject.file("contracts"))
@@ -348,6 +353,8 @@ dependencies {
     implementation(libs.onnxruntime.android)
 
     implementation(libs.pdfium.android)
+    compileOnly(libs.pdfium.android.core)
+    compileOnly(libs.pdfium.android.api)
     implementation(libs.bouncycastle.pkix)
     // pdfbox-android pins Bouncy Castle's jdk15to18 1.72 artifacts, which are the same
     // org.bouncycastle packages as the jdk18on 1.85 above and so duplicate every class at dex time.

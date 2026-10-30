@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">Sayfaları JPG olarak</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Her sayfa tek bir resim olur.</string>
+    <string name="pdf_tool_jpg_mode_extract">Resimleri çıkar</string>
+    <string name="pdf_tool_jpg_mode_extract_body">PDF içindeki fotoğrafları ve resimleri özgün kalitesinde kaydedin.</string>
+    <string name="pdf_tool_jpg_quality">Kalite</string>
+    <string name="pdf_tool_jpg_quality_normal">Normal · 150 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">Yüksek · 300 dpi</string>
+    <string name="pdf_tool_jpg_action_pages">JPG\'e dönüştür</string>
+    <string name="pdf_tool_jpg_action_extract">Resimleri çıkar</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">Scanly\'nin dışa aktaramadığı biçimdeki %d resim atlandı</item>
+        <item quantity="other">Scanly\'nin dışa aktaramadığı biçimlerdeki %d resim atlandı</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">Her sayfada bir resim, gösterildiği sırayla.</string>
+    <string name="pdf_tool_img2pdf_page_size">Sayfa boyutu</string>
+    <string name="pdf_tool_img2pdf_size_fit">Resme göre</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Letter</string>
+    <string name="pdf_tool_img2pdf_orientation">Yön</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Otomatik</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Dikey</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">Yatay</string>
+    <string name="pdf_tool_img2pdf_margin">Kenar boşluğu</string>
+    <string name="pdf_tool_img2pdf_margin_none">Yok</string>
+    <string name="pdf_tool_img2pdf_margin_small">Küçük</string>
+    <string name="pdf_tool_img2pdf_margin_big">Büyük</string>
+    <string name="pdf_tool_img2pdf_action">PDF oluştur</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">%d dosya resim olarak okunamadı ve dışarıda bırakıldı</item>
+        <item quantity="other">%d dosya resim olarak okunamadı ve dışarıda bırakıldı</item>
+    </plurals>
+</resources>

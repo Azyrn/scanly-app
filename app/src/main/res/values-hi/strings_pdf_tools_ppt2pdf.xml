@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_ppt2pdf_action">PDF में बदलें</string>
+    <string name="pdf_tool_ppt2pdf_shapes">कुछ आकृतियाँ सरल बनाई गईं।</string>
+    <string name="pdf_tool_ppt2pdf_fonts">कुछ फ़ॉन्ट मिलते-जुलते फ़ॉन्ट से बदल दिए गए।</string>
+    <plurals name="pdf_tool_ppt2pdf_charts">
+        <item quantity="one">%d चार्ट छोड़ दिया गया।</item>
+        <item quantity="other">%d चार्ट छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_diagrams">
+        <item quantity="one">%d SmartArt ग्राफ़िक छोड़ दिया गया।</item>
+        <item quantity="other">%d SmartArt ग्राफ़िक छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_objects">
+        <item quantity="one">%d एम्बेडेड ऑब्जेक्ट छोड़ दिया गया।</item>
+        <item quantity="other">%d एम्बेडेड ऑब्जेक्ट छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_media">
+        <item quantity="one">%d वीडियो या आवाज़ PDF में नहीं चल सकती; सिर्फ़ उसकी प्रीव्यू तस्वीर दिखती है।</item>
+        <item quantity="other">%d वीडियो या आवाज़ें PDF में नहीं चल सकतीं; सिर्फ़ उनकी प्रीव्यू तस्वीरें दिखती हैं।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_images">
+        <item quantity="one">%d तस्वीर दिखाई नहीं जा सकी।</item>
+        <item quantity="other">%d तस्वीरें दिखाई नहीं जा सकीं।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_hidden">
+        <item quantity="one">%d छिपी हुई स्लाइड छोड़ दी गई।</item>
+        <item quantity="other">%d छिपी हुई स्लाइडें छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_unreadable">
+        <item quantity="one">%d स्लाइड पढ़ी नहीं जा सकी और छोड़ दी गई।</item>
+        <item quantity="other">%d स्लाइडें पढ़ी नहीं जा सकीं और छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_truncated">
+        <item quantity="one">सिर्फ़ पहली %d स्लाइड बदली गई।</item>
+        <item quantity="other">सिर्फ़ पहली %d स्लाइडें बदली गईं।</item>
+    </plurals>
+</resources>

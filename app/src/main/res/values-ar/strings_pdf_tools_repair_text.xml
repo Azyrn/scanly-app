@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">إصلاح</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="zero">تم استرداد %d صفحة. تحقّق منها قبل حذف الملف الأصلي.</item>
+        <item quantity="one">تم استرداد %d صفحة. تحقّق منها قبل حذف الملف الأصلي.</item>
+        <item quantity="two">تم استرداد %d صفحتين. تحقّق منهما قبل حذف الملف الأصلي.</item>
+        <item quantity="few">تم استرداد %d صفحات. تحقّق منها قبل حذف الملف الأصلي.</item>
+        <item quantity="many">تم استرداد %d صفحة. تحقّق منها قبل حذف الملف الأصلي.</item>
+        <item quantity="other">تم استرداد %d صفحة. تحقّق منها قبل حذف الملف الأصلي.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">حدِّد بداية كل صفحة</string>
+    <string name="pdf_tool_extract_text_separators_body">تُضاف سطر مثل \"صفحة 3\" قبل نص كل صفحة.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- صفحة %d -----</string>
+    <string name="pdf_tool_extract_text_action">استخراج</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="zero">%d صفحة لا تحتوي على نص قابل للتحديد (ممسوحة ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتها.</item>
+        <item quantity="one">%d صفحة لا تحتوي على نص قابل للتحديد (ممسوحة ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتها.</item>
+        <item quantity="two">%d صفحتان لا تحتويان على نص قابل للتحديد (ممسوحتان ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتهما.</item>
+        <item quantity="few">%d صفحات لا تحتوي على نص قابل للتحديد (ممسوحة ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتها.</item>
+        <item quantity="many">%d صفحة لا تحتوي على نص قابل للتحديد (ممسوحة ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتها.</item>
+        <item quantity="other">%d صفحة لا تحتوي على نص قابل للتحديد (ممسوحة ضوئيًا). استخدم «PDF إلى نص» من الشاشة الرئيسية لقراءتها.</item>
+    </plurals>
+</resources>

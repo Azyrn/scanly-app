@@ -6,6 +6,7 @@ import android.media.MediaFormat
 import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.util.Log
+import com.skeler.scanely.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -48,16 +49,16 @@ class AudioPreparer @Inject constructor(
             trackMimes(uri)
         } catch (e: IOException) {
             Log.w(TAG, "probe failed", e)
-            throw PrepareException("This file couldn't be opened as audio or video.")
+            throw PrepareException(context.getString(R.string.au_err_unreadable))
         } catch (e: IllegalArgumentException) {
             Log.w(TAG, "probe failed", e)
-            throw PrepareException("This file couldn't be opened as audio or video.")
+            throw PrepareException(context.getString(R.string.au_err_unreadable))
         } catch (e: SecurityException) {
             Log.w(TAG, "probe lost access", e)
-            throw PrepareException("Scanly no longer has access to this file. Pick it again.")
+            throw PrepareException(context.getString(R.string.au_err_access_lost))
         }
         val audio = tracks.filter { it.first.startsWith("audio/") }
-        if (audio.isEmpty()) throw PrepareException("This file has no audio to transcribe.")
+        if (audio.isEmpty()) throw PrepareException(context.getString(R.string.au_err_no_audio))
         val trackUs = audio.maxOf { it.second }
         Probe(
             durationMs = if (trackUs > 0) trackUs / MICROS_PER_MS else retrieverDuration(uri),
@@ -102,8 +103,11 @@ class AudioPreparer @Inject constructor(
         val probe = probe(uri, mimeTypeHint)
         if (probe.durationMs > maxAudioMs) {
             throw PrepareException(
-                "This recording is ${TranscriptFormats.clock(probe.durationMs)} long. Your plan " +
-                    "transcribes up to ${maxAudioMs / MS_PER_MINUTE} minutes at a time."
+                context.getString(
+                    R.string.au_err_too_long,
+                    TranscriptFormats.clock(probe.durationMs),
+                    maxAudioMs / MS_PER_MINUTE
+                )
             )
         }
 
@@ -127,11 +131,11 @@ class AudioPreparer @Inject constructor(
             // IOException depending on device; every one of them means the same thing to the user.
             out.delete()
             Log.w(TAG, "transcode failed", e)
-            throw PrepareException("This file's audio couldn't be converted. Try another file.")
+            throw PrepareException(context.getString(R.string.au_err_convert))
         }
         if (out.length() > maxUploadBytes) {
             out.delete()
-            throw PrepareException("This recording is too large for your plan even after compressing it.")
+            throw PrepareException(context.getString(R.string.au_err_too_large))
         }
         PreparedAudio(out, "audio/mp4", probe.durationMs, transcoded = true)
     }
@@ -144,7 +148,7 @@ class AudioPreparer @Inject constructor(
         val out = File(workDir(), "${UUID.randomUUID()}.$extension")
         context.contentResolver.openInputStream(uri)?.use { input ->
             out.outputStream().use { input.copyTo(it) }
-        } ?: throw PrepareException("This file couldn't be read.")
+        } ?: throw PrepareException(context.getString(R.string.au_err_read))
         return PreparedAudio(out, probe.mimeType!!, probe.durationMs, transcoded = false)
     }
 

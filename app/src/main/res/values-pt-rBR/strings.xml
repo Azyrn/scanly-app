@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">Criar documentos com IA</string>
+    <string name="ai_build_documents_subtitle">Descreva ou anexe um arquivo: faturas, currículos, relatórios, apresentações</string>
+    <string name="design_paywall_fallback">Criar documentos com IA faz parte do Pro.</string>
+    <string name="custom_provider_build_documents_note">A criação de documentos com IA é dividida: seu modelo escreve o documento e o Scanly faz a diagramação. Um modelo mais forte oferece um design melhor, e o Scanly cobra um crédito pela diagramação em vez do custo habitual.</string>
+    <string name="plan_feature_build_documents">Criar documentos com IA: layouts, tabelas e estilos</string>
+    <string name="custom_provider_on_your_endpoint_note">Escanear, extrair dados e traduzir vão direto deste dispositivo para o seu provedor. Eles não usam seus créditos do Scanly e são cobrados pelo seu provedor.</string>
+</resources>

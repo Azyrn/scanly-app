@@ -9,6 +9,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.PdfEditorSession
 import com.skeler.scanely.core.pdfeditor.PdfEntitlementGate
 import com.skeler.scanely.core.pdfeditor.PdfFeature
@@ -307,7 +308,7 @@ class PageEditorViewModel @Inject constructor(
         val state = _uiState.value
         val signature = state.signatures.firstOrNull { it.id == state.activeSignatureId }
         if (signature == null) {
-            _uiState.update { it.copy(message = "Pick or capture a signature first.") }
+            _uiState.update { it.copy(message = context.getString(R.string.pe_pick_signature_first)) }
             return
         }
         val width = SIGNATURE_WIDTH_PT
@@ -488,7 +489,7 @@ class PageEditorViewModel @Inject constructor(
         viewModelScope.launch {
             val ink = signatureExtractor.extract(source)
             if (ink == null) {
-                _uiState.update { it.copy(message = "No signature found on that page.") }
+                _uiState.update { it.copy(message = context.getString(R.string.pe_no_signature_on_page)) }
                 return@launch
             }
             storeSignature(ink, label)
@@ -503,7 +504,7 @@ class PageEditorViewModel @Inject constructor(
     private suspend fun storeSignature(ink: Bitmap, label: String) {
         val stored = signatureStore.save(ink, label)
         if (stored == null) {
-            _uiState.update { it.copy(message = "Couldn't save that signature.") }
+            _uiState.update { it.copy(message = context.getString(R.string.pe_signature_save_failed)) }
         } else {
             session.registerStamp(stored.id, ink)
             _uiState.update { it.copy(activeSignatureId = stored.id) }

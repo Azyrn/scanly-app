@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">Pages en JPG</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Chaque page devient une image.</string>
+    <string name="pdf_tool_jpg_mode_extract">Extraire les images</string>
+    <string name="pdf_tool_jpg_mode_extract_body">Enregistre les photos et images du PDF à leur qualité d\'origine.</string>
+    <string name="pdf_tool_jpg_quality">Qualité</string>
+    <string name="pdf_tool_jpg_quality_normal">Normale · 150 ppp</string>
+    <string name="pdf_tool_jpg_quality_high">Élevée · 300 ppp</string>
+    <string name="pdf_tool_jpg_action_pages">Convertir en JPG</string>
+    <string name="pdf_tool_jpg_action_extract">Extraire les images</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">%d image dans un format que Scanly ne peut pas exporter a été ignorée</item>
+        <item quantity="many">%d images dans des formats que Scanly ne peut pas exporter ont été ignorées</item>
+        <item quantity="other">%d images dans des formats que Scanly ne peut pas exporter ont été ignorées</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">Une image par page, dans l\'ordre affiché.</string>
+    <string name="pdf_tool_img2pdf_page_size">Taille de page</string>
+    <string name="pdf_tool_img2pdf_size_fit">Adapter à l\'image</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Lettre</string>
+    <string name="pdf_tool_img2pdf_orientation">Orientation</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Auto</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Portrait</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">Paysage</string>
+    <string name="pdf_tool_img2pdf_margin">Marge</string>
+    <string name="pdf_tool_img2pdf_margin_none">Aucune</string>
+    <string name="pdf_tool_img2pdf_margin_small">Petite</string>
+    <string name="pdf_tool_img2pdf_margin_big">Grande</string>
+    <string name="pdf_tool_img2pdf_action">Créer le PDF</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">%d fichier n\'a pas pu être lu comme image et a été retiré</item>
+        <item quantity="many">%d fichiers n\'ont pas pu être lus comme images et ont été retirés</item>
+        <item quantity="other">%d fichiers n\'ont pas pu être lus comme images et ont été retirés</item>
+    </plurals>
+</resources>

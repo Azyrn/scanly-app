@@ -2,6 +2,7 @@ package com.skeler.scanely.core.pdfeditor.engine
 
 import android.content.Context
 import android.graphics.Bitmap
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.model.EditPlan
 import com.skeler.scanely.core.pdfeditor.model.PdfEdit
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -65,7 +66,7 @@ class PdfEditorEngine @Inject constructor(
 
             val surviving = survivingOrder(plan.structural, originalPageCount)
             if (surviving.isEmpty()) {
-                return@withContext PdfEditResult.Failed("Every page would be deleted.")
+                return@withContext PdfEditResult.Failed(context.getString(R.string.pe_err_all_deleted))
             }
             if (surviving != List(originalPageCount) { it }) {
                 val target = next()
@@ -133,7 +134,7 @@ class PdfEditorEngine @Inject constructor(
             current.copyTo(output, overwrite = true)
             PdfEditResult.Saved(output)
         } catch (e: Exception) {
-            PdfEditResult.Failed(e.message ?: "PDF edit failed.")
+            PdfEditResult.Failed(e.message ?: context.getString(R.string.pe_err_edit_failed))
         } finally {
             workspace.deleteRecursively()
         }
@@ -253,7 +254,9 @@ class PdfEditorEngine @Inject constructor(
         }
     }
 
-    private fun failure() = PdfEditResult.Failed(Qpdf.nativeLastError().ifBlank { "PDF edit failed." })
+    private fun failure() = PdfEditResult.Failed(
+        Qpdf.nativeLastError().ifBlank { context.getString(R.string.pe_err_edit_failed) }
+    )
 
     private inline fun QpdfResult.orReturn(onFailure: (PdfEditResult) -> Unit) {
         when (this) {

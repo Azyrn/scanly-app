@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.util.Log
 import androidx.compose.ui.geometry.Rect
+import com.skeler.scanely.R
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import com.tom_roush.pdfbox.pdmodel.interactive.digitalsignature.PDSignature
@@ -85,7 +86,7 @@ class PdfSigner @Inject constructor(
         request: SignRequest
     ): SignResult = withContext(Dispatchers.IO) {
         if (source.absolutePath == output.absolutePath) {
-            return@withContext SignResult.Failed("Can't sign a document onto itself.")
+            return@withContext SignResult.Failed(context.getString(R.string.sig_err_self))
         }
         ensureResources()
 
@@ -110,9 +111,7 @@ class PdfSigner @Inject constructor(
                 request.appearance?.let { appearance ->
                     val applied = applyAppearance(document, appearance, request, options)
                     if (!applied) {
-                        return@withContext SignResult.Failed(
-                            "That page couldn't take a visible signature."
-                        )
+                        return@withContext SignResult.Failed(context.getString(R.string.sig_err_page))
                     }
                 }
 
@@ -120,7 +119,7 @@ class PdfSigner @Inject constructor(
 
                 output.outputStream().buffered().use { out ->
                     val external = document.saveIncrementalForExternalSigning(out)
-                    val cms = CmsSigner.sign(request.identity) { external.content }
+                    val cms = CmsSigner.sign(context, request.identity) { external.content }
                     external.setSignature(cms)
                 }
             }
@@ -131,7 +130,7 @@ class PdfSigner @Inject constructor(
             if (e.looksLikeNotEnoughSpace()) {
                 SignResult.SignatureTooLarge
             } else {
-                SignResult.Failed(e.message ?: "The document couldn't be signed.")
+                SignResult.Failed(e.message ?: context.getString(R.string.sig_err_failed))
             }
         } finally {
             runCatching { options?.close() }

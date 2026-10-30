@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Каждый видимый лист становится страницами PDF в порядке книги. Широкие листы продолжаются на следующих страницах.</string>
+    <string name="excel2pdf_convert">Преобразовать в PDF</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d скрытый лист не включён.</item>
+        <item quantity="few">%d скрытых листа не включены.</item>
+        <item quantity="many">%d скрытых листов не включены.</item>
+        <item quantity="other">%d скрытых листов не включены.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d диаграмма не включена.</item>
+        <item quantity="few">%d диаграммы не включены.</item>
+        <item quantity="many">%d диаграмм не включены.</item>
+        <item quantity="other">%d диаграмм не включены.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d изображение не включено.</item>
+        <item quantity="few">%d изображения не включены.</item>
+        <item quantity="many">%d изображений не включены.</item>
+        <item quantity="other">%d изображений не включены.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">Формулы показывают последний сохранённый результат.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d формула не имела сохранённого результата и пуста.</item>
+        <item quantity="few">%d формулы не имели сохранённого результата и пусты.</item>
+        <item quantity="many">%d формул не имели сохранённого результата и пусты.</item>
+        <item quantity="other">%d формул не имели сохранённого результата и пусты.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">Условное форматирование не применено.</string>
+    <string name="excel2pdf_note_pivots">Сводные таблицы показывают последние сохранённые значения.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Очень большие листы обрезаны: сохранена только %d строка.</item>
+        <item quantity="few">Очень большие листы обрезаны: сохранено только %d строки.</item>
+        <item quantity="many">Очень большие листы обрезаны: сохранено только %d строк.</item>
+        <item quantity="other">Очень большие листы обрезаны: сохранено только %d строк.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">PDF ограничен %d страницей; остальные страницы не включены.</item>
+        <item quantity="few">PDF ограничен %d страницами; остальные не включены.</item>
+        <item quantity="many">PDF ограничен %d страницами; остальные не включены.</item>
+        <item quantity="other">PDF ограничен %d страницами; остальные не включены.</item>
+    </plurals>
+</resources>

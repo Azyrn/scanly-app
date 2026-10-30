@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">Создание документов с ИИ</string>
+    <string name="ai_build_documents_subtitle">Опишите или прикрепите файл: счета, резюме, отчёты, презентации</string>
+    <string name="design_paywall_fallback">Создание документов с ИИ входит в Pro.</string>
+    <string name="custom_provider_build_documents_note">Создание документов с ИИ разделено на два этапа: ваша модель пишет документ, а Scanly занимается версткой. Более мощная модель даёт лучший дизайн, а за верстку Scanly списывает один кредит вместо обычной стоимости.</string>
+    <string name="plan_feature_build_documents">Создание документов с ИИ: макеты, таблицы и оформление</string>
+    <string name="custom_provider_on_your_endpoint_note">Сканирование, извлечение данных и перевод идут напрямую с этого устройства к вашему провайдеру. Они не расходуют кредиты Scanly и оплачиваются вашим провайдером.</string>
+</resources>

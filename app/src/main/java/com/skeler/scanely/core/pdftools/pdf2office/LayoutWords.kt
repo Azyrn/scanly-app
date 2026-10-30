@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.pdf2office
 
+import kotlin.math.abs
 import kotlin.math.max
 
 /**
@@ -10,16 +11,25 @@ internal object LayoutWords {
 
     fun words(chars: List<LayoutChar>): List<LayoutWord> {
         val builder = WordBuilder()
-        for (char in chars) {
+        for ((index, char) in chars.withIndex()) {
             when {
-                char.char in SOFT_HYPHENS -> builder.softHyphen()
-                !char.hasBox || char.char.isWhitespace() || !isPrintable(char.char) -> builder.flush()
+                char.char in SOFT_HYPHENS || isLineEndHyphen(chars, index) -> builder.softHyphen()
+                breaksWord(char) -> builder.flush()
                 else -> builder.add(char)
             }
         }
         builder.flush()
         return builder.words
     }
+
+    /** pdfium's unmapped glyph (U+FFFE) drawn at the end of a line is the hyphen it broke a word with. */
+    private fun isLineEndHyphen(chars: List<LayoutChar>, index: Int): Boolean =
+        chars[index].char == UNMAPPED && chars[index].hasBox && endsLine(chars, index)
+
+    /** Whitespace, a character placed nowhere, or one that doesn't print. */
+    private fun breaksWord(char: LayoutChar): Boolean = !char.hasBox || char.char.isWhitespace() || !isPrintable(
+        char.char
+    )
 
     /** The word being collected, plus every word finished so far. */
     private class WordBuilder {
@@ -37,6 +47,13 @@ internal object LayoutWords {
 
         fun add(char: LayoutChar) {
             val last = previous
+            // A combining mark (an Arabic tanween or shadda, an accent) sits above or below its
+            // letter rather than after it: it belongs to the open word, and the next letter is
+            // measured from the letter, not from the mark.
+            if (last != null && Character.getType(char.char) == Character.NON_SPACING_MARK.toInt()) {
+                text.append(char.char)
+                return
+            }
             if (last != null && startsNewWord(last, char)) flush()
             val charBox = LayoutBox(char.left, char.top, char.right, char.bottom)
             box = box?.union(charBox) ?: charBox
@@ -59,13 +76,38 @@ internal object LayoutWords {
         }
     }
 
+    /**
+     * pdfium reports a hyphen that breaks a word at the end of a line as U+FFFE — the same code
+     * it uses for a glyph it can't map. Only at a line end is it a hyphen.
+     */
+    private fun endsLine(chars: List<LayoutChar>, index: Int): Boolean {
+        val char = chars[index]
+        // A few characters at most (line-break spaces): a page of unmapped glyphs stays linear.
+        for (next in index + 1 until minOf(chars.size, index + 1 + HYPHEN_LOOKAHEAD)) {
+            val candidate = chars[next]
+            if (candidate.hasBox && !candidate.char.isWhitespace()) {
+                return candidate.top > char.bottom || candidate.bottom < char.top
+            }
+        }
+        return true
+    }
+
     private fun startsNewWord(previous: LayoutChar, next: LayoutChar): Boolean {
+        // pdfium gives every letter of a ligature ("ffi") the ligature glyph's box, which would
+        // otherwise read as a jump backwards.
+        if (sameGlyph(previous, next)) return false
         val em = max(charEm(previous), charEm(next))
         // Overlap rather than centres: a comma or a "p" sits lower than an "h" on the same line.
         if (next.top > previous.bottom || next.bottom < previous.top) return true
-        val gap = next.left - previous.right
+        // Right-to-left letters advance leftwards: the gap runs from this letter's left edge.
+        val rtl = TextDirection.isRtlChar(previous.char) || TextDirection.isRtlChar(next.char)
+        val gap = if (rtl) previous.left - next.right else next.left - previous.right
         return gap > em * WORD_GAP_EM || gap < -em * BACKWARD_GAP_EM
     }
+
+    private fun sameGlyph(a: LayoutChar, b: LayoutChar): Boolean =
+        abs(a.left - b.left) < SAME_GLYPH_PT && abs(a.right - b.right) < SAME_GLYPH_PT &&
+            abs(a.top - b.top) < SAME_GLYPH_PT && abs(a.bottom - b.bottom) < SAME_GLYPH_PT
 
     /**
      * pdfium reports the size set by the font operator, which is 1 in documents that scale text
@@ -93,6 +135,9 @@ internal object LayoutWords {
     private const val CAP_HEIGHT_EM = 0.72f
     private const val MIN_TRUSTED_SIZE_PT = 2f
     private const val OUTGROWN_RATIO = 1.25f
+    private const val SAME_GLYPH_PT = 0.01f
 
     private val SOFT_HYPHENS = setOf('\u00AD', '\u0002')
+    private const val UNMAPPED = '\uFFFE'
+    private const val HYPHEN_LOOKAHEAD = 4
 }

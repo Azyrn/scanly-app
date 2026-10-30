@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ui/components/PaywallSheet.kt -->
+    <string name="cmp_paywall_credits_left">В этом месяце осталось %1$d из %2$d кредитов.</string>
+    <string name="cmp_paywall_credits_left_upgrade">В этом месяце осталось %1$d из %2$d кредитов. Оформите Pro, чтобы получить больше.</string>
+    <string name="cmp_paywall_more_credits">Больше кредитов, длиннее документы и больше форматов файлов.</string>
+    <string name="cmp_paywall_ai_scan_credit">ИИ-скан расходует 1 кредит за страницу. Остальные ИИ-инструменты используют тот же баланс кредитов.</string>
+    <string name="cmp_paywall_plan_active">Ваш тариф активен на этом аккаунте.</string>
+    <string name="cmp_paywall_key_active_here">Ваш ключ активен на этом устройстве.</string>
+    <string name="cmp_paywall_devices_used">Использовано устройств: %1$d из %2$d. Управлять ключом можно в настройках.</string>
+    <string name="cmp_paywall_watch_ad">Посмотрите рекламу, чтобы получить ещё %1$d кредитов</string>
+    <string name="cmp_paywall_where_to_buy_before">"ИИ-скан включает бесплатный месячный лимит. Платные тарифы доступны в "</string>
+    <string name="cmp_paywall_where_to_buy_after">. Покупки в этом приложении недоступны. Уже подписаны? Восстановите покупку ниже.</string>
+    <string name="cmp_copied">Скопировано</string>
+    <string name="cmp_copy_address">Копировать адрес</string>
+    <string name="cmp_license_key">Лицензионный ключ</string>
+    <string name="cmp_hide_key">Скрыть ключ</string>
+    <string name="cmp_show_key">Показать ключ</string>
+    <string name="cmp_redeem">Активировать</string>
+    <string name="cmp_lost_key_restore">Потеряли ключ? Восстановить покупку</string>
+    <string name="cmp_confirm_email_first">Сначала подтвердите адрес эл. почты: так подтверждается, что покупка принадлежит вам.</string>
+    <string name="cmp_send_confirmation_email">Отправить письмо для подтверждения</string>
+    <string name="cmp_paywall_plan_name">Scanly %1$s</string>
+    <string name="cmp_active">Активен</string>
+    <string name="cmp_paywall_feature_credits">%1$d ИИ-кредитов в месяц</string>
+    <string name="cmp_paywall_feature_pages">До %1$d страниц в одном документе</string>
+    <string name="cmp_paywall_feature_office">Файлы Word, PowerPoint и OpenDocument</string>
+    <string name="cmp_paywall_feature_translation">Перевод</string>
+    <string name="cmp_paywall_feature_extraction">Извлечение данных из чеков, счетов и карт</string>
+    <string name="cmp_paywall_feature_sign">Подписание PDF и проверка цифровых подписей</string>
+    <string name="cmp_paywall_feature_edit">Редактирование текста, сжатие и защита PDF паролем</string>
+    <string name="cmp_paywall_feature_ai_provider">Подключение собственного ИИ-провайдера</string>
+
+    <!-- ui/components/ResultsComponents.kt -->
+    <string name="cmp_edit_text">Редактировать текст</string>
+    <string name="cmp_print">Печать</string>
+    <string name="cmp_export">Экспорт</string>
+    <string name="cmp_copy_text">Копировать текст</string>
+    <string name="cmp_reading_options">Параметры чтения</string>
+    <string name="cmp_show_preview">Показать предпросмотр</string>
+    <string name="cmp_smaller_text">Уменьшить текст</string>
+    <string name="cmp_zoom_percent">%1$d%%</string>
+    <string name="cmp_bigger_text">Увеличить текст</string>
+    <string name="cmp_reset">Сброс</string>
+    <string name="cmp_no_table">Нет таблицы</string>
+    <string name="cmp_word_char_counts">Слов: %1$d · символов: %2$d</string>
+    <string name="cmp_save_as">Сохранить как</string>
+
+    <!-- ui/components/PageRangeDialog.kt -->
+    <string name="cmp_page_range_title">Какие страницы сканировать?</string>
+    <string name="cmp_page_range_over_ceiling">В файле %1$s %2$d страниц, а за один скан обрабатывается не больше %3$d. Выберите нужные.</string>
+    <string name="cmp_page_range_intro">В файле %1$s %2$d страниц. Каждая отсканированная страница учитывается в вашем тарифе, поэтому диапазон стоит дешевле всего файла.</string>
+    <string name="cmp_page_range_example">например 1-5, 8</string>
+    <string name="cmp_page_range_pick_up_to">Выберите до %1$d страниц от 1 до %2$d.</string>
+    <string name="cmp_page_range_use_numbers">Укажите номера страниц от 1 до %1$d, например 1-5 или 2,4.</string>
+    <string name="cmp_page_range_n_of_total">%1$d из %2$d страниц</string>
+    <string name="cmp_page_range_required">Обязательно: этот скан охватывает %1$d страниц</string>
+    <string name="cmp_page_range_leave_empty">Оставьте поле пустым, чтобы сканировать все %1$d страниц</string>
+    <string name="cmp_page_range_scan_count">Сканировать %1$d</string>
+    <string name="cmp_page_range_scan_all">Сканировать всё</string>
+
+    <!-- ui/components/TextDisplayComponents.kt -->
+    <string name="cmp_stage_uploading">Загрузка…</string>
+    <string name="cmp_stage_processing">Обработка…</string>
+    <string name="cmp_stage_generating">Создание…</string>
+    <string name="cmp_stage_complete">Готово</string>
+    <string name="cmp_processing_file_of">Обработка файла %1$d из %2$d...</string>
+    <string name="cmp_extracting_text">Извлечение текста...</string>
+    <string name="cmp_file_of">Файл %1$d из %2$d</string>
+    <string name="cmp_may_take_few_moments">Это может занять некоторое время</string>
+    <string name="cmp_translating">Перевод...</string>
+    <string name="cmp_couldnt_read_file">Не удалось прочитать этот файл</string>
+    <string name="cmp_no_text_extracted">Текст не извлечён</string>
+    <string name="cmp_try_different_image">Попробуйте выбрать другое изображение</string>
+    <string name="cmp_batch_scanning">Сканирование файлов: %1$d из %2$d…</string>
+
+    <!-- ui/components/product/FoodContentSection.kt -->
+    <string name="cmp_food_nutrition_facts">Пищевая ценность</string>
+    <string name="cmp_food_serving_size">Размер порции: %1$s</string>
+    <string name="cmp_food_ingredients">Состав</string>
+    <string name="cmp_food_allergens">Аллергены</string>
+    <string name="cmp_food_no_nutrition_info">Подробные данные о пищевой ценности этого продукта недоступны.</string>
+    <string name="cmp_food_calories">Калории</string>
+    <string name="cmp_food_fat">Жиры</string>
+    <string name="cmp_food_carbs">Углеводы</string>
+    <string name="cmp_food_protein">Белки</string>
+    <string name="cmp_food_sugar">Сахар</string>
+    <string name="cmp_food_salt">Соль</string>
+    <string name="cmp_food_fiber">Клетчатка</string>
+
+    <!-- ui/components/product/MedicineContentSection.kt -->
+    <string name="cmp_medicine_generic_name">Международное название</string>
+    <string name="cmp_medicine_manufacturer">Производитель</string>
+    <string name="cmp_medicine_active_ingredients">Действующие вещества</string>
+    <string name="cmp_medicine_dosage_form">Лекарственная форма</string>
+    <string name="cmp_medicine_route">Способ введения</string>
+    <string name="cmp_medicine_recalled">⚠️ Этот продукт отозван FDA.</string>
+    <string name="cmp_medicine_contraindications">Противопоказания</string>
+    <string name="cmp_medicine_indications">Показания</string>
+    <string name="cmp_medicine_fda_approved">Одобрено FDA: %1$s</string>
+    <string name="cmp_medicine_no_info">Подробная информация об этом лекарстве недоступна.</string>
+    <string name="cmp_medicine_warnings">Предупреждения</string>
+
+    <!-- ui/components/product/BookContentSection.kt -->
+    <string name="cmp_book_authors">Авторы</string>
+    <string name="cmp_book_publisher">Издательство</string>
+    <string name="cmp_book_published">Опубликовано</string>
+    <string name="cmp_book_categories">Категории</string>
+    <string name="cmp_book_isbn13">ISBN-13: %1$s</string>
+    <string name="cmp_book_isbn10">ISBN-10: %1$s</string>
+    <string name="cmp_book_no_info">Подробная информация об этой книге недоступна.</string>
+
+    <!-- ui/components/product/CosmeticsContentSection.kt -->
+    <string name="cmp_cosmetics_labels">Маркировка</string>
+    <string name="cmp_cosmetics_no_info">Подробная информация об этом продукте недоступна.</string>
+
+    <!-- ui/components/ExportNameDialog.kt -->
+    <string name="cmp_export_name_title">Назовите файл</string>
+    <string name="cmp_export_file_name_label">Имя файла</string>
+    <string name="cmp_export_name_hint">По возможности используется исходное имя файла.</string>
+
+    <!-- ui/components/ExtractionPresetSheet.kt -->
+    <string name="cmp_extract_data">Извлечь данные</string>
+    <string name="cmp_preset_cost">Получите размеченные поля вместе с текстом. Чтение страницы как данных стоит %1$d кредитов из вашего тарифа. В одном документе может быть до 8 страниц.</string>
+    <string name="cmp_preset_included_pro">Получите размеченные поля вместе с текстом. Входит в Pro и выше.</string>
+
+    <!-- ui/components/SignInRequiredSheet.kt -->
+    <string name="cmp_sign_in_ai_title">Войдите, чтобы пользоваться ИИ-сканированием</string>
+    <string name="cmp_sign_in_ai_body">ИИ-сканирование работает через общий ключ, поэтому нужен аккаунт. Распознавание текста и штрихкодов остаётся бесплатным и работает офлайн, вход для него не нужен.</string>
+    <string name="cmp_sign_in_create_account">Войти или создать аккаунт</string>
+
+    <!-- ui/components/MainActionButton.kt -->
+    <string name="cmp_view_previous_extracts">Посмотреть прошлые извлечения</string>
+
+    <!-- ui/components/MarkdownContent.kt -->
+    <string name="cmp_embedded_image">Встроенное изображение</string>
+
+    <!-- ui/components/StorageAccess.kt -->
+    <string name="cmp_storage_allow_settings">Разрешите доступ к хранилищу в настройках, чтобы сохранять файлы на этом телефоне.</string>
+
+    <!-- ui/components/LanguageChipRow.kt -->
+    <string name="cmp_chip_original">Оригинал</string>
+    <string name="cmp_chip_translate">Перевод</string>
+    <string name="cmp_chip_text_to_pdf">Текст в PDF</string>
+
+    <!-- ui/components/AiModeBottomSheet.kt -->
+    <string name="cmp_ai_scan_title">ИИ-скан</string>
+    <string name="cmp_ai_mode_extract_text_title">Извлечь текст</string>
+    <string name="cmp_ai_mode_extract_text_subtitle">Извлечь видимый текст из изображения</string>
+    <string name="cmp_ai_mode_extract_document_title">Извлечь документ</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">Файлы PDF, Word, PowerPoint и текстовые файлы</string>
+    <string name="cmp_ai_mode_extract_data_title">Извлечь данные</string>
+    <string name="cmp_ai_mode_extract_data_subtitle">Чеки, счета и карты как размеченные поля</string>
+    <string name="cmp_ai_mode_audio_title">Аудио в текст</string>
+    <string name="cmp_ai_mode_audio_subtitle">Записи, встречи и видео с разбивкой по говорящим</string>
+
+    <!-- ui/components/BarcodeScannerComponents.kt -->
+    <string name="cmp_barcode_detected">Штрихкод распознан</string>
+    <string name="cmp_barcode_content">Содержимое штрихкода</string>
+    <string name="cmp_copy_to_clipboard">Копировать в буфер обмена</string>
+
+    <!-- ui/components/ProductDetailSheet.kt -->
+    <string name="cmp_product_unknown_source">Неизвестно</string>
+    <string name="cmp_product_looking_up">Поиск товара...</string>
+    <string name="cmp_product_not_found">Товар не найден</string>
+    <string name="cmp_product_lookup_failed">Ошибка поиска</string>
+    <string name="cmp_product_unknown_error">Неизвестная ошибка</string>
+    <string name="cmp_product_unknown_name">Неизвестный товар</string>
+    <string name="cmp_product_via_source">через %1$s</string>
+
+    <!-- ui/components/ScanInsightComponents.kt -->
+    <plurals name="cmp_passages_hard_to_read">
+        <item quantity="one">%1$d фрагмент трудно читается</item>
+        <item quantity="few">%1$d фрагмента трудно читаются</item>
+        <item quantity="many">%1$d фрагментов трудно читаются</item>
+        <item quantity="other">%1$d фрагментов трудно читаются</item>
+    </plurals>
+    <string name="cmp_check_against_original">Перед использованием сверьте эти данные с оригиналом.</string>
+    <string name="cmp_show_all_count">Показать все (%1$d)</string>
+    <string name="cmp_copy_json">Копировать JSON</string>
+    <plurals name="cmp_links_found">
+        <item quantity="one">%1$d ссылка</item>
+        <item quantity="few">%1$d ссылки</item>
+        <item quantity="many">%1$d ссылок</item>
+        <item quantity="other">%1$d ссылок</item>
+    </plurals>
+
+    <!-- ui/components/FilePreviewOverlay.kt -->
+    <string name="cmp_preview_saves_to">Предпросмотр файла .%1$s · сохраняется в Downloads/Scanly</string>
+    <string name="cmp_export_format">Экспорт: %1$s</string>
+    <string name="cmp_preview_no_table_csv">В этом тексте нет таблицы, поэтому в CSV-файл нечего будет перенести.</string>
+    <string name="cmp_preview_rendering_pages">Создание страниц…</string>
+    <string name="cmp_preview_render_failed">Не удалось создать PDF из этого документа.</string>
+    <string name="cmp_preview_page_n_of_total">Страница %1$d из %2$d</string>
+    <string name="cmp_preview_first_n_of_pages">Первые %1$d из %2$d страниц</string>
+    <string name="cmp_preview_first_n_of_lines">Первые %1$d из %2$d строк</string>
+
+    <!-- ui/components/TextPdfExport.kt -->
+    <string name="cmp_export_nothing_to_export">Нечего экспортировать</string>
+    <string name="cmp_export_no_table_data">Нет данных таблицы для экспорта</string>
+    <string name="cmp_export_couldnt_save">Не удалось сохранить %1$s</string>
+
+    <!-- ui/viewmodel/DocumentScanViewModel.kt -->
+    <string name="cmp_doc_saved_to_downloads">%1$s сохранён в Downloads/Scanly</string>
+    <string name="cmp_doc_couldnt_create">Не удалось создать %1$s</string>
+    <plurals name="cmp_doc_saved_images">
+        <item quantity="one">Сохранено %1$d изображение в галерею</item>
+        <item quantity="few">Сохранено %1$d изображения в галерею</item>
+        <item quantity="many">Сохранено %1$d изображений в галерею</item>
+        <item quantity="other">Сохранено %1$d изображений в галерею</item>
+    </plurals>
+    <string name="cmp_doc_couldnt_save_images">Не удалось сохранить изображения</string>
+
+    <!-- ui/viewmodel/TranscribeViewModel.kt -->
+    <string name="cmp_transcribe_default_title">Аудио</string>
+    <string name="cmp_transcribe_nothing_recorded">Ничего не записано. Проверьте микрофон и попробуйте снова.</string>
+    <string name="cmp_transcribe_recording_title">Запись, %1$s</string>
+
+    <!-- docchat/presentation/screen/ChatReplies.kt -->
+    <string name="cmp_chat_reply_field_line">%1$s: %2$s</string>
+    <string name="act_open_link">Открыть ссылку</string>
+    <string name="act_copy">Копировать</string>
+    <string name="act_copy_text">Копировать текст</string>
+    <string name="act_copy_barcode">Копировать штрихкод</string>
+    <string name="act_copy_ssid">Копировать SSID</string>
+    <string name="act_call">Позвонить</string>
+    <string name="act_send_email">Написать письмо</string>
+    <string name="act_connect_wifi">Подключиться к Wi-Fi</string>
+    <string name="act_send_sms">Отправить SMS</string>
+    <string name="act_add_contact">Добавить контакт</string>
+    <string name="act_view_text">Показать текст</string>
+    <string name="act_add_event">Добавить в календарь</string>
+    <string name="act_product_info">Информация о товаре</string>
+    <string name="act_copied">Скопировано в буфер обмена</string>
+    <string name="act_err_url">Не удалось открыть ссылку</string>
+    <string name="act_err_copy">Не удалось скопировать</string>
+    <string name="act_err_dialer">Не удалось открыть набор номера</string>
+    <string name="act_err_email">Не удалось открыть приложение эл. почты</string>
+    <string name="act_err_sms">Не удалось открыть приложение для сообщений</string>
+    <string name="act_err_wifi">Не удалось подключиться к Wi-Fi</string>
+    <string name="act_wifi_suggested">Предложена сеть Wi-Fi: %1$s</string>
+    <string name="act_wifi_open_settings">Откройте настройки Wi-Fi, чтобы подключиться к %1$s</string>
+    <string name="act_err_contacts">Не удалось открыть контакты</string>
+    <string name="act_err_calendar">Не удалось открыть календарь</string>
+    <string name="tx_fmt_pdf">PDF</string>
+    <string name="tx_fmt_pdf_hint">Говорящие и время, готово к печати</string>
+    <string name="tx_fmt_word">Word</string>
+    <string name="tx_fmt_word_hint">Редактируемый документ</string>
+    <string name="tx_fmt_text">Текст</string>
+    <string name="tx_fmt_text_hint">Обычный .txt</string>
+    <string name="tx_fmt_md">Markdown</string>
+    <string name="tx_fmt_md_hint">Для приложений с заметками</string>
+    <string name="tx_fmt_srt">Субтитры (SRT)</string>
+    <string name="tx_fmt_srt_hint">Для видеоредакторов</string>
+    <string name="tx_fmt_vtt">Субтитры (WebVTT)</string>
+    <string name="tx_fmt_vtt_hint">Для веба, с говорящими</string>
+    <string name="pay_headline_pro_feature">Входит в Scanly Pro</string>
+    <string name="pay_headline_limit">Вы исчерпали лимит своего тарифа</string>
+    <string name="pay_headline_on_tier">У вас тариф %1$s</string>
+    <string name="pay_headline_upsell">Сканируйте больше с Pro</string>
+    <string name="pay_key_active">Ваш ключ активен. Пользуйтесь на здоровье.</string>
+    <string name="pay_key_active_tier">У вас тариф %1$s. Пользуйтесь на здоровье.</string>
+    <string name="pay_confirm_sent">Проверьте почту, откройте ссылку и снова нажмите «Восстановить покупку».</string>
+    <string name="pay_confirm_failed">Не удалось отправить письмо для подтверждения. Попробуйте ещё раз.</string>
+    <string name="pay_key_removed">Ключ удалён с этого устройства.</string>
+    <string name="pay_restored_tier">Ваш ключ %1$s вернулся.</string>
+    <string name="pay_restored">Ваш ключ снова на этом устройстве.</string>
+    <string name="pay_restore_nothing">На этом аккаунте нет подписки. Если вы платили с другого адреса эл. почты, войдите с ним и попробуйте снова.</string>
+    <string name="pay_plan_title">Тариф %1$s</string>
+    <string name="pay_plan_credits_left">В этом месяце осталось %1$d из %2$d ИИ-кредитов</string>
+    <string name="pay_plan_see_plans">Нажмите, чтобы посмотреть тарифы</string>
+    <string name="pay_plan_yours">Ваш тариф</string>
+    <string name="pay_plan_load_failed">Не удалось загрузить ваш тариф. Нажмите, чтобы повторить.</string>
+    <string name="pay_plan_checking">Проверка тарифа…</string>
+</resources>

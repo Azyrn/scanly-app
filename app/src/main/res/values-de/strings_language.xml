@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_language_title">Sprache</string>
+    <string name="settings_language_system">Systemstandard</string>
+    <string name="settings_language_cancel">Abbrechen</string>
+</resources>

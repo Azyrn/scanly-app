@@ -1,8 +1,11 @@
 package com.skeler.scanely.core.ai
 
+import android.content.Context
 import android.os.SystemClock
+import com.skeler.scanely.R
 import com.skeler.scanely.core.network.NetworkObserver
 import com.skeler.scanely.core.network.TokenUnavailableException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
@@ -63,8 +66,12 @@ internal fun backoffDelay(attempt: Int, serverRetryAfterSeconds: Int?): Long {
 /** Retries transient backend failures without retrying user-actionable errors. */
 @Singleton
 internal class BackendExecutor @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val networkObserver: NetworkObserver
 ) {
+    private fun unexpectedMessage(): String =
+        context.getString(R.string.ai_err_unexpected, AI_PROVIDER_NAME)
+
     suspend fun <T> run(
         emit: suspend (AiEvent) -> Unit,
         retrySafe: Boolean = true,
@@ -91,7 +98,7 @@ internal class BackendExecutor @Inject constructor(
                 aiDebug { "attempt ${attempt + 1} timed out" }
                 lastFailureWasNetwork = false
                 serverRetryAfterSeconds = null
-                lastFailureMessage = "The request took too long. Please try again."
+                lastFailureMessage = context.getString(R.string.ai_err_timeout)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: FatalAiException) {
@@ -107,14 +114,14 @@ internal class BackendExecutor @Inject constructor(
                 // busy minute. Retrying it spends a minute to arrive at the same answer, so the
                 // message goes straight through instead.
                 if (!worthRetrying(e.retryAfterSeconds)) {
-                    return AiOutcome.Fatal(AiResult.Error(e.message ?: UNEXPECTED_MESSAGE))
+                    return AiOutcome.Fatal(AiResult.Error(e.message ?: unexpectedMessage()))
                 }
             } catch (e: TokenUnavailableException) {
                 // A session the server rejected. Retrying cannot fix it, and the message is written
                 // for the user — it used to be dropped here for "your connection looks unstable".
                 aiDebug { "attempt ${attempt + 1} session: ${e.message}" }
                 return AiOutcome.Fatal(
-                    AiResult.Error(e.message ?: UNEXPECTED_MESSAGE, code = "unauthenticated")
+                    AiResult.Error(e.message ?: unexpectedMessage(), code = "unauthenticated")
                 )
             } catch (e: IOException) {
                 aiDebug { "attempt ${attempt + 1} IO: ${e.message}" }
@@ -126,10 +133,12 @@ internal class BackendExecutor @Inject constructor(
                 }
             } catch (e: SerializationException) {
                 aiDebug { "attempt ${attempt + 1} unparsable body: ${e.message}" }
-                return AiOutcome.Fatal(AiResult.Error(BAD_RESPONSE_MESSAGE))
+                return AiOutcome.Fatal(
+                    AiResult.Error(context.getString(R.string.ai_err_bad_response, AI_PROVIDER_NAME))
+                )
             } catch (e: Exception) {
                 aiDebug { "attempt ${attempt + 1} ${e::class.simpleName}: ${e.message}" }
-                return AiOutcome.Fatal(AiResult.Error(UNEXPECTED_MESSAGE))
+                return AiOutcome.Fatal(AiResult.Error(unexpectedMessage()))
             }
         }
 
@@ -151,14 +160,14 @@ internal class BackendExecutor @Inject constructor(
         while (remaining > 0) {
             val seconds = (remaining + 999) / 1000
             val lead = if (networkProblem) {
-                "Connection trouble"
+                context.getString(R.string.ai_retry_network)
             } else {
-                "Temporary service issue"
+                context.getString(R.string.ai_retry_service)
             }
             emit(
                 AiEvent.Stage(
                     AiStage.PROCESSING,
-                    "$lead. Retrying in ${seconds}s (${attempt + 1}/$MAX_ATTEMPTS)."
+                    context.getString(R.string.ai_retrying, lead, seconds, attempt + 1, MAX_ATTEMPTS)
                 )
             )
             val step = minOf(TICK_MS, remaining)
@@ -169,11 +178,6 @@ internal class BackendExecutor @Inject constructor(
 
     companion object {
         private const val MAX_ATTEMPTS = 3
-
-        private const val BAD_RESPONSE_MESSAGE =
-            "$AI_PROVIDER_NAME sent back something this app can't read. Try again."
-        private const val UNEXPECTED_MESSAGE =
-            "Something went wrong talking to $AI_PROVIDER_NAME. Try again."
 
         private const val TICK_MS = 1_000L
 

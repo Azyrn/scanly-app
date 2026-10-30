@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Görünen her çalışma sayfası, çalışma kitabındaki sıraya göre PDF\'in sayfalarına dönüşür. Geniş sayfalar sonraki sayfalara devam eder.</string>
+    <string name="excel2pdf_convert">PDF\'e dönüştür</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d gizli çalışma sayfası dışarıda bırakıldı.</item>
+        <item quantity="other">%d gizli çalışma sayfası dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d grafik dışarıda bırakıldı.</item>
+        <item quantity="other">%d grafik dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d resim dışarıda bırakıldı.</item>
+        <item quantity="other">%d resim dışarıda bırakıldı.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">Formüller, en son kaydedilen sonucunu gösterir.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">Kayıtlı sonucu olmayan %d formül boş bırakıldı.</item>
+        <item quantity="other">Kayıtlı sonucu olmayan %d formül boş bırakıldı.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">Koşullu biçimlendirme uygulanmadı.</string>
+    <string name="excel2pdf_note_pivots">Pivot tablolar, en son kaydedilen değerlerini gösterir.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Çok büyük çalışma sayfaları %d satırda kesildi.</item>
+        <item quantity="other">Çok büyük çalışma sayfaları %d satırda kesildi.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">PDF %d sayfada durur; geri kalanı dışarıda bırakıldı.</item>
+        <item quantity="other">PDF %d sayfada durur; geri kalanı dışarıda bırakıldı.</item>
+    </plurals>
+</resources>

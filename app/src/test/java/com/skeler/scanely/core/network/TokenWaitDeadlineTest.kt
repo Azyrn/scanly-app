@@ -2,6 +2,7 @@ package com.skeler.scanely.core.network
 
 import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.auth.GetTokenResult
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -22,7 +23,7 @@ class TokenWaitDeadlineTest {
         val started = System.currentTimeMillis()
 
         try {
-            awaitToken("Could not verify your session.") { stalled }
+            awaitToken(EnglishStrings.context(), "Could not verify your session.") { stalled }
             fail("a stalled token fetch returned")
         } catch (e: IOException) {
             val waited = System.currentTimeMillis() - started

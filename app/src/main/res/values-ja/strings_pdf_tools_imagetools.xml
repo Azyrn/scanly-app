@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d 件のファイルは読み取れなかったためスキップされました</item>
+        <item quantity="other">%d 件のファイルは読み取れなかったためスキップされました</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d 枚の画像はすでにこれ以上小さくできないため、変更されていません</item>
+        <item quantity="other">%d 枚の画像はすでにこれ以上小さくできないため、変更されていません</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">おすすめ</string>
+    <string name="pdf_tool_img_compress_recommended_body">かなり小さくなりますが、見た目は変わりません。</string>
+    <string name="pdf_tool_img_compress_strong">強</string>
+    <string name="pdf_tool_img_compress_strong_body">最も小さいファイルになります。細部がぼやける場合があります。</string>
+    <string name="pdf_tool_img_compress_light">軽</string>
+    <string name="pdf_tool_img_compress_light_body">最高の画質で、削減量は少なくなります。</string>
+    <string name="pdf_tool_img_png_to_jpg">ファイルを小さくするためPNGをJPGに変換</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNGをJPGに変換すると、目に見えない細部だけが失われます。透明な部分は白くなります。</string>
+    <string name="pdf_tool_img_compress_action">画像を圧縮</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">各画像がJPGに変換されます。透明な部分は白くなります。GIFは最初のフレームのみ保持されます。</string>
+    <string name="pdf_tool_img_to_jpg_action">JPGに変換</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">ピクセルをそのまま保持します。ファイルは大きくなります。</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">見た目は同じで、通常はJPGより小さくなります。</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256色。図形に向いていますが、写真では階調が粗く見えることがあります。</string>
+    <string name="pdf_tool_img_from_jpg_action">画像を変換</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">割合で指定</string>
+    <string name="pdf_tool_img_resize_by_size">サイズで指定</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">最大幅（px）</string>
+    <string name="pdf_tool_img_resize_height">最大高さ（px）</string>
+    <string name="pdf_tool_img_resize_size_hint">幅、高さ、またはその両方を入力してください。</string>
+    <string name="pdf_tool_img_resize_size_invalid">1 から %d までの数値を入力してください。</string>
+    <string name="pdf_tool_img_resize_keep_aspect">縦横比を維持</string>
+    <string name="pdf_tool_img_resize_no_enlarge">画像を拡大しない</string>
+    <string name="pdf_tool_img_resize_action">画像のサイズを変更</string>
+</resources>

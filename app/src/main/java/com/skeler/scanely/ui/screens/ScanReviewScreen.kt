@@ -72,7 +72,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -88,6 +91,7 @@ import com.skeler.scanely.ui.viewmodel.FilterPreview
 @Composable
 fun ScanReviewScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val navigator = LocalNavigator.current
     val vm: DocumentScanViewModel = hiltViewModel(activity)
@@ -119,11 +123,11 @@ fun ScanReviewScreen() {
                     context,
                     exported.uri,
                     exported.format.mimeType,
-                    "Open ${exported.format.label} with…"
+                    resources.getString(R.string.scr_scan_review_open_with, exported.format.label)
                 )
             ) {
                 snackbarHostState.showSnackbar(
-                    "No app installed to open ${exported.format.label} files"
+                    resources.getString(R.string.scr_scan_review_no_app, exported.format.label)
                 )
             }
             vm.consumeExport()
@@ -135,7 +139,7 @@ fun ScanReviewScreen() {
             TopAppBar(
                 title = {
                     Column {
-                        Text("Review scan", fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.scr_scan_review_title), fontWeight = FontWeight.SemiBold)
                         Text(
                             text = pageSummary(pages.size, currentPage),
                             style = MaterialTheme.typography.bodySmall,
@@ -145,7 +149,10 @@ fun ScanReviewScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -225,8 +232,8 @@ fun ScanReviewScreen() {
     pendingDelete?.let { index ->
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("Delete page ${index + 1}?") },
-            text = { Text("This page won't be included in your export. You can rescan it at any time.") },
+            title = { Text(stringResource(R.string.scr_scan_review_delete_page_title, index + 1)) },
+            text = { Text(stringResource(R.string.scr_scan_review_delete_page_body)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -234,11 +241,11 @@ fun ScanReviewScreen() {
                         vm.deletePage(index)
                     }
                 ) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.chat_delete_confirm), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { pendingDelete = null }) { Text("Keep") }
+                TextButton(onClick = { pendingDelete = null }) { Text(stringResource(R.string.scr_scan_review_keep)) }
             }
         )
     }
@@ -276,7 +283,7 @@ private fun PageStage(
                 ) {
                     Image(
                         bitmap = pages[index].asImageBitmap(),
-                        contentDescription = "Page ${index + 1}",
+                        contentDescription = stringResource(R.string.pdf2office_excel_sheet_page, index + 1),
                         contentScale = ContentScale.Fit,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -321,7 +328,7 @@ private fun PageCounter(current: Int, total: Int, modifier: Modifier = Modifier)
         color = MaterialTheme.colorScheme.surfaceContainerHighest
     ) {
         Text(
-            text = "${current + 1} / $total",
+            text = stringResource(R.string.pdf_stamp_numbers_format_slash, current + 1, total),
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface,
@@ -349,14 +356,14 @@ private fun PageTools(
             IconButton(onClick = onRotate) {
                 Icon(
                     Icons.Rounded.Rotate90DegreesCw,
-                    contentDescription = "Rotate page",
+                    contentDescription = stringResource(R.string.scr_scan_review_rotate_page),
                     tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             IconButton(onClick = onDelete) {
                 Icon(
                     Icons.Rounded.DeleteOutline,
-                    contentDescription = "Delete page",
+                    contentDescription = stringResource(R.string.scr_scan_review_delete_page),
                     tint = MaterialTheme.colorScheme.error
                 )
             }
@@ -372,7 +379,7 @@ private fun FilterStrip(
 ) {
     Column(Modifier.padding(top = 12.dp)) {
         Text(
-            text = "Enhance",
+            text = stringResource(R.string.scr_scan_review_enhance),
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -485,14 +492,14 @@ private fun ExportBar(enabled: Boolean, onClick: () -> Unit) {
                 Icon(Icons.Rounded.IosShare, contentDescription = null, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.size(10.dp))
                 Text(
-                    "Save or share",
+                    stringResource(R.string.scr_save_or_share),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "PDF, Word or images in your gallery",
+                text = stringResource(R.string.scr_scan_review_save_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -508,7 +515,7 @@ private fun ExportSheet(
     onImages: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val pageLabel = "$pageCount page${if (pageCount > 1) "s" else ""}"
+    val pageLabel = pluralStringResource(R.plurals.scr_scan_review_page_count, pageCount, pageCount)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -521,7 +528,7 @@ private fun ExportSheet(
                 .padding(bottom = 32.dp)
         ) {
             Text(
-                text = "Save or share",
+                text = stringResource(R.string.scr_save_or_share),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 4.dp)
@@ -530,22 +537,22 @@ private fun ExportSheet(
 
             ExportOption(
                 icon = R.drawable.ic_file_pdf,
-                title = "PDF document",
-                subtitle = "$pageLabel in one file · opens after saving",
+                title = stringResource(R.string.scr_export_pdf_title),
+                subtitle = stringResource(R.string.scr_export_pdf_subtitle, pageLabel),
                 onClick = onPdf
             )
             Spacer(Modifier.height(8.dp))
             ExportOption(
                 icon = R.drawable.ic_file_word,
-                title = "Word document",
-                subtitle = "$pageLabel as .docx, one scan per page",
+                title = stringResource(R.string.scr_export_word_title),
+                subtitle = stringResource(R.string.scr_export_word_subtitle, pageLabel),
                 onClick = onWord
             )
             Spacer(Modifier.height(8.dp))
             ExportOption(
                 icon = R.drawable.ic_action_gallery_stack,
-                title = "Images to gallery",
-                subtitle = "$pageLabel as JPEG in your Scanly album",
+                title = stringResource(R.string.scr_export_images_title),
+                subtitle = stringResource(R.string.scr_export_images_subtitle, pageLabel),
                 onClick = onImages
             )
         }
@@ -611,25 +618,26 @@ private fun EmptyPages(onBack: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Nothing left to review",
+            text = stringResource(R.string.scr_scan_review_empty_title),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(6.dp))
         Text(
-            text = "Every page was deleted. Scan again to start over.",
+            text = stringResource(R.string.scr_scan_review_empty_body),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(Modifier.height(20.dp))
-        Button(onClick = onBack, shape = CircleShape) { Text("Back to scanner") }
+        Button(onClick = onBack, shape = CircleShape) { Text(stringResource(R.string.scr_scan_review_back_to_scanner)) }
     }
 }
 
+@Composable
 private fun pageSummary(count: Int, current: Int): String = when {
-    count == 0 -> "No pages"
-    count == 1 -> "1 page"
-    else -> "Page ${current + 1} of $count"
+    count == 0 -> stringResource(R.string.scr_scan_review_no_pages)
+    count == 1 -> stringResource(R.string.scr_scan_review_one_page)
+    else -> stringResource(R.string.cmp_preview_page_n_of_total, current + 1, count)
 }

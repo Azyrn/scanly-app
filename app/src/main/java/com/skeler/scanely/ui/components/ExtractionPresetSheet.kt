@@ -17,8 +17,10 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.network.ExtractionPresetDto
 
 /**
@@ -41,17 +43,16 @@ fun ExtractionPresetSheet(
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Column(modifier = Modifier.padding(bottom = 32.dp)) {
             Text(
-                text = "Extract data",
+                text = stringResource(R.string.cmp_extract_data),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp)
             )
             Text(
                 text = if (included) {
-                    "Get labelled fields as well as the text. Reading a page as data costs " +
-                        "$pageCost credits from your plan. Each document can have up to 8 pages."
+                    stringResource(R.string.cmp_preset_cost, pageCost)
                 } else {
-                    "Get labelled fields as well as the text. Included with Pro and above."
+                    stringResource(R.string.cmp_preset_included_pro)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

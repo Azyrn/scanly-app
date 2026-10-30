@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">表示されているすべてのシートが、ブック内の順序でPDFのページになります。横長のシートは次のページに続きます。</string>
+    <string name="excel2pdf_convert">PDFに変換</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">非表示のシート %d 枚は除外されました。</item>
+        <item quantity="other">非表示のシート %d 枚は除外されました。</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">グラフ %d 件は除外されました。</item>
+        <item quantity="other">グラフ %d 件は除外されました。</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">画像 %d 件は除外されました。</item>
+        <item quantity="other">画像 %d 件は除外されました。</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">数式には、最後に保存された結果が表示されます。</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">保存された結果がない数式が %d 件あり、空欄になっています。</item>
+        <item quantity="other">保存された結果がない数式が %d 件あり、空欄になっています。</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">条件付き書式は適用されませんでした。</string>
+    <string name="excel2pdf_note_pivots">ピボットテーブルには、最後に保存された値が表示されます。</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">非常に大きなシートは %d 行目で切り取られました。</item>
+        <item quantity="other">非常に大きなシートは %d 行目で切り取られました。</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">PDFは %d ページで止まり、残りは除外されました。</item>
+        <item quantity="other">PDFは %d ページで止まり、残りは除外されました。</item>
+    </plurals>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Jedes sichtbare Blatt wird zu Seiten im PDF, in der Reihenfolge der Arbeitsmappe. Breite Blätter laufen auf den folgenden Seiten weiter.</string>
+    <string name="excel2pdf_convert">In PDF umwandeln</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d ausgeblendetes Blatt wurde weggelassen.</item>
+        <item quantity="other">%d ausgeblendete Blätter wurden weggelassen.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d Diagramm wurde weggelassen.</item>
+        <item quantity="other">%d Diagramme wurden weggelassen.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d Bild wurde weggelassen.</item>
+        <item quantity="other">%d Bilder wurden weggelassen.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">Formeln zeigen ihr zuletzt gespeichertes Ergebnis.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d Formel hatte kein gespeichertes Ergebnis und ist leer.</item>
+        <item quantity="other">%d Formeln hatten kein gespeichertes Ergebnis und sind leer.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">Bedingte Formatierung wurde nicht angewendet.</string>
+    <string name="excel2pdf_note_pivots">Pivot-Tabellen zeigen ihre zuletzt gespeicherten Werte.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Sehr große Blätter wurden nach %d Zeile abgeschnitten.</item>
+        <item quantity="other">Sehr große Blätter wurden nach %d Zeilen abgeschnitten.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">Das PDF endet nach %d Seite; der Rest wurde weggelassen.</item>
+        <item quantity="other">Das PDF endet nach %d Seiten; der Rest wurde weggelassen.</item>
+    </plurals>
+</resources>

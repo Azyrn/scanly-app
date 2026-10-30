@@ -7,6 +7,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -67,6 +68,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
@@ -77,6 +81,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.LocalDarkMode
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.text.FilenameSuggester
@@ -108,6 +113,7 @@ fun TranscriptScreen() {
     var renamingSpeaker by remember { mutableStateOf<Int?>(null) }
     var confirmDelete by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val resources = LocalResources.current
     val exportDocument = rememberTextExporter()
     val exportPlain = rememberPlainExporter()
 
@@ -116,7 +122,7 @@ fun TranscriptScreen() {
             TopAppBar(
                 title = {
                     Text(
-                        transcript?.title ?: "Transcript",
+                        transcript?.title ?: stringResource(R.string.scr_transcript_title_default),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.SemiBold,
@@ -125,7 +131,10 @@ fun TranscriptScreen() {
                 },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 actions = {
@@ -134,23 +143,35 @@ fun TranscriptScreen() {
                             context.getSystemService(ClipboardManager::class.java)?.setPrimaryClip(
                                 ClipData.newPlainText(transcript.title, TranscriptFormats.plainText(transcript))
                             )
-                            Toast.makeText(context, "Transcript copied", Toast.LENGTH_SHORT).show()
-                        }) { Icon(Icons.Rounded.ContentCopy, contentDescription = "Copy transcript") }
+                            Toast.makeText(
+                                context,
+                                resources.getString(R.string.scr_transcript_copied),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }) {
+                            Icon(
+                                Icons.Rounded.ContentCopy,
+                                contentDescription = stringResource(R.string.scr_transcript_copy)
+                            )
+                        }
                         IconButton(onClick = { share(context, transcript) }) {
-                            Icon(Icons.Rounded.Share, contentDescription = "Share transcript")
+                            Icon(
+                                Icons.Rounded.Share,
+                                contentDescription = stringResource(R.string.scr_transcript_share)
+                            )
                         }
                         Box {
                             IconButton(onClick = { exportOpen = true }) {
-                                Icon(Icons.Rounded.SaveAlt, contentDescription = "Save as")
+                                Icon(Icons.Rounded.SaveAlt, contentDescription = stringResource(R.string.cmp_save_as))
                             }
                             DropdownMenu(expanded = exportOpen, onDismissRequest = { exportOpen = false }) {
                                 TranscriptExport.entries.forEach { format ->
                                     DropdownMenuItem(
                                         text = {
                                             Column {
-                                                Text(format.label, fontWeight = FontWeight.Medium)
+                                                Text(stringResource(format.label), fontWeight = FontWeight.Medium)
                                                 Text(
-                                                    format.hint,
+                                                    stringResource(format.hint),
                                                     style = MaterialTheme.typography.bodySmall,
                                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                                 )
@@ -176,14 +197,14 @@ fun TranscriptScreen() {
                     }
                     Box {
                         IconButton(onClick = { menuOpen = true }) {
-                            Icon(Icons.Rounded.MoreVert, contentDescription = "More")
+                            Icon(Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.scr_more))
                         }
                         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                            DropdownMenuItem(text = { Text("Rename") }, onClick = {
+                            DropdownMenuItem(text = { Text(stringResource(R.string.scr_rename)) }, onClick = {
                                 menuOpen = false
                                 renaming = true
                             })
-                            DropdownMenuItem(text = { Text("Delete") }, onClick = {
+                            DropdownMenuItem(text = { Text(stringResource(R.string.chat_delete_confirm)) }, onClick = {
                                 menuOpen = false
                                 confirmDelete = true
                             })
@@ -211,7 +232,7 @@ fun TranscriptScreen() {
                 CircularProgressIndicator()
             }
             transcript == null -> Box(Modifier.fillMaxSize().padding(padding), Alignment.Center) {
-                Text("This transcript is no longer on this phone.")
+                Text(stringResource(R.string.scr_transcript_gone))
             }
             else -> TranscriptBody(
                 transcript = transcript,
@@ -230,7 +251,7 @@ fun TranscriptScreen() {
 
     if (renaming && transcript != null) {
         TextPromptDialog(
-            title = "Rename transcript",
+            title = stringResource(R.string.scr_transcript_rename_title),
             initial = transcript.title,
             onConfirm = {
                 viewModel.rename(it)
@@ -242,10 +263,10 @@ fun TranscriptScreen() {
 
     renamingSpeaker?.let { speaker ->
         TextPromptDialog(
-            title = "Name this speaker",
+            title = stringResource(R.string.scr_transcript_name_speaker_title),
             initial = transcript?.speakerNames?.get(speaker).orEmpty(),
-            placeholder = "Speaker ${speaker + 1}",
-            confirmLabel = "Save",
+            placeholder = stringResource(R.string.scr_transcript_speaker_placeholder, speaker + 1),
+            confirmLabel = stringResource(R.string.chat_save),
             onConfirm = {
                 viewModel.renameSpeaker(speaker, it)
                 renamingSpeaker = null
@@ -257,15 +278,19 @@ fun TranscriptScreen() {
     if (confirmDelete) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
-            title = { Text("Delete transcript?") },
-            text = { Text("The transcript and its recording will be removed from this phone.") },
+            title = { Text(stringResource(R.string.scr_transcribe_delete_title)) },
+            text = { Text(stringResource(R.string.scr_transcript_delete_body)) },
             confirmButton = {
                 TextButton(onClick = {
                     confirmDelete = false
                     viewModel.delete()
-                }) { Text("Delete") }
+                }) { Text(stringResource(R.string.chat_delete_confirm)) }
             },
-            dismissButton = { TextButton(onClick = { confirmDelete = false }) { Text("Cancel") } }
+            dismissButton = {
+                TextButton(
+                    onClick = { confirmDelete = false }
+                ) { Text(stringResource(R.string.chat_cancel)) }
+            }
         )
     }
 }
@@ -308,7 +333,7 @@ private fun TranscriptBody(
         if (transcript.isEmpty) {
             item(key = "empty") {
                 Text(
-                    "No speech was found in this recording.",
+                    stringResource(R.string.scr_transcript_no_speech),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -333,11 +358,14 @@ private fun Facts(transcript: Transcript) {
         TranscriptFormats.clock(transcript.durationMs),
         transcript.language.takeIf { it.isNotBlank() }?.let(TranscriptFormats::languageName),
         when {
-            transcript.speakerCount > 1 -> "${transcript.speakerCount} speakers"
-            transcript.speakerCount == 1 -> "1 speaker"
+            transcript.speakerCount > 0 -> pluralStringResource(
+                R.plurals.scr_transcript_speakers,
+                transcript.speakerCount,
+                transcript.speakerCount
+            )
             else -> null
         },
-        "${transcript.creditsUsed} ${if (transcript.creditsUsed == 1) "credit" else "credits"}"
+        pluralStringResource(R.plurals.scr_transcript_credits, transcript.creditsUsed, transcript.creditsUsed)
             .takeIf { transcript.creditsUsed > 0 }
     )
     Text(
@@ -451,19 +479,33 @@ private fun PlayerBar(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val shown = if (dragging) (dragValue * duration).toLong() else player.positionMs
                 Text(
-                    "${TranscriptFormats.clock(shown)} / ${TranscriptFormats.clock(player.durationMs)}",
+                    stringResource(
+                        R.string.scr_transcript_time,
+                        TranscriptFormats.clock(shown),
+                        TranscriptFormats.clock(player.durationMs)
+                    ),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = { onSkip(-10_000) }) { Icon(Icons.Rounded.Replay10, "Back 10 seconds") }
+                IconButton(
+                    onClick = { onSkip(-10_000) }
+                ) { Icon(Icons.Rounded.Replay10, stringResource(R.string.scr_player_back_10)) }
                 FilledIconButton(onClick = onToggle, modifier = Modifier.size(52.dp)) {
                     Icon(
                         if (player.playing) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,
-                        contentDescription = if (player.playing) "Pause" else "Play"
+                        contentDescription = if (player.playing) {
+                            stringResource(
+                                R.string.scr_pause
+                            )
+                        } else {
+                            stringResource(R.string.scr_play)
+                        }
                     )
                 }
-                IconButton(onClick = { onSkip(10_000) }) { Icon(Icons.Rounded.Forward10, "Forward 10 seconds") }
+                IconButton(
+                    onClick = { onSkip(10_000) }
+                ) { Icon(Icons.Rounded.Forward10, stringResource(R.string.scr_player_forward_10)) }
                 TextButton(onClick = onSpeed, modifier = Modifier.weight(1f).padding(start = 8.dp)) {
                     Text(speedLabel(player.speed))
                 }
@@ -480,7 +522,7 @@ private fun TextPromptDialog(
     title: String,
     initial: String,
     placeholder: String? = null,
-    confirmLabel: String = "Rename",
+    confirmLabel: String = stringResource(R.string.scr_rename),
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -497,7 +539,7 @@ private fun TextPromptDialog(
             )
         },
         confirmButton = { TextButton(onClick = { onConfirm(value) }) { Text(confirmLabel) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }
 
@@ -531,18 +573,18 @@ private val SPEAKERS_DARK = listOf(
 
 /** Every way a transcript can be saved. [document] formats go through the shared exporter. */
 private enum class TranscriptExport(
-    val label: String,
-    val hint: String,
+    @StringRes val label: Int,
+    @StringRes val hint: Int,
     val extension: String,
     val mimeType: String,
     val document: TextExportFormat? = null
 ) {
-    PDF("PDF", "Speakers and times, ready to print", "pdf", ScanExporter.PDF_MIME_TYPE, TextExportFormat.PDF),
-    WORD("Word", "Editable document", "docx", ScanExporter.WORD_MIME_TYPE, TextExportFormat.WORD),
-    TEXT("Text", "Plain .txt", "txt", "text/plain"),
-    MARKDOWN("Markdown", "For notes apps", "md", ScanExporter.MARKDOWN_MIME_TYPE),
-    SRT("Subtitles (SRT)", "For video editors", "srt", "application/x-subrip"),
-    VTT("Subtitles (WebVTT)", "For the web, with speakers", "vtt", "text/vtt")
+    PDF(R.string.tx_fmt_pdf, R.string.tx_fmt_pdf_hint, "pdf", ScanExporter.PDF_MIME_TYPE, TextExportFormat.PDF),
+    WORD(R.string.tx_fmt_word, R.string.tx_fmt_word_hint, "docx", ScanExporter.WORD_MIME_TYPE, TextExportFormat.WORD),
+    TEXT(R.string.tx_fmt_text, R.string.tx_fmt_text_hint, "txt", "text/plain"),
+    MARKDOWN(R.string.tx_fmt_md, R.string.tx_fmt_md_hint, "md", ScanExporter.MARKDOWN_MIME_TYPE),
+    SRT(R.string.tx_fmt_srt, R.string.tx_fmt_srt_hint, "srt", "application/x-subrip"),
+    VTT(R.string.tx_fmt_vtt, R.string.tx_fmt_vtt_hint, "vtt", "text/vtt")
 }
 
 private class PendingPlainExport(val transcript: Transcript, val format: TranscriptExport)
@@ -551,6 +593,7 @@ private class PendingPlainExport(val transcript: Transcript, val format: Transcr
 @Composable
 private fun rememberPlainExporter(): (Transcript, TranscriptExport) -> Unit {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val scope = rememberCoroutineScope()
     val withStorageAccess = rememberStorageAccess()
     var pending by remember { mutableStateOf<PendingPlainExport?>(null) }
@@ -580,12 +623,20 @@ private fun rememberPlainExporter(): (Transcript, TranscriptExport) -> Unit {
                             )
                         }.fold(
                             onSuccess = { uri ->
-                                Toast.makeText(context, "Saved to Downloads/Scanly", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    resources.getString(R.string.pdf_tool_saved),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 ScanExporter.shareDocument(context, uri, export.format.mimeType)
                             },
                             onFailure = {
-                                val label = export.format.label
-                                Toast.makeText(context, "Couldn't save $label", Toast.LENGTH_SHORT).show()
+                                val label = resources.getString(export.format.label)
+                                Toast.makeText(
+                                    context,
+                                    resources.getString(R.string.cmp_export_couldnt_save, label),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         )
                     }
@@ -602,5 +653,5 @@ private fun share(context: Context, transcript: Transcript) {
         putExtra(Intent.EXTRA_SUBJECT, transcript.title)
         putExtra(Intent.EXTRA_TEXT, TranscriptFormats.plainText(transcript))
     }
-    runCatching { context.startActivity(Intent.createChooser(send, "Share transcript")) }
+    runCatching { context.startActivity(Intent.createChooser(send, context.getString(R.string.scr_transcript_share))) }
 }

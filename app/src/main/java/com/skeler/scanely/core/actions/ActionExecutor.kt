@@ -13,7 +13,9 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.net.toUri
+import com.skeler.scanely.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -39,7 +41,7 @@ object ActionExecutor {
     }
 
     /** Runs an action, toasting [errorToast] on the failures launching intents can produce. */
-    private inline fun tryAction(context: Context, errorToast: String, block: () -> Unit) {
+    private inline fun tryAction(context: Context, @StringRes errorToast: Int, block: () -> Unit) {
         val failure = try {
             block()
             null
@@ -51,13 +53,13 @@ object ActionExecutor {
             e
         }
         if (failure != null) {
-            Log.w(TAG, errorToast, failure)
+            Log.w(TAG, "Action failed", failure)
             Toast.makeText(context, errorToast, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun openUrl(context: Context, url: String) {
-        tryAction(context, "Cannot open URL") {
+        tryAction(context, R.string.act_err_url) {
             var finalUrl = url
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
                 finalUrl = "https://$url"
@@ -69,16 +71,16 @@ object ActionExecutor {
     }
 
     private fun copyText(context: Context, text: String) {
-        tryAction(context, "Failed to copy") {
+        tryAction(context, R.string.act_err_copy) {
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Scanned Text", text)
             clipboard.setPrimaryClip(clip)
-            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.act_copied, Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun callPhone(context: Context, number: String) {
-        tryAction(context, "Cannot open dialer") {
+        tryAction(context, R.string.act_err_dialer) {
             val intent = Intent(Intent.ACTION_DIAL, "tel:$number".toUri())
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
@@ -86,7 +88,7 @@ object ActionExecutor {
     }
 
     private fun sendEmail(context: Context, email: String, subject: String?, body: String?) {
-        tryAction(context, "Cannot open email app") {
+        tryAction(context, R.string.act_err_email) {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = "mailto:".toUri()
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
@@ -99,7 +101,7 @@ object ActionExecutor {
     }
 
     private fun sendSms(context: Context, number: String, message: String?) {
-        tryAction(context, "Cannot open SMS app") {
+        tryAction(context, R.string.act_err_sms) {
             val intent = Intent(Intent.ACTION_SENDTO, "smsto:$number".toUri())
             message?.let { intent.putExtra("sms_body", it) }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -108,7 +110,7 @@ object ActionExecutor {
     }
 
     private fun connectWifi(context: Context, ssid: String, password: String?, type: WifiType) {
-        tryAction(context, "Cannot connect to WiFi") {
+        tryAction(context, R.string.act_err_wifi) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val suggestion = WifiNetworkSuggestion.Builder()
                     .setSsid(ssid)
@@ -125,18 +127,22 @@ object ActionExecutor {
                 val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
-                Toast.makeText(context, "WiFi suggestion added: $ssid", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.act_wifi_suggested, ssid), Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
-                Toast.makeText(context, "Open WiFi settings to connect to: $ssid", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.act_wifi_open_settings, ssid),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun addContact(context: Context, action: ScanAction.AddContact) {
-        tryAction(context, "Cannot open contacts") {
+        tryAction(context, R.string.act_err_contacts) {
             val intent = Intent(Intent.ACTION_INSERT).apply {
                 type = ContactsContract.Contacts.CONTENT_TYPE
                 action.name?.let { putExtra(ContactsContract.Intents.Insert.NAME, it) }
@@ -150,7 +156,7 @@ object ActionExecutor {
     }
 
     private fun addEvent(context: Context, action: ScanAction.AddEvent) {
-        tryAction(context, "Cannot open calendar") {
+        tryAction(context, R.string.act_err_calendar) {
             val intent = Intent(Intent.ACTION_INSERT).apply {
                 data = CalendarContract.Events.CONTENT_URI
                 action.title?.let { putExtra(CalendarContract.Events.TITLE, it) }

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Build Documents with AI, the document chat. English only for now; every string the chat shows is here. -->
+<resources>
+    <!-- Top bar -->
+    <string name="chat_title_empty">Scanly AI</string>
+    <string name="chat_menu">المحادثات والخطة</string>
+    <string name="chat_untitled">مستند بلا عنوان</string>
+    <string name="chat_file_default_name">مستند</string>
+    <string name="chat_new">محادثة جديدة</string>
+    <string name="chat_rename_action">إعادة تسمية المحادثة</string>
+    <string name="chat_rename_title">إعادة تسمية المحادثة</string>
+    <string name="chat_rename_label">الاسم</string>
+    <string name="chat_save">حفظ</string>
+    <string name="chat_cancel">إلغاء</string>
+
+    <!-- History -->
+    <string name="chat_group_today">اليوم</string>
+    <string name="chat_group_yesterday">أمس</string>
+    <string name="chat_group_week">آخر 7 أيام</string>
+    <string name="chat_group_older">أقدم</string>
+    <string name="chat_search_hint">البحث في المحادثات</string>
+    <string name="chat_search_clear">مسح البحث</string>
+    <string name="chat_search_empty">لا توجد محادثات تطابق بحثك.</string>
+    <string name="chat_history_empty">لا توجد محادثات بعد. تظهر هنا المستندات التي تنشئها.</string>
+    <string name="chat_more_actions">مزيد من الإجراءات</string>
+    <string name="chat_delete_title">هل تريد حذف هذه المحادثة؟</string>
+    <string name="chat_delete_body">سيتم حذف «%1$s» وملفاته من هذا الهاتف ومن حسابك. تبقى النسخ التي حفظتها في Downloads.</string>
+    <string name="chat_delete_confirm">حذف</string>
+
+    <!-- Empty state -->
+    <string name="chat_greeting_title">ماذا نُنشئ؟</string>
+    <!-- Example requests in a new chat; each fills the composer. Delete items to remove them. -->
+    <string-array name="chat_example_prompts">
+        <item>إنشاء سيرة ذاتية من صفحة واحدة</item>
+        <item>إنشاء جدول بيانات للميزانية</item>
+        <item>كتابة خطاب رسمي في Word</item>
+    </string-array>
+    <string name="chat_ask_answered">لقد أجبت.</string>
+    <string name="chat_greeting_body">صِف ما تريده، أو أرفِق ملفًا لإعادة بنائه.</string>
+
+    <!-- Composer -->
+    <string name="chat_composer_hint">صِف مستندًا…</string>
+    <string name="chat_composer_hint_revise">اطلب تعديلًا…</string>
+    <string name="chat_attach">إرفاق</string>
+    <string name="chat_send">إرسال</string>
+    <string name="chat_stop">إيقاف الانتظار</string>
+    <plurals name="chat_cost_hint">
+        <item quantity="zero">~%d رصيد</item>
+        <item quantity="one">~%d رصيد</item>
+        <item quantity="two">~%d رصيدان</item>
+        <item quantity="few">~%d أرصدة</item>
+        <item quantity="many">~%d رصيدًا</item>
+        <item quantity="other">~%d رصيد</item>
+    </plurals>
+    <string name="chat_cost_agent">المحادثة مجانية · الملفات تستهلك أرصدة</string>
+    <string name="chat_remove">إزالة %1$s</string>
+    <string name="chat_preparing_file">جارٍ التحضير…</string>
+    <string name="chat_preset_clean_up">تنظيفه</string>
+    <string name="chat_preset_one_page">أن يتسع لصفحة واحدة</string>
+    <plurals name="chat_pages">
+        <item quantity="zero">%d صفحة</item>
+        <item quantity="one">%d صفحة</item>
+        <item quantity="two">%d صفحتان</item>
+        <item quantity="few">%d صفحات</item>
+        <item quantity="many">%d صفحة</item>
+        <item quantity="other">%d صفحة</item>
+    </plurals>
+    <string name="chat_preparing_picture">جارٍ تحضير الصورة…</string>
+    <string name="chat_picture_role">موضوعة على الصفحة</string>
+    <string name="chat_scan_role">من مسوحاتي</string>
+    <string name="chat_image_pending">إعادة البناء أم وضع الصورة؟</string>
+    <string name="chat_role_rebuild">إعادة بناء هذا المستند</string>
+    <string name="chat_role_place">وضع هذه الصورة على الصفحة</string>
+    <string name="chat_role_rebuild_prompt">أعِد بناء هذا المستند كملف PDF نظيف. واحتفظ بكل كلمة واسم ورقم.</string>
+    <string name="chat_role_place_prompt">ضع هذه الصورة على الصفحة كصورة شخصية أو شعار.</string>
+    <string name="chat_role_question">هل تريد إعادة بنائها أم وضعها على الصفحة؟</string>
+    <string name="chat_role_question_body">تحوّل إعادة البناء الصورة إلى مستند جديد. أما الوضع فيُبقيها صورة، كصورة شخصية أو شعار.</string>
+    <string name="chat_role_answer_rebuild">أعِد بناءها</string>
+    <string name="chat_role_answer_place">ضعها</string>
+    <string name="chat_attach_error_dismiss">تجاهل</string>
+
+
+    <!-- Attach sheet -->
+    <string name="chat_attach_title">إضافة ملف</string>
+    <string name="chat_attach_camera">الكاميرا</string>
+    <string name="chat_attach_photos">الصور</string>
+    <string name="chat_attach_files">الملفات</string>
+    <string name="chat_attach_scans">مسوحاتي</string>
+    <string name="chat_no_scans">لا توجد مسوحات بعد. امسح مستندًا من الشاشة الرئيسية أولًا.</string>
+    <string name="chat_scans_title">مسوحاتك الأخيرة</string>
+
+
+    <!-- Message list -->
+    <string name="chat_jump_latest">الانتقال إلى الأحدث</string>
+    <string name="chat_unknown_message">تحتاج هذه الرسالة إلى إصدار أحدث من Scanly.</string>
+    <string name="chat_you_attached">تم إرفاق: %1$s</string>
+
+    <!-- Turn outcomes written into the chat -->
+    <string name="chat_stopped_waiting">توقّف الانتظار. قد يُكمل الخادم عمله ويستهلك أرصدة. أعِد المحاولة لتحصل على النتيجة نفسها دون دفع مرتين.</string>
+    <string name="chat_interrupted">انقطع هذا الطلب. أرسل رسالتك مرة أخرى.</string>
+    <string name="chat_reconnecting">جارٍ إعادة الاتصال بتصميمك…</string>
+    <string name="chat_design_failed">تعذّر إكمال التصميم. رسالتك محفوظة؛ حاول مرة أخرى.</string>
+
+    <!-- Attaching -->
+    <string name="chat_photo_unusable">تعذّر استخدام هذه الصورة. جرّب صورة أخرى.</string>
+    <string name="chat_file_too_many_pages">يُعيد المصمم بناء ما يصل إلى %1$d صفحة، وهذا الملف يحتوي على %2$d.</string>
+    <string name="chat_file_too_large">هذا الملف كبير جدًا لإعادة بنائه.</string>
+    <string name="chat_file_unreadable">تعذّرت قراءة هذا الملف. جرّب ملفًا آخر.</string>
+
+    <!-- File actions -->
+    <string name="chat_open_with">فتح باستخدام…</string>
+    <string name="chat_no_viewer">لا يوجد تطبيق على هذا الهاتف يمكنه فتح هذا الملف.</string>
+    <string name="chat_save_failed">تعذّر حفظ الملف.</string>
+    <string name="chat_share_failed">تعذّرت مشاركة الملف.</string>
+    <string name="chat_saved_to_downloads">تم الحفظ في Downloads.</string>
+    <plurals name="chat_images_saved">
+        <item quantity="zero">تم حفظ %d صورة في Pictures/Scanly.</item>
+        <item quantity="one">تم حفظ %d صورة في Pictures/Scanly.</item>
+        <item quantity="two">تم حفظ %d صورتين في Pictures/Scanly.</item>
+        <item quantity="few">تم حفظ %d صور في Pictures/Scanly.</item>
+        <item quantity="many">تم حفظ %d صورة في Pictures/Scanly.</item>
+        <item quantity="other">تم حفظ %d صورة في Pictures/Scanly.</item>
+    </plurals>
+    <string name="chat_images_failed">تعذّر حفظ الصور.</string>
+    <string name="chat_file_missing">تعذّر الحصول على هذا الملف. تحقّق من اتصالك وحاول مرة أخرى.</string>
+    <string name="chat_file_expired">لم يعد هذا التصميم محفوظًا. أعِد بناءه للحصول على الملف مرة أخرى.</string>
+
+    <!-- Reply cards -->
+    <string name="chat_not_charged">لم يُخصم شيء</string>
+    <string name="chat_retry">إعادة المحاولة</string>
+    <string name="chat_see_plans">عرض الخطط</string>
+    <string name="chat_ask_title">تحقّق من ملفك</string>
+    <string name="chat_ask_reason">يبدو هذا كـ%1$s.</string>
+    <string name="chat_ask_fallback">لا يبدو هذا الملف كالمستند الذي طلبته.</string>
+    <string name="chat_ask_continue">المتابعة على أي حال</string>
+    <string name="chat_ask_dismiss">ليس الآن</string>
+    <string name="chat_ask_answered_continue">اخترت المتابعة على أي حال.</string>
+    <string name="chat_ask_answered_dismiss">اخترت عدم المتابعة.</string>
+    <string name="chat_fields_title">بعض التفاصيل أولًا</string>
+    <string name="chat_fields_body">أضِفها حتى لا يُختلق أي شيء في مستندك.</string>
+    <string name="chat_fields_submit">إنشاء المستند</string>
+    <string name="chat_fields_open">إدخال التفاصيل</string>
+    <string name="chat_file_open">فتح</string>
+    <string name="chat_file_share">مشاركة</string>
+    <string name="chat_file_download">تنزيل</string>
+    <string name="chat_file_more">مزيد من الإجراءات</string>
+    <string name="chat_file_save_images">حفظ الصفحات كصور</string>
+    <string name="chat_file_revise">تعديل هذه النسخة</string>
+    <string name="chat_file_editing">جارٍ التعديل</string>
+    <plurals name="chat_credits_used">
+        <item quantity="zero">%d رصيد</item>
+        <item quantity="one">%d رصيد</item>
+        <item quantity="two">%d رصيدان</item>
+        <item quantity="few">%d أرصدة</item>
+        <item quantity="many">%d رصيدًا</item>
+        <item quantity="other">%d رصيد</item>
+    </plurals>
+    <string name="chat_expired">منتهٍ: أعِد البناء</string>
+    <string name="chat_expired_hint">لم يعد الخادم يحتفظ بهذا التصميم، لذا لا يمكن تعديله. أعِد بناءه لمواصلة التعديل.</string>
+    <string name="chat_thumbnail_description">الصفحة الأولى من %1$s</string>
+
+    <!-- Background job notification -->
+    <string name="chat_notification_channel">المستندات</string>
+    <string name="chat_notification_channel_description">عند جاهزية مستند أُنشئ في الخلفية</string>
+    <string name="chat_notification_ready">ملف PDF جاهز. انقر لفتح المحادثة.</string>
+    <string name="chat_notification_not_charged">لم يُخصم منك أي شيء.</string>
+
+    <!-- Working reply: the live status line and Show thinking -->
+    <string name="chat_status_elapsed">%1$s · %2$d ث</string>
+    <string name="chat_step_reading">قراءة ملفك</string>
+    <string name="chat_step_extracting">استخراج النص</string>
+    <string name="chat_step_planning">تخطيط الصفحة</string>
+    <string name="chat_step_writing">كتابة المحتوى</string>
+    <string name="chat_step_building">إنشاء ملف PDF</string>
+    <string name="chat_step_checking">التحقق من الجودة</string>
+    <string name="chat_step_fixing">إصلاح التخطيط</string>
+    <string name="chat_step_done">تم</string>
+    <string name="chat_step_thinking">التفكير</string>
+    <string name="chat_step_reading_guide">قراءة الدليل</string>
+    <string name="chat_step_coding">كتابة الشيفرة</string>
+    <string name="chat_step_previewing">مراجعة الصفحات</string>
+    <string name="chat_step_delivering">تسليم الملف</string>
+    <string name="chat_agent_done">تم. ملفاتك أدناه.</string>
+    <string name="chat_agent_failed">تعذّر على المساعد إكمال المهمة. رسالتك محفوظة؛ حاول مرة أخرى.</string>
+    <string name="chat_agent_about_file">(بخصوص الملف %1$s.)</string>
+    <string name="chat_agent_delivered">تم تسليم %1$s</string>
+    <string name="chat_approval_title">هل تريد فتح هذا الموقع؟</string>
+    <string name="chat_approval_new_url">هذا الرابط ليس في رسالتك ولا في نتائج البحث، لذا يحتاج المساعد إلى موافقتك لفتحه.</string>
+    <string name="chat_approval_page_link">وجد المساعد هذا الرابط في صفحة فتحها، ويحتاج إلى موافقتك لفتحه.</string>
+    <string name="chat_approval_warn_query">يحمل هذا الرابط بيانات إضافية بعد علامة «؟». إن كنت لا تثق بهذا الموقع، فاضغط رفض: قد يتلقى جزءًا من هذه المحادثة.</string>
+    <string name="chat_approval_warn_long">هذا الرابط طويل بشكل غير معتاد. إن كنت لا تثق بهذا الموقع، فاضغط رفض: قد يتلقى جزءًا من هذه المحادثة.</string>
+    <string name="chat_approval_countdown">عدم الرد خلال %1$s يعني الرفض.</string>
+    <string name="chat_approval_allow_once">السماح مرة واحدة</string>
+    <string name="chat_approval_deny">رفض</string>
+    <string name="chat_show_thinking">إظهار التفكير</string>
+    <string name="chat_hide_thinking">إخفاء التفكير</string>
+    <string name="chat_took">استغرق %1$d ث</string>
+    <string name="chat_seconds">%1$d ث</string>
+    <string name="chat_under_a_second">أقل من ثانية</string>
+    <string name="chat_background_note">يعمل في الخلفية. ستتلقى إشعارًا، وسيظهر الملف هنا.</string>
+    <string name="chat_stopped_note">توقّف الانتظار. سيظهر الملف هنا عند جهوزه.</string>
+
+    <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
+         Tool names and their arguments are the agent's own and are not translated. -->
+    <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
+    <plurals name="chat_log_steps">
+        <item quantity="zero">%d خطوة</item>
+        <item quantity="one">%d خطوة</item>
+        <item quantity="two">%d خطوتان</item>
+        <item quantity="few">%d خطوات</item>
+        <item quantity="many">%d خطوة</item>
+        <item quantity="other">%d خطوة</item>
+    </plurals>
+    <string name="chat_log_minutes">%1$d د %2$d ث</string>
+    <string name="chat_log_seconds">%1$d ث</string>
+    <string name="chat_log_worked">عمل لمدة %1$s · %2$s</string>
+    <string name="chat_log_show_steps">إظهار الخطوات</string>
+    <string name="chat_log_hide_steps">إخفاء الخطوات</string>
+    <string name="chat_log_thought">فكّر لمدة %1$s</string>
+    <string name="chat_log_thinking">التفكير</string>
+    <plurals name="chat_log_read">
+        <item quantity="zero">قرأ %d سطرًا</item>
+        <item quantity="one">قرأ %d سطرًا</item>
+        <item quantity="two">قرأ %d سطرين</item>
+        <item quantity="few">قرأ %d أسطر</item>
+        <item quantity="many">قرأ %d سطرًا</item>
+        <item quantity="other">قرأ %d سطرًا</item>
+    </plurals>
+    <plurals name="chat_log_wrote">
+        <item quantity="zero">كتب %d سطرًا</item>
+        <item quantity="one">كتب %d سطرًا</item>
+        <item quantity="two">كتب %d سطرين</item>
+        <item quantity="few">كتب %d أسطر</item>
+        <item quantity="many">كتب %d سطرًا</item>
+        <item quantity="other">كتب %d سطرًا</item>
+    </plurals>
+    <string name="chat_log_read_image">قراءة الصورة (%1$s)</string>
+    <string name="chat_log_no_output">(لا يوجد ناتج)</string>
+    <string name="chat_log_denied">مرفوض: غير مسموح به في هذه المهمة</string>
+    <string name="chat_log_running">قيد التشغيل…</string>
+    <plurals name="chat_log_more_lines">
+        <item quantity="zero">+%d سطر</item>
+        <item quantity="one">+%d سطر</item>
+        <item quantity="two">+%d سطران</item>
+        <item quantity="few">+%d أسطر</item>
+        <item quantity="many">+%d سطرًا</item>
+        <item quantity="other">+%d سطر</item>
+    </plurals>
+    <string name="chat_log_show_more">إظهار المزيد</string>
+    <string name="chat_log_show_less">إظهار أقل</string>
+    <plurals name="chat_log_not_shown">
+        <item quantity="zero">%1$d سطر إضافي (%2$d حرفًا) غير معروض</item>
+        <item quantity="one">%1$d سطر إضافي (%2$d حرفًا) غير معروض</item>
+        <item quantity="two">%1$d سطران إضافيان (%2$d حرفًا) غير معروضين</item>
+        <item quantity="few">%1$d أسطر إضافية (%2$d حرفًا) غير معروضة</item>
+        <item quantity="many">%1$d سطرًا إضافيًا (%2$d حرفًا) غير معروض</item>
+        <item quantity="other">%1$d سطر إضافي (%2$d حرفًا) غير معروض</item>
+    </plurals>
+    <plurals name="chat_log_not_kept">
+        <item quantity="zero">%1$d سطر (%2$d حرفًا) غير محفوظ</item>
+        <item quantity="one">%1$d سطر (%2$d حرفًا) غير محفوظ</item>
+        <item quantity="two">%1$d سطران (%2$d حرفًا) غير محفوظين</item>
+        <item quantity="few">%1$d أسطر (%2$d حرفًا) غير محفوظة</item>
+        <item quantity="many">%1$d سطرًا (%2$d حرفًا) غير محفوظ</item>
+        <item quantity="other">%1$d سطر (%2$d حرفًا) غير محفوظ</item>
+    </plurals>
+    <string name="chat_log_show_all">إظهار الكل</string>
+    <string name="chat_log_loading">جارٍ تحميل الناتج الكامل…</string>
+    <string name="chat_log_expired">انتهت صلاحية الناتج الكامل</string>
+    <string name="chat_log_unavailable">تعذّر تحميل الناتج الكامل. انقر لإعادة المحاولة.</string>
+    <string name="chat_log_past_limit">%1$d حرفًا إضافيًا تجاوز الحد ولم يُحفظ</string>
+    <plurals name="chat_log_dropped">
+        <item quantity="zero">%d سطر سابق غير محفوظ على هذا الهاتف</item>
+        <item quantity="one">%d سطر سابق غير محفوظ على هذا الهاتف</item>
+        <item quantity="two">%d سطران سابقان غير محفوظين على هذا الهاتف</item>
+        <item quantity="few">%d أسطر سابقة غير محفوظة على هذا الهاتف</item>
+        <item quantity="many">%d سطرًا سابقًا غير محفوظ على هذا الهاتف</item>
+        <item quantity="other">%d سطر سابق غير محفوظ على هذا الهاتف</item>
+    </plurals>
+</resources>

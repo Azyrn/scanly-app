@@ -132,6 +132,10 @@ leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", v
 # PDF editor: rendering, text positions and per-char font size (which is what lets replacement
 # text match the original), page deletion, and save-as-copy.
 pdfium-android = { group = "io.legere", name = "pdfiumandroid", version.ref = "pdfium" }
+# The same release's core module, which pdfiumandroid pulls in at runtime only. Compiled against so
+# PdfiumLayer can take the wrapper's global pdfium lock; adds nothing to the APK.
+pdfium-android-core = { group = "io.legere", name = "pdfiumandroid-core", version.ref = "pdfium" }
+pdfium-android-api = { group = "io.legere", name = "pdfiumandroid-api", version.ref = "pdfium" }
 # PKCS#7/CMS verification for embedded digital signatures. Pulls bcprov transitively; Android's
 # own cut-down "BC" provider can't parse detached CMS, so SignatureValidator registers this one
 # under its own name rather than replacing the platform provider.

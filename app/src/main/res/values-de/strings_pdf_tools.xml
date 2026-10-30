@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
+<resources>
+    <!-- Opening a PDF anywhere in the app -->
+    <string name="pdf_open_damaged">Diese Datei ist beschädigt oder keine PDF-Datei.</string>
+
+    <!-- Grid -->
+    <string name="pdf_tools_title">PDF-Werkzeuge</string>
+    <string name="pdf_tools_back">Zurück</string>
+    <string name="pdf_tools_section_organize">Ordnen und optimieren</string>
+    <string name="pdf_tools_section_convert">Umwandeln</string>
+    <string name="pdf_tools_section_edit">Bearbeiten und schützen</string>
+    <string name="pdf_tools_section_image">Bilder</string>
+    <string name="pdf_tools_pro_badge">Pro</string>
+    <string name="pdf_tools_paywall_reason">Dieses Werkzeug gehört zu Scanly Pro.</string>
+
+    <!-- Tool names -->
+    <string name="pdf_tool_compress">PDF komprimieren</string>
+    <string name="pdf_tool_edit">PDF bearbeiten</string>
+    <string name="pdf_tool_rotate">PDF drehen</string>
+    <string name="pdf_tool_unlock">PDF entsperren</string>
+    <string name="pdf_tool_protect">PDF schützen</string>
+    <string name="pdf_tool_organize">PDF ordnen</string>
+    <string name="pdf_tool_sign">PDF signieren</string>
+    <string name="pdf_tool_merge">PDFs zusammenführen</string>
+    <string name="pdf_tool_split">PDF aufteilen</string>
+    <string name="pdf_tool_pdf_to_word">PDF in Word</string>
+    <string name="pdf_tool_pdf_to_powerpoint">PDF in PowerPoint</string>
+    <string name="pdf_tool_pdf_to_excel">PDF in Excel</string>
+    <string name="pdf_tool_word_to_pdf">Word in PDF</string>
+    <string name="pdf_tool_powerpoint_to_pdf">PowerPoint in PDF</string>
+    <string name="pdf_tool_excel_to_pdf">Excel in PDF</string>
+    <string name="pdf_tool_pdf_to_jpg">PDF in JPG</string>
+    <string name="pdf_tool_image_to_pdf">Bild in PDF</string>
+    <string name="pdf_tool_page_numbers">Seitenzahlen</string>
+    <string name="pdf_tool_watermark">Wasserzeichen</string>
+    <string name="pdf_tool_repair">PDF reparieren</string>
+    <string name="pdf_tool_extract_text">Text extrahieren</string>
+    <string name="pdf_tool_compress_image">Bild komprimieren</string>
+    <string name="pdf_tool_convert_to_jpg">In JPG umwandeln</string>
+    <string name="pdf_tool_convert_from_jpg">Aus JPG umwandeln</string>
+    <string name="pdf_tool_resize_image">Bild skalieren</string>
+
+    <!-- Shared flow -->
+    <string name="pdf_tool_reading">Lese %1$s…</string>
+    <string name="pdf_tool_working">Verarbeite %1$s…</string>
+    <string name="pdf_tool_cancel">Abbrechen</string>
+    <string name="pdf_tool_cancelled">Abgebrochen.</string>
+    <string name="pdf_tool_file_summary">%1$s · %2$s</string>
+    <plurals name="pdf_tool_pages">
+        <item quantity="one">%d Seite</item>
+        <item quantity="other">%d Seiten</item>
+    </plurals>
+    <string name="pdf_tool_password_title">Passwort erforderlich</string>
+    <string name="pdf_tool_password_body">%1$s ist mit einem Passwort geschützt.</string>
+    <string name="pdf_tool_password_retry">Mit diesem Passwort lässt sich %1$s nicht öffnen.</string>
+    <string name="pdf_tool_password_label">Passwort</string>
+    <string name="pdf_tool_password_open">Öffnen</string>
+    <string name="pdf_tool_show_password">Passwort anzeigen</string>
+    <string name="pdf_tool_hide_password">Passwort verbergen</string>
+
+    <!-- Result -->
+    <string name="pdf_tool_done">Fertig</string>
+    <string name="pdf_tool_save">Speichern</string>
+    <string name="pdf_tool_saved">In Downloads/Scanly gespeichert</string>
+    <string name="pdf_tool_share">Teilen</string>
+    <string name="pdf_tool_open">Öffnen</string>
+    <string name="pdf_tool_open_with">Öffnen mit…</string>
+    <string name="pdf_tool_no_viewer">Keine App auf diesem Telefon kann diese Datei öffnen.</string>
+    <string name="pdf_tool_save_failed">Speichern in Downloads nicht möglich. Der Speicher ist vielleicht voll.</string>
+    <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
+    <string name="pdf_tool_another_file">Andere Datei wählen</string>
+    <string name="pdf_tool_try_again">Erneut versuchen</string>
+
+    <!-- Failures -->
+    <string name="pdf_tool_error_title">Konnte nicht abgeschlossen werden</string>
+    <string name="pdf_tool_error_unreadable">Scanly konnte diese Datei nicht lesen. Sie wurde vielleicht verschoben, oder die App, die sie verwaltet, hat den Zugriff verweigert.</string>
+    <string name="pdf_tool_error_damaged">Diese Datei ist beschädigt oder keine PDF-Datei.</string>
+    <string name="pdf_tool_error_low_storage">Auf diesem Telefon ist nicht genug freier Speicher. Gib etwas Platz frei und versuche es erneut.</string>
+    <string name="pdf_tool_error_wrong_password">Mit diesem Passwort lässt sich die Datei nicht öffnen.</string>
+    <string name="pdf_tool_error_not_encrypted">Diese PDF hat kein Passwort, das entfernt werden könnte.</string>
+    <string name="pdf_tool_error_no_gain">Diese PDF ist bereits so klein, wie es diese Stufe schafft. Probiere eine stärkere Stufe.</string>
+    <string name="pdf_tool_error_nothing_found">Diese PDF enthält nichts, was dieses Werkzeug extrahieren kann.</string>
+    <string name="pdf_tool_error_failed">Beim Verarbeiten dieser Datei ist etwas schiefgelaufen.</string>
+
+    <!-- Compress -->
+    <string name="pdf_tool_compress_lossless">Verlustfrei</string>
+    <string name="pdf_tool_compress_lossless_body">Packt die Datei neu. Die Seiten sehen genau gleich aus.</string>
+    <string name="pdf_tool_compress_balanced">Empfohlen</string>
+    <string name="pdf_tool_compress_balanced_body">Gute Qualität, deutlich kleinere Bilder</string>
+    <string name="pdf_tool_compress_smallest">Kleinste</string>
+    <string name="pdf_tool_compress_smallest_body">Geringere Bildqualität, kleinste Datei</string>
+    <string name="pdf_tool_compress_action">Komprimieren</string>
+
+    <!-- Protect -->
+    <string name="pdf_tool_protect_body">Wer die geschützte Kopie öffnet, braucht dieses Passwort. Sie ist mit AES-256 verschlüsselt.</string>
+    <string name="pdf_tool_protect_confirm">Passwort bestätigen</string>
+    <string name="pdf_tool_protect_mismatch">Die Passwörter stimmen nicht überein.</string>
+    <string name="pdf_tool_protect_action">Schützen</string>
+    <string name="pdf_tool_protect_already">Diese PDF hat bereits ein Passwort. Das neue ersetzt es.</string>
+
+    <!-- Rotate -->
+    <string name="pdf_tool_rotate_right">90° rechts</string>
+    <string name="pdf_tool_rotate_half">180°</string>
+    <string name="pdf_tool_rotate_left">90° links</string>
+    <string name="pdf_tool_rotate_body">Dreht jede Seite. Um einzelne Seiten zu drehen, nutze PDF ordnen.</string>
+    <string name="pdf_tool_rotate_action">Drehen</string>
+</resources>

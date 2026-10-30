@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.skeler.scanely.core.ai.FatalAiException
 import com.skeler.scanely.core.network.ApiJson
 import com.skeler.scanely.core.network.LocalWorker
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType
 import org.junit.After
@@ -26,7 +27,7 @@ class AgentTurnTest {
             .addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
             .build()
             .create(ChatSyncApi::class.java)
-    private val client = AgentClient(api, api)
+    private val client = AgentClient(EnglishStrings.context(), api, api)
 
     private fun request(
         hasDocument: Boolean = false,

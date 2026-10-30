@@ -287,7 +287,7 @@ private fun FieldsCard(id: String, body: FieldsBody, actions: ChatActions, modif
         if (submitted != null) {
             body.fields.forEach { field ->
                 Text(
-                    "${field.label}: ${submitted[field.id].orEmpty()}",
+                    stringResource(R.string.cmp_chat_reply_field_line, field.label, submitted[field.id].orEmpty()),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

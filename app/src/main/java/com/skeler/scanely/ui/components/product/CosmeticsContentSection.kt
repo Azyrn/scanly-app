@@ -6,7 +6,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.lookup.CosmeticsData
 
 @Composable
@@ -15,7 +17,7 @@ fun CosmeticsContentSection(data: CosmeticsData) {
 
     data.ingredients?.takeIf { it.isNotBlank() }?.let { ingredients ->
         hasContent = true
-        SectionHeader("Ingredients")
+        SectionHeader(stringResource(R.string.cmp_food_ingredients))
         Text(
             text = ingredients,
             style = MaterialTheme.typography.bodySmall
@@ -25,7 +27,7 @@ fun CosmeticsContentSection(data: CosmeticsData) {
 
     if (data.allergens.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Allergens")
+        SectionHeader(stringResource(R.string.cmp_food_allergens))
         Text(
             text = data.allergens.joinToString(", ") {
                 it.removePrefix("en:").replace("-", " ").replaceFirstChar { c -> c.uppercase() }
@@ -38,7 +40,7 @@ fun CosmeticsContentSection(data: CosmeticsData) {
 
     if (data.labels.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Labels")
+        SectionHeader(stringResource(R.string.cmp_cosmetics_labels))
         Text(
             text = data.labels.joinToString(", ") {
                 it.removePrefix("en:").replace("-", " ").replaceFirstChar { c -> c.uppercase() }
@@ -50,7 +52,7 @@ fun CosmeticsContentSection(data: CosmeticsData) {
 
     if (data.categories.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Categories")
+        SectionHeader(stringResource(R.string.cmp_book_categories))
         Text(
             text = data.categories.joinToString(", ") {
                 it.removePrefix("en:").replace("-", " ").replaceFirstChar { c -> c.uppercase() }
@@ -62,7 +64,7 @@ fun CosmeticsContentSection(data: CosmeticsData) {
 
     if (!hasContent) {
         Text(
-            text = "No detailed information available for this product.",
+            text = stringResource(R.string.cmp_cosmetics_no_info),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

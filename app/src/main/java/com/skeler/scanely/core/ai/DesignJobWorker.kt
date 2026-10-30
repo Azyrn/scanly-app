@@ -72,7 +72,7 @@ class DesignJobWorker(context: Context, params: WorkerParameters) : CoroutineWor
 
     /** The finished job's PDF, or a [FatalAiException] with the server's error. */
     private suspend fun collect(api: ScanlyApi, jobId: String): JobPdf? {
-        val response = awaitDesignJob(DEADLINE_SECONDS, POLL_MS) { api.designJob(jobId) }
+        val response = awaitDesignJob(applicationContext, DEADLINE_SECONDS, POLL_MS) { api.designJob(jobId) }
         val bytes = response.body()?.use { it.bytes() } ?: return null
         return JobPdf(
             designId = response.headers()[DESIGN_ID_HEADER] ?: jobId,

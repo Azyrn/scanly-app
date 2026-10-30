@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Options -->
-    <string name="pdf2office_word_body">Text, headings, lists and tables become editable in Word. Scanned pages are added as pictures.</string>
+    <string name="pdf2office_word_body">Every page keeps its size and look. Text stays editable in text boxes where it was on the page; lines, shapes and pictures are kept as pictures. Scanned pages stay as pictures with searchable text read on your device.</string>
     <string name="pdf2office_word_action">Convert to Word</string>
-    <string name="pdf2office_powerpoint_body">Each page becomes a slide, with its text in editable boxes where it was on the page. Scanned pages are added as pictures.</string>
+    <string name="pdf2office_powerpoint_body">Each page becomes a slide that keeps its look. Text stays editable in text boxes where it was on the page; lines, shapes and pictures are kept as pictures. Scanned pages stay as pictures with searchable text read on your device.</string>
     <string name="pdf2office_powerpoint_action">Convert to PowerPoint</string>
     <string name="pdf2office_excel_body">Tables become rows and cells, one sheet per page that has them. Numbers stay numbers, so you can sum them.</string>
     <string name="pdf2office_excel_action">Convert to Excel</string>
@@ -12,9 +12,14 @@
     <!-- Result notes -->
     <string name="pdf2office_simplified_word">Layout was simplified: text, headings, lists and tables are editable, but fonts, columns, drawings and pictures were not carried over.</string>
     <string name="pdf2office_simplified_powerpoint">Layout was simplified: text is editable where it was on the page, but fonts, drawings and pictures were not carried over.</string>
+    <!-- English only until the end-of-project translation pass (user decision 2026-10-28) -->
+    <plurals name="pdf2office_scanned_searchable" tools:ignore="MissingTranslation">
+        <item quantity="one">%d scanned page was kept as a picture, with its text read so you can search and copy it.</item>
+        <item quantity="other">%d scanned pages were kept as pictures, with their text read so you can search and copy it.</item>
+    </plurals>
     <plurals name="pdf2office_scanned_as_images">
-        <item quantity="one">%d scanned page was added as an image.</item>
-        <item quantity="other">%d scanned pages were added as images.</item>
+        <item quantity="one">%d scanned page was added as a picture; no text could be read from it.</item>
+        <item quantity="other">%d scanned pages were added as pictures; no text could be read from them.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
         <item quantity="one">%d very dense page was converted as plain lines.</item>

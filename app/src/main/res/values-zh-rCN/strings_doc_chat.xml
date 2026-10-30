@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Build Documents with AI, the document chat. English only for now; every string the chat shows is here. -->
+<resources>
+    <!-- Top bar -->
+    <string name="chat_title_empty">Scanly AI</string>
+    <string name="chat_menu">聊天与套餐</string>
+    <string name="chat_untitled">未命名文档</string>
+    <string name="chat_file_default_name">文档</string>
+    <string name="chat_new">新建聊天</string>
+    <string name="chat_rename_action">重命名聊天</string>
+    <string name="chat_rename_title">重命名聊天</string>
+    <string name="chat_rename_label">名称</string>
+    <string name="chat_save">保存</string>
+    <string name="chat_cancel">取消</string>
+
+    <!-- History -->
+    <string name="chat_group_today">今天</string>
+    <string name="chat_group_yesterday">昨天</string>
+    <string name="chat_group_week">过去 7 天</string>
+    <string name="chat_group_older">更早</string>
+    <string name="chat_search_hint">搜索聊天</string>
+    <string name="chat_search_clear">清除搜索</string>
+    <string name="chat_search_empty">没有与搜索匹配的聊天。</string>
+    <string name="chat_history_empty">还没有聊天。你生成的文档会显示在这里。</string>
+    <string name="chat_more_actions">更多操作</string>
+    <string name="chat_delete_title">删除此聊天？</string>
+    <string name="chat_delete_body">“%1$s”及其文件将从此手机和你的账户中删除。你保存到 Downloads 的副本会保留。</string>
+    <string name="chat_delete_confirm">删除</string>
+
+    <!-- Empty state -->
+    <string name="chat_greeting_title">我们该做什么？</string>
+    <!-- Example requests in a new chat; each fills the composer. Delete items to remove them. -->
+    <string-array name="chat_example_prompts">
+        <item>制作一页简历</item>
+        <item>创建预算表格</item>
+        <item>用 Word 写一封正式信函</item>
+    </string-array>
+    <string name="chat_ask_answered">你已回答。</string>
+    <string name="chat_greeting_body">描述你的需求，或附加文件以重新生成。</string>
+
+    <!-- Composer -->
+    <string name="chat_composer_hint">描述一份文档…</string>
+    <string name="chat_composer_hint_revise">请求修改…</string>
+    <string name="chat_attach">附加</string>
+    <string name="chat_send">发送</string>
+    <string name="chat_stop">停止等待</string>
+    <plurals name="chat_cost_hint">
+        <item quantity="one">~%d 积分</item>
+        <item quantity="other">~%d 积分</item>
+    </plurals>
+    <string name="chat_cost_agent">聊天免费 · 文件消耗积分</string>
+    <string name="chat_remove">移除 %1$s</string>
+    <string name="chat_preparing_file">准备中…</string>
+    <string name="chat_preset_clean_up">整理一下</string>
+    <string name="chat_preset_one_page">排成一页</string>
+    <plurals name="chat_pages">
+        <item quantity="one">%d 页</item>
+        <item quantity="other">%d 页</item>
+    </plurals>
+    <string name="chat_preparing_picture">正在准备图片…</string>
+    <string name="chat_picture_role">放置在页面上</string>
+    <string name="chat_scan_role">来自我的扫描件</string>
+    <string name="chat_image_pending">重建还是放置？</string>
+    <string name="chat_role_rebuild">重建此文档</string>
+    <string name="chat_role_place">将此图片放在页面上</string>
+    <string name="chat_role_rebuild_prompt">将此文档重建为整洁的 PDF。保留每一个文字、姓名和数字。</string>
+    <string name="chat_role_place_prompt">将此图片作为肖像或徽标放在页面上。</string>
+    <string name="chat_role_question">是重建它，还是把它放在页面上？</string>
+    <string name="chat_role_question_body">“重建”会将图片转换为新文档。“放置”则保留为图片，例如肖像或徽标。</string>
+    <string name="chat_role_answer_rebuild">重建</string>
+    <string name="chat_role_answer_place">放置</string>
+    <string name="chat_attach_error_dismiss">关闭</string>
+
+
+    <!-- Attach sheet -->
+    <string name="chat_attach_title">添加文件</string>
+    <string name="chat_attach_camera">相机</string>
+    <string name="chat_attach_photos">照片</string>
+    <string name="chat_attach_files">文件</string>
+    <string name="chat_attach_scans">我的扫描件</string>
+    <string name="chat_no_scans">还没有扫描件。请先从首页扫描一份文档。</string>
+    <string name="chat_scans_title">你最近的扫描件</string>
+
+
+    <!-- Message list -->
+    <string name="chat_jump_latest">跳到最新</string>
+    <string name="chat_unknown_message">此消息需要更新版本的 Scanly 才能显示。</string>
+    <string name="chat_you_attached">已附加：%1$s</string>
+
+    <!-- Turn outcomes written into the chat -->
+    <string name="chat_stopped_waiting">已停止等待。服务器可能仍会完成处理并消耗积分。重试即可获取相同结果，不会重复扣费。</string>
+    <string name="chat_interrupted">此请求已中断。请重新发送你的消息。</string>
+    <string name="chat_reconnecting">正在重新连接到你的设计…</string>
+    <string name="chat_design_failed">无法完成设计。你的消息已保留，请重试。</string>
+
+    <!-- Attaching -->
+    <string name="chat_photo_unusable">无法使用该图片。请尝试其他图片。</string>
+    <string name="chat_file_too_many_pages">设计工具最多可重建 %1$d 页，该文件共有 %2$d 页。</string>
+    <string name="chat_file_too_large">该文件太大，无法重建。</string>
+    <string name="chat_file_unreadable">无法读取该文件。请尝试其他文件。</string>
+
+    <!-- File actions -->
+    <string name="chat_open_with">用其他应用打开…</string>
+    <string name="chat_no_viewer">手机上没有可以打开此文件的应用。</string>
+    <string name="chat_save_failed">无法保存文件。</string>
+    <string name="chat_share_failed">无法分享文件。</string>
+    <string name="chat_saved_to_downloads">已保存到 Downloads。</string>
+    <plurals name="chat_images_saved">
+        <item quantity="one">已将 %d 张图片保存到 Pictures/Scanly。</item>
+        <item quantity="other">已将 %d 张图片保存到 Pictures/Scanly。</item>
+    </plurals>
+    <string name="chat_images_failed">无法保存图片。</string>
+    <string name="chat_file_missing">无法获取此文件。请检查网络连接后重试。</string>
+    <string name="chat_file_expired">此设计已不再保留。请重新生成以再次获取文件。</string>
+
+    <!-- Reply cards -->
+    <string name="chat_not_charged">未扣费</string>
+    <string name="chat_retry">重试</string>
+    <string name="chat_see_plans">查看套餐</string>
+    <string name="chat_ask_title">检查你的文件</string>
+    <string name="chat_ask_reason">这看起来像是 %1$s。</string>
+    <string name="chat_ask_fallback">此文件看起来不像你所要求的文档。</string>
+    <string name="chat_ask_continue">仍然继续</string>
+    <string name="chat_ask_dismiss">暂不</string>
+    <string name="chat_ask_answered_continue">你选择仍然继续。</string>
+    <string name="chat_ask_answered_dismiss">你选择不继续。</string>
+    <string name="chat_fields_title">先补充几项信息</string>
+    <string name="chat_fields_body">请补充这些信息，以免文档内容需要凭空编造。</string>
+    <string name="chat_fields_submit">创建文档</string>
+    <string name="chat_fields_open">填写详细信息</string>
+    <string name="chat_file_open">打开</string>
+    <string name="chat_file_share">分享</string>
+    <string name="chat_file_download">下载</string>
+    <string name="chat_file_more">更多操作</string>
+    <string name="chat_file_save_images">将页面保存为图片</string>
+    <string name="chat_file_revise">修改此版本</string>
+    <string name="chat_file_editing">编辑中</string>
+    <plurals name="chat_credits_used">
+        <item quantity="one">%d 积分</item>
+        <item quantity="other">%d 积分</item>
+    </plurals>
+    <string name="chat_expired">已过期：重新生成</string>
+    <string name="chat_expired_hint">服务器不再保留此设计，因此无法修改。请重新生成以继续编辑。</string>
+    <string name="chat_thumbnail_description">%1$s 的第一页</string>
+
+    <!-- Background job notification -->
+    <string name="chat_notification_channel">文档</string>
+    <string name="chat_notification_channel_description">后台生成的文档准备就绪时通知</string>
+    <string name="chat_notification_ready">你的 PDF 已准备好。点击即可打开聊天。</string>
+    <string name="chat_notification_not_charged">未对你扣费。</string>
+
+    <!-- Working reply: the live status line and Show thinking -->
+    <string name="chat_status_elapsed">%1$s · %2$ds</string>
+    <string name="chat_step_reading">正在读取你的文件</string>
+    <string name="chat_step_extracting">正在提取文字</string>
+    <string name="chat_step_planning">正在规划版式</string>
+    <string name="chat_step_writing">正在撰写内容</string>
+    <string name="chat_step_building">正在生成 PDF</string>
+    <string name="chat_step_checking">正在检查质量</string>
+    <string name="chat_step_fixing">正在修正版式</string>
+    <string name="chat_step_done">完成</string>
+    <string name="chat_step_thinking">思考中</string>
+    <string name="chat_step_reading_guide">正在阅读指南</string>
+    <string name="chat_step_coding">正在编写代码</string>
+    <string name="chat_step_previewing">正在查看页面</string>
+    <string name="chat_step_delivering">正在交付文件</string>
+    <string name="chat_agent_done">完成。你的文件在下方。</string>
+    <string name="chat_agent_failed">助手无法完成。你的消息已保留，请重试。</string>
+    <string name="chat_agent_about_file">（关于文件 %1$s。）</string>
+    <string name="chat_agent_delivered">已交付 %1$s</string>
+    <string name="chat_approval_title">打开此网站？</string>
+    <string name="chat_approval_new_url">此链接不在你的消息或搜索结果中，因此助手需要你的许可才能打开它。</string>
+    <string name="chat_approval_page_link">助手在它打开的页面上找到了此链接，需要你的许可才能打开。</string>
+    <string name="chat_approval_warn_query">此链接在“?”之后附带了额外数据。如果你不信任此网站，请点击“拒绝”：它可能会收到本次聊天的部分内容。</string>
+    <string name="chat_approval_warn_long">此链接异常长。如果你不信任此网站，请点击“拒绝”：它可能会收到本次聊天的部分内容。</string>
+    <string name="chat_approval_countdown">%1$s 内未作答即视为拒绝。</string>
+    <string name="chat_approval_allow_once">仅允许一次</string>
+    <string name="chat_approval_deny">拒绝</string>
+    <string name="chat_show_thinking">显示思考过程</string>
+    <string name="chat_hide_thinking">隐藏思考过程</string>
+    <string name="chat_took">用时 %1$d 秒</string>
+    <string name="chat_seconds">%1$d 秒</string>
+    <string name="chat_under_a_second">不到 1 秒</string>
+    <string name="chat_background_note">正在后台运行。完成后你会收到通知，文件也会显示在这里。</string>
+    <string name="chat_stopped_note">已停止等待。文件准备好后仍会显示在这里。</string>
+
+    <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
+         Tool names and their arguments are the agent's own and are not translated. -->
+    <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
+    <plurals name="chat_log_steps">
+        <item quantity="one">%d 个步骤</item>
+        <item quantity="other">%d 个步骤</item>
+    </plurals>
+    <string name="chat_log_minutes">%1$d 分 %2$d 秒</string>
+    <string name="chat_log_seconds">%1$d 秒</string>
+    <string name="chat_log_worked">已工作 %1$s · %2$s</string>
+    <string name="chat_log_show_steps">显示步骤</string>
+    <string name="chat_log_hide_steps">隐藏步骤</string>
+    <string name="chat_log_thought">思考了 %1$s</string>
+    <string name="chat_log_thinking">思考中</string>
+    <plurals name="chat_log_read">
+        <item quantity="one">已读取 %d 行</item>
+        <item quantity="other">已读取 %d 行</item>
+    </plurals>
+    <plurals name="chat_log_wrote">
+        <item quantity="one">已写入 %d 行</item>
+        <item quantity="other">已写入 %d 行</item>
+    </plurals>
+    <string name="chat_log_read_image">已读取图片（%1$s）</string>
+    <string name="chat_log_no_output">（无输出）</string>
+    <string name="chat_log_denied">已拒绝：此任务中不允许</string>
+    <string name="chat_log_running">运行中…</string>
+    <plurals name="chat_log_more_lines">
+        <item quantity="one">+%d 行</item>
+        <item quantity="other">+%d 行</item>
+    </plurals>
+    <string name="chat_log_show_more">显示更多</string>
+    <string name="chat_log_show_less">收起</string>
+    <plurals name="chat_log_not_shown">
+        <item quantity="one">另外 %1$d 行（%2$d 个字符）未显示</item>
+        <item quantity="other">另外 %1$d 行（%2$d 个字符）未显示</item>
+    </plurals>
+    <plurals name="chat_log_not_kept">
+        <item quantity="one">%1$d 行（%2$d 个字符）未保留</item>
+        <item quantity="other">%1$d 行（%2$d 个字符）未保留</item>
+    </plurals>
+    <string name="chat_log_show_all">显示全部</string>
+    <string name="chat_log_loading">正在加载完整输出…</string>
+    <string name="chat_log_expired">完整输出已过期</string>
+    <string name="chat_log_unavailable">无法加载完整输出。点击重试。</string>
+    <string name="chat_log_past_limit">另外 %1$d 个字符超出限制，未保留</string>
+    <plurals name="chat_log_dropped">
+        <item quantity="one">此手机上未保留 %d 行较早的记录</item>
+        <item quantity="other">此手机上未保留 %d 行较早的记录</item>
+    </plurals>
+</resources>

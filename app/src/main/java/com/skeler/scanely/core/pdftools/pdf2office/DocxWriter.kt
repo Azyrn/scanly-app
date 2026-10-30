@@ -135,16 +135,16 @@ internal class DocxWriter(out: OutputStream, pageWidthPt: Float, pageHeightPt: F
 
     private fun table(block: TableBlock): String = buildString {
         val columns = block.rows.maxOfOrNull { it.size }?.coerceAtLeast(1) ?: 1
-        val columnTwips = ((contentWidthPt * TWIPS_PER_POINT) / columns).roundToInt().coerceAtLeast(1)
-        append("<w:tbl><w:tblPr><w:tblStyle w:val=\"TableGrid\"/><w:tblW w:w=\"0\" w:type=\"auto\"/>")
+        val columnTwips = columnTwips(block, columns)
+        append("<w:tbl><w:tblPr><w:tblStyle w:val=\"TableGrid\"/><w:tblW w:w=\"${columnTwips.sum()}\" w:type=\"dxa\"/>")
         append("<w:tblLook w:val=\"04A0\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" ")
         append("w:noHBand=\"0\" w:noVBand=\"1\"/></w:tblPr><w:tblGrid>")
-        repeat(columns) { append("<w:gridCol w:w=\"$columnTwips\"/>") }
+        columnTwips.forEach { append("<w:gridCol w:w=\"$it\"/>") }
         append("</w:tblGrid>")
         block.rows.forEach { row ->
             append("<w:tr>")
             for (column in 0 until columns) {
-                append("<w:tc><w:tcPr><w:tcW w:w=\"$columnTwips\" w:type=\"dxa\"/></w:tcPr><w:p>")
+                append("<w:tc><w:tcPr><w:tcW w:w=\"${columnTwips[column]}\" w:type=\"dxa\"/></w:tcPr><w:p>")
                 val text = row.getOrElse(column) { "" }
                 if (text.isNotEmpty()) append(run(text, block.fontSize))
                 append("</w:p></w:tc>")
@@ -153,6 +153,17 @@ internal class DocxWriter(out: OutputStream, pageWidthPt: Float, pageHeightPt: F
         }
         // Two tables with nothing between them merge into one in Word.
         append("</w:tbl><w:p/>")
+    }
+
+    /**
+     * The PDF's column widths, scaled down to fit between the margins when wider; equal columns
+     * across the text width when the table has none.
+     */
+    private fun columnTwips(block: TableBlock, columns: Int): List<Int> {
+        val widths = block.columnWidthsPt.takeIf { it.size == columns && it.sum() > 0f }
+            ?: return List(columns) { ((contentWidthPt * TWIPS_PER_POINT) / columns).roundToInt().coerceAtLeast(1) }
+        val scale = min(1f, contentWidthPt / widths.sum())
+        return widths.map { (it * scale * TWIPS_PER_POINT).roundToInt().coerceAtLeast(1) }
     }
 
     /** A size of 0 (plain-line pages carry no geometry) leaves the style's size in charge. */

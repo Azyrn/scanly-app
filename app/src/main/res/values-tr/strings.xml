@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">Yapay zekâyla belge oluştur</string>
+    <string name="ai_build_documents_subtitle">Anlatın ya da bir dosya ekleyin: faturalar, özgeçmişler, raporlar, sunumlar</string>
+    <string name="design_paywall_fallback">Yapay zekâyla belge oluşturmak Pro\'nun bir parçası.</string>
+    <string name="custom_provider_build_documents_note">Yapay zekâyla belge oluşturma ikiye ayrılır: modeliniz belgeyi yazar, Scanly ise belgeyi biçimlendirir. Daha güçlü bir model daha iyi bir tasarım sağlar. Scanly, biçimlendirme için olağan maliyet yerine tek bir kredi alır.</string>
+    <string name="plan_feature_build_documents">Yapay zekâyla belge oluşturun: düzenler, tablolar ve biçimlendirme</string>
+    <string name="custom_provider_on_your_endpoint_note">Tarama, veri çıkarma ve çeviri işlemleri bu cihazdan doğrudan sağlayıcınıza gider. Scanly kredilerinizi kullanmaz, ücretlendirme sağlayıcınız tarafından yapılır.</string>
+</resources>

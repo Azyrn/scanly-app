@@ -48,7 +48,7 @@ fun AiModeBottomSheet(
             modifier = Modifier.padding(bottom = 32.dp)
         ) {
             Text(
-                text = "AI Scan",
+                text = stringResource(R.string.cmp_ai_scan_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
@@ -57,8 +57,8 @@ fun AiModeBottomSheet(
             if (AiMode.EXTRACT_TEXT.feature in offeredFeatures) {
                 AiModeItem(
                     iconRes = R.drawable.ic_action_extract_text,
-                    title = "Extract Text",
-                    subtitle = "Extract visible text from image",
+                    title = stringResource(R.string.cmp_ai_mode_extract_text_title),
+                    subtitle = stringResource(R.string.cmp_ai_mode_extract_text_subtitle),
                     onClick = { onModeSelected(AiMode.EXTRACT_TEXT) }
                 )
             }
@@ -66,8 +66,8 @@ fun AiModeBottomSheet(
             if (AiMode.EXTRACT_PDF_TEXT.feature in offeredFeatures) {
                 AiModeItem(
                     iconRes = R.drawable.ic_action_extract_pdf,
-                    title = "Extract Document",
-                    subtitle = "PDF, Word, PowerPoint and text files",
+                    title = stringResource(R.string.cmp_ai_mode_extract_document_title),
+                    subtitle = stringResource(R.string.cmp_ai_mode_extract_document_subtitle),
                     onClick = { onModeSelected(AiMode.EXTRACT_PDF_TEXT) }
                 )
             }
@@ -75,8 +75,8 @@ fun AiModeBottomSheet(
             if (showExtractData && AiMode.EXTRACT_DATA.feature in offeredFeatures) {
                 AiModeItem(
                     icon = Icons.Rounded.DataObject,
-                    title = "Extract Data",
-                    subtitle = "Receipts, invoices and cards, as labelled fields",
+                    title = stringResource(R.string.cmp_ai_mode_extract_data_title),
+                    subtitle = stringResource(R.string.cmp_ai_mode_extract_data_subtitle),
                     onClick = { onModeSelected(AiMode.EXTRACT_DATA) }
                 )
             }
@@ -84,8 +84,8 @@ fun AiModeBottomSheet(
             if (AiMode.TRANSCRIBE_AUDIO.feature in offeredFeatures) {
                 AiModeItem(
                     iconRes = R.drawable.ic_action_waveform,
-                    title = "Audio to Text",
-                    subtitle = "Recordings, meetings and video, speaker by speaker",
+                    title = stringResource(R.string.cmp_ai_mode_audio_title),
+                    subtitle = stringResource(R.string.cmp_ai_mode_audio_subtitle),
                     onClick = { onModeSelected(AiMode.TRANSCRIBE_AUDIO) }
                 )
             }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Reparar</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">%d página recuperada. Confira-a antes de excluir o original.</item>
+        <item quantity="many">%d páginas recuperadas. Confira-as antes de excluir o original.</item>
+        <item quantity="other">%d páginas recuperadas. Confira-as antes de excluir o original.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Marcar onde cada página começa</string>
+    <string name="pdf_tool_extract_text_separators_body">Adiciona uma linha como \"Página 3\" antes do texto de cada página.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Página %d -----</string>
+    <string name="pdf_tool_extract_text_action">Extrair</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d página não tinha texto selecionável (era uma digitalização). Use PDF para texto na tela inicial para lê-la.</item>
+        <item quantity="many">%d páginas não tinham texto selecionável (eram digitalizações). Use PDF para texto na tela inicial para lê-las.</item>
+        <item quantity="other">%d páginas não tinham texto selecionável (eram digitalizações). Use PDF para texto na tela inicial para lê-las.</item>
+    </plurals>
+</resources>

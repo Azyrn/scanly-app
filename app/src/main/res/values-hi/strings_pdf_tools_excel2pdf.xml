@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="excel2pdf_options_body">दिखने वाली हर शीट वर्कबुक के क्रम में PDF के पेजों में बदल जाती है। चौड़ी शीट अगले पेजों पर जारी रहती है।</string>
+    <string name="excel2pdf_convert">PDF में बदलें</string>
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d छिपी हुई शीट छोड़ दी गई।</item>
+        <item quantity="other">%d छिपी हुई शीटें छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d चार्ट छोड़ दिया गया।</item>
+        <item quantity="other">%d चार्ट छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d तस्वीर छोड़ दी गई।</item>
+        <item quantity="other">%d तस्वीरें छोड़ दी गईं।</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">फ़ॉर्मूले आखिरी बार सेव किया गया नतीजा दिखाते हैं।</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d फ़ॉर्मूले में सेव किया गया नतीजा नहीं था, इसलिए वह खाली है।</item>
+        <item quantity="other">%d फ़ॉर्मूलों में सेव किया गया नतीजा नहीं था, इसलिए वे खाली हैं।</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">कंडीशनल फ़ॉर्मैटिंग लागू नहीं की गई।</string>
+    <string name="excel2pdf_note_pivots">पिवट टेबल आखिरी बार सेव की गई वैल्यू दिखाती हैं।</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">बहुत बड़ी शीट %d पंक्ति पर काटी गई।</item>
+        <item quantity="other">बहुत बड़ी शीटें %d पंक्तियों पर काटी गईं।</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">PDF %d पेज पर रुकता है; बाकी छोड़ दिया गया।</item>
+        <item quantity="other">PDF %d पेजों पर रुकता है; बाकी छोड़ दिया गया।</item>
+    </plurals>
+</resources>

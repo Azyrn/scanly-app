@@ -22,6 +22,7 @@ import android.text.TextPaint
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ocr.TextBlockData
 import com.skeler.scanely.core.text.DocumentJson
 import com.skeler.scanely.core.text.MarkdownParser
@@ -537,7 +538,7 @@ object ScanExporter {
 
     /** Never throws; false if no viewer or launch rejected. */
     fun openPdf(context: Context, uri: Uri): Boolean {
-        return openDocument(context, uri, PDF_MIME_TYPE, "Open PDF with…")
+        return openDocument(context, uri, PDF_MIME_TYPE, context.getString(R.string.pdf_open_with))
     }
 
     /** Never throws; false if no app can open the exported file. */
@@ -580,7 +581,7 @@ object ScanExporter {
 
         // Sharing genuinely wants the picker, so the chooser leads here — but it falls back to the
         // bare SEND intent for the ROMs where ACTION_CHOOSER cannot be resolved at all.
-        val chooser = Intent.createChooser(send, "Share").apply {
+        val chooser = Intent.createChooser(send, context.getString(R.string.pdf_share_chooser)).apply {
             if (context !is Activity) addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return context.launch(chooser) || context.launch(send)
@@ -608,7 +609,7 @@ object ScanExporter {
     /** Launches [send] through the share chooser, falling back to the bare intent if that is rejected. */
     private fun launchChooserOrSend(context: Context, send: Intent): Boolean {
         if (context !is Activity) send.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val chooser = Intent.createChooser(send, "Share").apply {
+        val chooser = Intent.createChooser(send, context.getString(R.string.pdf_share_chooser)).apply {
             if (context !is Activity) addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         return context.launch(chooser) || context.launch(send)

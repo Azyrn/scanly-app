@@ -26,10 +26,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.PageRange
 
 /**
@@ -65,7 +67,7 @@ fun PageRangeDialog(
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
                 Text(
-                    text = "Scan which pages?",
+                    text = stringResource(R.string.cmp_page_range_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -75,11 +77,9 @@ fun PageRangeDialog(
 
                 Text(
                     text = if (mustChoose) {
-                        "$fileName has $totalPages pages, and this scan reads at most $maxPages. " +
-                            "Pick the ones that matter."
+                        stringResource(R.string.cmp_page_range_over_ceiling, fileName, totalPages, maxPages ?: 0)
                     } else {
-                        "$fileName has $totalPages pages. Every page you scan counts against " +
-                            "your plan, so a range costs less than the whole file."
+                        stringResource(R.string.cmp_page_range_intro, fileName, totalPages)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -92,8 +92,8 @@ fun PageRangeDialog(
                     onValueChange = { spec = it },
                     singleLine = true,
                     isError = invalid,
-                    label = { Text("Pages") },
-                    placeholder = { Text("e.g. 1-5, 8") },
+                    label = { Text(stringResource(R.string.pdf_tool_split_ranges_label)) },
+                    placeholder = { Text(stringResource(R.string.cmp_page_range_example)) },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done
@@ -102,12 +102,13 @@ fun PageRangeDialog(
                         Text(
                             when {
                                 invalid && mustChoose ->
-                                    "Pick up to $maxPages pages between 1 and $totalPages."
+                                    stringResource(R.string.cmp_page_range_pick_up_to, maxPages ?: 0, totalPages)
                                 invalid ->
-                                    "Use page numbers between 1 and $totalPages, like 1-5 or 2,4."
-                                selected != null -> "${selected.size} of $totalPages pages"
-                                mustChoose -> "Required — this scan covers $maxPages pages"
-                                else -> "Leave empty to scan all $totalPages pages"
+                                    stringResource(R.string.cmp_page_range_use_numbers, totalPages)
+                                selected != null ->
+                                    stringResource(R.string.cmp_page_range_n_of_total, selected.size, totalPages)
+                                mustChoose -> stringResource(R.string.cmp_page_range_required, maxPages ?: 0)
+                                else -> stringResource(R.string.cmp_page_range_leave_empty, totalPages)
                             }
                         )
                     },
@@ -130,7 +131,7 @@ fun PageRangeDialog(
                             .weight(1f)
                             .height(52.dp)
                     ) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.chat_cancel))
                     }
                     Button(
                         onClick = {
@@ -148,7 +149,13 @@ fun PageRangeDialog(
                             .weight(1f)
                             .height(52.dp)
                     ) {
-                        Text(if (selected != null) "Scan ${selected.size}" else "Scan all")
+                        Text(
+                            if (selected != null) {
+                                stringResource(R.string.cmp_page_range_scan_count, selected.size)
+                            } else {
+                                stringResource(R.string.cmp_page_range_scan_all)
+                            }
+                        )
                     }
                 }
             }

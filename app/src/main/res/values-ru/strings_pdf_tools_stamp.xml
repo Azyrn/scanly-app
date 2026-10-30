@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">Страница %1$d</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">Страница %1$d из %2$d</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">Номера добавляются поверх каждой страницы. Исходное содержимое не меняется.</string>
+    <string name="pdf_stamp_numbers_position">Положение</string>
+    <string name="pdf_stamp_numbers_top_left">Сверху слева</string>
+    <string name="pdf_stamp_numbers_top_center">Сверху по центру</string>
+    <string name="pdf_stamp_numbers_top_right">Сверху справа</string>
+    <string name="pdf_stamp_numbers_bottom_left">Снизу слева</string>
+    <string name="pdf_stamp_numbers_bottom_center">Снизу по центру</string>
+    <string name="pdf_stamp_numbers_bottom_right">Снизу справа</string>
+    <string name="pdf_stamp_numbers_format">Формат</string>
+    <string name="pdf_stamp_numbers_start">Начать с номера</string>
+    <string name="pdf_stamp_numbers_first_page">Нумеровать со страницы</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Страницы перед ней, например обложка, останутся без номера.</string>
+    <string name="pdf_stamp_numbers_start_invalid">Введите число от 0 до 99999.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">Введите страницу от 1 до %1$d.</string>
+    <string name="pdf_stamp_numbers_text_size">Размер текста</string>
+    <string name="pdf_stamp_numbers_margin">Отступ от края</string>
+    <string name="pdf_stamp_numbers_margin_narrow">Близко</string>
+    <string name="pdf_stamp_numbers_margin_normal">Обычный</string>
+    <string name="pdf_stamp_numbers_margin_wide">Далеко</string>
+    <string name="pdf_stamp_numbers_action">Добавить номера страниц</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">Малый</string>
+    <string name="pdf_stamp_size_medium">Средний</string>
+    <string name="pdf_stamp_size_large">Большой</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">Водяной знак добавляется на каждую страницу.</string>
+    <string name="pdf_stamp_watermark_kind">Водяной знак</string>
+    <string name="pdf_stamp_watermark_kind_text">Текст</string>
+    <string name="pdf_stamp_watermark_kind_image">Изображение</string>
+    <string name="pdf_stamp_watermark_text_label">Текст водяного знака</string>
+    <string name="pdf_stamp_watermark_text_default">КОНФИДЕНЦИАЛЬНО</string>
+    <string name="pdf_stamp_watermark_text_empty">Введите текст для нанесения.</string>
+    <string name="pdf_stamp_watermark_pick_image">Выбрать изображение</string>
+    <string name="pdf_stamp_watermark_change_image">Заменить изображение</string>
+    <string name="pdf_stamp_watermark_image_chosen">Выбрано изображение: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">Изображение ещё не выбрано.</string>
+    <string name="pdf_stamp_watermark_placement">Положение</string>
+    <string name="pdf_stamp_watermark_center">По центру</string>
+    <string name="pdf_stamp_watermark_top">Сверху</string>
+    <string name="pdf_stamp_watermark_bottom">Снизу</string>
+    <string name="pdf_stamp_watermark_tiled">Мозаикой</string>
+    <string name="pdf_stamp_watermark_rotation">Угол</string>
+    <string name="pdf_stamp_watermark_rotation_none">Горизонтально</string>
+    <string name="pdf_stamp_watermark_rotation_rising">Под 45° вверх</string>
+    <string name="pdf_stamp_watermark_rotation_falling">Под 45° вниз</string>
+    <string name="pdf_stamp_watermark_opacity">Непрозрачность</string>
+    <string name="pdf_stamp_watermark_opacity_light">25 %</string>
+    <string name="pdf_stamp_watermark_opacity_medium">50 %</string>
+    <string name="pdf_stamp_watermark_opacity_strong">75 %</string>
+    <string name="pdf_stamp_watermark_size">Размер</string>
+    <string name="pdf_stamp_watermark_layer">Слой</string>
+    <string name="pdf_stamp_watermark_layer_over">Поверх содержимого</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Всегда видим. Может закрывать часть текста.</string>
+    <string name="pdf_stamp_watermark_layer_under">Под содержимым</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Текст остаётся сверху. На отсканированных страницах изображение полностью скрывает его.</string>
+    <string name="pdf_stamp_watermark_action">Добавить водяной знак</string>
+</resources>

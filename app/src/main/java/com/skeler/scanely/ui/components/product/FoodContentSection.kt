@@ -10,8 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.lookup.FoodData
 
 @Composable
@@ -54,7 +56,7 @@ fun FoodContentSection(data: FoodData) {
 
     if (hasNutrition) {
         hasContent = true
-        SectionHeader("Nutrition Facts")
+        SectionHeader(stringResource(R.string.cmp_food_nutrition_facts))
         NutritionGrid(data)
         Spacer(modifier = Modifier.height(16.dp))
     }
@@ -62,7 +64,7 @@ fun FoodContentSection(data: FoodData) {
     data.servingSize?.takeIf { it.isNotBlank() }?.let { serving ->
         hasContent = true
         Text(
-            text = "Serving size: $serving",
+            text = stringResource(R.string.cmp_food_serving_size, serving),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -71,7 +73,7 @@ fun FoodContentSection(data: FoodData) {
 
     data.ingredients?.takeIf { it.isNotBlank() }?.let { ingredients ->
         hasContent = true
-        SectionHeader("Ingredients")
+        SectionHeader(stringResource(R.string.cmp_food_ingredients))
         Text(
             text = ingredients,
             style = MaterialTheme.typography.bodySmall
@@ -81,7 +83,7 @@ fun FoodContentSection(data: FoodData) {
 
     if (data.allergens.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Allergens")
+        SectionHeader(stringResource(R.string.cmp_food_allergens))
         Text(
             text = data.allergens.joinToString(", ") {
                 it.removePrefix("en:").replace("-", " ").replaceFirstChar { c -> c.uppercase() }
@@ -93,7 +95,7 @@ fun FoodContentSection(data: FoodData) {
 
     if (!hasContent) {
         Text(
-            text = "No detailed nutrition information available for this product.",
+            text = stringResource(R.string.cmp_food_no_nutrition_info),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -103,13 +105,13 @@ fun FoodContentSection(data: FoodData) {
 @Composable
 internal fun NutritionGrid(data: FoodData) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        data.calories?.let { NutritionRow("Calories", it) }
-        data.fat?.let { NutritionRow("Fat", it) }
-        data.carbs?.let { NutritionRow("Carbs", it) }
-        data.protein?.let { NutritionRow("Protein", it) }
-        data.sugar?.let { NutritionRow("Sugar", it) }
-        data.salt?.let { NutritionRow("Salt", it) }
-        data.fiber?.let { NutritionRow("Fiber", it) }
+        data.calories?.let { NutritionRow(stringResource(R.string.cmp_food_calories), it) }
+        data.fat?.let { NutritionRow(stringResource(R.string.cmp_food_fat), it) }
+        data.carbs?.let { NutritionRow(stringResource(R.string.cmp_food_carbs), it) }
+        data.protein?.let { NutritionRow(stringResource(R.string.cmp_food_protein), it) }
+        data.sugar?.let { NutritionRow(stringResource(R.string.cmp_food_sugar), it) }
+        data.salt?.let { NutritionRow(stringResource(R.string.cmp_food_salt), it) }
+        data.fiber?.let { NutritionRow(stringResource(R.string.cmp_food_fiber), it) }
     }
 }
 

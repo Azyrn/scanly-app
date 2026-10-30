@@ -54,6 +54,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -102,7 +103,10 @@ fun AuthScreen(
                 title = { },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -135,7 +139,11 @@ fun AuthScreen(
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = if (isSignUp) "Create your account" else "Welcome back",
+                text = if (isSignUp) {
+                    stringResource(R.string.set_auth_create_title)
+                } else {
+                    stringResource(R.string.set_auth_welcome_title)
+                },
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -144,8 +152,7 @@ fun AuthScreen(
             Spacer(Modifier.height(8.dp))
 
             Text(
-                text = "Sign in to use AI scans. Text recognition and barcode " +
-                    "scanning keep working offline without an account.",
+                text = stringResource(R.string.set_auth_intro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -156,7 +163,7 @@ fun AuthScreen(
             OutlinedTextField(
                 value = state.email,
                 onValueChange = authViewModel::onEmailChange,
-                label = { Text("Email") },
+                label = { Text(stringResource(R.string.set_auth_email_label)) },
                 singleLine = true,
                 enabled = !state.isLoading,
                 keyboardOptions = KeyboardOptions(
@@ -171,7 +178,7 @@ fun AuthScreen(
             OutlinedTextField(
                 value = state.password,
                 onValueChange = authViewModel::onPasswordChange,
-                label = { Text("Password") },
+                label = { Text(stringResource(R.string.pdf_tool_password_label)) },
                 singleLine = true,
                 enabled = !state.isLoading,
                 visualTransformation = if (passwordVisible) {
@@ -180,7 +187,7 @@ fun AuthScreen(
                     PasswordVisualTransformation()
                 },
                 supportingText = if (isSignUp) {
-                    { Text("At least 6 characters") }
+                    { Text(stringResource(R.string.set_auth_password_hint)) }
                 } else {
                     null
                 },
@@ -193,9 +200,9 @@ fun AuthScreen(
                                 Icons.Rounded.Visibility
                             },
                             contentDescription = if (passwordVisible) {
-                                "Hide password"
+                                stringResource(R.string.pdf_tool_hide_password)
                             } else {
-                                "Show password"
+                                stringResource(R.string.pdf_tool_show_password)
                             }
                         )
                     }
@@ -222,7 +229,7 @@ fun AuthScreen(
                         onClick = authViewModel::sendPasswordReset,
                         enabled = !state.isLoading
                     ) {
-                        Text("Forgot password?")
+                        Text(stringResource(R.string.set_auth_forgot_password))
                     }
                 }
             } else {
@@ -249,7 +256,11 @@ fun AuthScreen(
                     )
                 } else {
                     Text(
-                        text = if (isSignUp) "Create account" else "Sign in",
+                        text = if (isSignUp) {
+                            stringResource(R.string.set_auth_create_account)
+                        } else {
+                            stringResource(R.string.set_sign_in)
+                        },
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -260,7 +271,7 @@ fun AuthScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 HorizontalDivider(modifier = Modifier.weight(1f))
                 Text(
-                    text = "or",
+                    text = stringResource(R.string.set_auth_or),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 12.dp)
@@ -289,7 +300,7 @@ fun AuthScreen(
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(Modifier.width(12.dp))
-                        Text("Continue with Google", fontWeight = FontWeight.Medium)
+                        Text(stringResource(R.string.set_auth_continue_google), fontWeight = FontWeight.Medium)
                     }
                 }
             }
@@ -301,7 +312,11 @@ fun AuthScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = if (isSignUp) "Already have an account?" else "No account yet?",
+                    text = if (isSignUp) {
+                        stringResource(R.string.set_auth_have_account)
+                    } else {
+                        stringResource(R.string.set_auth_no_account)
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -310,7 +325,11 @@ fun AuthScreen(
                     enabled = !state.isLoading
                 ) {
                     Text(
-                        text = if (isSignUp) "Sign in" else "Create one",
+                        text = if (isSignUp) {
+                            stringResource(R.string.set_sign_in)
+                        } else {
+                            stringResource(R.string.set_auth_create_one)
+                        },
                         fontWeight = FontWeight.SemiBold
                     )
                 }

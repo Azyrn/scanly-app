@@ -7,6 +7,7 @@ import com.skeler.scanely.core.food.OpenFoodFactsApi
 import com.skeler.scanely.core.lookup.engines.OpenBeautyFactsEngine
 import com.skeler.scanely.core.lookup.engines.OpenFoodFactsEngine
 import com.skeler.scanely.core.network.NetworkObserver
+import com.skeler.scanely.testing.EnglishStrings
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType
@@ -105,7 +106,7 @@ class LookupRetryTest {
     private fun lookup(client: OkHttpClient, online: Boolean = true): LookupResult = runBlocking {
         val network = mock(NetworkObserver::class.java)
         `when`(network.isCurrentlyOnline()).thenReturn(online)
-        LookupOrchestrator(engines(client), network).lookup(barcode)
+        LookupOrchestrator(EnglishStrings.context(), engines(client), network).lookup(barcode)
     }
 
     private fun LookupResult.errorMessage(): String {

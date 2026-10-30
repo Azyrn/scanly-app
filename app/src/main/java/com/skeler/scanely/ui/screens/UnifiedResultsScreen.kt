@@ -47,10 +47,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.skeler.scanely.R
 import com.skeler.scanely.core.actions.ActionExecutor
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.navigation.LocalNavigator
@@ -74,6 +78,7 @@ import com.skeler.scanely.ui.viewmodel.UnifiedScanViewModel
 @Composable
 fun UnifiedResultsScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val unifiedViewModel: UnifiedScanViewModel = hiltViewModel(activity)
     val navigator = LocalNavigator.current
@@ -103,7 +108,7 @@ fun UnifiedResultsScreen() {
     val onCopyExtracted = {
         val clipboard = context.getSystemService(ClipboardManager::class.java)
         clipboard.setPrimaryClip(ClipData.newPlainText("Extracted Text", visibleText))
-        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, resources.getString(R.string.scr_copied_to_clipboard), Toast.LENGTH_SHORT).show()
     }
 
     val onBack: () -> Unit = { navigator.back() }
@@ -146,7 +151,7 @@ fun UnifiedResultsScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Results",
+                    text = stringResource(R.string.scr_results_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium
                 )
@@ -173,7 +178,7 @@ fun UnifiedResultsScreen() {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No text or barcodes detected",
+                            text = stringResource(R.string.scr_unified_none_detected),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center
@@ -191,7 +196,11 @@ fun UnifiedResultsScreen() {
                     if (sections.showBarcodes) {
                         ResultsSectionHeader(
                             icon = Icons.Rounded.QrCode2,
-                            title = if (barcodeActions.size > 1) "Scanned Codes" else "Scanned Code"
+                            title = pluralStringResource(
+                                R.plurals.scr_unified_scanned_codes,
+                                barcodeActions.size,
+                                barcodeActions.size
+                            )
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         barcodeActions.forEach { action ->
@@ -213,7 +222,7 @@ fun UnifiedResultsScreen() {
                             FilterChip(
                                 selected = !markdownMode,
                                 onClick = { markdownView = false },
-                                label = { Text("Original") }
+                                label = { Text(stringResource(R.string.cmp_chip_original)) }
                             )
                             FilterChip(
                                 selected = markdownMode,
@@ -233,7 +242,7 @@ fun UnifiedResultsScreen() {
                         ) {
                             ResultsSectionHeader(
                                 icon = Icons.AutoMirrored.Rounded.Notes,
-                                title = "Extracted Text"
+                                title = stringResource(R.string.scr_results_extracted_text)
                             )
                             // ExtractedTextActions emits one sibling per button, so it needs its
                             // own Row — in the SpaceBetween parent the buttons would spread apart.
@@ -290,7 +299,7 @@ fun UnifiedResultsScreen() {
                 .statusBarsPadding()
                 .padding(start = 12.dp, top = 8.dp)
         ) {
-            Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+            Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.pdf_tools_back))
         }
     }
 }
@@ -314,14 +323,14 @@ private fun ActionsButton(
         ) {
             Icon(
                 Icons.Rounded.MoreHoriz,
-                contentDescription = "Actions",
+                contentDescription = stringResource(R.string.scr_actions),
                 modifier = Modifier.size(if (compact) 18.dp else 20.dp)
             )
         }
         DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
             actions.forEach { action ->
                 DropdownMenuItem(
-                    text = { Text(action.label) },
+                    text = { Text(stringResource(action.label)) },
                     leadingIcon = {
                         Icon(action.icon, contentDescription = null, modifier = Modifier.size(20.dp))
                     },

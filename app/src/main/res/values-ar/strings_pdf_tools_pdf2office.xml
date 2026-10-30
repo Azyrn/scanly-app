@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">يصبح النص والعناوين والقوائم والجداول قابلة للتحرير في Word. تُضاف الصفحات الممسوحة ضوئيًا كصور.</string>
+    <string name="pdf2office_word_action">تحويل إلى Word</string>
+    <string name="pdf2office_powerpoint_body">تصبح كل صفحة شريحة، مع نصها في مربعات قابلة للتحرير في موضعه الأصلي. تُضاف الصفحات الممسوحة ضوئيًا كصور.</string>
+    <string name="pdf2office_powerpoint_action">تحويل إلى PowerPoint</string>
+    <string name="pdf2office_excel_body">تصبح الجداول صفوفًا وخلايا، بورقة عمل واحدة لكل صفحة تحتوي عليها. تبقى الأرقام أرقامًا، فيمكنك جمعها.</string>
+    <string name="pdf2office_excel_action">تحويل إلى Excel</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">تم تبسيط التخطيط: النص والعناوين والقوائم والجداول قابلة للتحرير، لكن الخطوط والأعمدة والرسومات والصور لم تُنقل.</string>
+    <string name="pdf2office_simplified_powerpoint">تم تبسيط التخطيط: النص قابل للتحرير في موضعه الأصلي، لكن الخطوط والرسومات والصور لم تُنقل.</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="zero">أُضيفت %d صفحة ممسوحة ضوئيًا كصورة.</item>
+        <item quantity="one">أُضيفت %d صفحة ممسوحة ضوئيًا كصورة.</item>
+        <item quantity="two">أُضيفت %d صفحتان ممسوحتان ضوئيًا كصورتين.</item>
+        <item quantity="few">أُضيفت %d صفحات ممسوحة ضوئيًا كصور.</item>
+        <item quantity="many">أُضيفت %d صفحة ممسوحة ضوئيًا كصورة.</item>
+        <item quantity="other">أُضيفت %d صفحة ممسوحة ضوئيًا كصورة.</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="zero">حُوّلت %d صفحة كثيفة جدًا كأسطر نصية بسيطة.</item>
+        <item quantity="one">حُوّلت %d صفحة كثيفة جدًا كأسطر نصية بسيطة.</item>
+        <item quantity="two">حُوّلت %d صفحتان كثيفتان جدًا كأسطر نصية بسيطة.</item>
+        <item quantity="few">حُوّلت %d صفحات كثيفة جدًا كأسطر نصية بسيطة.</item>
+        <item quantity="many">حُوّلت %d صفحة كثيفة جدًا كأسطر نصية بسيطة.</item>
+        <item quantity="other">حُوّلت %d صفحة كثيفة جدًا كأسطر نصية بسيطة.</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="zero">تعذّرت قراءة %d صفحة، فاستُبعدت.</item>
+        <item quantity="one">تعذّرت قراءة %d صفحة، فاستُبعدت.</item>
+        <item quantity="two">تعذّرت قراءة %d صفحتين، فاستُبعدتا.</item>
+        <item quantity="few">تعذّرت قراءة %d صفحات، فاستُبعدت.</item>
+        <item quantity="many">تعذّرت قراءة %d صفحة، فاستُبعدت.</item>
+        <item quantity="other">تعذّرت قراءة %d صفحة، فاستُبعدت.</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="zero">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
+        <item quantity="one">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
+        <item quantity="two">%d صفحتان ممسوحتان ضوئيًا لا تحتويان على نص، وتم تخطيهما.</item>
+        <item quantity="few">%d صفحات ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
+        <item quantity="many">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
+        <item quantity="other">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">لم يُعثر على جداول؛ وُضع النص سطرًا لكل صف.</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">صفحة %1$d</string>
+    <string name="pdf2office_excel_sheet_text">نص</string>
+</resources>

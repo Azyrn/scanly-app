@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">AI से दस्तावेज़ बनाएं</string>
+    <string name="ai_build_documents_subtitle">बताएं या फ़ाइल जोड़ें: इनवॉइस, CV, रिपोर्ट, स्लाइड</string>
+    <string name="design_paywall_fallback">AI से दस्तावेज़ बनाना Pro का हिस्सा है।</string>
+    <string name="custom_provider_build_documents_note">AI से दस्तावेज़ बनाने का काम दो हिस्सों में होता है: आपका मॉडल दस्तावेज़ लिखता है और Scanly उसे टाइपसेट करता है। बेहतर मॉडल से डिज़ाइन और अच्छा बनता है, और टाइपसेटिंग के लिए सामान्य लागत की जगह सिर्फ़ 1 क्रेडिट लगता है।</string>
+    <string name="plan_feature_build_documents">AI से दस्तावेज़ बनाएं — लेआउट, टेबल और स्टाइलिंग</string>
+    <string name="custom_provider_on_your_endpoint_note">स्कैनिंग, डेटा निकालना और अनुवाद, सब इसी डिवाइस से सीधे आपके प्रदाता (provider) तक जाते हैं। इनमें Scanly क्रेडिट नहीं लगते, और बिल आपके प्रदाता की ओर से आता है।</string>
+</resources>

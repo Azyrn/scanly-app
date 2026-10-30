@@ -3,6 +3,7 @@ package com.skeler.scanely.core.ocr.paddle
 import android.content.Context
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.skeler.scanely.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -117,7 +118,7 @@ class PaddleModelStore @Inject constructor(
         }.onFailure { e ->
             Log.e(TAG, "UVDoc download failed", e)
             uvdocFile.delete()
-            _uvdocState.value = PackState.Failed(e.message ?: "Download failed")
+            _uvdocState.value = PackState.Failed(e.message ?: context.getString(R.string.ocr_err_download))
         }.map { }
     }
 
@@ -140,7 +141,7 @@ class PaddleModelStore @Inject constructor(
         }.onFailure { e ->
             Log.e(TAG, "Table model download failed", e)
             tableFile.delete()
-            _tableState.value = PackState.Failed(e.message ?: "Download failed")
+            _tableState.value = PackState.Failed(e.message ?: context.getString(R.string.ocr_err_download))
         }.map { }
     }
 
@@ -180,7 +181,7 @@ class PaddleModelStore @Inject constructor(
         }.onFailure { e ->
             Log.e(TAG, "Pack download failed: ${pack.id}", e)
             dir.deleteRecursively()
-            setState(pack, PackState.Failed(e.message ?: "Download failed"))
+            setState(pack, PackState.Failed(e.message ?: context.getString(R.string.ocr_err_download)))
         }.map { }
     }
 

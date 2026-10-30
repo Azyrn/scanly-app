@@ -40,7 +40,7 @@ internal object ParagraphText {
     /** Symbol and Wingdings bullets arrive as private-use code points. */
     private fun isBulletGlyph(char: Char): Boolean = char in BULLET_GLYPHS || char in PRIVATE_USE
 
-    private val BULLET_GLYPHS = setOf('•', '◦', '▪', '▫', '‣', '●', '○', '■', '□', '·', '∙', '➢', '►', '✓', '✔')
+    val BULLET_GLYPHS = setOf('•', '◦', '▪', '▫', '‣', '●', '○', '■', '□', '·', '∙', '➢', '►', '✓', '✔')
     private val DASH_MARKERS = setOf('-', '–', '—', '*')
     private val PRIVATE_USE = '\uE000'..'\uF8FF'
     val NUMBERED_MARKER = Regex("^(\\d{1,3}|[a-zA-Z]|[ivxIVX]{1,4})[.)]$")

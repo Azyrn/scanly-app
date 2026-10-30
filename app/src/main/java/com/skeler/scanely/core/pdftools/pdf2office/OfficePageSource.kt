@@ -51,7 +51,10 @@ data class RenderedPage(val widthPx: Int, val heightPx: Int)
  * document is.
  */
 @Singleton
-class OfficePageSource @Inject constructor(private val reader: PdfPageReader) {
+class OfficePageSource @Inject constructor(
+    private val reader: PdfPageReader,
+    private val modelTables: ModelTables
+) {
 
     /** Falls back to A4 for every page when pdfium can't measure one — sizes only steer layout. */
     internal suspend fun geometries(document: ToolDocument): List<PageGeometry> =
@@ -63,11 +66,27 @@ class OfficePageSource @Inject constructor(private val reader: PdfPageReader) {
             ?: return OfficePage.Unreadable
 
         val (layout, dense) = when (raw) {
-            is RawPage.Chars -> LayoutAnalyzer.analyze(raw.chars) to false
+            is RawPage.Chars -> confirmed(LayoutAnalyzer.analyze(raw.chars), document, index, raw.chars) to false
             is RawPage.Plain -> LayoutAnalyzer.plainLines(raw.text) to true
         }
         return if (layout.isEmpty) OfficePage.Scanned else OfficePage.Text(layout, dense)
     }
+
+    /** [layout] again with the layout model's table regions, when the text alone left a table open. */
+    private suspend fun confirmed(
+        layout: PageLayout,
+        document: ToolDocument,
+        index: Int,
+        chars: List<LayoutChar>
+    ): PageLayout {
+        if (!layout.unconfirmedTables) return layout
+        val regions = tableRegions(document, index) ?: return layout
+        return LayoutAnalyzer.analyze(chars, regions)
+    }
+
+    /** The layout model's table regions on page [index] ([ModelTables]); null when it can't tell. */
+    internal suspend fun tableRegions(document: ToolDocument, index: Int): List<LayoutBox>? =
+        modelTables.regions(document.file, document.password, index)
 
     /**
      * Renders the page at about [RENDER_DPI] into [sink] as JPEG. Null when the page can't be

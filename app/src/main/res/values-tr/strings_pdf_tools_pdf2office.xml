@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">Metin, başlıklar, listeler ve tablolar Word\'de düzenlenebilir olur. Taranmış sayfalar resim olarak eklenir.</string>
+    <string name="pdf2office_word_action">Word\'e dönüştür</string>
+    <string name="pdf2office_powerpoint_body">Her sayfa bir slayt olur; metni sayfadaki konumunda düzenlenebilir kutularda yer alır. Taranmış sayfalar resim olarak eklenir.</string>
+    <string name="pdf2office_powerpoint_action">PowerPoint\'e dönüştür</string>
+    <string name="pdf2office_excel_body">Tablolar satır ve hücrelere dönüşür; tablo içeren her sayfa için bir çalışma sayfası oluşur. Sayılar sayı olarak kalır, böylece toplayabilirsiniz.</string>
+    <string name="pdf2office_excel_action">Excel\'e dönüştür</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">Düzen sadeleştirildi: metin, başlıklar, listeler ve tablolar düzenlenebilir, ancak yazı tipleri, sütunlar, çizimler ve resimler aktarılmadı.</string>
+    <string name="pdf2office_simplified_powerpoint">Düzen sadeleştirildi: metin sayfadaki konumunda düzenlenebilir, ancak yazı tipleri, çizimler ve resimler aktarılmadı.</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">%d taranmış sayfa resim olarak eklendi.</item>
+        <item quantity="other">%d taranmış sayfa resim olarak eklendi.</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">%d çok yoğun sayfa düz satırlar olarak dönüştürüldü.</item>
+        <item quantity="other">%d çok yoğun sayfa düz satırlar olarak dönüştürüldü.</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">%d sayfa okunamadı ve dışarıda bırakıldı.</item>
+        <item quantity="other">%d sayfa okunamadı ve dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">Metni olmayan %d taranmış sayfa atlandı.</item>
+        <item quantity="other">Metni olmayan %d taranmış sayfa atlandı.</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">Tablo bulunamadı; metin her satıra bir satır gelecek şekilde yerleştirildi.</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">Sayfa %1$d</string>
+    <string name="pdf2office_excel_sheet_text">Metin</string>
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="zero">تعذّرت قراءة %d ملف فتم تخطيه</item>
+        <item quantity="one">تعذّرت قراءة %d ملف فتم تخطيه</item>
+        <item quantity="two">تعذّرت قراءة %d ملفين فتم تخطيهما</item>
+        <item quantity="few">تعذّرت قراءة %d ملفات فتم تخطيها</item>
+        <item quantity="many">تعذّرت قراءة %d ملفًا فتم تخطيه</item>
+        <item quantity="other">تعذّرت قراءة %d ملف فتم تخطيه</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="zero">كانت %d صورة بأصغر حجم ممكن، فلم تتغيّر</item>
+        <item quantity="one">كانت %d صورة بأصغر حجم ممكن، فلم تتغيّر</item>
+        <item quantity="two">كانت %d صورتان بأصغر حجم ممكن، فلم تتغيّرا</item>
+        <item quantity="few">كانت %d صور بأصغر حجم ممكن، فلم تتغيّر</item>
+        <item quantity="many">كانت %d صورةً بأصغر حجم ممكن، فلم تتغيّر</item>
+        <item quantity="other">كانت %d صورة بأصغر حجم ممكن، فلم تتغيّر</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">موصى به</string>
+    <string name="pdf_tool_img_compress_recommended_body">أصغر بكثير، والمظهر يبقى كما هو.</string>
+    <string name="pdf_tool_img_compress_strong">قوي</string>
+    <string name="pdf_tool_img_compress_strong_body">أصغر الملفات. قد تفقد التفاصيل الدقيقة بعض وضوحها.</string>
+    <string name="pdf_tool_img_compress_light">خفيف</string>
+    <string name="pdf_tool_img_compress_light_body">أفضل جودة، مع توفير أقل.</string>
+    <string name="pdf_tool_img_png_to_jpg">تحويل PNG إلى JPG لحجم ملف أصغر</string>
+    <string name="pdf_tool_img_png_to_jpg_body">لا يمكن لملف PNG أن يفقد إلا تفاصيله الخفية. تتحول المناطق الشفافة إلى الأبيض.</string>
+    <string name="pdf_tool_img_compress_action">ضغط الصور</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">تتحول كل صورة إلى JPG. تتحول المناطق الشفافة إلى الأبيض، ويحتفظ GIF بإطاره الأول.</string>
+    <string name="pdf_tool_img_to_jpg_action">تحويل إلى JPG</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">بكسلات مطابقة تمامًا، وملفات أكبر.</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">المظهر نفسه، وغالبًا أصغر من JPG.</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 لونًا. مناسب للرسومات، وقد تظهر الصور الفوتوغرافية بتدرجات متقطعة.</string>
+    <string name="pdf_tool_img_from_jpg_action">تحويل الصور</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">بالنسبة المئوية</string>
+    <string name="pdf_tool_img_resize_by_size">بالحجم</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">أقصى عرض (بكسل)</string>
+    <string name="pdf_tool_img_resize_height">أقصى ارتفاع (بكسل)</string>
+    <string name="pdf_tool_img_resize_size_hint">أدخل عرضًا أو ارتفاعًا أو كليهما.</string>
+    <string name="pdf_tool_img_resize_size_invalid">استخدم رقمًا من 1 إلى %d.</string>
+    <string name="pdf_tool_img_resize_keep_aspect">الحفاظ على النسب</string>
+    <string name="pdf_tool_img_resize_no_enlarge">عدم تكبير الصور</string>
+    <string name="pdf_tool_img_resize_action">تغيير حجم الصور</string>
+</resources>

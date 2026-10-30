@@ -54,7 +54,7 @@ class PaddleMarksTableTest {
         // out; without this the pipe table only appears when that test happens to run afterwards.
         runBlocking { store.downloadTable() }
         engine = PaddleOcrEngine(context, store)
-        service = PaddleOcrService(engine, DefaultSettings(), PdfRendererHelper(context))
+        service = PaddleOcrService(context, engine, DefaultSettings(), PdfRendererHelper(context))
     }
 
     @After

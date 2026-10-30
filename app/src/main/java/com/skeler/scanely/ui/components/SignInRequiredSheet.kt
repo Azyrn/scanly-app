@@ -22,9 +22,11 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 
 /** Shown when a signed-out user reaches for an AI feature. Offline scanning stays open to all. */
 @Composable
@@ -56,7 +58,7 @@ fun SignInRequiredSheet(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Sign in to use AI scans",
+                text = stringResource(R.string.cmp_sign_in_ai_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -66,8 +68,7 @@ fun SignInRequiredSheet(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "AI scans run on a shared key, so they need an account. Text " +
-                    "recognition and barcode scanning stay free and offline — no sign-in needed.",
+                text = stringResource(R.string.cmp_sign_in_ai_body),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -79,7 +80,7 @@ fun SignInRequiredSheet(
                 onClick = onSignIn,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Sign in or create account", fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.cmp_sign_in_create_account), fontWeight = FontWeight.SemiBold)
             }
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -88,7 +89,7 @@ fun SignInRequiredSheet(
                 onClick = onDismiss,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Not now")
+                Text(stringResource(R.string.chat_ask_dismiss))
             }
         }
     }

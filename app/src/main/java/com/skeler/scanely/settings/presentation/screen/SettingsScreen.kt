@@ -2,9 +2,11 @@
 
 package com.skeler.scanely.settings.presentation.screen
 
+import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
@@ -34,11 +36,13 @@ import androidx.compose.material.icons.rounded.FontDownload
 import androidx.compose.material.icons.rounded.Gavel
 import androidx.compose.material.icons.rounded.Hub
 import androidx.compose.material.icons.rounded.Key
+import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.PersonRemove
 import androidx.compose.material.icons.rounded.Policy
 import androidx.compose.material.icons.rounded.PrivacyTip
 import androidx.compose.material.icons.rounded.QrCodeScanner
+import androidx.compose.material.icons.rounded.StarRate
 import androidx.compose.material.icons.rounded.TextFields
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
@@ -70,11 +74,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skeler.scanely.BuildConfig
 import com.skeler.scanely.R
 import com.skeler.scanely.auth.presentation.viewmodel.AuthViewModel
 import com.skeler.scanely.core.barcode.BarcodeEngine
+import com.skeler.scanely.core.common.AppLanguage
 import com.skeler.scanely.core.ocr.TextOcrEngine
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
@@ -117,6 +123,8 @@ fun SettingsScreen(
         .collectAsState(initial = BarcodeEngine.DEFAULT.id)
     val barcodeEngine = BarcodeEngine.fromId(engineId)
     var showEngineDialog by remember { mutableStateOf(false) }
+    var showLanguageDialog by remember { mutableStateOf(false) }
+    val languageTag = remember { AppLanguage.current(activity) }
 
     val textEngineId by settingsViewModel.getString(SettingsKeys.TEXT_OCR_ENGINE)
         .collectAsState(initial = TextOcrEngine.DEFAULT.id)
@@ -126,10 +134,13 @@ fun SettingsScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text("Settings", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.set_settings_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -150,13 +161,13 @@ fun SettingsScreen(
             item {
                 val user = currentUser
                 SettingsListSection(
-                    title = "Account",
+                    title = stringResource(R.string.set_section_account),
                     items = buildList {
                         if (user == null) {
                             add(
                                 SettingsItem(
-                                    title = "Sign in",
-                                    subtitle = "Required for AI scans",
+                                    title = stringResource(R.string.set_sign_in),
+                                    subtitle = stringResource(R.string.set_sign_in_subtitle),
                                     icon = Icons.AutoMirrored.Rounded.Login,
                                     onClick = { navigator.go(Destination.Auth) }
                                 )
@@ -165,7 +176,7 @@ fun SettingsScreen(
                             add(
                                 SettingsItem(
                                     title = user.label,
-                                    subtitle = user.email ?: "Signed in",
+                                    subtitle = user.email ?: stringResource(R.string.set_signed_in),
                                     icon = Icons.Rounded.AccountCircle,
                                     avatarUrl = user.photoUrl,
                                     trailingContent = {
@@ -183,7 +194,7 @@ fun SettingsScreen(
                                 )
                             )
                             // Plan and remaining pages come from the server, never from local state.
-                            val plan = planRow(paywallState)
+                            val plan = planRow(activity, paywallState)
                             add(
                                 SettingsItem(
                                     title = plan.title,
@@ -200,14 +211,17 @@ fun SettingsScreen(
                                 val entitlement = license.entitlement
                                 add(
                                     SettingsItem(
-                                        title = "Scanly Pro key",
+                                        title = stringResource(R.string.set_pro_key_title),
                                         subtitle = if (entitlement != null &&
                                             entitlement.maxActivations > 0
                                         ) {
-                                            "Active · ${entitlement.activationsUsed} of " +
-                                                "${entitlement.maxActivations} devices"
+                                            stringResource(
+                                                R.string.set_pro_key_active_devices,
+                                                entitlement.activationsUsed,
+                                                entitlement.maxActivations
+                                            )
                                         } else {
-                                            "Active on this device"
+                                            stringResource(R.string.set_pro_key_active_here)
                                         },
                                         icon = Icons.Rounded.Key,
                                         trailingIcon = Icons.Rounded.Delete,
@@ -218,8 +232,8 @@ fun SettingsScreen(
 
                             add(
                                 SettingsItem(
-                                    title = "Delete account",
-                                    subtitle = "Permanently erase your account and data",
+                                    title = stringResource(R.string.set_delete_account_title),
+                                    subtitle = stringResource(R.string.set_delete_account_subtitle),
                                     icon = Icons.Rounded.PersonRemove,
                                     onClick = { showDeleteAccountDialog = true }
                                 )
@@ -231,29 +245,36 @@ fun SettingsScreen(
 
             item {
                 SettingsListSection(
-                    title = "Customize",
+                    title = stringResource(R.string.set_section_customize),
                     items = listOf(
                         SettingsItem(
-                            title = "Look & Feel",
-                            subtitle = "Color palette, dark theme, pure black",
+                            title = stringResource(R.string.set_look_and_feel_title),
+                            subtitle = stringResource(R.string.set_look_and_feel_subtitle),
                             iconRes = R.drawable.ic_look_and_feel,
                             onClick = { navigator.go(Destination.LookAndFeel) }
                         ),
                         SettingsItem(
-                            title = "Text Recognition",
-                            subtitle = "${textEngine.displayName} · scripts & preprocessing",
+                            title = stringResource(R.string.settings_language_title),
+                            subtitle = AppLanguage.displayName(languageTag)
+                                ?: stringResource(R.string.settings_language_system),
+                            icon = Icons.Rounded.Language,
+                            onClick = { showLanguageDialog = true }
+                        ),
+                        SettingsItem(
+                            title = stringResource(R.string.set_text_recognition_title),
+                            subtitle = stringResource(R.string.set_text_recognition_subtitle, textEngine.displayName),
                             icon = Icons.Rounded.TextFields,
                             onClick = { navigator.go(Destination.TextRecognition) }
                         ),
                         SettingsItem(
-                            title = "Barcode Scanner Engine",
+                            title = stringResource(R.string.set_barcode_engine_title),
                             subtitle = barcodeEngine.displayName,
                             icon = Icons.Rounded.QrCodeScanner,
                             onClick = { showEngineDialog = true }
                         ),
                         SettingsItem(
-                            title = "Custom endpoint",
-                            subtitle = "Connect your own AI provider · Pro",
+                            title = stringResource(R.string.set_custom_endpoint_title),
+                            subtitle = stringResource(R.string.set_custom_endpoint_subtitle),
                             icon = Icons.Rounded.Hub,
                             onClick = { navigator.go(Destination.CustomProvider) }
                         )
@@ -263,23 +284,30 @@ fun SettingsScreen(
 
             item {
                 SettingsListSection(
-                    title = "About",
+                    title = stringResource(R.string.set_section_about),
                     items = listOfNotNull(
                         SettingsItem(
-                            title = "Privacy options",
-                            subtitle = "Manage ad consent choices",
+                            title = stringResource(R.string.set_privacy_options_title),
+                            subtitle = stringResource(R.string.set_privacy_options_subtitle),
                             icon = Icons.Rounded.PrivacyTip,
                             onClick = { paywallViewModel.showPrivacyOptions(activity) }
                         ).takeIf { isPrivacyOptionsRequired },
                         SettingsItem(
-                            title = "Privacy policy",
-                            subtitle = "What Scanly keeps, and who processes it",
+                            title = stringResource(R.string.set_rate_title),
+                            subtitle = stringResource(R.string.set_rate_subtitle),
+                            icon = Icons.Rounded.StarRate,
+                            trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
+                            onClick = { activity.openStoreListing() }
+                        ),
+                        SettingsItem(
+                            title = stringResource(R.string.set_privacy_policy_title),
+                            subtitle = stringResource(R.string.set_privacy_policy_subtitle),
                             icon = Icons.Rounded.Policy,
                             trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
                             onClick = { uriHandler.openUri(LegalLinks.PRIVACY_POLICY) }
                         ),
                         SettingsItem(
-                            title = "Terms of service",
+                            title = stringResource(R.string.set_terms_title),
                             icon = Icons.Rounded.Gavel,
                             trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
                             onClick = { uriHandler.openUri(LegalLinks.TERMS) }
@@ -292,14 +320,14 @@ fun SettingsScreen(
                         ),
                         SettingsItem(
                             title = "Azyrn",
-                            subtitle = "@Azyrn · Developer",
+                            subtitle = stringResource(R.string.set_developer_subtitle),
                             avatarUrl = DEVELOPER_AVATAR_URL,
                             trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
                             onClick = { uriHandler.openUri(DEVELOPER_URL) }
                         ),
                         SettingsItem(
                             title = "Telegram",
-                            subtitle = "Report bugs or request features",
+                            subtitle = stringResource(R.string.set_telegram_subtitle),
                             iconRes = R.drawable.ic_telegram,
                             trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
                             onClick = { uriHandler.openUri(TELEGRAM_URL) }
@@ -310,7 +338,7 @@ fun SettingsScreen(
 
             item {
                 Text(
-                    text = "Scanly ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                    text = stringResource(R.string.set_app_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     textAlign = TextAlign.Center,
@@ -344,12 +372,9 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { showRemoveKeyDialog = false },
             icon = { Icon(Icons.Rounded.Key, contentDescription = null) },
-            title = { Text("Remove your key?") },
+            title = { Text(stringResource(R.string.set_remove_key_title)) },
             text = {
-                Text(
-                    "This device drops back to the free plan and its slot is freed, so you can " +
-                        "use the key on another device. The key itself keeps working."
-                )
+                Text(stringResource(R.string.set_remove_key_message))
             },
             confirmButton = {
                 TextButton(
@@ -358,11 +383,13 @@ fun SettingsScreen(
                         showRemoveKeyDialog = false
                     }
                 ) {
-                    Text("Remove")
+                    Text(stringResource(R.string.set_remove_key_confirm))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showRemoveKeyDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showRemoveKeyDialog = false }) {
+                    Text(stringResource(R.string.settings_language_cancel))
+                }
             }
         )
     }
@@ -371,14 +398,9 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { showDeleteAccountDialog = false },
             icon = { Icon(Icons.Rounded.PersonRemove, contentDescription = null) },
-            title = { Text("Delete account?") },
+            title = { Text(stringResource(R.string.set_delete_account_dialog_title)) },
             text = {
-                Text(
-                    "This permanently erases your Scanly account, your sign-in details, and " +
-                        "your usage records on our servers. It cannot be undone.\n\n" +
-                        "Scans saved on this device are not affected, and an active Pro " +
-                        "subscription must be cancelled separately through Paddle."
-                )
+                Text(stringResource(R.string.set_delete_account_dialog_message))
             },
             confirmButton = {
                 TextButton(
@@ -387,11 +409,13 @@ fun SettingsScreen(
                         showDeleteAccountDialog = false
                     }
                 ) {
-                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.chat_delete_confirm), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteAccountDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDeleteAccountDialog = false }) {
+                    Text(stringResource(R.string.settings_language_cancel))
+                }
             }
         )
     }
@@ -400,12 +424,9 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { showSignOutDialog = false },
             icon = { Icon(Icons.AutoMirrored.Rounded.Logout, contentDescription = null) },
-            title = { Text("Sign out?") },
+            title = { Text(stringResource(R.string.set_sign_out_dialog_title)) },
             text = {
-                Text(
-                    "AI scans will stop working until you sign in again. Your scan history " +
-                        "and offline text recognition stay on this device."
-                )
+                Text(stringResource(R.string.set_sign_out_dialog_message))
             },
             confirmButton = {
                 TextButton(
@@ -414,12 +435,25 @@ fun SettingsScreen(
                         showSignOutDialog = false
                     }
                 ) {
-                    Text("Sign out")
+                    Text(stringResource(R.string.set_sign_out))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showSignOutDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showSignOutDialog = false }) {
+                    Text(stringResource(R.string.settings_language_cancel))
+                }
             }
+        )
+    }
+
+    if (showLanguageDialog) {
+        LanguageDialog(
+            current = languageTag,
+            onSelect = { tag ->
+                showLanguageDialog = false
+                if (tag != languageTag) AppLanguage.set(activity, tag)
+            },
+            onDismiss = { showLanguageDialog = false }
         )
     }
 
@@ -448,7 +482,7 @@ private fun AccountMenuButton(
         IconButton(onClick = { onExpandedChange(true) }) {
             Icon(
                 imageVector = Icons.Rounded.MoreVert,
-                contentDescription = "Account options",
+                contentDescription = stringResource(R.string.set_account_options),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -459,7 +493,7 @@ private fun AccountMenuButton(
             DropdownMenuItem(
                 text = {
                     Column {
-                        Text("Account ID", style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(R.string.set_account_id_label), style = MaterialTheme.typography.bodyMedium)
                         Text(
                             text = uid,
                             style = MaterialTheme.typography.labelSmall,
@@ -481,7 +515,7 @@ private fun AccountMenuButton(
             )
             HorizontalDivider()
             DropdownMenuItem(
-                text = { Text("Sign out") },
+                text = { Text(stringResource(R.string.set_sign_out)) },
                 leadingIcon = {
                     Icon(Icons.AutoMirrored.Rounded.Logout, contentDescription = null)
                 },
@@ -494,7 +528,63 @@ private fun AccountMenuButton(
 private fun Context.copyAccountId(uid: String) {
     getSystemService(ClipboardManager::class.java)
         ?.setPrimaryClip(ClipData.newPlainText("Scanly account ID", uid))
-    Toast.makeText(this, "Account ID copied", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this, getString(R.string.set_account_id_copied), Toast.LENGTH_SHORT).show()
+}
+
+/** The Play listing's id; debug builds carry a ".debug" suffix that has no listing. */
+private const val PLAY_LISTING_ID = "com.skeler.scanely"
+
+/** Opens Scanly's Play listing in the Play Store app, or in the browser when there is none. */
+private fun Context.openStoreListing() {
+    val market = Intent(Intent.ACTION_VIEW, "market://details?id=$PLAY_LISTING_ID".toUri())
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    try {
+        startActivity(market)
+    } catch (_: ActivityNotFoundException) {
+        startActivity(
+            Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$PLAY_LISTING_ID".toUri())
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+    }
+}
+
+@Composable
+private fun LanguageDialog(
+    current: String,
+    onSelect: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val options = listOf("" to stringResource(R.string.settings_language_system)) + AppLanguage.supported
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Rounded.Language, contentDescription = null) },
+        title = { Text(stringResource(R.string.settings_language_title)) },
+        text = {
+            LazyColumn {
+                items(options.size) { index ->
+                    val (tag, name) = options[index]
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(MaterialTheme.shapes.medium)
+                            .clickable { onSelect(tag) }
+                            .padding(vertical = 2.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = tag.equals(current, ignoreCase = true),
+                            onClick = { onSelect(tag) }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = name, style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.settings_language_cancel)) }
+        }
+    )
 }
 
 @Composable
@@ -506,13 +596,13 @@ private fun BarcodeEngineDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(Icons.Rounded.QrCodeScanner, contentDescription = null) },
-        title = { Text("Barcode Scanner Engine") },
+        title = { Text(stringResource(R.string.set_barcode_engine_title)) },
         text = {
             Column {
                 BarcodeEngine.entries.forEach { engine ->
                     val description = when (engine) {
-                        BarcodeEngine.ML_KIT -> "Google's on-device scanner with auto-zoom"
-                        BarcodeEngine.ZXING_CPP -> "Open-source decoder, works without GMS"
+                        BarcodeEngine.ML_KIT -> stringResource(R.string.set_barcode_mlkit_description)
+                        BarcodeEngine.ZXING_CPP -> stringResource(R.string.set_barcode_zxing_description)
                     }
                     Row(
                         modifier = Modifier
@@ -544,7 +634,7 @@ private fun BarcodeEngineDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Done") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.pdf_tool_done)) }
         }
     )
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Onar</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">%d sayfa kurtarıldı. Orijinali silmeden önce kontrol edin.</item>
+        <item quantity="other">%d sayfa kurtarıldı. Orijinali silmeden önce bunları kontrol edin.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Her sayfanın başlangıcını işaretle</string>
+    <string name="pdf_tool_extract_text_separators_body">Her sayfanın metninden önce \"Sayfa 3\" gibi bir satır ekler.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Sayfa %d -----</string>
+    <string name="pdf_tool_extract_text_action">Çıkar</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d sayfada seçilebilir metin yok (tarama). Okumak için ana ekrandaki PDF\'den Metne aracını kullanın.</item>
+        <item quantity="other">%d sayfada seçilebilir metin yok (taramalar). Okumak için ana ekrandaki PDF\'den Metne aracını kullanın.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signature_typed_open">서명 입력하기</string>
+    <string name="signature_typed_title">서명 입력</string>
+    <string name="signature_typed_name_label">이름</string>
+    <string name="signature_typed_preview_empty">서명이 여기에 표시돼요.</string>
+    <string name="signature_typed_colour">잉크 색상</string>
+    <string name="signature_typed_colour_option">잉크 색상 %1$d</string>
+    <string name="signature_typed_save">저장</string>
+    <string name="signature_typed_cancel">취소</string>
+    <string name="signature_typed_font_missing">서명 글꼴을 불러올 수 없어요.</string>
+    <string name="font_licenses_title">오픈소스 라이선스</string>
+    <string name="font_licenses_subtitle">Scanly에 포함된 글꼴과 아이콘</string>
+    <string name="font_licenses_close">닫기</string>
+    <string name="font_licenses_unreadable">이 라이선스 파일을 읽을 수 없어요.</string>
+</resources>

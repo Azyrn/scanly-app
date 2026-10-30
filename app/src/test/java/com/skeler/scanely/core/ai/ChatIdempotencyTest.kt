@@ -3,6 +3,7 @@ package com.skeler.scanely.core.ai
 import android.os.SystemClock
 import android.util.Log
 import com.skeler.scanely.core.network.*
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.*
@@ -23,13 +24,13 @@ class ChatIdempotencyTest {
                 val network = mock(NetworkObserver::class.java)
                 `when`(network.isCurrentlyOnline()).thenReturn(true)
                 val api = mock(ScanlyApi::class.java)
-                val client = BackendClient(api)
+                val client = BackendClient(EnglishStrings.context(), api)
                 val stream = "data: {\"choices\":[{\"delta\":{\"content\":\"Hello\"}}]}\n\ndata: [DONE]\n\n"
                 val translate = TranslateRequest("Bonjour", "English")
                 `when`(api.translate(translate, "translate-key")).thenReturn(
                     "data: {\"choices\":[{\"delta\":{\"content\":\"partial\"}}]}\n\n".toResponseBody(),
                     stream.toResponseBody())
-                assertEquals(AiOutcome.Success("Hello"), BackendExecutor(network).run(emit = {}) {
+                assertEquals(AiOutcome.Success("Hello"), BackendExecutor(EnglishStrings.context(), network).run(emit = {}) {
                     client.translate("Bonjour", "English", "translate-key", emit = {})
                 })
                 verify(api, times(2)).translate(translate, "translate-key")

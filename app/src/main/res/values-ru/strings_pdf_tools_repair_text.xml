@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Восстановить</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">Восстановлена %d страница. Проверьте её, прежде чем удалять оригинал.</item>
+        <item quantity="few">Восстановлено %d страницы. Проверьте их, прежде чем удалять оригинал.</item>
+        <item quantity="many">Восстановлено %d страниц. Проверьте их, прежде чем удалять оригинал.</item>
+        <item quantity="other">Восстановлено %d страниц. Проверьте их, прежде чем удалять оригинал.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Отмечать начало каждой страницы</string>
+    <string name="pdf_tool_extract_text_separators_body">Перед текстом каждой страницы добавляется строка вида «Страница 3».</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Страница %d -----</string>
+    <string name="pdf_tool_extract_text_action">Извлечь</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d страница не содержит выделяемого текста (скан). Чтобы прочитать её, используйте «PDF в текст» на главном экране.</item>
+        <item quantity="few">%d страницы не содержат выделяемого текста (сканы). Чтобы прочитать их, используйте «PDF в текст» на главном экране.</item>
+        <item quantity="many">%d страниц не содержат выделяемого текста (сканы). Чтобы прочитать их, используйте «PDF в текст» на главном экране.</item>
+        <item quantity="other">%d страниц не содержат выделяемого текста (сканы). Чтобы прочитать их, используйте «PDF в текст» на главном экране.</item>
+    </plurals>
+</resources>

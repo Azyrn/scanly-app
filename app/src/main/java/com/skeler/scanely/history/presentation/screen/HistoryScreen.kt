@@ -55,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -63,6 +64,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.skeler.scanely.R
 import com.skeler.scanely.core.presentation.components.svg.DynamicColorImageVectors
 import com.skeler.scanely.core.presentation.components.svg.vectors.noSearchResult
 import com.skeler.scanely.history.data.HistoryItem
@@ -109,7 +111,7 @@ fun HistoryScreen() {
                     val fontSize = lerp(expandedFontSize, collapsedFontSize, collapsedFraction)
                     Text(
                         modifier = Modifier.basicMarquee(),
-                        text = "History",
+                        text = stringResource(R.string.set_history_title),
                         maxLines = 1,
                         fontSize = fontSize,
                         fontFamily = FontFamily.SansSerif,
@@ -120,7 +122,7 @@ fun HistoryScreen() {
                     IconButton(onClick = { navigator.back() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.pdf_tools_back)
                         )
                     }
                 }
@@ -140,11 +142,11 @@ fun HistoryScreen() {
                     icon = {
                         Icon(
                             imageVector = Icons.Rounded.DeleteOutline,
-                            contentDescription = "Clear History"
+                            contentDescription = stringResource(R.string.set_history_clear)
                         )
                     },
                     text = {
-                        Text("Clear All")
+                        Text(stringResource(R.string.set_history_clear_all))
                     },
                     onClick = {
                         showClearConfirmDialog = true
@@ -206,7 +208,7 @@ fun HistoryScreen() {
                             ) {
                                 Icon(
                                     imageVector = Icons.Rounded.Delete,
-                                    contentDescription = "Delete",
+                                    contentDescription = stringResource(R.string.chat_delete_confirm),
                                     tint = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             }
@@ -232,8 +234,8 @@ fun HistoryScreen() {
     if (showClearConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showClearConfirmDialog = false },
-            title = { Text("Clear History") },
-            text = { Text("Are you sure you want to delete all history? This action cannot be undone.") },
+            title = { Text(stringResource(R.string.set_history_clear)) },
+            text = { Text(stringResource(R.string.set_history_clear_message)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -241,12 +243,12 @@ fun HistoryScreen() {
                         showClearConfirmDialog = false
                     }
                 ) {
-                    Text("Delete All", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.set_history_delete_all), color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showClearConfirmDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.settings_language_cancel))
                 }
             }
         )
@@ -303,7 +305,7 @@ private fun NoHistoryUi(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "No history yet",
+            text = stringResource(R.string.set_history_empty),
             style = MaterialTheme.typography.bodyMediumEmphasized,
             textAlign = TextAlign.Center,
             modifier = Modifier

@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.skeler.scanely.auth.data.repository.FirebaseAuthRepository
 import com.skeler.scanely.core.network.NetworkObserver
+import com.skeler.scanely.testing.EnglishStrings
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.ScanlyPublicApi
 import kotlinx.coroutines.runBlocking
@@ -32,6 +33,7 @@ class AuthWaitDeadlineTest {
             val auth = mock(FirebaseAuth::class.java)
             `when`(auth.currentUser).thenReturn(user)
             val repository = FirebaseAuthRepository(
+                EnglishStrings.context(),
                 auth,
                 mock(CredentialManager::class.java),
                 mock(ScanlyPublicApi::class.java),

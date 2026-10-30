@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">第 %1$d 页</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">第 %1$d 页，共 %2$d 页</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">页码会添加在每一页的上方。原有内容不会被改动。</string>
+    <string name="pdf_stamp_numbers_position">位置</string>
+    <string name="pdf_stamp_numbers_top_left">左上</string>
+    <string name="pdf_stamp_numbers_top_center">顶部居中</string>
+    <string name="pdf_stamp_numbers_top_right">右上</string>
+    <string name="pdf_stamp_numbers_bottom_left">左下</string>
+    <string name="pdf_stamp_numbers_bottom_center">底部居中</string>
+    <string name="pdf_stamp_numbers_bottom_right">右下</string>
+    <string name="pdf_stamp_numbers_format">格式</string>
+    <string name="pdf_stamp_numbers_start">起始页码</string>
+    <string name="pdf_stamp_numbers_first_page">从第几页开始编号</string>
+    <string name="pdf_stamp_numbers_first_page_hint">封面等之前的页面不编号。</string>
+    <string name="pdf_stamp_numbers_start_invalid">请输入 0 到 99999 之间的数字。</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">请输入 1 到 %1$d 之间的页码。</string>
+    <string name="pdf_stamp_numbers_text_size">文字大小</string>
+    <string name="pdf_stamp_numbers_margin">距边缘距离</string>
+    <string name="pdf_stamp_numbers_margin_narrow">近</string>
+    <string name="pdf_stamp_numbers_margin_normal">标准</string>
+    <string name="pdf_stamp_numbers_margin_wide">远</string>
+    <string name="pdf_stamp_numbers_action">添加页码</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">小</string>
+    <string name="pdf_stamp_size_medium">中</string>
+    <string name="pdf_stamp_size_large">大</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">水印会添加到每一页。</string>
+    <string name="pdf_stamp_watermark_kind">水印</string>
+    <string name="pdf_stamp_watermark_kind_text">文字</string>
+    <string name="pdf_stamp_watermark_kind_image">图片</string>
+    <string name="pdf_stamp_watermark_text_label">水印文字</string>
+    <string name="pdf_stamp_watermark_text_default">机密</string>
+    <string name="pdf_stamp_watermark_text_empty">请输入要添加的文字。</string>
+    <string name="pdf_stamp_watermark_pick_image">选择图片</string>
+    <string name="pdf_stamp_watermark_change_image">更换图片</string>
+    <string name="pdf_stamp_watermark_image_chosen">已选择图片：%1$s</string>
+    <string name="pdf_stamp_watermark_image_none">尚未选择图片。</string>
+    <string name="pdf_stamp_watermark_placement">位置</string>
+    <string name="pdf_stamp_watermark_center">居中</string>
+    <string name="pdf_stamp_watermark_top">顶部</string>
+    <string name="pdf_stamp_watermark_bottom">底部</string>
+    <string name="pdf_stamp_watermark_tiled">平铺</string>
+    <string name="pdf_stamp_watermark_rotation">角度</string>
+    <string name="pdf_stamp_watermark_rotation_none">水平</string>
+    <string name="pdf_stamp_watermark_rotation_rising">向上倾斜 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">向下倾斜 45°</string>
+    <string name="pdf_stamp_watermark_opacity">不透明度</string>
+    <string name="pdf_stamp_watermark_opacity_light">25%</string>
+    <string name="pdf_stamp_watermark_opacity_medium">50%</string>
+    <string name="pdf_stamp_watermark_opacity_strong">75%</string>
+    <string name="pdf_stamp_watermark_size">大小</string>
+    <string name="pdf_stamp_watermark_layer">图层</string>
+    <string name="pdf_stamp_watermark_layer_over">覆盖在内容之上</string>
+    <string name="pdf_stamp_watermark_layer_over_body">始终可见，可能会遮挡部分文字。</string>
+    <string name="pdf_stamp_watermark_layer_under">位于内容之下</string>
+    <string name="pdf_stamp_watermark_layer_under_body">文字保持在最上层。对于扫描页面，图片会将其完全遮住。</string>
+    <string name="pdf_stamp_watermark_action">添加水印</string>
+</resources>

@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.auth.domain.model.AuthUser
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,6 +40,7 @@ data class AuthUiState(
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    @param:ApplicationContext private val appContext: Context,
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -83,7 +86,7 @@ class AuthViewModel @Inject constructor(
     fun sendPasswordReset() {
         val state = _uiState.value
         if (!state.isEmailValid) {
-            _uiState.update { it.copy(error = "Enter your email address first.") }
+            _uiState.update { it.copy(error = appContext.getString(R.string.auth_val_email_required)) }
             return
         }
         viewModelScope.launch {
@@ -94,10 +97,7 @@ class AuthViewModel @Inject constructor(
                     isLoading = false,
                     error = result.exceptionOrNull()?.message,
                     // Do not reveal whether this address has a password account.
-                    info = (
-                        "If ${state.email.trim()} has a password, a reset link is on its " +
-                            "way. Google accounts have none — use Continue with Google."
-                        )
+                    info = appContext.getString(R.string.auth_reset_sent, state.email.trim())
                         .takeIf { _ -> result.isSuccess }
                 )
             }
@@ -116,7 +116,7 @@ class AuthViewModel @Inject constructor(
                 it.copy(
                     isLoading = false,
                     error = result.exceptionOrNull()?.message,
-                    info = if (result.isSuccess) "Your account has been deleted." else null
+                    info = if (result.isSuccess) activityContext.getString(R.string.set_account_deleted) else null
                 )
             }
         }
@@ -133,8 +133,8 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun AuthUiState.validationError(): String = when {
-        !isEmailValid -> "Enter a valid email address."
-        !isPasswordValid -> "Password must be at least $MIN_PASSWORD_LENGTH characters."
-        else -> "Check your details and try again."
+        !isEmailValid -> appContext.getString(R.string.auth_val_invalid_email)
+        !isPasswordValid -> appContext.getString(R.string.auth_val_password_short, MIN_PASSWORD_LENGTH)
+        else -> appContext.getString(R.string.auth_val_check_details)
     }
 }

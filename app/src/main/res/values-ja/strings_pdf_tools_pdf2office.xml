@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">テキスト、見出し、リスト、表がWordで編集できるようになります。スキャンされたページは画像として追加されます。</string>
+    <string name="pdf2office_word_action">Wordに変換</string>
+    <string name="pdf2office_powerpoint_body">各ページがスライドになり、テキストは元のページと同じ位置に編集可能なボックスとして配置されます。スキャンされたページは画像として追加されます。</string>
+    <string name="pdf2office_powerpoint_action">PowerPointに変換</string>
+    <string name="pdf2office_excel_body">表は行とセルに変換され、表のあるページごとにシートが作成されます。数値は数値のまま残るため、合計できます。</string>
+    <string name="pdf2office_excel_action">Excelに変換</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">レイアウトを簡略化しました。テキスト、見出し、リスト、表は編集できますが、フォント、段組み、図形、画像は引き継がれません。</string>
+    <string name="pdf2office_simplified_powerpoint">レイアウトを簡略化しました。テキストは元のページと同じ位置で編集できますが、フォント、図形、画像は引き継がれません。</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">スキャンされたページ %d 枚は画像として追加されました。</item>
+        <item quantity="other">スキャンされたページ %d 枚は画像として追加されました。</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">非常に情報量の多いページ %d 枚は、プレーンな行として変換されました。</item>
+        <item quantity="other">非常に情報量の多いページ %d 枚は、プレーンな行として変換されました。</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">読み取れなかったページ %d 枚は除外されました。</item>
+        <item quantity="other">読み取れなかったページ %d 枚は除外されました。</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">テキストのないスキャンページ %d 枚はスキップされました。</item>
+        <item quantity="other">テキストのないスキャンページ %d 枚はスキップされました。</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">表が見つからなかったため、テキストを1行ずつ配置しました。</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">ページ %1$d</string>
+    <string name="pdf2office_excel_sheet_text">テキスト</string>
+</resources>

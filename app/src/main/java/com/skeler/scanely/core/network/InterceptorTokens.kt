@@ -1,7 +1,9 @@
 package com.skeler.scanely.core.network
 
+import android.content.Context
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.awaitWithin
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
@@ -14,10 +16,12 @@ import java.io.IOException
  * dispatcher thread's default handler and kills the process — a caller's own try/catch cannot
  * stop it. Firebase throws bare FirebaseExceptions here, so every one of them has to be narrowed.
  */
-internal fun <T> awaitToken(failureMessage: String, task: () -> Task<T>): T =
+internal fun <T> awaitToken(context: Context, failureMessage: String, task: () -> Task<T>): T =
     try {
         runBlocking {
-            task().awaitWithin(TOKEN_WAIT_MS) { TokenUnavailableException(TOKEN_TIMEOUT_MESSAGE) }
+            task().awaitWithin(TOKEN_WAIT_MS) {
+                TokenUnavailableException(context.getString(R.string.net_token_timeout))
+            }
         }
     } catch (e: IOException) {
         throw e
@@ -53,6 +57,3 @@ class TokenUnavailableException(
  * stall, not a slow network — and it sits inside the control client's 20 s callTimeout.
  */
 internal const val TOKEN_WAIT_MS = 15_000L
-
-internal const val TOKEN_TIMEOUT_MESSAGE =
-    "Signing in to Scanly is taking too long. Check your connection and try again."

@@ -9,7 +9,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BackendExecutorTest {
-    private val executor = BackendExecutor(NetworkObserver(
+    private val executor = BackendExecutor(InstrumentationRegistry.getInstrumentation().targetContext, NetworkObserver(
         InstrumentationRegistry.getInstrumentation().targetContext))
 
     @Test fun exhaustedRetriesKeepServerReasonInsteadOfInventingBusy() = runBlocking {

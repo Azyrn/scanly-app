@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.barcode
 
+import com.skeler.scanely.R
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.scan.galleryActions
@@ -57,7 +58,7 @@ class SharedBarcodeActionsTest {
         val gallery = galleryActions(listOf(wifi()))
 
         assertEquals(cameraActions(listOf(wifi())), gallery)
-        assertTrue(gallery.contains(ScanAction.CopyText("Home", "Copy SSID")))
+        assertTrue(gallery.contains(ScanAction.CopyText("Home", R.string.act_copy_ssid)))
     }
 
     @Test

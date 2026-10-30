@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">الصفحات إلى JPG</string>
+    <string name="pdf_tool_jpg_mode_pages_body">تصبح كل صفحة صورة واحدة.</string>
+    <string name="pdf_tool_jpg_mode_extract">استخراج الصور</string>
+    <string name="pdf_tool_jpg_mode_extract_body">احفظ الصور والصور الفوتوغرافية الموجودة داخل ملف PDF بجودتها الأصلية.</string>
+    <string name="pdf_tool_jpg_quality">الجودة</string>
+    <string name="pdf_tool_jpg_quality_normal">عادية · 150 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">عالية · 300 dpi</string>
+    <string name="pdf_tool_jpg_action_pages">تحويل إلى JPG</string>
+    <string name="pdf_tool_jpg_action_extract">استخراج الصور</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="zero">تم تخطي %d صورة بصيغة لا تستطيع Scanly تصديرها</item>
+        <item quantity="one">تم تخطي %d صورة بصيغة لا تستطيع Scanly تصديرها</item>
+        <item quantity="two">تم تخطي %d صورتين بصيغتين لا تستطيع Scanly تصديرهما</item>
+        <item quantity="few">تم تخطي %d صور بصيغ لا تستطيع Scanly تصديرها</item>
+        <item quantity="many">تم تخطي %d صورة بصيغة لا تستطيع Scanly تصديرها</item>
+        <item quantity="other">تم تخطي %d صورة بصيغة لا تستطيع Scanly تصديرها</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">صورة واحدة في كل صفحة، بالترتيب المعروض.</string>
+    <string name="pdf_tool_img2pdf_page_size">حجم الصفحة</string>
+    <string name="pdf_tool_img2pdf_size_fit">ملاءمة للصورة</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Letter</string>
+    <string name="pdf_tool_img2pdf_orientation">الاتجاه</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">تلقائي</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">عمودي</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">أفقي</string>
+    <string name="pdf_tool_img2pdf_margin">الهامش</string>
+    <string name="pdf_tool_img2pdf_margin_none">بدون</string>
+    <string name="pdf_tool_img2pdf_margin_small">صغير</string>
+    <string name="pdf_tool_img2pdf_margin_big">كبير</string>
+    <string name="pdf_tool_img2pdf_action">إنشاء PDF</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="zero">تعذّرت قراءة %d ملف كصورة، فاستُبعد</item>
+        <item quantity="one">تعذّرت قراءة %d ملف كصورة، فاستُبعد</item>
+        <item quantity="two">تعذّرت قراءة %d ملفين كصورتين، فاستُبعدا</item>
+        <item quantity="few">تعذّرت قراءة %d ملفات كصور، فاستُبعدت</item>
+        <item quantity="many">تعذّرت قراءة %d ملفًا كصورة، فاستُبعد</item>
+        <item quantity="other">تعذّرت قراءة %d ملف كصورة، فاستُبعد</item>
+    </plurals>
+</resources>

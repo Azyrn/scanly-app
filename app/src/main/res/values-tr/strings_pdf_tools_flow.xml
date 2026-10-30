@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
+<resources>
+    <!-- Inputs on the options screen -->
+    <string name="pdf_tool_flow_add_files">Dosya ekle</string>
+    <string name="pdf_tool_flow_remove">%1$s kaldır</string>
+    <string name="pdf_tool_flow_move_up">%1$s yukarı taşı</string>
+    <string name="pdf_tool_flow_move_down">%1$s aşağı taşı</string>
+    <plurals name="pdf_tool_flow_min_inputs">
+        <item quantity="one">Devam etmek için en az %d dosya ekleyin.</item>
+        <item quantity="other">Devam etmek için en az %d dosya ekleyin.</item>
+    </plurals>
+    <string name="pdf_tool_flow_skipped">Açılamayan bir dosya dışarıda bırakıldı.</string>
+
+    <!-- Progress -->
+    <plurals name="pdf_tool_flow_working_files">
+        <item quantity="one">%d dosya üzerinde çalışılıyor…</item>
+        <item quantity="other">%d dosya üzerinde çalışılıyor…</item>
+    </plurals>
+
+    <!-- Result -->
+    <string name="pdf_tool_flow_open_output">%1$s aç</string>
+    <string name="pdf_tool_flow_share_all">Tümünü paylaş</string>
+</resources>

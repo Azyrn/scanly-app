@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Merge -->
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">%d Datei</item>
+        <item quantity="other">%d Dateien</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · insgesamt %2$s</string>
+    <string name="pdf_tool_merge_body">Die Dateien werden in der oben angezeigten Reihenfolge zusammengefügt. Die zusammengeführte Kopie hat kein Passwort, auch wenn einige Dateien eines hatten.</string>
+    <string name="pdf_tool_merge_need_more">Füge mindestens eine weitere PDF hinzu, um zusammenzuführen.</string>
+    <string name="pdf_tool_merge_action">Zusammenführen</string>
+
+    <!-- Split: modes -->
+    <string name="pdf_tool_split_mode_ranges">Nach Bereichen teilen</string>
+    <string name="pdf_tool_split_mode_ranges_body">Eine neue Datei für jeden eingegebenen Bereich</string>
+    <string name="pdf_tool_split_mode_every">Alle paar Seiten teilen</string>
+    <string name="pdf_tool_split_mode_every_body">Eine neue Datei nach jeweils einer festen Seitenzahl</string>
+    <string name="pdf_tool_split_mode_extract">Seiten extrahieren</string>
+    <string name="pdf_tool_split_mode_extract_body">Die ausgewählten Seiten zusammen in einer Datei</string>
+    <string name="pdf_tool_split_mode_delete">Seiten löschen</string>
+    <string name="pdf_tool_split_mode_delete_body">Eine Kopie ohne die ausgewählten Seiten</string>
+    <string name="pdf_tool_split_mode_size">Nach Dateigröße teilen</string>
+    <string name="pdf_tool_split_mode_size_body">Dateien, die nicht größer als die eingestellte Größe sind</string>
+
+    <!-- Split: fields -->
+    <string name="pdf_tool_split_ranges_label">Seiten</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Zum Beispiel 1-3, 5, 8-10</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Gib die gewünschten Seiten ein, zum Beispiel 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">„%1$s“ ist keine Seite und kein Bereich</string>
+    <string name="pdf_tool_split_range_out">„%1$s“ liegt außerhalb der Seiten 1–%2$d</string>
+    <string name="pdf_tool_split_range_reversed">„%1$s“ läuft rückwärts; schreibe die kleinere Seite zuerst</string>
+    <string name="pdf_tool_split_delete_all">Das sind alle Seiten. Lass mindestens eine übrig.</string>
+    <string name="pdf_tool_split_every_label">Seiten pro Datei</string>
+    <string name="pdf_tool_split_every_invalid">Gib eine Zahl von 1 bis %1$d ein</string>
+    <string name="pdf_tool_split_every_less">Weniger Seiten pro Datei</string>
+    <string name="pdf_tool_split_every_more">Mehr Seiten pro Datei</string>
+    <string name="pdf_tool_split_size_label">Größte Dateigröße (MB)</string>
+    <string name="pdf_tool_split_size_invalid">Gib eine Größe über 0 MB ein</string>
+    <string name="pdf_tool_split_size_body">Seiten bleiben ganz, daher erhält eine einzelne Seite, die größer ist, eine eigene Datei.</string>
+    <string name="pdf_tool_split_locked">Diese Datei hat ein Passwort, und die neuen Dateien behalten es.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">Erstellt %d Datei</item>
+        <item quantity="other">Erstellt %d Dateien</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">Behält %d Seite</item>
+        <item quantity="other">Behält %d Seiten</item>
+    </plurals>
+
+    <!-- Split: actions -->
+    <string name="pdf_tool_split_action">Teilen</string>
+    <string name="pdf_tool_split_extract_action">Seiten extrahieren</string>
+    <string name="pdf_tool_split_delete_action">Seiten löschen</string>
+
+    <!-- Split: result notes -->
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">%d Seite ist allein schon größer als das Größenlimit und erhält deshalb eine eigene Datei.</item>
+        <item quantity="other">%d Seiten sind allein schon größer als das Größenlimit und erhalten deshalb jeweils eine eigene Datei.</item>
+    </plurals>
+</resources>

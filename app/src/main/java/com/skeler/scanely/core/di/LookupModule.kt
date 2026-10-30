@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.di
 
+import android.content.Context
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skeler.scanely.core.food.OpenFoodFactsApi
 import com.skeler.scanely.core.lookup.LookupEngine
@@ -15,6 +16,7 @@ import com.skeler.scanely.core.network.NetworkObserver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import okhttp3.MediaType.Companion.toMediaType
@@ -92,9 +94,10 @@ object LookupModule {
     @Provides
     @Singleton
     fun provideLookupOrchestrator(
+        @ApplicationContext context: Context,
         engines: Set<@JvmSuppressWildcards LookupEngine>,
         networkObserver: NetworkObserver
     ): LookupOrchestrator {
-        return LookupOrchestrator(engines, networkObserver)
+        return LookupOrchestrator(context, engines, networkObserver)
     }
 }

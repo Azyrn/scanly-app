@@ -1,5 +1,6 @@
 package com.skeler.scanely.ui.viewmodel
 
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -14,6 +15,7 @@ class UnknownPlanRowTest {
     @Test
     fun `a plan that failed to load is not called Free`() {
         val row = planRow(
+            EnglishStrings.context(),
             PaywallState(isQuotaKnown = false, error = "Couldn't reach Scanly. Check your connection and try again.")
         )
 
@@ -23,14 +25,14 @@ class UnknownPlanRowTest {
 
     @Test
     fun `a plan still loading is not called Free either`() {
-        val row = planRow(PaywallState(isQuotaKnown = false, isLoading = true))
+        val row = planRow(EnglishStrings.context(), PaywallState(isQuotaKnown = false, isLoading = true))
 
         assertFalse(row.title, row.title.contains("Free"))
     }
 
     @Test
     fun `a loaded plan is named with its credits`() {
-        val row = planRow(PaywallState(currentTier = "pro", pagesRemaining = 650, pagesPerMonth = 700, isQuotaKnown = true))
+        val row = planRow(EnglishStrings.context(), PaywallState(currentTier = "pro", pagesRemaining = 650, pagesPerMonth = 700, isQuotaKnown = true))
 
         assertEquals("Pro plan", row.title)
         assertEquals("650 of 700 AI credits left this month", row.subtitle)

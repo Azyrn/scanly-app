@@ -5,6 +5,7 @@ import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.network.LocalWorker
 import com.skeler.scanely.core.network.proceedWithToken
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -48,10 +49,10 @@ class LicenseSessionMessageTest {
         `when`(deviceId.displayName).thenReturn("Test phone")
 
         val client = OkHttpClient.Builder()
-            .addInterceptor { chain -> chain.proceedWithToken { refresh -> if (refresh) "" else "stale" } }
+            .addInterceptor { chain -> chain.proceedWithToken(EnglishStrings.context()) { refresh -> if (refresh) "" else "stale" } }
             .build()
         val api = worker.api(client)
-        val repository = LicenseRepository(api, store, deviceId, auth, EntitlementRepository(worker.api(), auth))
+        val repository = LicenseRepository(EnglishStrings.context(), api, store, deviceId, auth, EntitlementRepository(EnglishStrings.context(), worker.api(), auth))
 
         assertFalse(repository.activate("SCAN-LY00-KEY0-0001"))
         assertEquals("Your session expired. Sign in again.", repository.state.value.error)

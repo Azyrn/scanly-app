@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">Text, Überschriften, Listen und Tabellen werden in Word bearbeitbar. Gescannte Seiten werden als Bilder eingefügt.</string>
+    <string name="pdf2office_word_action">In Word umwandeln</string>
+    <string name="pdf2office_powerpoint_body">Jede Seite wird zu einer Folie, deren Text in bearbeitbaren Feldern an derselben Stelle steht wie auf der Seite. Gescannte Seiten werden als Bilder eingefügt.</string>
+    <string name="pdf2office_powerpoint_action">In PowerPoint umwandeln</string>
+    <string name="pdf2office_excel_body">Tabellen werden zu Zeilen und Zellen, ein Blatt pro Seite mit Tabellen. Zahlen bleiben Zahlen, sodass du sie summieren kannst.</string>
+    <string name="pdf2office_excel_action">In Excel umwandeln</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">Das Layout wurde vereinfacht: Text, Überschriften, Listen und Tabellen sind bearbeitbar, Schriften, Spalten, Zeichnungen und Bilder wurden aber nicht übernommen.</string>
+    <string name="pdf2office_simplified_powerpoint">Das Layout wurde vereinfacht: Text ist an derselben Stelle wie auf der Seite bearbeitbar, Schriften, Zeichnungen und Bilder wurden aber nicht übernommen.</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">%d gescannte Seite wurde als Bild eingefügt.</item>
+        <item quantity="other">%d gescannte Seiten wurden als Bilder eingefügt.</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">%d sehr dichte Seite wurde als einfache Zeilen umgewandelt.</item>
+        <item quantity="other">%d sehr dichte Seiten wurden als einfache Zeilen umgewandelt.</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">%d Seite konnte nicht gelesen werden und wurde weggelassen.</item>
+        <item quantity="other">%d Seiten konnten nicht gelesen werden und wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">%d gescannte Seite hat keinen Text und wurde übersprungen.</item>
+        <item quantity="other">%d gescannte Seiten haben keinen Text und wurden übersprungen.</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">Keine Tabellen gefunden; der Text wurde zeilenweise eingefügt.</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">Seite %1$d</string>
+    <string name="pdf2office_excel_sheet_text">Text</string>
+</resources>

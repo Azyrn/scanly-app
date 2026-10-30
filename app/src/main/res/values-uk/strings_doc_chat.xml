@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Build Documents with AI, the document chat. English only for now; every string the chat shows is here. -->
+<resources>
+    <!-- Top bar -->
+    <string name="chat_title_empty">Scanly AI</string>
+    <string name="chat_menu">Чати та план</string>
+    <string name="chat_untitled">Документ без назви</string>
+    <string name="chat_file_default_name">Документ</string>
+    <string name="chat_new">Новий чат</string>
+    <string name="chat_rename_action">Перейменувати чат</string>
+    <string name="chat_rename_title">Перейменувати чат</string>
+    <string name="chat_rename_label">Назва</string>
+    <string name="chat_save">Зберегти</string>
+    <string name="chat_cancel">Скасувати</string>
+
+    <!-- History -->
+    <string name="chat_group_today">Сьогодні</string>
+    <string name="chat_group_yesterday">Вчора</string>
+    <string name="chat_group_week">Попередні 7 днів</string>
+    <string name="chat_group_older">Раніше</string>
+    <string name="chat_search_hint">Пошук у чатах</string>
+    <string name="chat_search_clear">Очистити пошук</string>
+    <string name="chat_search_empty">Жоден чат не відповідає пошуку.</string>
+    <string name="chat_history_empty">Чатів ще немає. Створені вами документи з\'являтимуться тут.</string>
+    <string name="chat_more_actions">Більше дій</string>
+    <string name="chat_delete_title">Видалити цей чат?</string>
+    <string name="chat_delete_body">«%1$s» і його файли буде видалено з цього телефона та вашого облікового запису. Копії, які ви зберегли в Downloads, залишаться.</string>
+    <string name="chat_delete_confirm">Видалити</string>
+
+    <!-- Empty state -->
+    <string name="chat_greeting_title">Що створимо?</string>
+    <!-- Example requests in a new chat; each fills the composer. Delete items to remove them. -->
+    <string-array name="chat_example_prompts">
+        <item>Зроби односторінкове резюме</item>
+        <item>Створи таблицю бюджету</item>
+        <item>Напиши офіційного листа в Word</item>
+    </string-array>
+    <string name="chat_ask_answered">Ви відповіли.</string>
+    <string name="chat_greeting_body">Опишіть або додайте файл, щоб перебудувати його.</string>
+
+    <!-- Composer -->
+    <string name="chat_composer_hint">Опишіть документ…</string>
+    <string name="chat_composer_hint_revise">Попросіть змінити…</string>
+    <string name="chat_attach">Додати</string>
+    <string name="chat_send">Надіслати</string>
+    <string name="chat_stop">Припинити очікування</string>
+    <plurals name="chat_cost_hint">
+        <item quantity="one">~%d кредит</item>
+        <item quantity="few">~%d кредити</item>
+        <item quantity="many">~%d кредитів</item>
+        <item quantity="other">~%d кредитів</item>
+    </plurals>
+    <string name="chat_cost_agent">Чат безкоштовний · файли використовують кредити</string>
+    <string name="chat_remove">Видалити %1$s</string>
+    <string name="chat_preparing_file">Готуємо…</string>
+    <string name="chat_preset_clean_up">Очистити</string>
+    <string name="chat_preset_one_page">Вмістити на одній сторінці</string>
+    <plurals name="chat_pages">
+        <item quantity="one">%d сторінка</item>
+        <item quantity="few">%d сторінки</item>
+        <item quantity="many">%d сторінок</item>
+        <item quantity="other">%d сторінок</item>
+    </plurals>
+    <string name="chat_preparing_picture">Готуємо зображення…</string>
+    <string name="chat_picture_role">Розміщено на сторінці</string>
+    <string name="chat_scan_role">Із моїх сканувань</string>
+    <string name="chat_image_pending">Перебудувати чи розмістити?</string>
+    <string name="chat_role_rebuild">Перебудувати цей документ</string>
+    <string name="chat_role_place">Розмістити це зображення на сторінці</string>
+    <string name="chat_role_rebuild_prompt">Перебудуй цей документ як чистий PDF. Збережи кожне слово, ім\'я та число.</string>
+    <string name="chat_role_place_prompt">Розмісти це зображення на сторінці як портрет або логотип.</string>
+    <string name="chat_role_question">Перебудувати його чи розмістити на сторінці?</string>
+    <string name="chat_role_question_body">«Перебудувати» перетворює зображення на новий документ. «Розмістити» залишає його зображенням, як портрет або логотип.</string>
+    <string name="chat_role_answer_rebuild">Перебудувати</string>
+    <string name="chat_role_answer_place">Розмістити</string>
+    <string name="chat_attach_error_dismiss">Закрити</string>
+
+
+    <!-- Attach sheet -->
+    <string name="chat_attach_title">Додати файл</string>
+    <string name="chat_attach_camera">Камера</string>
+    <string name="chat_attach_photos">Фото</string>
+    <string name="chat_attach_files">Файли</string>
+    <string name="chat_attach_scans">Мої сканування</string>
+    <string name="chat_no_scans">Сканувань ще немає. Спершу відскануйте документ на головному екрані.</string>
+    <string name="chat_scans_title">Ваші останні сканування</string>
+
+
+    <!-- Message list -->
+    <string name="chat_jump_latest">Перейти до останнього</string>
+    <string name="chat_unknown_message">Для цього повідомлення потрібна новіша версія Scanly.</string>
+    <string name="chat_you_attached">Додано: %1$s</string>
+
+    <!-- Turn outcomes written into the chat -->
+    <string name="chat_stopped_waiting">Очікування припинено. Сервер може все ще завершити роботу й використати кредити. Повторіть спробу, щоб отримати той самий результат без подвійної оплати.</string>
+    <string name="chat_interrupted">Цей запит перервано. Надішліть повідомлення ще раз.</string>
+    <string name="chat_reconnecting">Повторне підключення до вашого дизайну…</string>
+    <string name="chat_design_failed">Не вдалося завершити дизайн. Ваше повідомлення збережено; спробуйте ще раз.</string>
+
+    <!-- Attaching -->
+    <string name="chat_photo_unusable">Це зображення не вдалося використати. Спробуйте інше.</string>
+    <string name="chat_file_too_many_pages">Дизайнер перебудовує до %1$d сторінок. У цьому файлі їх %2$d.</string>
+    <string name="chat_file_too_large">Цей файл завеликий для перебудови.</string>
+    <string name="chat_file_unreadable">Не вдалося прочитати цей файл. Спробуйте інший.</string>
+
+    <!-- File actions -->
+    <string name="chat_open_with">Відкрити за допомогою…</string>
+    <string name="chat_no_viewer">На цьому телефоні немає застосунку, який може відкрити цей файл.</string>
+    <string name="chat_save_failed">Не вдалося зберегти файл.</string>
+    <string name="chat_share_failed">Не вдалося поділитися файлом.</string>
+    <string name="chat_saved_to_downloads">Збережено в Downloads.</string>
+    <plurals name="chat_images_saved">
+        <item quantity="one">Збережено %d зображення у Pictures/Scanly.</item>
+        <item quantity="few">Збережено %d зображення у Pictures/Scanly.</item>
+        <item quantity="many">Збережено %d зображень у Pictures/Scanly.</item>
+        <item quantity="other">Збережено %d зображення у Pictures/Scanly.</item>
+    </plurals>
+    <string name="chat_images_failed">Не вдалося зберегти зображення.</string>
+    <string name="chat_file_missing">Не вдалося отримати цей файл. Перевірте з\'єднання та спробуйте ще раз.</string>
+    <string name="chat_file_expired">Цей дизайн більше не зберігається. Перебудуйте його, щоб отримати файл знову.</string>
+
+    <!-- Reply cards -->
+    <string name="chat_not_charged">Кошти не списано</string>
+    <string name="chat_retry">Повторити</string>
+    <string name="chat_see_plans">Переглянути плани</string>
+    <string name="chat_ask_title">Перевірте свій файл</string>
+    <string name="chat_ask_reason">Схоже на %1$s.</string>
+    <string name="chat_ask_fallback">Цей файл не схожий на документ, який ви запитували.</string>
+    <string name="chat_ask_continue">Продовжити все одно</string>
+    <string name="chat_ask_dismiss">Не зараз</string>
+    <string name="chat_ask_answered_continue">Ви вирішили продовжити все одно.</string>
+    <string name="chat_ask_answered_dismiss">Ви вирішили не продовжувати.</string>
+    <string name="chat_fields_title">Спочатку кілька деталей</string>
+    <string name="chat_fields_body">Додайте їх, щоб нічого в документі не довелося вигадувати.</string>
+    <string name="chat_fields_submit">Створити документ</string>
+    <string name="chat_fields_open">Заповнити деталі</string>
+    <string name="chat_file_open">Відкрити</string>
+    <string name="chat_file_share">Поділитися</string>
+    <string name="chat_file_download">Завантажити</string>
+    <string name="chat_file_more">Більше дій</string>
+    <string name="chat_file_save_images">Зберегти сторінки як зображення</string>
+    <string name="chat_file_revise">Змінити цю версію</string>
+    <string name="chat_file_editing">Редагування</string>
+    <plurals name="chat_credits_used">
+        <item quantity="one">%d кредит</item>
+        <item quantity="few">%d кредити</item>
+        <item quantity="many">%d кредитів</item>
+        <item quantity="other">%d кредитів</item>
+    </plurals>
+    <string name="chat_expired">Минуло: перебудувати</string>
+    <string name="chat_expired_hint">Сервер більше не зберігає цей дизайн, тож змінити його не можна. Перебудуйте його, щоб продовжити редагування.</string>
+    <string name="chat_thumbnail_description">Перша сторінка: %1$s</string>
+
+    <!-- Background job notification -->
+    <string name="chat_notification_channel">Документи</string>
+    <string name="chat_notification_channel_description">Коли документ, створений у фоновому режимі, готовий</string>
+    <string name="chat_notification_ready">Ваш PDF готовий. Торкніться, щоб відкрити чат.</string>
+    <string name="chat_notification_not_charged">З вас не списано кошти.</string>
+
+    <!-- Working reply: the live status line and Show thinking -->
+    <string name="chat_status_elapsed">%1$s · %2$d с</string>
+    <string name="chat_step_reading">Читаємо ваш файл</string>
+    <string name="chat_step_extracting">Витягуємо текст</string>
+    <string name="chat_step_planning">Плануємо макет</string>
+    <string name="chat_step_writing">Пишемо вміст</string>
+    <string name="chat_step_building">Створюємо PDF</string>
+    <string name="chat_step_checking">Перевіряємо якість</string>
+    <string name="chat_step_fixing">Виправляємо макет</string>
+    <string name="chat_step_done">Готово</string>
+    <string name="chat_step_thinking">Міркуємо</string>
+    <string name="chat_step_reading_guide">Читаємо посібник</string>
+    <string name="chat_step_coding">Пишемо код</string>
+    <string name="chat_step_previewing">Дивимося сторінки</string>
+    <string name="chat_step_delivering">Надсилаємо файл</string>
+    <string name="chat_agent_done">Готово. Ваші файли нижче.</string>
+    <string name="chat_agent_failed">Асистент не зміг завершити роботу. Ваше повідомлення збережено; спробуйте ще раз.</string>
+    <string name="chat_agent_about_file">(Про файл %1$s.)</string>
+    <string name="chat_agent_delivered">Надіслано %1$s</string>
+    <string name="chat_approval_title">Відкрити цей вебсайт?</string>
+    <string name="chat_approval_new_url">Цього посилання немає у вашому повідомленні чи результатах пошуку, тому асистенту потрібен ваш дозвіл, щоб відкрити його.</string>
+    <string name="chat_approval_page_link">Асистент знайшов це посилання на сторінці, яку відкрив, і потребує вашого дозволу, щоб відкрити його.</string>
+    <string name="chat_approval_warn_query">Це посилання містить додаткові дані після \"?\". Якщо ви не довіряєте цьому сайту, натисніть «Відхилити»: він може отримати частину цього чату.</string>
+    <string name="chat_approval_warn_long">Це посилання незвично довге. Якщо ви не довіряєте цьому сайту, натисніть «Відхилити»: він може отримати частину цього чату.</string>
+    <string name="chat_approval_countdown">Відсутність відповіді за %1$s означає «ні».</string>
+    <string name="chat_approval_allow_once">Дозволити один раз</string>
+    <string name="chat_approval_deny">Відхилити</string>
+    <string name="chat_show_thinking">Показати міркування</string>
+    <string name="chat_hide_thinking">Приховати міркування</string>
+    <string name="chat_took">Тривало %1$d с</string>
+    <string name="chat_seconds">%1$d с</string>
+    <string name="chat_under_a_second">менше 1 с</string>
+    <string name="chat_background_note">Працює у фоновому режимі. Ви отримаєте сповіщення, а файл з\'явиться тут.</string>
+    <string name="chat_stopped_note">Очікування припинено. Файл усе одно з\'явиться тут, коли буде готовий.</string>
+
+    <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
+         Tool names and their arguments are the agent's own and are not translated. -->
+    <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
+    <plurals name="chat_log_steps">
+        <item quantity="one">%d крок</item>
+        <item quantity="few">%d кроки</item>
+        <item quantity="many">%d кроків</item>
+        <item quantity="other">%d кроків</item>
+    </plurals>
+    <string name="chat_log_minutes">%1$d хв %2$d с</string>
+    <string name="chat_log_seconds">%1$d с</string>
+    <string name="chat_log_worked">Час роботи: %1$s · %2$s</string>
+    <string name="chat_log_show_steps">Показати кроки</string>
+    <string name="chat_log_hide_steps">Приховати кроки</string>
+    <string name="chat_log_thought">Міркував %1$s</string>
+    <string name="chat_log_thinking">Міркування</string>
+    <plurals name="chat_log_read">
+        <item quantity="one">Прочитано %d рядок</item>
+        <item quantity="few">Прочитано %d рядки</item>
+        <item quantity="many">Прочитано %d рядків</item>
+        <item quantity="other">Прочитано %d рядків</item>
+    </plurals>
+    <plurals name="chat_log_wrote">
+        <item quantity="one">Записано %d рядок</item>
+        <item quantity="few">Записано %d рядки</item>
+        <item quantity="many">Записано %d рядків</item>
+        <item quantity="other">Записано %d рядків</item>
+    </plurals>
+    <string name="chat_log_read_image">Прочитано зображення (%1$s)</string>
+    <string name="chat_log_no_output">(Немає виводу)</string>
+    <string name="chat_log_denied">Відхилено: це не дозволено в цьому завданні</string>
+    <string name="chat_log_running">Виконується…</string>
+    <plurals name="chat_log_more_lines">
+        <item quantity="one">+%d рядок</item>
+        <item quantity="few">+%d рядки</item>
+        <item quantity="many">+%d рядків</item>
+        <item quantity="other">+%d рядків</item>
+    </plurals>
+    <string name="chat_log_show_more">Показати більше</string>
+    <string name="chat_log_show_less">Показати менше</string>
+    <plurals name="chat_log_not_shown">
+        <item quantity="one">Ще %1$d рядок (%2$d символів) не показано</item>
+        <item quantity="few">Ще %1$d рядки (%2$d символів) не показано</item>
+        <item quantity="many">Ще %1$d рядків (%2$d символів) не показано</item>
+        <item quantity="other">Ще %1$d рядків (%2$d символів) не показано</item>
+    </plurals>
+    <plurals name="chat_log_not_kept">
+        <item quantity="one">%1$d рядок (%2$d символів) не збережено</item>
+        <item quantity="few">%1$d рядки (%2$d символів) не збережено</item>
+        <item quantity="many">%1$d рядків (%2$d символів) не збережено</item>
+        <item quantity="other">%1$d рядків (%2$d символів) не збережено</item>
+    </plurals>
+    <string name="chat_log_show_all">Показати все</string>
+    <string name="chat_log_loading">Завантажуємо повний вивід…</string>
+    <string name="chat_log_expired">Повний вивід застарів</string>
+    <string name="chat_log_unavailable">Не вдалося завантажити повний вивід. Торкніться, щоб спробувати знову.</string>
+    <string name="chat_log_past_limit">Ще %1$d символів перевищили ліміт і не збережено</string>
+    <plurals name="chat_log_dropped">
+        <item quantity="one">%d попередній рядок не зберігається на цьому телефоні</item>
+        <item quantity="few">%d попередні рядки не зберігаються на цьому телефоні</item>
+        <item quantity="many">%d попередніх рядків не зберігаються на цьому телефоні</item>
+        <item quantity="other">%d попередніх рядків не зберігаються на цьому телефоні</item>
+    </plurals>
+</resources>

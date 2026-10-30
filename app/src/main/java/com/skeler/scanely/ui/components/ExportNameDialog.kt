@@ -23,10 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.text.FilenameSuggester
 
 /**
@@ -51,14 +53,14 @@ fun ExportNameDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(Icons.Rounded.DriveFileRenameOutline, contentDescription = null) },
-        title = { Text("Name your file") },
+        title = { Text(stringResource(R.string.cmp_export_name_title)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = value,
                     onValueChange = { value = it },
                     singleLine = true,
-                    label = { Text("File name") },
+                    label = { Text(stringResource(R.string.cmp_export_file_name_label)) },
                     suffix = { Text(".$extension") },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { confirm() }),
@@ -68,13 +70,13 @@ fun ExportNameDialog(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Using the original file name when available.",
+                    text = stringResource(R.string.cmp_export_name_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         },
-        confirmButton = { TextButton(onClick = confirm) { Text("Save") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        confirmButton = { TextButton(onClick = confirm) { Text(stringResource(R.string.chat_save)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }

@@ -10,6 +10,9 @@ import com.skeler.scanely.core.license.DeviceId
 import com.skeler.scanely.core.license.LicenseRepository
 import com.skeler.scanely.core.license.LicenseStore
 import com.skeler.scanely.core.network.LocalWorker
+import com.skeler.scanely.testing.EnglishStrings
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -22,11 +25,9 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.mockingDetails
-import org.mockito.Mockito.`when`
-import java.util.concurrent.Executors
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * How many times the paywall's two flows hit the Worker, read from the Worker's own request log.
@@ -78,9 +79,9 @@ class PaywallCallCountTest {
         `when`(resolver.isSwitchedOn).thenReturn(flowOf(false))
 
         val api = worker.api()
-        val entitlements = EntitlementRepository(api, auth)
-        val license = LicenseRepository(api, store, deviceId, auth, entitlements)
-        val viewModel = PaywallViewModel(license, entitlements, ads, resolver, auth)
+        val entitlements = EntitlementRepository(EnglishStrings.context(), api, auth)
+        val license = LicenseRepository(EnglishStrings.context(), api, store, deviceId, auth, entitlements)
+        val viewModel = PaywallViewModel(EnglishStrings.context(), license, entitlements, ads, resolver, auth)
 
         // Start-up traffic (sign-in triggers both repositories) is not what is being counted.
         worker.awaitQuiet()

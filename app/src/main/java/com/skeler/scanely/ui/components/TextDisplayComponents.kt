@@ -36,12 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiStage
 import com.skeler.scanely.core.common.LocalReadingTextScale
 import com.skeler.scanely.core.ocr.BatchProgress
@@ -177,15 +179,15 @@ fun ProcessingContent(
 
         Text(
             text = when (stage) {
-                AiStage.PREPARING -> "Preparing…"
-                AiStage.UPLOADING -> "Uploading…"
-                AiStage.PROCESSING -> "Processing…"
-                AiStage.GENERATING -> "Generating…"
-                AiStage.COMPLETE -> "Complete"
+                AiStage.PREPARING -> stringResource(R.string.chat_preparing_file)
+                AiStage.UPLOADING -> stringResource(R.string.cmp_stage_uploading)
+                AiStage.PROCESSING -> stringResource(R.string.cmp_stage_processing)
+                AiStage.GENERATING -> stringResource(R.string.cmp_stage_generating)
+                AiStage.COMPLETE -> stringResource(R.string.cmp_stage_complete)
                 null -> if (totalFiles > 1) {
-                    "Processing file $currentFile of $totalFiles..."
+                    stringResource(R.string.cmp_processing_file_of, currentFile, totalFiles)
                 } else {
-                    "Extracting text..."
+                    stringResource(R.string.cmp_extracting_text)
                 }
             },
             style = MaterialTheme.typography.titleMedium,
@@ -210,7 +212,7 @@ fun ProcessingContent(
         if (totalFiles > 1 && stage != null) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "File $currentFile of $totalFiles",
+                text = stringResource(R.string.cmp_file_of, currentFile, totalFiles),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -218,7 +220,7 @@ fun ProcessingContent(
 
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stageMessage ?: "This may take a few moments",
+            text = stageMessage ?: stringResource(R.string.cmp_may_take_few_moments),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
             color = if (stageMessage != null) {
@@ -250,7 +252,7 @@ fun ProcessingContent(
         if (onCancel != null) {
             Spacer(modifier = Modifier.height(20.dp))
             OutlinedButton(onClick = onCancel) {
-                Text("Cancel")
+                Text(stringResource(R.string.chat_cancel))
             }
         }
     }
@@ -268,7 +270,7 @@ fun TranslatingContent(modifier: Modifier = Modifier) {
         LoadingIndicator(modifier = Modifier.size(48.dp))
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Translating...",
+            text = stringResource(R.string.cmp_translating),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -288,7 +290,11 @@ fun EmptyResultContent(modifier: Modifier = Modifier, failure: String? = null) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = if (failure != null) "Couldn't read this file" else "No text extracted",
+            text = if (failure != null) {
+                stringResource(R.string.cmp_couldnt_read_file)
+            } else {
+                stringResource(R.string.cmp_no_text_extracted)
+            },
             style = MaterialTheme.typography.titleMedium,
             color = if (failure != null) {
                 MaterialTheme.colorScheme.error
@@ -298,7 +304,7 @@ fun EmptyResultContent(modifier: Modifier = Modifier, failure: String? = null) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = failure ?: "Try selecting a different image",
+            text = failure ?: stringResource(R.string.cmp_try_different_image),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.outline,
             textAlign = TextAlign.Center
@@ -321,7 +327,7 @@ fun BatchScanProgress(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Scanning ${progress.done.coerceAtLeast(1)} of ${progress.total} files…",
+            text = stringResource(R.string.cmp_batch_scanning, progress.done.coerceAtLeast(1), progress.total),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

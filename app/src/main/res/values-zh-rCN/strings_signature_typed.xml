@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typed signatures (page editor Sign tool) -->
+    <string name="signature_typed_open">输入签名</string>
+    <string name="signature_typed_title">输入你的签名</string>
+    <string name="signature_typed_name_label">你的姓名</string>
+    <string name="signature_typed_preview_empty">你的签名将显示在这里。</string>
+    <string name="signature_typed_colour">墨水颜色</string>
+    <string name="signature_typed_colour_option">墨水颜色 %1$d</string>
+    <string name="signature_typed_save">保存</string>
+    <string name="signature_typed_cancel">取消</string>
+    <string name="signature_typed_font_missing">无法加载签名字体。</string>
+
+    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
+    <string name="font_licenses_title">开源许可</string>
+    <string name="font_licenses_subtitle">Scanly 内置的字体和图标</string>
+    <string name="font_licenses_close">关闭</string>
+    <string name="font_licenses_unreadable">无法读取此许可文件。</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">Páginas a JPG</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Cada página se convierte en una imagen.</string>
+    <string name="pdf_tool_jpg_mode_extract">Extraer imágenes</string>
+    <string name="pdf_tool_jpg_mode_extract_body">Guarda las fotos e imágenes del PDF con su calidad original.</string>
+    <string name="pdf_tool_jpg_quality">Calidad</string>
+    <string name="pdf_tool_jpg_quality_normal">Normal · 150 ppp</string>
+    <string name="pdf_tool_jpg_quality_high">Alta · 300 ppp</string>
+    <string name="pdf_tool_jpg_action_pages">Convertir a JPG</string>
+    <string name="pdf_tool_jpg_action_extract">Extraer imágenes</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">Se omitió %d imagen en un formato que Scanly no puede exportar</item>
+        <item quantity="many">Se omitieron %d imágenes en formatos que Scanly no puede exportar</item>
+        <item quantity="other">Se omitieron %d imágenes en formatos que Scanly no puede exportar</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">Una imagen por página, en el orden mostrado.</string>
+    <string name="pdf_tool_img2pdf_page_size">Tamaño de página</string>
+    <string name="pdf_tool_img2pdf_size_fit">Ajustar a la imagen</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Carta</string>
+    <string name="pdf_tool_img2pdf_orientation">Orientación</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Automática</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Vertical</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">Horizontal</string>
+    <string name="pdf_tool_img2pdf_margin">Margen</string>
+    <string name="pdf_tool_img2pdf_margin_none">Ninguno</string>
+    <string name="pdf_tool_img2pdf_margin_small">Pequeño</string>
+    <string name="pdf_tool_img2pdf_margin_big">Grande</string>
+    <string name="pdf_tool_img2pdf_action">Crear PDF</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">%d archivo no se pudo leer como imagen y se omitió</item>
+        <item quantity="many">%d archivos no se pudieron leer como imágenes y se omitieron</item>
+        <item quantity="other">%d archivos no se pudieron leer como imágenes y se omitieron</item>
+    </plurals>
+</resources>

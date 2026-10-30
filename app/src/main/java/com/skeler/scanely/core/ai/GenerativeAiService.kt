@@ -1,7 +1,9 @@
 package com.skeler.scanely.core.ai
 
+import android.content.Context
 import android.net.Uri
 import android.os.SystemClock
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.custom.CustomDesignResult
 import com.skeler.scanely.core.ai.custom.CustomDesigner
 import com.skeler.scanely.core.ai.custom.CustomProviderConfig
@@ -10,6 +12,7 @@ import com.skeler.scanely.core.ai.custom.CustomScanResult
 import com.skeler.scanely.core.ai.custom.CustomScanner
 import com.skeler.scanely.core.network.NetworkObserver
 import com.skeler.scanely.core.text.MarkdownParser
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +27,7 @@ const val AI_PROVIDER_NAME = "Scanly AI"
 
 @Singleton
 class GenerativeAiService @Inject internal constructor(
+    @param:ApplicationContext private val context: Context,
     private val payloadFactory: PayloadFactory,
     private val client: BackendClient,
     private val executor: BackendExecutor,
@@ -63,7 +67,7 @@ class GenerativeAiService @Inject internal constructor(
             send(AiEvent.Stage(AiStage.PREPARING))
 
             if (!networkObserver.isCurrentlyOnline()) {
-                send(AiEvent.Finished(AiResult.Error(OFFLINE_MESSAGE)))
+                send(AiEvent.Finished(AiResult.Error(context.getString(R.string.ai_err_offline))))
                 return@channelFlow
             }
 
@@ -98,10 +102,7 @@ class GenerativeAiService @Inject internal constructor(
         if (extractPreset != null && job == null) {
             emit(
                 AiEvent.Finished(
-                    AiResult.Error(
-                        "Scanly couldn't load that extraction type. Try again, or turn your own " +
-                            "endpoint off in Settings to use Scanly AI."
-                    )
+                    AiResult.Error(context.getString(R.string.ai_err_extraction_unavailable, AI_PROVIDER_NAME))
                 )
             )
             return
@@ -128,7 +129,7 @@ class GenerativeAiService @Inject internal constructor(
                 entitlementRepository.entitlement.value?.maxUploadBytes ?: PayloadFactory.MAX_UPLOAD_BYTES
             )
         } catch (e: PayloadFactory.PayloadException) {
-            emit(AiEvent.Finished(AiResult.Error(e.message ?: "Failed to read file")))
+            emit(AiEvent.Finished(AiResult.Error(e.message ?: context.getString(R.string.ai_err_read_file))))
             return
         }
 
@@ -146,7 +147,7 @@ class GenerativeAiService @Inject internal constructor(
             emit(AiEvent.Stage(AiStage.PROCESSING))
             val response = client.ocr(file, idempotencyKey, pageRange, extractPreset)
             if (response.text.isBlank()) {
-                throw FatalAiException(AiResult.Error("No text could be read from this file."))
+                throw FatalAiException(AiResult.Error(context.getString(R.string.ai_err_no_text)))
             }
             response
         }
@@ -185,7 +186,7 @@ class GenerativeAiService @Inject internal constructor(
         emit: suspend (AiEvent) -> Unit
     ): TranscriptionResult = withContext(Dispatchers.IO) {
         if (!networkObserver.isCurrentlyOnline()) {
-            return@withContext TranscriptionResult.Failure(AiResult.Error(OFFLINE_MESSAGE))
+            return@withContext TranscriptionResult.Failure(AiResult.Error(context.getString(R.string.ai_err_offline)))
         }
         val outcome = executor.run(emit = emit, attemptTimeoutMs = TRANSCRIBE_ATTEMPT_TIMEOUT_MS) {
             client.transcribe(file, mimeType, options, idempotencyKey, onUploadProgress)
@@ -226,7 +227,10 @@ class GenerativeAiService @Inject internal constructor(
             if (!networkObserver.isCurrentlyOnline()) {
                 send(
                     DesignEvent.Finished(
-                        DesignResult.Failure(AiResult.Error(OFFLINE_MESSAGE), canRecoverOnForeground = true)
+                        DesignResult.Failure(
+                            AiResult.Error(context.getString(R.string.ai_err_offline)),
+                            canRecoverOnForeground = true
+                        )
                     )
                 )
                 return@channelFlow
@@ -237,7 +241,9 @@ class GenerativeAiService @Inject internal constructor(
                 background = { jobId ->
                     send(DesignEvent.Background(jobId))
                     // The chat says this itself, and only for the rebuilds that take minutes.
-                    if (!chat) send(DesignEvent.Stage(AiStage.GENERATING, BACKGROUND_MESSAGE))
+                    if (!chat) {
+                        send(DesignEvent.Stage(AiStage.GENERATING, context.getString(R.string.ai_design_background)))
+                    }
                 },
                 step = { id, at -> send(DesignEvent.Step(id, at)) }
             )
@@ -289,10 +295,7 @@ class GenerativeAiService @Inject internal constructor(
                 // the exact failure this input was added to fix.
                 if (document != null) {
                     throw FatalAiException(
-                        AiResult.Error(
-                            "Your own AI endpoint can't read a picked image or PDF. Turn off the " +
-                                "custom endpoint to rebuild this document, or design from a scan instead."
-                        )
+                        AiResult.Error(context.getString(R.string.ai_err_custom_no_files))
                     )
                 }
                 when (
@@ -323,7 +326,7 @@ class GenerativeAiService @Inject internal constructor(
     suspend fun translateText(text: String, targetLanguage: String): AiResult =
         withContext(Dispatchers.IO) {
             if (!networkObserver.isCurrentlyOnline()) {
-                return@withContext AiResult.Error(OFFLINE_MESSAGE)
+                return@withContext AiResult.Error(context.getString(R.string.ai_err_offline))
             }
 
             route(
@@ -342,7 +345,7 @@ class GenerativeAiService @Inject internal constructor(
         val outcome = executor.run(emit = {}) {
             val result = client.translate(text, targetLanguage, key, emit = {})
             if (result.isBlank()) {
-                throw FatalAiException(AiResult.Error("Translation came back empty."))
+                throw FatalAiException(AiResult.Error(context.getString(R.string.ai_err_translate_empty)))
             }
             MarkdownParser.unwrapAddedFence(text, result)
         }
@@ -378,17 +381,13 @@ class GenerativeAiService @Inject internal constructor(
     }
 
     private fun exhaustedMessage(outcome: AiOutcome.Exhausted): String = when {
-        outcome.networkProblem && !networkObserver.isCurrentlyOnline() -> OFFLINE_MESSAGE
+        outcome.networkProblem && !networkObserver.isCurrentlyOnline() -> context.getString(R.string.ai_err_offline)
         outcome.networkProblem ->
-            "Couldn't reach $AI_PROVIDER_NAME — your connection looks unstable. " +
-                "Check it and try again."
-        else -> outcome.message ?: "Couldn't complete the request. Please try again."
+            context.getString(R.string.ai_err_unstable, AI_PROVIDER_NAME)
+        else -> outcome.message ?: context.getString(R.string.ai_err_generic)
     }
 
     companion object {
-        private const val OFFLINE_MESSAGE =
-            "No internet connection. Check your network and try again."
-
         /**
          * Per attempt, not per request. The Worker streams a heartbeat while xAI works, so the
          * socket never idles; this bounds a three-hour recording's upload plus its ~9-minute
@@ -425,5 +424,3 @@ private class DesignListeners(
     val background: suspend (String) -> Unit,
     val step: suspend (id: String, at: Long) -> Unit
 )
-
-private const val BACKGROUND_MESSAGE = "Building your document. You can leave the app; we'll notify you."

@@ -11,6 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.ocr.TextBlockData
 import com.skeler.scanely.core.pdf.ScanExporter
@@ -81,6 +83,7 @@ private class PendingExport(
 @Composable
 fun rememberTextExporter(sourceUri: Uri? = null): (ExportContent, TextExportFormat) -> Unit {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val scope = rememberCoroutineScope()
     val withStorageAccess = rememberStorageAccess()
     var pending by remember { mutableStateOf<PendingExport?>(null) }
@@ -105,12 +108,12 @@ fun rememberTextExporter(sourceUri: Uri? = null): (ExportContent, TextExportForm
     return exporter@{ content: ExportContent, format: TextExportFormat ->
         val text = content.text
         if (text.isBlank()) {
-            toast(context, "Nothing to export")
+            toast(context, resources.getString(R.string.cmp_export_nothing_to_export))
             return@exporter
         }
         val rows = if (format == TextExportFormat.CSV) tableRows(content) else emptyList()
         if (format == TextExportFormat.CSV && rows.isEmpty()) {
-            toast(context, "No table data to export")
+            toast(context, resources.getString(R.string.cmp_export_no_table_data))
             return@exporter
         }
         pending = PendingExport(
@@ -152,11 +155,11 @@ private suspend fun write(context: Context, export: PendingExport, name: String)
         }
     }.fold(
         onSuccess = { uri ->
-            toast(context, "Saved to Downloads/Scanly")
+            toast(context, context.getString(R.string.pdf_tool_saved))
             ScanExporter.shareDocument(context, uri, format.mimeType)
         },
         onFailure = {
-            toast(context, "Couldn't save ${format.name}")
+            toast(context, context.getString(R.string.cmp_export_couldnt_save, format.name))
         }
     )
 }

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">Dokumente mit KI erstellen</string>
+    <string name="ai_build_documents_subtitle">Beschreibe es oder hänge eine Datei an: Rechnungen, Lebensläufe, Berichte, Folien</string>
+    <string name="design_paywall_fallback">Dokumente mit KI zu erstellen ist Teil von Pro.</string>
+    <string name="custom_provider_build_documents_note">Das Erstellen von Dokumenten mit KI ist aufgeteilt: Dein Modell schreibt das Dokument, Scanly übernimmt Satz und Layout. Ein stärkeres Modell liefert ein besseres Design, und für den Satz berechnet Scanly einen Credit statt der üblichen Kosten.</string>
+    <string name="plan_feature_build_documents">Dokumente mit KI erstellen – Layouts, Tabellen und Gestaltung</string>
+    <string name="custom_provider_on_your_endpoint_note">Scannen, Datenauslesen und Übersetzen gehen direkt von diesem Gerät an deinen Anbieter. Sie verbrauchen keine Scanly-Credits, und dein Anbieter rechnet sie ab.</string>
+</resources>

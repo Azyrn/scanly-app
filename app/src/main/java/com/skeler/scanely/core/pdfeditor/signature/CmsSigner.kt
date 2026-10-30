@@ -1,5 +1,7 @@
 package com.skeler.scanely.core.pdfeditor.signature
 
+import android.content.Context
+import com.skeler.scanely.R
 import org.bouncycastle.asn1.ASN1EncodableVector
 import org.bouncycastle.asn1.ASN1ObjectIdentifier
 import org.bouncycastle.asn1.DERSet
@@ -39,11 +41,11 @@ object CmsSigner {
     private val provider by lazy { BouncyCastleProvider() }
 
     /** Content is streamed rather than buffered: the bytes to digest are the whole PDF. */
-    fun sign(identity: SigningIdentity, content: () -> InputStream): ByteArray {
+    fun sign(context: Context, identity: SigningIdentity, content: () -> InputStream): ByteArray {
         val certificate = identity.certificate
         val generator = CMSSignedDataGenerator()
 
-        val contentSigner = JcaContentSignerBuilder(signatureAlgorithmFor(identity))
+        val contentSigner = JcaContentSignerBuilder(signatureAlgorithmFor(context, identity))
             .setProvider(provider)
             .build(identity.privateKey)
 
@@ -91,14 +93,14 @@ object CmsSigner {
         )
     }
 
-    private fun signatureAlgorithmFor(identity: SigningIdentity): String =
+    private fun signatureAlgorithmFor(context: Context, identity: SigningIdentity): String =
         when (val algorithm = identity.privateKey.algorithm.uppercase()) {
             "RSA" -> "SHA256withRSA"
             "EC", "ECDSA" -> "SHA256withECDSA"
             "DSA" -> "SHA256withDSA"
             "ED25519" -> "Ed25519"
             else -> throw UnsupportedOperationException(
-                "Signing with a $algorithm key isn't supported."
+                context.getString(R.string.sig_err_algorithm, algorithm)
             )
         }
 

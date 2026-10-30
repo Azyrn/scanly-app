@@ -18,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.lookup.MedicineData
 
 @Composable
@@ -27,21 +29,21 @@ fun MedicineContentSection(data: MedicineData) {
 
     data.genericName?.takeIf { it.isNotBlank() }?.let { generic ->
         hasContent = true
-        SectionHeader("Generic Name")
+        SectionHeader(stringResource(R.string.cmp_medicine_generic_name))
         Text(generic, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(12.dp))
     }
 
     data.manufacturer?.takeIf { it.isNotBlank() }?.let { manufacturer ->
         hasContent = true
-        SectionHeader("Manufacturer")
+        SectionHeader(stringResource(R.string.cmp_medicine_manufacturer))
         Text(manufacturer, style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(12.dp))
     }
 
     if (data.activeIngredients.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Active Ingredients")
+        SectionHeader(stringResource(R.string.cmp_medicine_active_ingredients))
         data.activeIngredients.forEach { ingredient ->
             Text("• $ingredient", style = MaterialTheme.typography.bodySmall)
         }
@@ -51,15 +53,15 @@ fun MedicineContentSection(data: MedicineData) {
     if (data.dosageForm != null || data.route != null) {
         hasContent = true
         Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-            data.dosageForm?.let { InfoColumn("Dosage Form", it) }
-            data.route?.let { InfoColumn("Route", it) }
+            data.dosageForm?.let { InfoColumn(stringResource(R.string.cmp_medicine_dosage_form), it) }
+            data.route?.let { InfoColumn(stringResource(R.string.cmp_medicine_route), it) }
         }
         Spacer(modifier = Modifier.height(12.dp))
     }
 
     if (data.isRecalled) {
         hasContent = true
-        WarningCard(listOf("⚠️ This product has been recalled by the FDA."))
+        WarningCard(listOf(stringResource(R.string.cmp_medicine_recalled)))
         Spacer(modifier = Modifier.height(12.dp))
     }
 
@@ -71,7 +73,7 @@ fun MedicineContentSection(data: MedicineData) {
 
     if (data.contraindications.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Contraindications")
+        SectionHeader(stringResource(R.string.cmp_medicine_contraindications))
         data.contraindications.take(5).forEach { contra ->
             Text("• ${contra.take(150)}", style = MaterialTheme.typography.bodySmall)
         }
@@ -80,7 +82,7 @@ fun MedicineContentSection(data: MedicineData) {
 
     data.indications?.takeIf { it.isNotBlank() }?.let { indication ->
         hasContent = true
-        SectionHeader("Indications")
+        SectionHeader(stringResource(R.string.cmp_medicine_indications))
         Text(
             text = indication.take(500),
             style = MaterialTheme.typography.bodySmall
@@ -91,7 +93,7 @@ fun MedicineContentSection(data: MedicineData) {
         hasContent = true
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "FDA approved: $date",
+            text = stringResource(R.string.cmp_medicine_fda_approved, date),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -99,7 +101,7 @@ fun MedicineContentSection(data: MedicineData) {
 
     if (!hasContent) {
         Text(
-            text = "No detailed information available for this medicine.",
+            text = stringResource(R.string.cmp_medicine_no_info),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -123,7 +125,7 @@ internal fun WarningCard(warnings: List<String>) {
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    "Warnings",
+                    stringResource(R.string.cmp_medicine_warnings),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.error
                 )

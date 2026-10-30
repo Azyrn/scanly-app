@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ui/components/PaywallSheet.kt -->
+    <string name="cmp_paywall_credits_left">本月你还剩 %1$d / %2$d 积分。</string>
+    <string name="cmp_paywall_credits_left_upgrade">本月你还剩 %1$d / %2$d 积分。升级可获得更多积分。</string>
+    <string name="cmp_paywall_more_credits">更多积分、更长的文档，以及更多文件格式。</string>
+    <string name="cmp_paywall_ai_scan_credit">AI 扫描每页消耗 1 积分。其他 AI 工具共用你的积分余额。</string>
+    <string name="cmp_paywall_plan_active">你的套餐已在此账户上生效。</string>
+    <string name="cmp_paywall_key_active_here">你的密钥已在此设备上激活。</string>
+    <string name="cmp_paywall_devices_used">已使用 %1$d / %2$d 台设备。请在“设置”中管理你的密钥。</string>
+    <string name="cmp_paywall_watch_ad">观看广告，再获得 %1$d 积分</string>
+    <string name="cmp_paywall_where_to_buy_before">"AI 扫描包含每月免费额度。付费套餐可在 "</string>
+    <string name="cmp_paywall_where_to_buy_after">。本应用内无法购买。已订阅？请在下方恢复购买。</string>
+    <string name="cmp_copied">已复制</string>
+    <string name="cmp_copy_address">复制地址</string>
+    <string name="cmp_license_key">许可证密钥</string>
+    <string name="cmp_hide_key">隐藏密钥</string>
+    <string name="cmp_show_key">显示密钥</string>
+    <string name="cmp_redeem">兑换</string>
+    <string name="cmp_lost_key_restore">丢失了密钥？恢复购买</string>
+    <string name="cmp_confirm_email_first">请先确认你的邮箱地址，它将用于证明此次购买属于你。</string>
+    <string name="cmp_send_confirmation_email">发送确认邮件</string>
+    <string name="cmp_paywall_plan_name">Scanly %1$s</string>
+    <string name="cmp_active">已激活</string>
+    <string name="cmp_paywall_feature_credits">每月 %1$d 个 AI 积分</string>
+    <string name="cmp_paywall_feature_pages">单个文档最多 %1$d 页</string>
+    <string name="cmp_paywall_feature_office">Word、PowerPoint 和 OpenDocument 文件</string>
+    <string name="cmp_paywall_feature_translation">翻译</string>
+    <string name="cmp_paywall_feature_extraction">从收据、发票和卡片中提取数据</string>
+    <string name="cmp_paywall_feature_sign">签署 PDF 并验证数字签名</string>
+    <string name="cmp_paywall_feature_edit">编辑文字、压缩 PDF 并设置密码保护</string>
+    <string name="cmp_paywall_feature_ai_provider">连接你自己的 AI 服务商</string>
+
+    <!-- ui/components/ResultsComponents.kt -->
+    <string name="cmp_edit_text">编辑文字</string>
+    <string name="cmp_print">打印</string>
+    <string name="cmp_export">导出</string>
+    <string name="cmp_copy_text">复制文字</string>
+    <string name="cmp_reading_options">阅读选项</string>
+    <string name="cmp_show_preview">显示预览</string>
+    <string name="cmp_smaller_text">缩小文字</string>
+    <string name="cmp_zoom_percent">%1$d%%</string>
+    <string name="cmp_bigger_text">放大文字</string>
+    <string name="cmp_reset">重置</string>
+    <string name="cmp_no_table">没有表格</string>
+    <string name="cmp_word_char_counts">%1$d 个词 · %2$d 个字符</string>
+    <string name="cmp_save_as">另存为</string>
+
+    <!-- ui/components/PageRangeDialog.kt -->
+    <string name="cmp_page_range_title">扫描哪些页面？</string>
+    <string name="cmp_page_range_over_ceiling">%1$s 共有 %2$d 页，本次扫描最多读取 %3$d 页。请选择重要的页面。</string>
+    <string name="cmp_page_range_intro">%1$s 共有 %2$d 页。每扫描一页都会计入你的套餐，因此扫描部分页面比整个文件更省。</string>
+    <string name="cmp_page_range_example">例如 1-5, 8</string>
+    <string name="cmp_page_range_pick_up_to">请在 1 至 %2$d 页之间选择最多 %1$d 页。</string>
+    <string name="cmp_page_range_use_numbers">请使用 1 到 %1$d 之间的页码，例如 1-5 或 2,4。</string>
+    <string name="cmp_page_range_n_of_total">%1$d / %2$d 页</string>
+    <string name="cmp_page_range_required">必填，本次扫描涵盖 %1$d 页</string>
+    <string name="cmp_page_range_leave_empty">留空即可扫描全部 %1$d 页</string>
+    <string name="cmp_page_range_scan_count">扫描 %1$d 页</string>
+    <string name="cmp_page_range_scan_all">扫描全部</string>
+
+    <!-- ui/components/TextDisplayComponents.kt -->
+    <string name="cmp_stage_uploading">上传中…</string>
+    <string name="cmp_stage_processing">处理中…</string>
+    <string name="cmp_stage_generating">生成中…</string>
+    <string name="cmp_stage_complete">完成</string>
+    <string name="cmp_processing_file_of">正在处理第 %1$d 个文件，共 %2$d 个...</string>
+    <string name="cmp_extracting_text">正在提取文字...</string>
+    <string name="cmp_file_of">第 %1$d 个文件，共 %2$d 个</string>
+    <string name="cmp_may_take_few_moments">可能需要一些时间</string>
+    <string name="cmp_translating">翻译中...</string>
+    <string name="cmp_couldnt_read_file">无法读取此文件</string>
+    <string name="cmp_no_text_extracted">未提取到文字</string>
+    <string name="cmp_try_different_image">请尝试选择其他图片</string>
+    <string name="cmp_batch_scanning">正在扫描第 %1$d / %2$d 个文件…</string>
+
+    <!-- ui/components/product/FoodContentSection.kt -->
+    <string name="cmp_food_nutrition_facts">营养成分表</string>
+    <string name="cmp_food_serving_size">每份大小：%1$s</string>
+    <string name="cmp_food_ingredients">配料</string>
+    <string name="cmp_food_allergens">过敏原</string>
+    <string name="cmp_food_no_nutrition_info">此产品暂无详细的营养信息。</string>
+    <string name="cmp_food_calories">热量</string>
+    <string name="cmp_food_fat">脂肪</string>
+    <string name="cmp_food_carbs">碳水化合物</string>
+    <string name="cmp_food_protein">蛋白质</string>
+    <string name="cmp_food_sugar">糖</string>
+    <string name="cmp_food_salt">盐</string>
+    <string name="cmp_food_fiber">膳食纤维</string>
+
+    <!-- ui/components/product/MedicineContentSection.kt -->
+    <string name="cmp_medicine_generic_name">通用名</string>
+    <string name="cmp_medicine_manufacturer">生产商</string>
+    <string name="cmp_medicine_active_ingredients">有效成分</string>
+    <string name="cmp_medicine_dosage_form">剂型</string>
+    <string name="cmp_medicine_route">给药途径</string>
+    <string name="cmp_medicine_recalled">⚠️ 美国 FDA 已召回此产品。</string>
+    <string name="cmp_medicine_contraindications">禁忌</string>
+    <string name="cmp_medicine_indications">适应症</string>
+    <string name="cmp_medicine_fda_approved">FDA 批准：%1$s</string>
+    <string name="cmp_medicine_no_info">此药品暂无详细信息。</string>
+    <string name="cmp_medicine_warnings">警告</string>
+
+    <!-- ui/components/product/BookContentSection.kt -->
+    <string name="cmp_book_authors">作者</string>
+    <string name="cmp_book_publisher">出版社</string>
+    <string name="cmp_book_published">出版日期</string>
+    <string name="cmp_book_categories">分类</string>
+    <string name="cmp_book_isbn13">ISBN-13：%1$s</string>
+    <string name="cmp_book_isbn10">ISBN-10：%1$s</string>
+    <string name="cmp_book_no_info">此图书暂无详细信息。</string>
+
+    <!-- ui/components/product/CosmeticsContentSection.kt -->
+    <string name="cmp_cosmetics_labels">标签</string>
+    <string name="cmp_cosmetics_no_info">此产品暂无详细信息。</string>
+
+    <!-- ui/components/ExportNameDialog.kt -->
+    <string name="cmp_export_name_title">为文件命名</string>
+    <string name="cmp_export_file_name_label">文件名</string>
+    <string name="cmp_export_name_hint">如有原文件名，将使用原文件名。</string>
+
+    <!-- ui/components/ExtractionPresetSheet.kt -->
+    <string name="cmp_extract_data">提取数据</string>
+    <string name="cmp_preset_cost">除文字外，还可获得带标签的字段。将页面作为数据读取会从你的套餐中扣除 %1$d 积分。每份文档最多可包含 8 页。</string>
+    <string name="cmp_preset_included_pro">除文字外，还可获得带标签的字段。Pro 及以上套餐均包含此功能。</string>
+
+    <!-- ui/components/SignInRequiredSheet.kt -->
+    <string name="cmp_sign_in_ai_title">登录以使用 AI 扫描</string>
+    <string name="cmp_sign_in_ai_body">AI 扫描使用共享密钥，因此需要账户。文字识别和条码扫描仍可免费离线使用，无需登录。</string>
+    <string name="cmp_sign_in_create_account">登录或创建账户</string>
+
+    <!-- ui/components/MainActionButton.kt -->
+    <string name="cmp_view_previous_extracts">查看之前的提取结果</string>
+
+    <!-- ui/components/MarkdownContent.kt -->
+    <string name="cmp_embedded_image">嵌入图片</string>
+
+    <!-- ui/components/StorageAccess.kt -->
+    <string name="cmp_storage_allow_settings">请在“设置”中允许存储访问权限，以便将文件保存到此手机。</string>
+
+    <!-- ui/components/LanguageChipRow.kt -->
+    <string name="cmp_chip_original">原文</string>
+    <string name="cmp_chip_translate">翻译</string>
+    <string name="cmp_chip_text_to_pdf">文本转 PDF</string>
+
+    <!-- ui/components/AiModeBottomSheet.kt -->
+    <string name="cmp_ai_scan_title">AI 扫描</string>
+    <string name="cmp_ai_mode_extract_text_title">提取文字</string>
+    <string name="cmp_ai_mode_extract_text_subtitle">提取图片中可见的文字</string>
+    <string name="cmp_ai_mode_extract_document_title">提取文档</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">PDF、Word、PowerPoint 和文本文件</string>
+    <string name="cmp_ai_mode_extract_data_title">提取数据</string>
+    <string name="cmp_ai_mode_extract_data_subtitle">收据、发票和卡片，以带标签的字段呈现</string>
+    <string name="cmp_ai_mode_audio_title">音频转文字</string>
+    <string name="cmp_ai_mode_audio_subtitle">录音、会议和视频，逐位说话人区分</string>
+
+    <!-- ui/components/BarcodeScannerComponents.kt -->
+    <string name="cmp_barcode_detected">检测到条码</string>
+    <string name="cmp_barcode_content">条码内容</string>
+    <string name="cmp_copy_to_clipboard">复制到剪贴板</string>
+
+    <!-- ui/components/ProductDetailSheet.kt -->
+    <string name="cmp_product_unknown_source">未知</string>
+    <string name="cmp_product_looking_up">正在查询产品...</string>
+    <string name="cmp_product_not_found">未找到产品</string>
+    <string name="cmp_product_lookup_failed">查询失败</string>
+    <string name="cmp_product_unknown_error">未知错误</string>
+    <string name="cmp_product_unknown_name">未知产品</string>
+    <string name="cmp_product_via_source">来源：%1$s</string>
+
+    <!-- ui/components/ScanInsightComponents.kt -->
+    <plurals name="cmp_passages_hard_to_read">
+        <item quantity="one">有一段文字难以辨认</item>
+        <item quantity="other">%1$d 段文字难以辨认</item>
+    </plurals>
+    <string name="cmp_check_against_original">在依赖这些内容之前，请先与原文核对。</string>
+    <string name="cmp_show_all_count">显示全部 %1$d 项</string>
+    <string name="cmp_copy_json">复制 JSON</string>
+    <plurals name="cmp_links_found">
+        <item quantity="one">%1$d 个链接</item>
+        <item quantity="other">%1$d 个链接</item>
+    </plurals>
+
+    <!-- ui/components/FilePreviewOverlay.kt -->
+    <string name="cmp_preview_saves_to">.%1$s 的预览 · 保存到 Downloads/Scanly</string>
+    <string name="cmp_export_format">导出 %1$s</string>
+    <string name="cmp_preview_no_table_csv">此文本中没有表格，因此 CSV 文件将没有内容。</string>
+    <string name="cmp_preview_rendering_pages">正在渲染页面…</string>
+    <string name="cmp_preview_render_failed">无法将此文档渲染为 PDF。</string>
+    <string name="cmp_preview_page_n_of_total">第 %1$d 页，共 %2$d 页</string>
+    <string name="cmp_preview_first_n_of_pages">前 %1$d 页（共 %2$d 页）</string>
+    <string name="cmp_preview_first_n_of_lines">前 %1$d 行（共 %2$d 行）</string>
+
+    <!-- ui/components/TextPdfExport.kt -->
+    <string name="cmp_export_nothing_to_export">没有可导出的内容</string>
+    <string name="cmp_export_no_table_data">没有可导出的表格数据</string>
+    <string name="cmp_export_couldnt_save">无法保存 %1$s</string>
+
+    <!-- ui/viewmodel/DocumentScanViewModel.kt -->
+    <string name="cmp_doc_saved_to_downloads">%1$s 已保存到 Downloads/Scanly</string>
+    <string name="cmp_doc_couldnt_create">无法创建 %1$s</string>
+    <plurals name="cmp_doc_saved_images">
+        <item quantity="one">已将 %1$d 张图片保存到相册</item>
+        <item quantity="other">已将 %1$d 张图片保存到相册</item>
+    </plurals>
+    <string name="cmp_doc_couldnt_save_images">无法保存图片</string>
+
+    <!-- ui/viewmodel/TranscribeViewModel.kt -->
+    <string name="cmp_transcribe_default_title">音频</string>
+    <string name="cmp_transcribe_nothing_recorded">没有录到内容。请检查麦克风后重试。</string>
+    <string name="cmp_transcribe_recording_title">录音中，%1$s</string>
+
+    <!-- docchat/presentation/screen/ChatReplies.kt -->
+    <string name="cmp_chat_reply_field_line">%1$s：%2$s</string>
+    <string name="act_open_link">打开链接</string>
+    <string name="act_copy">复制</string>
+    <string name="act_copy_text">复制文字</string>
+    <string name="act_copy_barcode">复制条码</string>
+    <string name="act_copy_ssid">复制 SSID</string>
+    <string name="act_call">拨打电话</string>
+    <string name="act_send_email">发送邮件</string>
+    <string name="act_connect_wifi">连接 Wi-Fi</string>
+    <string name="act_send_sms">发送短信</string>
+    <string name="act_add_contact">添加联系人</string>
+    <string name="act_view_text">查看文字</string>
+    <string name="act_add_event">添加到日历</string>
+    <string name="act_product_info">产品信息</string>
+    <string name="act_copied">已复制到剪贴板</string>
+    <string name="act_err_url">无法打开链接</string>
+    <string name="act_err_copy">无法复制</string>
+    <string name="act_err_dialer">无法打开拨号盘</string>
+    <string name="act_err_email">无法打开邮件应用</string>
+    <string name="act_err_sms">无法打开短信应用</string>
+    <string name="act_err_wifi">无法连接 Wi-Fi</string>
+    <string name="act_wifi_suggested">建议的 Wi-Fi 网络：%1$s</string>
+    <string name="act_wifi_open_settings">打开 Wi-Fi 设置以连接 %1$s</string>
+    <string name="act_err_contacts">无法打开联系人</string>
+    <string name="act_err_calendar">无法打开日历</string>
+    <string name="tx_fmt_pdf">PDF</string>
+    <string name="tx_fmt_pdf_hint">包含说话人和时间，可直接打印</string>
+    <string name="tx_fmt_word">Word</string>
+    <string name="tx_fmt_word_hint">可编辑文档</string>
+    <string name="tx_fmt_text">文本</string>
+    <string name="tx_fmt_text_hint">纯文本 .txt</string>
+    <string name="tx_fmt_md">Markdown</string>
+    <string name="tx_fmt_md_hint">适用于笔记应用</string>
+    <string name="tx_fmt_srt">字幕 (SRT)</string>
+    <string name="tx_fmt_srt_hint">适用于视频编辑软件</string>
+    <string name="tx_fmt_vtt">字幕 (WebVTT)</string>
+    <string name="tx_fmt_vtt_hint">适用于网页，包含说话人</string>
+    <string name="pay_headline_pro_feature">Scanly Pro 功能</string>
+    <string name="pay_headline_limit">你已达到套餐上限</string>
+    <string name="pay_headline_on_tier">你当前使用的是 %1$s</string>
+    <string name="pay_headline_upsell">升级 Pro，扫描更多</string>
+    <string name="pay_key_active">你的密钥已激活，祝你使用愉快。</string>
+    <string name="pay_key_active_tier">你当前使用的是 %1$s，祝你使用愉快。</string>
+    <string name="pay_confirm_sent">请查收邮件，打开其中的链接，然后再次点击“恢复购买”。</string>
+    <string name="pay_confirm_failed">无法发送确认邮件，请重试。</string>
+    <string name="pay_key_removed">已从此设备移除密钥。</string>
+    <string name="pay_restored_tier">你的 %1$s 密钥已恢复。</string>
+    <string name="pay_restored">你的密钥已在此设备上恢复。</string>
+    <string name="pay_restore_nothing">此账户没有订阅。如果你使用其他邮箱付款，请使用该邮箱登录后重试。</string>
+    <string name="pay_plan_title">%1$s 套餐</string>
+    <string name="pay_plan_credits_left">本月剩余 %1$d / %2$d 积分</string>
+    <string name="pay_plan_see_plans">点击查看套餐</string>
+    <string name="pay_plan_yours">你的套餐</string>
+    <string name="pay_plan_load_failed">无法加载你的套餐。点击重试。</string>
+    <string name="pay_plan_checking">正在检查你的套餐…</string>
+</resources>

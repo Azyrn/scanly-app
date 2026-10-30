@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Cada planilha visível se torna páginas do PDF, na ordem da pasta de trabalho. Planilhas largas continuam nas páginas seguintes.</string>
+    <string name="excel2pdf_convert">Converter para PDF</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">%d planilha oculta foi deixada de fora.</item>
+        <item quantity="many">%d planilhas ocultas foram deixadas de fora.</item>
+        <item quantity="other">%d planilhas ocultas foram deixadas de fora.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">%d gráfico foi deixado de fora.</item>
+        <item quantity="many">%d gráficos foram deixados de fora.</item>
+        <item quantity="other">%d gráficos foram deixados de fora.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">%d imagem foi deixada de fora.</item>
+        <item quantity="many">%d imagens foram deixadas de fora.</item>
+        <item quantity="other">%d imagens foram deixadas de fora.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">As fórmulas mostram o último resultado salvo.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d fórmula não tinha resultado salvo e está em branco.</item>
+        <item quantity="many">%d fórmulas não tinham resultado salvo e estão em branco.</item>
+        <item quantity="other">%d fórmulas não tinham resultado salvo e estão em branco.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">A formatação condicional não foi aplicada.</string>
+    <string name="excel2pdf_note_pivots">As tabelas dinâmicas mostram os últimos valores salvos.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Planilhas muito grandes foram cortadas em %d linha.</item>
+        <item quantity="many">Planilhas muito grandes foram cortadas em %d linhas.</item>
+        <item quantity="other">Planilhas muito grandes foram cortadas em %d linhas.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">O PDF para em %d página; o restante foi deixado de fora.</item>
+        <item quantity="many">O PDF para em %d páginas; o restante foi deixado de fora.</item>
+        <item quantity="other">O PDF para em %d páginas; o restante foi deixado de fora.</item>
+    </plurals>
+</resources>

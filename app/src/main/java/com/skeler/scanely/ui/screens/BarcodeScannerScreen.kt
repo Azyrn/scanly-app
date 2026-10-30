@@ -51,12 +51,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.skeler.scanely.R
 import com.skeler.scanely.core.actions.ActionExecutor
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.barcode.BarcodeAnalyzer
@@ -86,6 +89,7 @@ fun BarcodeScannerScreen(
     lookupOrchestrator: LookupOrchestrator
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val navigator = LocalNavigator.current
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
@@ -118,7 +122,11 @@ fun BarcodeScannerScreen(
                     detectedActions = result.barcodeActions
                     showActionsSheet = true
                 } else {
-                    Toast.makeText(context, "No barcode found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.scr_barcode_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -201,7 +209,7 @@ fun BarcodeScannerScreen(
                         shape = MaterialTheme.shapes.medium
                     ) {
                         Text(
-                            text = "Point camera at barcode or QR code\nPinch to zoom · tap to focus",
+                            text = stringResource(R.string.scr_barcode_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White,
                             textAlign = TextAlign.Center,
@@ -222,7 +230,13 @@ fun BarcodeScannerScreen(
                             Icon(Icons.Rounded.PhotoLibrary, null, tint = Color.White, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = if (isProcessingGallery) "Scanning..." else "Upload from gallery",
+                                text = if (isProcessingGallery) {
+                                    stringResource(
+                                        R.string.scr_barcode_scanning
+                                    )
+                                } else {
+                                    stringResource(R.string.scr_barcode_upload_gallery)
+                                },
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.White
                             )
@@ -241,12 +255,12 @@ fun BarcodeScannerScreen(
                     contentColor = Color.White
                 )
             ) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.pdf_tools_back))
             }
         } else {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "Camera permission required\nfor barcode scanning.",
+                    text = stringResource(R.string.scr_barcode_permission_required),
                     color = Color.White,
                     textAlign = TextAlign.Center
                 )
@@ -293,7 +307,11 @@ fun BarcodeScannerScreen(
                 onCopy = {
                     val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
                     clipboard.setPrimaryClip(ClipData.newPlainText("Barcode Content", text))
-                    Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.scr_copied_to_clipboard),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 },
                 onDismiss = { textToShow = null }
             )

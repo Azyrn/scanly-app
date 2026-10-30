@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
+<resources>
+    <!-- Opening a PDF anywhere in the app -->
+    <string name="pdf_open_damaged">このファイルは破損しているか、PDFではありません。</string>
+
+    <!-- Grid -->
+    <string name="pdf_tools_title">PDFツール</string>
+    <string name="pdf_tools_back">戻る</string>
+    <string name="pdf_tools_section_organize">整理と最適化</string>
+    <string name="pdf_tools_section_convert">変換</string>
+    <string name="pdf_tools_section_edit">編集と保護</string>
+    <string name="pdf_tools_section_image">画像</string>
+    <string name="pdf_tools_pro_badge">Pro</string>
+    <string name="pdf_tools_paywall_reason">このツールは Scanly Pro に含まれています。</string>
+
+    <!-- Tool names -->
+    <string name="pdf_tool_compress">PDFを圧縮</string>
+    <string name="pdf_tool_edit">PDFを編集</string>
+    <string name="pdf_tool_rotate">PDFを回転</string>
+    <string name="pdf_tool_unlock">PDFのロックを解除</string>
+    <string name="pdf_tool_protect">PDFを保護</string>
+    <string name="pdf_tool_organize">PDFを整理</string>
+    <string name="pdf_tool_sign">PDFに署名</string>
+    <string name="pdf_tool_merge">PDFを結合</string>
+    <string name="pdf_tool_split">PDFを分割</string>
+    <string name="pdf_tool_pdf_to_word">PDFをWordに変換</string>
+    <string name="pdf_tool_pdf_to_powerpoint">PDFをPowerPointに変換</string>
+    <string name="pdf_tool_pdf_to_excel">PDFをExcelに変換</string>
+    <string name="pdf_tool_word_to_pdf">WordをPDFに変換</string>
+    <string name="pdf_tool_powerpoint_to_pdf">PowerPointをPDFに変換</string>
+    <string name="pdf_tool_excel_to_pdf">ExcelをPDFに変換</string>
+    <string name="pdf_tool_pdf_to_jpg">PDFをJPGに変換</string>
+    <string name="pdf_tool_image_to_pdf">画像をPDFに変換</string>
+    <string name="pdf_tool_page_numbers">ページ番号</string>
+    <string name="pdf_tool_watermark">透かし</string>
+    <string name="pdf_tool_repair">PDFを修復</string>
+    <string name="pdf_tool_extract_text">テキストを抽出</string>
+    <string name="pdf_tool_compress_image">画像を圧縮</string>
+    <string name="pdf_tool_convert_to_jpg">JPGに変換</string>
+    <string name="pdf_tool_convert_from_jpg">JPGから変換</string>
+    <string name="pdf_tool_resize_image">画像のサイズを変更</string>
+
+    <!-- Shared flow -->
+    <string name="pdf_tool_reading">%1$s を読み込んでいます…</string>
+    <string name="pdf_tool_working">%1$s を処理しています…</string>
+    <string name="pdf_tool_cancel">キャンセル</string>
+    <string name="pdf_tool_cancelled">キャンセルしました。</string>
+    <string name="pdf_tool_file_summary">%1$s · %2$s</string>
+    <plurals name="pdf_tool_pages">
+        <item quantity="one">%d ページ</item>
+        <item quantity="other">%d ページ</item>
+    </plurals>
+    <string name="pdf_tool_password_title">パスワードが必要です</string>
+    <string name="pdf_tool_password_body">%1$s はパスワードで保護されています。</string>
+    <string name="pdf_tool_password_retry">このパスワードでは %1$s を開けませんでした。</string>
+    <string name="pdf_tool_password_label">パスワード</string>
+    <string name="pdf_tool_password_open">開く</string>
+    <string name="pdf_tool_show_password">パスワードを表示</string>
+    <string name="pdf_tool_hide_password">パスワードを非表示</string>
+
+    <!-- Result -->
+    <string name="pdf_tool_done">完了</string>
+    <string name="pdf_tool_save">保存</string>
+    <string name="pdf_tool_saved">Downloads/Scanly に保存しました</string>
+    <string name="pdf_tool_share">共有</string>
+    <string name="pdf_tool_open">開く</string>
+    <string name="pdf_tool_open_with">他のアプリで開く…</string>
+    <string name="pdf_tool_no_viewer">この端末には、このファイルを開けるアプリがありません。</string>
+    <string name="pdf_tool_save_failed">Downloads に保存できませんでした。ストレージがいっぱいの可能性があります。</string>
+    <string name="pdf_tool_size_change">%1$s → %2$s（%3$s）</string>
+    <string name="pdf_tool_another_file">別のファイルを選択</string>
+    <string name="pdf_tool_try_again">もう一度試す</string>
+
+    <!-- Failures -->
+    <string name="pdf_tool_error_title">完了できませんでした</string>
+    <string name="pdf_tool_error_unreadable">Scanly はそのファイルを読み取れませんでした。ファイルが移動されたか、保存先のアプリがアクセスを拒否した可能性があります。</string>
+    <string name="pdf_tool_error_damaged">このファイルは破損しているか、PDFではありません。</string>
+    <string name="pdf_tool_error_low_storage">この端末の空き容量が不足しています。空き容量を確保してから、もう一度お試しください。</string>
+    <string name="pdf_tool_error_wrong_password">このパスワードではファイルを開けませんでした。</string>
+    <string name="pdf_tool_error_not_encrypted">この PDF には削除するパスワードがありません。</string>
+    <string name="pdf_tool_error_no_gain">この PDF は、このレベルでこれ以上小さくできません。より強いレベルをお試しください。</string>
+    <string name="pdf_tool_error_nothing_found">このPDFには、このツールで抽出できる内容がありません。</string>
+    <string name="pdf_tool_error_failed">このファイルの処理中に問題が発生しました。</string>
+
+    <!-- Compress -->
+    <string name="pdf_tool_compress_lossless">劣化なし</string>
+    <string name="pdf_tool_compress_lossless_body">ファイルを再構成します。ページの見た目は完全に同じです。</string>
+    <string name="pdf_tool_compress_balanced">おすすめ</string>
+    <string name="pdf_tool_compress_balanced_body">画質は良好で、画像がかなり小さくなります</string>
+    <string name="pdf_tool_compress_smallest">最小</string>
+    <string name="pdf_tool_compress_smallest_body">画質は下がりますが、ファイルサイズは最小になります</string>
+    <string name="pdf_tool_compress_action">圧縮</string>
+
+    <!-- Protect -->
+    <string name="pdf_tool_protect_body">保護されたコピーを開くには、このパスワードが必要です。AES-256で暗号化されます。</string>
+    <string name="pdf_tool_protect_confirm">パスワードを確認</string>
+    <string name="pdf_tool_protect_mismatch">パスワードが一致しません。</string>
+    <string name="pdf_tool_protect_action">保護</string>
+    <string name="pdf_tool_protect_already">この PDF にはすでにパスワードがあります。新しいパスワードで置き換えられます。</string>
+
+    <!-- Rotate -->
+    <string name="pdf_tool_rotate_right">右に90°</string>
+    <string name="pdf_tool_rotate_half">180°</string>
+    <string name="pdf_tool_rotate_left">左に90°</string>
+    <string name="pdf_tool_rotate_body">すべてのページを回転します。個別のページを回転するには、「PDFを整理」を使用してください。</string>
+    <string name="pdf_tool_rotate_action">回転</string>
+</resources>

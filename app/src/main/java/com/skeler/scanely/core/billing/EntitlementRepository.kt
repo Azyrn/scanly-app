@@ -1,12 +1,14 @@
 package com.skeler.scanely.core.billing
 
+import android.content.Context
 import android.util.Log
+import com.skeler.scanely.R
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.di.BackendControl
 import com.skeler.scanely.core.network.MeResponse
-import com.skeler.scanely.core.network.NO_CONNECTION_MESSAGE
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.TokenUnavailableException
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,12 +40,16 @@ data class EntitlementStatus(
  */
 @Singleton
 class EntitlementRepository internal constructor(
+    private val context: Context,
     private val api: ScanlyApi,
     private val authRepository: AuthRepository,
     private val scope: CoroutineScope
 ) {
-    @Inject constructor(@BackendControl api: ScanlyApi, authRepository: AuthRepository) :
-        this(api, authRepository, CoroutineScope(SupervisorJob() + Dispatchers.IO))
+    @Inject constructor(
+        @ApplicationContext context: Context,
+        @BackendControl api: ScanlyApi,
+        authRepository: AuthRepository
+    ) : this(context, api, authRepository, CoroutineScope(SupervisorJob() + Dispatchers.IO))
 
     private val _entitlement = MutableStateFlow<MeResponse?>(null)
 
@@ -75,7 +81,7 @@ class EntitlementRepository internal constructor(
             accountUid = uid
         }
         if (uid == null) {
-            _status.value = EntitlementStatus(error = SIGN_IN_FIRST)
+            _status.value = EntitlementStatus(error = context.getString(R.string.plan_sign_in_to_see))
             return
         }
         _status.value = EntitlementStatus(isRefreshing = true)
@@ -104,12 +110,8 @@ class EntitlementRepository internal constructor(
 
     private fun Exception.userMessage(): String = when (this) {
         // Written for the user already: which token could not be minted, and what to do about it.
-        is TokenUnavailableException -> message ?: NO_CONNECTION_MESSAGE
-        is IOException -> NO_CONNECTION_MESSAGE
-        else -> "Couldn't load your plan. Try again."
-    }
-
-    private companion object {
-        const val SIGN_IN_FIRST = "Sign in to see your plan."
+        is TokenUnavailableException -> message ?: context.getString(R.string.net_no_connection)
+        is IOException -> context.getString(R.string.net_no_connection)
+        else -> context.getString(R.string.plan_load_failed)
     }
 }

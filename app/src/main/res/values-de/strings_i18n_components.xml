@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ui/components/PaywallSheet.kt -->
+    <string name="cmp_paywall_credits_left">Du hast in diesem Monat noch %1$d von %2$d Credits übrig.</string>
+    <string name="cmp_paywall_credits_left_upgrade">Du hast in diesem Monat noch %1$d von %2$d Credits übrig. Upgrade für mehr.</string>
+    <string name="cmp_paywall_more_credits">Mehr Credits, längere Dokumente und mehr Dateiformate.</string>
+    <string name="cmp_paywall_ai_scan_credit">KI-Scan verbraucht 1 Credit pro Seite. Andere KI-Werkzeuge teilen sich dein Credit-Guthaben.</string>
+    <string name="cmp_paywall_plan_active">Dein Tarif ist auf diesem Konto aktiv.</string>
+    <string name="cmp_paywall_key_active_here">Dein Schlüssel ist auf diesem Gerät aktiv.</string>
+    <string name="cmp_paywall_devices_used">%1$d von %2$d Geräten genutzt. Verwalte deinen Schlüssel in den Einstellungen.</string>
+    <string name="cmp_paywall_watch_ad">Sieh eine Werbung für %1$d weitere Credits</string>
+    <string name="cmp_paywall_where_to_buy_before">"KI-Scan enthält ein kostenloses monatliches Kontingent. Bezahlte Tarife gibt es auf "</string>
+    <string name="cmp_paywall_where_to_buy_after">. Käufe sind in dieser App nicht möglich. Bereits abonniert? Stelle unten deinen Kauf wieder her.</string>
+    <string name="cmp_copied">Kopiert</string>
+    <string name="cmp_copy_address">Adresse kopieren</string>
+    <string name="cmp_license_key">Lizenzschlüssel</string>
+    <string name="cmp_hide_key">Schlüssel verbergen</string>
+    <string name="cmp_show_key">Schlüssel anzeigen</string>
+    <string name="cmp_redeem">Einlösen</string>
+    <string name="cmp_lost_key_restore">Schlüssel verloren? Kauf wiederherstellen</string>
+    <string name="cmp_confirm_email_first">Bestätige zuerst deine E-Mail-Adresse. Damit wird belegt, dass der Kauf dir gehört.</string>
+    <string name="cmp_send_confirmation_email">Bestätigungs-E-Mail senden</string>
+    <string name="cmp_paywall_plan_name">Scanly %1$s</string>
+    <string name="cmp_active">Aktiv</string>
+    <string name="cmp_paywall_feature_credits">%1$d KI-Credits pro Monat</string>
+    <string name="cmp_paywall_feature_pages">Bis zu %1$d Seiten in einem Dokument</string>
+    <string name="cmp_paywall_feature_office">Word-, PowerPoint- und OpenDocument-Dateien</string>
+    <string name="cmp_paywall_feature_translation">Übersetzung</string>
+    <string name="cmp_paywall_feature_extraction">Datenauslesen aus Quittungen, Rechnungen und Karten</string>
+    <string name="cmp_paywall_feature_sign">PDFs signieren und digitale Signaturen prüfen</string>
+    <string name="cmp_paywall_feature_edit">Text bearbeiten, PDFs komprimieren und mit Passwort schützen</string>
+    <string name="cmp_paywall_feature_ai_provider">Eigenen KI-Anbieter verbinden</string>
+
+    <!-- ui/components/ResultsComponents.kt -->
+    <string name="cmp_edit_text">Text bearbeiten</string>
+    <string name="cmp_print">Drucken</string>
+    <string name="cmp_export">Exportieren</string>
+    <string name="cmp_copy_text">Text kopieren</string>
+    <string name="cmp_reading_options">Leseoptionen</string>
+    <string name="cmp_show_preview">Vorschau anzeigen</string>
+    <string name="cmp_smaller_text">Kleinerer Text</string>
+    <string name="cmp_zoom_percent">%1$d%%</string>
+    <string name="cmp_bigger_text">Größerer Text</string>
+    <string name="cmp_reset">Zurücksetzen</string>
+    <string name="cmp_no_table">Keine Tabelle</string>
+    <string name="cmp_word_char_counts">%1$d Wörter · %2$d Zeichen</string>
+    <string name="cmp_save_as">Speichern als</string>
+
+    <!-- ui/components/PageRangeDialog.kt -->
+    <string name="cmp_page_range_title">Welche Seiten scannen?</string>
+    <string name="cmp_page_range_over_ceiling">%1$s hat %2$d Seiten, und dieser Scan liest höchstens %3$d. Wähle die wichtigen aus.</string>
+    <string name="cmp_page_range_intro">%1$s hat %2$d Seiten. Jede gescannte Seite zählt auf dein Tarifkontingent, daher kostet ein Bereich weniger als die ganze Datei.</string>
+    <string name="cmp_page_range_example">z. B. 1-5, 8</string>
+    <string name="cmp_page_range_pick_up_to">Wähle bis zu %1$d Seiten zwischen 1 und %2$d.</string>
+    <string name="cmp_page_range_use_numbers">Verwende Seitennummern zwischen 1 und %1$d, etwa 1-5 oder 2,4.</string>
+    <string name="cmp_page_range_n_of_total">%1$d von %2$d Seiten</string>
+    <string name="cmp_page_range_required">Pflicht – dieser Scan umfasst %1$d Seiten</string>
+    <string name="cmp_page_range_leave_empty">Leer lassen, um alle %1$d Seiten zu scannen</string>
+    <string name="cmp_page_range_scan_count">%1$d scannen</string>
+    <string name="cmp_page_range_scan_all">Alle scannen</string>
+
+    <!-- ui/components/TextDisplayComponents.kt -->
+    <string name="cmp_stage_uploading">Wird hochgeladen…</string>
+    <string name="cmp_stage_processing">Wird verarbeitet…</string>
+    <string name="cmp_stage_generating">Wird erstellt…</string>
+    <string name="cmp_stage_complete">Fertig</string>
+    <string name="cmp_processing_file_of">Datei %1$d von %2$d wird verarbeitet...</string>
+    <string name="cmp_extracting_text">Text wird extrahiert...</string>
+    <string name="cmp_file_of">Datei %1$d von %2$d</string>
+    <string name="cmp_may_take_few_moments">Das kann einen Moment dauern</string>
+    <string name="cmp_translating">Wird übersetzt...</string>
+    <string name="cmp_couldnt_read_file">Diese Datei konnte nicht gelesen werden</string>
+    <string name="cmp_no_text_extracted">Kein Text extrahiert</string>
+    <string name="cmp_try_different_image">Versuche ein anderes Bild</string>
+    <string name="cmp_batch_scanning">Scanne %1$d von %2$d Dateien…</string>
+
+    <!-- ui/components/product/FoodContentSection.kt -->
+    <string name="cmp_food_nutrition_facts">Nährwerte</string>
+    <string name="cmp_food_serving_size">Portionsgröße: %1$s</string>
+    <string name="cmp_food_ingredients">Zutaten</string>
+    <string name="cmp_food_allergens">Allergene</string>
+    <string name="cmp_food_no_nutrition_info">Für dieses Produkt sind keine detaillierten Nährwertangaben verfügbar.</string>
+    <string name="cmp_food_calories">Kalorien</string>
+    <string name="cmp_food_fat">Fett</string>
+    <string name="cmp_food_carbs">Kohlenhydrate</string>
+    <string name="cmp_food_protein">Eiweiß</string>
+    <string name="cmp_food_sugar">Zucker</string>
+    <string name="cmp_food_salt">Salz</string>
+    <string name="cmp_food_fiber">Ballaststoffe</string>
+
+    <!-- ui/components/product/MedicineContentSection.kt -->
+    <string name="cmp_medicine_generic_name">Generischer Name</string>
+    <string name="cmp_medicine_manufacturer">Hersteller</string>
+    <string name="cmp_medicine_active_ingredients">Wirkstoffe</string>
+    <string name="cmp_medicine_dosage_form">Darreichungsform</string>
+    <string name="cmp_medicine_route">Applikationsweg</string>
+    <string name="cmp_medicine_recalled">⚠️ Dieses Produkt wurde von der FDA zurückgerufen.</string>
+    <string name="cmp_medicine_contraindications">Gegenanzeigen</string>
+    <string name="cmp_medicine_indications">Anwendungsgebiete</string>
+    <string name="cmp_medicine_fda_approved">FDA-zugelassen: %1$s</string>
+    <string name="cmp_medicine_no_info">Für dieses Medikament sind keine detaillierten Informationen verfügbar.</string>
+    <string name="cmp_medicine_warnings">Warnhinweise</string>
+
+    <!-- ui/components/product/BookContentSection.kt -->
+    <string name="cmp_book_authors">Autoren</string>
+    <string name="cmp_book_publisher">Verlag</string>
+    <string name="cmp_book_published">Veröffentlicht</string>
+    <string name="cmp_book_categories">Kategorien</string>
+    <string name="cmp_book_isbn13">ISBN-13: %1$s</string>
+    <string name="cmp_book_isbn10">ISBN-10: %1$s</string>
+    <string name="cmp_book_no_info">Für dieses Buch sind keine detaillierten Informationen verfügbar.</string>
+
+    <!-- ui/components/product/CosmeticsContentSection.kt -->
+    <string name="cmp_cosmetics_labels">Kennzeichnungen</string>
+    <string name="cmp_cosmetics_no_info">Für dieses Produkt sind keine detaillierten Informationen verfügbar.</string>
+
+    <!-- ui/components/ExportNameDialog.kt -->
+    <string name="cmp_export_name_title">Datei benennen</string>
+    <string name="cmp_export_file_name_label">Dateiname</string>
+    <string name="cmp_export_name_hint">Verwendet nach Möglichkeit den ursprünglichen Dateinamen.</string>
+
+    <!-- ui/components/ExtractionPresetSheet.kt -->
+    <string name="cmp_extract_data">Daten extrahieren</string>
+    <string name="cmp_preset_cost">Erhalte beschriftete Felder zusätzlich zum Text. Eine Seite als Daten zu lesen kostet %1$d Credits aus deinem Tarif. Jedes Dokument kann bis zu 8 Seiten haben.</string>
+    <string name="cmp_preset_included_pro">Erhalte beschriftete Felder zusätzlich zum Text. Im Pro-Tarif und höher enthalten.</string>
+
+    <!-- ui/components/SignInRequiredSheet.kt -->
+    <string name="cmp_sign_in_ai_title">Melde dich an, um KI-Scans zu nutzen</string>
+    <string name="cmp_sign_in_ai_body">KI-Scans laufen über einen gemeinsamen Schlüssel und brauchen daher ein Konto. Texterkennung und Barcode-Scan bleiben kostenlos und offline, ohne Anmeldung.</string>
+    <string name="cmp_sign_in_create_account">Anmelden oder Konto erstellen</string>
+
+    <!-- ui/components/MainActionButton.kt -->
+    <string name="cmp_view_previous_extracts">Frühere Extraktionen anzeigen</string>
+
+    <!-- ui/components/MarkdownContent.kt -->
+    <string name="cmp_embedded_image">Eingebettetes Bild</string>
+
+    <!-- ui/components/StorageAccess.kt -->
+    <string name="cmp_storage_allow_settings">Erlaube in den Einstellungen den Speicherzugriff, um Dateien auf diesem Telefon zu speichern.</string>
+
+    <!-- ui/components/LanguageChipRow.kt -->
+    <string name="cmp_chip_original">Original</string>
+    <string name="cmp_chip_translate">Übersetzen</string>
+    <string name="cmp_chip_text_to_pdf">Text in PDF</string>
+
+    <!-- ui/components/AiModeBottomSheet.kt -->
+    <string name="cmp_ai_scan_title">KI-Scan</string>
+    <string name="cmp_ai_mode_extract_text_title">Text extrahieren</string>
+    <string name="cmp_ai_mode_extract_text_subtitle">Sichtbaren Text aus dem Bild extrahieren</string>
+    <string name="cmp_ai_mode_extract_document_title">Dokument extrahieren</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">PDF-, Word-, PowerPoint- und Textdateien</string>
+    <string name="cmp_ai_mode_extract_data_title">Daten extrahieren</string>
+    <string name="cmp_ai_mode_extract_data_subtitle">Quittungen, Rechnungen und Karten als beschriftete Felder</string>
+    <string name="cmp_ai_mode_audio_title">Audio in Text</string>
+    <string name="cmp_ai_mode_audio_subtitle">Aufnahmen, Besprechungen und Videos, Sprecher für Sprecher</string>
+
+    <!-- ui/components/BarcodeScannerComponents.kt -->
+    <string name="cmp_barcode_detected">Barcode erkannt</string>
+    <string name="cmp_barcode_content">Barcode-Inhalt</string>
+    <string name="cmp_copy_to_clipboard">In die Zwischenablage kopieren</string>
+
+    <!-- ui/components/ProductDetailSheet.kt -->
+    <string name="cmp_product_unknown_source">Unbekannt</string>
+    <string name="cmp_product_looking_up">Produkt wird gesucht...</string>
+    <string name="cmp_product_not_found">Produkt nicht gefunden</string>
+    <string name="cmp_product_lookup_failed">Suche fehlgeschlagen</string>
+    <string name="cmp_product_unknown_error">Unbekannter Fehler</string>
+    <string name="cmp_product_unknown_name">Unbekanntes Produkt</string>
+    <string name="cmp_product_via_source">über %1$s</string>
+
+    <!-- ui/components/ScanInsightComponents.kt -->
+    <plurals name="cmp_passages_hard_to_read">
+        <item quantity="one">Eine Passage war schwer lesbar</item>
+        <item quantity="other">%1$d Passagen waren schwer lesbar</item>
+    </plurals>
+    <string name="cmp_check_against_original">Prüfe diese Angaben am Original, bevor du dich darauf verlässt.</string>
+    <string name="cmp_show_all_count">Alle %1$d anzeigen</string>
+    <string name="cmp_copy_json">JSON kopieren</string>
+    <plurals name="cmp_links_found">
+        <item quantity="one">%1$d Link</item>
+        <item quantity="other">%1$d Links</item>
+    </plurals>
+
+    <!-- ui/components/FilePreviewOverlay.kt -->
+    <string name="cmp_preview_saves_to">Vorschau der .%1$s · speichert in Downloads/Scanly</string>
+    <string name="cmp_export_format">%1$s exportieren</string>
+    <string name="cmp_preview_no_table_csv">In diesem Text gibt es keine Tabelle, die eine CSV-Datei füllen könnte.</string>
+    <string name="cmp_preview_rendering_pages">Seiten werden gerendert…</string>
+    <string name="cmp_preview_render_failed">Dieses Dokument konnte nicht als PDF gerendert werden.</string>
+    <string name="cmp_preview_page_n_of_total">Seite %1$d von %2$d</string>
+    <string name="cmp_preview_first_n_of_pages">Erste %1$d von %2$d Seiten</string>
+    <string name="cmp_preview_first_n_of_lines">Erste %1$d von %2$d Zeilen</string>
+
+    <!-- ui/components/TextPdfExport.kt -->
+    <string name="cmp_export_nothing_to_export">Nichts zu exportieren</string>
+    <string name="cmp_export_no_table_data">Keine Tabellendaten zum Exportieren</string>
+    <string name="cmp_export_couldnt_save">%1$s konnte nicht gespeichert werden</string>
+
+    <!-- ui/viewmodel/DocumentScanViewModel.kt -->
+    <string name="cmp_doc_saved_to_downloads">%1$s in Downloads/Scanly gespeichert</string>
+    <string name="cmp_doc_couldnt_create">%1$s konnte nicht erstellt werden</string>
+    <plurals name="cmp_doc_saved_images">
+        <item quantity="one">%1$d Bild in der Galerie gespeichert</item>
+        <item quantity="other">%1$d Bilder in der Galerie gespeichert</item>
+    </plurals>
+    <string name="cmp_doc_couldnt_save_images">Bilder konnten nicht gespeichert werden</string>
+
+    <!-- ui/viewmodel/TranscribeViewModel.kt -->
+    <string name="cmp_transcribe_default_title">Audio</string>
+    <string name="cmp_transcribe_nothing_recorded">Nichts wurde aufgenommen. Prüfe das Mikrofon und versuche es erneut.</string>
+    <string name="cmp_transcribe_recording_title">Aufnahme, %1$s</string>
+
+    <!-- docchat/presentation/screen/ChatReplies.kt -->
+    <string name="cmp_chat_reply_field_line">%1$s: %2$s</string>
+    <string name="act_open_link">Link öffnen</string>
+    <string name="act_copy">Kopieren</string>
+    <string name="act_copy_text">Text kopieren</string>
+    <string name="act_copy_barcode">Barcode kopieren</string>
+    <string name="act_copy_ssid">SSID kopieren</string>
+    <string name="act_call">Anrufen</string>
+    <string name="act_send_email">E-Mail senden</string>
+    <string name="act_connect_wifi">Mit WLAN verbinden</string>
+    <string name="act_send_sms">SMS senden</string>
+    <string name="act_add_contact">Kontakt hinzufügen</string>
+    <string name="act_view_text">Text anzeigen</string>
+    <string name="act_add_event">Zum Kalender hinzufügen</string>
+    <string name="act_product_info">Produktinfo</string>
+    <string name="act_copied">In die Zwischenablage kopiert</string>
+    <string name="act_err_url">Der Link konnte nicht geöffnet werden</string>
+    <string name="act_err_copy">Konnte nicht kopiert werden</string>
+    <string name="act_err_dialer">Die Telefon-App konnte nicht geöffnet werden</string>
+    <string name="act_err_email">Es konnte keine E-Mail-App geöffnet werden</string>
+    <string name="act_err_sms">Es konnte keine Nachrichten-App geöffnet werden</string>
+    <string name="act_err_wifi">Konnte nicht mit dem WLAN verbinden</string>
+    <string name="act_wifi_suggested">WLAN-Netzwerk vorgeschlagen: %1$s</string>
+    <string name="act_wifi_open_settings">Öffne die WLAN-Einstellungen, um dich mit %1$s zu verbinden</string>
+    <string name="act_err_contacts">Kontakte konnten nicht geöffnet werden</string>
+    <string name="act_err_calendar">Der Kalender konnte nicht geöffnet werden</string>
+    <string name="tx_fmt_pdf">PDF</string>
+    <string name="tx_fmt_pdf_hint">Sprecher und Zeiten, druckfertig</string>
+    <string name="tx_fmt_word">Word</string>
+    <string name="tx_fmt_word_hint">Bearbeitbares Dokument</string>
+    <string name="tx_fmt_text">Text</string>
+    <string name="tx_fmt_text_hint">Einfache .txt</string>
+    <string name="tx_fmt_md">Markdown</string>
+    <string name="tx_fmt_md_hint">Für Notiz-Apps</string>
+    <string name="tx_fmt_srt">Untertitel (SRT)</string>
+    <string name="tx_fmt_srt_hint">Für Videoschnitt-Programme</string>
+    <string name="tx_fmt_vtt">Untertitel (WebVTT)</string>
+    <string name="tx_fmt_vtt_hint">Für das Web, mit Sprechern</string>
+    <string name="pay_headline_pro_feature">Teil von Scanly Pro</string>
+    <string name="pay_headline_limit">Du hast das Limit deines Tarifs erreicht</string>
+    <string name="pay_headline_on_tier">Du nutzt %1$s</string>
+    <string name="pay_headline_upsell">Scanne mehr mit Pro</string>
+    <string name="pay_key_active">Dein Schlüssel ist aktiv. Viel Freude damit.</string>
+    <string name="pay_key_active_tier">Du nutzt %1$s. Viel Freude damit.</string>
+    <string name="pay_confirm_sent">Prüfe dein Postfach, öffne den Link und tippe dann erneut auf „Kauf wiederherstellen“.</string>
+    <string name="pay_confirm_failed">Die Bestätigungs-E-Mail konnte nicht gesendet werden. Versuche es erneut.</string>
+    <string name="pay_key_removed">Schlüssel von diesem Gerät entfernt.</string>
+    <string name="pay_restored_tier">Dein %1$s-Schlüssel ist zurück.</string>
+    <string name="pay_restored">Dein Schlüssel ist wieder auf diesem Gerät.</string>
+    <string name="pay_restore_nothing">Für dieses Konto gibt es kein Abo. Wenn du mit einer anderen E-Mail-Adresse bezahlt hast, melde dich mit dieser an und versuche es erneut.</string>
+    <string name="pay_plan_title">%1$s-Tarif</string>
+    <string name="pay_plan_credits_left">%1$d von %2$d KI-Credits diesen Monat übrig</string>
+    <string name="pay_plan_see_plans">Tippen, um Tarife zu sehen</string>
+    <string name="pay_plan_yours">Dein Tarif</string>
+    <string name="pay_plan_load_failed">Dein Tarif konnte nicht geladen werden. Tippe, um es erneut zu versuchen.</string>
+    <string name="pay_plan_checking">Dein Tarif wird geprüft…</string>
+</resources>

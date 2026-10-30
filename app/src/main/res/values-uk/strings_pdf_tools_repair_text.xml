@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Відновити</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">Відновлено %d сторінку. Перевірте її, перш ніж видаляти оригінал.</item>
+        <item quantity="few">Відновлено %d сторінки. Перевірте їх, перш ніж видаляти оригінал.</item>
+        <item quantity="many">Відновлено %d сторінок. Перевірте їх, перш ніж видаляти оригінал.</item>
+        <item quantity="other">Відновлено %d сторінки. Перевірте їх, перш ніж видаляти оригінал.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Позначати початок кожної сторінки</string>
+    <string name="pdf_tool_extract_text_separators_body">Додає рядок на кшталт \"Сторінка 3\" перед текстом кожної сторінки.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Сторінка %d -----</string>
+    <string name="pdf_tool_extract_text_action">Витягти</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">На %d сторінці немає тексту, який можна виділити (це скан). Щоб прочитати його, скористайтеся інструментом «PDF у текст» на головному екрані.</item>
+        <item quantity="few">На %d сторінках немає тексту, який можна виділити (це скани). Щоб прочитати їх, скористайтеся інструментом «PDF у текст» на головному екрані.</item>
+        <item quantity="many">На %d сторінках немає тексту, який можна виділити (це скани). Щоб прочитати їх, скористайтеся інструментом «PDF у текст» на головному екрані.</item>
+        <item quantity="other">На %d сторінки немає тексту, який можна виділити (це скани). Щоб прочитати їх, скористайтеся інструментом «PDF у текст» на головному екрані.</item>
+    </plurals>
+</resources>

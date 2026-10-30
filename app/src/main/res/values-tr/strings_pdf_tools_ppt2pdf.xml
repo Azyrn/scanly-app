@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
+<resources>
+    <string name="pdf_tool_ppt2pdf_action">PDF\'e dönüştür</string>
+    <string name="pdf_tool_ppt2pdf_shapes">Bazı şekiller basitleştirildi.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">Bazı yazı tipleri benzerleriyle değiştirildi.</string>
+    <plurals name="pdf_tool_ppt2pdf_charts">
+        <item quantity="one">%d grafik dışarıda bırakıldı.</item>
+        <item quantity="other">%d grafik dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_diagrams">
+        <item quantity="one">%d SmartArt grafiği dışarıda bırakıldı.</item>
+        <item quantity="other">%d SmartArt grafiği dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_objects">
+        <item quantity="one">%d gömülü nesne dışarıda bırakıldı.</item>
+        <item quantity="other">%d gömülü nesne dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_media">
+        <item quantity="one">%d video veya ses PDF\'de oynatılamaz; yalnızca önizleme resmi gösterilir.</item>
+        <item quantity="other">%d video veya ses PDF\'de oynatılamaz; yalnızca önizleme resimleri gösterilir.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_images">
+        <item quantity="one">%d resim gösterilemedi.</item>
+        <item quantity="other">%d resim gösterilemedi.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_hidden">
+        <item quantity="one">%d gizli slayt atlandı.</item>
+        <item quantity="other">%d gizli slayt atlandı.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_unreadable">
+        <item quantity="one">%d slayt okunamadı ve dışarıda bırakıldı.</item>
+        <item quantity="other">%d slayt okunamadı ve dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_truncated">
+        <item quantity="one">Yalnızca ilk %d slayt dönüştürüldü.</item>
+        <item quantity="other">Yalnızca ilk %d slayt dönüştürüldü.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">Wandelt das Dokument auf deinem Telefon um. Diagramme, Textfelder und Gleichungen können noch nicht angezeigt werden und werden weggelassen.</string>
+    <string name="pdf_tool_word_to_pdf_action">In PDF umwandeln</string>
+
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">%d Diagramm wurde weggelassen.</item>
+        <item quantity="other">%d Diagramme wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">%d SmartArt-Diagramm wurde weggelassen.</item>
+        <item quantity="other">%d SmartArt-Diagramme wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">%d Textfeld oder eine Form wurde weggelassen.</item>
+        <item quantity="other">%d Textfelder oder Formen wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">%d Gleichung wurde weggelassen.</item>
+        <item quantity="other">%d Gleichungen wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">%d eingebettetes Objekt wurde weggelassen.</item>
+        <item quantity="other">%d eingebettete Objekte wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">%d Bild liegt in einem nicht darstellbaren Format vor und wurde weggelassen.</item>
+        <item quantity="other">%d Bilder liegen in einem nicht darstellbaren Format vor und wurden weggelassen.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">%d Tabellenzeile war höher als eine Seite und wurde abgeschnitten.</item>
+        <item quantity="other">%d Tabellenzeilen waren höher als eine Seite und wurden abgeschnitten.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">Nur %d Seite wurde umgewandelt.</item>
+        <item quantity="other">Nur die ersten %d Seiten wurden umgewandelt.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Einige Schriften wurden durch ähnliche ersetzt.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Kopf- und Fußzeilen wurden weggelassen.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Fußnoten wurden weggelassen.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Text in Spalten wurde als eine einzige Spalte angeordnet.</string>
+</resources>

@@ -3,9 +3,11 @@ package com.skeler.scanely.ui.pdfeditor
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.compose.ui.geometry.Rect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.pdfeditor.CompressionResult
@@ -67,11 +69,11 @@ data class TargetSearch(
 }
 
 /** Where a signature's visible mark sits on its page, as a fraction of the page box. */
-enum class SignaturePosition(val label: String) {
-    BOTTOM_RIGHT("Bottom right"),
-    BOTTOM_LEFT("Bottom left"),
-    TOP_RIGHT("Top right"),
-    TOP_LEFT("Top left")
+enum class SignaturePosition(@StringRes val label: Int) {
+    BOTTOM_RIGHT(R.string.pe_pos_bottom_right),
+    BOTTOM_LEFT(R.string.pe_pos_bottom_left),
+    TOP_RIGHT(R.string.pe_pos_top_right),
+    TOP_LEFT(R.string.pe_pos_top_left)
 }
 
 /**
@@ -296,7 +298,7 @@ class DocToolsViewModel @Inject constructor(
 
     fun stageCompression(settings: CompressionSettings) {
         session.edits.push(PdfEdit.Compress(settings))
-        _uiState.update { it.copy(message = "Compression staged. Save to apply it.") }
+        _uiState.update { it.copy(message = appContext.getString(R.string.pe_compression_staged)) }
     }
 
     fun addMerge(uri: Uri, password: String = "") {
@@ -314,7 +316,7 @@ class DocToolsViewModel @Inject constructor(
                         )
                     )
                     is StageMergeResult.Unreadable ->
-                        it.copy(mergePassword = null, message = "Couldn't read that PDF.")
+                        it.copy(mergePassword = null, message = appContext.getString(R.string.pe_merge_read_failed))
                 }
             }
         }
@@ -338,7 +340,7 @@ class DocToolsViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 merges = emptyList(),
-                message = "${merges.size} document(s) staged. Save to apply."
+                message = appContext.getString(R.string.pe_documents_staged, merges.size)
             )
         }
     }
@@ -351,12 +353,12 @@ class DocToolsViewModel @Inject constructor(
                 permissions = permissions
             )
         )
-        _uiState.update { it.copy(message = "Encryption staged. Save to apply it.") }
+        _uiState.update { it.copy(message = appContext.getString(R.string.pe_encryption_staged)) }
     }
 
     fun stageDecryption() {
         session.edits.push(PdfEdit.Decrypt)
-        _uiState.update { it.copy(message = "Password removal staged. Save to apply it.") }
+        _uiState.update { it.copy(message = appContext.getString(R.string.pe_password_removal_staged)) }
     }
 
     fun loadMetadata() {
@@ -368,7 +370,7 @@ class DocToolsViewModel @Inject constructor(
 
     fun stageMetadataStrip(stripXmp: Boolean) {
         session.edits.push(PdfEdit.StripMetadata(stripXmp))
-        _uiState.update { it.copy(message = "Metadata removal staged. Save to apply it.") }
+        _uiState.update { it.copy(message = appContext.getString(R.string.pe_metadata_removal_staged)) }
     }
 
     fun validateSignatures() {
@@ -393,11 +395,14 @@ class DocToolsViewModel @Inject constructor(
             }
             _uiState.update {
                 if (bytes == null) {
-                    it.copy(signing = it.signing.copy(error = "Couldn't read that certificate."))
+                    it.copy(
+                        signing = it.signing.copy(error = appContext.getString(R.string.pe_certificate_read_failed))
+                    )
                 } else {
                     it.copy(
                         signing = SigningState(
-                            fileName = UriNames.displayName(appContext, uri) ?: "Certificate",
+                            fileName = UriNames.displayName(appContext, uri)
+                                ?: appContext.getString(R.string.pe_certificate_file_fallback),
                             certificateBytes = bytes,
                             appearanceId = it.signing.appearanceId,
                             reason = it.signing.reason,
@@ -418,7 +423,7 @@ class DocToolsViewModel @Inject constructor(
         viewModelScope.launch {
             val characters = password.toCharArray()
             val result = withContext(Dispatchers.Default) {
-                Pkcs12Loader.load(bytes, characters)
+                Pkcs12Loader.load(appContext, bytes, characters)
             }
             characters.fill('\u0000')
 
@@ -429,9 +434,9 @@ class DocToolsViewModel @Inject constructor(
                         is Pkcs12Result.Loaded ->
                             signing.copy(identity = result.identity, error = null)
                         is Pkcs12Result.WrongPassword ->
-                            signing.copy(error = "That password didn't unlock the certificate.")
+                            signing.copy(error = appContext.getString(R.string.pe_certificate_password_wrong))
                         is Pkcs12Result.NoPrivateKey -> signing.copy(
-                            error = "That file has no private key, so it can't sign."
+                            error = appContext.getString(R.string.pe_certificate_no_private_key)
                         )
                         is Pkcs12Result.Failed -> signing.copy(error = result.message)
                     }
@@ -486,7 +491,7 @@ class DocToolsViewModel @Inject constructor(
 
             when (result) {
                 is SignResult.Saved -> {
-                    val export = exportSigned(session.exportRetry, result.file) {
+                    val export = exportSigned(appContext, session.exportRetry, result.file) {
                         ScanExporter.exportPdfFile(appContext, it, signedName())
                     }
                     // Adopting emits the document, which is what re-reads Save's state in the studio.
@@ -499,14 +504,11 @@ class DocToolsViewModel @Inject constructor(
                 }
 
                 is SignResult.EncryptedNotSupported -> failSigning(
-                    "A password-protected document can't be signed. Remove the password first, " +
-                        "and don't stage a new one — encrypting rewrites the file and would " +
-                        "break the signature."
+                    appContext.getString(R.string.pe_sign_encrypted_unsupported)
                 )
 
                 is SignResult.SignatureTooLarge -> failSigning(
-                    "This certificate's chain is too large to fit the signature. Try one with a " +
-                        "shorter chain."
+                    appContext.getString(R.string.pe_sign_chain_too_large)
                 )
 
                 is SignResult.Failed -> failSigning(result.message)

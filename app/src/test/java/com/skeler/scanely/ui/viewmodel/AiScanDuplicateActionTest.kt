@@ -6,6 +6,7 @@ import com.skeler.scanely.core.ai.*
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.ocr.PdfRendererHelper
 import com.skeler.scanely.history.data.HistoryManager
+import com.skeler.scanely.testing.EnglishStrings
 import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
@@ -24,7 +25,7 @@ class AiScanDuplicateActionTest {
 
     @Before fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        vm = AiScanViewModel(service, mock(HistoryManager::class.java),
+        vm = AiScanViewModel(EnglishStrings.context(), service, mock(HistoryManager::class.java),
             entitlement, mock(PdfRendererHelper::class.java), mock(FeatureSwitches::class.java))
     }
     @After fun cleanup() { vm.viewModelScope.cancel(); Dispatchers.resetMain() }

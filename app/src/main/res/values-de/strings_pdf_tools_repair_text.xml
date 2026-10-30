@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Repair PDF and Extract text. -->
+<resources>
+    <!-- Repair -->
+    <string name="pdf_tool_repair_action">Reparieren</string>
+    <plurals name="pdf_tool_repair_recovered">
+        <item quantity="one">%d Seite wiederhergestellt. Prüfe sie, bevor du das Original löschst.</item>
+        <item quantity="other">%d Seiten wiederhergestellt. Prüfe sie, bevor du das Original löschst.</item>
+    </plurals>
+
+    <!-- Extract text -->
+    <string name="pdf_tool_extract_text_separators">Anfang jeder Seite markieren</string>
+    <string name="pdf_tool_extract_text_separators_body">Fügt vor dem Text jeder Seite eine Zeile wie „Seite 3“ ein.</string>
+    <!-- The line written into the .txt file before each page's text; %d is the page number. -->
+    <string name="pdf_tool_extract_text_page_separator">----- Seite %d -----</string>
+    <string name="pdf_tool_extract_text_action">Extrahieren</string>
+    <plurals name="pdf_tool_extract_text_empty_pages">
+        <item quantity="one">%d Seite hat keinen auswählbaren Text (ein Scan). Lies sie mit „PDF in Text“ auf dem Startbildschirm.</item>
+        <item quantity="other">%d Seiten haben keinen auswählbaren Text (Scans). Lies sie mit „PDF in Text“ auf dem Startbildschirm.</item>
+    </plurals>
+</resources>

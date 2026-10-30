@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -250,7 +251,7 @@ private fun DrawerChatRow(chat: ChatEntity, selected: Boolean, callbacks: Drawer
 /** The plan and what is left of it, as Settings names them; tapping opens the plans. */
 @Composable
 private fun PlanFooter(paywall: PaywallState, onPlan: () -> Unit) {
-    val row = planRow(paywall)
+    val row = planRow(LocalContext.current, paywall)
     Surface(
         onClick = onPlan,
         color = MaterialTheme.colorScheme.surfaceContainerLow,

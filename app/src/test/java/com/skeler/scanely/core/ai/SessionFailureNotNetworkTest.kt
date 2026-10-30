@@ -10,6 +10,7 @@ import com.skeler.scanely.core.network.NetworkObserver
 import com.skeler.scanely.core.network.TokenUnavailableException
 import com.skeler.scanely.core.network.proceedWithToken
 import com.skeler.scanely.core.network.tokenFailure
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -35,7 +36,7 @@ class SessionFailureNotNetworkTest {
 
     /** The real interceptor chain: a stale token, a 401, and a forced refresh that yields nothing. */
     private val client = OkHttpClient.Builder()
-        .addInterceptor { chain -> chain.proceedWithToken { refresh -> if (refresh) "" else "stale" } }
+        .addInterceptor { chain -> chain.proceedWithToken(EnglishStrings.context()) { refresh -> if (refresh) "" else "stale" } }
         .build()
 
     @Test
@@ -46,7 +47,7 @@ class SessionFailureNotNetworkTest {
             mockStatic(Log::class.java).use {
                 val network = mock(NetworkObserver::class.java)
                 `when`(network.isCurrentlyOnline()).thenReturn(true)
-                BackendExecutor(network).run(emit = {}) {
+                BackendExecutor(EnglishStrings.context(), network).run(emit = {}) {
                     client.newCall(Request.Builder().url(worker.baseUrl + "v1/ocr").build()).execute()
                 }
             }

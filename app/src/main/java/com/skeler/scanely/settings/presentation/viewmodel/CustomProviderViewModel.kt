@@ -1,7 +1,9 @@
 package com.skeler.scanely.settings.presentation.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.custom.AuthStyle
 import com.skeler.scanely.core.ai.custom.ConnectionFailure
 import com.skeler.scanely.core.ai.custom.ConnectionTestResult
@@ -11,6 +13,7 @@ import com.skeler.scanely.core.billing.ProEntitlementGate
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.domain.repository.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -53,6 +56,7 @@ data class CustomProviderUiState(
 
 @HiltViewModel
 class CustomProviderViewModel @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val settings: SettingsRepository,
     private val tester: CustomProviderTester,
     proEntitlementGate: ProEntitlementGate
@@ -136,7 +140,7 @@ class CustomProviderViewModel @Inject constructor(
                         isTesting = false,
                         verifiedFor = credentials,
                         failure = null,
-                        message = "Connected. This endpoint is ready to save."
+                        message = context.getString(R.string.cp_connected)
                     )
                     is ConnectionTestResult.Failure -> current.copy(
                         isTesting = false,
@@ -165,7 +169,7 @@ class CustomProviderViewModel @Inject constructor(
             )
             settings.setBoolean(SettingsKeys.CUSTOM_PROVIDER_VERIFIED, true)
             settings.setBoolean(SettingsKeys.CUSTOM_PROVIDER_ENABLED, true)
-            _state.update { it.copy(isEnabled = true, message = "Saved. Scans will use this endpoint.") }
+            _state.update { it.copy(isEnabled = true, message = context.getString(R.string.cp_saved)) }
         }
     }
 
@@ -187,7 +191,10 @@ class CustomProviderViewModel @Inject constructor(
             settings.setString(SettingsKeys.CUSTOM_PROVIDER_AUTH_HEADER, "")
             settings.setBoolean(SettingsKeys.CUSTOM_PROVIDER_VERIFIED, false)
             settings.setBoolean(SettingsKeys.CUSTOM_PROVIDER_ENABLED, false)
-            _state.value = CustomProviderUiState(isPro = _state.value.isPro, message = "Endpoint removed.")
+            _state.value = CustomProviderUiState(
+                isPro = _state.value.isPro,
+                message = context.getString(R.string.cp_removed)
+            )
         }
     }
 

@@ -13,13 +13,14 @@ internal class DocxTableReader(private val session: ReadSession) {
         val columns = ArrayList<Int>()
         val rows = ArrayList<DocxRow>()
         var bordered = false
+        val margins = IntArray(2) { NO_MARGIN }
         try {
             session.tableStyle = session.styles.table(null)
             bordered = session.styles.tableBorders(null) == true
             parser.children { name ->
                 when {
                     !parser.isW() -> parser.skip()
-                    name == "tblPr" -> bordered = readTableProps(parser)
+                    name == "tblPr" -> bordered = readTableProps(parser, margins)
                     name == "tblGrid" -> readGrid(parser, columns)
                     else -> readRows(parser, name, rows, bordered)
                 }
@@ -27,22 +28,43 @@ internal class DocxTableReader(private val session: ReadSession) {
         } finally {
             session.tableStyle = saved
         }
-        return DocxTable(columns, rows)
+        return DocxTable(
+            columns,
+            rows,
+            margins[0].takeIf { it != NO_MARGIN },
+            margins[1].takeIf { it != NO_MARGIN }
+        )
     }
 
     /** Sets the table style in force for the cells and answers whether the table draws lines. */
-    private fun readTableProps(parser: XmlPullParser): Boolean {
+    private fun readTableProps(parser: XmlPullParser, margins: IntArray): Boolean {
         var styleId: String? = null
         var borders: Boolean? = null
         parser.children { name ->
             when (name) {
                 "tblStyle" -> styleId = parser.attr("val").also { parser.skip() }
                 "tblBorders" -> borders = parseBorders(parser)
+                "tblCellMar" -> readCellMargins(parser, margins)
                 else -> parser.skip()
             }
         }
         session.tableStyle = session.styles.table(styleId)
         return borders ?: session.styles.tableBorders(styleId) ?: false
+    }
+
+    /** Left and right cell margins, in twips; only dxa widths, the form Word writes. */
+    private fun readCellMargins(parser: XmlPullParser, margins: IntArray) {
+        parser.children { name ->
+            val side = when (name) {
+                "left", "start" -> 0
+                "right", "end" -> 1
+                else -> null
+            }
+            val width = parser.intAttr("w")
+            val dxa = parser.attr("type").let { it == null || it == "dxa" }
+            if (side != null && width != null && dxa) margins[side] = width.coerceAtLeast(0)
+            parser.skip()
+        }
     }
 
     private fun readGrid(parser: XmlPullParser, columns: MutableList<Int>) {
@@ -140,5 +162,6 @@ internal class DocxTableReader(private val session: ReadSession) {
     private companion object {
         /** Word's own limit on columns, so a hostile gridSpan can't make one cell a million wide. */
         const val MAX_SPAN = 63
+        const val NO_MARGIN = -1
     }
 }

@@ -1,5 +1,9 @@
 package com.skeler.scanely.core.pdftools.pdf2office
 
+import com.skeler.scanely.core.pdftools.pdf2office.exact.Block
+import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactPageLayout
+import com.skeler.scanely.core.pdftools.pdf2office.exact.PagePicture
+import com.skeler.scanely.core.pdftools.pdf2office.exact.TextMeasurer
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.OutputStream
@@ -54,18 +58,19 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
     }
 
     fun addTextSlide(layout: PageLayout, pageWidthPt: Float, pageHeightPt: Float) {
-        val frame = Frame(pageWidthPt, pageHeightPt)
+        val frame = frame(pageWidthPt, pageHeightPt)
         val shapes = StringBuilder()
         var shapeId = FIRST_SHAPE_ID
         if (layout.positioned) {
             layout.blocks.forEach { block ->
-                val lines = when (block) {
-                    is ParagraphBlock -> block.lines.map { if (block.kind == BlockKind.BULLET) "• $it" else it }
-                    is TableBlock -> block.rows.map { row -> row.joinToString("\t") }
+                when (block) {
+                    is ParagraphBlock -> {
+                        val lines = block.lines.map { if (block.kind == BlockKind.BULLET) "• $it" else it }
+                        val bold = block.kind == BlockKind.HEADING_1 || block.kind == BlockKind.HEADING_2
+                        shapes.append(textBox(shapeId++, frame, block.box, lines, block.fontSize, bold, wrap = false))
+                    }
+                    is TableBlock -> shapes.append(PptxTables.textTable(shapeId++, frame, block))
                 }
-                val bold = block is ParagraphBlock &&
-                    (block.kind == BlockKind.HEADING_1 || block.kind == BlockKind.HEADING_2)
-                shapes.append(textBox(shapeId++, frame, block.box, lines, block.fontSize, bold, wrap = false))
             }
         } else if (!layout.isEmpty) {
             // Too dense to place: one box over the page, shrunk to fit by PowerPoint.
@@ -73,7 +78,7 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
             val page = LayoutBox(MARGIN_PT, MARGIN_PT, pageWidthPt - MARGIN_PT, pageHeightPt - MARGIN_PT)
             shapes.append(textBox(shapeId, frame, page, lines, DENSE_FONT_PT, bold = false, wrap = true))
         }
-        writeSlide(shapes.toString(), image = null)
+        writeSlide(shapes.toString(), emptyList())
     }
 
     /** [jpeg] is copied in at once; the caller may delete it as soon as this returns. */
@@ -82,14 +87,69 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
         val media = "image$images.jpg"
         zip.copyEntry("ppt/media/$media", jpeg)
 
-        val frame = Frame(pageWidthPt, pageHeightPt)
+        val frame = frame(pageWidthPt, pageHeightPt)
         val picture = "<p:pic><p:nvPicPr><p:cNvPr id=\"$FIRST_SHAPE_ID\" name=\"Page image\"/>" +
             "<p:cNvPicPr><a:picLocks noChangeAspect=\"1\"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>" +
-            "<p:blipFill><a:blip r:embed=\"rIdImage\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>" +
+            "<p:blipFill><a:blip r:embed=\"rIdImage1\"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>" +
             "<p:spPr>${xfrm(frame.x(0f), frame.y(0f), frame.length(pageWidthPt), frame.length(pageHeightPt))}" +
             "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom></p:spPr></p:pic>"
-        writeSlide(picture, image = media)
+        writeSlide(picture, listOf(media))
     }
+
+    /**
+     * A page that looks like the PDF: the page drawn without its text (and without the pictures
+     * extracted below) as the bottom layer, each extracted picture, then every [Block] as a text box
+     * at its PDF position in the source font, size and colour. A scan's text goes first, behind its
+     * picture. Both files are copied in at once; the caller may delete them as soon as this returns.
+     */
+    fun addExactSlide(
+        layout: ExactPageLayout,
+        widthPt: Float,
+        heightPt: Float,
+        background: File?,
+        pictures: List<PagePicture>,
+        measurer: TextMeasurer
+    ) {
+        val slide = ExactSlide(frame(widthPt, heightPt), heightPt, measurer)
+        if (layout.behindPicture) slide.text(layout)
+        background?.let {
+            slide.picture(
+                copyImage(it, it.name.endsWith(".png")),
+                0f,
+                0f,
+                widthPt,
+                heightPt,
+                "Page background"
+            )
+        }
+        pictures.forEach {
+            slide.picture(
+                copyImage(it.file, it.png),
+                it.xPt,
+                it.yPt,
+                it.widthPt,
+                it.heightPt,
+                "Picture ${slide.nextId}"
+            )
+        }
+        if (!layout.behindPicture) slide.text(layout)
+        writeSlide(slide.shapes.toString(), slide.media)
+    }
+
+    /** [file] copied into the package now (the caller may delete it after); its entry under ppt/media. */
+    private fun copyImage(file: File, png: Boolean): String {
+        images++
+        val entry = "image$images." + if (png) "png" else "jpg"
+        zip.copyEntry("ppt/media/$entry", file)
+        return entry
+    }
+
+    private fun frame(pageWidthPt: Float, pageHeightPt: Float) = SlideFrame(
+        pageWidthPt,
+        pageHeightPt,
+        slideWidth,
+        slideHeight
+    )
 
     /** Closes every part and the zip. The writer is unusable afterwards. */
     fun finish() {
@@ -155,7 +215,12 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
         zip.writeEntry(
             "[Content_Types].xml",
             contentTypes(
-                defaults = mapOf("rels" to TYPE_RELATIONSHIPS, "xml" to "application/xml", "jpg" to "image/jpeg"),
+                defaults = mapOf(
+                    "rels" to TYPE_RELATIONSHIPS,
+                    "xml" to "application/xml",
+                    "jpg" to "image/jpeg",
+                    "png" to "image/png"
+                ),
                 overrides = mapOf(
                     "/ppt/presentation.xml" to TYPE_PRESENTATION,
                     "/ppt/presProps.xml" to TYPE_PRES_PROPS,
@@ -168,7 +233,7 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
         )
     }
 
-    private fun writeSlide(shapes: String, image: String?) {
+    private fun writeSlide(shapes: String, media: List<String>) {
         slides++
         zip.writeEntry(
             "ppt/slides/slide$slides.xml",
@@ -176,13 +241,13 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
                 "<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>"
         )
         val rels = listOf(relationship("rIdLayout", REL_LAYOUT, "../slideLayouts/slideLayout1.xml")) +
-            listOfNotNull(image?.let { relationship("rIdImage", REL_IMAGE, "../media/$it") })
+            media.mapIndexed { n, name -> relationship("rIdImage${n + 1}", REL_IMAGE, "../media/$name") }
         zip.writeEntry("ppt/slides/_rels/slide$slides.xml.rels", relationships(rels))
     }
 
     private fun textBox(
         id: Int,
-        frame: Frame,
+        frame: SlideFrame,
         box: LayoutBox,
         lines: List<String>,
         fontSizePt: Float,
@@ -208,39 +273,15 @@ internal class PptxWriter(out: OutputStream, firstPageWidthPt: Float, firstPageH
             "$autofit</a:bodyPr><a:lstStyle/>$paragraphs</p:txBody></p:sp>"
     }
 
-    private fun xfrm(x: Long, y: Long, cx: Long, cy: Long) =
-        "<a:xfrm><a:off x=\"$x\" y=\"$y\"/>" +
-            "<a:ext cx=\"${cx.coerceAtLeast(1)}\" cy=\"${cy.coerceAtLeast(1)}\"/></a:xfrm>"
-
-    /** Page points → slide EMUs for one page: uniform scale to fit, centred. */
-    private inner class Frame(pageWidthPt: Float, pageHeightPt: Float) {
-        private val widthEmu = pageWidthPt.coerceAtLeast(1f) * EMU_PER_POINT
-        private val heightEmu = pageHeightPt.coerceAtLeast(1f) * EMU_PER_POINT
-
-        /** Slide points per page point. */
-        val scale: Float = min(slideWidth / widthEmu, slideHeight / heightEmu)
-        private val offsetX = ((slideWidth - widthEmu * scale) / 2f).coerceAtLeast(0f)
-        private val offsetY = ((slideHeight - heightEmu * scale) / 2f).coerceAtLeast(0f)
-
-        fun x(pt: Float): Long = (offsetX + pt * EMU_PER_POINT * scale).roundToLong().coerceAtLeast(0)
-        fun y(pt: Float): Long = (offsetY + pt * EMU_PER_POINT * scale).roundToLong().coerceAtLeast(0)
-        fun length(pt: Float): Long = (pt * EMU_PER_POINT * scale).roundToLong()
-    }
-
     private companion object {
         const val BUFFER_BYTES = 64 * 1024
         const val MIN_SLIDE_EMU = 914_400f
         const val MAX_SLIDE_EMU = 51_206_400f
-        const val FIRST_SHAPE_ID = 2
         const val FIRST_SLIDE_ID = 256
         const val MASTER_ID = 2_147_483_648L
         const val LAYOUT_ID = 2_147_483_649L
         const val MARGIN_PT = 24f
         const val DENSE_FONT_PT = 10f
-        const val HUNDREDTHS = 100f
-        const val MIN_FONT_HUNDREDTHS = 100
-        const val MAX_FONT_HUNDREDTHS = 400_000
-        const val BOX_SLACK = 1.08f
 
         const val GROUP_HEADER = "<p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>" +
             "<p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"0\" cy=\"0\"/><a:chOff x=\"0\" y=\"0\"/>" +

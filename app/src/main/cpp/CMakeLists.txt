@@ -99,7 +99,7 @@ add_library(jpeg_static STATIC IMPORTED)
 set_target_properties(jpeg_static PROPERTIES IMPORTED_LOCATION ${JPEG_LIB})
 add_dependencies(jpeg_static jpeg_ext)
 
-add_library(scanlypdf SHARED qpdf_jni.cpp)
+add_library(scanlypdf SHARED qpdf_jni.cpp pdfium_layer.cpp)
 add_dependencies(scanlypdf qpdf_ext)
 
 # The install tree does not exist at configure time; CMake needs to be told the include
@@ -113,6 +113,8 @@ target_link_libraries(scanlypdf
     jpeg_static
     z
     android
+    jnigraphics
+    dl
     log)
 
 target_compile_options(scanlypdf PRIVATE -fvisibility=hidden -Oz)

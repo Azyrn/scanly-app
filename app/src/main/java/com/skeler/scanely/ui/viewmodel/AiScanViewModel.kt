@@ -1,9 +1,11 @@
 package com.skeler.scanely.ui.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiEvent
 import com.skeler.scanely.core.ai.AiFeature
 import com.skeler.scanely.core.ai.AiMode
@@ -18,6 +20,7 @@ import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.ocr.PdfRendererHelper
 import com.skeler.scanely.history.data.HistoryManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -65,6 +68,7 @@ data class RescanParams(
 
 @HiltViewModel
 class AiScanViewModel @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val aiService: GenerativeAiService,
     private val historyManager: HistoryManager,
     private val entitlementRepository: EntitlementRepository,
@@ -129,13 +133,13 @@ class AiScanViewModel @Inject constructor(
     ): AiResult = collect(aiService.processFileEvents(uri, pageRange, extractPreset))
 
     private suspend fun collect(events: Flow<AiEvent>): AiResult {
-        var result: AiResult = AiResult.Error("Cancelled")
+        var result: AiResult = AiResult.Error(context.getString(R.string.ai_err_cancelled))
         events.catch { error ->
             if (error is CancellationException) throw error
             val message = if (error is SecurityException) {
-                "File access expired. Select the file again."
+                context.getString(R.string.ai_err_file_access)
             } else {
-                "Couldn't finish the request. Please try again."
+                context.getString(R.string.ai_err_request_failed)
             }
             emit(AiEvent.Finished(AiResult.Error(message)))
         }.collect { event ->
@@ -223,7 +227,7 @@ class AiScanViewModel @Inject constructor(
                 _aiState.value = _aiState.value.copy(streamingText = null)
             }
 
-            val combinedResult = combineBatchResults(results)
+            val combinedResult = combineBatchResults(context, results)
             publishFinalResult(combinedResult, uris.first())
         }
     }
@@ -298,7 +302,7 @@ class AiScanViewModel @Inject constructor(
         if (translationJob?.isActive == true) return
         val currentText = _aiState.value.originalText
         if (currentText.isNullOrBlank()) {
-            _aiState.value = _aiState.value.copy(message = "Nothing to translate yet.")
+            _aiState.value = _aiState.value.copy(message = context.getString(R.string.ai_nothing_to_translate))
             return
         }
 
@@ -354,12 +358,12 @@ class AiScanViewModel @Inject constructor(
  * for the plan, so the paywall opens with the server's reason. It used to be a "success" whose
  * text was a list of error messages, saved to history, with the upgrade sheet never shown.
  */
-internal fun combineBatchResults(results: List<AiResult>): AiResult {
+internal fun combineBatchResults(context: Context, results: List<AiResult>): AiResult {
     if (results.none { it is AiResult.Success }) {
         val errors = results.filterIsInstance<AiResult.Error>()
         return errors.firstOrNull { it.isUpgradePath }
             ?: errors.firstOrNull()
-            ?: AiResult.Error("No text extracted from any file")
+            ?: AiResult.Error(context.getString(R.string.ai_err_no_text_batch))
     }
 
     val sections = mutableListOf<String>()
@@ -395,7 +399,7 @@ internal fun combineBatchResults(results: List<AiResult>): AiResult {
             extraction
         )
     } else {
-        AiResult.Error("No text extracted from any file")
+        AiResult.Error(context.getString(R.string.ai_err_no_text_batch))
     }
 }
 

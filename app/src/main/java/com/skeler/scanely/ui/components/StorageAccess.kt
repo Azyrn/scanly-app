@@ -10,7 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.core.content.ContextCompat
+import com.skeler.scanely.R
 
 /**
  * Runs a save into Downloads or Pictures. Android 10+ writes there through MediaStore with no
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat
 @Composable
 fun rememberStorageAccess(): (save: () -> Unit) -> Unit {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val pending = remember { arrayOfNulls<() -> Unit>(1) }
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -32,7 +35,7 @@ fun rememberStorageAccess(): (save: () -> Unit) -> Unit {
         } else {
             Toast.makeText(
                 context,
-                "Allow storage access in Settings to save files on this phone.",
+                resources.getString(R.string.cmp_storage_allow_settings),
                 Toast.LENGTH_LONG
             ).show()
         }

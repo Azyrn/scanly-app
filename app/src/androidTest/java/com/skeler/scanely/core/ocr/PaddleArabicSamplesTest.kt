@@ -58,7 +58,7 @@ class PaddleArabicSamplesTest {
                 SettingsKeys.PADDLE_STRUCTURE to false
             )
         )
-        return PaddleOcrService(engine, settings, PdfRendererHelper(appCtx))
+        return PaddleOcrService(appCtx, engine, settings, PdfRendererHelper(appCtx))
     }
 
     private fun asset(name: String): Bitmap {

@@ -1,7 +1,10 @@
 package com.skeler.scanely.core.lookup
 
+import android.content.Context
 import android.util.Log
+import com.skeler.scanely.R
 import com.skeler.scanely.core.network.NetworkObserver
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.async
@@ -16,6 +19,7 @@ private const val ENGINE_TIMEOUT_MS = 10_000L
 
 @Singleton
 class LookupOrchestrator @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val engines: Set<@JvmSuppressWildcards LookupEngine>,
     private val networkObserver: NetworkObserver
 ) {
@@ -32,7 +36,7 @@ class LookupOrchestrator @Inject constructor(
 
         if (supportingEngines.isEmpty()) {
             Log.d(TAG, "No engines support barcode: $barcode")
-            return@coroutineScope LookupResult.NotFound("No compatible engines")
+            return@coroutineScope LookupResult.NotFound(context.getString(R.string.lk_no_engines))
         }
 
         Log.d(
@@ -66,11 +70,15 @@ class LookupOrchestrator @Inject constructor(
         searched: List<LookupEngine>,
         failures: List<Pair<String, Exception>>
     ): LookupResult = when {
-        failures.isEmpty() -> LookupResult.NotFound("Searched ${searched.size} sources")
+        failures.isEmpty() -> LookupResult.NotFound(context.getString(R.string.lk_searched, searched.size))
         // Someone answered "not found"; the product may still be in a source that did not
         // answer, so say which rather than calling the search complete.
         failures.size < searched.size -> LookupResult.NotFound(
-            "Searched ${searched.size} sources. Couldn't reach ${failures.joinToString { it.first }}"
+            context.getString(
+                R.string.lk_searched_partial,
+                searched.size,
+                failures.joinToString { it.first }
+            )
         )
         else -> LookupResult.Error(
             searched.joinToString { it.name },
@@ -86,9 +94,10 @@ class LookupOrchestrator @Inject constructor(
     private fun failureMessage(failures: List<Exception>): String {
         val networkFailure = failures.any { it is IOException || it is TimeoutCancellationException }
         return when {
-            networkFailure && !networkObserver.isCurrentlyOnline() -> NO_INTERNET
-            failures.all { it is IOException || it is TimeoutCancellationException } -> UNREACHABLE
-            else -> SERVER_PROBLEM
+            networkFailure && !networkObserver.isCurrentlyOnline() -> context.getString(R.string.net_no_internet)
+            failures.all { it is IOException || it is TimeoutCancellationException } ->
+                context.getString(R.string.lk_unreachable)
+            else -> context.getString(R.string.lk_server_problem)
         }
     }
 
@@ -108,13 +117,5 @@ class LookupOrchestrator @Inject constructor(
             Log.e(TAG, "${engine.name} failed after retries: ${e.message}")
             LookupResult.Error(engine.name, e)
         }
-    }
-
-    private companion object {
-        const val NO_INTERNET = "No internet connection."
-        const val UNREACHABLE =
-            "Couldn't reach the product databases. Your connection looks fine — try again in a few minutes."
-        const val SERVER_PROBLEM =
-            "Couldn't reach the product databases: their servers are having problems. Try again later."
     }
 }

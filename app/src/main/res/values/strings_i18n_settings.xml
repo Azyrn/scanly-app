@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">Settings</string>
+    <string name="set_section_account">Account</string>
+    <string name="set_sign_in">Sign in</string>
+    <string name="set_sign_in_subtitle">Required for AI scans</string>
+    <string name="set_signed_in">Signed in</string>
+    <string name="set_pro_key_title">Scanly Pro key</string>
+    <string name="set_pro_key_active_devices">Active · %1$d of %2$d devices</string>
+    <string name="set_pro_key_active_here">Active on this device</string>
+    <string name="set_delete_account_title">Delete account</string>
+    <string name="set_delete_account_subtitle">Permanently erase your account and data</string>
+    <string name="set_section_customize">Customize</string>
+    <string name="set_look_and_feel_title">Look &amp; Feel</string>
+    <string name="set_look_and_feel_subtitle">Color palette, dark theme, pure black</string>
+    <string name="set_text_recognition_title">Text Recognition</string>
+    <string name="set_text_recognition_subtitle">%1$s · scripts &amp; preprocessing</string>
+    <string name="set_barcode_engine_title">Barcode Scanner Engine</string>
+    <string name="set_custom_endpoint_title">Custom endpoint</string>
+    <string name="set_custom_endpoint_subtitle">Connect your own AI provider · Pro</string>
+    <string name="set_section_about">About</string>
+    <string name="set_privacy_options_title">Privacy options</string>
+    <string name="set_privacy_options_subtitle">Manage ad consent choices</string>
+    <string name="set_rate_title">Rate Scanly</string>
+    <string name="set_rate_subtitle">Tell others what you think on Google Play</string>
+    <string name="set_privacy_policy_title">Privacy policy</string>
+    <string name="set_privacy_policy_subtitle">What Scanly keeps, and who processes it</string>
+    <string name="set_terms_title">Terms of service</string>
+    <string name="set_developer_subtitle">\@Azyrn · Developer</string>
+    <string name="set_telegram_subtitle">Report bugs or request features</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">Remove your key?</string>
+    <string name="set_remove_key_message">This device drops back to the free plan and its slot is freed, so you can use the key on another device. The key itself keeps working.</string>
+    <string name="set_remove_key_confirm">Remove</string>
+    <string name="set_delete_account_dialog_title">Delete account?</string>
+    <string name="set_delete_account_dialog_message">This permanently erases your Scanly account, your sign-in details, and your usage records on our servers. It cannot be undone.\n\nScans saved on this device are not affected, and an active Pro subscription must be cancelled separately through Paddle.</string>
+    <string name="set_sign_out_dialog_title">Sign out?</string>
+    <string name="set_sign_out_dialog_message">AI scans will stop working until you sign in again. Your scan history and offline text recognition stay on this device.</string>
+    <string name="set_sign_out">Sign out</string>
+    <string name="set_account_options">Account options</string>
+    <string name="set_account_id_label">Account ID</string>
+    <string name="set_account_id_copied">Account ID copied</string>
+    <string name="set_barcode_mlkit_description">Google\'s on-device scanner with auto-zoom</string>
+    <string name="set_barcode_zxing_description">Open-source decoder, works without GMS</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">Wallpaper colors</string>
+    <string name="set_palette_subtitle">Pick a palette to recolor the whole app</string>
+    <string name="set_section_color_palette">Color palette</string>
+    <string name="set_palette_dynamic">Dynamic</string>
+    <string name="set_section_personalize">Personalize</string>
+    <string name="set_dark_theme">Dark theme</string>
+    <string name="set_on">On</string>
+    <string name="set_off">Off</string>
+    <string name="set_pure_black_title">Pure Black M3</string>
+    <string name="set_pure_black_subtitle">Save battery on OLED displays</string>
+    <string name="set_palette_cerulean_wave">Cerulean Wave</string>
+    <string name="set_palette_lavender_volt">Lavender Volt</string>
+    <string name="set_palette_amethyst_haze">Amethyst Haze</string>
+    <string name="set_palette_emerald_grove">Emerald Grove</string>
+    <string name="set_palette_sunset_coral">Sunset Coral</string>
+    <string name="set_palette_rose_blush">Rose Blush</string>
+    <string name="set_palette_monochrome">Monochrome</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">Engine</string>
+    <string name="set_section_script">Script</string>
+    <string name="set_section_preprocessing">Preprocessing</string>
+    <string name="set_auto_rotate_title">Auto-rotate page</string>
+    <string name="set_auto_rotate_subtitle">Detects sideways and upside-down pages</string>
+    <string name="set_fix_flipped_title">Fix flipped lines</string>
+    <string name="set_fix_flipped_subtitle">For pages mixing upright and upside-down lines. Unreliable on Arabic</string>
+    <string name="set_flatten_curved_title">Flatten curved pages</string>
+    <string name="set_downloading_percent">Downloading %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">UVDoc dewarping · 30 MB download</string>
+    <string name="set_uvdoc_ready_subtitle">UVDoc dewarping — slower, for books and folds</string>
+    <string name="set_section_document_structure">Document structure</string>
+    <string name="set_detect_layout_title">Detect layout</string>
+    <string name="set_detect_layout_subtitle">Headings, paragraphs and reading order in the Markdown view</string>
+    <string name="set_recognize_tables_title">Recognize tables</string>
+    <string name="set_tables_missing_subtitle">SLANet tables · 8 MB download</string>
+    <string name="set_tables_ready_subtitle">Rebuilds tables as grids you can export to CSV</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
+    <string name="set_script_delete_description">Delete %1$s</string>
+    <string name="set_script_download_description">Download %1$s</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">A Pro feature</string>
+    <string name="set_pro_required_message">Connecting your own AI provider is part of Scanly Pro. The fields below show exactly what you\'d set up — they unlock once you\'re on Pro. Upgrade, or redeem a key you already own, from the Account section in Settings.</string>
+    <string name="set_custom_intro_body">Connect any AI provider. Pick the protocol it speaks, paste the endpoint URL, the model name and your API key, then test the connection.</string>
+    <string name="set_custom_intro_hosts">Most hosts are OpenAI-compatible — Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude and Gemini have their own protocols, and a self-hosted server on your network works over plain http.</string>
+    <string name="set_custom_intro_pdf_pages">Scanned PDFs go up to %1$d pages at a time, since they travel as images in one request. Office documents still need Scanly AI.</string>
+    <string name="set_section_protocol">Protocol</string>
+    <string name="set_section_endpoint">Endpoint</string>
+    <string name="set_endpoint_url_label">Endpoint URL</string>
+    <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI puts your account ID in the path — paste the full URL including it.</string>
+    <string name="set_endpoint_hint_openai">Usually ends in /v1/chat/completions.</string>
+    <string name="set_endpoint_hint_anthropic">Usually ends in /v1/messages.</string>
+    <string name="set_endpoint_hint_gemini">Just the host is enough — the model and path are added for you.</string>
+    <string name="set_model_label">Model</string>
+    <string name="set_model_hint">Spelled exactly as your provider lists it.</string>
+    <string name="set_api_key_label">API key</string>
+    <string name="set_api_key_hint">Stored on this device only. Never sent to Scanly\'s servers.</string>
+    <string name="set_header_name_label">Header name</string>
+    <string name="set_header_name_hint">The header your gateway expects the key in.</string>
+    <string name="set_auth_style_label">Send the key as</string>
+    <string name="set_endpoint_verified">Verified — this endpoint answered correctly.</string>
+    <string name="set_endpoint_unverified">Unverified — test the connection before saving.</string>
+    <string name="set_testing">Testing…</string>
+    <string name="set_test_connection">Test connection</string>
+    <string name="set_remove_endpoint">Remove endpoint</string>
+    <string name="set_use_for_ai_title">Use for AI features</string>
+    <string name="set_use_for_ai_verified">Scans, data extraction, translation, drafts and designs all use your endpoint instead of Scanly AI. Audio to Text always uses Scanly AI, since a chat endpoint can\'t take audio.</string>
+    <string name="set_use_for_ai_unverified">Verify the endpoint first.</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">Create your account</string>
+    <string name="set_auth_welcome_title">Welcome back</string>
+    <string name="set_auth_intro">Sign in to use AI scans. Text recognition and barcode scanning keep working offline without an account.</string>
+    <string name="set_auth_email_label">Email</string>
+    <string name="set_auth_password_hint">At least 6 characters</string>
+    <string name="set_auth_forgot_password">Forgot password?</string>
+    <string name="set_auth_create_account">Create account</string>
+    <string name="set_auth_or">or</string>
+    <string name="set_auth_continue_google">Continue with Google</string>
+    <string name="set_auth_have_account">Already have an account?</string>
+    <string name="set_auth_no_account">No account yet?</string>
+    <string name="set_auth_create_one">Create one</string>
+    <string name="set_account_deleted">Your account has been deleted.</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">History</string>
+    <string name="set_history_clear">Clear History</string>
+    <string name="set_history_clear_all">Clear All</string>
+    <string name="set_history_clear_message">Are you sure you want to delete all history? This action cannot be undone.</string>
+    <string name="set_history_delete_all">Delete All</string>
+    <string name="set_history_empty">No history yet</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">Преобразует документ прямо на телефоне. Диаграммы, текстовые поля и формулы пока не отображаются, поэтому их не будет.</string>
+    <string name="pdf_tool_word_to_pdf_action">Преобразовать в PDF</string>
+
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">%d диаграмма не включена.</item>
+        <item quantity="few">%d диаграммы не включены.</item>
+        <item quantity="many">%d диаграмм не включены.</item>
+        <item quantity="other">%d диаграмм не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">%d объект SmartArt не включён.</item>
+        <item quantity="few">%d объекта SmartArt не включены.</item>
+        <item quantity="many">%d объектов SmartArt не включены.</item>
+        <item quantity="other">%d объектов SmartArt не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">%d текстовое поле или фигура не включены.</item>
+        <item quantity="few">%d текстовых поля или фигуры не включены.</item>
+        <item quantity="many">%d текстовых полей или фигур не включены.</item>
+        <item quantity="other">%d текстовых полей или фигур не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">%d уравнение не включено.</item>
+        <item quantity="few">%d уравнения не включены.</item>
+        <item quantity="many">%d уравнений не включены.</item>
+        <item quantity="other">%d уравнений не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">%d встроенный объект не включён.</item>
+        <item quantity="few">%d встроенных объекта не включены.</item>
+        <item quantity="many">%d встроенных объектов не включены.</item>
+        <item quantity="other">%d встроенных объектов не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">%d изображение в неподдерживаемом формате не включено.</item>
+        <item quantity="few">%d изображения в неподдерживаемом формате не включены.</item>
+        <item quantity="many">%d изображений в неподдерживаемом формате не включены.</item>
+        <item quantity="other">%d изображений в неподдерживаемом формате не включены.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">%d строка таблицы была выше страницы и обрезана.</item>
+        <item quantity="few">%d строки таблицы были выше страницы и обрезаны.</item>
+        <item quantity="many">%d строк таблицы были выше страницы и обрезаны.</item>
+        <item quantity="other">%d строк таблицы были выше страницы и обрезаны.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">Преобразована только %d страница.</item>
+        <item quantity="few">Преобразованы только %d страницы.</item>
+        <item quantity="many">Преобразовано только %d страниц.</item>
+        <item quantity="other">Преобразовано только %d страниц.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Некоторые шрифты заменены похожими.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Колонтитулы не включены.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Сноски не включены.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Текст в колонках выведен в одну колонку.</string>
+</resources>

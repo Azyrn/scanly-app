@@ -54,7 +54,8 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
         return edges
     }
 
-    fun row(row: DocxRow, edges: FloatArray, maxImageHeight: Float): RowPlan {
+    fun row(table: DocxTable, row: DocxRow, edges: FloatArray, maxImageHeight: Float): RowPlan {
+        val padding = padding(table)
         var column = 0
         val last = edges.size - 1
         val cells = row.cells.mapNotNull { cell ->
@@ -62,7 +63,7 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
             column += cell.span
             if (start >= last) return@mapNotNull null
             val end = min(start + cell.span, last)
-            val inner = (edges[end] - edges[start] - 2 * CELL_PADDING).coerceAtLeast(MIN_INNER)
+            val inner = (edges[end] - edges[start] - padding.first - padding.second).coerceAtLeast(MIN_INNER)
             val items = if (cell.merge == VerticalMerge.CONTINUE) {
                 emptyList()
             } else {
@@ -102,17 +103,23 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
                 fillPaint.color = fill or OPAQUE
                 canvas.drawRect(rect, fillPaint)
             }
-            drawItems(canvas, rect, cellPlan.items)
+            drawItems(canvas, rect, padding(table).first, cellPlan.items)
             if (cell.bordered) drawBorders(canvas, rect, !continued, !continuesBelow(table, index, cellPlan.column))
         }
     }
 
-    private fun drawItems(canvas: Canvas, rect: RectF, items: List<CellItem>) {
+    /** Left and right cell padding in points: the table's own margins, else Word's default. */
+    private fun padding(table: DocxTable): Pair<Float, Float> = Pair(
+        table.cellMarginLeft?.let { it / TWIPS_PER_POINT } ?: CELL_PADDING,
+        table.cellMarginRight?.let { it / TWIPS_PER_POINT } ?: CELL_PADDING
+    )
+
+    private fun drawItems(canvas: Canvas, rect: RectF, left: Float, items: List<CellItem>) {
         if (items.isEmpty()) return
         canvas.withClip(rect) {
             var y = rect.top + CELL_PADDING_V
             for (item in items) {
-                item.draw(canvas, rect.left + CELL_PADDING, y)
+                item.draw(canvas, rect.left + left, y)
                 y += item.height
             }
         }
@@ -199,7 +206,7 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
         maxImageHeight: Float
     ) : CellItem {
         private val edges = columns(table, width)
-        private val rows = table.rows.map { row(it, edges, maxImageHeight) }
+        private val rows = table.rows.map { row(table, it, edges, maxImageHeight) }
 
         override val height: Float = rows.fold(0f) { sum, row -> sum + row.height }
 

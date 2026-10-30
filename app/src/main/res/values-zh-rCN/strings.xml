@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">用 AI 生成文档</string>
+    <string name="ai_build_documents_subtitle">描述需求或附加文件：发票、简历、报告、幻灯片</string>
+    <string name="design_paywall_fallback">用 AI 生成文档是 Pro 功能的一部分。</string>
+    <string name="custom_provider_build_documents_note">用 AI 生成文档分为两步：你的模型负责编写文档内容，Scanly 负责排版。更强的模型能带来更好的设计，而排版部分只收取一个积分，不按常规费用计算。</string>
+    <string name="plan_feature_build_documents">用 AI 生成文档：版式、表格和样式</string>
+    <string name="custom_provider_on_your_endpoint_note">扫描、数据提取和翻译都会从本设备直接发送到你的服务商。它们不消耗你的 Scanly 积分，费用由你的服务商收取。</string>
+</resources>

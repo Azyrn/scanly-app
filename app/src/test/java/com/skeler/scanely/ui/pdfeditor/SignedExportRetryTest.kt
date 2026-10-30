@@ -3,6 +3,7 @@ package com.skeler.scanely.ui.pdfeditor
 import com.skeler.scanely.core.pdfeditor.ExportRetry
 import com.skeler.scanely.core.pdfeditor.canSave
 import com.skeler.scanely.core.pdfeditor.exportSigned
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -37,7 +38,7 @@ class SignedExportRetryTest {
         val retry = ExportRetry()
         downloads.setWritable(false)
 
-        val result = exportSigned(retry, signed, toDownloads)
+        val result = exportSigned(EnglishStrings.context(), retry, signed, toDownloads)
 
         assertNull(result.saved)
         assertEquals(signed, retry.unexported)
@@ -49,7 +50,7 @@ class SignedExportRetryTest {
     fun `Save exports the signed file once Downloads is writable, without signing again`() = runBlocking {
         val retry = ExportRetry()
         downloads.setWritable(false)
-        exportSigned(retry, signed, toDownloads)
+        exportSigned(EnglishStrings.context(), retry, signed, toDownloads)
 
         downloads.setWritable(true)
         val exported = retry.export(retry.unexported!!, toDownloads)

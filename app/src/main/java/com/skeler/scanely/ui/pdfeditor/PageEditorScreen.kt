@@ -102,6 +102,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.IntOffset
@@ -135,6 +136,7 @@ import kotlin.math.roundToInt
 @Composable
 fun PageEditorScreen(startIndex: Int) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val navigator = LocalNavigator.current
     val vm: PageEditorViewModel = hiltViewModel(activity)
@@ -153,7 +155,7 @@ fun PageEditorScreen(startIndex: Int) {
 
     fun noTextHere() {
         scope.launch {
-            snackbarHostState.showSnackbar("No selectable text there — this page may be a scan.")
+            snackbarHostState.showSnackbar(resources.getString(R.string.pe_no_selectable_text))
         }
     }
 
@@ -184,13 +186,13 @@ fun PageEditorScreen(startIndex: Int) {
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         val page = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
             ?.pages?.firstOrNull()?.imageUri ?: return@rememberLauncherForActivityResult
-        decodeBitmap(context, page)?.let { vm.captureSignature(it, "Signature") }
+        decodeBitmap(context, page)?.let { vm.captureSignature(it, resources.getString(R.string.pe_signature)) }
     }
 
     fun captureSignature() {
         if (!DocumentScannerManager.isScannerAvailable(context)) {
             scope.launch {
-                snackbarHostState.showSnackbar("The document scanner isn't available on this device.")
+                snackbarHostState.showSnackbar(resources.getString(R.string.pe_scanner_unavailable))
             }
             return
         }
@@ -205,21 +207,28 @@ fun PageEditorScreen(startIndex: Int) {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Page ${pagerState.currentPage + 1} of ${pageCount.coerceAtLeast(1)}",
+                        text = stringResource(
+                            R.string.pdf_stamp_numbers_format_page_of,
+                            pagerState.currentPage + 1,
+                            pageCount.coerceAtLeast(1)
+                        ),
                         style = MaterialTheme.typography.titleMedium
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 actions = {
                     IconButton(onClick = vm::undo, enabled = state.canUndo) {
-                        Icon(Icons.AutoMirrored.Rounded.Undo, contentDescription = "Undo")
+                        Icon(Icons.AutoMirrored.Rounded.Undo, contentDescription = stringResource(R.string.pe_undo))
                     }
                     IconButton(onClick = vm::redo, enabled = state.canRedo) {
-                        Icon(Icons.AutoMirrored.Rounded.Redo, contentDescription = "Redo")
+                        Icon(Icons.AutoMirrored.Rounded.Redo, contentDescription = stringResource(R.string.pe_redo))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -343,9 +352,9 @@ fun PageEditorScreen(startIndex: Int) {
     pendingText?.let { at ->
         val page = state.pages.getOrNull(pagerState.currentPage)
         TextEntryDialog(
-            title = "Add text",
+            title = stringResource(R.string.pe_add_text),
             initial = "",
-            confirmLabel = "Add",
+            confirmLabel = stringResource(R.string.pe_add),
             onConfirm = { text ->
                 pendingText = null
                 if (page != null) {
@@ -388,7 +397,7 @@ fun PageEditorScreen(startIndex: Int) {
             onRestore = { paywallViewModel.restorePurchase() },
             onConfirmEmail = { paywallViewModel.confirmEmail() },
             onRetry = { paywallViewModel.refresh() },
-            reason = "Signing and editing text are part of Scanly Pro.",
+            reason = stringResource(R.string.pe_paywall_reason_text),
             isFeatureLock = true
         )
     }
@@ -426,15 +435,16 @@ private fun TextStyleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isReplace) "Replace text" else "Insert text") },
+        title = {
+            Text(if (isReplace) stringResource(R.string.pe_replace_text) else stringResource(R.string.pe_insert_text))
+        },
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Text(
                     text = if (target.fontDetected) {
-                        "Matched to ${font.displayName} at ${sizePt.roundToInt()} pt from the " +
-                            "surrounding text."
+                        stringResource(R.string.pe_matched_font, font.displayName, sizePt.roundToInt())
                     } else {
-                        "Too few characters to match a font confidently — check the style below."
+                        stringResource(R.string.pe_font_match_few_chars)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -444,7 +454,15 @@ private fun TextStyleDialog(
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
-                    label = { Text(if (isReplace) "Replacement" else "Text to add") },
+                    label = {
+                        Text(
+                            if (isReplace) {
+                                stringResource(R.string.pe_replacement)
+                            } else {
+                                stringResource(R.string.pe_text_to_add)
+                            }
+                        )
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 2,
                     maxLines = 6
@@ -470,12 +488,9 @@ private fun TextStyleDialog(
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text = if (isReplace) {
-                        "The original is covered and the new text drawn on its baseline. A longer " +
-                            "replacement is condensed to fit the space, then runs on to the margin " +
-                            "— it is never pushed onto the line below."
+                        stringResource(R.string.pe_replace_explainer)
                     } else {
-                        "The line stays as it is — the new words sit on the same baseline beside " +
-                            "it. PDF text can't reflow, so nothing shifts to make room."
+                        stringResource(R.string.pe_insert_explainer)
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -487,10 +502,10 @@ private fun TextStyleDialog(
                 onClick = { onConfirm(text, font, sizePt) },
                 enabled = text.isNotBlank()
             ) {
-                Text(if (isReplace) "Replace" else "Insert")
+                Text(if (isReplace) stringResource(R.string.pe_replace) else stringResource(R.string.pe_insert))
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }
 
@@ -918,11 +933,11 @@ private fun ToolOptionStrip(
                     // where they can be seen next to the words they will apply to.
                     EditorTool.RETYPE -> {
                         ColorRow(state.textColor, onTextColor, TextPalette)
-                        Hint("Drag across the words to replace, or tap for the whole line.")
+                        Hint(stringResource(R.string.pe_hint_replace_tool))
                     }
                     EditorTool.INSERT -> {
                         ColorRow(state.textColor, onTextColor, TextPalette)
-                        Hint("Tap a line where the new words should go.")
+                        Hint(stringResource(R.string.pe_hint_insert_tool))
                     }
                     EditorTool.SIGNATURE -> SignatureRow(
                         state = state,
@@ -933,23 +948,29 @@ private fun ToolOptionStrip(
                     )
                     EditorTool.ERASER -> {
                         WidthSlider(state.eraserRadiusPt, onEraserRadius, ERASER_RANGE)
-                        Hint("Drag to rub out marks you added.")
+                        Hint(stringResource(R.string.pe_hint_eraser))
                     }
                     EditorTool.WHITEOUT -> {
                         ColorRow(state.whiteoutColor, onWhiteoutColor, WhiteoutPalette)
                         WidthSlider(state.whiteoutWidthPt, onWhiteoutWidth, WHITEOUT_RANGE)
-                        Hint("Covers the page — it hides text, it does not remove it.")
+                        Hint(stringResource(R.string.pe_hint_whiteout))
                     }
-                    null -> Hint("Pick a tool. It stays on until you tap it again.")
+                    null -> Hint(stringResource(R.string.pe_hint_pick_tool))
                 }
             }
         }
 
         IconButton(onClick = onPrevious, enabled = canGoBack) {
-            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowLeft, contentDescription = "Previous page")
+            Icon(
+                Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                contentDescription = stringResource(R.string.pe_previous_page)
+            )
         }
         IconButton(onClick = onNext, enabled = canGoForward) {
-            Icon(Icons.AutoMirrored.Rounded.KeyboardArrowRight, contentDescription = "Next page")
+            Icon(
+                Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                contentDescription = stringResource(R.string.pe_next_page)
+            )
         }
     }
 }
@@ -999,7 +1020,7 @@ private fun WidthSlider(
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = "${width.roundToInt()} pt",
+            text = stringResource(R.string.pe_width_pt, width.roundToInt()),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -1026,12 +1047,14 @@ private fun ShapeRow(selected: ShapeKind, onSelect: (ShapeKind) -> Unit) {
 }
 
 private val ShapeKind.label: String
-    get() = when (this) {
-        ShapeKind.RECTANGLE -> "Box"
-        ShapeKind.ELLIPSE -> "Oval"
-        ShapeKind.LINE -> "Line"
-        ShapeKind.ARROW -> "Arrow"
-    }
+    @Composable get() = stringResource(
+        when (this) {
+            ShapeKind.RECTANGLE -> R.string.pe_shape_box
+            ShapeKind.ELLIPSE -> R.string.pe_shape_oval
+            ShapeKind.LINE -> R.string.pe_shape_line
+            ShapeKind.ARROW -> R.string.pe_shape_arrow
+        }
+    )
 
 @Composable
 private fun LineStyleRow(selected: LineStyle, onSelect: (LineStyle) -> Unit) {
@@ -1043,9 +1066,9 @@ private fun LineStyleRow(selected: LineStyle, onSelect: (LineStyle) -> Unit) {
                 label = {
                     Text(
                         when (style) {
-                            LineStyle.SOLID -> "Solid"
-                            LineStyle.SQUIGGLY -> "Squiggly"
-                            LineStyle.STRIKETHROUGH -> "Strike"
+                            LineStyle.SOLID -> stringResource(R.string.pe_line_solid)
+                            LineStyle.SQUIGGLY -> stringResource(R.string.pe_line_squiggly)
+                            LineStyle.STRIKETHROUGH -> stringResource(R.string.pe_line_strike)
                         }
                     )
                 }
@@ -1073,7 +1096,7 @@ private fun SizeStepper(size: Float, onSize: (Float) -> Unit) {
         IconButton(onClick = { onSize((size - 1f).coerceAtLeast(6f)) }) {
             Text("-", style = MaterialTheme.typography.titleMedium)
         }
-        Text("${size.roundToInt()} pt", style = MaterialTheme.typography.labelMedium)
+        Text(stringResource(R.string.pe_width_pt, size.roundToInt()), style = MaterialTheme.typography.labelMedium)
         IconButton(onClick = { onSize((size + 1f).coerceAtMost(72f)) }) {
             Text("+", style = MaterialTheme.typography.titleMedium)
         }
@@ -1100,7 +1123,7 @@ private fun SignatureRow(
                 .clickable(onClick = onCapture),
             contentAlignment = Alignment.Center
         ) {
-            Icon(Icons.Rounded.Add, contentDescription = "Capture a signature")
+            Icon(Icons.Rounded.Add, contentDescription = stringResource(R.string.pe_capture_signature))
         }
         Box(
             modifier = Modifier
@@ -1141,7 +1164,7 @@ private fun SignatureRow(
                 if (isActive) {
                     Icon(
                         imageVector = Icons.Rounded.Close,
-                        contentDescription = "Delete signature",
+                        contentDescription = stringResource(R.string.pe_delete_signature),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier
                             .align(Alignment.TopEnd)
@@ -1154,7 +1177,7 @@ private fun SignatureRow(
 
         if (state.activeSignatureId != null) {
             Text(
-                text = "Tap the page to place it.",
+                text = stringResource(R.string.pe_tap_to_place_signature),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

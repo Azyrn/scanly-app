@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- PDF to JPG -->
+    <string name="pdf_tool_jpg_mode_pages">ページをJPGに</string>
+    <string name="pdf_tool_jpg_mode_pages_body">各ページが1枚の画像になります。</string>
+    <string name="pdf_tool_jpg_mode_extract">画像を抽出</string>
+    <string name="pdf_tool_jpg_mode_extract_body">PDF内の写真や画像を、元の画質のまま保存します。</string>
+    <string name="pdf_tool_jpg_quality">画質</string>
+    <string name="pdf_tool_jpg_quality_normal">標準 · 150 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">高 · 300 dpi</string>
+    <string name="pdf_tool_jpg_action_pages">JPGに変換</string>
+    <string name="pdf_tool_jpg_action_extract">画像を抽出</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">Scanly がエクスポートできない形式の画像 %d 件はスキップされました</item>
+        <item quantity="other">Scanly がエクスポートできない形式の画像 %d 件はスキップされました</item>
+    </plurals>
+
+    <!-- Image to PDF -->
+    <string name="pdf_tool_img2pdf_body">表示された順序で、1ページに1枚ずつ画像を配置します。</string>
+    <string name="pdf_tool_img2pdf_page_size">ページサイズ</string>
+    <string name="pdf_tool_img2pdf_size_fit">画像に合わせる</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">レター</string>
+    <string name="pdf_tool_img2pdf_orientation">向き</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">自動</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">縦</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">横</string>
+    <string name="pdf_tool_img2pdf_margin">余白</string>
+    <string name="pdf_tool_img2pdf_margin_none">なし</string>
+    <string name="pdf_tool_img2pdf_margin_small">小</string>
+    <string name="pdf_tool_img2pdf_margin_big">大</string>
+    <string name="pdf_tool_img2pdf_action">PDFを作成</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">画像として読み取れなかったファイル %d 件は除外されました</item>
+        <item quantity="other">画像として読み取れなかったファイル %d 件は除外されました</item>
+    </plurals>
+</resources>

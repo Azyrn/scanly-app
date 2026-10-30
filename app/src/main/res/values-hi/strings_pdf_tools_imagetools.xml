@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d फ़ाइल पढ़ी नहीं जा सकी और छोड़ दी गई।</item>
+        <item quantity="other">%d फ़ाइलें पढ़ी नहीं जा सकीं और छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d तस्वीर पहले से ही सबसे छोटी थी, इसलिए वह नहीं बदली गई।</item>
+        <item quantity="other">%d तस्वीरें पहले से ही सबसे छोटी थीं, इसलिए वे नहीं बदली गईं।</item>
+    </plurals>
+    <string name="pdf_tool_img_compress_recommended">सुझाया गया</string>
+    <string name="pdf_tool_img_compress_recommended_body">काफ़ी छोटी हो जाती है, फिर भी वैसी ही दिखती है।</string>
+    <string name="pdf_tool_img_compress_strong">ज़्यादा</string>
+    <string name="pdf_tool_img_compress_strong_body">सबसे छोटी फ़ाइलें। बारीक डिटेल थोड़ी धुंधली हो सकती है।</string>
+    <string name="pdf_tool_img_compress_light">हल्का</string>
+    <string name="pdf_tool_img_compress_light_body">सबसे अच्छी क्वालिटी, पर बचत कम।</string>
+    <string name="pdf_tool_img_png_to_jpg">छोटी फ़ाइल के लिए PNG को JPG में बदलें</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNG से बस छिपी हुई डिटेल खो सकती है। पारदर्शी हिस्से सफ़ेद हो जाते हैं।</string>
+    <string name="pdf_tool_img_compress_action">तस्वीरें कंप्रेस करें</string>
+    <string name="pdf_tool_img_to_jpg_body">हर तस्वीर JPG बन जाती है। पारदर्शी हिस्से सफ़ेद हो जाते हैं; GIF का सिर्फ़ पहला फ़्रेम रहता है।</string>
+    <string name="pdf_tool_img_to_jpg_action">JPG में बदलें</string>
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">पिक्सल हूबहू वैसे ही, पर फ़ाइलें बड़ी।</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">क्वालिटी वैसी ही, आम तौर पर JPG से छोटी।</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 रंग। ग्राफ़िक्स के लिए अच्छा, फ़ोटो में धारियाँ दिख सकती हैं।</string>
+    <string name="pdf_tool_img_from_jpg_action">तस्वीरें बदलें</string>
+    <string name="pdf_tool_img_resize_by_percent">प्रतिशत के हिसाब से</string>
+    <string name="pdf_tool_img_resize_by_size">साइज़ के हिसाब से</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">अधिकतम चौड़ाई (px)</string>
+    <string name="pdf_tool_img_resize_height">अधिकतम ऊँचाई (px)</string>
+    <string name="pdf_tool_img_resize_size_hint">चौड़ाई, ऊँचाई, या दोनों डालें।</string>
+    <string name="pdf_tool_img_resize_size_invalid">1 से %d के बीच की संख्या डालें।</string>
+    <string name="pdf_tool_img_resize_keep_aspect">अनुपात बनाए रखें</string>
+    <string name="pdf_tool_img_resize_no_enlarge">तस्वीरें बड़ी न करें</string>
+    <string name="pdf_tool_img_resize_action">तस्वीरों का साइज़ बदलें</string>
+</resources>

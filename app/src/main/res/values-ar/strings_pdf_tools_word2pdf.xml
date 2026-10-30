@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">يحوّل المستند على هاتفك. لا يمكن عرض الرسوم البيانية ومربعات النصوص والمعادلات بعد، لذا تُستبعد.</string>
+    <string name="pdf_tool_word_to_pdf_action">تحويل إلى PDF</string>
+
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="zero">تم استبعاد %d مخطط.</item>
+        <item quantity="one">تم استبعاد %d مخطط.</item>
+        <item quantity="two">تم استبعاد %d مخططين.</item>
+        <item quantity="few">تم استبعاد %d مخططات.</item>
+        <item quantity="many">تم استبعاد %d مخططًا.</item>
+        <item quantity="other">تم استبعاد %d مخطط.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="zero">تم استبعاد %d مخطط SmartArt.</item>
+        <item quantity="one">تم استبعاد %d مخطط SmartArt.</item>
+        <item quantity="two">تم استبعاد %d مخططي SmartArt.</item>
+        <item quantity="few">تم استبعاد %d مخططات SmartArt.</item>
+        <item quantity="many">تم استبعاد %d مخططًا من SmartArt.</item>
+        <item quantity="other">تم استبعاد %d مخطط SmartArt.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="zero">تم استبعاد %d مربع نص أو شكل.</item>
+        <item quantity="one">تم استبعاد %d مربع نص أو شكل.</item>
+        <item quantity="two">تم استبعاد %d مربعي نص أو شكلين.</item>
+        <item quantity="few">تم استبعاد %d مربعات نص أو أشكال.</item>
+        <item quantity="many">تم استبعاد %d مربعًا نصيًا أو شكلًا.</item>
+        <item quantity="other">تم استبعاد %d مربع نص أو شكل.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="zero">تم استبعاد %d معادلة.</item>
+        <item quantity="one">تم استبعاد %d معادلة.</item>
+        <item quantity="two">تم استبعاد %d معادلتين.</item>
+        <item quantity="few">تم استبعاد %d معادلات.</item>
+        <item quantity="many">تم استبعاد %d معادلة.</item>
+        <item quantity="other">تم استبعاد %d معادلة.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="zero">تم استبعاد %d كائن مضمّن.</item>
+        <item quantity="one">تم استبعاد %d كائن مضمّن.</item>
+        <item quantity="two">تم استبعاد %d كائنين مضمّنين.</item>
+        <item quantity="few">تم استبعاد %d كائنات مضمّنة.</item>
+        <item quantity="many">تم استبعاد %d كائنًا مضمّنًا.</item>
+        <item quantity="other">تم استبعاد %d كائن مضمّن.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="zero">%d صورة بصيغة لا يمكن عرضها، وتم استبعادها.</item>
+        <item quantity="one">%d صورة بصيغة لا يمكن عرضها، وتم استبعادها.</item>
+        <item quantity="two">%d صورتان بصيغة لا يمكن عرضهما، وتم استبعادهما.</item>
+        <item quantity="few">%d صور بصيغ لا يمكن عرضها، وتم استبعادها.</item>
+        <item quantity="many">%d صورةً بصيغة لا يمكن عرضها، وتم استبعادها.</item>
+        <item quantity="other">%d صورة بصيغة لا يمكن عرضها، وتم استبعادها.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="zero">%d صف في جدول كان أطول من الصفحة، وتم قطعه.</item>
+        <item quantity="one">%d صف في جدول كان أطول من الصفحة، وتم قطعه.</item>
+        <item quantity="two">%d صفّان في جدول كانا أطول من الصفحة، وتم قطعهما.</item>
+        <item quantity="few">%d صفوف في جدول كانت أطول من الصفحة، وتم قطعها.</item>
+        <item quantity="many">%d صفًا في جدول كان أطول من الصفحة، وتم قطعه.</item>
+        <item quantity="other">%d صف في جدول كان أطول من الصفحة، وتم قطعه.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="zero">تم تحويل أول %d صفحة فقط.</item>
+        <item quantity="one">تم تحويل %d صفحة فقط.</item>
+        <item quantity="two">تم تحويل أول %d صفحتين فقط.</item>
+        <item quantity="few">تم تحويل أول %d صفحات فقط.</item>
+        <item quantity="many">تم تحويل أول %d صفحة فقط.</item>
+        <item quantity="other">تم تحويل أول %d صفحة فقط.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">تم استبدال بعض الخطوط بخطوط مشابهة.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">تم استبعاد الترويسات والتذييلات.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">تم استبعاد الحواشي.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">تم عرض النص المكتوب بأعمدة كعمود واحد.</string>
+</resources>

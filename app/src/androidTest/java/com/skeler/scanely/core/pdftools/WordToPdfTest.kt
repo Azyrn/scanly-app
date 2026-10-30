@@ -42,7 +42,7 @@ class WordToPdfTest {
     private val dir = File(context.cacheDir, "word-to-pdf-test").apply { mkdirs() }
 
     private val workspace = ToolWorkspace(context)
-    private val job = DocxToPdfJob(workspace)
+    private val job = DocxToPdfJob(context, workspace)
     private val reader = PdfPageReader(context)
 
     @After
@@ -63,7 +63,8 @@ class WordToPdfTest {
         for (expected in listOf("Quarterly report", "Bold words", "First bullet", "Second bullet", "B2", "C3")) {
             assertTrue("page 1 is missing \"$expected\": $first", first.contains(expected))
         }
-        assertTrue(reader.plainText(output.file, 1).orEmpty().contains("After the break"))
+        val second = reader.plainText(output.file, 1).orEmpty()
+        assertTrue("page 2 is missing \"After the break\": $second", second.contains("After the break"))
         assertTrue(
             "the chart note is missing: ${result.notes}",
             ToolNote(R.plurals.pdf_tool_word_to_pdf_note_charts, 1, plural = true) in result.notes
@@ -87,7 +88,8 @@ class WordToPdfTest {
 
         val file = result.outputs.single().file
         assertEquals(pages, reader.pageCount(file))
-        assertTrue(reader.plainText(file, pages - 1).orEmpty().contains("Page marker $pages"))
+        val last = reader.plainText(file, pages - 1).orEmpty()
+        assertTrue("the last page is missing \"Page marker $pages\": $last", last.contains("Page marker $pages"))
     }
 
     @Test
@@ -137,7 +139,7 @@ class WordToPdfTest {
 
         assertEquals(
             ToolFailure.LowStorage,
-            failureOf { DocxToPdfJob(full).convert(input(docx("report.docx", REPORT_BODY), run)) }
+            failureOf { DocxToPdfJob(context, full).convert(input(docx("report.docx", REPORT_BODY), run)) }
         )
         assertRunEmpty(run)
     }

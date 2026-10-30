@@ -4,6 +4,7 @@ import com.skeler.scanely.auth.domain.model.AuthUser
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.di.GenerativeAiModule
 import com.skeler.scanely.core.di.NetworkModule
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -53,7 +54,7 @@ class EntitlementStallTest {
         )
 
         val started = System.nanoTime()
-        val repository = EntitlementRepository(api, auth) // signing in starts the first fetch
+        val repository = EntitlementRepository(EnglishStrings.context(), api, auth) // signing in starts the first fetch
         while (repository.status.value.error == null) Thread.sleep(50)
         val seconds = (System.nanoTime() - started) / 1e9
 

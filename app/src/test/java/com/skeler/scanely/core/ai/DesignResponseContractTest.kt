@@ -2,6 +2,7 @@ package com.skeler.scanely.core.ai
 
 import com.skeler.scanely.core.network.DesignRequest
 import com.skeler.scanely.core.network.ScanlyApi
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import okhttp3.Headers
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -19,7 +20,7 @@ class DesignResponseContractTest {
         // The app locale travels with every design: it labels asked fields and sets the digit style.
         `when`(api.design(DesignRequest("invoice", locale = java.util.Locale.getDefault().toLanguageTag()), "action-key"))
             .thenReturn(Response.success(bytes.toResponseBody(), headers))
-        val result = BackendClient(api).design("invoice", null, null, null, null, "action-key")
+        val result = BackendClient(EnglishStrings.context(), api).design("invoice", null, null, null, null, "action-key")
         assertArrayEquals(bytes, result.pdf)
         assertEquals("owned-id", result.designId)
         assertEquals(3, result.pagesBilled)
@@ -28,7 +29,7 @@ class DesignResponseContractTest {
     @Test fun `an in flight design polls the same operation until its PDF arrives`() = runBlocking {
         // Exact error shape from worker/src/idempotency.ts.
         var calls = 0
-        val response = awaitDesignResponse(pollDelayMs = 0) {
+        val response = awaitDesignResponse(EnglishStrings.context(), pollDelayMs = 0) {
             if (++calls == 1) Response.error(400,
                 """{"error":{"code":"bad_request","message":"This scan is already being processed. Check your history in a moment.","reason":"duplicate_request"}}""".toResponseBody())
             else Response.success("%PDF-fixture".toResponseBody())
@@ -51,7 +52,7 @@ class DesignResponseContractTest {
             else Response.success("%PDF-job".toByteArray().toResponseBody(), pdf)
         }
         val announced = mutableListOf<String>()
-        val client = BackendClient(api)
+        val client = BackendClient(EnglishStrings.context(), api)
         val result = kotlinx.coroutines.withTimeout(60_000) {
             client.design("rebuild", null, null, null, "doc", "key", onBackground = { announced += it })
         }
@@ -64,14 +65,14 @@ class DesignResponseContractTest {
     @Test fun `a failed background job is final and carries the server's not-charged word`() = runBlocking {
         val failed = """{"error":{"code":"provider_error","message":"The designer took too long. Try again.","notCharged":true}}"""
         val error = try {
-            awaitDesignJob(300, pollDelayMs = 0) { Response.error(502, failed.toResponseBody()) }
+            awaitDesignJob(EnglishStrings.context(), 300, pollDelayMs = 0) { Response.error(502, failed.toResponseBody()) }
             null
         } catch (e: FatalAiException) { e.result }
         assertEquals("provider_error", error!!.code)
         assertTrue(error.notCharged)
         // A failure the server did not vouch for says nothing about billing.
         val silent = try {
-            awaitDesignJob(300, pollDelayMs = 0) { Response.error(500, "{}".toResponseBody()) }
+            awaitDesignJob(EnglishStrings.context(), 300, pollDelayMs = 0) { Response.error(500, "{}".toResponseBody()) }
             null
         } catch (e: FatalAiException) { e.result }
         assertFalse(silent!!.notCharged)
@@ -94,7 +95,7 @@ class DesignResponseContractTest {
         val pdf = Headers.headersOf("Content-Type", "application/pdf", "X-Design-Id", "job-2", "X-Usage-Pages", "2")
         `when`(api.designJob("job-2")).thenReturn(Response.success("%PDF-chat".toByteArray().toResponseBody(), pdf))
         val steps = mutableListOf<String>()
-        val result = BackendClient(api).design(
+        val result = BackendClient(EnglishStrings.context(), api).design(
             "invoice", null, null, null, null, "key", chat = true, onStep = { id, _ -> steps += id }
         )
         assertEquals(listOf("planning", "writing"), steps)
@@ -126,7 +127,7 @@ class DesignResponseContractTest {
         }
         val steps = mutableListOf<String>()
         val result = kotlinx.coroutines.withTimeout(60_000) {
-            BackendClient(api).design("invoice", null, null, null, null, "key", chat = true, onStep = { id, _ -> steps += id })
+            BackendClient(EnglishStrings.context(), api).design("invoice", null, null, null, null, "key", chat = true, onStep = { id, _ -> steps += id })
         }
         assertEquals(listOf("planning", "building"), steps)
         assertEquals("job-3", result.designId)

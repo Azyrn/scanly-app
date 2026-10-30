@@ -40,10 +40,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.skeler.scanely.R
 import com.skeler.scanely.core.common.LocalDarkMode
 import com.skeler.scanely.core.common.LocalSettings
 import com.skeler.scanely.navigation.LocalNavigator
@@ -55,6 +57,7 @@ import com.skeler.scanely.ui.components.PaletteChip
 import com.skeler.scanely.ui.components.SettingSwitchTile
 import com.skeler.scanely.ui.components.SettingsSectionHeader
 import com.skeler.scanely.ui.components.illustrations.PaletteShowcase
+import com.skeler.scanely.ui.theme.SeedColor
 import com.skeler.scanely.ui.theme.SeedPalettes
 
 @Composable
@@ -70,18 +73,21 @@ fun LookAndFeelScreen(
     val isDark = LocalDarkMode.current
 
     val selectedName = when {
-        useDynamicColors -> "Wallpaper colors"
-        else -> SeedPalettes.ALL.getOrElse(seedColorIndex) { SeedPalettes.DEFAULT }.name
+        useDynamicColors -> stringResource(R.string.set_palette_wallpaper)
+        else -> SeedPalettes.ALL.getOrElse(seedColorIndex) { SeedPalettes.DEFAULT }.localizedName()
     }
 
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
             TopAppBar(
-                title = { Text("Look & Feel", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.set_look_and_feel_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -128,7 +134,7 @@ fun LookAndFeelScreen(
                     Spacer(modifier = Modifier.height(6.dp))
 
                     Text(
-                        text = "Pick a palette to recolor the whole app",
+                        text = stringResource(R.string.set_palette_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center,
@@ -141,7 +147,7 @@ fun LookAndFeelScreen(
 
             item {
                 SettingsSectionHeader(
-                    text = "Color palette",
+                    text = stringResource(R.string.set_section_color_palette),
                     modifier = Modifier.padding(horizontal = 32.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -153,7 +159,7 @@ fun LookAndFeelScreen(
                 ) {
                     item(key = "dynamic") {
                         PaletteChip(
-                            label = "Dynamic",
+                            label = stringResource(R.string.set_palette_dynamic),
                             isSelected = useDynamicColors,
                             onClick = {
                                 settingsViewModel.setBoolean(SettingsKeys.USE_DYNAMIC_COLORS, true)
@@ -165,7 +171,7 @@ fun LookAndFeelScreen(
                         key = { _, seedColor -> seedColor.name }
                     ) { index, seedColor ->
                         PaletteChip(
-                            label = seedColor.name,
+                            label = seedColor.localizedName(),
                             dotColor = Color(seedColor.primary),
                             dotBrush = if (seedColor.monochrome) BlackWhiteDot else null,
                             isSelected = !useDynamicColors && seedColorIndex == index,
@@ -182,14 +188,14 @@ fun LookAndFeelScreen(
 
             item {
                 SettingsSectionHeader(
-                    text = "Personalize",
+                    text = stringResource(R.string.set_section_personalize),
                     modifier = Modifier.padding(horizontal = 32.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
                     SettingSwitchTile(
-                        title = "Dark theme",
-                        subtitle = if (isDark) "On" else "Off",
+                        title = stringResource(R.string.set_dark_theme),
+                        subtitle = if (isDark) stringResource(R.string.set_on) else stringResource(R.string.set_off),
                         icon = Icons.Rounded.DarkMode,
                         checked = isDark,
                         position = GroupPosition.Top,
@@ -204,8 +210,8 @@ fun LookAndFeelScreen(
                     )
 
                     SettingSwitchTile(
-                        title = "Pure Black M3",
-                        subtitle = "Save battery on OLED displays",
+                        title = stringResource(R.string.set_pure_black_title),
+                        subtitle = stringResource(R.string.set_pure_black_subtitle),
                         icon = Icons.Rounded.Contrast,
                         checked = isOledMode,
                         position = GroupPosition.Bottom,
@@ -217,6 +223,18 @@ fun LookAndFeelScreen(
             }
         }
     }
+}
+
+@Composable
+private fun SeedColor.localizedName(): String = when (this) {
+    SeedPalettes.CeruleanWave -> stringResource(R.string.set_palette_cerulean_wave)
+    SeedPalettes.LavenderVolt -> stringResource(R.string.set_palette_lavender_volt)
+    SeedPalettes.AmethystHaze -> stringResource(R.string.set_palette_amethyst_haze)
+    SeedPalettes.EmeraldGrove -> stringResource(R.string.set_palette_emerald_grove)
+    SeedPalettes.SunsetCoral -> stringResource(R.string.set_palette_sunset_coral)
+    SeedPalettes.RoseBlush -> stringResource(R.string.set_palette_rose_blush)
+    SeedPalettes.Monochrome -> stringResource(R.string.set_palette_monochrome)
+    else -> name
 }
 
 private val BlackWhiteDot = Brush.linearGradient(

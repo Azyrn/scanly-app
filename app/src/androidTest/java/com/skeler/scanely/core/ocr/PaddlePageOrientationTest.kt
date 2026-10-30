@@ -63,6 +63,7 @@ class PaddlePageOrientationTest {
     }
 
     private fun service() = PaddleOcrService(
+        context,
         engine,
         FakeSettings(ScriptPack.ARABIC),
         PdfRendererHelper(context)

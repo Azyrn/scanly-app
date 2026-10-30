@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
+<resources>
+    <string name="pdf_tool_ppt2pdf_action">PDFに変換</string>
+    <string name="pdf_tool_ppt2pdf_shapes">一部の図形は簡略化されました。</string>
+    <string name="pdf_tool_ppt2pdf_fonts">一部のフォントは近いフォントに置き換えられました。</string>
+    <plurals name="pdf_tool_ppt2pdf_charts">
+        <item quantity="one">グラフ %d 件は除外されました。</item>
+        <item quantity="other">グラフ %d 件は除外されました。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_diagrams">
+        <item quantity="one">SmartArt %d 件は除外されました。</item>
+        <item quantity="other">SmartArt %d 件は除外されました。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_objects">
+        <item quantity="one">埋め込みオブジェクト %d 件は除外されました。</item>
+        <item quantity="other">埋め込みオブジェクト %d 件は除外されました。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_media">
+        <item quantity="one">動画や音声 %d 件は PDF では再生できないため、プレビュー画像のみ表示されます。</item>
+        <item quantity="other">動画や音声 %d 件は PDF では再生できないため、プレビュー画像のみ表示されます。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_images">
+        <item quantity="one">画像 %d 件を表示できませんでした。</item>
+        <item quantity="other">画像 %d 件を表示できませんでした。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_hidden">
+        <item quantity="one">非表示のスライド %d 枚をスキップしました。</item>
+        <item quantity="other">非表示のスライド %d 枚をスキップしました。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_unreadable">
+        <item quantity="one">読み取れなかったスライド %d 枚は除外されました。</item>
+        <item quantity="other">読み取れなかったスライド %d 枚は除外されました。</item>
+    </plurals>
+    <plurals name="pdf_tool_ppt2pdf_truncated">
+        <item quantity="one">最初の %d 枚のスライドのみ変換されました。</item>
+        <item quantity="other">最初の %d 枚のスライドのみ変換されました。</item>
+    </plurals>
+</resources>

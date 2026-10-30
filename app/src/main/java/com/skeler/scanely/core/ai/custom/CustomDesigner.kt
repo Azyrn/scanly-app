@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.ai.custom
 
+import android.content.Context
 import com.skeler.scanely.core.ai.AiEvent
 import com.skeler.scanely.core.ai.AiStage
 import com.skeler.scanely.core.ai.DesignBytes
@@ -11,6 +12,7 @@ import com.skeler.scanely.core.network.DesignCompileRequest
 import com.skeler.scanely.core.network.DesignPromptRequest
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.TolerantJson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import retrofit2.Response
@@ -33,6 +35,7 @@ import javax.inject.Singleton
  */
 @Singleton
 internal class CustomDesigner @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val api: ScanlyApi,
     private val scanner: CustomScanner
 ) {
@@ -144,7 +147,7 @@ internal class CustomDesigner @Inject constructor(
         val prompts = try {
             api.designPrompt(request)
         } catch (e: HttpException) {
-            throw e.toAiException()
+            throw e.toAiException(context)
         }
 
         return when (val result = scanner.writeTypst(prompts.system, prompts.user, config)) {
@@ -169,7 +172,7 @@ internal class CustomDesigner @Inject constructor(
         designId: String?
     ): CompileOutcome {
         val key = UUID.randomUUID().toString()
-        val response = awaitDesignResponse {
+        val response = awaitDesignResponse(context) {
             api.designCompile(DesignCompileRequest(source, prompt, photo, designId), key)
         }
 

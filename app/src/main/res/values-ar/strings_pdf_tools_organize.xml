@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Merge -->
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="zero">%d ملف</item>
+        <item quantity="one">%d ملف</item>
+        <item quantity="two">%d ملفان</item>
+        <item quantity="few">%d ملفات</item>
+        <item quantity="many">%d ملفًا</item>
+        <item quantity="other">%d ملف</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · المجموع %2$s</string>
+    <string name="pdf_tool_merge_body">تُدمج الملفات بالترتيب المدرج أعلاه. النسخة المدمجة لا تحمل كلمة مرور، حتى لو كان لبعض الملفات كلمة مرور.</string>
+    <string name="pdf_tool_merge_need_more">أضِف ملف PDF آخر واحدًا على الأقل للدمج.</string>
+    <string name="pdf_tool_merge_action">دمج</string>
+
+    <!-- Split: modes -->
+    <string name="pdf_tool_split_mode_ranges">تقسيم حسب النطاقات</string>
+    <string name="pdf_tool_split_mode_ranges_body">ملف جديد لكل نطاق تكتبه</string>
+    <string name="pdf_tool_split_mode_every">تقسيم كل عدد من الصفحات</string>
+    <string name="pdf_tool_split_mode_every_body">ملف جديد لكل عدد محدد من الصفحات</string>
+    <string name="pdf_tool_split_mode_extract">استخراج صفحات</string>
+    <string name="pdf_tool_split_mode_extract_body">الصفحات التي تختارها، معًا في ملف واحد</string>
+    <string name="pdf_tool_split_mode_delete">حذف صفحات</string>
+    <string name="pdf_tool_split_mode_delete_body">نسخة بدون الصفحات التي تختارها</string>
+    <string name="pdf_tool_split_mode_size">تقسيم حسب حجم الملف</string>
+    <string name="pdf_tool_split_mode_size_body">ملفات لا تتجاوز الحجم الذي حددته</string>
+
+    <!-- Split: fields -->
+    <string name="pdf_tool_split_ranges_label">الصفحات</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">مثال: 1-3، 5، 8-10</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">اكتب الصفحات التي تريدها، مثلًا: 1-3، 5</string>
+    <string name="pdf_tool_split_range_syntax">«%1$s» ليس صفحة ولا نطاقًا</string>
+    <string name="pdf_tool_split_range_out">«%1$s» خارج الصفحات من 1 إلى %2$d</string>
+    <string name="pdf_tool_split_range_reversed">«%1$s» بالترتيب المعكوس؛ اكتب الصفحة الأصغر أولًا</string>
+    <string name="pdf_tool_split_delete_all">هذه كل الصفحات. أبقِ صفحة واحدة على الأقل.</string>
+    <string name="pdf_tool_split_every_label">عدد الصفحات لكل ملف</string>
+    <string name="pdf_tool_split_every_invalid">أدخل رقمًا من 1 إلى %1$d</string>
+    <string name="pdf_tool_split_every_less">صفحات أقل لكل ملف</string>
+    <string name="pdf_tool_split_every_more">صفحات أكثر لكل ملف</string>
+    <string name="pdf_tool_split_size_label">أكبر حجم للملف (ميغابايت)</string>
+    <string name="pdf_tool_split_size_invalid">أدخل حجمًا أكبر من 0 ميغابايت</string>
+    <string name="pdf_tool_split_size_body">تبقى الصفحات كاملة، فالصفحة الواحدة الأكبر من هذا الحجم تحصل على ملف خاص بها.</string>
+    <string name="pdf_tool_split_locked">هذا الملف محمي بكلمة مرور، والملفات الجديدة تحتفظ بها.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="zero">ينتج %d ملف</item>
+        <item quantity="one">ينتج %d ملف</item>
+        <item quantity="two">ينتج %d ملفين</item>
+        <item quantity="few">ينتج %d ملفات</item>
+        <item quantity="many">ينتج %d ملفًا</item>
+        <item quantity="other">ينتج %d ملف</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="zero">يحتفظ بـ %d صفحة</item>
+        <item quantity="one">يحتفظ بـ %d صفحة</item>
+        <item quantity="two">يحتفظ بـ %d صفحتين</item>
+        <item quantity="few">يحتفظ بـ %d صفحات</item>
+        <item quantity="many">يحتفظ بـ %d صفحة</item>
+        <item quantity="other">يحتفظ بـ %d صفحة</item>
+    </plurals>
+
+    <!-- Split: actions -->
+    <string name="pdf_tool_split_action">تقسيم</string>
+    <string name="pdf_tool_split_extract_action">استخراج صفحات</string>
+    <string name="pdf_tool_split_delete_action">حذف صفحات</string>
+
+    <!-- Split: result notes -->
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="zero">%d صفحة تتجاوز حد الحجم وحدها، لذا تحصل على ملف خاص بها.</item>
+        <item quantity="one">%d صفحة تتجاوز حد الحجم وحدها، لذا تحصل على ملف خاص بها.</item>
+        <item quantity="two">%d صفحتان تتجاوزان حد الحجم وحدهما، لذا تحصل كل منهما على ملف خاص بها.</item>
+        <item quantity="few">%d صفحات تتجاوز حد الحجم وحدها، لذا تحصل كل منها على ملف خاص بها.</item>
+        <item quantity="many">%d صفحةً تتجاوز حد الحجم وحدها، لذا تحصل كل منها على ملف خاص بها.</item>
+        <item quantity="other">%d صفحة تتجاوز حد الحجم وحدها، لذا تحصل على ملف خاص بها.</item>
+    </plurals>
+</resources>

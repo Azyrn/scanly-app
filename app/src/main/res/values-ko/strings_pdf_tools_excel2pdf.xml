@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="excel2pdf_options_body">보이는 시트는 모두 통합 문서의 순서대로 PDF 페이지가 돼요. 넓은 시트는 다음 페이지로 이어져요.</string>
+    <string name="excel2pdf_convert">PDF로 변환</string>
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">숨겨진 시트 %d개는 제외됐어요.</item>
+        <item quantity="other">숨겨진 시트 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">차트 %d개는 제외됐어요.</item>
+        <item quantity="other">차트 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">사진 %d장은 제외됐어요.</item>
+        <item quantity="other">사진 %d장은 제외됐어요.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">수식은 마지막으로 저장된 결과를 보여줘요.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">저장된 결과가 없는 수식 %d개는 비어 있어요.</item>
+        <item quantity="other">저장된 결과가 없는 수식 %d개는 비어 있어요.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">조건부 서식은 적용되지 않았어요.</string>
+    <string name="excel2pdf_note_pivots">피벗 테이블은 마지막으로 저장된 값을 보여줘요.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">매우 큰 시트는 %d행에서 잘렸어요.</item>
+        <item quantity="other">매우 큰 시트는 %d행에서 잘렸어요.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">PDF는 %d페이지까지만 만들어지고 나머지는 제외됐어요.</item>
+        <item quantity="other">PDF는 %d페이지까지만 만들어지고 나머지는 제외됐어요.</item>
+    </plurals>
+</resources>

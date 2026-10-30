@@ -17,7 +17,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 
 @Composable
 fun LanguageChipRow(
@@ -51,7 +53,7 @@ fun LanguageChipRow(
         FilterChip(
             selected = currentLanguage == null && !structuredView,
             onClick = onSelectOriginal,
-            label = { Text("Original") }
+            label = { Text(stringResource(R.string.cmp_chip_original)) }
         )
 
         if (showMarkdown) {
@@ -83,7 +85,7 @@ fun LanguageChipRow(
                 FilterChip(
                     selected = false,
                     onClick = onShowLanguageMenu,
-                    label = { Text("Translate") }
+                    label = { Text(stringResource(R.string.cmp_chip_translate)) }
                 )
 
                 DropdownMenu(
@@ -109,7 +111,7 @@ fun LanguageChipRow(
                     modifier = Modifier.size(18.dp)
                 )
             },
-            label = { Text("Text to PDF") }
+            label = { Text(stringResource(R.string.cmp_chip_text_to_pdf)) }
         )
     }
 }

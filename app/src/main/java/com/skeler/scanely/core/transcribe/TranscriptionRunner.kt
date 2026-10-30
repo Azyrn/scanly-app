@@ -1,6 +1,8 @@
 package com.skeler.scanely.core.transcribe
 
+import android.content.Context
 import android.net.Uri
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiEvent
 import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ai.AiStage
@@ -8,6 +10,7 @@ import com.skeler.scanely.core.ai.GenerativeAiService
 import com.skeler.scanely.core.ai.TranscriptionResult
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.network.TranscriptDto
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +35,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class TranscriptionRunner @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val preparer: AudioPreparer,
     private val service: GenerativeAiService,
     private val store: TranscriptStore,
@@ -153,9 +157,7 @@ class TranscriptionRunner @Inject constructor(
             entitlements.refresh()
             _state.value = State.SaveFailed(
                 AiResult.Error(
-                    "Your transcript is ready but couldn't be saved on this device " +
-                        "(${e.message ?: e.javaClass.simpleName}). Free some space and tap Save again — " +
-                        "you will not be charged again."
+                    context.getString(R.string.tx_save_failed, e.message ?: e.javaClass.simpleName)
                 )
             )
             return
@@ -185,7 +187,7 @@ class TranscriptionRunner @Inject constructor(
         val prepared = try {
             prepare(source, limits.maxUpload, limits.maxAudioMs, forceTranscode)
         } catch (e: AudioPreparer.PrepareException) {
-            fail(AiResult.Error(e.message ?: "This recording couldn't be prepared."))
+            fail(AiResult.Error(e.message ?: context.getString(R.string.tx_prepare_failed)))
             return null
         }
         return Attempt(prepared, upload(prepared, options, UUID.randomUUID().toString()))

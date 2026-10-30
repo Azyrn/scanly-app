@@ -4,6 +4,7 @@ package com.skeler.scanely.ui.components
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -110,7 +111,7 @@ fun PaywallSheet(
             val onTopPlan = isPaid && state.plans.none { it.plan.pagesPerMonth > currentPages }
 
             Text(
-                text = paywallHeadline(reason, isFeatureLock, isPaid, state.currentTier),
+                text = paywallHeadline(LocalContext.current, reason, isFeatureLock, isPaid, state.currentTier),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -123,9 +124,20 @@ fun PaywallSheet(
                 text = when {
                     reason != null -> reason
                     state.isQuotaKnown ->
-                        "You have ${state.pagesRemaining} of ${state.pagesPerMonth} credits left " +
-                            "this month." + if (onTopPlan) "" else " Upgrade for more."
-                    else -> "More credits, longer documents, and more file formats."
+                        if (onTopPlan) {
+                            stringResource(
+                                R.string.cmp_paywall_credits_left,
+                                state.pagesRemaining,
+                                state.pagesPerMonth
+                            )
+                        } else {
+                            stringResource(
+                                R.string.cmp_paywall_credits_left_upgrade,
+                                state.pagesRemaining,
+                                state.pagesPerMonth
+                            )
+                        }
+                    else -> stringResource(R.string.cmp_paywall_more_credits)
                 },
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -134,7 +146,7 @@ fun PaywallSheet(
 
             Spacer(Modifier.height(12.dp))
             Text(
-                text = "AI Scan uses 1 credit per page. Other AI tools share your credit balance.",
+                text = stringResource(R.string.cmp_paywall_ai_scan_credit),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -159,7 +171,7 @@ fun PaywallSheet(
                 }
             }
 
-            upgradeNotice(state.currentTier, state.plans)?.let { notice ->
+            upgradeNotice(LocalContext.current, state.currentTier, state.plans)?.let { notice ->
                 Text(
                     text = notice,
                     style = MaterialTheme.typography.bodyMedium,
@@ -173,7 +185,7 @@ fun PaywallSheet(
                 state.license.isActive -> LicenseActive(state)
 
                 onTopPlan -> Text(
-                    text = "Your plan is active on this account.",
+                    text = stringResource(R.string.cmp_paywall_plan_active),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -210,7 +222,13 @@ fun PaywallSheet(
             Spacer(Modifier.height(8.dp))
 
             TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
-                Text(if (state.license.isActive || onTopPlan) "Done" else "Not now")
+                Text(
+                    if (state.license.isActive || onTopPlan) {
+                        stringResource(R.string.chat_step_done)
+                    } else {
+                        stringResource(R.string.chat_ask_dismiss)
+                    }
+                )
             }
         }
     }
@@ -230,7 +248,7 @@ private fun PlansUnavailable(error: String, onRetry: () -> Unit) {
     OutlinedButton(onClick = onRetry) {
         Icon(Icons.Rounded.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
         Spacer(Modifier.size(8.dp))
-        Text("Try again")
+        Text(stringResource(R.string.pdf_tool_try_again))
     }
 }
 
@@ -239,7 +257,7 @@ private fun LicenseActive(state: PaywallState) {
     val entitlement = state.license.entitlement
 
     Text(
-        text = state.message ?: "Your key is active on this device.",
+        text = state.message ?: stringResource(R.string.cmp_paywall_key_active_here),
         style = MaterialTheme.typography.bodyLarge,
         fontWeight = FontWeight.Medium,
         color = MaterialTheme.colorScheme.primary,
@@ -249,8 +267,11 @@ private fun LicenseActive(state: PaywallState) {
     if (entitlement != null && entitlement.maxActivations > 0) {
         Spacer(Modifier.height(4.dp))
         Text(
-            text = "${entitlement.activationsUsed} of ${entitlement.maxActivations} devices used. " +
-                "Manage your key in Settings.",
+            text = stringResource(
+                R.string.cmp_paywall_devices_used,
+                entitlement.activationsUsed,
+                entitlement.maxActivations
+            ),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
@@ -267,7 +288,7 @@ private fun WatchAdForPages(pagesPerAd: Int, onWatchAd: () -> Unit) {
             modifier = Modifier.size(18.dp)
         )
         Spacer(Modifier.size(8.dp))
-        Text("Watch an ad for $pagesPerAd more credits")
+        Text(stringResource(R.string.cmp_paywall_watch_ad, pagesPerAd))
     }
 }
 
@@ -275,10 +296,12 @@ private fun WatchAdForPages(pagesPerAd: Int, onWatchAd: () -> Unit) {
 private fun WhereToBuy() {
     val context = LocalContext.current
     var copied by remember { mutableStateOf(false) }
+    val whereToBuyBefore = stringResource(R.string.cmp_paywall_where_to_buy_before)
+    val whereToBuyAfter = stringResource(R.string.cmp_paywall_where_to_buy_after)
 
     Text(
         text = buildAnnotatedString {
-            append("AI Scan includes a free monthly allowance. Paid plans are available on ")
+            append(whereToBuyBefore)
             withStyle(
                 SpanStyle(
                     fontWeight = FontWeight.SemiBold,
@@ -287,7 +310,7 @@ private fun WhereToBuy() {
             ) {
                 append(SCANLY_SITE)
             }
-            append(". Purchases are not available in this app. Already subscribed? Restore your purchase below.")
+            append(whereToBuyAfter)
         },
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -309,7 +332,7 @@ private fun WhereToBuy() {
             modifier = Modifier.size(16.dp)
         )
         Spacer(Modifier.size(8.dp))
-        Text(if (copied) "Copied" else "Copy address")
+        Text(if (copied) stringResource(R.string.cmp_copied) else stringResource(R.string.cmp_copy_address))
     }
 }
 
@@ -326,7 +349,7 @@ private fun RedeemField(
         value = key,
         onValueChange = { key = it },
         modifier = Modifier.fillMaxWidth(),
-        label = { Text("License key") },
+        label = { Text(stringResource(R.string.cmp_license_key)) },
         placeholder = { Text("SCANLY-XXXXX-XXXXX-XXXXX-XXXXX") },
         singleLine = true,
         isError = error != null,
@@ -340,7 +363,11 @@ private fun RedeemField(
             IconButton(onClick = { keyVisible = !keyVisible }) {
                 Icon(
                     if (keyVisible) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
-                    contentDescription = if (keyVisible) "Hide key" else "Show key"
+                    contentDescription = if (keyVisible) {
+                        stringResource(R.string.cmp_hide_key)
+                    } else {
+                        stringResource(R.string.cmp_show_key)
+                    }
                 )
             }
         },
@@ -366,7 +393,7 @@ private fun RedeemField(
                 color = MaterialTheme.colorScheme.onPrimary
             )
         } else {
-            Text("Redeem")
+            Text(stringResource(R.string.cmp_redeem))
         }
     }
 }
@@ -389,13 +416,13 @@ private fun LostYourKey(
         enabled = !isBusy,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Lost your key? Restore purchase")
+        Text(stringResource(R.string.cmp_lost_key_restore))
     }
 
     if (!needsEmailConfirmation) return
 
     Text(
-        text = "Confirm your email address first — it is what proves the purchase is yours.",
+        text = stringResource(R.string.cmp_confirm_email_first),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         textAlign = TextAlign.Center
@@ -408,7 +435,7 @@ private fun LostYourKey(
         enabled = !isBusy,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Send confirmation email")
+        Text(stringResource(R.string.cmp_send_confirmation_email))
     }
 }
 
@@ -438,13 +465,13 @@ private fun PlanCard(option: PlanOption) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Scanly ${plan.id.replaceFirstChar(Char::titlecase)}",
+                    text = stringResource(R.string.cmp_paywall_plan_name, plan.id.replaceFirstChar(Char::titlecase)),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
                 if (option.isCurrent) {
                     Text(
-                        text = "Active",
+                        text = stringResource(R.string.cmp_active),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
@@ -453,18 +480,18 @@ private fun PlanCard(option: PlanOption) {
 
             Spacer(Modifier.height(8.dp))
 
-            PlanFeature("${plan.pagesPerMonth} AI credits a month")
-            PlanFeature("Up to ${plan.maxPagesPerDoc} pages in one document")
-            if (plan.allowsOffice) PlanFeature("Word, PowerPoint and OpenDocument files")
-            if (plan.allowsTranslation) PlanFeature("Translation")
+            PlanFeature(stringResource(R.string.cmp_paywall_feature_credits, plan.pagesPerMonth))
+            PlanFeature(stringResource(R.string.cmp_paywall_feature_pages, plan.maxPagesPerDoc))
+            if (plan.allowsOffice) PlanFeature(stringResource(R.string.cmp_paywall_feature_office))
+            if (plan.allowsTranslation) PlanFeature(stringResource(R.string.cmp_paywall_feature_translation))
             if (plan.allowsExtraction) {
-                PlanFeature("Data extraction from receipts, invoices and cards")
+                PlanFeature(stringResource(R.string.cmp_paywall_feature_extraction))
             }
             if (plan.allowsDesign) PlanFeature(stringResource(R.string.plan_feature_build_documents))
 
-            PlanFeature("Sign PDFs and verify digital signatures")
-            PlanFeature("Edit text, compress and password-protect PDFs")
-            PlanFeature("Connect your own AI provider")
+            PlanFeature(stringResource(R.string.cmp_paywall_feature_sign))
+            PlanFeature(stringResource(R.string.cmp_paywall_feature_edit))
+            PlanFeature(stringResource(R.string.cmp_paywall_feature_ai_provider))
         }
     }
 }
@@ -498,13 +525,14 @@ private fun PlanFeature(text: String) {
  * had exhausted something they had never used.
  */
 internal fun paywallHeadline(
+    context: Context,
     reason: String?,
     isFeatureLock: Boolean,
     isPaid: Boolean,
     currentTier: String
 ): String = when {
-    reason != null && isFeatureLock -> "Part of Scanly Pro"
-    reason != null -> "You've hit your plan's limit"
-    isPaid -> "You're on ${currentTier.replaceFirstChar(Char::titlecase)}"
-    else -> "Scan more with Pro"
+    reason != null && isFeatureLock -> context.getString(R.string.pay_headline_pro_feature)
+    reason != null -> context.getString(R.string.pay_headline_limit)
+    isPaid -> context.getString(R.string.pay_headline_on_tier, currentTier.replaceFirstChar(Char::titlecase))
+    else -> context.getString(R.string.pay_headline_upsell)
 }

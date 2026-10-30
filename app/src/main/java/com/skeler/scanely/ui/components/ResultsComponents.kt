@@ -45,11 +45,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AI_PROVIDER_NAME
 import com.skeler.scanely.core.common.LocalReadingTextScale
 import kotlin.math.roundToInt
@@ -129,7 +131,11 @@ fun RowScope.ExtractedTextActions(
                 contentColor = MaterialTheme.colorScheme.onSurface
             )
         ) {
-            Icon(Icons.Rounded.Close, contentDescription = "Cancel", modifier = Modifier.size(iconSize))
+            Icon(
+                Icons.Rounded.Close,
+                contentDescription = stringResource(R.string.chat_cancel),
+                modifier = Modifier.size(iconSize)
+            )
         }
         Spacer(modifier = Modifier.size(gap))
         FilledTonalIconButton(
@@ -144,7 +150,11 @@ fun RowScope.ExtractedTextActions(
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Icon(Icons.Rounded.Check, contentDescription = "Save", modifier = Modifier.size(iconSize))
+            Icon(
+                Icons.Rounded.Check,
+                contentDescription = stringResource(R.string.chat_save),
+                modifier = Modifier.size(iconSize)
+            )
         }
     } else {
         if (leading != null) {
@@ -164,7 +174,11 @@ fun RowScope.ExtractedTextActions(
                     contentColor = MaterialTheme.colorScheme.onSurface
                 )
             ) {
-                Icon(Icons.Rounded.Edit, contentDescription = "Edit text", modifier = Modifier.size(iconSize))
+                Icon(
+                    Icons.Rounded.Edit,
+                    contentDescription = stringResource(R.string.cmp_edit_text),
+                    modifier = Modifier.size(iconSize)
+                )
             }
             Spacer(modifier = Modifier.size(gap))
         }
@@ -178,7 +192,11 @@ fun RowScope.ExtractedTextActions(
                     contentColor = MaterialTheme.colorScheme.onSurface
                 )
             ) {
-                Icon(Icons.Rounded.Print, contentDescription = "Print", modifier = Modifier.size(iconSize))
+                Icon(
+                    Icons.Rounded.Print,
+                    contentDescription = stringResource(R.string.cmp_print),
+                    modifier = Modifier.size(iconSize)
+                )
             }
             Spacer(modifier = Modifier.size(gap))
         }
@@ -194,7 +212,11 @@ fun RowScope.ExtractedTextActions(
                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 ) {
-                    Icon(Icons.Rounded.SaveAlt, contentDescription = "Export", modifier = Modifier.size(iconSize))
+                    Icon(
+                        Icons.Rounded.SaveAlt,
+                        contentDescription = stringResource(R.string.cmp_export),
+                        modifier = Modifier.size(iconSize)
+                    )
                 }
                 DropdownMenu(
                     expanded = exportMenuOpen,
@@ -223,7 +245,11 @@ fun RowScope.ExtractedTextActions(
                 contentColor = MaterialTheme.colorScheme.onPrimary
             )
         ) {
-            Icon(Icons.Rounded.ContentCopy, contentDescription = "Copy text", modifier = Modifier.size(iconSize))
+            Icon(
+                Icons.Rounded.ContentCopy,
+                contentDescription = stringResource(R.string.cmp_copy_text),
+                modifier = Modifier.size(iconSize)
+            )
         }
         if (!state.editing) {
             Spacer(modifier = Modifier.size(gap))
@@ -240,7 +266,7 @@ fun RowScope.ExtractedTextActions(
                 ) {
                     Icon(
                         Icons.Rounded.MoreVert,
-                        contentDescription = "Reading options",
+                        contentDescription = stringResource(R.string.cmp_reading_options),
                         modifier = Modifier.size(iconSize)
                     )
                 }
@@ -255,7 +281,7 @@ fun RowScope.ExtractedTextActions(
                             modifier = Modifier.padding(vertical = 4.dp)
                         )
                         DropdownMenuItem(
-                            text = { Text("Show preview") },
+                            text = { Text(stringResource(R.string.cmp_show_preview)) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Outlined.FindInPage,
@@ -282,7 +308,7 @@ private fun TextSizeMenuItem() {
 
     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
         Text(
-            text = "Text size",
+            text = stringResource(R.string.pdf_stamp_numbers_text_size),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -296,12 +322,12 @@ private fun TextSizeMenuItem() {
             ) {
                 Icon(
                     Icons.Rounded.Remove,
-                    contentDescription = "Smaller text",
+                    contentDescription = stringResource(R.string.cmp_smaller_text),
                     modifier = Modifier.size(18.dp)
                 )
             }
             Text(
-                text = "${(scale.value * 100).roundToInt()}%",
+                text = stringResource(R.string.cmp_zoom_percent, (scale.value * 100).roundToInt()),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
@@ -315,13 +341,13 @@ private fun TextSizeMenuItem() {
             ) {
                 Icon(
                     Icons.Rounded.Add,
-                    contentDescription = "Bigger text",
+                    contentDescription = stringResource(R.string.cmp_bigger_text),
                     modifier = Modifier.size(18.dp)
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
             TextButton(onClick = scale::reset, enabled = scale.value != 1f) {
-                Text("Reset")
+                Text(stringResource(R.string.cmp_reset))
             }
         }
     }
@@ -342,7 +368,7 @@ fun ExportMenuItem(
         } else {
             {
                 Text(
-                    text = "No table",
+                    text = stringResource(R.string.cmp_no_table),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -383,7 +409,7 @@ fun ExtractedTextSection(
         }
 
         Text(
-            text = "${counts.first} words · ${counts.second} characters",
+            text = stringResource(R.string.cmp_word_char_counts, counts.first, counts.second),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 4.dp)
@@ -436,7 +462,7 @@ fun ExportMenu(
         modifier = Modifier.width(184.dp)
     ) {
         Text(
-            text = "Save as",
+            text = stringResource(R.string.cmp_save_as),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 20.dp, top = 12.dp, bottom = 6.dp)
@@ -458,7 +484,7 @@ fun ExportMenu(
                 } else {
                     {
                         Text(
-                            text = "No table",
+                            text = stringResource(R.string.cmp_no_table),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )

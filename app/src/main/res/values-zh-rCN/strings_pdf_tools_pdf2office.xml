@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
+<resources>
+    <!-- Options -->
+    <string name="pdf2office_word_body">文本、标题、列表和表格将变为可在 Word 中编辑的内容。扫描页面会以图片形式添加。</string>
+    <string name="pdf2office_word_action">转换为 Word</string>
+    <string name="pdf2office_powerpoint_body">每页变为一张幻灯片，文字放在原页面的位置上，并可以编辑。扫描页面会以图片形式添加。</string>
+    <string name="pdf2office_powerpoint_action">转换为 PowerPoint</string>
+    <string name="pdf2office_excel_body">表格变为行和单元格，每个含有表格的页面对应一个工作表。数字仍为数字，因此可以求和。</string>
+    <string name="pdf2office_excel_action">转换为 Excel</string>
+
+    <!-- Result notes -->
+    <string name="pdf2office_simplified_word">版式已简化：文本、标题、列表和表格可以编辑，但字体、分栏、绘图和图片未被保留。</string>
+    <string name="pdf2office_simplified_powerpoint">版式已简化：文字位于原页面的位置并可以编辑，但字体、绘图和图片未被保留。</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">已将 %d 个扫描页面作为图片添加。</item>
+        <item quantity="other">已将 %d 个扫描页面作为图片添加。</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">%d 个内容非常密集的页面已按普通文本行转换。</item>
+        <item quantity="other">%d 个内容非常密集的页面已按普通文本行转换。</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">%d 页无法读取，已被省略。</item>
+        <item quantity="other">%d 页无法读取，已被省略。</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">%d 个扫描页面没有文字，已跳过。</item>
+        <item quantity="other">%d 个扫描页面没有文字，已跳过。</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">未找到表格；文字已按每行一条的方式放置。</string>
+
+    <!-- Sheet names in the converted workbook (31 characters at most) -->
+    <string name="pdf2office_excel_sheet_page">第 %1$d 页</string>
+    <string name="pdf2office_excel_sheet_text">文本</string>
+</resources>

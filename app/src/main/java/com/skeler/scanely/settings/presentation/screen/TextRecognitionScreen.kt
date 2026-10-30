@@ -38,10 +38,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ocr.TextOcrEngine
 import com.skeler.scanely.core.ocr.paddle.PackState
 import com.skeler.scanely.core.ocr.paddle.ScriptPack
@@ -80,10 +82,13 @@ fun TextRecognitionScreen(
         containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                title = { Text("Text Recognition", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.set_text_recognition_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -100,7 +105,7 @@ fun TextRecognitionScreen(
             contentPadding = PaddingValues(bottom = 48.dp)
         ) {
             item {
-                SectionHeader("Engine", topSpacing = 8.dp)
+                SectionHeader(stringResource(R.string.set_section_engine), topSpacing = 8.dp)
                 ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
                     TextOcrEngine.entries.forEachIndexed { index, option ->
                         EngineRow(
@@ -116,7 +121,7 @@ fun TextRecognitionScreen(
             item {
                 AnimatedVisibility(visible = engine == TextOcrEngine.PADDLE) {
                     Column {
-                        SectionHeader("Script")
+                        SectionHeader(stringResource(R.string.set_section_script))
                         ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
                             ScriptPack.entries.forEachIndexed { index, pack ->
                                 ScriptRow(
@@ -131,11 +136,11 @@ fun TextRecognitionScreen(
                             }
                         }
 
-                        SectionHeader("Preprocessing")
+                        SectionHeader(stringResource(R.string.set_section_preprocessing))
                         ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
                             SettingSwitchTile(
-                                title = "Auto-rotate page",
-                                subtitle = "Detects sideways and upside-down pages",
+                                title = stringResource(R.string.set_auto_rotate_title),
+                                subtitle = stringResource(R.string.set_auto_rotate_subtitle),
                                 icon = Icons.Rounded.ScreenRotation,
                                 checked = docOrientation,
                                 position = GroupPosition.Top,
@@ -144,9 +149,8 @@ fun TextRecognitionScreen(
                                 }
                             )
                             SettingSwitchTile(
-                                title = "Fix flipped lines",
-                                subtitle = "For pages mixing upright and upside-down lines. " +
-                                    "Unreliable on Arabic",
+                                title = stringResource(R.string.set_fix_flipped_title),
+                                subtitle = stringResource(R.string.set_fix_flipped_subtitle),
                                 icon = Icons.Rounded.Rotate90DegreesCcw,
                                 checked = lineOrientation,
                                 position = GroupPosition.Middle,
@@ -155,13 +159,16 @@ fun TextRecognitionScreen(
                                 }
                             )
                             SettingSwitchTile(
-                                title = "Flatten curved pages",
+                                title = stringResource(R.string.set_flatten_curved_title),
                                 subtitle = when (val state = uvdoc) {
                                     is PackState.Downloading ->
-                                        "Downloading ${(state.progress * 100).toInt()}%"
+                                        stringResource(
+                                            R.string.set_downloading_percent,
+                                            (state.progress * 100).toInt()
+                                        )
                                     is PackState.Failed -> state.message
-                                    is PackState.Missing -> "UVDoc dewarping · 30 MB download"
-                                    else -> "UVDoc dewarping — slower, for books and folds"
+                                    is PackState.Missing -> stringResource(R.string.set_uvdoc_missing_subtitle)
+                                    else -> stringResource(R.string.set_uvdoc_ready_subtitle)
                                 },
                                 icon = Icons.Rounded.Crop,
                                 enabled = uvdoc !is PackState.Downloading,
@@ -171,11 +178,11 @@ fun TextRecognitionScreen(
                             )
                         }
 
-                        SectionHeader("Document structure")
+                        SectionHeader(stringResource(R.string.set_section_document_structure))
                         ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
                             SettingSwitchTile(
-                                title = "Detect layout",
-                                subtitle = "Headings, paragraphs and reading order in the Markdown view",
+                                title = stringResource(R.string.set_detect_layout_title),
+                                subtitle = stringResource(R.string.set_detect_layout_subtitle),
                                 icon = Icons.AutoMirrored.Rounded.Article,
                                 checked = structure,
                                 position = GroupPosition.Top,
@@ -184,13 +191,16 @@ fun TextRecognitionScreen(
                                 }
                             )
                             SettingSwitchTile(
-                                title = "Recognize tables",
+                                title = stringResource(R.string.set_recognize_tables_title),
                                 subtitle = when (val state = tableModel) {
                                     is PackState.Downloading ->
-                                        "Downloading ${(state.progress * 100).toInt()}%"
+                                        stringResource(
+                                            R.string.set_downloading_percent,
+                                            (state.progress * 100).toInt()
+                                        )
                                     is PackState.Failed -> state.message
-                                    is PackState.Missing -> "SLANet tables · 8 MB download"
-                                    else -> "Rebuilds tables as grids you can export to CSV"
+                                    is PackState.Missing -> stringResource(R.string.set_tables_missing_subtitle)
+                                    else -> stringResource(R.string.set_tables_ready_subtitle)
                                 },
                                 icon = Icons.Rounded.TableChart,
                                 enabled = structure && tableModel !is PackState.Downloading,
@@ -266,7 +276,8 @@ private fun ScriptRow(
             title = pack.displayName,
             subtitle = when (state) {
                 is PackState.Failed -> state.message
-                is PackState.Missing -> "${pack.languages} · ${pack.sizeMb} MB"
+                is PackState.Missing ->
+                    stringResource(R.string.set_script_missing_subtitle, pack.languages, pack.sizeMb)
                 else -> pack.languages
             },
             subtitleColor = if (state is PackState.Failed) {
@@ -292,7 +303,7 @@ private fun ScriptRow(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Delete,
-                        contentDescription = "Delete ${pack.displayName}",
+                        contentDescription = stringResource(R.string.set_script_delete_description, pack.displayName),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
@@ -303,7 +314,7 @@ private fun ScriptRow(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Download,
-                        contentDescription = "Download ${pack.displayName}",
+                        contentDescription = stringResource(R.string.set_script_download_description, pack.displayName),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">Belgeyi telefonunuzda dönüştürür. Grafikler, metin kutuları ve denklemler henüz gösterilemiyor, bu yüzden dışarıda bırakılır.</string>
+    <string name="pdf_tool_word_to_pdf_action">PDF\'e dönüştür</string>
+
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">%d grafik dışarıda bırakıldı.</item>
+        <item quantity="other">%d grafik dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">%d SmartArt diyagramı dışarıda bırakıldı.</item>
+        <item quantity="other">%d SmartArt diyagramı dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">%d metin kutusu veya şekil dışarıda bırakıldı.</item>
+        <item quantity="other">%d metin kutusu veya şekil dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">%d denklem dışarıda bırakıldı.</item>
+        <item quantity="other">%d denklem dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">%d gömülü nesne dışarıda bırakıldı.</item>
+        <item quantity="other">%d gömülü nesne dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">%d resim gösterilemeyen bir biçimde olduğu için dışarıda bırakıldı.</item>
+        <item quantity="other">%d resim gösterilemeyen bir biçimde olduğu için dışarıda bırakıldı.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">Sayfadan uzun %d tablo satırı kesildi.</item>
+        <item quantity="other">Sayfadan uzun %d tablo satırı kesildi.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">Yalnızca ilk %d sayfa dönüştürüldü.</item>
+        <item quantity="other">Yalnızca ilk %d sayfa dönüştürüldü.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Bazı yazı tipleri benzerleriyle değiştirildi.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Üstbilgiler ve altbilgiler dışarıda bırakıldı.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Dipnotlar dışarıda bırakıldı.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Sütunlardaki metin tek sütun olarak düzenlendi.</string>
+</resources>

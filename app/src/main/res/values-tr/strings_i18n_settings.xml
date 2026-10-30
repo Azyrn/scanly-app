@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">Ayarlar</string>
+    <string name="set_section_account">Hesap</string>
+    <string name="set_sign_in">Oturum aç</string>
+    <string name="set_sign_in_subtitle">AI taramaları için gerekli</string>
+    <string name="set_signed_in">Oturum açıldı</string>
+    <string name="set_pro_key_title">Scanly Pro anahtarı</string>
+    <string name="set_pro_key_active_devices">Etkin · %2$d cihazdan %1$d</string>
+    <string name="set_pro_key_active_here">Bu cihazda etkin</string>
+    <string name="set_delete_account_title">Hesabı sil</string>
+    <string name="set_delete_account_subtitle">Hesabınızı ve verilerinizi kalıcı olarak silin</string>
+    <string name="set_section_customize">Özelleştir</string>
+    <string name="set_look_and_feel_title">Görünüm &amp; Tema</string>
+    <string name="set_look_and_feel_subtitle">Renk paleti, koyu tema, saf siyah</string>
+    <string name="set_text_recognition_title">Metin tanıma</string>
+    <string name="set_text_recognition_subtitle">%1$s · diller ve ön işleme</string>
+    <string name="set_barcode_engine_title">Barkod tarayıcı motoru</string>
+    <string name="set_custom_endpoint_title">Özel uç nokta</string>
+    <string name="set_custom_endpoint_subtitle">Kendi yapay zekâ sağlayıcınızı bağlayın · Pro</string>
+    <string name="set_section_about">Hakkında</string>
+    <string name="set_privacy_options_title">Gizlilik seçenekleri</string>
+    <string name="set_privacy_options_subtitle">Reklam onayı tercihlerini yönetin</string>
+    <string name="set_rate_title">Scanly\'yi puanla</string>
+    <string name="set_rate_subtitle">Google Play\'de düşüncelerinizi paylaşın</string>
+    <string name="set_privacy_policy_title">Gizlilik politikası</string>
+    <string name="set_privacy_policy_subtitle">Scanly neyi saklar ve bunu kim işler</string>
+    <string name="set_terms_title">Hizmet şartları</string>
+    <string name="set_developer_subtitle">\@Azyrn · Geliştirici</string>
+    <string name="set_telegram_subtitle">Hataları bildirin veya özellik isteyin</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">Anahtarınız kaldırılsın mı?</string>
+    <string name="set_remove_key_message">Bu cihaz ücretsiz plana döner ve yuvası boşalır; böylece anahtarı başka bir cihazda kullanabilirsiniz. Anahtarın kendisi çalışmaya devam eder.</string>
+    <string name="set_remove_key_confirm">Kaldır</string>
+    <string name="set_delete_account_dialog_title">Hesap silinsin mi?</string>
+    <string name="set_delete_account_dialog_message">Bu işlem Scanly hesabınızı, oturum açma bilgilerinizi ve sunucularımızdaki kullanım kayıtlarınızı kalıcı olarak siler. Geri alınamaz.\n\nBu cihazda kaydedilen taramalar etkilenmez; etkin bir Pro aboneliğini ise Paddle üzerinden ayrıca iptal etmeniz gerekir.</string>
+    <string name="set_sign_out_dialog_title">Oturum kapatılsın mı?</string>
+    <string name="set_sign_out_dialog_message">Tekrar oturum açana kadar AI taramaları çalışmaz. Tarama geçmişiniz ve çevrimdışı metin tanıma bu cihazda kalır.</string>
+    <string name="set_sign_out">Oturumu kapat</string>
+    <string name="set_account_options">Hesap seçenekleri</string>
+    <string name="set_account_id_label">Hesap kimliği</string>
+    <string name="set_account_id_copied">Hesap kimliği kopyalandı</string>
+    <string name="set_barcode_mlkit_description">Google\'ın otomatik yakınlaştırmalı cihaz içi tarayıcısı</string>
+    <string name="set_barcode_zxing_description">Açık kaynaklı çözücü, GMS olmadan çalışır</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">Duvar kağıdı renkleri</string>
+    <string name="set_palette_subtitle">Tüm uygulamanın renklerini değiştirmek için bir palet seçin</string>
+    <string name="set_section_color_palette">Renk paleti</string>
+    <string name="set_palette_dynamic">Dinamik</string>
+    <string name="set_section_personalize">Kişiselleştir</string>
+    <string name="set_dark_theme">Koyu tema</string>
+    <string name="set_on">Açık</string>
+    <string name="set_off">Kapalı</string>
+    <string name="set_pure_black_title">Saf siyah M3</string>
+    <string name="set_pure_black_subtitle">OLED ekranlarda pil tasarrufu sağlar</string>
+    <string name="set_palette_cerulean_wave">Cerulean Wave</string>
+    <string name="set_palette_lavender_volt">Lavender Volt</string>
+    <string name="set_palette_amethyst_haze">Amethyst Haze</string>
+    <string name="set_palette_emerald_grove">Emerald Grove</string>
+    <string name="set_palette_sunset_coral">Sunset Coral</string>
+    <string name="set_palette_rose_blush">Rose Blush</string>
+    <string name="set_palette_monochrome">Tek renk</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">Motor</string>
+    <string name="set_section_script">Yazı sistemi</string>
+    <string name="set_section_preprocessing">Ön işleme</string>
+    <string name="set_auto_rotate_title">Sayfayı otomatik döndür</string>
+    <string name="set_auto_rotate_subtitle">Yan ve ters çevrilmiş sayfaları algılar</string>
+    <string name="set_fix_flipped_title">Ters satırları düzelt</string>
+    <string name="set_fix_flipped_subtitle">Hem düz hem ters satır içeren sayfalar için. Arapçada güvenilir değil</string>
+    <string name="set_flatten_curved_title">Kıvrık sayfaları düzleştir</string>
+    <string name="set_downloading_percent">İndiriliyor: %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">UVDoc düzeltme · 30 MB indirme</string>
+    <string name="set_uvdoc_ready_subtitle">UVDoc düzeltme — daha yavaş, kitaplar ve kıvrımlar için</string>
+    <string name="set_section_document_structure">Belge yapısı</string>
+    <string name="set_detect_layout_title">Düzeni algıla</string>
+    <string name="set_detect_layout_subtitle">Markdown görünümünde başlıklar, paragraflar ve okuma sırası</string>
+    <string name="set_recognize_tables_title">Tabloları tanı</string>
+    <string name="set_tables_missing_subtitle">SLANet tabloları · 8 MB indirme</string>
+    <string name="set_tables_ready_subtitle">Tabloları CSV olarak dışa aktarabileceğiniz ızgaralara dönüştürür</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
+    <string name="set_script_delete_description">%1$s yazı sistemini sil</string>
+    <string name="set_script_download_description">%1$s yazı sistemini indir</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">Bir Pro özelliği</string>
+    <string name="set_pro_required_message">Kendi yapay zekâ sağlayıcınızı bağlamak Scanly Pro\'nun bir parçası. Aşağıdaki alanlar kuracağınız ayarları gösterir; Pro\'ya geçtiğinizde açılırlar. Ayarlar\'daki Hesap bölümünden yükseltin ya da zaten sahip olduğunuz bir anahtarı kullanın.</string>
+    <string name="set_custom_intro_body">Herhangi bir yapay zekâ sağlayıcısını bağlayın. Kullandığı protokolü seçin, uç nokta URL\'sini, model adını ve API anahtarınızı yapıştırın, ardından bağlantıyı test edin.</string>
+    <string name="set_custom_intro_hosts">Çoğu sunucu OpenAI ile uyumlu — Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude ve Gemini kendi protokollerini kullanır; ağınızdaki kendi sunucunuz düz http üzerinden çalışır.</string>
+    <string name="set_custom_intro_pdf_pages">Taranmış PDF\'ler tek seferde en fazla %1$d sayfa gönderilir, çünkü tek bir istekte resim olarak iletilirler. Ofis belgeleri hâlâ Scanly AI gerektirir.</string>
+    <string name="set_section_protocol">Protokol</string>
+    <string name="set_section_endpoint">Uç nokta</string>
+    <string name="set_endpoint_url_label">Uç nokta URL\'si</string>
+    <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI, hesap kimliğinizi yolda kullanır; URL\'nin tamamını, bu kimlik dahil, yapıştırın.</string>
+    <string name="set_endpoint_hint_openai">Genellikle /v1/chat/completions ile biter.</string>
+    <string name="set_endpoint_hint_anthropic">Genellikle /v1/messages ile biter.</string>
+    <string name="set_endpoint_hint_gemini">Yalnızca sunucu adı yeterli; model ve yol sizin için eklenir.</string>
+    <string name="set_model_label">Model</string>
+    <string name="set_model_hint">Sağlayıcınızın listelediği gibi tam olarak yazın.</string>
+    <string name="set_api_key_label">API anahtarı</string>
+    <string name="set_api_key_hint">Yalnızca bu cihazda saklanır. Scanly\'nin sunucularına hiçbir zaman gönderilmez.</string>
+    <string name="set_header_name_label">Başlık adı</string>
+    <string name="set_header_name_hint">Ağ geçidinizin anahtarı beklediği başlık.</string>
+    <string name="set_auth_style_label">Anahtarı şu şekilde gönder</string>
+    <string name="set_endpoint_verified">Doğrulandı — bu uç nokta doğru yanıt verdi.</string>
+    <string name="set_endpoint_unverified">Doğrulanmadı — kaydetmeden önce bağlantıyı test edin.</string>
+    <string name="set_testing">Test ediliyor…</string>
+    <string name="set_test_connection">Bağlantıyı test et</string>
+    <string name="set_remove_endpoint">Uç noktayı kaldır</string>
+    <string name="set_use_for_ai_title">Yapay zekâ özelliklerinde kullan</string>
+    <string name="set_use_for_ai_verified">Taramalar, veri çıkarma, çeviri, taslaklar ve tasarımlar Scanly AI yerine uç noktanızı kullanır. Sesten Metne her zaman Scanly AI ile çalışır, çünkü bir sohbet uç noktası ses alamaz.</string>
+    <string name="set_use_for_ai_unverified">Önce uç noktayı doğrulayın.</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">Hesabınızı oluşturun</string>
+    <string name="set_auth_welcome_title">Tekrar hoş geldiniz</string>
+    <string name="set_auth_intro">Yapay zekâ taramalarını kullanmak için oturum açın. Metin tanıma ve barkod tarama, hesap olmadan çevrimdışı çalışmaya devam eder.</string>
+    <string name="set_auth_email_label">E-posta</string>
+    <string name="set_auth_password_hint">En az 6 karakter</string>
+    <string name="set_auth_forgot_password">Parolanızı mı unuttunuz?</string>
+    <string name="set_auth_create_account">Hesap oluştur</string>
+    <string name="set_auth_or">veya</string>
+    <string name="set_auth_continue_google">Google ile devam et</string>
+    <string name="set_auth_have_account">Zaten bir hesabınız var mı?</string>
+    <string name="set_auth_no_account">Henüz hesabınız yok mu?</string>
+    <string name="set_auth_create_one">Bir tane oluşturun</string>
+    <string name="set_account_deleted">Hesabınız silindi.</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">Geçmiş</string>
+    <string name="set_history_clear">Geçmişi temizle</string>
+    <string name="set_history_clear_all">Tümünü temizle</string>
+    <string name="set_history_clear_message">Tüm geçmişi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="set_history_delete_all">Tümünü sil</string>
+    <string name="set_history_empty">Henüz geçmiş yok</string>
+</resources>

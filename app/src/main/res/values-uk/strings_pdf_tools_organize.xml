@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Merge -->
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">%d файл</item>
+        <item quantity="few">%d файли</item>
+        <item quantity="many">%d файлів</item>
+        <item quantity="other">%d файлів</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · разом %2$s</string>
+    <string name="pdf_tool_merge_body">Файли з\'єднуються в порядку, у якому їх перелічено вище. В об\'єднаній копії немає пароля, навіть якщо деякі файли його мали.</string>
+    <string name="pdf_tool_merge_need_more">Додайте принаймні ще один PDF, щоб об\'єднати.</string>
+    <string name="pdf_tool_merge_action">Об\'єднати</string>
+
+    <!-- Split: modes -->
+    <string name="pdf_tool_split_mode_ranges">Розділити за діапазонами</string>
+    <string name="pdf_tool_split_mode_ranges_body">Один новий файл для кожного введеного діапазону</string>
+    <string name="pdf_tool_split_mode_every">Розділити через кілька сторінок</string>
+    <string name="pdf_tool_split_mode_every_body">Новий файл після заданої кількості сторінок</string>
+    <string name="pdf_tool_split_mode_extract">Витягти сторінки</string>
+    <string name="pdf_tool_split_mode_extract_body">Вибрані сторінки разом в одному файлі</string>
+    <string name="pdf_tool_split_mode_delete">Видалити сторінки</string>
+    <string name="pdf_tool_split_mode_delete_body">Копія без вибраних сторінок</string>
+    <string name="pdf_tool_split_mode_size">Розділити за розміром файлу</string>
+    <string name="pdf_tool_split_mode_size_body">Файли не більші за заданий розмір</string>
+
+    <!-- Split: fields -->
+    <string name="pdf_tool_split_ranges_label">Сторінки</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Наприклад, 1-3, 5, 8-10</string>
+    <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Введіть потрібні сторінки, наприклад 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s” — не сторінка і не діапазон</string>
+    <string name="pdf_tool_split_range_out">“%1$s” виходить за межі сторінок 1–%2$d</string>
+    <string name="pdf_tool_split_range_reversed">“%1$s” іде у зворотному порядку; спершу напишіть меншу сторінку</string>
+    <string name="pdf_tool_split_delete_all">Це всі сторінки. Залиште принаймні одну.</string>
+    <string name="pdf_tool_split_every_label">Сторінок в одному файлі</string>
+    <string name="pdf_tool_split_every_invalid">Введіть число від 1 до %1$d</string>
+    <string name="pdf_tool_split_every_less">Менше сторінок в одному файлі</string>
+    <string name="pdf_tool_split_every_more">Більше сторінок в одному файлі</string>
+    <string name="pdf_tool_split_size_label">Найбільший розмір файлу (МБ)</string>
+    <string name="pdf_tool_split_size_invalid">Введіть розмір більше 0 МБ</string>
+    <string name="pdf_tool_split_size_body">Сторінки не діляться; окрема сторінка, більша за цей розмір, отримає власний файл.</string>
+    <string name="pdf_tool_split_locked">Цей файл має пароль, і нові файли його зберігають.</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">Створює %d файл</item>
+        <item quantity="few">Створює %d файли</item>
+        <item quantity="many">Створює %d файлів</item>
+        <item quantity="other">Створює %d файлів</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">Зберігає %d сторінку</item>
+        <item quantity="few">Зберігає %d сторінки</item>
+        <item quantity="many">Зберігає %d сторінок</item>
+        <item quantity="other">Зберігає %d сторінок</item>
+    </plurals>
+
+    <!-- Split: actions -->
+    <string name="pdf_tool_split_action">Розділити</string>
+    <string name="pdf_tool_split_extract_action">Витягти сторінки</string>
+    <string name="pdf_tool_split_delete_action">Видалити сторінки</string>
+
+    <!-- Split: result notes -->
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">%d сторінка сама по собі більша за ліміт розміру, тому має окремий файл.</item>
+        <item quantity="few">%d сторінки самі по собі більші за ліміт розміру, тому кожна має окремий файл.</item>
+        <item quantity="many">%d сторінок самі по собі більші за ліміт розміру, тому кожна має окремий файл.</item>
+        <item quantity="other">%d сторінок самі по собі більші за ліміт розміру, тому кожна має окремий файл.</item>
+    </plurals>
+</resources>

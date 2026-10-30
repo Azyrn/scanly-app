@@ -1,6 +1,7 @@
 package com.skeler.scanely.core.ai
 
 import com.skeler.scanely.core.network.BackendError
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -13,7 +14,7 @@ import org.junit.Test
 class UpgradePathTest {
 
     private fun errorFor(code: String, message: String, requiredTier: String? = null): AiResult.Error =
-        (backendFailure(413, BackendError(code, message, requiredTier = requiredTier)) as FatalAiException).result
+        (backendFailure(EnglishStrings.context(), 413, BackendError(code, message, requiredTier = requiredTier)) as FatalAiException).result
 
     @Test
     fun `a limit that is the same on every plan does not open the paywall`() {

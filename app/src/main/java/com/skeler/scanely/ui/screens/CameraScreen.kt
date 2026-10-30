@@ -63,6 +63,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
@@ -74,6 +76,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.skeler.scanely.R
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.viewmodel.DocumentScanViewModel
@@ -93,6 +96,7 @@ private const val TAG = "CameraScreen"
 @Composable
 fun DocumentCaptureScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val vm: DocumentScanViewModel = hiltViewModel(activity)
     val navigator = LocalNavigator.current
@@ -183,7 +187,7 @@ fun DocumentCaptureScreen() {
                                     Log.e(TAG, "Document capture failed", exc)
                                     Toast.makeText(
                                         context,
-                                        "Couldn't capture — try again",
+                                        resources.getString(R.string.scr_camera_capture_failed),
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -198,7 +202,7 @@ fun DocumentCaptureScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Camera permission required.",
+                    text = stringResource(R.string.scr_camera_permission_required),
                     color = Color.White,
                     textAlign = TextAlign.Center
                 )
@@ -229,11 +233,11 @@ private fun CaptureTopBar(onClose: () -> Unit) {
                     contentColor = Color.White
                 )
             ) {
-                Icon(Icons.Rounded.Close, contentDescription = "Close")
+                Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.font_licenses_close))
             }
             Spacer(Modifier.size(12.dp))
             Text(
-                text = "Capture document",
+                text = stringResource(R.string.scr_camera_capture_document),
                 color = Color.White,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold
@@ -260,7 +264,7 @@ private fun FocusHint() {
             )
             Spacer(Modifier.size(8.dp))
             Text(
-                text = "Tap to focus · line the page up with the edges",
+                text = stringResource(R.string.scr_camera_focus_hint),
                 color = Color.White,
                 style = MaterialTheme.typography.labelMedium
             )
@@ -302,7 +306,7 @@ private fun ShutterButton(
                     } else {
                         Icon(
                             imageVector = Icons.Rounded.CameraAlt,
-                            contentDescription = "Capture",
+                            contentDescription = stringResource(R.string.scr_camera_capture),
                             tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.size(34.dp)
                         )

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">Ajustes</string>
+    <string name="set_section_account">Cuenta</string>
+    <string name="set_sign_in">Iniciar sesión</string>
+    <string name="set_sign_in_subtitle">Necesario para los escaneos con IA</string>
+    <string name="set_signed_in">Sesión iniciada</string>
+    <string name="set_pro_key_title">Clave Pro de Scanly</string>
+    <string name="set_pro_key_active_devices">Activa · %1$d de %2$d dispositivos</string>
+    <string name="set_pro_key_active_here">Activa en este dispositivo</string>
+    <string name="set_delete_account_title">Eliminar cuenta</string>
+    <string name="set_delete_account_subtitle">Borra de forma permanente tu cuenta y tus datos</string>
+    <string name="set_section_customize">Personalizar</string>
+    <string name="set_look_and_feel_title">Aspecto y estilo</string>
+    <string name="set_look_and_feel_subtitle">Paleta de colores, tema oscuro, negro puro</string>
+    <string name="set_text_recognition_title">Reconocimiento de texto</string>
+    <string name="set_text_recognition_subtitle">%1$s · idiomas y preprocesamiento</string>
+    <string name="set_barcode_engine_title">Motor del lector de códigos de barras</string>
+    <string name="set_custom_endpoint_title">Endpoint personalizado</string>
+    <string name="set_custom_endpoint_subtitle">Conecta tu propio proveedor de IA · Pro</string>
+    <string name="set_section_about">Acerca de</string>
+    <string name="set_privacy_options_title">Opciones de privacidad</string>
+    <string name="set_privacy_options_subtitle">Gestiona tus opciones de consentimiento para anuncios</string>
+    <string name="set_rate_title">Valora Scanly</string>
+    <string name="set_rate_subtitle">Cuéntales a otros lo que opinas en Google Play</string>
+    <string name="set_privacy_policy_title">Política de privacidad</string>
+    <string name="set_privacy_policy_subtitle">Qué guarda Scanly y quién lo procesa</string>
+    <string name="set_terms_title">Condiciones del servicio</string>
+    <string name="set_developer_subtitle">\@Azyrn · Desarrollador</string>
+    <string name="set_telegram_subtitle">Informa de errores o pide funciones</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">¿Quitar tu clave?</string>
+    <string name="set_remove_key_message">Este dispositivo vuelve al plan gratuito y su plaza queda libre, así que puedes usar la clave en otro dispositivo. La clave sigue funcionando.</string>
+    <string name="set_remove_key_confirm">Quitar</string>
+    <string name="set_delete_account_dialog_title">¿Eliminar cuenta?</string>
+    <string name="set_delete_account_dialog_message">Esto borra de forma permanente tu cuenta de Scanly, tus datos de inicio de sesión y tus registros de uso en nuestros servidores. No se puede deshacer.\n\nLos escaneos guardados en este dispositivo no se ven afectados, y una suscripción Pro activa debe cancelarse por separado a través de Paddle.</string>
+    <string name="set_sign_out_dialog_title">¿Cerrar sesión?</string>
+    <string name="set_sign_out_dialog_message">Los escaneos con IA dejarán de funcionar hasta que vuelvas a iniciar sesión. Tu historial de escaneos y el reconocimiento de texto sin conexión se quedan en este dispositivo.</string>
+    <string name="set_sign_out">Cerrar sesión</string>
+    <string name="set_account_options">Opciones de la cuenta</string>
+    <string name="set_account_id_label">ID de la cuenta</string>
+    <string name="set_account_id_copied">ID de la cuenta copiado</string>
+    <string name="set_barcode_mlkit_description">Lector de Google en el dispositivo, con zoom automático</string>
+    <string name="set_barcode_zxing_description">Decodificador de código abierto, funciona sin GMS</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">Colores del fondo de pantalla</string>
+    <string name="set_palette_subtitle">Elige una paleta para cambiar los colores de toda la aplicación</string>
+    <string name="set_section_color_palette">Paleta de colores</string>
+    <string name="set_palette_dynamic">Dinámica</string>
+    <string name="set_section_personalize">Personalización</string>
+    <string name="set_dark_theme">Tema oscuro</string>
+    <string name="set_on">Activado</string>
+    <string name="set_off">Desactivado</string>
+    <string name="set_pure_black_title">Negro puro M3</string>
+    <string name="set_pure_black_subtitle">Ahorra batería en pantallas OLED</string>
+    <string name="set_palette_cerulean_wave">Ola cerúlea</string>
+    <string name="set_palette_lavender_volt">Lavanda eléctrica</string>
+    <string name="set_palette_amethyst_haze">Bruma amatista</string>
+    <string name="set_palette_emerald_grove">Bosque esmeralda</string>
+    <string name="set_palette_sunset_coral">Coral del atardecer</string>
+    <string name="set_palette_rose_blush">Rubor rosado</string>
+    <string name="set_palette_monochrome">Monocromo</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">Motor</string>
+    <string name="set_section_script">Escritura</string>
+    <string name="set_section_preprocessing">Preprocesamiento</string>
+    <string name="set_auto_rotate_title">Rotar página automáticamente</string>
+    <string name="set_auto_rotate_subtitle">Detecta páginas de lado y boca abajo</string>
+    <string name="set_fix_flipped_title">Corregir líneas volteadas</string>
+    <string name="set_fix_flipped_subtitle">Para páginas con líneas derechas y boca abajo. Poco fiable en árabe</string>
+    <string name="set_flatten_curved_title">Aplanar páginas curvadas</string>
+    <string name="set_downloading_percent">Descargando %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">Corrección de curvatura UVDoc · descarga de 30 MB</string>
+    <string name="set_uvdoc_ready_subtitle">Corrección de curvatura UVDoc: más lenta, para libros y pliegues</string>
+    <string name="set_section_document_structure">Estructura del documento</string>
+    <string name="set_detect_layout_title">Detectar diseño</string>
+    <string name="set_detect_layout_subtitle">Títulos, párrafos y orden de lectura en la vista Markdown</string>
+    <string name="set_recognize_tables_title">Reconocer tablas</string>
+    <string name="set_tables_missing_subtitle">Tablas SLANet · descarga de 8 MB</string>
+    <string name="set_tables_ready_subtitle">Reconstruye las tablas como cuadrículas que puedes exportar a CSV</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
+    <string name="set_script_delete_description">Eliminar %1$s</string>
+    <string name="set_script_download_description">Descargar %1$s</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">Función Pro</string>
+    <string name="set_pro_required_message">Conectar tu propio proveedor de IA forma parte de Scanly Pro. Los campos de abajo muestran exactamente lo que configurarías; se desbloquean cuando tengas Pro. Mejora tu plan, o canjea una clave que ya tengas, desde la sección Cuenta de Ajustes.</string>
+    <string name="set_custom_intro_body">Conecta cualquier proveedor de IA. Elige el protocolo que usa, pega la URL del endpoint, el nombre del modelo y tu clave de API, y luego prueba la conexión.</string>
+    <string name="set_custom_intro_hosts">La mayoría de los hosts son compatibles con OpenAI: Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude y Gemini tienen sus propios protocolos, y un servidor propio en tu red funciona con http sin cifrar.</string>
+    <string name="set_custom_intro_pdf_pages">Los PDF escaneados admiten hasta %1$d páginas a la vez, ya que se envían como imágenes en una sola solicitud. Los documentos de Office siguen necesitando Scanly AI.</string>
+    <string name="set_section_protocol">Protocolo</string>
+    <string name="set_section_endpoint">Endpoint</string>
+    <string name="set_endpoint_url_label">URL del endpoint</string>
+    <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI pone el ID de tu cuenta en la ruta: pega la URL completa, incluido ese ID.</string>
+    <string name="set_endpoint_hint_openai">Normalmente termina en /v1/chat/completions.</string>
+    <string name="set_endpoint_hint_anthropic">Normalmente termina en /v1/messages.</string>
+    <string name="set_endpoint_hint_gemini">Basta con el host: el modelo y la ruta se añaden por ti.</string>
+    <string name="set_model_label">Modelo</string>
+    <string name="set_model_hint">Escríbelo exactamente como lo muestra tu proveedor.</string>
+    <string name="set_api_key_label">Clave de API</string>
+    <string name="set_api_key_hint">Se guarda solo en este dispositivo. Nunca se envía a los servidores de Scanly.</string>
+    <string name="set_header_name_label">Nombre del encabezado</string>
+    <string name="set_header_name_hint">El encabezado en el que tu gateway espera la clave.</string>
+    <string name="set_auth_style_label">Enviar la clave como</string>
+    <string name="set_endpoint_verified">Verificado: este endpoint respondió correctamente.</string>
+    <string name="set_endpoint_unverified">Sin verificar: prueba la conexión antes de guardar.</string>
+    <string name="set_testing">Probando…</string>
+    <string name="set_test_connection">Probar conexión</string>
+    <string name="set_remove_endpoint">Quitar endpoint</string>
+    <string name="set_use_for_ai_title">Usar para las funciones de IA</string>
+    <string name="set_use_for_ai_verified">Los escaneos, la extracción de datos, la traducción, los borradores y los diseños usan tu endpoint en lugar de Scanly AI. Audio a texto siempre usa Scanly AI, ya que un endpoint de chat no puede recibir audio.</string>
+    <string name="set_use_for_ai_unverified">Verifica primero el endpoint.</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">Crea tu cuenta</string>
+    <string name="set_auth_welcome_title">Bienvenido de nuevo</string>
+    <string name="set_auth_intro">Inicia sesión para usar los escaneos con IA. El reconocimiento de texto y el escaneo de códigos de barras siguen funcionando sin conexión y sin cuenta.</string>
+    <string name="set_auth_email_label">Correo electrónico</string>
+    <string name="set_auth_password_hint">Mínimo 6 caracteres</string>
+    <string name="set_auth_forgot_password">¿Olvidaste la contraseña?</string>
+    <string name="set_auth_create_account">Crear cuenta</string>
+    <string name="set_auth_or">o</string>
+    <string name="set_auth_continue_google">Continuar con Google</string>
+    <string name="set_auth_have_account">¿Ya tienes una cuenta?</string>
+    <string name="set_auth_no_account">¿Aún no tienes cuenta?</string>
+    <string name="set_auth_create_one">Crear una</string>
+    <string name="set_account_deleted">Tu cuenta se ha eliminado.</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">Historial</string>
+    <string name="set_history_clear">Borrar historial</string>
+    <string name="set_history_clear_all">Borrar todo</string>
+    <string name="set_history_clear_message">¿Seguro que quieres eliminar todo el historial? Esta acción no se puede deshacer.</string>
+    <string name="set_history_delete_all">Eliminar todo</string>
+    <string name="set_history_empty">Todavía no hay historial</string>
+</resources>

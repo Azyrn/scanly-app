@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">صفحة %1$d</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">صفحة %1$d من %2$d</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">تُضاف الأرقام فوق كل صفحة. ولا يتغيّر المحتوى الأصلي.</string>
+    <string name="pdf_stamp_numbers_position">الموضع</string>
+    <string name="pdf_stamp_numbers_top_left">أعلى يسار</string>
+    <string name="pdf_stamp_numbers_top_center">أعلى المنتصف</string>
+    <string name="pdf_stamp_numbers_top_right">أعلى يمين</string>
+    <string name="pdf_stamp_numbers_bottom_left">أسفل يسار</string>
+    <string name="pdf_stamp_numbers_bottom_center">أسفل المنتصف</string>
+    <string name="pdf_stamp_numbers_bottom_right">أسفل يمين</string>
+    <string name="pdf_stamp_numbers_format">التنسيق</string>
+    <string name="pdf_stamp_numbers_start">البدء من الرقم</string>
+    <string name="pdf_stamp_numbers_first_page">الترقيم ابتداءً من الصفحة</string>
+    <string name="pdf_stamp_numbers_first_page_hint">تبقى الصفحات التي قبلها، مثل الغلاف، بدون أرقام.</string>
+    <string name="pdf_stamp_numbers_start_invalid">أدخل رقمًا من 0 إلى 99999.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">أدخل صفحة من 1 إلى %1$d.</string>
+    <string name="pdf_stamp_numbers_text_size">حجم النص</string>
+    <string name="pdf_stamp_numbers_margin">المسافة من الحافة</string>
+    <string name="pdf_stamp_numbers_margin_narrow">قريبة</string>
+    <string name="pdf_stamp_numbers_margin_normal">عادية</string>
+    <string name="pdf_stamp_numbers_margin_wide">بعيدة</string>
+    <string name="pdf_stamp_numbers_action">إضافة أرقام الصفحات</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">صغير</string>
+    <string name="pdf_stamp_size_medium">متوسط</string>
+    <string name="pdf_stamp_size_large">كبير</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">تُضاف العلامة المائية إلى كل صفحة.</string>
+    <string name="pdf_stamp_watermark_kind">العلامة المائية</string>
+    <string name="pdf_stamp_watermark_kind_text">نص</string>
+    <string name="pdf_stamp_watermark_kind_image">صورة</string>
+    <string name="pdf_stamp_watermark_text_label">نص العلامة المائية</string>
+    <string name="pdf_stamp_watermark_text_default">سرّي</string>
+    <string name="pdf_stamp_watermark_text_empty">اكتب النص المراد إضافته.</string>
+    <string name="pdf_stamp_watermark_pick_image">اختيار صورة</string>
+    <string name="pdf_stamp_watermark_change_image">تغيير الصورة</string>
+    <string name="pdf_stamp_watermark_image_chosen">الصورة المختارة: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">لم تُختر أي صورة بعد.</string>
+    <string name="pdf_stamp_watermark_placement">الموضع</string>
+    <string name="pdf_stamp_watermark_center">المنتصف</string>
+    <string name="pdf_stamp_watermark_top">أعلى</string>
+    <string name="pdf_stamp_watermark_bottom">أسفل</string>
+    <string name="pdf_stamp_watermark_tiled">متكرر</string>
+    <string name="pdf_stamp_watermark_rotation">الزاوية</string>
+    <string name="pdf_stamp_watermark_rotation_none">أفقي</string>
+    <string name="pdf_stamp_watermark_rotation_rising">صاعد بزاوية 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">هابط بزاوية 45°</string>
+    <string name="pdf_stamp_watermark_opacity">الشفافية</string>
+    <string name="pdf_stamp_watermark_opacity_light">25%</string>
+    <string name="pdf_stamp_watermark_opacity_medium">50%</string>
+    <string name="pdf_stamp_watermark_opacity_strong">75%</string>
+    <string name="pdf_stamp_watermark_size">الحجم</string>
+    <string name="pdf_stamp_watermark_layer">الطبقة</string>
+    <string name="pdf_stamp_watermark_layer_over">فوق المحتوى</string>
+    <string name="pdf_stamp_watermark_layer_over_body">مرئية دائمًا. قد تغطي بعض النص.</string>
+    <string name="pdf_stamp_watermark_layer_under">أسفل المحتوى</string>
+    <string name="pdf_stamp_watermark_layer_under_body">يبقى النص في الأعلى. وفي الصفحات الممسوحة ضوئيًا تخفيه الصورة تمامًا.</string>
+    <string name="pdf_stamp_watermark_action">إضافة العلامة المائية</string>
+</resources>

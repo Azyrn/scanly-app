@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">設定</string>
+    <string name="set_section_account">アカウント</string>
+    <string name="set_sign_in">サインイン</string>
+    <string name="set_sign_in_subtitle">AIスキャンにはサインインが必要です</string>
+    <string name="set_signed_in">サインイン済み</string>
+    <string name="set_pro_key_title">Scanly Pro キー</string>
+    <string name="set_pro_key_active_devices">有効 · %1$d / %2$d 台の端末</string>
+    <string name="set_pro_key_active_here">この端末で有効</string>
+    <string name="set_delete_account_title">アカウントを削除</string>
+    <string name="set_delete_account_subtitle">アカウントとデータを完全に消去します</string>
+    <string name="set_section_customize">カスタマイズ</string>
+    <string name="set_look_and_feel_title">外観</string>
+    <string name="set_look_and_feel_subtitle">カラーパレット、ダークテーマ、純粋な黒</string>
+    <string name="set_text_recognition_title">テキスト認識</string>
+    <string name="set_text_recognition_subtitle">%1$s · 文字体系と前処理</string>
+    <string name="set_barcode_engine_title">バーコードスキャナーエンジン</string>
+    <string name="set_custom_endpoint_title">カスタムエンドポイント</string>
+    <string name="set_custom_endpoint_subtitle">独自のAIプロバイダーに接続 · Pro</string>
+    <string name="set_section_about">情報</string>
+    <string name="set_privacy_options_title">プライバシーの設定</string>
+    <string name="set_privacy_options_subtitle">広告への同意設定を管理</string>
+    <string name="set_rate_title">Scanly を評価</string>
+    <string name="set_rate_subtitle">Google Play でご意見を共有してください</string>
+    <string name="set_privacy_policy_title">プライバシーポリシー</string>
+    <string name="set_privacy_policy_subtitle">Scanly が保存する情報と、その処理を行う主体</string>
+    <string name="set_terms_title">利用規約</string>
+    <string name="set_developer_subtitle">\@Azyrn · 開発者</string>
+    <string name="set_telegram_subtitle">バグの報告や機能のリクエスト</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">キーを削除しますか？</string>
+    <string name="set_remove_key_message">この端末は無料プランに戻り、枠が解放されるため、キーを別の端末で使用できます。キー自体は引き続き有効です。</string>
+    <string name="set_remove_key_confirm">削除</string>
+    <string name="set_delete_account_dialog_title">アカウントを削除しますか？</string>
+    <string name="set_delete_account_dialog_message">この操作により、当社サーバー上の Scanly アカウント、サインイン情報、利用記録が完全に削除されます。元に戻すことはできません。\n\nこの端末に保存されたスキャンには影響しません。有効な Pro サブスクリプションは、Paddle から別途キャンセルしてください。</string>
+    <string name="set_sign_out_dialog_title">サインアウトしますか？</string>
+    <string name="set_sign_out_dialog_message">再度サインインするまで、AIスキャンは使用できなくなります。スキャン履歴とオフラインのテキスト認識は、この端末に残ります。</string>
+    <string name="set_sign_out">サインアウト</string>
+    <string name="set_account_options">アカウントの設定</string>
+    <string name="set_account_id_label">アカウントID</string>
+    <string name="set_account_id_copied">アカウントIDをコピーしました</string>
+    <string name="set_barcode_mlkit_description">Google の端末内スキャナー。自動ズーム機能付き</string>
+    <string name="set_barcode_zxing_description">オープンソースのデコーダー。GMS がなくても動作します</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">壁紙の色</string>
+    <string name="set_palette_subtitle">パレットを選ぶと、アプリ全体の色が変わります</string>
+    <string name="set_section_color_palette">カラーパレット</string>
+    <string name="set_palette_dynamic">ダイナミック</string>
+    <string name="set_section_personalize">個人設定</string>
+    <string name="set_dark_theme">ダークテーマ</string>
+    <string name="set_on">オン</string>
+    <string name="set_off">オフ</string>
+    <string name="set_pure_black_title">純粋な黒 (M3)</string>
+    <string name="set_pure_black_subtitle">OLEDディスプレイで電池を節約</string>
+    <string name="set_palette_cerulean_wave">セルリアンウェーブ</string>
+    <string name="set_palette_lavender_volt">ラベンダーボルト</string>
+    <string name="set_palette_amethyst_haze">アメジストヘイズ</string>
+    <string name="set_palette_emerald_grove">エメラルドグローブ</string>
+    <string name="set_palette_sunset_coral">サンセットコーラル</string>
+    <string name="set_palette_rose_blush">ローズブラッシュ</string>
+    <string name="set_palette_monochrome">モノクローム</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">エンジン</string>
+    <string name="set_section_script">文字体系</string>
+    <string name="set_section_preprocessing">前処理</string>
+    <string name="set_auto_rotate_title">ページを自動回転</string>
+    <string name="set_auto_rotate_subtitle">横向きや上下逆さまのページを検出します</string>
+    <string name="set_fix_flipped_title">反転した行を修正</string>
+    <string name="set_fix_flipped_subtitle">正立の行と逆さまの行が混在するページ向けです。アラビア語では精度が低下します</string>
+    <string name="set_flatten_curved_title">曲がったページを平らにする</string>
+    <string name="set_downloading_percent">ダウンロード中 %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">UVDoc によるゆがみ補正 · 30 MB のダウンロード</string>
+    <string name="set_uvdoc_ready_subtitle">UVDoc によるゆがみ補正。処理は遅くなりますが、書籍や折り目に適しています</string>
+    <string name="set_section_document_structure">文書構造</string>
+    <string name="set_detect_layout_title">レイアウトを検出</string>
+    <string name="set_detect_layout_subtitle">Markdown 表示で見出し、段落、読み順を検出します</string>
+    <string name="set_recognize_tables_title">表を認識</string>
+    <string name="set_tables_missing_subtitle">SLANet 表モデル · 8 MB のダウンロード</string>
+    <string name="set_tables_ready_subtitle">表をグリッドとして再構成し、CSV にエクスポートできます</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
+    <string name="set_script_delete_description">%1$s を削除</string>
+    <string name="set_script_download_description">%1$s をダウンロード</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">Pro の機能</string>
+    <string name="set_pro_required_message">独自のAIプロバイダーへの接続は Scanly Pro の機能です。以下の項目は設定内容のプレビューで、Pro に登録すると入力できるようになります。設定画面の「アカウント」セクションからアップグレードするか、お持ちのキーを引き換えてください。</string>
+    <string name="set_custom_intro_body">任意のAIプロバイダーに接続できます。使用するプロトコルを選び、エンドポイントの URL、モデル名、API キーを貼り付けてから、接続をテストしてください。</string>
+    <string name="set_custom_intro_hosts">ほとんどのホストは OpenAI 互換です（Groq、OpenAI、OpenRouter、NVIDIA NIM、Together、Fireworks など）。Claude と Gemini は独自のプロトコルを使用します。ネットワーク内にセルフホストしたサーバーは、通常の http でも利用できます。</string>
+    <string name="set_custom_intro_pdf_pages">スキャンされた PDF は画像として1回のリクエストで送信されるため、一度に最大 %1$d ページまで送信できます。Office 文書には引き続き Scanly AI が必要です。</string>
+    <string name="set_section_protocol">プロトコル</string>
+    <string name="set_section_endpoint">エンドポイント</string>
+    <string name="set_endpoint_url_label">エンドポイントの URL</string>
+    <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI では、パスにアカウント ID を含めます。ID を含む完全な URL を貼り付けてください。</string>
+    <string name="set_endpoint_hint_openai">通常は /v1/chat/completions で終わります。</string>
+    <string name="set_endpoint_hint_anthropic">通常は /v1/messages で終わります。</string>
+    <string name="set_endpoint_hint_gemini">ホスト名だけで十分です。モデルとパスは自動的に追加されます。</string>
+    <string name="set_model_label">モデル</string>
+    <string name="set_model_hint">プロバイダーの一覧に表示されているとおりに正確に入力してください。</string>
+    <string name="set_api_key_label">API キー</string>
+    <string name="set_api_key_hint">この端末にのみ保存されます。Scanly のサーバーには送信されません。</string>
+    <string name="set_header_name_label">ヘッダー名</string>
+    <string name="set_header_name_hint">ゲートウェイがキーを受け取るヘッダーです。</string>
+    <string name="set_auth_style_label">キーの送信方法</string>
+    <string name="set_endpoint_verified">確認済み。このエンドポイントは正しく応答しました。</string>
+    <string name="set_endpoint_unverified">未確認。保存する前に接続をテストしてください。</string>
+    <string name="set_testing">テスト中…</string>
+    <string name="set_test_connection">接続をテスト</string>
+    <string name="set_remove_endpoint">エンドポイントを削除</string>
+    <string name="set_use_for_ai_title">AI 機能に使用</string>
+    <string name="set_use_for_ai_verified">スキャン、データ抽出、翻訳、下書き、デザインはすべて、Scanly AI ではなくこのエンドポイントを使用します。音声からテキストへの変換は、チャットエンドポイントが音声を扱えないため、常に Scanly AI を使用します。</string>
+    <string name="set_use_for_ai_unverified">先にエンドポイントを確認してください。</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">アカウントを作成</string>
+    <string name="set_auth_welcome_title">おかえりなさい</string>
+    <string name="set_auth_intro">AIスキャンを利用するにはサインインしてください。テキスト認識とバーコードスキャンは、アカウントなしでもオフラインで利用できます。</string>
+    <string name="set_auth_email_label">メールアドレス</string>
+    <string name="set_auth_password_hint">6文字以上</string>
+    <string name="set_auth_forgot_password">パスワードをお忘れですか？</string>
+    <string name="set_auth_create_account">アカウントを作成</string>
+    <string name="set_auth_or">または</string>
+    <string name="set_auth_continue_google">Google で続行</string>
+    <string name="set_auth_have_account">すでにアカウントをお持ちですか？</string>
+    <string name="set_auth_no_account">アカウントをお持ちではありませんか？</string>
+    <string name="set_auth_create_one">作成する</string>
+    <string name="set_account_deleted">アカウントを削除しました。</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">履歴</string>
+    <string name="set_history_clear">履歴を消去</string>
+    <string name="set_history_clear_all">すべて消去</string>
+    <string name="set_history_clear_message">すべての履歴を削除してもよろしいですか？この操作は元に戻せません。</string>
+    <string name="set_history_delete_all">すべて削除</string>
+    <string name="set_history_empty">履歴はまだありません</string>
+</resources>

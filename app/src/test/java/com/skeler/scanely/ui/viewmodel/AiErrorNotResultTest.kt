@@ -4,6 +4,7 @@ import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ai.FatalAiException
 import com.skeler.scanely.core.ai.backendFailure
 import com.skeler.scanely.core.network.BackendError
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -19,6 +20,7 @@ class AiErrorNotResultTest {
     /** What the app makes of the Worker's 402 when the month's credits are spent. */
     private fun quotaRefusal(): AiResult.Error {
         val failure = backendFailure(
+            EnglishStrings.context(),
             402,
             BackendError(
                 code = "quota_exceeded",
@@ -31,7 +33,7 @@ class AiErrorNotResultTest {
 
     @Test
     fun `a batch where every file was refused is an error the paywall can act on`() {
-        val combined = combineBatchResults(listOf(quotaRefusal(), quotaRefusal(), quotaRefusal()))
+        val combined = combineBatchResults(EnglishStrings.context(), listOf(quotaRefusal(), quotaRefusal(), quotaRefusal()))
 
         assertTrue("not saved as a success", combined is AiResult.Error)
         combined as AiResult.Error
@@ -47,7 +49,7 @@ class AiErrorNotResultTest {
 
     @Test
     fun `a batch that read something is still a success`() {
-        val combined = combineBatchResults(listOf(AiResult.Success("Page one"), quotaRefusal()))
+        val combined = combineBatchResults(EnglishStrings.context(), listOf(AiResult.Success("Page one"), quotaRefusal()))
 
         assertTrue(combined is AiResult.Success)
         assertTrue((combined as AiResult.Success).text.startsWith("Page one"))

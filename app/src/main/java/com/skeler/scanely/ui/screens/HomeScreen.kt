@@ -41,7 +41,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
@@ -90,6 +92,7 @@ private data class PendingPdfScan(val uri: Uri, val mode: AiMode, val pageCount:
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val scanViewModel: ScanViewModel = hiltViewModel(activity)
     val aiViewModel: AiScanViewModel = hiltViewModel(activity)
@@ -142,7 +145,7 @@ fun HomeScreen() {
             if (selectedUris.size > MAX_AI_FILES) {
                 scope.launch {
                     snackbarHostState.showSnackbar(
-                        "Up to $MAX_AI_FILES files per scan — using the first $MAX_AI_FILES."
+                        resources.getString(R.string.scr_home_ai_file_limit, MAX_AI_FILES)
                     )
                 }
             }
@@ -255,7 +258,7 @@ fun HomeScreen() {
                                 onClick = { showPaywall = true },
                                 label = {
                                     Text(
-                                        text = "${quota.pagesRemaining} credits",
+                                        text = stringResource(R.string.scr_home_credits, quota.pagesRemaining),
                                         style = MaterialTheme.typography.labelMedium,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
@@ -286,7 +289,7 @@ fun HomeScreen() {
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_settings_expressive),
-                                contentDescription = "Settings"
+                                contentDescription = stringResource(R.string.set_settings_title)
                             )
                         }
                     }
@@ -321,7 +324,7 @@ fun HomeScreen() {
                 verticalArrangement = homeArrangement(gap)
             ) {
                 Text(
-                    text = "What would you like to scan?",
+                    text = stringResource(R.string.scr_home_question),
                     style = MaterialTheme.typography.headlineSmall,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onBackground
@@ -332,8 +335,8 @@ fun HomeScreen() {
 
                 MainActionButton(
                     iconRes = R.drawable.ic_action_aperture,
-                    title = "Scan Document",
-                    subtitle = "Auto-crop, enhance & export PDF",
+                    title = stringResource(R.string.scr_home_scan_document),
+                    subtitle = stringResource(R.string.scr_home_scan_document_subtitle),
                     onClick = startDocumentScan,
                     accentTint = accents.document,
                     contentPadding = cardPadding
@@ -341,8 +344,8 @@ fun HomeScreen() {
 
                 MainActionButton(
                     iconRes = R.drawable.ic_action_gallery_stack,
-                    title = "Image to Text",
-                    subtitle = "From photos and screenshots",
+                    title = stringResource(R.string.scr_home_image_to_text),
+                    subtitle = stringResource(R.string.scr_home_image_to_text_subtitle),
                     onClick = { launchGalleryPicker() },
                     accentTint = accents.gallery,
                     contentPadding = cardPadding
@@ -350,8 +353,8 @@ fun HomeScreen() {
 
                 MainActionButton(
                     iconRes = R.drawable.ic_action_document,
-                    title = "PDF to Text",
-                    subtitle = "Scanned pages included",
+                    title = stringResource(R.string.scr_home_pdf_to_text),
+                    subtitle = stringResource(R.string.scr_home_pdf_to_text_subtitle),
                     onClick = { pdfLauncher() },
                     accentTint = accents.pdf,
                     contentPadding = cardPadding
@@ -359,8 +362,8 @@ fun HomeScreen() {
 
                 MainActionButton(
                     iconRes = R.drawable.ic_action_pdf_edit,
-                    title = "Edit PDF",
-                    subtitle = "Annotate, sign, merge & compress",
+                    title = stringResource(R.string.pdf_tool_edit),
+                    subtitle = stringResource(R.string.scr_home_edit_pdf_subtitle),
                     onClick = { navigator.go(Destination.PdfTools) },
                     accentTint = accents.edit,
                     contentPadding = cardPadding
@@ -368,8 +371,8 @@ fun HomeScreen() {
 
                 MainActionButton(
                     iconRes = R.drawable.ic_action_qr,
-                    title = "Scan Barcode/QR",
-                    subtitle = "QR, product codes, PDF417",
+                    title = stringResource(R.string.scr_home_scan_barcode),
+                    subtitle = stringResource(R.string.scr_home_scan_barcode_subtitle),
                     onClick = { navigator.go(Destination.BarcodeScanner) },
                     accentTint = accents.qr,
                     contentPadding = cardPadding
@@ -378,8 +381,8 @@ fun HomeScreen() {
                 if (showsAiScanCard(offeredFeatures)) {
                     MainActionButton(
                         iconRes = R.drawable.ic_action_spark,
-                        title = "AI Scan",
-                        subtitle = "Fields and tables, not just text",
+                        title = stringResource(R.string.cmp_ai_scan_title),
+                        subtitle = stringResource(R.string.scr_home_ai_scan_subtitle),
                         onClick = { if (scanViewModel.requireSignInForAi()) showAiBottomSheet = true },
                         accentTint = accents.ai,
                         contentPadding = cardPadding
@@ -418,7 +421,7 @@ fun HomeScreen() {
 
     pendingPageRange?.let { pending ->
         PageRangeDialog(
-            fileName = UriNames.displayName(context, pending.uri) ?: "This PDF",
+            fileName = UriNames.displayName(context, pending.uri) ?: stringResource(R.string.scr_home_this_pdf),
             totalPages = pending.pageCount,
             onConfirm = { range ->
                 pendingPageRange = null

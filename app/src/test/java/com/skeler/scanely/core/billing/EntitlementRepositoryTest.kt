@@ -4,6 +4,7 @@ import com.skeler.scanely.auth.domain.model.AuthUser
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.network.MeResponse
 import com.skeler.scanely.core.network.ScanlyApi
+import com.skeler.scanely.testing.EnglishStrings
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.intrinsics.COROUTINE_SUSPENDED
 import kotlin.coroutines.resume
@@ -30,7 +31,7 @@ class EntitlementRepositoryTest {
                 pending = it.rawArguments.last() as Continuation<MeResponse>
                 COROUTINE_SUSPENDED
             }.`when`(api).me()
-            val repository = EntitlementRepository(api, auth, scope)
+            val repository = EntitlementRepository(EnglishStrings.context(), api, auth, scope)
             assertNotNull(pending)
             users.value = null
             assertNull(repository.entitlement.value)
@@ -56,7 +57,7 @@ class EntitlementRepositoryTest {
                 pending += it.rawArguments.last() as Continuation<MeResponse>
                 COROUTINE_SUSPENDED
             }.`when`(api).me()
-            val repository = EntitlementRepository(api, auth, scope)
+            val repository = EntitlementRepository(EnglishStrings.context(), api, auth, scope)
             repository.refresh()
             val newer = mock(MeResponse::class.java)
             pending[1].resume(newer)

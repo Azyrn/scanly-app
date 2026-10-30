@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.network
 
+import com.skeler.scanely.testing.EnglishStrings
 import java.lang.reflect.Proxy
 import okhttp3.Interceptor
 import okhttp3.Protocol
@@ -31,7 +32,7 @@ class BackendAuthInterceptorTest {
     @Test fun `401 forces one fresh token and preserves idempotency key`() {
         val requests = mutableListOf<Request>()
         val refreshed = mutableListOf<Boolean>()
-        chain(listOf(401, 200), requests).proceedWithToken {
+        chain(listOf(401, 200), requests).proceedWithToken(EnglishStrings.context()) {
             refreshed += it
             if (it) "fresh" else "cached"
         }.use { assertEquals(200, it.code) }
@@ -42,14 +43,14 @@ class BackendAuthInterceptorTest {
 
     @Test fun `a second 401 is returned without looping`() {
         val requests = mutableListOf<Request>()
-        chain(listOf(401, 401), requests).proceedWithToken { "token" }.use { assertEquals(401, it.code) }
+        chain(listOf(401, 401), requests).proceedWithToken(EnglishStrings.context()) { "token" }.use { assertEquals(401, it.code) }
         assertEquals(2, requests.size)
     }
 
     @Test fun `quota and server failures are not replayed by auth`() {
         for (status in listOf(200, 402, 429, 500)) {
             val requests = mutableListOf<Request>()
-            chain(listOf(status), requests).proceedWithToken { "token" }.close()
+            chain(listOf(status), requests).proceedWithToken(EnglishStrings.context()) { "token" }.close()
             assertEquals(1, requests.size)
         }
     }

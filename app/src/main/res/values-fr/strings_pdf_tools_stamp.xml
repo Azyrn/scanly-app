@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">Page %1$d</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">Page %1$d sur %2$d</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">Les numéros sont ajoutés au-dessus de chaque page. Le contenu d\'origine n\'est pas modifié.</string>
+    <string name="pdf_stamp_numbers_position">Position</string>
+    <string name="pdf_stamp_numbers_top_left">Haut à gauche</string>
+    <string name="pdf_stamp_numbers_top_center">Haut au centre</string>
+    <string name="pdf_stamp_numbers_top_right">Haut à droite</string>
+    <string name="pdf_stamp_numbers_bottom_left">Bas à gauche</string>
+    <string name="pdf_stamp_numbers_bottom_center">Bas au centre</string>
+    <string name="pdf_stamp_numbers_bottom_right">Bas à droite</string>
+    <string name="pdf_stamp_numbers_format">Format</string>
+    <string name="pdf_stamp_numbers_start">Commencer au numéro</string>
+    <string name="pdf_stamp_numbers_first_page">Numéroter à partir de la page</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Les pages qui précèdent, comme une couverture, restent sans numéro.</string>
+    <string name="pdf_stamp_numbers_start_invalid">Saisissez un nombre de 0 à 99999.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">Saisissez une page de 1 à %1$d.</string>
+    <string name="pdf_stamp_numbers_text_size">Taille du texte</string>
+    <string name="pdf_stamp_numbers_margin">Distance du bord</string>
+    <string name="pdf_stamp_numbers_margin_narrow">Proche</string>
+    <string name="pdf_stamp_numbers_margin_normal">Normale</string>
+    <string name="pdf_stamp_numbers_margin_wide">Loin</string>
+    <string name="pdf_stamp_numbers_action">Ajouter les numéros de page</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">Petite</string>
+    <string name="pdf_stamp_size_medium">Moyenne</string>
+    <string name="pdf_stamp_size_large">Grande</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">Le filigrane est ajouté à chaque page.</string>
+    <string name="pdf_stamp_watermark_kind">Filigrane</string>
+    <string name="pdf_stamp_watermark_kind_text">Texte</string>
+    <string name="pdf_stamp_watermark_kind_image">Image</string>
+    <string name="pdf_stamp_watermark_text_label">Texte du filigrane</string>
+    <string name="pdf_stamp_watermark_text_default">CONFIDENTIEL</string>
+    <string name="pdf_stamp_watermark_text_empty">Saisissez le texte à apposer.</string>
+    <string name="pdf_stamp_watermark_pick_image">Choisir une image</string>
+    <string name="pdf_stamp_watermark_change_image">Changer d\'image</string>
+    <string name="pdf_stamp_watermark_image_chosen">Image choisie : %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">Aucune image choisie pour l\'instant.</string>
+    <string name="pdf_stamp_watermark_placement">Position</string>
+    <string name="pdf_stamp_watermark_center">Centre</string>
+    <string name="pdf_stamp_watermark_top">Haut</string>
+    <string name="pdf_stamp_watermark_bottom">Bas</string>
+    <string name="pdf_stamp_watermark_tiled">En mosaïque</string>
+    <string name="pdf_stamp_watermark_rotation">Angle</string>
+    <string name="pdf_stamp_watermark_rotation_none">Horizontal</string>
+    <string name="pdf_stamp_watermark_rotation_rising">Montant à 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">Descendant à 45°</string>
+    <string name="pdf_stamp_watermark_opacity">Opacité</string>
+    <string name="pdf_stamp_watermark_opacity_light">25 %</string>
+    <string name="pdf_stamp_watermark_opacity_medium">50 %</string>
+    <string name="pdf_stamp_watermark_opacity_strong">75 %</string>
+    <string name="pdf_stamp_watermark_size">Taille</string>
+    <string name="pdf_stamp_watermark_layer">Calque</string>
+    <string name="pdf_stamp_watermark_layer_over">Au-dessus du contenu</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Toujours visible. Peut masquer une partie du texte.</string>
+    <string name="pdf_stamp_watermark_layer_under">Sous le contenu</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Le texte reste au-dessus. Sur les pages numérisées, l\'image le masque complètement.</string>
+    <string name="pdf_stamp_watermark_action">Ajouter le filigrane</string>
+</resources>

@@ -13,6 +13,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.skeler.scanely.R
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.actions.ScanActionDetector
 import com.skeler.scanely.core.barcode.BarcodeEngine
@@ -72,7 +73,7 @@ class UnifiedScanService @Inject constructor(
     suspend fun scanImage(uri: Uri): UnifiedScanResult = withContext(Dispatchers.IO) {
         val bitmap = loadBitmapFromUri(uri)
             ?: return@withContext UnifiedScanResult(
-                textResult = OcrResult.Error("Failed to load image"),
+                textResult = OcrResult.Error(context.getString(R.string.ocr_err_load_image)),
                 barcodeActions = emptyList(),
                 textActions = emptyList()
             )
@@ -193,7 +194,7 @@ class UnifiedScanService @Inject constructor(
                 }
                 .addOnFailureListener { e ->
                     Log.e(TAG, "Text recognition failed", e)
-                    continuation.resume(OcrResult.Error(e.message ?: "Recognition failed"))
+                    continuation.resume(OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition)))
                 }
         }
 

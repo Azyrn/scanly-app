@@ -46,11 +46,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiFeature
 import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ocr.OcrResult
@@ -264,7 +266,7 @@ fun ResultsScreen() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Results",
+                        text = stringResource(R.string.scr_results_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Medium
                     )
@@ -353,7 +355,7 @@ fun ResultsScreen() {
                                 FilterChip(
                                     selected = !markdownMode && !jsonMode,
                                     onClick = { resultView = ResultView.PLAIN },
-                                    label = { Text("Original") }
+                                    label = { Text(stringResource(R.string.cmp_chip_original)) }
                                 )
                                 FilterChip(
                                     selected = markdownMode,
@@ -428,7 +430,7 @@ fun ResultsScreen() {
                         ) {
                             ResultsSectionHeader(
                                 icon = Icons.AutoMirrored.Rounded.Notes,
-                                title = "Extracted Text"
+                                title = stringResource(R.string.scr_results_extracted_text)
                             )
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 ExtractedTextActions(
@@ -461,7 +463,7 @@ fun ResultsScreen() {
                         )
                     }
                     else -> {
-                        EmptyResultContent(failure = scanFailureMessage(ocrState.result))
+                        EmptyResultContent(failure = scanFailureMessage(context, ocrState.result))
                     }
                 }
 
@@ -491,7 +493,7 @@ fun ResultsScreen() {
             ) {
                 Icon(
                     Icons.Rounded.Autorenew,
-                    contentDescription = "Rescan",
+                    contentDescription = stringResource(R.string.scr_results_rescan),
                     modifier = Modifier.size(26.dp)
                 )
             }
@@ -509,7 +511,7 @@ fun ResultsScreen() {
                 .statusBarsPadding()
                 .padding(start = 12.dp, top = 8.dp)
         ) {
-            Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+            Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.pdf_tools_back))
         }
     }
 }
@@ -520,7 +522,7 @@ private enum class ResultView { PLAIN, MARKDOWN, JSON }
 private fun copyToClipboard(context: Context, text: String) {
     val clipboard = context.getSystemService(ClipboardManager::class.java)
     clipboard.setPrimaryClip(ClipData.newPlainText("Extracted Text", text))
-    Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, context.getString(R.string.scr_copied_to_clipboard), Toast.LENGTH_SHORT).show()
 }
 
 /** An AI run that produced nothing, said plainly, with the button below as the way forward. */
@@ -533,13 +535,13 @@ private fun AiErrorContent(message: String, canRetry: Boolean) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "The scan didn't finish",
+            text = stringResource(R.string.scr_results_scan_failed),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.error
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = if (canRetry) "$message\n\nTap the button below to try again." else message,
+            text = if (canRetry) stringResource(R.string.scr_results_scan_failed_retry, message) else message,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center

@@ -1,5 +1,7 @@
 package com.skeler.scanely.docchat.data
 
+import android.content.Context
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ai.FatalAiException
 import com.skeler.scanely.core.ai.TransientAiException
@@ -8,6 +10,7 @@ import com.skeler.scanely.core.ai.backendFailure
 import com.skeler.scanely.core.ai.toAiException
 import com.skeler.scanely.core.network.TolerantJson
 import com.skeler.scanely.core.network.backendError
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
@@ -30,6 +33,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class AgentClient @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val api: ChatSyncApi,
     /** For the live events only: a client that keeps the stream open ([AgentEventsApi]). */
     @param:AgentEventsApi private val events: ChatSyncApi
@@ -39,14 +43,14 @@ class AgentClient @Inject constructor(
     suspend fun start(request: AgentTurnRequest): AgentTurnAccepted = try {
         api.startAgentTurn(request)
     } catch (e: HttpException) {
-        throw e.toAiException()
+        throw e.toAiException(context)
     }
 
     /** Stores one picture or PDF for [chatId]; the id later turns name it by. Refusals are the server's, final. */
     suspend fun upload(chatId: String, name: String, bytes: ByteArray): String = try {
         api.uploadAgentAttachment(chatId, name, bytes.toRequestBody(OCTET_STREAM)).id
     } catch (e: HttpException) {
-        throw e.toAiException()
+        throw e.toAiException(context)
     }
 
     /**
@@ -229,21 +233,21 @@ class AgentClient @Inject constructor(
                 if (!response.isSuccessful) throw failureOf(response)
                 val status = response.body()?.use { body ->
                     TolerantJson.decodeFromString(AgentStatusDto.serializer(), body.string())
-                } ?: throw TransientAiException("The assistant sent an empty reply.")
+                } ?: throw TransientAiException(context.getString(R.string.ai_err_assistant_empty))
                 status.steps.forEach { onStep(it.step, it.at) }
                 reportLog(status, onRows, onTasks)
                 if (response.code() == HTTP_ACCEPTED) delay(pollMs) else finished = status
             }
             finished
-        } ?: throw TransientAiException("The assistant is still working. Open this chat again in a moment.")
+        } ?: throw TransientAiException(context.getString(R.string.ai_err_assistant_working))
 
     /** The turn ran once; its failure is final, and the server said what it billed. */
     private fun failureOf(response: retrofit2.Response<ResponseBody>): FatalAiException {
         val error = HttpException(response).backendError()
-        val failure = backendFailure(response.code(), error)
+        val failure = backendFailure(context, response.code(), error)
         return failure as? FatalAiException ?: FatalAiException(
             AiResult.Error(
-                failure.message ?: "The assistant failed. Try again.",
+                failure.message ?: context.getString(R.string.ai_err_assistant_failed),
                 code = error?.code,
                 notCharged = error?.notCharged == true
             )

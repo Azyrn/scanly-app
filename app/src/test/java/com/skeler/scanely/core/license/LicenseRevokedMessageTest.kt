@@ -4,6 +4,7 @@ import com.skeler.scanely.auth.domain.model.AuthUser
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.network.LocalWorker
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
@@ -47,7 +48,7 @@ class LicenseRevokedMessageTest {
 
         val api = worker.api()
         // Signing in triggers the status check on its own, as it does at app start.
-        val repository = LicenseRepository(api, store, deviceId, auth, EntitlementRepository(api, auth))
+        val repository = LicenseRepository(EnglishStrings.context(), api, store, deviceId, auth, EntitlementRepository(EnglishStrings.context(), api, auth))
 
         verify(store, timeout(10_000)).clear()
         worker.awaitQuiet(quietMs = 500)

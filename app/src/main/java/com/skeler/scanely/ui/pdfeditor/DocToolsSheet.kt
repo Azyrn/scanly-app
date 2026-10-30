@@ -5,6 +5,7 @@ package com.skeler.scanely.ui.pdfeditor
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -66,6 +67,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -73,6 +75,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.pdfeditor.CompressionResult
 import com.skeler.scanely.core.pdfeditor.PdfFeature
@@ -101,16 +104,16 @@ private val CERTIFICATE_MIME_TYPES = arrayOf(
     "application/octet-stream"
 )
 
-private enum class ToolPane(val title: String, val feature: PdfFeature?) {
-    MENU("Document tools", null),
-    MERGE("Merge", PdfFeature.MERGE),
-    COMPRESS("Compress", PdfFeature.COMPRESS),
-    ENCRYPT("Password", PdfFeature.ENCRYPT),
-    DECRYPT("Remove password", PdfFeature.DECRYPT),
-    METADATA("Metadata", PdfFeature.REMOVE_METADATA),
-    SIGN("Sign document", PdfFeature.SIGNATURE),
-    VALIDATE("Signatures", PdfFeature.VALIDATE_SIGNATURES),
-    LIBRARY("Signature library", PdfFeature.SIGNATURE)
+private enum class ToolPane(@StringRes val title: Int, val feature: PdfFeature?) {
+    MENU(R.string.pe_pane_menu, null),
+    MERGE(R.string.pe_pane_merge, PdfFeature.MERGE),
+    COMPRESS(R.string.pe_pane_compress, PdfFeature.COMPRESS),
+    ENCRYPT(R.string.pe_pane_password, PdfFeature.ENCRYPT),
+    DECRYPT(R.string.pe_pane_remove_password, PdfFeature.DECRYPT),
+    METADATA(R.string.pe_pane_metadata, PdfFeature.REMOVE_METADATA),
+    SIGN(R.string.pe_pane_sign, PdfFeature.SIGNATURE),
+    VALIDATE(R.string.pe_pane_signatures, PdfFeature.VALIDATE_SIGNATURES),
+    LIBRARY(R.string.pe_pane_library, PdfFeature.SIGNATURE)
 }
 
 @Composable
@@ -138,12 +141,15 @@ fun DocToolsSheet(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (pane != ToolPane.MENU) {
                     IconButton(onClick = { pane = ToolPane.MENU }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                     Spacer(Modifier.width(4.dp))
                 }
                 Text(
-                    text = pane.title,
+                    text = stringResource(pane.title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -161,7 +167,7 @@ fun DocToolsSheet(
                     )
                     state.savedUri?.let { uri ->
                         TextButton(onClick = { ScanExporter.openPdf(activity, uri) }) {
-                            Text("Open")
+                            stringResource(R.string.chat_file_open)
                         }
                     }
                 }
@@ -196,14 +202,14 @@ fun DocToolsSheet(
 @Composable
 private fun ToolMenu(isPro: Boolean, onOpen: (ToolPane) -> Unit) {
     val entries = listOf(
-        Triple(ToolPane.MERGE, Icons.AutoMirrored.Rounded.MergeType, "Add pages from another PDF"),
-        Triple(ToolPane.COMPRESS, Icons.Rounded.Compress, "Presets, custom quality, or a size target"),
-        Triple(ToolPane.ENCRYPT, Icons.Rounded.Lock, "AES-256, with per-action permissions"),
-        Triple(ToolPane.DECRYPT, Icons.Rounded.LockOpen, "Remove the password from a copy"),
-        Triple(ToolPane.METADATA, Icons.Rounded.Info, "See and strip document info"),
-        Triple(ToolPane.SIGN, Icons.Rounded.HistoryEdu, "Sign with a certificate you already have"),
-        Triple(ToolPane.VALIDATE, Icons.Rounded.VerifiedUser, "Check embedded digital signatures"),
-        Triple(ToolPane.LIBRARY, Icons.Rounded.Gesture, "Reuse a captured signature")
+        Triple(ToolPane.MERGE, Icons.AutoMirrored.Rounded.MergeType, stringResource(R.string.pe_menu_merge_hint)),
+        Triple(ToolPane.COMPRESS, Icons.Rounded.Compress, stringResource(R.string.pe_menu_compress_hint)),
+        Triple(ToolPane.ENCRYPT, Icons.Rounded.Lock, stringResource(R.string.pe_menu_encrypt_hint)),
+        Triple(ToolPane.DECRYPT, Icons.Rounded.LockOpen, stringResource(R.string.pe_menu_decrypt_hint)),
+        Triple(ToolPane.METADATA, Icons.Rounded.Info, stringResource(R.string.pe_menu_metadata_hint)),
+        Triple(ToolPane.SIGN, Icons.Rounded.HistoryEdu, stringResource(R.string.pe_menu_sign_hint)),
+        Triple(ToolPane.VALIDATE, Icons.Rounded.VerifiedUser, stringResource(R.string.pe_menu_validate_hint)),
+        Triple(ToolPane.LIBRARY, Icons.Rounded.Gesture, stringResource(R.string.pe_menu_library_hint))
     )
 
     ConnectedGroup {
@@ -222,7 +228,7 @@ private fun ToolMenu(isPro: Boolean, onOpen: (ToolPane) -> Unit) {
                 Spacer(Modifier.width(16.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = target.title,
+                        text = stringResource(target.title),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium
                     )
@@ -269,7 +275,7 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
         ) {
             Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
-            Text("Add a PDF")
+            stringResource(R.string.pe_add_a_pdf)
         }
 
         Spacer(Modifier.height(12.dp))
@@ -289,31 +295,31 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "${candidate.pageCount} pages",
+                        text = stringResource(R.string.pe_merge_page_count, candidate.pageCount),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
                 IconButton(onClick = { vm.removeMerge(candidate) }) {
-                    Icon(Icons.Rounded.Delete, contentDescription = "Remove")
+                    Icon(Icons.Rounded.Delete, contentDescription = stringResource(R.string.pe_remove))
                 }
             }
         }
 
         if (state.merges.isNotEmpty()) {
-            PreviewLine("${state.pageCount} pages → ${state.mergedPageCount} pages")
+            PreviewLine(stringResource(R.string.pe_merge_page_change, state.pageCount, state.mergedPageCount))
             Spacer(Modifier.height(12.dp))
             Button(onClick = vm::stageMerge, modifier = Modifier.fillMaxWidth()) {
-                Text("Add to document")
+                stringResource(R.string.pe_add_to_document)
             }
         }
     }
 }
 
-private enum class CompressMode(val label: String) {
-    PRESETS("Presets"),
-    CUSTOM("Custom"),
-    TARGET("Target size")
+private enum class CompressMode(@StringRes val label: Int) {
+    PRESETS(R.string.pe_compress_presets),
+    CUSTOM(R.string.pe_compress_custom),
+    TARGET(R.string.pe_compress_target)
 }
 
 @Composable
@@ -322,7 +328,7 @@ private fun CompressPane(vm: DocToolsViewModel, state: DocToolsUiState) {
 
     Column {
         Text(
-            text = "Now ${formatBytes(state.sizeBytes)}",
+            text = stringResource(R.string.pe_compress_now, formatBytes(state.sizeBytes)),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -333,7 +339,7 @@ private fun CompressPane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 FilterChip(
                     selected = entry == mode,
                     onClick = { mode = entry },
-                    label = { Text(entry.label) }
+                    label = { Text(stringResource(entry.label)) }
                 )
             }
         }
@@ -356,7 +362,7 @@ private fun PresetCompression(vm: DocToolsViewModel, state: DocToolsUiState) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
             Spacer(Modifier.width(12.dp))
-            Text("Trying each level on this document…")
+            stringResource(R.string.pe_compress_trying_levels)
         }
         return
     }
@@ -390,8 +396,7 @@ private fun PresetCompression(vm: DocToolsViewModel, state: DocToolsUiState) {
     if (state.estimates.any { it.result?.helps == false }) {
         Spacer(Modifier.height(10.dp))
         PreviewLine(
-            "A level that can't beat the original is greyed out. Some documents are already packed " +
-                "as tightly as they go, and re-saving one only adds bytes."
+            stringResource(R.string.pe_compress_greyed_hint)
         )
     }
 }
@@ -400,7 +405,7 @@ private fun PresetCompression(vm: DocToolsViewModel, state: DocToolsUiState) {
 private fun ResultFigure(result: CompressionResult?) {
     if (result == null) {
         Text(
-            text = "Unavailable",
+            text = stringResource(R.string.pe_unavailable),
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -418,9 +423,9 @@ private fun ResultFigure(result: CompressionResult?) {
         )
         Text(
             text = if (result.helps) {
-                "${result.deltaPercent}%"
+                stringResource(R.string.pe_percent_value, result.deltaPercent)
             } else {
-                "+${result.deltaPercent}% — no saving"
+                stringResource(R.string.pe_delta_no_saving, result.deltaPercent)
             },
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -434,24 +439,23 @@ private fun CustomCompressionPane(vm: DocToolsViewModel, state: DocToolsUiState)
 
     Column {
         SettingSlider(
-            label = "Image quality",
+            label = stringResource(R.string.pe_compress_image_quality),
             value = custom.jpegQuality.toFloat(),
             range = CompressionSettings.MIN_QUALITY.toFloat()..CompressionSettings.MAX_QUALITY.toFloat(),
-            display = "${custom.jpegQuality}%",
+            display = stringResource(R.string.pe_percent_value, custom.jpegQuality),
             onChange = { vm.setCustomQuality(it.roundToInt()) }
         )
         SettingSlider(
-            label = "Only images wider than",
+            label = stringResource(R.string.pe_compress_min_edge_label),
             value = custom.minImageEdge.toFloat(),
             range = MIN_EDGE_RANGE,
-            display = "${custom.minImageEdge} px",
+            display = stringResource(R.string.pe_px_value, custom.minImageEdge),
             onChange = { vm.setCustomMinEdge(it.roundToInt()) }
         )
 
         Spacer(Modifier.height(8.dp))
         PreviewLine(
-            "Below that width an image is a logo or a rule, where re-encoding costs quality and " +
-                "saves nothing. Text and vector art are never touched at any setting."
+            stringResource(R.string.pe_compress_custom_hint)
         )
         Spacer(Modifier.height(14.dp))
 
@@ -459,20 +463,20 @@ private fun CustomCompressionPane(vm: DocToolsViewModel, state: DocToolsUiState)
             custom.isMeasuring -> Row(verticalAlignment = Alignment.CenterVertically) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(12.dp))
-                Text("Compressing at ${custom.jpegQuality}%…")
+                stringResource(R.string.pe_compressing_at, custom.jpegQuality)
             }
 
             custom.result == null -> Button(
                 onClick = vm::measureCustom,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Try these settings")
+                stringResource(R.string.pe_try_these_settings)
             }
 
             else -> {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "${formatBytes(state.sizeBytes)} → ",
+                        text = stringResource(R.string.pe_size_to_result, formatBytes(state.sizeBytes)),
                         style = MaterialTheme.typography.bodyMedium
                     )
                     ResultFigure(custom.result)
@@ -483,7 +487,13 @@ private fun CustomCompressionPane(vm: DocToolsViewModel, state: DocToolsUiState)
                     enabled = custom.result.helps,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (custom.result.helps) "Use these settings" else "No saving at these settings")
+                    Text(
+                        if (custom.result.helps) {
+                            stringResource(R.string.pe_use_these_settings)
+                        } else {
+                            stringResource(R.string.pe_no_saving_at_these_settings)
+                        }
+                    )
                 }
             }
         }
@@ -524,7 +534,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
 
     Column {
         Text(
-            text = "Get this under",
+            text = stringResource(R.string.pe_get_this_under),
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(Modifier.height(4.dp))
@@ -534,7 +544,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 megabytes = entered.filter { it.isDigit() || it == '.' }.take(6)
                 vm.clearTargetSearch()
             },
-            suffix = { Text("MB") },
+            suffix = { stringResource(R.string.pe_unit_mb) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Decimal,
@@ -553,25 +563,31 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
             search?.isRunning == true -> Row(verticalAlignment = Alignment.CenterVertically) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(12.dp))
-                Text("Searching — pass ${search.probes + 1}…")
+                stringResource(R.string.pe_searching_pass, search.probes + 1)
             }
 
             search?.best != null -> {
                 val best = search.best
                 Text(
                     text = if (search.reachedTarget) {
-                        "${formatBytes(best.effectiveBytes)} at ${qualityLabel(best)}."
+                        stringResource(
+                            R.string.pe_reached_size_at,
+                            formatBytes(best.effectiveBytes),
+                            qualityLabel(best)
+                        )
                     } else {
-                        "Couldn't reach that. The smallest this document goes is " +
-                            "${formatBytes(best.effectiveBytes)}, at ${qualityLabel(best)}."
+                        stringResource(
+                            R.string.pe_not_reached_smallest,
+                            formatBytes(best.effectiveBytes),
+                            qualityLabel(best)
+                        )
                     },
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(Modifier.height(6.dp))
                 if (!search.reachedTarget) {
                     PreviewLine(
-                        "Most of what's left is text and page structure, which compression can " +
-                            "repack but not shrink much further."
+                        stringResource(R.string.pe_compress_leftover_hint)
                     )
                     Spacer(Modifier.height(6.dp))
                 }
@@ -581,7 +597,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                     enabled = best.helps,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Use this")
+                    stringResource(R.string.pe_use_this)
                 }
             }
 
@@ -590,14 +606,13 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 enabled = targetBytes != null,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Find the settings")
+                stringResource(R.string.pe_find_the_settings)
             }
         }
 
         Spacer(Modifier.height(10.dp))
         PreviewLine(
-            "Each attempt compresses the document for real, so this takes a few seconds and the " +
-                "size it reports is the size you get."
+            stringResource(R.string.pe_compress_target_hint)
         )
     }
 }
@@ -620,18 +635,22 @@ private fun suggestedTargetMb(sizeBytes: Long): String {
 }
 
 private val CompressionLevel.label: String
-    get() = when (this) {
-        CompressionLevel.LOSSLESS -> "Lossless"
-        CompressionLevel.BALANCED -> "Balanced"
-        CompressionLevel.SMALLEST -> "Smallest"
-    }
+    @Composable get() = stringResource(
+        when (this) {
+            CompressionLevel.LOSSLESS -> R.string.pe_level_lossless
+            CompressionLevel.BALANCED -> R.string.pe_level_balanced
+            CompressionLevel.SMALLEST -> R.string.pe_level_smallest
+        }
+    )
 
 private val CompressionLevel.explanation: String
-    get() = when (this) {
-        CompressionLevel.LOSSLESS -> "Structure only — pixel-identical"
-        CompressionLevel.BALANCED -> "Images re-encoded at 75% quality"
-        CompressionLevel.SMALLEST -> "Images re-encoded at 45% quality"
-    }
+    @Composable get() = stringResource(
+        when (this) {
+            CompressionLevel.LOSSLESS -> R.string.pe_level_lossless_detail
+            CompressionLevel.BALANCED -> R.string.pe_level_balanced_detail
+            CompressionLevel.SMALLEST -> R.string.pe_level_smallest_detail
+        }
+    )
 
 private val MIN_EDGE_RANGE = 16f..800f
 
@@ -649,7 +668,7 @@ private fun EncryptPane(vm: DocToolsViewModel) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { stringResource(R.string.pdf_tool_password_label) },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -659,13 +678,13 @@ private fun EncryptPane(vm: DocToolsViewModel) {
         OutlinedTextField(
             value = confirm,
             onValueChange = { confirm = it },
-            label = { Text("Confirm password") },
+            label = { stringResource(R.string.pdf_tool_protect_confirm) },
             singleLine = true,
             isError = mismatch,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             supportingText = if (mismatch) {
-                { Text("The passwords don't match.") }
+                { Text(stringResource(R.string.pdf_tool_protect_mismatch)) }
             } else {
                 null
             },
@@ -674,15 +693,14 @@ private fun EncryptPane(vm: DocToolsViewModel) {
 
         Spacer(Modifier.height(12.dp))
 
-        PermissionSwitch("Allow printing", allowPrinting) { allowPrinting = it }
-        PermissionSwitch("Allow copying text", allowCopying) { allowCopying = it }
-        PermissionSwitch("Allow editing", allowModifying) { allowModifying = it }
+        PermissionSwitch(stringResource(R.string.pe_allow_printing), allowPrinting) { allowPrinting = it }
+        PermissionSwitch(stringResource(R.string.pe_allow_copying_text), allowCopying) { allowCopying = it }
+        PermissionSwitch(stringResource(R.string.pe_allow_editing), allowModifying) { allowModifying = it }
 
         Spacer(Modifier.height(8.dp))
 
         PreviewLine(
-            "AES-256. The saved copy will ask for this password to open. " +
-                "Scanly cannot recover it for you."
+            stringResource(R.string.pe_encrypt_hint)
         )
 
         Spacer(Modifier.height(12.dp))
@@ -706,7 +724,7 @@ private fun EncryptPane(vm: DocToolsViewModel) {
             enabled = password.isNotEmpty() && password == confirm,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Stage encryption")
+            stringResource(R.string.pe_stage_encryption)
         }
     }
 }
@@ -729,7 +747,7 @@ private fun DecryptPane(vm: DocToolsViewModel, state: DocToolsUiState) {
     Column {
         if (!state.isEncrypted) {
             Text(
-                text = "This document isn't password protected.",
+                text = stringResource(R.string.pe_not_password_protected),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -737,12 +755,11 @@ private fun DecryptPane(vm: DocToolsViewModel, state: DocToolsUiState) {
         }
 
         PreviewLine(
-            "The saved copy will open without a password. The original file on your device is " +
-                "left untouched."
+            stringResource(R.string.pe_decrypt_hint)
         )
         Spacer(Modifier.height(12.dp))
         Button(onClick = vm::stageDecryption, modifier = Modifier.fillMaxWidth()) {
-            Text("Remove password")
+            stringResource(R.string.pe_remove_password)
         }
     }
 }
@@ -756,7 +773,7 @@ private fun MetadataPane(vm: DocToolsViewModel, state: DocToolsUiState) {
         val entries = state.metadata?.entries.orEmpty()
         if (entries.isEmpty()) {
             Text(
-                text = "No document info is set on this file.",
+                text = stringResource(R.string.pe_no_document_info),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -780,15 +797,15 @@ private fun MetadataPane(vm: DocToolsViewModel, state: DocToolsUiState) {
         }
 
         Spacer(Modifier.height(12.dp))
-        PermissionSwitch("Also remove XMP metadata", stripXmp) { stripXmp = it }
+        PermissionSwitch(stringResource(R.string.pe_also_remove_xmp), stripXmp) { stripXmp = it }
         Spacer(Modifier.height(8.dp))
-        PreviewLine("Everything listed above is removed from the saved copy.")
+        PreviewLine(stringResource(R.string.pe_metadata_hint))
         Spacer(Modifier.height(12.dp))
         Button(
             onClick = { vm.stageMetadataStrip(stripXmp) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Remove metadata")
+            stringResource(R.string.pe_remove_metadata)
         }
     }
 }
@@ -804,9 +821,7 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
     Column {
         if (!state.canSign) {
             Text(
-                text = "This document is password-protected, so it can't be signed. Remove the " +
-                    "password first — encrypting rewrites the whole file, which would break any " +
-                    "signature on it.",
+                text = stringResource(R.string.pe_sign_password_protected_hint),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -818,8 +833,7 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
             signing.awaitingPassword -> CertificatePassword(vm, signing)
             else -> {
                 Text(
-                    text = "Sign with a PKCS#12 certificate (.p12 or .pfx) that you already have. " +
-                        "Scanly doesn't issue certificates.",
+                    text = stringResource(R.string.pe_sign_intro_hint),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -830,7 +844,7 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 ) {
                     Icon(Icons.Rounded.Add, contentDescription = null, Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Choose certificate")
+                    stringResource(R.string.pe_choose_certificate)
                 }
             }
         }
@@ -846,9 +860,7 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
 
         Spacer(Modifier.height(20.dp))
         Text(
-            text = "This proves the document hasn't changed since you signed it, and that the " +
-                "signature came from your certificate. It isn't a government-accredited DSC or " +
-                "an eIDAS qualified signature — those need a hardware token from a licensed CA.",
+            text = stringResource(R.string.pe_sign_disclaimer),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -869,7 +881,7 @@ private fun CertificatePassword(vm: DocToolsViewModel, signing: SigningState) {
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Certificate password") },
+            label = { stringResource(R.string.pe_certificate_password) },
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
@@ -880,19 +892,19 @@ private fun CertificatePassword(vm: DocToolsViewModel, signing: SigningState) {
         )
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Asked for every signature. Scanly never stores it.",
+            text = stringResource(R.string.pe_asked_every_signature),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(Modifier.height(16.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = vm::clearCertificate) { Text("Cancel") }
+            OutlinedButton(onClick = vm::clearCertificate) { stringResource(R.string.chat_cancel) }
             Button(
                 onClick = { vm.unlockCertificate(password) },
                 enabled = password.isNotEmpty(),
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Unlock")
+                stringResource(R.string.pe_unlock)
             }
         }
     }
@@ -914,21 +926,20 @@ private fun UnlockedCertificate(
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
         )
-        PreviewLine("Issued by ${shortName(identity.issuer)}")
+        PreviewLine(stringResource(R.string.pe_issued_by, shortName(identity.issuer)))
         // Built here rather than shared: SimpleDateFormat is not thread-safe, and one held at file
         // scope also freezes the locale it was loaded with.
         val dates = SimpleDateFormat("d MMM yyyy", LocalLocale.current.platformLocale)
         PreviewLine(
-            "Valid ${dates.format(identity.notBefore)} to ${dates.format(identity.notAfter)}"
+            stringResource(R.string.pe_valid_range, dates.format(identity.notBefore), dates.format(identity.notAfter))
         )
         if (identity.chain.size > 1) {
-            PreviewLine("${identity.chain.size} certificates in the chain")
+            PreviewLine(stringResource(R.string.pe_chain_count, identity.chain.size))
         }
         if (expired) {
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "This certificate is outside its validity window. It can still sign, but " +
-                    "readers will flag the signature.",
+                text = stringResource(R.string.pe_certificate_expired_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error
             )
@@ -939,7 +950,7 @@ private fun UnlockedCertificate(
         OutlinedTextField(
             value = signing.reason,
             onValueChange = vm::setSigningReason,
-            label = { Text("Reason (optional)") },
+            label = { stringResource(R.string.pe_reason_optional) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -947,14 +958,14 @@ private fun UnlockedCertificate(
         OutlinedTextField(
             value = signing.location,
             onValueChange = vm::setSigningLocation,
-            label = { Text("Location (optional)") },
+            label = { stringResource(R.string.pe_location_optional) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(Modifier.height(20.dp))
         Text(
-            text = "Visible mark",
+            text = stringResource(R.string.pe_visible_mark),
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.SemiBold
         )
@@ -962,7 +973,7 @@ private fun UnlockedCertificate(
 
         if (state.storedSignatures.isEmpty()) {
             Text(
-                text = "No saved signatures. The document will be signed without a visible mark.",
+                text = stringResource(R.string.pe_no_saved_signatures),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -977,7 +988,7 @@ private fun UnlockedCertificate(
                 FilterChip(
                     selected = signing.appearanceId == null,
                     onClick = { vm.setSigningAppearance(null) },
-                    label = { Text("None") }
+                    label = { stringResource(R.string.pdf_tool_img2pdf_margin_none) }
                 )
                 state.storedSignatures.forEach { stored ->
                     FilterChip(
@@ -1017,17 +1028,22 @@ private fun UnlockedCertificate(
                 )
                 Spacer(Modifier.width(10.dp))
             }
-            Text(if (signing.isSigning) "Signing" else "Sign document")
+            Text(
+                if (signing.isSigning) {
+                    stringResource(R.string.pe_signing)
+                } else {
+                    stringResource(R.string.pe_sign_document)
+                }
+            )
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            text = "Any staged edits are applied first, so the document can't be changed after " +
-                "it is signed.",
+            text = stringResource(R.string.pe_sign_staged_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(Modifier.height(8.dp))
-        TextButton(onClick = vm::clearCertificate) { Text("Use a different certificate") }
+        TextButton(onClick = vm::clearCertificate) { stringResource(R.string.pe_use_different_certificate) }
     }
 }
 
@@ -1037,7 +1053,7 @@ private fun PageAndPosition(vm: DocToolsViewModel, state: DocToolsUiState) {
 
     Column {
         Text(
-            text = "Page ${signing.pageIndex + 1} of ${state.pageCount}",
+            text = stringResource(R.string.pdf_stamp_numbers_format_page_of, signing.pageIndex + 1, state.pageCount),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -1060,7 +1076,7 @@ private fun PageAndPosition(vm: DocToolsViewModel, state: DocToolsUiState) {
                 FilterChip(
                     selected = signing.position == position,
                     onClick = { vm.setSigningPosition(position) },
-                    label = { Text(position.label) }
+                    label = { Text(stringResource(position.label)) }
                 )
             }
         }
@@ -1079,7 +1095,7 @@ private fun ValidatePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 if (state.isValidating) {
                     CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 } else {
-                    Text("Check signatures")
+                    stringResource(R.string.pe_check_signatures)
                 }
             }
             return@Column
@@ -1087,7 +1103,7 @@ private fun ValidatePane(vm: DocToolsViewModel, state: DocToolsUiState) {
 
         if (state.signatures.isEmpty()) {
             Text(
-                text = "This document has no digital signatures.",
+                text = stringResource(R.string.pe_no_digital_signatures),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -1128,7 +1144,7 @@ private fun SignatureReport(info: SignatureInfo) {
                 Text(
                     text = info.signerName.ifBlank {
                         info.certificates.firstOrNull()?.let { shortName(it.subject) }
-                            ?: info.fieldName.ifBlank { "Signature" }
+                            ?: info.fieldName.ifBlank { stringResource(R.string.pe_signature) }
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
@@ -1141,30 +1157,28 @@ private fun SignatureReport(info: SignatureInfo) {
 
         ReportLine(
             when (info.integrity) {
-                Integrity.INTACT -> "Content unchanged since signing"
-                Integrity.TAMPERED -> "Content has changed since signing"
-                Integrity.UNVERIFIABLE -> "Signature couldn't be read"
+                Integrity.INTACT -> stringResource(R.string.pe_integrity_intact)
+                Integrity.TAMPERED -> stringResource(R.string.pe_integrity_tampered)
+                Integrity.UNVERIFIABLE -> stringResource(R.string.pe_integrity_unverifiable)
             }
         )
         ReportLine(
             when (info.trust) {
-                TrustStatus.TRUSTED -> "Issuer chains to a trusted root"
+                TrustStatus.TRUSTED -> stringResource(R.string.pe_trust_trusted)
                 TrustStatus.UNTRUSTED_ISSUER ->
-                    "Issuer isn't in Scanly's trust store — the signature is cryptographically " +
-                        "valid, but its issuer can't be confirmed on this device"
+                    stringResource(R.string.pe_trust_untrusted_issuer)
                 TrustStatus.EXPIRED ->
-                    "The signing certificate had already expired when this was signed"
-                TrustStatus.NOT_YET_VALID -> "The signing certificate wasn't valid yet"
-                TrustStatus.UNKNOWN -> "Issuer could not be checked"
+                    stringResource(R.string.pe_trust_expired)
+                TrustStatus.NOT_YET_VALID -> stringResource(R.string.pe_trust_not_yet_valid)
+                TrustStatus.UNKNOWN -> stringResource(R.string.pe_trust_unknown)
             }
         )
         if (!info.coversWholeDocument) {
-            ReportLine("The signature doesn't cover the whole file — it was changed after signing")
+            ReportLine(stringResource(R.string.pe_not_whole_document))
         }
         if (info.expiredSinceSigning) {
             ReportLine(
-                "The certificate has expired since — normal for an older document, and it " +
-                    "doesn't weaken the signature"
+                stringResource(R.string.pe_expired_since_signing)
             )
         }
         info.signedAtMillis?.let {
@@ -1172,23 +1186,25 @@ private fun SignatureReport(info: SignatureInfo) {
                 .format(Date(it))
             ReportLine(
                 when (info.timeSource) {
-                    TimeSource.TIMESTAMP -> "Timestamped $at by a timestamping authority"
-                    TimeSource.SIGNED_ATTRIBUTE -> "Signed $at (signer's own clock)"
-                    TimeSource.DOCUMENT_DATE -> "Dated $at — unauthenticated"
-                    TimeSource.NONE -> "Signed $at"
+                    TimeSource.TIMESTAMP -> stringResource(R.string.pe_time_timestamp, at)
+                    TimeSource.SIGNED_ATTRIBUTE -> stringResource(R.string.pe_time_signed_clock, at)
+                    TimeSource.DOCUMENT_DATE -> stringResource(R.string.pe_time_document_date, at)
+                    TimeSource.NONE -> stringResource(R.string.pe_time_signed, at)
                 }
             )
         }
-        info.certificates.firstOrNull()?.let { ReportLine("Issued by ${shortName(it.issuer)}") }
+        info.certificates.firstOrNull()?.let { ReportLine(stringResource(R.string.pe_issued_by, shortName(it.issuer))) }
     }
 }
 
 private val SignatureVerdict.headline: String
-    get() = when (this) {
-        SignatureVerdict.VALID -> "Signature valid"
-        SignatureVerdict.UNKNOWN -> "Validity unknown"
-        SignatureVerdict.INVALID -> "Signature invalid"
-    }
+    @Composable get() = stringResource(
+        when (this) {
+            SignatureVerdict.VALID -> R.string.pe_verdict_valid
+            SignatureVerdict.UNKNOWN -> R.string.pe_verdict_unknown
+            SignatureVerdict.INVALID -> R.string.pe_verdict_invalid
+        }
+    )
 
 private val SignatureVerdict.icon: ImageVector
     get() = when (this) {
@@ -1226,7 +1242,7 @@ private fun LibraryPane(vm: DocToolsViewModel) {
     Column {
         if (state.storedSignatures.isEmpty()) {
             Text(
-                text = "No signatures saved yet. Capture one from the page editor's Sign tool.",
+                text = stringResource(R.string.pe_no_signatures_saved),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -1264,7 +1280,7 @@ private fun LibraryPane(vm: DocToolsViewModel) {
                     modifier = Modifier.weight(1f)
                 )
                 TextButton(onClick = { vm.deleteStoredSignature(signature.id) }) {
-                    Text("Delete")
+                    stringResource(R.string.chat_delete_confirm)
                 }
             }
         }

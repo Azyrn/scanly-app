@@ -1,5 +1,7 @@
 package com.skeler.scanely.core.pdfeditor
 
+import android.content.Context
+import com.skeler.scanely.R
 import java.io.File
 
 /**
@@ -42,6 +44,7 @@ internal data class SignedExport<T>(val saved: T?, val message: String)
  * failed write left Save disabled and signing again — a second signature — as the only way out.
  */
 internal suspend fun <T : Any> exportSigned(
+    context: Context,
     retry: ExportRetry,
     file: File,
     write: suspend (File) -> T?
@@ -50,9 +53,9 @@ internal suspend fun <T : Any> exportSigned(
     return SignedExport(
         saved,
         if (saved == null) {
-            "Signed, but couldn't write to Downloads. Tap Save to try again."
+            context.getString(R.string.pe_export_signed_failed)
         } else {
-            "Signed and saved to Downloads/Scanly"
+            context.getString(R.string.pe_export_signed_ok)
         }
     )
 }

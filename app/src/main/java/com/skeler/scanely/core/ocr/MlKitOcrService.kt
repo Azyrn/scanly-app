@@ -9,6 +9,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.skeler.scanely.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -33,12 +34,12 @@ class MlKitOcrService @Inject constructor(
     suspend fun recognizeFromUri(imageUri: Uri): OcrResult = withContext(Dispatchers.IO) {
         try {
             val bitmap = loadBitmapFromUri(imageUri)
-                ?: return@withContext OcrResult.Error("Failed to load image")
+                ?: return@withContext OcrResult.Error(context.getString(R.string.ocr_err_load_image))
 
             recognizeFromBitmap(bitmap)
         } catch (e: Exception) {
             Log.e(TAG, "Recognition failed", e)
-            OcrResult.Error(e.message ?: "Unknown error")
+            OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_unknown))
         }
     }
 
@@ -83,7 +84,7 @@ class MlKitOcrService @Inject constructor(
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "ML Kit processing failed", e)
-                continuation.resume(OcrResult.Error(e.message ?: "Recognition failed"))
+                continuation.resume(OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition)))
             }
     }
 
@@ -91,7 +92,7 @@ class MlKitOcrService @Inject constructor(
         try {
             if (pageIndex != null) {
                 val bitmap = pdfRendererHelper.renderPage(pdfUri, pageIndex)
-                    ?: return@withContext OcrResult.Error("Failed to render PDF page $pageIndex")
+                    ?: return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_page, pageIndex))
 
                 recognizeFromBitmap(bitmap)
             } else {
@@ -119,7 +120,7 @@ class MlKitOcrService @Inject constructor(
                     bitmap.recycle()
                 }
                 if (!opened) {
-                    return@withContext OcrResult.Error("Failed to render PDF pages")
+                    return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pages))
                 }
 
                 if (allText.isEmpty()) {
@@ -134,7 +135,7 @@ class MlKitOcrService @Inject constructor(
             }
         } catch (e: Exception) {
             Log.e(TAG, "PDF recognition failed", e)
-            OcrResult.Error(e.message ?: "PDF processing failed")
+            OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_pdf_processing))
         }
     }
 

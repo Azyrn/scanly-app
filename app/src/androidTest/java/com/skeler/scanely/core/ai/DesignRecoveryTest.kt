@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.ai
 
+import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ class DesignRecoveryTest {
     @Test fun waitsForExistingDesignToFinish() = runBlocking {
         var calls = 0
         val pdf = Response.success("pdf".toResponseBody())
-        val result = awaitDesignResponse(pollDelayMs = 1) {
+        val result = awaitDesignResponse(InstrumentationRegistry.getInstrumentation().targetContext, pollDelayMs = 1) {
             if (++calls < 3) pending() else pdf
         }
         assertSame(pdf, result)
@@ -30,7 +31,7 @@ class DesignRecoveryTest {
     @Test fun ordinaryBadRequestIsNotPolled() = runBlocking {
         var calls = 0
         try {
-            awaitDesignResponse(pollDelayMs = 1) {
+            awaitDesignResponse(InstrumentationRegistry.getInstrumentation().targetContext, pollDelayMs = 1) {
                 calls++
                 Response.error(400,
                     """{"error":{"code":"bad_request","message":"Invalid prompt"}}""".toResponseBody())
@@ -46,7 +47,7 @@ class DesignRecoveryTest {
         val started = CompletableDeferred<Unit>()
         var calls = 0
         val job = launch {
-            awaitDesignResponse {
+            awaitDesignResponse(InstrumentationRegistry.getInstrumentation().targetContext) {
                 calls++
                 started.complete(Unit)
                 pending()

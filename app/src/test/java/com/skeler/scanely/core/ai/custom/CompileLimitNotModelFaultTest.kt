@@ -4,6 +4,7 @@ import android.content.Context
 import com.skeler.scanely.core.network.CustomProviderApi
 import com.skeler.scanely.core.network.LocalWorker
 import com.skeler.scanely.core.ocr.PdfRendererHelper
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonObject
 import okhttp3.MediaType.Companion.toMediaType
@@ -43,6 +44,7 @@ class CompileLimitNotModelFaultTest {
     }
 
     private val designer = CustomDesigner(
+        EnglishStrings.context(),
         worker.api(),
         CustomScanner(mock(Context::class.java), endpoint, mock(PdfRendererHelper::class.java))
     )

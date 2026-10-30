@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_language_title">언어</string>
+    <string name="settings_language_system">시스템 기본값</string>
+    <string name="settings_language_cancel">취소</string>
+</resources>

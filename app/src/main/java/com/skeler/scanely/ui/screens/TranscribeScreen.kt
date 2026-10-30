@@ -84,6 +84,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
@@ -91,6 +93,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.skeler.scanely.R
 import com.skeler.scanely.core.transcribe.AudioRecorder
 import com.skeler.scanely.core.transcribe.TranscribeOptions
 import com.skeler.scanely.core.transcribe.TranscriptFormats
@@ -114,6 +117,7 @@ fun TranscribeScreen() {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val paywallViewModel: PaywallViewModel = hiltViewModel(activity)
     val paywallState by paywallViewModel.state.collectAsStateWithLifecycle()
+    val micDeniedMessage = stringResource(R.string.scr_transcribe_mic_denied)
 
     var showLanguages by remember { mutableStateOf(false) }
     var showKeyTerms by remember { mutableStateOf(false) }
@@ -165,10 +169,13 @@ fun TranscribeScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Audio to Text", fontWeight = FontWeight.SemiBold) },
+                title = { Text(stringResource(R.string.cmp_ai_mode_audio_title), fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -226,7 +233,7 @@ fun TranscribeScreen() {
             val unsaved = job as? TranscriptionRunner.State.SaveFailed
             val failure = (job as? TranscriptionRunner.State.Failed)?.error ?: unsaved?.error
             val message = failure?.message ?: state.pickError
-                ?: MIC_DENIED.takeIf { micDenied }
+                ?: micDeniedMessage.takeIf { micDenied }
             if (message != null) {
                 item(key = "error") {
                     ErrorCard(
@@ -258,7 +265,7 @@ fun TranscribeScreen() {
             if (state.recent.isNotEmpty()) {
                 item(key = "recent-title") {
                     Text(
-                        "Your transcripts",
+                        stringResource(R.string.scr_transcribe_your_transcripts),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 8.dp)
@@ -300,15 +307,19 @@ fun TranscribeScreen() {
     confirmDelete?.let { summary ->
         AlertDialog(
             onDismissRequest = { confirmDelete = null },
-            title = { Text("Delete transcript?") },
-            text = { Text("\"${summary.title}\" and its recording will be removed from this phone.") },
+            title = { Text(stringResource(R.string.scr_transcribe_delete_title)) },
+            text = { Text(stringResource(R.string.scr_transcribe_delete_body, summary.title)) },
             confirmButton = {
                 TextButton(onClick = {
                     viewModel.deleteTranscript(summary.id)
                     confirmDelete = null
-                }) { Text("Delete") }
+                }) { Text(stringResource(R.string.chat_delete_confirm)) }
             },
-            dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text("Cancel") } }
+            dismissButton = {
+                TextButton(
+                    onClick = { confirmDelete = null }
+                ) { Text(stringResource(R.string.chat_cancel)) }
+            }
         )
     }
 
@@ -331,14 +342,11 @@ fun TranscribeScreen() {
 
 private enum class Panel { START, RECORDING, WORKING, PENDING }
 
-private const val MIC_DENIED =
-    "Scanly needs microphone access to record. Allow it in Settings, or choose a file."
-
 @Composable
 private fun StartPanel(onRecord: () -> Unit, onPick: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(
-            "Record, or pick a voice memo, meeting or video.",
+            stringResource(R.string.scr_transcribe_start_hint),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -346,15 +354,15 @@ private fun StartPanel(onRecord: () -> Unit, onPick: () -> Unit) {
             BigAction(
                 modifier = Modifier.weight(1f),
                 icon = { Icon(Icons.Rounded.Mic, null, modifier = Modifier.size(30.dp)) },
-                title = "Record",
-                subtitle = "Keeps going with the screen off",
+                title = stringResource(R.string.scr_transcribe_record),
+                subtitle = stringResource(R.string.scr_transcribe_record_subtitle),
                 onClick = onRecord
             )
             BigAction(
                 modifier = Modifier.weight(1f),
                 icon = { Icon(Icons.Rounded.AudioFile, null, modifier = Modifier.size(30.dp)) },
-                title = "Choose file",
-                subtitle = "Audio or video",
+                title = stringResource(R.string.scr_transcribe_choose_file),
+                subtitle = stringResource(R.string.scr_transcribe_choose_file_subtitle),
                 onClick = onPick
             )
         }
@@ -440,7 +448,13 @@ private fun RecordingPanel(
                         )
                 )
                 Text(
-                    if (state.paused) "Paused" else "Recording",
+                    if (state.paused) {
+                        stringResource(
+                            R.string.scr_transcribe_paused
+                        )
+                    } else {
+                        stringResource(R.string.scr_transcribe_recording)
+                    },
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -452,7 +466,7 @@ private fun RecordingPanel(
             )
             LevelMeter(level = state.level)
             Text(
-                "Up to $maxMinutes minutes on your plan",
+                stringResource(R.string.scr_transcribe_up_to_minutes, maxMinutes),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -461,7 +475,10 @@ private fun RecordingPanel(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 FilledTonalIconButton(onClick = onDiscard, modifier = Modifier.size(56.dp)) {
-                    Icon(Icons.Rounded.DeleteOutline, contentDescription = "Discard recording")
+                    Icon(
+                        Icons.Rounded.DeleteOutline,
+                        contentDescription = stringResource(R.string.scr_transcribe_discard_recording)
+                    )
                 }
                 FilledIconButton(
                     onClick = onStop,
@@ -471,7 +488,11 @@ private fun RecordingPanel(
                         contentColor = MaterialTheme.colorScheme.onError
                     )
                 ) {
-                    Icon(Icons.Rounded.Stop, contentDescription = "Stop and keep", modifier = Modifier.size(36.dp))
+                    Icon(
+                        Icons.Rounded.Stop,
+                        contentDescription = stringResource(R.string.scr_transcribe_stop_and_keep),
+                        modifier = Modifier.size(36.dp)
+                    )
                 }
                 FilledTonalIconButton(
                     onClick = onTogglePause,
@@ -479,7 +500,13 @@ private fun RecordingPanel(
                 ) {
                     Icon(
                         if (state.paused) Icons.Rounded.PlayArrow else Icons.Rounded.Pause,
-                        contentDescription = if (state.paused) "Resume" else "Pause"
+                        contentDescription = if (state.paused) {
+                            stringResource(
+                                R.string.scr_resume
+                            )
+                        } else {
+                            stringResource(R.string.scr_pause)
+                        }
                     )
                 }
             }
@@ -515,11 +542,16 @@ private fun LevelMeter(level: Float) {
 @Composable
 private fun WorkingPanel(state: TranscriptionRunner.State.Working, onCancel: () -> Unit) {
     val (title, body) = when (state.phase) {
-        TranscriptionRunner.Phase.PREPARING -> "Preparing audio" to "Compressing it for upload on this phone."
-        TranscriptionRunner.Phase.UPLOADING -> "Uploading" to "Sending the recording to Scanly AI."
+        TranscriptionRunner.Phase.PREPARING -> stringResource(
+            R.string.scr_transcribe_preparing_title
+        ) to stringResource(R.string.scr_transcribe_preparing_body)
+        TranscriptionRunner.Phase.UPLOADING -> stringResource(
+            R.string.scr_transcribe_uploading_title
+        ) to stringResource(R.string.scr_transcribe_uploading_body)
         TranscriptionRunner.Phase.TRANSCRIBING ->
-            "Transcribing" to "Long recordings take a few minutes. You can leave this screen — " +
-                "the transcript is saved here when it's done."
+            stringResource(
+                R.string.scr_transcribe_transcribing_title
+            ) to stringResource(R.string.scr_transcribe_transcribing_body)
     }
     Card(
         shape = MaterialTheme.shapes.extraLarge,
@@ -539,7 +571,10 @@ private fun WorkingPanel(state: TranscriptionRunner.State.Working, onCancel: () 
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             if (state.cancellable) {
-                TextButton(onClick = onCancel, modifier = Modifier.align(Alignment.End)) { Text("Cancel") }
+                TextButton(
+                    onClick = onCancel,
+                    modifier = Modifier.align(Alignment.End)
+                ) { Text(stringResource(R.string.chat_cancel)) }
             }
         }
     }
@@ -573,21 +608,32 @@ private fun PendingPanel(state: TranscribeUiState, onTranscribe: () -> Unit, onR
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        if (pending.probed) TranscriptFormats.clock(pending.durationMs) else "Reading file…",
+                        if (pending.probed) {
+                            TranscriptFormats.clock(
+                                pending.durationMs
+                            )
+                        } else {
+                            stringResource(R.string.scr_transcribe_reading_file)
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
                 IconButton(onClick = onRemove) {
-                    Icon(Icons.Rounded.Close, contentDescription = "Remove")
+                    Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.pe_remove))
                 }
             }
             val estimate = state.estimatedCredits
             if (estimate != null) {
-                val balance = state.creditsRemaining?.let { " · you have $it" }.orEmpty()
-                val passes = if (state.options.passes > 1) " (auto-detect with formatting runs twice)" else ""
+                val balance = state.creditsRemaining?.let {
+                    stringResource(
+                        R.string.scr_transcribe_balance,
+                        it
+                    )
+                }.orEmpty()
+                val passes = if (state.options.passes > 1) stringResource(R.string.scr_transcribe_passes_note) else ""
                 Text(
-                    "About $estimate ${if (estimate == 1) "credit" else "credits"}$balance$passes",
+                    pluralStringResource(R.plurals.scr_transcribe_estimate, estimate, estimate) + balance + passes,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -596,7 +642,7 @@ private fun PendingPanel(state: TranscribeUiState, onTranscribe: () -> Unit, onR
                 onClick = onTranscribe,
                 enabled = pending.probed,
                 modifier = Modifier.fillMaxWidth().height(52.dp)
-            ) { Text("Transcribe", style = MaterialTheme.typography.titleMedium) }
+            ) { Text(stringResource(R.string.scr_transcribe_action), style = MaterialTheme.typography.titleMedium) }
         }
     }
 }
@@ -621,9 +667,25 @@ private fun ErrorCard(
             Column(Modifier.weight(1f)) {
                 Text(message, color = MaterialTheme.colorScheme.onErrorContainer)
                 Row {
-                    if (showUpgrade) TextButton(onClick = onUpgrade) { Text("See plans") }
-                    if (onRetrySave != null) TextButton(onClick = onRetrySave) { Text("Save again") }
-                    TextButton(onClick = onDismiss) { Text(if (onRetrySave != null) "Discard" else "Dismiss") }
+                    if (showUpgrade) TextButton(onClick = onUpgrade) { Text(stringResource(R.string.chat_see_plans)) }
+                    if (onRetrySave != null) {
+                        TextButton(
+                            onClick = onRetrySave
+                        ) { Text(stringResource(R.string.scr_transcribe_save_again)) }
+                    }
+                    TextButton(
+                        onClick = onDismiss
+                    ) {
+                        Text(
+                            if (onRetrySave != null) {
+                                stringResource(
+                                    R.string.scr_transcribe_discard
+                                )
+                            } else {
+                                stringResource(R.string.chat_attach_error_dismiss)
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -638,17 +700,23 @@ private fun OptionsCard(state: TranscribeUiState, onLanguage: () -> Unit, onKeyT
     ) {
         Column(Modifier.padding(vertical = 6.dp)) {
             NavRow(
-                title = "Language",
-                value = state.language?.let(TranscriptFormats::languageName) ?: "Auto-detect",
+                title = stringResource(R.string.settings_language_title),
+                value = state.language?.let(
+                    TranscriptFormats::languageName
+                ) ?: stringResource(R.string.scr_auto_detect),
                 onClick = onLanguage
             )
             HorizontalDivider(Modifier.padding(horizontal = 16.dp))
             NavRow(
-                title = "Key terms",
+                title = stringResource(R.string.scr_transcribe_key_terms),
                 value = if (state.keyTerms.isEmpty()) {
-                    "Names and words to spell right"
+                    stringResource(R.string.scr_transcribe_key_terms_empty)
                 } else {
-                    "${state.keyTerms.size} of ${TranscribeOptions.MAX_KEY_TERMS}"
+                    stringResource(
+                        R.string.scr_transcribe_key_terms_count,
+                        state.keyTerms.size,
+                        TranscribeOptions.MAX_KEY_TERMS
+                    )
                 },
                 onClick = onKeyTerms
             )
@@ -676,13 +744,12 @@ private fun NavRow(title: String, value: String, onClick: () -> Unit) {
 @Composable
 private fun PlanNote(state: TranscribeUiState, usesCustomEndpoint: Boolean) {
     val minutesPerCredit = state.secondsPerCredit / 60
+    val perCreditNote = stringResource(R.string.scr_transcribe_plan_note, minutesPerCredit, state.maxAudioMinutes)
+    val customEndpointNote = stringResource(R.string.scr_transcribe_custom_endpoint_note)
     val lines = buildList {
-        add(
-            "1 credit ≈ $minutesPerCredit minutes of audio · up to ${state.maxAudioMinutes} minutes " +
-                "per recording on your plan."
-        )
+        add(perCreditNote)
         if (usesCustomEndpoint) {
-            add("Audio to Text always runs on Scanly AI and uses your credits, even with your own endpoint on.")
+            add(customEndpointNote)
         }
     }
     Text(
@@ -715,7 +782,10 @@ private fun RecentRow(summary: TranscriptSummary, onOpen: () -> Unit, onDelete: 
                 val facts = listOfNotNull(
                     DateUtils.getRelativeTimeSpanString(summary.createdAt).toString(),
                     TranscriptFormats.clock(summary.durationMs),
-                    "${summary.speakerCount} speakers".takeIf { summary.speakerCount > 1 }
+                    stringResource(
+                        R.string.scr_transcribe_speakers,
+                        summary.speakerCount
+                    ).takeIf { summary.speakerCount > 1 }
                 )
                 Text(
                     facts.joinToString(" · "),
@@ -733,7 +803,10 @@ private fun RecentRow(summary: TranscriptSummary, onOpen: () -> Unit, onDelete: 
                 }
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Rounded.DeleteOutline, contentDescription = "Delete ${summary.title}")
+                Icon(
+                    Icons.Rounded.DeleteOutline,
+                    contentDescription = stringResource(R.string.set_script_delete_description, summary.title)
+                )
             }
         }
     }
@@ -750,13 +823,12 @@ private fun LanguageSheet(
     val sorted = remember(languages) { languages.sortedBy { TranscriptFormats.languageName(it) } }
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Text(
-            "Language",
+            stringResource(R.string.settings_language_title),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
         )
         Text(
-            "Pick the main language spoken. Other languages in the recording are still transcribed " +
-                "as spoken; this one decides how numbers and dates are written.",
+            stringResource(R.string.scr_transcribe_language_hint),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 24.dp)
@@ -764,8 +836,8 @@ private fun LanguageSheet(
         LazyColumn(Modifier.navigationBarsPadding()) {
             item {
                 LanguageRow(
-                    title = "Auto-detect",
-                    subtitle = "Finds the language itself, but runs twice, so it costs twice the credits.",
+                    title = stringResource(R.string.scr_auto_detect),
+                    subtitle = stringResource(R.string.scr_transcribe_auto_detect_subtitle),
                     selected = selected == null,
                     onClick = { onSelect(null) }
                 )
@@ -802,7 +874,11 @@ private fun LanguageRow(title: String, subtitle: String?, selected: Boolean, onC
             }
         }
         if (selected) {
-            Icon(Icons.Rounded.Check, contentDescription = "Selected", tint = MaterialTheme.colorScheme.primary)
+            Icon(
+                Icons.Rounded.Check,
+                contentDescription = stringResource(R.string.scr_selected),
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }
@@ -832,16 +908,23 @@ private fun KeyTermsSheet(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Key terms", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 Text(
-                    "${terms.size} / ${TranscribeOptions.MAX_KEY_TERMS}",
+                    stringResource(R.string.scr_transcribe_key_terms),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.weight(1f)
+                )
+                Text(
+                    stringResource(
+                        R.string.pdf_stamp_numbers_format_slash,
+                        terms.size,
+                        TranscribeOptions.MAX_KEY_TERMS
+                    ),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             Text(
-                "Names, product words and jargon the transcriber should spell exactly. Used for " +
-                    "every recording until you remove them. Paste several separated by commas.",
+                stringResource(R.string.scr_transcribe_key_terms_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -849,14 +932,14 @@ private fun KeyTermsSheet(
                 OutlinedTextField(
                     value = input,
                     onValueChange = { input = it },
-                    placeholder = { Text("e.g. Sebastian, Typst, Mistral OCR") },
+                    placeholder = { Text(stringResource(R.string.scr_transcribe_key_terms_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.weight(1f),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions(onDone = { add() })
                 )
                 Spacer(Modifier.width(8.dp))
-                FilledTonalButton(onClick = add, enabled = input.isNotBlank()) { Text("Add") }
+                FilledTonalButton(onClick = add, enabled = input.isNotBlank()) { Text(stringResource(R.string.pe_add)) }
             }
             note?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
             FlowRow(
@@ -871,7 +954,7 @@ private fun KeyTermsSheet(
                         trailingIcon = {
                             Icon(
                                 Icons.Rounded.Close,
-                                contentDescription = "Remove $term",
+                                contentDescription = stringResource(R.string.chat_remove, term),
                                 modifier = Modifier.size(InputChipDefaults.IconSize)
                             )
                         }
@@ -879,7 +962,10 @@ private fun KeyTermsSheet(
                 }
             }
             if (terms.isNotEmpty()) {
-                TextButton(onClick = onClear, modifier = Modifier.align(Alignment.End)) { Text("Clear all") }
+                TextButton(
+                    onClick = onClear,
+                    modifier = Modifier.align(Alignment.End)
+                ) { Text(stringResource(R.string.scr_clear_all)) }
             }
         }
     }

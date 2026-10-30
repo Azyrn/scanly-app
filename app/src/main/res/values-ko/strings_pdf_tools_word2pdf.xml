@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">휴대폰에서 문서를 바로 변환해요. 차트, 텍스트 상자, 수식은 아직 표시할 수 없어 제외돼요.</string>
+    <string name="pdf_tool_word_to_pdf_action">PDF로 변환</string>
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">차트 %d개는 제외됐어요.</item>
+        <item quantity="other">차트 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">SmartArt 다이어그램 %d개는 제외됐어요.</item>
+        <item quantity="other">SmartArt 다이어그램 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">텍스트 상자 또는 도형 %d개는 제외됐어요.</item>
+        <item quantity="other">텍스트 상자 또는 도형 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">수식 %d개는 제외됐어요.</item>
+        <item quantity="other">수식 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">포함된 개체 %d개는 제외됐어요.</item>
+        <item quantity="other">포함된 개체 %d개는 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">사진 %d장은 표시할 수 없는 형식이라 제외됐어요.</item>
+        <item quantity="other">사진 %d장은 표시할 수 없는 형식이라 제외됐어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">페이지보다 큰 표 행 %d개는 잘렸어요.</item>
+        <item quantity="other">페이지보다 큰 표 행 %d개는 잘렸어요.</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">처음 %d페이지만 변환됐어요.</item>
+        <item quantity="other">처음 %d페이지만 변환됐어요.</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">일부 글꼴은 비슷한 글꼴로 바뀌었어요.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">머리글과 바닥글은 제외됐어요.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">각주는 제외됐어요.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">다단 텍스트는 한 단으로 배치됐어요.</string>
+</resources>

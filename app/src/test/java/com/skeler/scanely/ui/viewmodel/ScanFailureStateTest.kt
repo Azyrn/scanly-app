@@ -5,6 +5,7 @@ import com.skeler.scanely.core.ocr.OcrBatchBuilder
 import com.skeler.scanely.core.ocr.OcrResult
 import com.skeler.scanely.core.ocr.scanFailureMessage
 import com.skeler.scanely.core.scan.UnifiedScanResult
+import com.skeler.scanely.testing.EnglishStrings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -28,7 +29,7 @@ class ScanFailureStateTest {
 
     @Test
     fun `files that could not be read are a failure, not an empty result`() {
-        val state = bothFilesUnreadable().toUiState(uri = null)
+        val state = bothFilesUnreadable().toUiState(EnglishStrings.context(), uri = null)
 
         assertNotNull("the screen is told the scan failed", state.failure)
         assertFalse("and does not fall through to 'nothing detected'", state.isEmpty)
@@ -36,7 +37,7 @@ class ScanFailureStateTest {
 
     @Test
     fun `a page with genuinely no text is still reported as empty`() {
-        val state = UnifiedScanResult(OcrResult.Empty, emptyList(), emptyList()).toUiState(null)
+        val state = UnifiedScanResult(OcrResult.Empty, emptyList(), emptyList()).toUiState(EnglishStrings.context(), null)
 
         assertNull(state.failure)
         assertTrue(state.isEmpty)
@@ -44,9 +45,9 @@ class ScanFailureStateTest {
 
     @Test
     fun `a text failure next to a readable code shows the code, not a failure screen`() {
-        val code = ScanAction.CopyText("4006381333931", "Copy")
+        val code = ScanAction.CopyText("4006381333931")
         val state = UnifiedScanResult(OcrResult.Error("Recognition failed"), listOf(code), emptyList())
-            .toUiState(null)
+            .toUiState(EnglishStrings.context(), null)
 
         assertEquals(listOf(code), state.barcodeActions)
         assertFalse(state.isEmpty)
@@ -55,6 +56,7 @@ class ScanFailureStateTest {
     @Test
     fun `the text engine still downloading says so, instead of blaming the image`() {
         val message = scanFailureMessage(
+            EnglishStrings.context(),
             OcrResult.Error("Waiting for the text optional module to be downloaded. Please wait.")
         )
 

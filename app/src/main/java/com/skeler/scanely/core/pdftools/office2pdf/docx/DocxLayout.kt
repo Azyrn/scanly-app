@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.docx
 
+import android.content.res.AssetManager
 import android.graphics.Canvas
 import android.graphics.pdf.PdfDocument
 import kotlinx.coroutines.currentCoroutineContext
@@ -18,10 +19,11 @@ import java.util.zip.ZipFile
  */
 internal class DocxLayout(
     zip: ZipFile,
+    assets: AssetManager,
     private val notes: DocxNotes,
     private val maxPages: Int = MAX_PAGES
 ) {
-    private val paragraphs = ParagraphFactory(DocxImages(zip), notes)
+    private val paragraphs = ParagraphFactory(DocxImages(zip), DocxFonts(assets), notes)
     private val tables = TableLayout(paragraphs)
 
     suspend fun render(document: DocxDocument, out: OutputStream, onProgress: (Float?) -> Unit) {
@@ -120,7 +122,7 @@ internal class DocxLayout(
         val fills = HashMap<Int, Int?>()
         for (index in table.rows.indices) {
             currentCoroutineContext().ensureActive()
-            val plan = tables.row(table.rows[index], edges, flow.box.contentHeight * IMAGE_PAGE_SHARE)
+            val plan = tables.row(table, table.rows[index], edges, flow.box.contentHeight * IMAGE_PAGE_SHARE)
             if (flow.y + plan.height > flow.box.bottom + EPSILON && !flow.atTop) flow.finishPage()
             flow.ensurePage()
             if (plan.height > flow.box.contentHeight + EPSILON) notes.clippedRows++

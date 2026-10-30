@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d файл не удалось прочитать, и он пропущен</item>
+        <item quantity="few">%d файла не удалось прочитать, и они пропущены</item>
+        <item quantity="many">%d файлов не удалось прочитать, и они пропущены</item>
+        <item quantity="other">%d файлов не удалось прочитать, и они пропущены</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d изображение уже было максимально компактным, поэтому оно не изменено</item>
+        <item quantity="few">%d изображения уже были максимально компактными, поэтому они не изменены</item>
+        <item quantity="many">%d изображений уже были максимально компактными, поэтому они не изменены</item>
+        <item quantity="other">%d изображений уже были максимально компактными, поэтому они не изменены</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">Рекомендуется</string>
+    <string name="pdf_tool_img_compress_recommended_body">Заметно меньше, но выглядит так же.</string>
+    <string name="pdf_tool_img_compress_strong">Сильное</string>
+    <string name="pdf_tool_img_compress_strong_body">Самые маленькие файлы. Мелкие детали могут стать мягче.</string>
+    <string name="pdf_tool_img_compress_light">Лёгкое</string>
+    <string name="pdf_tool_img_compress_light_body">Лучшее качество, но экономия меньше.</string>
+    <string name="pdf_tool_img_png_to_jpg">Преобразовать PNG в JPG для меньшего файла</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNG может потерять только скрытые детали. Прозрачные области станут белыми.</string>
+    <string name="pdf_tool_img_compress_action">Сжать изображения</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">Каждое изображение станет JPG. Прозрачные области станут белыми; GIF сохранит первый кадр.</string>
+    <string name="pdf_tool_img_to_jpg_action">Преобразовать в JPG</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Точные пиксели, файлы больше.</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">Выглядит так же, обычно меньше JPG.</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 цветов. Хорошо для графики, на фотографиях могут быть полосы.</string>
+    <string name="pdf_tool_img_from_jpg_action">Преобразовать изображения</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">По проценту</string>
+    <string name="pdf_tool_img_resize_by_size">По размеру</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">Макс. ширина (пикс.)</string>
+    <string name="pdf_tool_img_resize_height">Макс. высота (пикс.)</string>
+    <string name="pdf_tool_img_resize_size_hint">Введите ширину, высоту или оба значения.</string>
+    <string name="pdf_tool_img_resize_size_invalid">Введите число от 1 до %d.</string>
+    <string name="pdf_tool_img_resize_keep_aspect">Сохранить пропорции</string>
+    <string name="pdf_tool_img_resize_no_enlarge">Не увеличивать изображения</string>
+    <string name="pdf_tool_img_resize_action">Изменить размер изображений</string>
+</resources>

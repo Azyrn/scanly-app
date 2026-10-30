@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.compose.ui.geometry.Rect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.pdfeditor.PdfEditorSession
 import com.skeler.scanely.core.pdfeditor.PdfEntitlementGate
@@ -192,7 +193,7 @@ class PdfStudioViewModel @Inject constructor(
         val state = _uiState.value
         if (state.selection.isEmpty()) return
         if (state.selection.size >= state.pages.size) {
-            _uiState.update { it.copy(message = "A document needs at least one page.") }
+            _uiState.update { it.copy(message = appContext.getString(R.string.pe_document_needs_page)) }
             return
         }
         session.edits.push(PdfEdit.DeletePages(state.selection))
@@ -232,14 +233,18 @@ class PdfStudioViewModel @Inject constructor(
         val selection = state.pages.map { it.originalIndex }.filter { it in state.selection }
         if (selection.isEmpty() || state.isBusy) return
 
-        busy("Extracting") {
+        busy(appContext.getString(R.string.pe_busy_extracting)) {
             val extracted = session.extractPages(selection)
             if (extracted == null) {
-                fail("Couldn't extract those pages.")
+                fail(appContext.getString(R.string.pe_extract_failed))
             } else {
                 // Extraction reads the file on disk, so anything still staged isn't in it yet.
-                val note = if (state.isDirty) " — staged edits not included" else ""
-                publish(extracted, "${baseName()}_pages", "Extracted ${selection.size} pages$note")
+                val note = if (state.isDirty) appContext.getString(R.string.pe_staged_edits_not_included) else ""
+                publish(
+                    extracted,
+                    "${baseName()}_pages",
+                    appContext.getString(R.string.pe_extracted_pages, selection.size, note)
+                )
                 clearSelection()
             }
         }
@@ -266,7 +271,14 @@ class PdfStudioViewModel @Inject constructor(
         // Nothing staged, but the last save never reached Downloads: export it again.
         val unexported = exportRetry.unexported
         if (!state.isDirty && unexported != null) {
-            busy("Saving") { publish(unexported, baseName(), "Saved to Downloads/Scanly", retryable = true) }
+            busy(appContext.getString(R.string.pe_busy_saving)) {
+                publish(
+                    unexported,
+                    baseName(),
+                    appContext.getString(R.string.pdf_tool_saved),
+                    retryable = true
+                )
+            }
             return
         }
 
@@ -276,7 +288,7 @@ class PdfStudioViewModel @Inject constructor(
             return
         }
 
-        busy("Checking signatures") {
+        busy(appContext.getString(R.string.pe_busy_checking_signatures)) {
             val existing = validator.validate(document.file, document.password)
             if (existing.isEmpty()) {
                 saveConfirmed()
@@ -293,18 +305,18 @@ class PdfStudioViewModel @Inject constructor(
         if (!state.isDirty) return
         _uiState.update { it.copy(signaturesAtRisk = 0) }
 
-        busy("Saving") {
+        busy(appContext.getString(R.string.pe_busy_saving)) {
             val structural = session.edits.plan().structural
             when (val result = session.applyEdits()) {
                 is PdfEditResult.Saved -> {
-                    publish(result.file, baseName(), "Saved to Downloads/Scanly", retryable = true)
+                    publish(result.file, baseName(), appContext.getString(R.string.pdf_tool_saved), retryable = true)
                     session.adopt(result.file, passwordAfter(structural))
                     _thumbnails.value = emptyMap()
                     pending.clear()
                 }
                 is PdfEditResult.WrongPassword ->
                     _uiState.update { it.copy(needsPassword = true, passwordError = true) }
-                is PdfEditResult.NothingToDo -> fail("Nothing to save yet.")
+                is PdfEditResult.NothingToDo -> fail(appContext.getString(R.string.pe_nothing_to_save))
                 is PdfEditResult.Failed -> fail(result.message)
             }
         }
@@ -336,8 +348,8 @@ class PdfStudioViewModel @Inject constructor(
             val next = it.copy(canSave = canSave(it.isDirty, exportRetry))
             when {
                 uri != null -> next.copy(message = successMessage, savedUri = uri)
-                retryable -> next.copy(message = "Couldn't write to Downloads. Tap Save to try again.")
-                else -> next.copy(message = "Couldn't write to Downloads.")
+                retryable -> next.copy(message = appContext.getString(R.string.pe_write_failed_retry))
+                else -> next.copy(message = appContext.getString(R.string.pe_write_failed))
             }
         }
     }

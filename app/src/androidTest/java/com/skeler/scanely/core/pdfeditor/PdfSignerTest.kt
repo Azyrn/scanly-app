@@ -56,7 +56,7 @@ class PdfSignerTest {
     }
 
     private fun identity(): SigningIdentity {
-        val result = Pkcs12Loader.load(asset("signer.p12").readBytes(), "scanly".toCharArray())
+        val result = Pkcs12Loader.load(context, asset("signer.p12").readBytes(), "scanly".toCharArray())
         assertTrue("$result", result is Pkcs12Result.Loaded)
         return (result as Pkcs12Result.Loaded).identity
     }

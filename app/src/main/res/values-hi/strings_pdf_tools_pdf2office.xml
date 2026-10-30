@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf2office_word_body">टेक्स्ट, हेडिंग, सूचियाँ और टेबल Word में एडिट किए जा सकेंगे। स्कैन किए गए पेज तस्वीरों के रूप में जुड़ते हैं।</string>
+    <string name="pdf2office_word_action">Word में बदलें</string>
+    <string name="pdf2office_powerpoint_body">हर पेज एक स्लाइड बनता है, और उसका टेक्स्ट पेज वाली जगह पर एडिट होने वाले बॉक्स में रहता है। स्कैन किए गए पेज तस्वीरों के रूप में जुड़ते हैं।</string>
+    <string name="pdf2office_powerpoint_action">PowerPoint में बदलें</string>
+    <string name="pdf2office_excel_body">टेबल पंक्तियों और सेल में बदल जाती हैं, और जिस पेज पर टेबल है उसके लिए एक शीट बनती है। नंबर नंबर ही रहते हैं, ताकि आप उनका जोड़ निकाल सकें।</string>
+    <string name="pdf2office_excel_action">Excel में बदलें</string>
+    <string name="pdf2office_simplified_word">लेआउट सरल किया गया: टेक्स्ट, हेडिंग, सूचियाँ और टेबल एडिट हो सकते हैं, लेकिन फ़ॉन्ट, कॉलम, ड्रॉइंग और तस्वीरें नहीं लाई गईं।</string>
+    <string name="pdf2office_simplified_powerpoint">लेआउट सरल किया गया: टेक्स्ट पेज वाली जगह पर एडिट हो सकता है, लेकिन फ़ॉन्ट, ड्रॉइंग और तस्वीरें नहीं लाई गईं।</string>
+    <plurals name="pdf2office_scanned_as_images">
+        <item quantity="one">%d स्कैन किया गया पेज तस्वीर के रूप में जोड़ा गया।</item>
+        <item quantity="other">%d स्कैन किए गए पेज तस्वीरों के रूप में जोड़े गए।</item>
+    </plurals>
+    <plurals name="pdf2office_dense_pages">
+        <item quantity="one">बहुत घना %d पेज सादी लाइनों के रूप में बदला गया।</item>
+        <item quantity="other">बहुत घने %d पेज सादी लाइनों के रूप में बदले गए।</item>
+    </plurals>
+    <plurals name="pdf2office_unreadable_pages">
+        <item quantity="one">%d पेज पढ़ा नहीं जा सका और छोड़ दिया गया।</item>
+        <item quantity="other">%d पेज पढ़े नहीं जा सके और छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf2office_excel_scanned_skipped">
+        <item quantity="one">%d स्कैन किए गए पेज में कोई टेक्स्ट नहीं है, इसलिए उसे छोड़ दिया गया।</item>
+        <item quantity="other">%d स्कैन किए गए पेजों में कोई टेक्स्ट नहीं है, इसलिए उन्हें छोड़ दिया गया।</item>
+    </plurals>
+    <string name="pdf2office_excel_no_tables">कोई टेबल नहीं मिली; टेक्स्ट हर पंक्ति में एक-एक लाइन करके रखा गया।</string>
+    <string name="pdf2office_excel_sheet_page">पेज %1$d</string>
+    <string name="pdf2office_excel_sheet_text">टेक्स्ट</string>
+</resources>

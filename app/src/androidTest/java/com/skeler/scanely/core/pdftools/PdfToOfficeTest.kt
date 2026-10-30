@@ -2,9 +2,14 @@ package com.skeler.scanely.core.pdftools
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.skeler.scanely.core.ocr.paddle.PaddleLineReader
+import com.skeler.scanely.core.ocr.paddle.PaddleModelStore
+import com.skeler.scanely.core.ocr.paddle.PaddleOcrEngine
+import okhttp3.OkHttpClient
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.engine.PdfPageReader
 import com.skeler.scanely.core.pdfeditor.engine.QpdfEngine
+import com.skeler.scanely.core.pdftools.pdf2office.ModelTables
 import com.skeler.scanely.core.pdftools.pdf2office.OfficePageSource
 import com.skeler.scanely.core.pdftools.pdf2office.PdfToExcelJob
 import com.skeler.scanely.core.pdftools.pdf2office.PdfToPowerPointJob
@@ -39,9 +44,10 @@ class PdfToOfficeTest {
     private val reader = PdfPageReader(context)
     private val workspace = ToolWorkspace(context)
     private val engine = PdfToolEngine(QpdfEngine(), reader, workspace)
-    private val source = OfficePageSource(reader)
-    private val word = PdfToWordJob(source, workspace)
-    private val powerPoint = PdfToPowerPointJob(source, workspace)
+    private val ocr = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private val source = OfficePageSource(reader, ModelTables(reader, ocr))
+    private val word = PdfToWordJob(context, source, workspace, PaddleLineReader(ocr))
+    private val powerPoint = PdfToPowerPointJob(context, source, workspace, PaddleLineReader(ocr))
     private val excel = PdfToExcelJob(context, source, workspace)
 
     @After
@@ -52,7 +58,7 @@ class PdfToOfficeTest {
     // --- Word ---
 
     @Test
-    fun textPdfBecomesHeadingsAndParagraphs() = runBlocking {
+    fun textPdfKeepsThePageAndItsTextInPlace() = runBlocking {
         val document = open(pdf("report.pdf", listOf(textPage())))
         val progress = mutableListOf<Float?>()
 
@@ -64,35 +70,47 @@ class PdfToOfficeTest {
         val parts = parts(output.file)
         assertTrue(parts.keys.containsAll(listOf("[Content_Types].xml", "_rels/.rels", "word/document.xml")))
         val xml = parts.getValue("word/document.xml")
-        assertTrue(xml.contains("<w:pStyle w:val=\"Heading1\"/>"))
-        assertTrue(xml.contains("Quarterly Report"))
-        assertTrue(xml.contains("quick brown fox"))
-        assertTrue(xml.contains("second paragraph"))
-        assertTrue(ToolNote(R.string.pdf2office_simplified_word) in result.notes)
+        // The PDF's 595 x 842 pt page, with no margins, and the text in boxes anchored to the page.
+        assertTrue(xml.contains("<w:pgSz w:w=\"11900\" w:h=\"16840\"/>"))
+        assertTrue(xml.contains("w:left=\"0\""))
+        assertTrue(xml.contains("txBox=\"1\""))
+        assertTrue(xml.contains("relativeFrom=\"page\""))
+        val text = Regex("<w:t[^>]*>([^<]*)</w:t>").findAll(xml).joinToString("") { it.groupValues[1] }
+        assertTrue(text, text.contains("Quarterly Report"))
+        assertTrue(text, text.contains("quick brown fox"))
+        assertTrue(text, text.contains("second paragraph"))
+        // Only text on the page: nothing to put behind it.
+        assertFalse(parts.keys.any { it.startsWith("word/media/") })
+        assertTrue(result.notes.isEmpty())
         assertEquals(1f, progress.last())
     }
 
     @Test
-    fun numberGridBecomesAWordTable() = runBlocking {
+    fun numberGridKeepsEveryCellInPlace() = runBlocking {
         val document = open(pdf("grid.pdf", listOf(gridPage())))
 
         val xml = parts(word.convert(input(document)).outputs.single().file).getValue("word/document.xml")
 
-        assertTrue(xml.contains("<w:tbl>"))
-        assertTrue(xml.contains(">Region</w:t>"))
-        assertTrue(xml.contains(">4521</w:t>"))
+        val cells = Regex("<w:t[^>]*>([^<]*)</w:t>").findAll(xml).map { it.groupValues[1].trim() }.toList()
+        assertTrue(cells.toString(), "Region" in cells)
+        assertTrue(cells.toString(), "4521" in cells)
     }
 
     @Test
-    fun scannedPageIsAddedAsAnImage() = runBlocking {
+    fun aPictureOnThePageStaysAPictureWhereItWas() = runBlocking {
         val document = open(pdf("scan.pdf", listOf(textPage(), IMAGE_PAGE)))
 
         val result = word.convert(input(document))
 
         val parts = parts(result.outputs.single().file)
-        assertTrue(parts.containsKey("word/media/image1.jpg"))
-        assertTrue(parts.getValue("word/_rels/document.xml.rels").contains("media/image1.jpg"))
-        assertTrue(ToolNote(R.plurals.pdf2office_scanned_as_images, 1, plural = true) in result.notes)
+        val media = parts.keys.filter { it.startsWith("word/media/") }
+        assertEquals(media.toString(), 1, media.size)
+        assertTrue(parts.getValue("word/_rels/document.xml.rels").contains(media.single().removePrefix("word/")))
+        // The fixture draws a 451 x 698 pt image 72 pt from the left and bottom of an A4 page.
+        val xml = parts.getValue("word/document.xml")
+        assertTrue(xml.contains("<wp:positionH relativeFrom=\"page\"><wp:posOffset>${72 * 12_700}</wp:posOffset>"))
+        assertTrue(xml.contains("<wp:positionV relativeFrom=\"page\"><wp:posOffset>${72 * 12_700}</wp:posOffset>"))
+        assertTrue(xml.contains("<wp:extent cx=\"${451 * 12_700}\" cy=\"${698 * 12_700}\"/>"))
     }
 
     // --- PowerPoint ---
@@ -115,7 +133,7 @@ class PdfToOfficeTest {
         assertTrue(first.contains("Quarterly Report"))
         assertFalse("text slide got a page picture", first.contains("<p:pic>"))
         assertTrue(parts.getValue("ppt/slides/slide4.xml").contains("<p:pic>"))
-        assertTrue(ToolNote(R.string.pdf2office_simplified_powerpoint) in result.notes)
+        assertFalse("exact layout is not a simplified conversion", ToolNote(R.string.pdf2office_simplified_powerpoint) in result.notes)
     }
 
     // --- Excel ---
@@ -158,7 +176,7 @@ class PdfToOfficeTest {
         val run = full.newRun()
 
         val failure = failureOf {
-            PdfToWordJob(source, full).convert(ToolJobInput(listOf(document), emptyList(), run) {})
+            PdfToWordJob(context, source, full, lineReader(context)).convert(ToolJobInput(listOf(document), emptyList(), run) {})
         }
 
         assertEquals(ToolFailure.LowStorage, failure)
@@ -309,3 +327,6 @@ class PdfToOfficeTest {
         const val IMAGE_PAGE = "q 451 0 0 698 72 72 cm /Im0 Do Q\n"
     }
 }
+
+private fun lineReader(context: android.content.Context) =
+    PaddleLineReader(PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient())))

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typed signatures (page editor Sign tool) -->
+    <string name="signature_typed_open">署名を入力</string>
+    <string name="signature_typed_title">署名を入力してください</string>
+    <string name="signature_typed_name_label">お名前</string>
+    <string name="signature_typed_preview_empty">署名がここに表示されます。</string>
+    <string name="signature_typed_colour">インクの色</string>
+    <string name="signature_typed_colour_option">インクの色 %1$d</string>
+    <string name="signature_typed_save">保存</string>
+    <string name="signature_typed_cancel">キャンセル</string>
+    <string name="signature_typed_font_missing">署名用フォントを読み込めませんでした。</string>
+
+    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
+    <string name="font_licenses_title">オープンソースのライセンス</string>
+    <string name="font_licenses_subtitle">Scanly に同梱されているフォントとアイコン</string>
+    <string name="font_licenses_close">閉じる</string>
+    <string name="font_licenses_unreadable">このライセンスファイルを読み取れませんでした。</string>
+</resources>

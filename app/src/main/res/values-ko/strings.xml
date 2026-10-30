@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Scanly</string>
+    <string name="ai_build_documents_title">AI로 문서 만들기</string>
+    <string name="ai_build_documents_subtitle">설명하거나 파일을 첨부하세요: 송장, 이력서, 보고서, 슬라이드</string>
+    <string name="design_paywall_fallback">AI로 문서 만들기는 Pro에 포함되어 있어요.</string>
+    <string name="custom_provider_build_documents_note">AI로 문서 만들기는 두 단계로 진행돼요. 사용자의 모델이 문서를 작성하고 Scanly가 조판해요. 더 성능 좋은 모델을 쓰면 디자인이 더 좋아지고, 조판에는 평소 비용 대신 크레딧 1개만 사용돼요.</string>
+    <string name="plan_feature_build_documents">AI로 문서 만들기 — 레이아웃, 표, 스타일</string>
+    <string name="custom_provider_on_your_endpoint_note">스캔, 데이터 추출, 번역은 모두 이 기기에서 사용자의 제공자로 바로 전송돼요. Scanly 크레딧은 사용하지 않으며, 비용은 제공자에게 청구돼요.</string>
+</resources>

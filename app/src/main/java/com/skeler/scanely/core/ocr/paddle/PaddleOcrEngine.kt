@@ -52,12 +52,21 @@ class PaddleOcrEngine @Inject constructor(
     // Above 4 threads the little cores drag the batch out (~2x slower on big.LITTLE).
     private val threads = Runtime.getRuntime().availableProcessors().coerceIn(1, 4)
 
+    // The CPU arena keeps the largest buffers any crop or page shape ever needed and never gives
+    // them back (scan_ar_wiki peaked at 1.25 GB); shrinking it after each run keeps its speed
+    // within a run without the growth. Lives as long as the engine, like the environment.
+    private val runOptions = OrtSession.RunOptions().apply {
+        addRunConfigEntry("memory.enable_memory_arena_shrinkage", "cpu:0")
+    }
+
     // Closed as soon as the session is built: ORT copies the options into the session, and a
     // SessionOptions left open holds its native handle for the life of the process.
     private fun createSession(model: ByteArray): OrtSession =
         OrtSession.SessionOptions().use { options ->
             options.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT)
             options.setIntraOpNumThreads(threads)
+            // Memory patterns assume fixed shapes; every crop and page has its own.
+            options.setMemoryPatternOptimization(false)
             env.createSession(model, options)
         }
 
@@ -359,7 +368,7 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     private fun parseLayout(image: OnnxTensor, scale: OnnxTensor): List<LayoutRegion> =
-        layoutDet.run(mapOf("image" to image, "scale_factor" to scale)).use { result ->
+        layoutDet.run(mapOf("image" to image, "scale_factor" to scale), runOptions).use { result ->
             val output = result[0] as OnnxTensor
             val rows = output.info.shape[0].toInt()
             val flat = FloatArray(rows * 6).also { output.floatBuffer.get(it) }
@@ -396,7 +405,7 @@ class PaddleOcrEngine @Inject constructor(
             tensor,
             longArrayOf(1, 3, TABLE_SIDE.toLong(), TABLE_SIDE.toLong())
         ).use { input ->
-            tableRec.run(mapOf(tableRec.inputNames.first() to input)).use { result ->
+            tableRec.run(mapOf(tableRec.inputNames.first() to input), runOptions).use { result ->
                 val boxOut = result[0] as OnnxTensor
                 val structOut = result[1] as OnnxTensor
                 val steps = structOut.info.shape[1].toInt()
@@ -427,7 +436,7 @@ class PaddleOcrEngine @Inject constructor(
     ): T {
         val name = inputName ?: session.inputNames.first()
         OnnxTensor.createTensor(env, input, shape).use { tensor ->
-            session.run(mapOf(name to tensor)).use { result ->
+            session.run(mapOf(name to tensor), runOptions).use { result ->
                 val output = result[0] as OnnxTensor
                 return decode(output.floatBuffer, output.info.shape)
             }

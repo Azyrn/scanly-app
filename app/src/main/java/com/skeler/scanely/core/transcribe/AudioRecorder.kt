@@ -216,8 +216,12 @@ class RecordingService : Service() {
         val manager = getSystemService(NotificationManager::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             manager.createNotificationChannel(
-                NotificationChannel(CHANNEL_ID, "Recording", NotificationManager.IMPORTANCE_LOW).apply {
-                    description = "Shown while Audio to Text is recording"
+                NotificationChannel(
+                    CHANNEL_ID,
+                    getString(R.string.au_notif_channel_name),
+                    NotificationManager.IMPORTANCE_LOW
+                ).apply {
+                    description = getString(R.string.au_notif_channel_desc)
                 }
             )
         }
@@ -232,8 +236,8 @@ class RecordingService : Service() {
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_mic)
-            .setContentTitle("Recording")
-            .setContentText("Scanly is recording for Audio to Text. Tap to return.")
+            .setContentTitle(getString(R.string.au_notif_title))
+            .setContentText(getString(R.string.au_notif_text))
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(open)

@@ -1,16 +1,18 @@
 package com.skeler.scanely.core.license
 
+import android.content.Context
 import android.util.Log
+import com.skeler.scanely.R
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.di.BackendControl
 import com.skeler.scanely.core.network.BackendError
 import com.skeler.scanely.core.network.LicenseEntitlementDto
 import com.skeler.scanely.core.network.LicenseRequest
-import com.skeler.scanely.core.network.NO_CONNECTION_MESSAGE
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.TokenUnavailableException
 import com.skeler.scanely.core.network.backendError
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -67,6 +69,7 @@ sealed interface RestoreOutcome {
  */
 @Singleton
 class LicenseRepository @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     @param:BackendControl private val api: ScanlyApi,
     private val store: LicenseStore,
     private val deviceId: DeviceId,
@@ -96,11 +99,11 @@ class LicenseRepository @Inject constructor(
     suspend fun activate(rawKey: String): Boolean {
         val key = normalizeLicenseKey(rawKey)
         if (key.isBlank()) {
-            _state.value = _state.value.copy(error = "Enter your license key.")
+            _state.value = _state.value.copy(error = context.getString(R.string.lic_enter_key))
             return false
         }
         if (!authRepository.isSignedIn) {
-            _state.value = _state.value.copy(error = SIGN_IN_FIRST)
+            _state.value = _state.value.copy(error = context.getString(R.string.lic_sign_in_first))
             return false
         }
 
@@ -133,8 +136,8 @@ class LicenseRepository @Inject constructor(
      */
     suspend fun restore(): RestoreOutcome {
         if (!authRepository.isSignedIn) {
-            _state.value = _state.value.copy(error = SIGN_IN_FIRST)
-            return RestoreOutcome.Failed(SIGN_IN_FIRST)
+            _state.value = _state.value.copy(error = context.getString(R.string.lic_sign_in_first))
+            return RestoreOutcome.Failed(context.getString(R.string.lic_sign_in_first))
         }
 
         _state.value = _state.value.copy(isBusy = true, error = null, needsEmailConfirmation = false)
@@ -166,7 +169,7 @@ class LicenseRepository @Inject constructor(
         if (activate(key)) {
             RestoreOutcome.Restored(_state.value.entitlement?.tier)
         } else {
-            RestoreOutcome.Failed(_state.value.error ?: NO_CONNECTION_MESSAGE)
+            RestoreOutcome.Failed(_state.value.error ?: context.getString(R.string.net_no_connection))
         }
 
     /** Mails the confirmation link that unlocks the address half of [restore]. */
@@ -247,16 +250,16 @@ class LicenseRepository @Inject constructor(
     private fun Exception.userMessage(
         backendError: BackendError? = (this as? HttpException)?.backendError()
     ): String = when (this) {
-        is HttpException -> backendError?.message ?: "Couldn't check that key. Try again."
+        is HttpException -> backendError?.message ?: context.getString(R.string.lic_check_failed)
         // The session was rejected; its message says to sign in again. Must precede IOException,
         // which it extends — "Couldn't reach Scanly" sent people to check a connection that worked.
-        is TokenUnavailableException -> message ?: NO_CONNECTION_MESSAGE
+        is TokenUnavailableException -> message ?: context.getString(R.string.net_no_connection)
         // Covers a token that expired between the sign-in check and the call.
-        is IOException -> if (authRepository.isSignedIn) NO_CONNECTION_MESSAGE else SIGN_IN_FIRST
-        else -> NO_CONNECTION_MESSAGE
-    }
-
-    private companion object {
-        const val SIGN_IN_FIRST = "Sign in first, then redeem your key."
+        is IOException -> if (authRepository.isSignedIn) {
+            context.getString(R.string.net_no_connection)
+        } else {
+            context.getString(R.string.lic_sign_in_first)
+        }
+        else -> context.getString(R.string.net_no_connection)
     }
 }

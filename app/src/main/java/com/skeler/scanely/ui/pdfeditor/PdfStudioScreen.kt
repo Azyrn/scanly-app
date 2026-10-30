@@ -90,6 +90,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.onLongClick
@@ -100,6 +102,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
@@ -118,6 +121,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PdfStudioScreen() {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val activity = LocalActivity.current as ComponentActivity
     val navigator = LocalNavigator.current
     val vm: PdfStudioViewModel = hiltViewModel(activity)
@@ -164,7 +168,7 @@ fun PdfStudioScreen() {
         val saved = state.savedUri
         val result = snackbarHostState.showSnackbar(
             message = message,
-            actionLabel = saved?.let { "Open" },
+            actionLabel = saved?.let { resources.getString(R.string.chat_file_open) },
             duration = if (saved != null) SnackbarDuration.Long else SnackbarDuration.Short
         )
         if (result == SnackbarResult.ActionPerformed && saved != null) {
@@ -295,7 +299,7 @@ fun PdfStudioScreen() {
             onRestore = { paywallViewModel.restorePurchase() },
             onConfirmEmail = { paywallViewModel.confirmEmail() },
             onRetry = { paywallViewModel.refresh() },
-            reason = "Compressing, encrypting and editing text are part of Scanly Pro.",
+            reason = stringResource(R.string.pe_paywall_reason_studio),
             isFeatureLock = true
         )
     }
@@ -321,18 +325,18 @@ private fun StudioBar(
         },
         navigationIcon = {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = stringResource(R.string.pdf_tools_back))
             }
         },
         actions = {
             IconButton(onClick = onUndo, enabled = canUndo) {
-                Icon(Icons.AutoMirrored.Rounded.Undo, contentDescription = "Undo")
+                Icon(Icons.AutoMirrored.Rounded.Undo, contentDescription = stringResource(R.string.pe_undo))
             }
             IconButton(onClick = onRedo, enabled = canRedo) {
-                Icon(Icons.AutoMirrored.Rounded.Redo, contentDescription = "Redo")
+                Icon(Icons.AutoMirrored.Rounded.Redo, contentDescription = stringResource(R.string.pe_redo))
             }
             IconButton(onClick = onSelectAll) {
-                Icon(Icons.Rounded.SelectAll, contentDescription = "Select all")
+                Icon(Icons.Rounded.SelectAll, contentDescription = stringResource(R.string.pe_select_all))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -351,24 +355,32 @@ private fun SelectionBar(
     onExtract: () -> Unit
 ) {
     TopAppBar(
-        title = { Text("$count selected", style = MaterialTheme.typography.titleMedium) },
+        title = {
+            Text(
+                stringResource(R.string.pe_selected_count, count),
+                style = MaterialTheme.typography.titleMedium
+            )
+        },
         navigationIcon = {
             IconButton(onClick = onClear) {
-                Icon(Icons.Rounded.Close, contentDescription = "Clear selection")
+                Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.pe_clear_selection))
             }
         },
         actions = {
             IconButton(onClick = onRotate) {
-                Icon(Icons.Rounded.Rotate90DegreesCw, contentDescription = "Rotate")
+                Icon(
+                    Icons.Rounded.Rotate90DegreesCw,
+                    contentDescription = stringResource(R.string.pdf_tool_rotate_action)
+                )
             }
             IconButton(onClick = onCrop) {
-                Icon(Icons.Rounded.Crop, contentDescription = "Crop")
+                Icon(Icons.Rounded.Crop, contentDescription = stringResource(R.string.pe_crop))
             }
             IconButton(onClick = onExtract) {
-                Icon(Icons.Rounded.ContentCopy, contentDescription = "Extract to a new PDF")
+                Icon(Icons.Rounded.ContentCopy, contentDescription = stringResource(R.string.pe_extract_to_new_pdf))
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Rounded.DeleteOutline, contentDescription = "Delete")
+                Icon(Icons.Rounded.DeleteOutline, contentDescription = stringResource(R.string.chat_delete_confirm))
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -391,9 +403,9 @@ private fun StudioActionBar(
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            BarAction(Icons.Rounded.Edit, "Edit", onClick = onEdit)
-            BarAction(Icons.Rounded.Tune, "Tools", onClick = onTools)
-            BarAction(Icons.Rounded.SaveAlt, "Save", enabled = canSave, onClick = onSave)
+            BarAction(Icons.Rounded.Edit, stringResource(R.string.pe_edit), onClick = onEdit)
+            BarAction(Icons.Rounded.Tune, stringResource(R.string.pe_tools), onClick = onTools)
+            BarAction(Icons.Rounded.SaveAlt, stringResource(R.string.chat_save), enabled = canSave, onClick = onSave)
         }
     }
 }
@@ -664,7 +676,11 @@ private fun PageTile(
                         .padding(horizontal = 6.dp, vertical = 2.dp)
                 ) {
                     Text(
-                        text = if (page.isCropped) "Cropped" else "Edited",
+                        text = if (page.isCropped) {
+                            stringResource(R.string.pe_cropped)
+                        } else {
+                            stringResource(R.string.pe_edited)
+                        },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSecondaryContainer
                     )

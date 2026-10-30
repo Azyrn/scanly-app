@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Page numbers and Watermark, which stamp marks onto every page. -->
+<resources>
+    <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
+    <string name="pdf_stamp_numbers_format_plain">%1$d</string>
+    <string name="pdf_stamp_numbers_format_page">Sayfa %1$d</string>
+    <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">Sayfa %1$d / %2$d</string>
+
+    <!-- Page numbers: options -->
+    <string name="pdf_stamp_numbers_body">Numaralar her sayfanın üstüne eklenir. Özgün içerik değiştirilmez.</string>
+    <string name="pdf_stamp_numbers_position">Konum</string>
+    <string name="pdf_stamp_numbers_top_left">Sol üst</string>
+    <string name="pdf_stamp_numbers_top_center">Üst orta</string>
+    <string name="pdf_stamp_numbers_top_right">Sağ üst</string>
+    <string name="pdf_stamp_numbers_bottom_left">Sol alt</string>
+    <string name="pdf_stamp_numbers_bottom_center">Alt orta</string>
+    <string name="pdf_stamp_numbers_bottom_right">Sağ alt</string>
+    <string name="pdf_stamp_numbers_format">Biçim</string>
+    <string name="pdf_stamp_numbers_start">Şu numaradan başla</string>
+    <string name="pdf_stamp_numbers_first_page">Şu sayfadan numaralandır</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Kapak gibi önündeki sayfalar numaralandırılmaz.</string>
+    <string name="pdf_stamp_numbers_start_invalid">0 ile 99999 arasında bir sayı girin.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">1 ile %1$d arasında bir sayfa girin.</string>
+    <string name="pdf_stamp_numbers_text_size">Yazı boyutu</string>
+    <string name="pdf_stamp_numbers_margin">Kenardan uzaklık</string>
+    <string name="pdf_stamp_numbers_margin_narrow">Yakın</string>
+    <string name="pdf_stamp_numbers_margin_normal">Normal</string>
+    <string name="pdf_stamp_numbers_margin_wide">Uzak</string>
+    <string name="pdf_stamp_numbers_action">Sayfa numaraları ekle</string>
+
+    <!-- Shared size choices -->
+    <string name="pdf_stamp_size_small">Küçük</string>
+    <string name="pdf_stamp_size_medium">Orta</string>
+    <string name="pdf_stamp_size_large">Büyük</string>
+
+    <!-- Watermark: options -->
+    <string name="pdf_stamp_watermark_body">Filigran her sayfaya eklenir.</string>
+    <string name="pdf_stamp_watermark_kind">Filigran</string>
+    <string name="pdf_stamp_watermark_kind_text">Metin</string>
+    <string name="pdf_stamp_watermark_kind_image">Resim</string>
+    <string name="pdf_stamp_watermark_text_label">Filigran metni</string>
+    <string name="pdf_stamp_watermark_text_default">GİZLİ</string>
+    <string name="pdf_stamp_watermark_text_empty">Eklenecek metni yazın.</string>
+    <string name="pdf_stamp_watermark_pick_image">Resim seç</string>
+    <string name="pdf_stamp_watermark_change_image">Resmi değiştir</string>
+    <string name="pdf_stamp_watermark_image_chosen">Seçilen resim: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">Henüz bir resim seçilmedi.</string>
+    <string name="pdf_stamp_watermark_placement">Konum</string>
+    <string name="pdf_stamp_watermark_center">Ortada</string>
+    <string name="pdf_stamp_watermark_top">Üstte</string>
+    <string name="pdf_stamp_watermark_bottom">Altta</string>
+    <string name="pdf_stamp_watermark_tiled">Döşeli</string>
+    <string name="pdf_stamp_watermark_rotation">Açı</string>
+    <string name="pdf_stamp_watermark_rotation_none">Düz</string>
+    <string name="pdf_stamp_watermark_rotation_rising">45° yukarı</string>
+    <string name="pdf_stamp_watermark_rotation_falling">45° aşağı</string>
+    <string name="pdf_stamp_watermark_opacity">Opaklık</string>
+    <string name="pdf_stamp_watermark_opacity_light">%25</string>
+    <string name="pdf_stamp_watermark_opacity_medium">%50</string>
+    <string name="pdf_stamp_watermark_opacity_strong">%75</string>
+    <string name="pdf_stamp_watermark_size">Boyut</string>
+    <string name="pdf_stamp_watermark_layer">Katman</string>
+    <string name="pdf_stamp_watermark_layer_over">İçeriğin üstünde</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Her zaman görünür. Bazı metinlerin üstünü kapatabilir.</string>
+    <string name="pdf_stamp_watermark_layer_under">İçeriğin altında</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Metin en üstte kalır. Taranmış sayfalarda resim onu tamamen gizler.</string>
+    <string name="pdf_stamp_watermark_action">Filigran ekle</string>
+</resources>

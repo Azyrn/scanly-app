@@ -31,6 +31,7 @@ import com.skeler.scanely.core.network.NetworkObserver
 import com.skeler.scanely.core.network.PasswordResetRequest
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.ScanlyPublicApi
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +48,7 @@ class AuthException(message: String) : Exception(message)
 
 @Singleton
 class FirebaseAuthRepository @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val firebaseAuth: FirebaseAuth,
     private val credentialManager: CredentialManager,
     private val publicApi: ScanlyPublicApi,
@@ -98,7 +100,7 @@ class FirebaseAuthRepository @Inject constructor(
             if (credential !is CustomCredential ||
                 credential.type != GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
             ) {
-                throw AuthException("Unexpected credential type from Google.")
+                throw AuthException(context.getString(R.string.auth_err_credential_type))
             }
 
             val idToken = GoogleIdTokenCredential.createFrom(credential.data).idToken
@@ -116,14 +118,14 @@ class FirebaseAuthRepository @Inject constructor(
     override suspend fun sendEmailVerification(): Result<Unit> =
         runAuthCatching {
             val user = firebaseAuth.currentUser
-                ?: throw AuthException("Sign in first, then confirm your email.")
+                ?: throw AuthException(context.getString(R.string.auth_err_sign_in_to_confirm))
             user.sendEmailVerification().await()
         }
 
     override suspend fun refreshSession(): Result<Unit> =
         runAuthCatching {
             val user = firebaseAuth.currentUser
-                ?: throw AuthException("Sign in first.")
+                ?: throw AuthException(context.getString(R.string.auth_err_sign_in_first))
             user.reload().await()
             // reload() updates the account, not the cached token that carries `email_verified`.
             firebaseAuth.currentUser?.getIdToken(true)?.await()
@@ -159,27 +161,33 @@ class FirebaseAuthRepository @Inject constructor(
 
     private fun Exception.toUserMessage(): String = when (this) {
         is AuthException -> message.orEmpty()
-        is GetCredentialCancellationException -> "Sign-in cancelled."
+        is GetCredentialCancellationException -> context.getString(R.string.auth_err_cancelled)
         is NoCredentialException ->
-            "No Google account available on this device. Add one in Settings, then try again."
-        is GoogleIdTokenParsingException -> "Google returned a malformed token. Try again."
-        is GetCredentialException -> "Google sign-in is unavailable right now. Try again."
+            context.getString(R.string.auth_err_no_google_account)
+        is GoogleIdTokenParsingException -> context.getString(R.string.auth_err_bad_token)
+        is GetCredentialException -> context.getString(R.string.auth_err_google_unavailable)
         is FirebaseAuthWeakPasswordException ->
-            reason ?: "Password is too weak — use at least 6 characters."
+            reason ?: context.getString(R.string.auth_err_weak_password)
         is FirebaseAuthUserCollisionException ->
-            "An account already exists for that email. Sign in instead."
+            context.getString(R.string.auth_err_account_exists)
         // Preserve Firebase's account-enumeration protection.
         is FirebaseAuthInvalidCredentialsException,
-        is FirebaseAuthInvalidUserException -> "Incorrect email or password."
-        is FirebaseNetworkException -> "No internet connection."
-        is FirebaseTooManyRequestsException -> "Too many attempts. Try again later."
+        is FirebaseAuthInvalidUserException -> context.getString(R.string.auth_err_wrong_credentials)
+        is FirebaseNetworkException -> context.getString(R.string.auth_err_offline)
+        is FirebaseTooManyRequestsException -> context.getString(R.string.auth_err_too_many)
         // Prefer the backend's user-facing error message.
-        is HttpException -> backendMessage() ?: "Something went wrong. Try again."
+        is HttpException -> backendMessage() ?: context.getString(R.string.auth_err_generic)
         // An IOException is anything below HTTP: refused, reset, TLS, DNS, timeout. Only the
         // device knows whether that is because it is offline.
         is IOException ->
-            if (networkObserver.isCurrentlyOnline()) SERVER_UNREACHABLE else "No internet connection."
-        else -> message ?: "Something went wrong. Try again."
+            context.getString(
+                if (networkObserver.isCurrentlyOnline()) {
+                    R.string.auth_err_server_unreachable
+                } else {
+                    R.string.auth_err_offline
+                }
+            )
+        else -> message ?: context.getString(R.string.auth_err_generic)
     }
 
     private fun HttpException.backendMessage(): String? = try {
@@ -190,15 +198,17 @@ class FirebaseAuthRepository @Inject constructor(
         null
     }
 
+    private fun com.google.firebase.auth.AuthResult.requireUser(): AuthUser =
+        user?.toAuthUser() ?: throw AuthException(context.getString(R.string.auth_err_no_account))
+
+    private suspend fun <T> Task<T>.await(): T = awaitWithin(AUTH_WAIT_MS) {
+        AuthException(context.getString(R.string.auth_err_too_slow))
+    }
+
     private companion object {
         val backendJson = Json { ignoreUnknownKeys = true }
-        const val SERVER_UNREACHABLE =
-            "Couldn't reach the Scanly server. Your connection looks fine — try again in a few minutes."
     }
 }
-
-private fun com.google.firebase.auth.AuthResult.requireUser(): AuthUser =
-    user?.toAuthUser() ?: throw AuthException("Sign-in succeeded but returned no account.")
 
 private fun FirebaseUser.toAuthUser() = AuthUser(
     uid = uid,
@@ -212,7 +222,3 @@ private fun FirebaseUser.toAuthUser() = AuthUser(
  * without a deadline the sign-in button spun with no way out.
  */
 private const val AUTH_WAIT_MS = 30_000L
-
-private suspend fun <T> Task<T>.await(): T = awaitWithin(AUTH_WAIT_MS) {
-    AuthException("Signing in is taking too long. Check your connection and try again.")
-}

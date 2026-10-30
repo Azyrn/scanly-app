@@ -145,7 +145,7 @@ class PdfEditorSession @Inject constructor(
         }
         if (copied.isFailure) {
             Log.w(TAG, "Could not copy $uri into the editor workspace", copied.exceptionOrNull())
-            return@withContext PdfOpenResult.Failed("Couldn't open that file.")
+            return@withContext PdfOpenResult.Failed(context.getString(R.string.pe_err_open_file))
         }
 
         val name = UriNames.displayName(context, uri) ?: "Document.pdf"
@@ -156,7 +156,7 @@ class PdfEditorSession @Inject constructor(
     suspend fun unlock(password: String): PdfOpenResult {
         val (file, name) = _document.value?.let { it.file to it.displayName }
             ?: pending
-            ?: return PdfOpenResult.Failed("No document is open.")
+            ?: return PdfOpenResult.Failed(context.getString(R.string.pe_err_no_document))
         return probe(file, name, password)
     }
 
@@ -343,7 +343,9 @@ class PdfEditorSession @Inject constructor(
      * than silently dropped.
      */
     suspend fun signDocument(request: SignRequest): SignResult = withContext(Dispatchers.IO) {
-        val current = _document.value ?: return@withContext SignResult.Failed("No document is open.")
+        val current = _document.value ?: return@withContext SignResult.Failed(
+            context.getString(R.string.pe_err_no_document)
+        )
         if (current.isEncrypted || current.password.isNotEmpty()) {
             return@withContext SignResult.EncryptedNotSupported
         }
@@ -362,7 +364,7 @@ class PdfEditorSession @Inject constructor(
     }
 
     suspend fun applyEdits(): PdfEditResult {
-        val current = _document.value ?: return PdfEditResult.Failed("No document is open.")
+        val current = _document.value ?: return PdfEditResult.Failed(context.getString(R.string.pe_err_no_document))
         val output = File(workspace, "edited.pdf")
         return engine.apply(
             source = current.file,
@@ -391,7 +393,7 @@ class PdfEditorSession @Inject constructor(
         }
 
         val geometries = pageReader.pageGeometries(file, password)
-            ?: return PdfOpenResult.Failed("Couldn't read this PDF's pages.")
+            ?: return PdfOpenResult.Failed(context.getString(R.string.pe_err_read_pages))
 
         _document.value = OpenPdf(
             file = file,

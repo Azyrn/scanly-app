@@ -95,10 +95,13 @@ fun CustomProviderScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text("Custom endpoint", fontWeight = FontWeight.Bold) },
+                title = { Text(stringResource(R.string.set_custom_endpoint_title), fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -155,15 +158,13 @@ private fun ProRequiredCard() {
             )
             Spacer(Modifier.height(12.dp))
             Text(
-                "A Pro feature",
+                stringResource(R.string.set_pro_required_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                "Connecting your own AI provider is part of Scanly Pro. The fields below show " +
-                    "exactly what you'd set up — they unlock once you're on Pro. Upgrade, or " +
-                    "redeem a key you already own, from the Account section in Settings.",
+                stringResource(R.string.set_pro_required_message),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -181,15 +182,12 @@ private fun IntroCard() {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                "Connect any AI provider. Pick the protocol it speaks, paste the endpoint URL, " +
-                    "the model name and your API key, then test the connection.",
+                stringResource(R.string.set_custom_intro_body),
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Most hosts are OpenAI-compatible — Groq, OpenAI, OpenRouter, NVIDIA NIM, " +
-                    "Together, Fireworks. Claude and Gemini have their own protocols, and a " +
-                    "self-hosted server on your network works over plain http.",
+                stringResource(R.string.set_custom_intro_hosts),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -207,8 +205,7 @@ private fun IntroCard() {
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Scanned PDFs go up to ${CustomScanner.MAX_PAGES} pages at a time, since they " +
-                    "travel as images in one request. Office documents still need Scanly AI.",
+                stringResource(R.string.set_custom_intro_pdf_pages, CustomScanner.MAX_PAGES),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -221,7 +218,7 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
     var keyVisible by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        SettingsSectionHeader(text = "Protocol")
+        SettingsSectionHeader(text = stringResource(R.string.set_section_protocol))
 
         ProtocolChips(state = state, viewModel = viewModel)
 
@@ -231,12 +228,12 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SettingsSectionHeader(text = "Endpoint")
+        SettingsSectionHeader(text = stringResource(R.string.set_section_endpoint))
 
         OutlinedTextField(
             value = state.credentials.url,
             onValueChange = viewModel::setUrl,
-            label = { Text("Endpoint URL") },
+            label = { Text(stringResource(R.string.set_endpoint_url_label)) },
             placeholder = { Text(urlPlaceholder(state.credentials.protocol)) },
             singleLine = true,
             enabled = state.canEdit,
@@ -247,14 +244,13 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
             supportingText = {
                 Text(
                     if (EndpointUrl.looksLikeCloudflare(state.credentials.url)) {
-                        "Cloudflare Workers AI puts your account ID in the path — paste the full " +
-                            "URL including it."
+                        stringResource(R.string.set_endpoint_hint_cloudflare)
                     } else {
                         when (state.credentials.protocol) {
-                            ProviderProtocol.OPENAI -> "Usually ends in /v1/chat/completions."
-                            ProviderProtocol.ANTHROPIC -> "Usually ends in /v1/messages."
+                            ProviderProtocol.OPENAI -> stringResource(R.string.set_endpoint_hint_openai)
+                            ProviderProtocol.ANTHROPIC -> stringResource(R.string.set_endpoint_hint_anthropic)
                             ProviderProtocol.GEMINI ->
-                                "Just the host is enough — the model and path are added for you."
+                                stringResource(R.string.set_endpoint_hint_gemini)
                         }
                     }
                 )
@@ -265,19 +261,19 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
         OutlinedTextField(
             value = state.credentials.model,
             onValueChange = viewModel::setModel,
-            label = { Text("Model") },
+            label = { Text(stringResource(R.string.set_model_label)) },
             placeholder = { Text("llama-3.3-70b-versatile") },
             singleLine = true,
             enabled = state.canEdit,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            supportingText = { Text("Spelled exactly as your provider lists it.") },
+            supportingText = { Text(stringResource(R.string.set_model_hint)) },
             modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = state.credentials.apiKey,
             onValueChange = viewModel::setApiKey,
-            label = { Text("API key") },
+            label = { Text(stringResource(R.string.set_api_key_label)) },
             singleLine = true,
             enabled = state.canEdit,
             visualTransformation = if (keyVisible) {
@@ -293,11 +289,15 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
                 IconButton(onClick = { keyVisible = !keyVisible }) {
                     Icon(
                         if (keyVisible) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
-                        contentDescription = if (keyVisible) "Hide key" else "Show key"
+                        contentDescription = if (keyVisible) {
+                            stringResource(R.string.cmp_hide_key)
+                        } else {
+                            stringResource(R.string.cmp_show_key)
+                        }
                     )
                 }
             },
-            supportingText = { Text("Stored on this device only. Never sent to Scanly's servers.") },
+            supportingText = { Text(stringResource(R.string.set_api_key_hint)) },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -307,11 +307,11 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
             OutlinedTextField(
                 value = state.credentials.customAuthHeader,
                 onValueChange = viewModel::setCustomAuthHeader,
-                label = { Text("Header name") },
+                label = { Text(stringResource(R.string.set_header_name_label)) },
                 placeholder = { Text("x-api-key") },
                 singleLine = true,
                 enabled = state.canEdit,
-                supportingText = { Text("The header your gateway expects the key in.") },
+                supportingText = { Text(stringResource(R.string.set_header_name_hint)) },
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -342,7 +342,7 @@ private fun AuthStylePicker(state: CustomProviderUiState, viewModel: CustomProvi
 
     Column {
         Text(
-            text = "Send the key as",
+            text = stringResource(R.string.set_auth_style_label),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -407,9 +407,9 @@ private fun VerificationRow(state: CustomProviderUiState) {
         Spacer(Modifier.width(8.dp))
         Text(
             text = if (verified) {
-                "Verified — this endpoint answered correctly."
+                stringResource(R.string.set_endpoint_verified)
             } else {
-                "Unverified — test the connection before saving."
+                stringResource(R.string.set_endpoint_unverified)
             },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -431,9 +431,9 @@ private fun Actions(state: CustomProviderUiState, viewModel: CustomProviderViewM
                     strokeWidth = 2.dp
                 )
                 Spacer(Modifier.width(8.dp))
-                Text("Testing…")
+                Text(stringResource(R.string.set_testing))
             } else {
-                Text("Test connection")
+                Text(stringResource(R.string.set_test_connection))
             }
         }
 
@@ -442,13 +442,13 @@ private fun Actions(state: CustomProviderUiState, viewModel: CustomProviderViewM
             enabled = state.canSave,
             modifier = Modifier.weight(1f)
         ) {
-            Text("Save")
+            Text(stringResource(R.string.pdf_tool_save))
         }
     }
 
     if (state.isPro && state.credentials.isComplete) {
         TextButton(onClick = viewModel::clear) {
-            Text("Remove endpoint")
+            Text(stringResource(R.string.set_remove_endpoint))
         }
     }
 }
@@ -461,14 +461,12 @@ private fun EnableRow(state: CustomProviderUiState, viewModel: CustomProviderVie
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text("Use for AI features", style = MaterialTheme.typography.bodyLarge)
+            Text(stringResource(R.string.set_use_for_ai_title), style = MaterialTheme.typography.bodyLarge)
             Text(
                 if (state.isVerified) {
-                    "Scans, data extraction, translation, drafts and designs all use your " +
-                        "endpoint instead of Scanly AI. Audio to Text always uses Scanly AI, " +
-                        "since a chat endpoint can't take audio."
+                    stringResource(R.string.set_use_for_ai_verified)
                 } else {
-                    "Verify the endpoint first."
+                    stringResource(R.string.set_use_for_ai_unverified)
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant

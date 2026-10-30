@@ -1,5 +1,7 @@
 package com.skeler.scanely.core.pdfeditor.signature
 
+import android.content.Context
+import com.skeler.scanely.R
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.ByteArrayInputStream
 import java.security.KeyStore
@@ -76,7 +78,7 @@ object Pkcs12Loader {
 
     private val provider by lazy { BouncyCastleProvider() }
 
-    fun load(bytes: ByteArray, password: CharArray): Pkcs12Result {
+    fun load(context: Context, bytes: ByteArray, password: CharArray): Pkcs12Result {
         val store = runCatching {
             KeyStore.getInstance("PKCS12", provider).apply {
                 load(ByteArrayInputStream(bytes), password)
@@ -85,21 +87,21 @@ object Pkcs12Loader {
             return if (error.looksLikeWrongPassword()) {
                 Pkcs12Result.WrongPassword
             } else {
-                Pkcs12Result.Failed(error.message ?: "That file could not be read as a PKCS#12.")
+                Pkcs12Result.Failed(error.message ?: context.getString(R.string.sig_err_pkcs12))
             }
         }
 
-        return runCatching { pickIdentity(store, password) }
+        return runCatching { pickIdentity(context, store, password) }
             .getOrElse { error ->
                 if (error.looksLikeWrongPassword()) {
                     Pkcs12Result.WrongPassword
                 } else {
-                    Pkcs12Result.Failed(error.message ?: "The certificate could not be read.")
+                    Pkcs12Result.Failed(error.message ?: context.getString(R.string.sig_err_cert_read))
                 }
             }
     }
 
-    private fun pickIdentity(store: KeyStore, password: CharArray): Pkcs12Result {
+    private fun pickIdentity(context: Context, store: KeyStore, password: CharArray): Pkcs12Result {
         val pool = store.aliases().toList().mapNotNull { alias ->
             store.getCertificate(alias) as? X509Certificate
         }
@@ -122,7 +124,7 @@ object Pkcs12Loader {
         // A file holding both a signing and an encryption certificate is ordinary; picking the
         // first entry would sign with whichever the bag happened to list first.
         val chosen = candidates.firstOrNull { it.canSign } ?: return Pkcs12Result.Failed(
-            "This certificate is not allowed to sign documents."
+            context.getString(R.string.sig_err_cert_usage)
         )
         return Pkcs12Result.Loaded(chosen)
     }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
+<resources>
+    <!-- Inputs on the options screen -->
+    <string name="pdf_tool_flow_add_files">إضافة ملفات</string>
+    <string name="pdf_tool_flow_remove">إزالة %1$s</string>
+    <string name="pdf_tool_flow_move_up">نقل %1$s لأعلى</string>
+    <string name="pdf_tool_flow_move_down">نقل %1$s لأسفل</string>
+    <plurals name="pdf_tool_flow_min_inputs">
+        <item quantity="zero">أضِف على الأقل %d ملفات للمتابعة.</item>
+        <item quantity="one">أضِف على الأقل %d ملف للمتابعة.</item>
+        <item quantity="two">أضِف على الأقل %d ملفين للمتابعة.</item>
+        <item quantity="few">أضِف على الأقل %d ملفات للمتابعة.</item>
+        <item quantity="many">أضِف على الأقل %d ملفًا للمتابعة.</item>
+        <item quantity="other">أضِف على الأقل %d ملف للمتابعة.</item>
+    </plurals>
+    <string name="pdf_tool_flow_skipped">تم استبعاد ملف تعذّر فتحه.</string>
+
+    <!-- Progress -->
+    <plurals name="pdf_tool_flow_working_files">
+        <item quantity="zero">جارٍ معالجة %d ملف…</item>
+        <item quantity="one">جارٍ معالجة %d ملف…</item>
+        <item quantity="two">جارٍ معالجة %d ملفين…</item>
+        <item quantity="few">جارٍ معالجة %d ملفات…</item>
+        <item quantity="many">جارٍ معالجة %d ملفًا…</item>
+        <item quantity="other">جارٍ معالجة %d ملف…</item>
+    </plurals>
+
+    <!-- Result -->
+    <string name="pdf_tool_flow_open_output">فتح %1$s</string>
+    <string name="pdf_tool_flow_share_all">مشاركة الكل</string>
+</resources>

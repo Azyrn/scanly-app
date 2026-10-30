@@ -43,11 +43,14 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.skeler.scanely.R
 
 @Composable
 fun PasswordDialog(
@@ -60,14 +63,14 @@ fun PasswordDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Password needed") },
+        title = { Text(stringResource(R.string.pdf_tool_password_title)) },
         text = {
             Column {
                 Text(
                     text = if (isRetry) {
-                        "That password didn't open $fileName."
+                        stringResource(R.string.pdf_tool_password_retry, fileName)
                     } else {
-                        "$fileName is encrypted."
+                        stringResource(R.string.pe_file_encrypted, fileName)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -76,7 +79,7 @@ fun PasswordDialog(
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.pdf_tool_password_label)) },
                     singleLine = true,
                     isError = isRetry,
                     visualTransformation = PasswordVisualTransformation(),
@@ -87,10 +90,10 @@ fun PasswordDialog(
         },
         confirmButton = {
             Button(onClick = { onConfirm(password) }, enabled = password.isNotEmpty()) {
-                Text("Open")
+                Text(stringResource(R.string.chat_file_open))
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }
 
@@ -104,22 +107,21 @@ fun SignatureAtRiskDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val subject = if (count == 1) "a digital signature" else "$count digital signatures"
-    val pronoun = if (count == 1) "that signature" else "those signatures"
+    val subject = pluralStringResource(R.plurals.pe_digital_signatures, count, count)
+    val pronoun = pluralStringResource(R.plurals.pe_signature_pronoun, count)
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("This document is signed") },
+        title = { Text(stringResource(R.string.pe_document_signed)) },
         text = {
             Text(
-                text = "It carries $subject. Saving your edits rewrites the file, and $pronoun " +
-                    "will no longer verify. The original file on disk is not affected.",
+                text = stringResource(R.string.pe_signature_risk_body, subject, pronoun),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
-        confirmButton = { Button(onClick = onConfirm) { Text("Save anyway") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        confirmButton = { Button(onClick = onConfirm) { Text(stringResource(R.string.pe_save_anyway)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }
 
@@ -161,7 +163,7 @@ fun TextEntryDialog(
                 Text(confirmLabel)
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) } }
     )
 }
 
@@ -185,13 +187,17 @@ fun CropPageDialog(
         Surface(shape = RoundedCornerShape(24.dp), tonalElevation = 3.dp) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Text(
-                    text = if (pageCount > 1) "Crop $pageCount pages" else "Crop page",
+                    text = if (pageCount > 1) {
+                        pluralStringResource(R.plurals.pe_crop_pages, pageCount, pageCount)
+                    } else {
+                        stringResource(R.string.pe_crop_page)
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Drag the corners. Everything outside the frame is trimmed.",
+                    text = stringResource(R.string.pe_crop_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -215,11 +221,11 @@ fun CropPageDialog(
                 Spacer(Modifier.height(16.dp))
 
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    TextButton(onClick = { frame = Rect(0f, 0f, 1f, 1f) }) { Text("Reset") }
+                    TextButton(onClick = { frame = Rect(0f, 0f, 1f, 1f) }) { Text(stringResource(R.string.cmp_reset)) }
                     Spacer(Modifier.weight(1f))
-                    TextButton(onClick = onDismiss) { Text("Cancel") }
+                    TextButton(onClick = onDismiss) { Text(stringResource(R.string.chat_cancel)) }
                     Spacer(Modifier.size(8.dp))
-                    Button(onClick = { onConfirm(frame) }) { Text("Crop") }
+                    Button(onClick = { onConfirm(frame) }) { Text(stringResource(R.string.pe_crop)) }
                 }
             }
         }

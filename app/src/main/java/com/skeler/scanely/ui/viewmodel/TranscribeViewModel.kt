@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.transcribe.AudioPreparer
@@ -117,7 +118,7 @@ class TranscribeViewModel @Inject constructor(
 
     fun onFilePicked(uri: Uri) {
         val title = UriNames.displayName(context, uri)?.substringBeforeLast('.')?.takeIf { it.isNotBlank() }
-            ?: "Audio"
+            ?: context.getString(R.string.cmp_transcribe_default_title)
         val source = TranscriptionRunner.Source.Picked(uri, title)
         local.value = LocalState(pending = PendingAudio(source, 0, probed = false))
         viewModelScope.launch {
@@ -151,11 +152,13 @@ class TranscribeViewModel @Inject constructor(
     fun stopRecording() {
         val elapsed = (recorder.state.value as? AudioRecorder.State.Recording)?.elapsedMs ?: 0L
         val file: File = recorder.stop() ?: run {
-            local.value = LocalState(pickError = "Nothing was recorded. Check the microphone and try again.")
+            local.value = LocalState(pickError = context.getString(R.string.cmp_transcribe_nothing_recorded))
             return
         }
-        val title = "Recording, " + DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
-            .format(Date())
+        val title = context.getString(
+            R.string.cmp_transcribe_recording_title,
+            DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date())
+        )
         local.value = LocalState(pending = PendingAudio(TranscriptionRunner.Source.Recorded(file, title), elapsed))
     }
 
@@ -197,7 +200,7 @@ class TranscribeViewModel @Inject constructor(
     fun editKeyTerms(edit: KeyTermEdit): String? {
         val current = state.value.keyTerms
         val (terms, note) = when (edit) {
-            is KeyTermEdit.Add -> addKeyTerms(current, edit.raw)
+            is KeyTermEdit.Add -> addKeyTerms(context, current, edit.raw)
             is KeyTermEdit.Remove -> (current - edit.term) to null
             KeyTermEdit.Clear -> emptyList<String>() to null
         }
@@ -231,17 +234,26 @@ class TranscribeViewModel @Inject constructor(
          * Adds one term or a pasted list — commas, semicolons and new lines all separate — the way
          * the server will accept them: cleaned, de-duplicated ignoring case, and capped.
          */
-        internal fun addKeyTerms(current: List<String>, raw: String): Pair<List<String>, String?> {
+        internal fun addKeyTerms(
+            context: Context,
+            current: List<String>,
+            raw: String
+        ): Pair<List<String>, String?> {
             val candidates = raw.split(',', '\n', ';').map(String::trim).filter(String::isNotEmpty)
             val cleaned = candidates.mapNotNull(TranscriptionPrefs::cleanKeyTerm)
             val seen = current.map { it.lowercase() }.toMutableSet()
             val added = cleaned.filter { seen.add(it.lowercase()) }
             val kept = added.take((TranscribeOptions.MAX_KEY_TERMS - current.size).coerceAtLeast(0))
             val note = when {
-                added.size > kept.size ->
-                    "Up to ${TranscribeOptions.MAX_KEY_TERMS} key terms. ${added.size - kept.size} weren't added."
-                cleaned.size < candidates.size ->
-                    "Key terms can be up to ${TranscribeOptions.MAX_KEY_TERM_CHARS} characters."
+                added.size > kept.size -> context.getString(
+                    R.string.tx_key_terms_limit,
+                    TranscribeOptions.MAX_KEY_TERMS,
+                    added.size - kept.size
+                )
+                cleaned.size < candidates.size -> context.getString(
+                    R.string.tx_key_terms_length,
+                    TranscribeOptions.MAX_KEY_TERM_CHARS
+                )
                 else -> null
             }
             return (current + kept) to note

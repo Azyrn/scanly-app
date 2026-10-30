@@ -68,7 +68,9 @@ class BackendE2ETest {
                 .baseUrl(BuildConfig.SCANLY_API_BASE_URL)
                 .client(
                     OkHttpClient.Builder()
-                        .addInterceptor(BackendAuthInterceptor(auth))
+                        .addInterceptor(
+                            BackendAuthInterceptor(InstrumentationRegistry.getInstrumentation().targetContext, auth)
+                        )
                         .connectTimeout(30, TimeUnit.SECONDS)
                         .readTimeout(300, TimeUnit.SECONDS)
                         .writeTimeout(120, TimeUnit.SECONDS)
@@ -84,7 +86,7 @@ class BackendE2ETest {
                 .build()
                 .create(ScanlyApi::class.java)
 
-            client = BackendClient(api)
+            client = BackendClient(InstrumentationRegistry.getInstrumentation().targetContext, api)
         }
 
         private fun asset(name: String): ByteArray =

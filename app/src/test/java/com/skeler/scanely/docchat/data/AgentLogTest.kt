@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.skeler.scanely.core.network.ApiJson
 import com.skeler.scanely.core.network.LocalWorker
 import com.skeler.scanely.core.network.TolerantJson
+import com.skeler.scanely.testing.EnglishStrings
 import java.io.File
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
@@ -116,7 +117,7 @@ class AgentLogTest {
     private val api =
         Retrofit.Builder().baseUrl(worker.baseUrl).addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
             .build().create(ChatSyncApi::class.java)
-    private val client = AgentClient(api, api)
+    private val client = AgentClient(EnglishStrings.context(), api, api)
 
     @Test
     fun `a whole output is fetched while the turn is kept, and says expired once it is not`() = runBlocking {

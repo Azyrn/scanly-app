@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.core.image.DocumentFilters
 import com.skeler.scanely.core.image.ImagePreprocessor
 import com.skeler.scanely.core.image.ScanFilter
@@ -167,12 +168,15 @@ class DocumentScanViewModel @Inject constructor(
                         it.copy(
                             isExporting = false,
                             exportedScan = ExportedScan(uri, format),
-                            message = "${format.label} saved to Downloads/Scanly"
+                            message = appContext.getString(R.string.cmp_doc_saved_to_downloads, format.label)
                         )
                     },
                     onFailure = { e ->
                         Log.e(TAG, "${format.label} export failed", e)
-                        it.copy(isExporting = false, message = "Couldn't create ${format.label}")
+                        it.copy(
+                            isExporting = false,
+                            message = appContext.getString(R.string.cmp_doc_couldnt_create, format.label)
+                        )
                     }
                 )
             }
@@ -191,9 +195,9 @@ class DocumentScanViewModel @Inject constructor(
                 it.copy(
                     isExporting = false,
                     message = if (count > 0) {
-                        "Saved $count image${if (count > 1) "s" else ""} to gallery"
+                        appContext.resources.getQuantityString(R.plurals.cmp_doc_saved_images, count, count)
                     } else {
-                        "Couldn't save images"
+                        appContext.getString(R.string.cmp_doc_couldnt_save_images)
                     }
                 )
             }

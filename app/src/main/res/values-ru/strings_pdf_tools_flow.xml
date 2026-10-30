@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
+<resources>
+    <!-- Inputs on the options screen -->
+    <string name="pdf_tool_flow_add_files">Добавить файлы</string>
+    <string name="pdf_tool_flow_remove">Удалить %1$s</string>
+    <string name="pdf_tool_flow_move_up">Переместить %1$s вверх</string>
+    <string name="pdf_tool_flow_move_down">Переместить %1$s вниз</string>
+    <plurals name="pdf_tool_flow_min_inputs">
+        <item quantity="one">Добавьте как минимум %d файл, чтобы продолжить.</item>
+        <item quantity="few">Добавьте как минимум %d файла, чтобы продолжить.</item>
+        <item quantity="many">Добавьте как минимум %d файлов, чтобы продолжить.</item>
+        <item quantity="other">Добавьте как минимум %d файлов, чтобы продолжить.</item>
+    </plurals>
+    <string name="pdf_tool_flow_skipped">Файл, который не удалось открыть, пропущен.</string>
+
+    <!-- Progress -->
+    <plurals name="pdf_tool_flow_working_files">
+        <item quantity="one">Обрабатывается %d файл…</item>
+        <item quantity="few">Обрабатывается %d файла…</item>
+        <item quantity="many">Обрабатывается %d файлов…</item>
+        <item quantity="other">Обрабатывается %d файлов…</item>
+    </plurals>
+
+    <!-- Result -->
+    <string name="pdf_tool_flow_open_output">Открыть %1$s</string>
+    <string name="pdf_tool_flow_share_all">Поделиться всеми</string>
+</resources>

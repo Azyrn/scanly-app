@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typed signatures (page editor Sign tool) -->
+    <string name="signature_typed_open">Signatur eingeben</string>
+    <string name="signature_typed_title">Deine Signatur eingeben</string>
+    <string name="signature_typed_name_label">Dein Name</string>
+    <string name="signature_typed_preview_empty">Deine Signatur erscheint hier.</string>
+    <string name="signature_typed_colour">Tintenfarbe</string>
+    <string name="signature_typed_colour_option">Tintenfarbe %1$d</string>
+    <string name="signature_typed_save">Speichern</string>
+    <string name="signature_typed_cancel">Abbrechen</string>
+    <string name="signature_typed_font_missing">Die Signaturschrift konnte nicht geladen werden.</string>
+
+    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
+    <string name="font_licenses_title">Open-Source-Lizenzen</string>
+    <string name="font_licenses_subtitle">Schriften und Symbole, die in Scanly enthalten sind</string>
+    <string name="font_licenses_close">Schließen</string>
+    <string name="font_licenses_unreadable">Diese Lizenzdatei konnte nicht gelesen werden.</string>
+</resources>

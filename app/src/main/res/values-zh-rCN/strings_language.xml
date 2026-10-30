@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_language_title">语言</string>
+    <string name="settings_language_system">跟随系统</string>
+    <string name="settings_language_cancel">取消</string>
+</resources>

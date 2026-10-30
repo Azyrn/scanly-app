@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="pdf_tool_merge_files">
+        <item quantity="one">%d फ़ाइल</item>
+        <item quantity="other">%d फ़ाइलें</item>
+    </plurals>
+    <string name="pdf_tool_merge_summary">%1$s · कुल %2$s</string>
+    <string name="pdf_tool_merge_body">फ़ाइलें ऊपर दिए गए क्रम में जुड़ती हैं। कुछ फ़ाइलों पर पासवर्ड हो, तब भी जुड़ी हुई कॉपी पर पासवर्ड नहीं होगा।</string>
+    <string name="pdf_tool_merge_need_more">मर्ज करने के लिए कम से कम एक और PDF जोड़ें।</string>
+    <string name="pdf_tool_merge_action">मर्ज करें</string>
+    <string name="pdf_tool_split_mode_ranges">रेंज के हिसाब से बाँटें</string>
+    <string name="pdf_tool_split_mode_ranges_body">आपकी लिखी हर रेंज के लिए एक नई फ़ाइल</string>
+    <string name="pdf_tool_split_mode_every">कुछ पेज के बाद बाँटें</string>
+    <string name="pdf_tool_split_mode_every_body">हर तय संख्या के पेजों पर एक नई फ़ाइल</string>
+    <string name="pdf_tool_split_mode_extract">पेज निकालें</string>
+    <string name="pdf_tool_split_mode_extract_body">चुने हुए पेज एक फ़ाइल में साथ</string>
+    <string name="pdf_tool_split_mode_delete">पेज हटाएं</string>
+    <string name="pdf_tool_split_mode_delete_body">चुने हुए पेजों को छोड़कर एक कॉपी</string>
+    <string name="pdf_tool_split_mode_size">फ़ाइल साइज़ के हिसाब से बाँटें</string>
+    <string name="pdf_tool_split_mode_size_body">तय साइज़ से बड़ी न होने वाली फ़ाइलें</string>
+    <string name="pdf_tool_split_ranges_label">पेज</string>
+    <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">उदाहरण: 1-3, 5, 8-10</string>
+    <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">जो पेज चाहिए वे डालें, जैसे 1-3, 5</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s” कोई पेज या रेंज नहीं है</string>
+    <string name="pdf_tool_split_range_out">“%1$s” पेज 1–%2$d के बाहर है</string>
+    <string name="pdf_tool_split_range_reversed">“%1$s” उल्टा है; पहले छोटा पेज लिखें</string>
+    <string name="pdf_tool_split_delete_all">यह सभी पेज हैं। कम से कम एक पेज रहने दें।</string>
+    <string name="pdf_tool_split_every_label">हर फ़ाइल में पेज</string>
+    <string name="pdf_tool_split_every_invalid">1 से %1$d के बीच की संख्या डालें</string>
+    <string name="pdf_tool_split_every_less">हर फ़ाइल में पेज कम करें</string>
+    <string name="pdf_tool_split_every_more">हर फ़ाइल में पेज बढ़ाएं</string>
+    <string name="pdf_tool_split_size_label">सबसे बड़ा फ़ाइल साइज़ (MB)</string>
+    <string name="pdf_tool_split_size_invalid">0 MB से बड़ा साइज़ डालें</string>
+    <string name="pdf_tool_split_size_body">पेज टूटते नहीं, इसलिए इससे बड़ा एक अकेला पेज अपनी अलग फ़ाइल बन जाता है।</string>
+    <string name="pdf_tool_split_locked">इस फ़ाइल पर पासवर्ड है, और नई फ़ाइलों में भी वही रहेगा।</string>
+    <plurals name="pdf_tool_split_makes_files">
+        <item quantity="one">%d फ़ाइल बनेगी</item>
+        <item quantity="other">%d फ़ाइलें बनेंगी</item>
+    </plurals>
+    <plurals name="pdf_tool_split_keeps_pages">
+        <item quantity="one">%d पेज रहेगा</item>
+        <item quantity="other">%d पेज रहेंगे</item>
+    </plurals>
+    <string name="pdf_tool_split_action">बाँटें</string>
+    <string name="pdf_tool_split_extract_action">पेज निकालें</string>
+    <string name="pdf_tool_split_delete_action">पेज हटाएं</string>
+    <plurals name="pdf_tool_split_oversized_pages">
+        <item quantity="one">%d पेज अकेले ही साइज़ की सीमा से बड़ा है, इसलिए उसकी अपनी फ़ाइल है।</item>
+        <item quantity="other">%d पेज अकेले ही साइज़ की सीमा से बड़े हैं, इसलिए हर एक की अपनी फ़ाइल है।</item>
+    </plurals>
+</resources>

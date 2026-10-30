@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.docx
 
+import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -115,29 +116,13 @@ internal class PictureSpan(
 }
 
 /**
- * Word font names to the three families every Android device has. Close enough for line breaks
- * to land near where Word put them; the result says fonts were replaced unless the family was
- * one the device draws natively anyway.
+ * Word font names to typefaces. Times New Roman and Courier New map to the metric-compatible
+ * Liberation fonts bundled in assets, so lines break where Word broke them; anything else
+ * falls back to the three families every Android device has, close enough for line breaks to land
+ * near Word's. The result says fonts were replaced unless the family was one of those.
  */
-internal object DocxFonts {
-    private val SERIF = listOf(
-        "times", "cambria", "georgia", "garamond", "book antiqua", "palatino", "baskerville", "constantia",
-        "century", "bodoni", "didot", "bookman", "minion", "noto serif", "liberation serif", "dejavu serif",
-        "serif", "batang", "mincho", "simsun"
-    )
-    private val MONO = listOf(
-        "courier",
-        "consolas",
-        "mono",
-        "menlo",
-        "lucida console",
-        "inconsolata",
-        "fira code"
-    )
-    private val NATIVE = setOf(
-        "arial", "helvetica", "roboto", "sans-serif", "times new roman", "times", "serif", "courier new",
-        "courier", "monospace", "noto sans", "noto serif", "droid sans", "droid serif", "droid sans mono"
-    )
+internal class DocxFonts(private val assets: AssetManager) {
+    private val bundled = HashMap<String, Typeface?>()
 
     fun typeface(font: String?, bold: Boolean, italic: Boolean): Typeface {
         val style = when {
@@ -146,10 +131,25 @@ internal object DocxFonts {
             italic -> Typeface.ITALIC
             else -> Typeface.NORMAL
         }
-        return Typeface.create(family(font), style)
+        return Typeface.create(bundledFor(font) ?: family(font), style)
     }
 
-    fun isReplaced(font: String?): Boolean = font != null && font.trim().lowercase() !in NATIVE
+    fun isReplaced(font: String?): Boolean {
+        val name = font?.trim()?.lowercase() ?: return false
+        return name !in NATIVE && metricTwin(name) == null
+    }
+
+    /** The bundled twin of [font], loaded once; null when there is none or it can't be read. */
+    private fun bundledFor(font: String?): Typeface? {
+        val asset = metricTwin(font?.trim()?.lowercase() ?: return null) ?: return null
+        return bundled.getOrPut(asset) {
+            try {
+                Typeface.createFromAsset(assets, asset)
+            } catch (ignored: RuntimeException) {
+                null
+            }
+        }
+    }
 
     private fun family(font: String?): Typeface {
         val name = font?.lowercase().orEmpty()
@@ -158,5 +158,43 @@ internal object DocxFonts {
             SERIF.any { name.contains(it) } && !name.contains("sans") -> Typeface.SERIF
             else -> Typeface.SANS_SERIF
         }
+    }
+
+    private companion object {
+        val SERIF = listOf(
+            "times", "cambria", "georgia", "garamond", "book antiqua", "palatino", "baskerville", "constantia",
+            "century", "bodoni", "didot", "bookman", "minion", "noto serif", "liberation serif", "dejavu serif",
+            "serif", "batang", "mincho", "simsun"
+        )
+        val MONO = listOf(
+            "courier",
+            "consolas",
+            "mono",
+            "menlo",
+            "lucida console",
+            "inconsolata",
+            "fira code"
+        )
+        val NATIVE = setOf(
+            "arial", "helvetica", "roboto", "sans-serif", "times new roman", "times", "serif", "courier new",
+            "courier", "monospace", "noto sans", "noto serif", "droid sans", "droid serif", "droid sans mono"
+        )
+
+        /**
+         * Exact family names whose metrics a bundled font reproduces. Carlito (Calibri) and
+         * Caladea (Cambria) are bundled too but left out: their spaces are so narrow that pdfium
+         * reads "Page marker" back as "Pagemarker", which breaks search and copy in the PDF.
+         */
+        val TWINS = mapOf(
+            "times new roman" to "fonts/LiberationSerif-Regular.ttf",
+            "times" to "fonts/LiberationSerif-Regular.ttf",
+            "liberation serif" to "fonts/LiberationSerif-Regular.ttf",
+            "tinos" to "fonts/LiberationSerif-Regular.ttf",
+            "courier new" to "fonts/LiberationMono-Regular.ttf",
+            "liberation mono" to "fonts/LiberationMono-Regular.ttf",
+            "cousine" to "fonts/LiberationMono-Regular.ttf"
+        )
+
+        fun metricTwin(name: String): String? = TWINS[name]
     }
 }

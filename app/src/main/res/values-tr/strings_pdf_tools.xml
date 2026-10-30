@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
+<resources>
+    <!-- Opening a PDF anywhere in the app -->
+    <string name="pdf_open_damaged">Bu dosya bozuk ya da bir PDF değil.</string>
+
+    <!-- Grid -->
+    <string name="pdf_tools_title">PDF araçları</string>
+    <string name="pdf_tools_back">Geri</string>
+    <string name="pdf_tools_section_organize">Düzenle ve optimize et</string>
+    <string name="pdf_tools_section_convert">Dönüştür</string>
+    <string name="pdf_tools_section_edit">Düzenle ve güvenli hale getir</string>
+    <string name="pdf_tools_section_image">Resimler</string>
+    <string name="pdf_tools_pro_badge">Pro</string>
+    <string name="pdf_tools_paywall_reason">Bu araç Scanly Pro\'nun bir parçası.</string>
+
+    <!-- Tool names -->
+    <string name="pdf_tool_compress">PDF\'yi sıkıştır</string>
+    <string name="pdf_tool_edit">PDF\'yi düzenle</string>
+    <string name="pdf_tool_rotate">PDF\'yi döndür</string>
+    <string name="pdf_tool_unlock">PDF\'nin kilidini aç</string>
+    <string name="pdf_tool_protect">PDF\'yi koru</string>
+    <string name="pdf_tool_organize">Sayfaları düzenle</string>
+    <string name="pdf_tool_sign">PDF\'yi imzala</string>
+    <string name="pdf_tool_merge">PDF\'leri birleştir</string>
+    <string name="pdf_tool_split">PDF\'yi böl</string>
+    <string name="pdf_tool_pdf_to_word">PDF\'den Word\'e</string>
+    <string name="pdf_tool_pdf_to_powerpoint">PDF\'den PowerPoint\'e</string>
+    <string name="pdf_tool_pdf_to_excel">PDF\'den Excel\'e</string>
+    <string name="pdf_tool_word_to_pdf">Word\'den PDF\'e</string>
+    <string name="pdf_tool_powerpoint_to_pdf">PowerPoint\'ten PDF\'e</string>
+    <string name="pdf_tool_excel_to_pdf">Excel\'den PDF\'e</string>
+    <string name="pdf_tool_pdf_to_jpg">PDF\'den JPG\'e</string>
+    <string name="pdf_tool_image_to_pdf">Resimden PDF\'e</string>
+    <string name="pdf_tool_page_numbers">Sayfa numaraları</string>
+    <string name="pdf_tool_watermark">Filigran</string>
+    <string name="pdf_tool_repair">PDF\'yi onar</string>
+    <string name="pdf_tool_extract_text">Metni çıkar</string>
+    <string name="pdf_tool_compress_image">Resmi sıkıştır</string>
+    <string name="pdf_tool_convert_to_jpg">JPG\'e dönüştür</string>
+    <string name="pdf_tool_convert_from_jpg">JPG\'den dönüştür</string>
+    <string name="pdf_tool_resize_image">Resmi yeniden boyutlandır</string>
+
+    <!-- Shared flow -->
+    <string name="pdf_tool_reading">%1$s okunuyor…</string>
+    <string name="pdf_tool_working">%1$s üzerinde çalışılıyor…</string>
+    <string name="pdf_tool_cancel">İptal</string>
+    <string name="pdf_tool_cancelled">İptal edildi.</string>
+    <string name="pdf_tool_file_summary">%1$s · %2$s</string>
+    <plurals name="pdf_tool_pages">
+        <item quantity="one">%d sayfa</item>
+        <item quantity="other">%d sayfa</item>
+    </plurals>
+    <string name="pdf_tool_password_title">Parola gerekli</string>
+    <string name="pdf_tool_password_body">%1$s bir parolayla korunuyor.</string>
+    <string name="pdf_tool_password_retry">Bu parola %1$s dosyasını açmadı.</string>
+    <string name="pdf_tool_password_label">Parola</string>
+    <string name="pdf_tool_password_open">Aç</string>
+    <string name="pdf_tool_show_password">Parolayı göster</string>
+    <string name="pdf_tool_hide_password">Parolayı gizle</string>
+
+    <!-- Result -->
+    <string name="pdf_tool_done">Tamam</string>
+    <string name="pdf_tool_save">Kaydet</string>
+    <string name="pdf_tool_saved">Downloads/Scanly klasörüne kaydedildi</string>
+    <string name="pdf_tool_share">Paylaş</string>
+    <string name="pdf_tool_open">Aç</string>
+    <string name="pdf_tool_open_with">Birlikte aç…</string>
+    <string name="pdf_tool_no_viewer">Bu telefonda bu dosyayı açabilecek bir uygulama yok.</string>
+    <string name="pdf_tool_save_failed">Downloads klasörüne kaydedilemedi. Depolama alanınız dolmuş olabilir.</string>
+    <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
+    <string name="pdf_tool_another_file">Başka bir dosya seçin</string>
+    <string name="pdf_tool_try_again">Yeniden dene</string>
+
+    <!-- Failures -->
+    <string name="pdf_tool_error_title">Tamamlanamadı</string>
+    <string name="pdf_tool_error_unreadable">Scanly bu dosyayı okuyamadı. Taşınmış olabilir ya da dosyayı tutan uygulama erişimi reddetmiş olabilir.</string>
+    <string name="pdf_tool_error_damaged">Bu dosya bozuk ya da bir PDF değil.</string>
+    <string name="pdf_tool_error_low_storage">Bu telefonda yeterli boş depolama alanı yok. Biraz yer açıp yeniden deneyin.</string>
+    <string name="pdf_tool_error_wrong_password">Bu parola dosyayı açmadı.</string>
+    <string name="pdf_tool_error_not_encrypted">Bu PDF\'nin kaldırılacak bir parolası yok.</string>
+    <string name="pdf_tool_error_no_gain">Bu PDF zaten bu düzeyin küçültebileceği kadar küçük. Daha güçlü bir düzey deneyin.</string>
+    <string name="pdf_tool_error_nothing_found">Bu PDF\'de bu aracın çıkarabileceği bir şey yok.</string>
+    <string name="pdf_tool_error_failed">Bu dosya işlenirken bir sorun oluştu.</string>
+
+    <!-- Compress -->
+    <string name="pdf_tool_compress_lossless">Kayıpsız</string>
+    <string name="pdf_tool_compress_lossless_body">Dosyayı yeniden paketler. Sayfalar birebir aynı görünür.</string>
+    <string name="pdf_tool_compress_balanced">Önerilen</string>
+    <string name="pdf_tool_compress_balanced_body">İyi kalite, çok daha küçük resimler</string>
+    <string name="pdf_tool_compress_smallest">En küçük</string>
+    <string name="pdf_tool_compress_smallest_body">Daha düşük resim kalitesi, en küçük dosya</string>
+    <string name="pdf_tool_compress_action">Sıkıştır</string>
+
+    <!-- Protect -->
+    <string name="pdf_tool_protect_body">Korunan kopyayı açan herkes bu parolaya ihtiyaç duyar. AES-256 ile şifrelenir.</string>
+    <string name="pdf_tool_protect_confirm">Parolayı onaylayın</string>
+    <string name="pdf_tool_protect_mismatch">Parolalar eşleşmiyor.</string>
+    <string name="pdf_tool_protect_action">Koru</string>
+    <string name="pdf_tool_protect_already">Bu PDF\'nin zaten bir parolası var. Yeni parola onun yerine geçer.</string>
+
+    <!-- Rotate -->
+    <string name="pdf_tool_rotate_right">90° sağa</string>
+    <string name="pdf_tool_rotate_half">180°</string>
+    <string name="pdf_tool_rotate_left">90° sola</string>
+    <string name="pdf_tool_rotate_body">Her sayfayı döndürür. Tek tek sayfaları döndürmek için Sayfaları düzenle aracını kullanın.</string>
+    <string name="pdf_tool_rotate_action">Döndür</string>
+</resources>

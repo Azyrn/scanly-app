@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.actions
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.TextSnippet
 import androidx.compose.material.icons.rounded.Call
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.rounded.RestaurantMenu
 import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.skeler.scanely.R
 
 enum class WifiType {
     WPA,
@@ -21,26 +23,27 @@ enum class WifiType {
 
 sealed class ScanAction {
 
-    abstract val label: String
+    @get:StringRes
+    abstract val label: Int
     abstract val icon: ImageVector
 
     /** The scanned value this action carries, shown wherever the action is listed. */
     abstract val detail: String
 
     data class OpenUrl(val url: String) : ScanAction() {
-        override val label: String = "Open Link"
+        override val label: Int = R.string.act_open_link
         override val icon: ImageVector = Icons.Rounded.Link
         override val detail: String = url
     }
 
-    data class CopyText(val text: String, val displayLabel: String = "Copy") : ScanAction() {
-        override val label: String = displayLabel
+    data class CopyText(val text: String, @StringRes val displayLabel: Int = R.string.act_copy) : ScanAction() {
+        override val label: Int = displayLabel
         override val icon: ImageVector = Icons.Rounded.ContentCopy
         override val detail: String = text
     }
 
     data class CallPhone(val number: String) : ScanAction() {
-        override val label: String = "Call"
+        override val label: Int = R.string.act_call
         override val icon: ImageVector = Icons.Rounded.Call
         override val detail: String = number
     }
@@ -50,7 +53,7 @@ sealed class ScanAction {
         val subject: String? = null,
         val body: String? = null
     ) : ScanAction() {
-        override val label: String = "Send Email"
+        override val label: Int = R.string.act_send_email
         override val icon: ImageVector = Icons.Rounded.Email
         override val detail: String = email
     }
@@ -60,7 +63,7 @@ sealed class ScanAction {
         val password: String?,
         val type: WifiType
     ) : ScanAction() {
-        override val label: String = "Connect to WiFi"
+        override val label: Int = R.string.act_connect_wifi
         override val icon: ImageVector = Icons.Rounded.Wifi
         override val detail: String = ssid
     }
@@ -69,7 +72,7 @@ sealed class ScanAction {
         val number: String,
         val message: String? = null
     ) : ScanAction() {
-        override val label: String = "Send SMS"
+        override val label: Int = R.string.act_send_sms
         override val icon: ImageVector = Icons.Rounded.Sms
         override val detail: String = number
     }
@@ -80,13 +83,13 @@ sealed class ScanAction {
         val email: String?,
         val organization: String? = null
     ) : ScanAction() {
-        override val label: String = "Add Contact"
+        override val label: Int = R.string.act_add_contact
         override val icon: ImageVector = Icons.Rounded.Person
-        override val detail: String = name ?: phone ?: email ?: "Contact"
+        override val detail: String = name ?: phone ?: email.orEmpty()
     }
 
     data class ShowRaw(val text: String) : ScanAction() {
-        override val label: String = "View Text"
+        override val label: Int = R.string.act_view_text
         override val icon: ImageVector = Icons.AutoMirrored.Rounded.TextSnippet
         override val detail: String = text
     }
@@ -99,13 +102,13 @@ sealed class ScanAction {
         val startRaw: String? = null,
         val endRaw: String? = null
     ) : ScanAction() {
-        override val label: String = "Add to Calendar"
+        override val label: Int = R.string.act_add_event
         override val icon: ImageVector = Icons.Rounded.Event
-        override val detail: String = title ?: "Event"
+        override val detail: String = title.orEmpty()
     }
 
     data class LookupProduct(val barcode: String) : ScanAction() {
-        override val label: String = "Product Info"
+        override val label: Int = R.string.act_product_info
         override val icon: ImageVector = Icons.Rounded.RestaurantMenu
         override val detail: String = barcode
     }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
+<resources>
+    <!-- Opening a PDF anywhere in the app -->
+    <string name="pdf_open_damaged">هذا الملف تالف أو ليس ملف PDF.</string>
+
+    <!-- Grid -->
+    <string name="pdf_tools_title">أدوات PDF</string>
+    <string name="pdf_tools_back">رجوع</string>
+    <string name="pdf_tools_section_organize">تنظيم وتحسين</string>
+    <string name="pdf_tools_section_convert">تحويل</string>
+    <string name="pdf_tools_section_edit">تحرير وتأمين</string>
+    <string name="pdf_tools_section_image">الصور</string>
+    <string name="pdf_tools_pro_badge">Pro</string>
+    <string name="pdf_tools_paywall_reason">هذه الأداة جزء من Scanly Pro.</string>
+
+    <!-- Tool names -->
+    <string name="pdf_tool_compress">ضغط PDF</string>
+    <string name="pdf_tool_edit">تحرير PDF</string>
+    <string name="pdf_tool_rotate">تدوير PDF</string>
+    <string name="pdf_tool_unlock">فتح PDF</string>
+    <string name="pdf_tool_protect">حماية PDF</string>
+    <string name="pdf_tool_organize">تنظيم PDF</string>
+    <string name="pdf_tool_sign">توقيع PDF</string>
+    <string name="pdf_tool_merge">دمج PDF</string>
+    <string name="pdf_tool_split">تقسيم PDF</string>
+    <string name="pdf_tool_pdf_to_word">PDF إلى Word</string>
+    <string name="pdf_tool_pdf_to_powerpoint">PDF إلى PowerPoint</string>
+    <string name="pdf_tool_pdf_to_excel">PDF إلى Excel</string>
+    <string name="pdf_tool_word_to_pdf">Word إلى PDF</string>
+    <string name="pdf_tool_powerpoint_to_pdf">PowerPoint إلى PDF</string>
+    <string name="pdf_tool_excel_to_pdf">Excel إلى PDF</string>
+    <string name="pdf_tool_pdf_to_jpg">PDF إلى JPG</string>
+    <string name="pdf_tool_image_to_pdf">صورة إلى PDF</string>
+    <string name="pdf_tool_page_numbers">أرقام الصفحات</string>
+    <string name="pdf_tool_watermark">علامة مائية</string>
+    <string name="pdf_tool_repair">إصلاح PDF</string>
+    <string name="pdf_tool_extract_text">استخراج النص</string>
+    <string name="pdf_tool_compress_image">ضغط صورة</string>
+    <string name="pdf_tool_convert_to_jpg">تحويل إلى JPG</string>
+    <string name="pdf_tool_convert_from_jpg">تحويل من JPG</string>
+    <string name="pdf_tool_resize_image">تغيير حجم الصورة</string>
+
+    <!-- Shared flow -->
+    <string name="pdf_tool_reading">جارٍ قراءة %1$s…</string>
+    <string name="pdf_tool_working">جارٍ معالجة %1$s…</string>
+    <string name="pdf_tool_cancel">إلغاء</string>
+    <string name="pdf_tool_cancelled">تم الإلغاء.</string>
+    <string name="pdf_tool_file_summary">%1$s · %2$s</string>
+    <plurals name="pdf_tool_pages">
+        <item quantity="zero">%d صفحة</item>
+        <item quantity="one">%d صفحة</item>
+        <item quantity="two">%d صفحتان</item>
+        <item quantity="few">%d صفحات</item>
+        <item quantity="many">%d صفحة</item>
+        <item quantity="other">%d صفحة</item>
+    </plurals>
+    <string name="pdf_tool_password_title">كلمة المرور مطلوبة</string>
+    <string name="pdf_tool_password_body">%1$s محمي بكلمة مرور.</string>
+    <string name="pdf_tool_password_retry">كلمة المرور هذه لا تفتح %1$s.</string>
+    <string name="pdf_tool_password_label">كلمة المرور</string>
+    <string name="pdf_tool_password_open">فتح</string>
+    <string name="pdf_tool_show_password">إظهار كلمة المرور</string>
+    <string name="pdf_tool_hide_password">إخفاء كلمة المرور</string>
+
+    <!-- Result -->
+    <string name="pdf_tool_done">تم</string>
+    <string name="pdf_tool_save">حفظ</string>
+    <string name="pdf_tool_saved">تم الحفظ في المجلد Downloads/Scanly</string>
+    <string name="pdf_tool_share">مشاركة</string>
+    <string name="pdf_tool_open">فتح</string>
+    <string name="pdf_tool_open_with">فتح باستخدام…</string>
+    <string name="pdf_tool_no_viewer">لا يوجد تطبيق على هذا الهاتف يمكنه فتح هذا الملف.</string>
+    <string name="pdf_tool_save_failed">تعذّر الحفظ في Downloads. قد تكون مساحة التخزين ممتلئة.</string>
+    <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
+    <string name="pdf_tool_another_file">اختيار ملف آخر</string>
+    <string name="pdf_tool_try_again">إعادة المحاولة</string>
+
+    <!-- Failures -->
+    <string name="pdf_tool_error_title">تعذّر إكمال العملية</string>
+    <string name="pdf_tool_error_unreadable">تعذّر على Scanly قراءة هذا الملف. ربما نُقل، أو رفض التطبيق الذي يحتويه منح حق الوصول.</string>
+    <string name="pdf_tool_error_damaged">هذا الملف تالف أو ليس ملف PDF.</string>
+    <string name="pdf_tool_error_low_storage">لا توجد مساحة تخزين فارغة كافية على هذا الهاتف. أفرِغ بعض المساحة وحاول مرة أخرى.</string>
+    <string name="pdf_tool_error_wrong_password">كلمة المرور هذه لا تفتح الملف.</string>
+    <string name="pdf_tool_error_not_encrypted">لا يحتوي ملف PDF هذا على كلمة مرور لإزالتها.</string>
+    <string name="pdf_tool_error_no_gain">ملف PDF هذا أصغر بالفعل مما يستطيع هذا المستوى تحقيقه. جرّب مستوى أقوى.</string>
+    <string name="pdf_tool_error_nothing_found">لا يحتوي ملف PDF هذا على شيء يمكن لهذه الأداة استخراجه.</string>
+    <string name="pdf_tool_error_failed">حدث خطأ أثناء معالجة هذا الملف.</string>
+
+    <!-- Compress -->
+    <string name="pdf_tool_compress_lossless">بدون فقدان</string>
+    <string name="pdf_tool_compress_lossless_body">يعيد تغليف الملف. تبقى الصفحات مطابقة تمامًا.</string>
+    <string name="pdf_tool_compress_balanced">موصى به</string>
+    <string name="pdf_tool_compress_balanced_body">جودة جيدة، وصور أصغر بكثير</string>
+    <string name="pdf_tool_compress_smallest">الأصغر</string>
+    <string name="pdf_tool_compress_smallest_body">جودة صور أقل، وأصغر حجم للملف</string>
+    <string name="pdf_tool_compress_action">ضغط</string>
+
+    <!-- Protect -->
+    <string name="pdf_tool_protect_body">سيحتاج أي شخص يفتح النسخة المحمية إلى كلمة المرور هذه. وهي مشفّرة بتقنية AES-256.</string>
+    <string name="pdf_tool_protect_confirm">تأكيد كلمة المرور</string>
+    <string name="pdf_tool_protect_mismatch">كلمتا المرور غير متطابقتين.</string>
+    <string name="pdf_tool_protect_action">حماية</string>
+    <string name="pdf_tool_protect_already">يحتوي ملف PDF هذا على كلمة مرور بالفعل. ستحل الجديدة محلها.</string>
+
+    <!-- Rotate -->
+    <string name="pdf_tool_rotate_right">90° لليمين</string>
+    <string name="pdf_tool_rotate_half">180°</string>
+    <string name="pdf_tool_rotate_left">90° لليسار</string>
+    <string name="pdf_tool_rotate_body">يدوّر كل الصفحات. لتدوير صفحات منفردة، استخدم تنظيم PDF.</string>
+    <string name="pdf_tool_rotate_action">تدوير</string>
+</resources>

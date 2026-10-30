@@ -26,10 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.ScanExtraction
 
 /** Shown at a glance; the rest are one tap away. */
@@ -62,11 +65,11 @@ fun UnclearPassagesNotice(passages: List<String>, modifier: Modifier = Modifier)
                 )
                 Spacer(Modifier.size(10.dp))
                 Text(
-                    text = if (passages.size == 1) {
-                        "One passage was hard to read"
-                    } else {
-                        "${passages.size} passages were hard to read"
-                    },
+                    text = pluralStringResource(
+                        R.plurals.cmp_passages_hard_to_read,
+                        passages.size,
+                        passages.size
+                    ),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onTertiaryContainer
@@ -87,14 +90,20 @@ fun UnclearPassagesNotice(passages: List<String>, modifier: Modifier = Modifier)
             }
 
             Text(
-                text = "Check these against the original before you rely on them.",
+                text = stringResource(R.string.cmp_check_against_original),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onTertiaryContainer
             )
 
             if (passages.size > PREVIEW_ROWS) {
                 TextButton(onClick = { expanded = !expanded }) {
-                    Text(if (expanded) "Show less" else "Show all ${passages.size}")
+                    Text(
+                        if (expanded) {
+                            stringResource(R.string.chat_log_show_less)
+                        } else {
+                            stringResource(R.string.cmp_show_all_count, passages.size)
+                        }
+                    )
                 }
             }
         }
@@ -137,7 +146,7 @@ fun ExtractedFieldsCard(
                     modifier = Modifier.weight(1f)
                 )
                 TextButton(onClick = { onCopyJson(extraction.json) }) {
-                    Text("Copy JSON")
+                    Text(stringResource(R.string.cmp_copy_json))
                 }
             }
 
@@ -188,7 +197,7 @@ fun DocumentLinksCard(links: List<String>, modifier: Modifier = Modifier) {
                 )
                 Spacer(Modifier.size(10.dp))
                 Text(
-                    text = if (links.size == 1) "1 link" else "${links.size} links",
+                    text = pluralStringResource(R.plurals.cmp_links_found, links.size, links.size),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -214,7 +223,13 @@ fun DocumentLinksCard(links: List<String>, modifier: Modifier = Modifier) {
 
             if (links.size > PREVIEW_ROWS) {
                 TextButton(onClick = { expanded = !expanded }) {
-                    Text(if (expanded) "Show less" else "Show all ${links.size}")
+                    Text(
+                        if (expanded) {
+                            stringResource(R.string.chat_log_show_less)
+                        } else {
+                            stringResource(R.string.cmp_show_all_count, links.size)
+                        }
+                    )
                 }
             }
         }

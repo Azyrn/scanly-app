@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notes under image tool results -->
+    <plurals name="pdf_tool_img_skipped">
+        <item quantity="one">%d 个文件无法读取，已被跳过</item>
+        <item quantity="other">%d 个文件无法读取，已被跳过</item>
+    </plurals>
+    <plurals name="pdf_tool_img_already_small">
+        <item quantity="one">%d 张图片已经不能再小了，因此保持不变</item>
+        <item quantity="other">%d 张图片已经不能再小了，因此保持不变</item>
+    </plurals>
+
+    <!-- Compress image -->
+    <string name="pdf_tool_img_compress_recommended">推荐</string>
+    <string name="pdf_tool_img_compress_recommended_body">体积大幅减小，外观基本不变。</string>
+    <string name="pdf_tool_img_compress_strong">强力</string>
+    <string name="pdf_tool_img_compress_strong_body">文件最小。细节可能会变得模糊。</string>
+    <string name="pdf_tool_img_compress_light">轻度</string>
+    <string name="pdf_tool_img_compress_light_body">画质最佳，节省的空间较少。</string>
+    <string name="pdf_tool_img_png_to_jpg">将 PNG 转换为 JPG 以减小文件大小</string>
+    <string name="pdf_tool_img_png_to_jpg_body">PNG 只会丢失一些隐藏的细节。透明区域将变为白色。</string>
+    <string name="pdf_tool_img_compress_action">压缩图片</string>
+
+    <!-- Convert to JPG -->
+    <string name="pdf_tool_img_to_jpg_body">每张图片都会转换为 JPG。透明区域将变为白色；GIF 仅保留第一帧。</string>
+    <string name="pdf_tool_img_to_jpg_action">转换为 JPG</string>
+
+    <!-- Convert from JPG -->
+    <string name="pdf_tool_img_from_jpg_png">PNG</string>
+    <string name="pdf_tool_img_from_jpg_png_body">像素精确，文件更大。</string>
+    <string name="pdf_tool_img_from_jpg_webp">WebP</string>
+    <string name="pdf_tool_img_from_jpg_webp_body">外观相同，通常比 JPG 更小。</string>
+    <string name="pdf_tool_img_from_jpg_gif">GIF</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 色。适合图形，照片可能出现色带。</string>
+    <string name="pdf_tool_img_from_jpg_action">转换图片</string>
+
+    <!-- Resize image -->
+    <string name="pdf_tool_img_resize_by_percent">按百分比</string>
+    <string name="pdf_tool_img_resize_by_size">按尺寸</string>
+    <string name="pdf_tool_img_resize_percent">%d%%</string>
+    <string name="pdf_tool_img_resize_width">最大宽度（px）</string>
+    <string name="pdf_tool_img_resize_height">最大高度（px）</string>
+    <string name="pdf_tool_img_resize_size_hint">输入宽度、高度或两者。</string>
+    <string name="pdf_tool_img_resize_size_invalid">请输入 1 到 %d 之间的数字。</string>
+    <string name="pdf_tool_img_resize_keep_aspect">保持比例</string>
+    <string name="pdf_tool_img_resize_no_enlarge">不放大图片</string>
+    <string name="pdf_tool_img_resize_action">调整图片尺寸</string>
+</resources>

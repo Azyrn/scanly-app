@@ -1,8 +1,10 @@
 package com.skeler.scanely.ui.viewmodel
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skeler.scanely.R
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.ads.RewardedAdManager
 import com.skeler.scanely.core.ai.custom.CustomProviderResolver
@@ -13,6 +15,7 @@ import com.skeler.scanely.core.license.RestoreOutcome
 import com.skeler.scanely.core.network.ExtractionPresetDto
 import com.skeler.scanely.core.network.PlanDto
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -83,6 +86,7 @@ data class PaywallState(
 
 @HiltViewModel
 class PaywallViewModel @Inject internal constructor(
+    @ApplicationContext private val context: Context,
     private val licenseRepository: LicenseRepository,
     private val entitlementRepository: EntitlementRepository,
     private val rewardedAdManager: RewardedAdManager,
@@ -166,9 +170,9 @@ class PaywallViewModel @Inject internal constructor(
                 // it could be.
                 val tier = licenseRepository.state.value.entitlement?.tier
                 _message.value = if (tier == null) {
-                    "Your key is active. Enjoy."
+                    context.getString(R.string.pay_key_active)
                 } else {
-                    "You're on ${tier.replaceFirstChar(Char::titlecase)}. Enjoy."
+                    context.getString(R.string.pay_key_active_tier, tier.replaceFirstChar(Char::titlecase))
                 }
             }
         }
@@ -183,7 +187,7 @@ class PaywallViewModel @Inject internal constructor(
      */
     fun restorePurchase() {
         viewModelScope.launch {
-            _message.value = restoreMessage(licenseRepository.restore())
+            _message.value = restoreMessage(context, licenseRepository.restore())
         }
     }
 
@@ -192,9 +196,9 @@ class PaywallViewModel @Inject internal constructor(
         viewModelScope.launch {
             _message.value = licenseRepository.confirmEmail().fold(
                 onSuccess = {
-                    "Check your inbox, open the link, then tap Restore purchase again."
+                    context.getString(R.string.pay_confirm_sent)
                 },
-                onFailure = { it.message ?: "Couldn't send the confirmation email. Try again." }
+                onFailure = { it.message ?: context.getString(R.string.pay_confirm_failed) }
             )
         }
     }
@@ -228,7 +232,7 @@ class PaywallViewModel @Inject internal constructor(
     fun removeKey() {
         viewModelScope.launch {
             licenseRepository.deactivate()
-            _message.value = "Key removed from this device."
+            _message.value = context.getString(R.string.pay_key_removed)
         }
     }
 
@@ -266,14 +270,12 @@ const val SCANLY_SITE = "scanlyocr.com"
  * Checked by plan size rather than name, like the paywall's own top-plan test, so a new tier needs
  * no change. Null when there is no bigger plan, or when the plans have not loaded.
  */
-internal fun upgradeNotice(currentTier: String, plans: List<PlanOption>): String? {
+internal fun upgradeNotice(context: Context, currentTier: String, plans: List<PlanOption>): String? {
     if (currentTier.equals("free", ignoreCase = true)) return null
     val currentPages = plans.firstOrNull { it.isCurrent }?.plan?.pagesPerMonth ?: return null
     if (plans.none { it.plan.pagesPerMonth > currentPages }) return null
 
-    return "To move to a bigger plan, go to $SCANLY_SITE/upgrade and sign in with the same account " +
-        "you use here: it changes the plan you have. Buying another plan on the pricing page starts " +
-        "a second subscription, billed alongside this one."
+    return context.getString(R.string.pay_upgrade_notice, SCANLY_SITE)
 }
 
 /**
@@ -281,16 +283,14 @@ internal fun upgradeNotice(currentTier: String, plans: List<PlanOption>): String
  * outcomes leave their own prose in [LicenseState], as an affordance or an inline error, and
  * repeating it in a snackbar would say the same thing twice.
  */
-internal fun restoreMessage(outcome: RestoreOutcome): String? = when (outcome) {
+internal fun restoreMessage(context: Context, outcome: RestoreOutcome): String? = when (outcome) {
     is RestoreOutcome.Restored ->
-        outcome.tier?.let { "Your ${it.replaceFirstChar(Char::titlecase)} key is back." }
-            ?: "Your key is back on this device."
+        outcome.tier?.let { context.getString(R.string.pay_restored_tier, it.replaceFirstChar(Char::titlecase)) }
+            ?: context.getString(R.string.pay_restored)
 
     // Not "nothing to restore": someone signed into the wrong account reads that as a subscription
     // that has vanished, and the thing they can actually check is which address they paid with.
-    RestoreOutcome.NothingFound ->
-        "No subscription on this account. If you paid with a different email address, sign in " +
-            "with that one and try again."
+    RestoreOutcome.NothingFound -> context.getString(R.string.pay_restore_nothing)
 
     RestoreOutcome.NeedsEmailConfirmation -> null
     is RestoreOutcome.Failed -> null
@@ -304,23 +304,24 @@ data class PlanRow(val title: String, val subtitle: String)
  * to print it as "Free plan", so a subscriber whose plan failed to load was told they were on Free.
  * An active key on this device still names its tier; otherwise the row says what is happening.
  */
-internal fun planRow(state: PaywallState): PlanRow {
+internal fun planRow(context: Context, state: PaywallState): PlanRow {
     if (state.isQuotaKnown) {
         return PlanRow(
-            title = state.currentTier.replaceFirstChar(Char::titlecase) + " plan",
+            title = context.getString(R.string.pay_plan_title, state.currentTier.replaceFirstChar(Char::titlecase)),
             subtitle = if (state.pagesPerMonth > 0) {
-                "${state.pagesRemaining} of ${state.pagesPerMonth} AI credits left this month"
+                context.getString(R.string.pay_plan_credits_left, state.pagesRemaining, state.pagesPerMonth)
             } else {
-                "Tap to see plans"
+                context.getString(R.string.pay_plan_see_plans)
             }
         )
     }
     val keyTier = state.license.entitlement?.tier?.takeIf { state.license.isActive }
-    val title = keyTier?.let { it.replaceFirstChar(Char::titlecase) + " plan" } ?: "Your plan"
+    val title = keyTier?.let { context.getString(R.string.pay_plan_title, it.replaceFirstChar(Char::titlecase)) }
+        ?: context.getString(R.string.pay_plan_yours)
     val subtitle = if (state.error != null) {
-        "Couldn't load your plan. Tap to try again."
+        context.getString(R.string.pay_plan_load_failed)
     } else {
-        "Checking your plan…"
+        context.getString(R.string.pay_plan_checking)
     }
     return PlanRow(title, subtitle)
 }

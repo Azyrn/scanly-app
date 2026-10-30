@@ -1,6 +1,8 @@
 package com.skeler.scanely.core.ai
 
+import android.content.Context
 import android.os.SystemClock
+import com.skeler.scanely.R
 import com.skeler.scanely.core.network.BackendError
 import com.skeler.scanely.core.network.BackendErrorEnvelope
 import com.skeler.scanely.core.network.ChatStreamChunk
@@ -14,6 +16,7 @@ import com.skeler.scanely.core.network.TranscriptDto
 import com.skeler.scanely.core.network.TranslateRequest
 import com.skeler.scanely.core.network.backendError
 import com.skeler.scanely.core.transcribe.TranscribeOptions
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -77,8 +80,8 @@ data class ScanExtraction(
  * `rate_limited` may succeed on the next attempt, and everything else is the user's to resolve, so
  * retrying it only wastes their time.
  */
-internal fun HttpException.toAiException(waitForDesign: Boolean = false): Exception {
-    return backendFailure(code(), backendError(), waitForDesign)
+internal fun HttpException.toAiException(context: Context, waitForDesign: Boolean = false): Exception {
+    return backendFailure(context, code(), backendError(), waitForDesign)
 }
 
 /**
@@ -86,6 +89,7 @@ internal fun HttpException.toAiException(waitForDesign: Boolean = false): Except
  * writes a failure that happens after it has started answering as the envelope inside a 200.
  */
 internal fun backendFailure(
+    context: Context,
     status: Int,
     error: BackendError?,
     waitForDesign: Boolean = false
@@ -97,8 +101,8 @@ internal fun backendFailure(
         else -> "internal"
     }
     val message = error?.message ?: when (status) {
-        401 -> "Sign in to use AI scanning."
-        else -> "AI scanning failed. Try again."
+        401 -> context.getString(R.string.ai_err_sign_in)
+        else -> context.getString(R.string.ai_err_failed)
     }
 
     if (waitForDesign && code == "bad_request" && error?.reason == "duplicate_request") {
@@ -141,6 +145,7 @@ internal class DesignBytes(
 
 @Singleton
 internal class BackendClient @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val api: ScanlyApi
 ) {
     private val json = TolerantJson
@@ -165,7 +170,7 @@ internal class BackendClient @Inject constructor(
                 extractPreset?.let { MultipartBody.Part.createFormData("extract", it) }
             )
         } catch (e: HttpException) {
-            throw e.toAiException()
+            throw e.toAiException(context)
         }
 
         val pages = response.pages.sortedBy { it.index }
@@ -218,7 +223,7 @@ internal class BackendClient @Inject constructor(
         val body: ResponseBody = try {
             api.transcribe(filePart, parts, idempotencyKey)
         } catch (e: HttpException) {
-            throw e.toAiException()
+            throw e.toAiException(context)
         }
         return decodeTranscript(body.use { it.string() })
     }
@@ -226,11 +231,11 @@ internal class BackendClient @Inject constructor(
     /** Heartbeat spaces precede the JSON; a failure after the upload is an envelope in the 200. */
     private fun decodeTranscript(raw: String): TranscriptDto {
         val parsed = json.parseToJsonElement(raw.trim()) as? JsonObject
-            ?: throw TransientAiException("The transcript arrived incomplete. Try again.")
+            ?: throw TransientAiException(context.getString(R.string.ai_err_transcript_incomplete))
         val error = parsed["error"]?.let {
             json.decodeFromJsonElement(BackendErrorEnvelope.serializer(), parsed).error
         }
-        if (error != null) throw backendFailure(HTTP_OK, error)
+        if (error != null) throw backendFailure(context, HTTP_OK, error)
         return json.decodeFromJsonElement(TranscriptDto.serializer(), parsed)
     }
 
@@ -243,7 +248,7 @@ internal class BackendClient @Inject constructor(
         val body: ResponseBody = try {
             api.translate(TranslateRequest(text, targetLanguage), idempotencyKey)
         } catch (e: HttpException) {
-            throw e.toAiException()
+            throw e.toAiException(context)
         }
         return stream(body, "translation", emit)
     }
@@ -282,16 +287,16 @@ internal class BackendClient @Inject constructor(
             locale = Locale.getDefault().toLanguageTag(),
             ocrReceipt = ocrReceipt
         )
-        val response = awaitDesignResponse {
+        val response = awaitDesignResponse(context) {
             if (chat) api.designChat(request, idempotencyKey) else api.design(request, idempotencyKey)
         }
         if (response.code() == HTTP_ACCEPTED) {
             // A design the server runs as a background job. A retry of this request replays the
             // same job id, so following it again is never a second design.
             val job = response.body()?.use { json.decodeFromString(DesignJobAccepted.serializer(), it.string()) }
-                ?: throw TransientAiException("The designer did not say where your document is being built.")
+                ?: throw TransientAiException(context.getString(R.string.ai_err_design_no_location))
             onBackground(job.jobId)
-            if (!chat) return awaitDesignJob(job.deadlineSeconds) { api.designJob(job.jobId) }.toDesignBytes()
+            if (!chat) return awaitDesignJob(context, job.deadlineSeconds) { api.designJob(job.jobId) }.toDesignBytes()
             return followJob(job, onStep).toDesignBytes()
         }
 
@@ -319,7 +324,7 @@ internal class BackendClient @Inject constructor(
         } catch (_: Exception) {
             // Polling below reports the steps instead.
         }
-        return awaitDesignJob(job.deadlineSeconds, CHAT_POLL_MS, onPending = { pending ->
+        return awaitDesignJob(context, job.deadlineSeconds, CHAT_POLL_MS, onPending = { pending ->
             runCatching { json.decodeFromString(DesignJobPending.serializer(), pending) }
                 .getOrNull()?.steps?.forEach { onStep(it.step, it.at) }
         }) { api.designJob(job.jobId) }
@@ -347,9 +352,9 @@ internal class BackendClient @Inject constructor(
 
     private fun Response<ResponseBody>.toDesignBytes(): DesignBytes {
         val bytes = body()?.use { it.bytes() }
-            ?: throw TransientAiException("The designer sent back an empty document.")
+            ?: throw TransientAiException(context.getString(R.string.ai_err_design_empty))
         val id = headers()[DESIGN_ID_HEADER]
-            ?: throw TransientAiException("The designer sent back a document with no id.")
+            ?: throw TransientAiException(context.getString(R.string.ai_err_design_no_id))
 
         return DesignBytes(
             pdf = bytes,
@@ -465,6 +470,7 @@ internal const val HTTP_ACCEPTED = 202
  * once, and retrying the request would only replay the same failed job.
  */
 internal suspend fun awaitDesignJob(
+    context: Context,
     deadlineSeconds: Int,
     pollDelayMs: Long = 4_000L,
     /** The 202 body while the job runs: its state and, from servers that report them, its steps. */
@@ -479,13 +485,13 @@ internal suspend fun awaitDesignJob(
             response = call()
         }
         response
-    } ?: throw TransientAiException("Your document is still being built. Try again in a moment.")
+    } ?: throw TransientAiException(context.getString(R.string.ai_err_design_building))
     if (!response.isSuccessful) {
         val error = HttpException(response).backendError()
-        val failure = backendFailure(response.code(), error)
+        val failure = backendFailure(context, response.code(), error)
         throw failure as? FatalAiException ?: FatalAiException(
             AiResult.Error(
-                failure.message ?: "The designer failed. Try again.",
+                failure.message ?: context.getString(R.string.ai_err_design_failed),
                 code = error?.code,
                 notCharged = error?.notCharged == true
             )
@@ -496,12 +502,13 @@ internal suspend fun awaitDesignJob(
 
 /** Poll only an explicitly in-flight design; retain its original billing key at the call site. */
 internal suspend fun awaitDesignResponse(
+    context: Context,
     pollDelayMs: Long = 5_000L,
     call: suspend () -> Response<ResponseBody>
 ): Response<ResponseBody> = withTimeout(300_000L) {
     var response = call()
     while (!response.isSuccessful) {
-        val failure = HttpException(response).toAiException(waitForDesign = true)
+        val failure = HttpException(response).toAiException(context, waitForDesign = true)
         if (failure !is DesignStillProcessingException) throw failure
         delay(pollDelayMs)
         response = call()

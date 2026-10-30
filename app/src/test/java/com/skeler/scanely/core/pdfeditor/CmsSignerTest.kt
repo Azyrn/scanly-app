@@ -2,6 +2,7 @@ package com.skeler.scanely.core.pdfeditor
 
 import com.skeler.scanely.core.pdfeditor.signature.CmsSigner
 import com.skeler.scanely.core.pdfeditor.signature.SigningIdentity
+import com.skeler.scanely.testing.EnglishStrings
 import org.bouncycastle.asn1.ess.SigningCertificateV2
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers
 import org.bouncycastle.asn1.x500.X500Name
@@ -99,7 +100,7 @@ class CmsSignerTest {
     private val document = "%PDF-1.7\nnot really a pdf, but bytes are bytes\n%%EOF".toByteArray()
 
     private fun signOf(identity: SigningIdentity, content: ByteArray) =
-        CmsSigner.sign(identity) { ByteArrayInputStream(content) }
+        CmsSigner.sign(EnglishStrings.context(), identity) { ByteArrayInputStream(content) }
 
     @Test
     fun `the signature verifies against the certificate it names`() {

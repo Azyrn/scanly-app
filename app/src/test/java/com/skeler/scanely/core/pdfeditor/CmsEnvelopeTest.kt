@@ -3,6 +3,7 @@ package com.skeler.scanely.core.pdfeditor
 import com.skeler.scanely.core.pdfeditor.signature.CmsEnvelope
 import com.skeler.scanely.core.pdfeditor.signature.CmsSigner
 import com.skeler.scanely.core.pdfeditor.signature.SigningIdentity
+import com.skeler.scanely.testing.EnglishStrings
 import org.bouncycastle.asn1.x500.X500Name
 import org.bouncycastle.asn1.x509.BasicConstraints
 import org.bouncycastle.asn1.x509.Extension
@@ -62,7 +63,7 @@ class CmsEnvelopeTest {
     @Test
     fun `a padded blob parses back to the signature it holds`() {
         val identity = identity()
-        val cms = CmsSigner.sign(identity) { ByteArrayInputStream(document) }
+        val cms = CmsSigner.sign(EnglishStrings.context(), identity) { ByteArrayInputStream(document) }
 
         val parsed = CmsEnvelope.parse(paddedTo(cms, cms.size + 4096))
 
@@ -79,7 +80,7 @@ class CmsEnvelopeTest {
     @Test
     fun `an unpadded blob parses just the same`() {
         val identity = identity()
-        val cms = CmsSigner.sign(identity) { ByteArrayInputStream(document) }
+        val cms = CmsSigner.sign(EnglishStrings.context(), identity) { ByteArrayInputStream(document) }
 
         val parsed = CmsEnvelope.parse(cms)
 
@@ -99,7 +100,7 @@ class CmsEnvelopeTest {
      */
     @Test
     fun `the blob really does end in zero bytes of its own`() {
-        val cms = CmsSigner.sign(identity()) { ByteArrayInputStream(document) }
+        val cms = CmsSigner.sign(EnglishStrings.context(), identity()) { ByteArrayInputStream(document) }
 
         assertTrue(
             "expected BER end-of-contents octets at the end of the blob",

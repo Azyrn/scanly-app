@@ -2,6 +2,7 @@ package com.skeler.scanely.core.pdfeditor
 
 import com.skeler.scanely.core.pdfeditor.signature.Pkcs12Loader
 import com.skeler.scanely.core.pdfeditor.signature.Pkcs12Result
+import com.skeler.scanely.testing.EnglishStrings
 import org.bouncycastle.asn1.x500.X500Name
 import org.bouncycastle.asn1.x509.BasicConstraints
 import org.bouncycastle.asn1.x509.Extension
@@ -121,7 +122,7 @@ class Pkcs12LoaderTest {
             )
         )
 
-        val result = Pkcs12Loader.load(bytes, "secret".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray())
 
         assertTrue("$result", result is Pkcs12Result.Loaded)
         val identity = (result as Pkcs12Result.Loaded).identity
@@ -139,7 +140,7 @@ class Pkcs12LoaderTest {
         val chain = chain()
         val bytes = p12("secret", listOf(Triple("signer", chain.signerKeys, arrayOf(chain.signer))))
 
-        val result = Pkcs12Loader.load(bytes, "secret".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray())
 
         assertTrue("$result", result is Pkcs12Result.Loaded)
         assertEquals(1, (result as Pkcs12Result.Loaded).identity.chain.size)
@@ -150,14 +151,14 @@ class Pkcs12LoaderTest {
         val chain = chain()
         val bytes = p12("secret", listOf(Triple("signer", chain.signerKeys, arrayOf(chain.signer))))
 
-        val result = Pkcs12Loader.load(bytes, "wrong".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "wrong".toCharArray())
 
         assertEquals(Pkcs12Result.WrongPassword, result)
     }
 
     @Test
     fun `something that is not a PKCS12 fails rather than throwing`() {
-        val result = Pkcs12Loader.load("%PDF-1.7 not a keystore".toByteArray(), "x".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), "%PDF-1.7 not a keystore".toByteArray(), "x".toCharArray())
 
         assertTrue("$result", result is Pkcs12Result.Failed)
     }
@@ -171,7 +172,7 @@ class Pkcs12LoaderTest {
             .also { store.store(it, "secret".toCharArray()) }
             .toByteArray()
 
-        val result = Pkcs12Loader.load(bytes, "secret".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray())
 
         assertEquals(Pkcs12Result.NoPrivateKey, result)
     }
@@ -197,7 +198,7 @@ class Pkcs12LoaderTest {
             )
         )
 
-        val result = Pkcs12Loader.load(bytes, "secret".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray())
 
         assertTrue("$result", result is Pkcs12Result.Loaded)
         assertEquals("CN=Asha Rao", (result as Pkcs12Result.Loaded).identity.subject)
@@ -212,7 +213,7 @@ class Pkcs12LoaderTest {
         )
         val bytes = p12("secret", listOf(Triple("plain", plainKeys, arrayOf(plain))))
 
-        val result = Pkcs12Loader.load(bytes, "secret".toCharArray())
+        val result = Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray())
 
         assertTrue("$result", result is Pkcs12Result.Loaded)
         assertTrue((result as Pkcs12Result.Loaded).identity.canSign)
@@ -223,7 +224,7 @@ class Pkcs12LoaderTest {
         val chain = chain()
         val bytes = p12("secret", listOf(Triple("signer", chain.signerKeys, arrayOf(chain.signer))))
 
-        val identity = (Pkcs12Loader.load(bytes, "secret".toCharArray()) as Pkcs12Result.Loaded)
+        val identity = (Pkcs12Loader.load(EnglishStrings.context(), bytes, "secret".toCharArray()) as Pkcs12Result.Loaded)
             .identity
 
         assertTrue(identity.isValidAt(at(2026, 6, 1)))

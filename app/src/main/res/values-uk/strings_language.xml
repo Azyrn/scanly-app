@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_language_title">Мова</string>
+    <string name="settings_language_system">Як у системі</string>
+    <string name="settings_language_cancel">Скасувати</string>
+</resources>

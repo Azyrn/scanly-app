@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ui/components/PaywallSheet.kt -->
+    <string name="cmp_paywall_credits_left">今月の残りクレジットは %2$d 件中 %1$d 件です。</string>
+    <string name="cmp_paywall_credits_left_upgrade">今月の残りクレジットは %2$d 件中 %1$d 件です。アップグレードすると、より多くのクレジットを利用できます。</string>
+    <string name="cmp_paywall_more_credits">より多くのクレジット、より長い書類、より多くのファイル形式に対応します。</string>
+    <string name="cmp_paywall_ai_scan_credit">AIスキャンは1ページにつき1クレジットを使用します。他のAIツールもクレジット残高を共有します。</string>
+    <string name="cmp_paywall_plan_active">このアカウントでプランが有効になっています。</string>
+    <string name="cmp_paywall_key_active_here">このデバイスでキーが有効になっています。</string>
+    <string name="cmp_paywall_devices_used">%2$d 台中 %1$d 台の端末で使用中です。キーの管理は設定で行えます。</string>
+    <string name="cmp_paywall_watch_ad">広告を見て、さらに %1$d クレジットを獲得</string>
+    <string name="cmp_paywall_where_to_buy_before">"AIスキャンには毎月の無料枠が含まれています。有料プランは "</string>
+    <string name="cmp_paywall_where_to_buy_after">で提供されています。このアプリ内では購入できません。すでに購読済みの場合は、下から購入を復元してください。</string>
+    <string name="cmp_copied">コピーしました</string>
+    <string name="cmp_copy_address">アドレスをコピー</string>
+    <string name="cmp_license_key">ライセンスキー</string>
+    <string name="cmp_hide_key">キーを非表示</string>
+    <string name="cmp_show_key">キーを表示</string>
+    <string name="cmp_redeem">引き換え</string>
+    <string name="cmp_lost_key_restore">キーをお忘れですか？購入を復元</string>
+    <string name="cmp_confirm_email_first">まずメールアドレスを確認してください。購入者本人であることの証明に使用されます。</string>
+    <string name="cmp_send_confirmation_email">確認メールを送信</string>
+    <string name="cmp_paywall_plan_name">Scanly %1$s</string>
+    <string name="cmp_active">有効</string>
+    <string name="cmp_paywall_feature_credits">毎月 %1$d AI クレジット</string>
+    <string name="cmp_paywall_feature_pages">1つの書類で最大 %1$d ページ</string>
+    <string name="cmp_paywall_feature_office">Word、PowerPoint、OpenDocument のファイル</string>
+    <string name="cmp_paywall_feature_translation">翻訳</string>
+    <string name="cmp_paywall_feature_extraction">レシート、請求書、カードからのデータ抽出</string>
+    <string name="cmp_paywall_feature_sign">PDF への署名とデジタル署名の検証</string>
+    <string name="cmp_paywall_feature_edit">テキストの編集、PDF の圧縮とパスワード保護</string>
+    <string name="cmp_paywall_feature_ai_provider">独自の AI プロバイダーに接続</string>
+
+    <!-- ui/components/ResultsComponents.kt -->
+    <string name="cmp_edit_text">テキストを編集</string>
+    <string name="cmp_print">印刷</string>
+    <string name="cmp_export">エクスポート</string>
+    <string name="cmp_copy_text">テキストをコピー</string>
+    <string name="cmp_reading_options">表示オプション</string>
+    <string name="cmp_show_preview">プレビューを表示</string>
+    <string name="cmp_smaller_text">文字を小さく</string>
+    <string name="cmp_zoom_percent">%1$d%%</string>
+    <string name="cmp_bigger_text">文字を大きく</string>
+    <string name="cmp_reset">リセット</string>
+    <string name="cmp_no_table">表なし</string>
+    <string name="cmp_word_char_counts">%1$d 語 · %2$d 文字</string>
+    <string name="cmp_save_as">名前を付けて保存</string>
+
+    <!-- ui/components/PageRangeDialog.kt -->
+    <string name="cmp_page_range_title">どのページをスキャンしますか？</string>
+    <string name="cmp_page_range_over_ceiling">%1$s は %2$d ページあり、このスキャンで読み取れるのは最大 %3$d ページです。重要なページを選んでください。</string>
+    <string name="cmp_page_range_intro">%1$s は全 %2$d ページです。スキャンしたページはすべてプランに計上されるため、一部の範囲だけならファイル全体より少ないクレジットで済みます。</string>
+    <string name="cmp_page_range_example">例: 1-5, 8</string>
+    <string name="cmp_page_range_pick_up_to">1 から %2$d ページの中から、最大 %1$d ページを選んでください。</string>
+    <string name="cmp_page_range_use_numbers">1 から %1$d の間のページ番号を使用してください（例: 1-5 または 2,4）。</string>
+    <string name="cmp_page_range_n_of_total">%1$d / %2$d ページ</string>
+    <string name="cmp_page_range_required">必須 — このスキャンは %1$d ページが対象です</string>
+    <string name="cmp_page_range_leave_empty">空欄のままにすると、全 %1$d ページをスキャンします</string>
+    <string name="cmp_page_range_scan_count">%1$d ページをスキャン</string>
+    <string name="cmp_page_range_scan_all">すべてスキャン</string>
+
+    <!-- ui/components/TextDisplayComponents.kt -->
+    <string name="cmp_stage_uploading">アップロード中…</string>
+    <string name="cmp_stage_processing">処理中…</string>
+    <string name="cmp_stage_generating">生成中…</string>
+    <string name="cmp_stage_complete">完了</string>
+    <string name="cmp_processing_file_of">ファイル %1$d / %2$d を処理中...</string>
+    <string name="cmp_extracting_text">テキストを抽出中...</string>
+    <string name="cmp_file_of">ファイル %1$d / %2$d</string>
+    <string name="cmp_may_take_few_moments">少し時間がかかる場合があります</string>
+    <string name="cmp_translating">翻訳中...</string>
+    <string name="cmp_couldnt_read_file">このファイルを読み取れませんでした</string>
+    <string name="cmp_no_text_extracted">テキストを抽出できませんでした</string>
+    <string name="cmp_try_different_image">別の画像を選択してください</string>
+    <string name="cmp_batch_scanning">%1$d / %2$d 件のファイルをスキャン中…</string>
+
+    <!-- ui/components/product/FoodContentSection.kt -->
+    <string name="cmp_food_nutrition_facts">栄養成分表示</string>
+    <string name="cmp_food_serving_size">1食分の量: %1$s</string>
+    <string name="cmp_food_ingredients">原材料</string>
+    <string name="cmp_food_allergens">アレルゲン</string>
+    <string name="cmp_food_no_nutrition_info">この製品の詳しい栄養情報はありません。</string>
+    <string name="cmp_food_calories">エネルギー</string>
+    <string name="cmp_food_fat">脂質</string>
+    <string name="cmp_food_carbs">炭水化物</string>
+    <string name="cmp_food_protein">たんぱく質</string>
+    <string name="cmp_food_sugar">糖類</string>
+    <string name="cmp_food_salt">食塩相当量</string>
+    <string name="cmp_food_fiber">食物繊維</string>
+
+    <!-- ui/components/product/MedicineContentSection.kt -->
+    <string name="cmp_medicine_generic_name">一般名</string>
+    <string name="cmp_medicine_manufacturer">製造元</string>
+    <string name="cmp_medicine_active_ingredients">有効成分</string>
+    <string name="cmp_medicine_dosage_form">剤形</string>
+    <string name="cmp_medicine_route">投与経路</string>
+    <string name="cmp_medicine_recalled">⚠️ この製品は FDA によって回収されました。</string>
+    <string name="cmp_medicine_contraindications">禁忌</string>
+    <string name="cmp_medicine_indications">効能・効果</string>
+    <string name="cmp_medicine_fda_approved">FDA 承認: %1$s</string>
+    <string name="cmp_medicine_no_info">この医薬品の詳しい情報はありません。</string>
+    <string name="cmp_medicine_warnings">警告</string>
+
+    <!-- ui/components/product/BookContentSection.kt -->
+    <string name="cmp_book_authors">著者</string>
+    <string name="cmp_book_publisher">出版社</string>
+    <string name="cmp_book_published">出版日</string>
+    <string name="cmp_book_categories">カテゴリ</string>
+    <string name="cmp_book_isbn13">ISBN-13: %1$s</string>
+    <string name="cmp_book_isbn10">ISBN-10: %1$s</string>
+    <string name="cmp_book_no_info">この書籍の詳しい情報はありません。</string>
+
+    <!-- ui/components/product/CosmeticsContentSection.kt -->
+    <string name="cmp_cosmetics_labels">表示</string>
+    <string name="cmp_cosmetics_no_info">この製品の詳しい情報はありません。</string>
+
+    <!-- ui/components/ExportNameDialog.kt -->
+    <string name="cmp_export_name_title">ファイル名を入力</string>
+    <string name="cmp_export_file_name_label">ファイル名</string>
+    <string name="cmp_export_name_hint">元のファイル名がある場合はそれを使用します。</string>
+
+    <!-- ui/components/ExtractionPresetSheet.kt -->
+    <string name="cmp_extract_data">データを抽出</string>
+    <string name="cmp_preset_cost">テキストに加えて、ラベル付きの項目も取得できます。ページをデータとして読み取ると、プランから %1$d クレジットが消費されます。書類ごとに最大 8 ページまで指定できます。</string>
+    <string name="cmp_preset_included_pro">テキストに加えて、ラベル付きの項目も取得できます。Pro 以上のプランに含まれています。</string>
+
+    <!-- ui/components/SignInRequiredSheet.kt -->
+    <string name="cmp_sign_in_ai_title">AIスキャンを使用するにはサインイン</string>
+    <string name="cmp_sign_in_ai_body">AIスキャンは共有キーで動作するため、アカウントが必要です。テキスト認識とバーコードスキャンは、サインインなしで無料・オフラインのまま利用できます。</string>
+    <string name="cmp_sign_in_create_account">サインインまたはアカウントを作成</string>
+
+    <!-- ui/components/MainActionButton.kt -->
+    <string name="cmp_view_previous_extracts">以前の抽出結果を表示</string>
+
+    <!-- ui/components/MarkdownContent.kt -->
+    <string name="cmp_embedded_image">埋め込み画像</string>
+
+    <!-- ui/components/StorageAccess.kt -->
+    <string name="cmp_storage_allow_settings">端末にファイルを保存するには、設定でストレージへのアクセスを許可してください。</string>
+
+    <!-- ui/components/LanguageChipRow.kt -->
+    <string name="cmp_chip_original">原文</string>
+    <string name="cmp_chip_translate">翻訳</string>
+    <string name="cmp_chip_text_to_pdf">テキストを PDF に</string>
+
+    <!-- ui/components/AiModeBottomSheet.kt -->
+    <string name="cmp_ai_scan_title">AIスキャン</string>
+    <string name="cmp_ai_mode_extract_text_title">テキストを抽出</string>
+    <string name="cmp_ai_mode_extract_text_subtitle">画像内の表示テキストを抽出</string>
+    <string name="cmp_ai_mode_extract_document_title">書類を抽出</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">PDF、Word、PowerPoint、テキストファイル</string>
+    <string name="cmp_ai_mode_extract_data_title">データを抽出</string>
+    <string name="cmp_ai_mode_extract_data_subtitle">レシート、請求書、カードをラベル付きの項目として抽出</string>
+    <string name="cmp_ai_mode_audio_title">音声からテキストへ</string>
+    <string name="cmp_ai_mode_audio_subtitle">録音、会議、動画を話者ごとに文字起こし</string>
+
+    <!-- ui/components/BarcodeScannerComponents.kt -->
+    <string name="cmp_barcode_detected">バーコードを検出</string>
+    <string name="cmp_barcode_content">バーコードの内容</string>
+    <string name="cmp_copy_to_clipboard">クリップボードにコピー</string>
+
+    <!-- ui/components/ProductDetailSheet.kt -->
+    <string name="cmp_product_unknown_source">不明</string>
+    <string name="cmp_product_looking_up">製品を検索中...</string>
+    <string name="cmp_product_not_found">製品が見つかりません</string>
+    <string name="cmp_product_lookup_failed">検索に失敗しました</string>
+    <string name="cmp_product_unknown_error">不明なエラー</string>
+    <string name="cmp_product_unknown_name">不明な製品</string>
+    <string name="cmp_product_via_source">提供元: %1$s</string>
+
+    <!-- ui/components/ScanInsightComponents.kt -->
+    <plurals name="cmp_passages_hard_to_read">
+        <item quantity="one">読みにくい箇所が1か所ありました</item>
+        <item quantity="other">読みにくい箇所が %1$d か所ありました</item>
+    </plurals>
+    <string name="cmp_check_against_original">利用する前に、原文と照らし合わせて確認してください。</string>
+    <string name="cmp_show_all_count">すべて表示（%1$d 件）</string>
+    <string name="cmp_copy_json">JSON をコピー</string>
+    <plurals name="cmp_links_found">
+        <item quantity="one">%1$d 件のリンク</item>
+        <item quantity="other">%1$d 件のリンク</item>
+    </plurals>
+
+    <!-- ui/components/FilePreviewOverlay.kt -->
+    <string name="cmp_preview_saves_to">.%1$s のプレビュー · 保存先: Downloads/Scanly</string>
+    <string name="cmp_export_format">%1$s でエクスポート</string>
+    <string name="cmp_preview_no_table_csv">このテキストには表がないため、CSV に書き出す内容がありません。</string>
+    <string name="cmp_preview_rendering_pages">ページを描画中…</string>
+    <string name="cmp_preview_render_failed">この書類を PDF として描画できませんでした。</string>
+    <string name="cmp_preview_page_n_of_total">ページ %1$d / %2$d</string>
+    <string name="cmp_preview_first_n_of_pages">最初の %1$d / %2$d ページ</string>
+    <string name="cmp_preview_first_n_of_lines">最初の %1$d / %2$d 行</string>
+
+    <!-- ui/components/TextPdfExport.kt -->
+    <string name="cmp_export_nothing_to_export">書き出す内容がありません</string>
+    <string name="cmp_export_no_table_data">書き出す表データがありません</string>
+    <string name="cmp_export_couldnt_save">%1$s を保存できませんでした</string>
+
+    <!-- ui/viewmodel/DocumentScanViewModel.kt -->
+    <string name="cmp_doc_saved_to_downloads">%1$s を Downloads/Scanly に保存しました</string>
+    <string name="cmp_doc_couldnt_create">%1$s を作成できませんでした</string>
+    <plurals name="cmp_doc_saved_images">
+        <item quantity="one">%1$d 枚の画像をギャラリーに保存しました</item>
+        <item quantity="other">%1$d 枚の画像をギャラリーに保存しました</item>
+    </plurals>
+    <string name="cmp_doc_couldnt_save_images">画像を保存できませんでした</string>
+
+    <!-- ui/viewmodel/TranscribeViewModel.kt -->
+    <string name="cmp_transcribe_default_title">音声</string>
+    <string name="cmp_transcribe_nothing_recorded">何も録音されませんでした。マイクを確認して、もう一度お試しください。</string>
+    <string name="cmp_transcribe_recording_title">録音中 · %1$s</string>
+
+    <!-- docchat/presentation/screen/ChatReplies.kt -->
+    <string name="cmp_chat_reply_field_line">%1$s: %2$s</string>
+    <string name="act_open_link">リンクを開く</string>
+    <string name="act_copy">コピー</string>
+    <string name="act_copy_text">テキストをコピー</string>
+    <string name="act_copy_barcode">バーコードをコピー</string>
+    <string name="act_copy_ssid">SSID をコピー</string>
+    <string name="act_call">電話をかける</string>
+    <string name="act_send_email">メールを送信</string>
+    <string name="act_connect_wifi">Wi-Fi に接続</string>
+    <string name="act_send_sms">SMS を送信</string>
+    <string name="act_add_contact">連絡先に追加</string>
+    <string name="act_view_text">テキストを表示</string>
+    <string name="act_add_event">カレンダーに追加</string>
+    <string name="act_product_info">製品情報</string>
+    <string name="act_copied">クリップボードにコピーしました</string>
+    <string name="act_err_url">リンクを開けませんでした</string>
+    <string name="act_err_copy">コピーできませんでした</string>
+    <string name="act_err_dialer">ダイヤラーを開けませんでした</string>
+    <string name="act_err_email">メールアプリを開けませんでした</string>
+    <string name="act_err_sms">メッセージアプリを開けませんでした</string>
+    <string name="act_err_wifi">Wi-Fi に接続できませんでした</string>
+    <string name="act_wifi_suggested">Wi-Fi ネットワークの候補: %1$s</string>
+    <string name="act_wifi_open_settings">Wi-Fi 設定を開いて %1$s に接続してください</string>
+    <string name="act_err_contacts">連絡先を開けませんでした</string>
+    <string name="act_err_calendar">カレンダーを開けませんでした</string>
+    <string name="tx_fmt_pdf">PDF</string>
+    <string name="tx_fmt_pdf_hint">話者と時刻入り、印刷に便利</string>
+    <string name="tx_fmt_word">Word</string>
+    <string name="tx_fmt_word_hint">編集可能な書類</string>
+    <string name="tx_fmt_text">テキスト</string>
+    <string name="tx_fmt_text_hint">プレーンテキスト .txt</string>
+    <string name="tx_fmt_md">Markdown</string>
+    <string name="tx_fmt_md_hint">ノートアプリ向け</string>
+    <string name="tx_fmt_srt">字幕 (SRT)</string>
+    <string name="tx_fmt_srt_hint">動画編集ソフト向け</string>
+    <string name="tx_fmt_vtt">字幕 (WebVTT)</string>
+    <string name="tx_fmt_vtt_hint">ウェブ向け、話者付き</string>
+    <string name="pay_headline_pro_feature">Scanly Pro の機能</string>
+    <string name="pay_headline_limit">プランの上限に達しました</string>
+    <string name="pay_headline_on_tier">現在のプラン: %1$s</string>
+    <string name="pay_headline_upsell">Pro でもっとスキャン</string>
+    <string name="pay_key_active">キーは有効です。ご利用ありがとうございます。</string>
+    <string name="pay_key_active_tier">現在のプランは %1$s です。ご利用ありがとうございます。</string>
+    <string name="pay_confirm_sent">受信トレイを確認してリンクを開き、もう一度「購入を復元」をタップしてください。</string>
+    <string name="pay_confirm_failed">確認メールを送信できませんでした。もう一度お試しください。</string>
+    <string name="pay_key_removed">この端末からキーを削除しました。</string>
+    <string name="pay_restored_tier">%1$s のキーが戻りました。</string>
+    <string name="pay_restored">この端末でキーが戻りました。</string>
+    <string name="pay_restore_nothing">このアカウントにはサブスクリプションがありません。別のメールアドレスで支払った場合は、そのアドレスでサインインして、もう一度お試しください。</string>
+    <string name="pay_plan_title">%1$s プラン</string>
+    <string name="pay_plan_credits_left">今月の AI クレジット残り %1$d / %2$d</string>
+    <string name="pay_plan_see_plans">タップしてプランを表示</string>
+    <string name="pay_plan_yours">あなたのプラン</string>
+    <string name="pay_plan_load_failed">プランを読み込めませんでした。タップして再試行してください。</string>
+    <string name="pay_plan_checking">プランを確認中…</string>
+</resources>

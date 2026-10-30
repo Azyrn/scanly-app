@@ -1,5 +1,6 @@
 package com.skeler.scanely.ui.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import com.skeler.scanely.core.scan.UnifiedScanResult
 import com.skeler.scanely.core.scan.UnifiedScanService
 import com.skeler.scanely.history.data.HistoryManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,6 +31,7 @@ private const val TAG = "UnifiedScanViewModel"
 
 @HiltViewModel
 class UnifiedScanViewModel @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val unifiedScanService: UnifiedScanService,
     private val historyManager: HistoryManager
 ) : ViewModel() {
@@ -60,7 +63,7 @@ class UnifiedScanViewModel @Inject constructor(
                 }
             }
 
-            val state = result.toUiState(uri)
+            val state = result.toUiState(context, uri)
             val extractedText = state.extractedText
             _uiState.value = state
 
@@ -130,11 +133,11 @@ data class UnifiedScanUiState(
     val failure: String? = null
 )
 
-internal fun UnifiedScanResult.toUiState(uri: Uri?): UnifiedScanUiState {
+internal fun UnifiedScanResult.toUiState(context: Context, uri: Uri?): UnifiedScanUiState {
     val success = textResult as? OcrResult.Success
     // A readable code is a result even when the text beside it failed; the failure screen is only
     // for a scan that produced nothing at all.
-    val failure = scanFailureMessage(textResult).takeIf { isEmpty }
+    val failure = scanFailureMessage(context, textResult).takeIf { isEmpty }
     return UnifiedScanUiState(
         isLoading = false,
         extractedText = success?.text,

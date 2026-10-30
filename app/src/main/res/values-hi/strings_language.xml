@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_language_title">भाषा</string>
+    <string name="settings_language_system">सिस्टम डिफ़ॉल्ट</string>
+    <string name="settings_language_cancel">रद्द करें</string>
+</resources>

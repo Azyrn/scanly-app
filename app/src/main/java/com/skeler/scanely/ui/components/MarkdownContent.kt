@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -48,6 +49,7 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.text.MarkdownParser
 import com.skeler.scanely.core.text.MathText
 import com.skeler.scanely.core.text.MdBlock
@@ -228,7 +230,7 @@ private fun MarkdownImage(block: MdBlock.Image, base64: String?) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Image(
                 bitmap = bitmap,
-                contentDescription = block.alt.ifBlank { "Embedded image" },
+                contentDescription = block.alt.ifBlank { stringResource(R.string.cmp_embedded_image) },
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -262,7 +264,7 @@ private fun MarkdownImage(block: MdBlock.Image, base64: String?) {
             )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
-                text = block.alt.ifBlank { "Embedded image" },
+                text = block.alt.ifBlank { stringResource(R.string.cmp_embedded_image) },
                 style = bodyStyle(),
                 fontStyle = FontStyle.Italic,
                 color = MaterialTheme.colorScheme.onSurfaceVariant

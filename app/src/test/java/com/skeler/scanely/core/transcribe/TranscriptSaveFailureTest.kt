@@ -5,6 +5,7 @@ import com.skeler.scanely.core.ai.GenerativeAiService
 import com.skeler.scanely.core.billing.EntitlementRepository
 import com.skeler.scanely.core.network.TranscriptDto
 import com.skeler.scanely.core.network.TranscriptSegmentDto
+import com.skeler.scanely.testing.EnglishStrings
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -32,6 +33,7 @@ class TranscriptSaveFailureTest {
     private val store = TranscriptStore(context)
     private val service = mock(GenerativeAiService::class.java)
     private val runner = TranscriptionRunner(
+        EnglishStrings.context(),
         mock(AudioPreparer::class.java),
         service,
         store,

@@ -60,7 +60,11 @@ internal class LabelPlan(val text: String, val paint: TextPaint, val x: Float)
  * page. Paragraphs past [CHUNK_CHARS] are split, since one StaticLayout over megabytes of text
  * would stall for a long time with no chance to cancel.
  */
-internal class ParagraphFactory(private val images: DocxImages, private val notes: DocxNotes) {
+internal class ParagraphFactory(
+    private val images: DocxImages,
+    private val fonts: DocxFonts,
+    private val notes: DocxNotes
+) {
 
     fun build(paragraph: DocxParagraph, width: Float, maxImageHeight: Float): List<ParagraphPlan> {
         val style = paragraph.style
@@ -135,7 +139,7 @@ internal class ParagraphFactory(private val images: DocxImages, private val note
         if (background != null) {
             text.setSpan(BackgroundColorSpan(opaque(background)), start, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
-        if (run.text.isNotBlank() && DocxFonts.isReplaced(style.font)) notes.fontsReplaced = true
+        if (run.text.isNotBlank() && fonts.isReplaced(style.font)) notes.fontsReplaced = true
     }
 
     /** Super- and subscript are drawn smaller and shifted, as Word does without a dedicated font. */
@@ -148,7 +152,7 @@ internal class ParagraphFactory(private val images: DocxImages, private val note
         }
         return RunSpan(
             size = if (style.verticalAlign == VerticalAlign.BASELINE) size else size * SCRIPT_SCALE,
-            typeface = DocxFonts.typeface(style.font, style.bold, style.italic),
+            typeface = fonts.typeface(style.font, style.bold, style.italic),
             color = opaque(style.color ?: Color.BLACK),
             decoration = (if (style.underline) UNDERLINE else 0) or (if (style.strike) STRIKE else 0),
             shift = shift.toInt()
@@ -227,7 +231,8 @@ internal class ParagraphFactory(private val images: DocxImages, private val note
 
     private fun paint(style: RunStyle): TextPaint = TextPaint(TEXT_FLAGS).apply {
         textSize = style.halfPoints / 2f
-        typeface = DocxFonts.typeface(style.font, style.bold, style.italic)
+        fontFeatureSettings = NO_LIGATURES
+        typeface = fonts.typeface(style.font, style.bold, style.italic)
         color = opaque(style.color ?: Color.BLACK)
     }
 
@@ -276,6 +281,13 @@ internal class ParagraphFactory(private val images: DocxImages, private val note
 }
 
 /** All of a run's character formatting in one span, so a size like 10.5 pt stays fractional. */
+
+/**
+ * Word sets text without standard ligatures, and a ligature glyph ("ft" in Carlito) reaches the
+ * PDF with no character behind it, so the word could no longer be found or copied.
+ */
+private const val NO_LIGATURES = "\"liga\" 0, \"clig\" 0"
+
 private class RunSpan(
     private val size: Float,
     private val typeface: Typeface,
@@ -295,6 +307,7 @@ private class RunSpan(
     private fun applyMetrics(paint: TextPaint) {
         paint.textSize = size
         paint.typeface = typeface
+        paint.fontFeatureSettings = NO_LIGATURES
         paint.baselineShift += shift
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">Cada hoja visible se convierte en páginas del PDF, en el orden del libro. Las hojas anchas continúan en las páginas siguientes.</string>
+    <string name="excel2pdf_convert">Convertir a PDF</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="one">Se omitió %d hoja oculta.</item>
+        <item quantity="many">Se omitieron %d hojas ocultas.</item>
+        <item quantity="other">Se omitieron %d hojas ocultas.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="one">Se omitió %d gráfico.</item>
+        <item quantity="many">Se omitieron %d gráficos.</item>
+        <item quantity="other">Se omitieron %d gráficos.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="one">Se omitió %d imagen.</item>
+        <item quantity="many">Se omitieron %d imágenes.</item>
+        <item quantity="other">Se omitieron %d imágenes.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">Las fórmulas muestran su último resultado guardado.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="one">%d fórmula no tenía un resultado guardado y está en blanco.</item>
+        <item quantity="many">%d fórmulas no tenían un resultado guardado y están en blanco.</item>
+        <item quantity="other">%d fórmulas no tenían un resultado guardado y están en blanco.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">No se aplicó el formato condicional.</string>
+    <string name="excel2pdf_note_pivots">Las tablas dinámicas muestran sus últimos valores guardados.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="one">Las hojas muy grandes se cortaron en %d fila.</item>
+        <item quantity="many">Las hojas muy grandes se cortaron en %d filas.</item>
+        <item quantity="other">Las hojas muy grandes se cortaron en %d filas.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="one">El PDF se detiene en %d página; el resto se omitió.</item>
+        <item quantity="many">El PDF se detiene en %d páginas; el resto se omitió.</item>
+        <item quantity="other">El PDF se detiene en %d páginas; el resto se omitió.</item>
+    </plurals>
+</resources>

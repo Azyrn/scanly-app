@@ -1,6 +1,7 @@
 package com.skeler.scanely.core.barcode
 
 import android.net.Uri
+import com.skeler.scanely.R
 import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.actions.WifiType
 
@@ -49,7 +50,7 @@ object BarcodeContentParser {
         }
 
         if (text.isNotBlank() && actions.none { it is ScanAction.CopyText }) {
-            actions.add(ScanAction.CopyText(text, "Copy Barcode"))
+            actions.add(ScanAction.CopyText(text, R.string.act_copy_barcode))
         }
         return actions
     }
@@ -73,7 +74,7 @@ object BarcodeContentParser {
                 type = wifiType
             )
         )
-        actions.add(ScanAction.CopyText(ssid, "Copy SSID"))
+        actions.add(ScanAction.CopyText(ssid, R.string.act_copy_ssid))
     }
 
     private fun parseMailto(text: String, actions: MutableList<ScanAction>) {

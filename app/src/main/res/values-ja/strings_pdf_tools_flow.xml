@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
+<resources>
+    <!-- Inputs on the options screen -->
+    <string name="pdf_tool_flow_add_files">ファイルを追加</string>
+    <string name="pdf_tool_flow_remove">%1$s を削除</string>
+    <string name="pdf_tool_flow_move_up">%1$s を上へ移動</string>
+    <string name="pdf_tool_flow_move_down">%1$s を下へ移動</string>
+    <plurals name="pdf_tool_flow_min_inputs">
+        <item quantity="one">続行するには、ファイルを %d 件以上追加してください。</item>
+        <item quantity="other">続行するには、ファイルを %d 件以上追加してください。</item>
+    </plurals>
+    <string name="pdf_tool_flow_skipped">開けなかったファイルは除外されました。</string>
+
+    <!-- Progress -->
+    <plurals name="pdf_tool_flow_working_files">
+        <item quantity="one">%d 件のファイルを処理しています…</item>
+        <item quantity="other">%d 件のファイルを処理しています…</item>
+    </plurals>
+
+    <!-- Result -->
+    <string name="pdf_tool_flow_open_output">%1$s を開く</string>
+    <string name="pdf_tool_flow_share_all">すべて共有</string>
+</resources>

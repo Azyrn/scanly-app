@@ -51,6 +51,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import com.skeler.scanely.R
 import com.skeler.scanely.core.pdf.PdfPreview
 import com.skeler.scanely.core.pdf.ScanExporter
 
@@ -142,7 +144,7 @@ fun FilePreviewOverlay(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Preview of the .${format.extension} · saves to Downloads/Scanly",
+                    text = stringResource(R.string.cmp_preview_saves_to, format.extension),
                     style = MaterialTheme.typography.labelSmall,
                     color = PillInk.copy(alpha = 0.75f)
                 )
@@ -160,7 +162,7 @@ fun FilePreviewOverlay(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     TextButton(onClick = onDismiss) {
-                        Text("Close", color = PillInk)
+                        Text(stringResource(R.string.pdf_stamp_numbers_margin_narrow), color = PillInk)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
@@ -183,7 +185,7 @@ fun FilePreviewOverlay(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Export ${format.label}")
+                        Text(stringResource(R.string.cmp_export_format, format.label))
                     }
                 }
             }
@@ -277,7 +279,7 @@ private fun PreviewPage(
             val rows = remember(content) { tableRows(content) }
             Sheet(height = height, color = Paper) {
                 if (rows.isEmpty()) {
-                    PageMessage("No table in this text, so a CSV would have nothing to carry.")
+                    PageMessage(stringResource(R.string.cmp_preview_no_table_csv))
                 } else {
                     SheetBody(rows)
                 }
@@ -348,11 +350,11 @@ private fun PdfPages(
 
     when {
         rendered == null -> Sheet(height = height, color = Paper) {
-            PageMessage("Rendering pages…", loading = true)
+            PageMessage(stringResource(R.string.cmp_preview_rendering_pages), loading = true)
         }
 
         preview == null || preview.pages.isEmpty() -> Sheet(height = height, color = Paper) {
-            PageMessage("Couldn't render this document as a PDF.")
+            PageMessage(stringResource(R.string.cmp_preview_render_failed))
         }
 
         else -> Column(
@@ -374,7 +376,11 @@ private fun PdfPages(
                 ) {
                     Image(
                         bitmap = page.asImageBitmap(),
-                        contentDescription = "Page ${index + 1} of ${preview.pageCount}",
+                        contentDescription = stringResource(
+                            R.string.cmp_preview_page_n_of_total,
+                            index + 1,
+                            preview.pageCount
+                        ),
                         contentScale = ContentScale.FillWidth,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -383,7 +389,7 @@ private fun PdfPages(
 
             if (preview.pageCount > preview.pages.size) {
                 Text(
-                    text = "First ${preview.pages.size} of ${preview.pageCount} pages",
+                    text = stringResource(R.string.cmp_preview_first_n_of_pages, preview.pages.size, preview.pageCount),
                     style = MaterialTheme.typography.labelSmall,
                     color = PillInk,
                     textAlign = TextAlign.Center,
@@ -517,7 +523,7 @@ private fun FileTextBody(text: String) {
 
         if (lines.size > shown.size) {
             Text(
-                text = "First ${shown.size} of ${lines.size} lines",
+                text = stringResource(R.string.cmp_preview_first_n_of_lines, shown.size, lines.size),
                 style = MaterialTheme.typography.labelSmall,
                 color = PaperMuted,
                 modifier = Modifier

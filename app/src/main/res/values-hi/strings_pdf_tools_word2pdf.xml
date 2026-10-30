@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_word_to_pdf_body">आपके फ़ोन पर ही दस्तावेज़ बदलता है। चार्ट, टेक्स्ट बॉक्स और समीकरण अभी नहीं दिखाए जा सकते, इसलिए छोड़ दिए जाते हैं।</string>
+    <string name="pdf_tool_word_to_pdf_action">PDF में बदलें</string>
+    <plurals name="pdf_tool_word_to_pdf_note_charts">
+        <item quantity="one">%d चार्ट छोड़ दिया गया।</item>
+        <item quantity="other">%d चार्ट छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_diagrams">
+        <item quantity="one">%d SmartArt आरेख छोड़ दिया गया।</item>
+        <item quantity="other">%d SmartArt आरेख छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_shapes">
+        <item quantity="one">%d टेक्स्ट बॉक्स या आकृति छोड़ दी गई।</item>
+        <item quantity="other">%d टेक्स्ट बॉक्स या आकृतियाँ छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_equations">
+        <item quantity="one">%d समीकरण छोड़ दिया गया।</item>
+        <item quantity="other">%d समीकरण छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_objects">
+        <item quantity="one">%d एम्बेडेड ऑब्जेक्ट छोड़ दिया गया।</item>
+        <item quantity="other">%d एम्बेडेड ऑब्जेक्ट छोड़ दिए गए।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_images">
+        <item quantity="one">%d तस्वीर ऐसे फ़ॉर्मैट में है जो दिखाया नहीं जा सकता, इसलिए छोड़ दी गई।</item>
+        <item quantity="other">%d तस्वीरें ऐसे फ़ॉर्मैट में हैं जो दिखाया नहीं जा सकता, इसलिए छोड़ दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_rows">
+        <item quantity="one">%d टेबल पंक्ति पूरे पेज से बड़ी थी और काट दी गई।</item>
+        <item quantity="other">%d टेबल पंक्तियाँ पूरे पेज से बड़ी थीं और काट दी गईं।</item>
+    </plurals>
+    <plurals name="pdf_tool_word_to_pdf_note_page_limit">
+        <item quantity="one">सिर्फ़ पहला %d पेज बदला गया।</item>
+        <item quantity="other">सिर्फ़ पहले %d पेज बदले गए।</item>
+    </plurals>
+    <string name="pdf_tool_word_to_pdf_note_fonts">कुछ फ़ॉन्ट मिलते-जुलते फ़ॉन्ट से बदल दिए गए।</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">हेडर और फ़ुटर छोड़ दिए गए।</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">फ़ुटनोट छोड़ दिए गए।</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">कॉलम वाला टेक्स्ट एक ही कॉलम में लगाया गया।</string>
+</resources>

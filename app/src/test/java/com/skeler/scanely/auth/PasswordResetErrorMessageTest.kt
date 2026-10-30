@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.skeler.scanely.auth.data.repository.FirebaseAuthRepository
 import com.skeler.scanely.core.network.NetworkObserver
+import com.skeler.scanely.testing.EnglishStrings
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.ScanlyPublicApi
 import java.net.ServerSocket
@@ -50,6 +51,7 @@ class PasswordResetErrorMessageTest {
             val network = mock(NetworkObserver::class.java)
             `when`(network.isCurrentlyOnline()).thenReturn(online)
             val repository = FirebaseAuthRepository(
+                EnglishStrings.context(),
                 mock(FirebaseAuth::class.java),
                 mock(CredentialManager::class.java),
                 unreachableBackend(),

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
+<resources>
+    <string name="excel2pdf_options_body">تصبح كل ورقة عمل مرئية صفحاتٍ في ملف PDF، بحسب ترتيبها في المصنف. تتابع الأوراق العريضة في الصفحات التالية.</string>
+    <string name="excel2pdf_convert">تحويل إلى PDF</string>
+
+    <!-- Result notes: what the PDF had to leave out or simplify -->
+    <plurals name="excel2pdf_note_hidden_sheets">
+        <item quantity="zero">تم استبعاد %d ورقة عمل مخفية.</item>
+        <item quantity="one">تم استبعاد %d ورقة عمل مخفية.</item>
+        <item quantity="two">تم استبعاد %d ورقتي عمل مخفيتين.</item>
+        <item quantity="few">تم استبعاد %d أوراق عمل مخفية.</item>
+        <item quantity="many">تم استبعاد %d ورقة عمل مخفية.</item>
+        <item quantity="other">تم استبعاد %d ورقة عمل مخفية.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_charts">
+        <item quantity="zero">تم استبعاد %d مخطط.</item>
+        <item quantity="one">تم استبعاد %d مخطط.</item>
+        <item quantity="two">تم استبعاد %d مخططين.</item>
+        <item quantity="few">تم استبعاد %d مخططات.</item>
+        <item quantity="many">تم استبعاد %d مخططًا.</item>
+        <item quantity="other">تم استبعاد %d مخطط.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_pictures">
+        <item quantity="zero">تم استبعاد %d صورة.</item>
+        <item quantity="one">تم استبعاد %d صورة.</item>
+        <item quantity="two">تم استبعاد %d صورتين.</item>
+        <item quantity="few">تم استبعاد %d صور.</item>
+        <item quantity="many">تم استبعاد %d صورة.</item>
+        <item quantity="other">تم استبعاد %d صورة.</item>
+    </plurals>
+    <string name="excel2pdf_note_formulas_cached">تعرض الصيغ آخر نتيجة محفوظة لها.</string>
+    <plurals name="excel2pdf_note_formulas_missing">
+        <item quantity="zero">%d صيغة لا تحمل نتيجة محفوظة، فتظهر فارغة.</item>
+        <item quantity="one">%d صيغة لا تحمل نتيجة محفوظة، فتظهر فارغة.</item>
+        <item quantity="two">%d صيغتان لا تحملان نتيجة محفوظة، فتظهران فارغتين.</item>
+        <item quantity="few">%d صيغ لا تحمل نتيجة محفوظة، فتظهر فارغة.</item>
+        <item quantity="many">%d صيغةً لا تحمل نتيجة محفوظة، فتظهر فارغة.</item>
+        <item quantity="other">%d صيغة لا تحمل نتيجة محفوظة، فتظهر فارغة.</item>
+    </plurals>
+    <string name="excel2pdf_note_conditional">لم يتم تطبيق التنسيق الشرطي.</string>
+    <string name="excel2pdf_note_pivots">تعرض الجداول المحورية آخر قيم محفوظة لها.</string>
+    <plurals name="excel2pdf_note_cut_rows">
+        <item quantity="zero">قُصّت الأوراق الكبيرة جدًا عند %d صف.</item>
+        <item quantity="one">قُصّت الأوراق الكبيرة جدًا عند %d صف.</item>
+        <item quantity="two">قُصّت الأوراق الكبيرة جدًا عند %d صفين.</item>
+        <item quantity="few">قُصّت الأوراق الكبيرة جدًا عند %d صفوف.</item>
+        <item quantity="many">قُصّت الأوراق الكبيرة جدًا عند %d صفًا.</item>
+        <item quantity="other">قُصّت الأوراق الكبيرة جدًا عند %d صف.</item>
+    </plurals>
+    <plurals name="excel2pdf_note_page_cap">
+        <item quantity="zero">يتوقف ملف PDF عند %d صفحة، وتم استبعاد الباقي.</item>
+        <item quantity="one">يتوقف ملف PDF عند %d صفحة، وتم استبعاد الباقي.</item>
+        <item quantity="two">يتوقف ملف PDF عند %d صفحتين، وتم استبعاد الباقي.</item>
+        <item quantity="few">يتوقف ملف PDF عند %d صفحات، وتم استبعاد الباقي.</item>
+        <item quantity="many">يتوقف ملف PDF عند %d صفحة، وتم استبعاد الباقي.</item>
+        <item quantity="other">يتوقف ملف PDF عند %d صفحة، وتم استبعاد الباقي.</item>
+    </plurals>
+</resources>

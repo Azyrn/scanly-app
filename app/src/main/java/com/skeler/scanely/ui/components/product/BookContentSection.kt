@@ -10,7 +10,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.R
 import com.skeler.scanely.core.lookup.BookData
 
 @Composable
@@ -19,7 +21,7 @@ fun BookContentSection(data: BookData) {
 
     if (data.authors.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Authors")
+        SectionHeader(stringResource(R.string.cmp_book_authors))
         Text(
             text = data.authors.joinToString(", "),
             style = MaterialTheme.typography.bodyMedium
@@ -34,22 +36,22 @@ fun BookContentSection(data: BookData) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            data.publisher?.let { InfoColumn("Publisher", it) }
-            data.publishedDate?.let { InfoColumn("Published", it) }
-            data.pageCount?.let { InfoColumn("Pages", it.toString()) }
+            data.publisher?.let { InfoColumn(stringResource(R.string.cmp_book_publisher), it) }
+            data.publishedDate?.let { InfoColumn(stringResource(R.string.cmp_book_published), it) }
+            data.pageCount?.let { InfoColumn(stringResource(R.string.pdf_tool_split_ranges_label), it.toString()) }
         }
         Spacer(modifier = Modifier.height(12.dp))
     }
 
     data.language?.takeIf { it.isNotBlank() }?.let { language ->
         hasContent = true
-        InfoColumn("Language", language.uppercase())
+        InfoColumn(stringResource(R.string.settings_language_title), language.uppercase())
         Spacer(modifier = Modifier.height(12.dp))
     }
 
     if (data.categories.isNotEmpty()) {
         hasContent = true
-        SectionHeader("Categories")
+        SectionHeader(stringResource(R.string.cmp_book_categories))
         Text(
             text = data.categories.joinToString(", "),
             style = MaterialTheme.typography.bodySmall
@@ -61,7 +63,7 @@ fun BookContentSection(data: BookData) {
         data.isbn13?.let { isbn ->
             hasContent = true
             Text(
-                text = "ISBN-13: $isbn",
+                text = stringResource(R.string.cmp_book_isbn13, isbn),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -69,7 +71,7 @@ fun BookContentSection(data: BookData) {
         data.isbn10?.let { isbn ->
             hasContent = true
             Text(
-                text = "ISBN-10: $isbn",
+                text = stringResource(R.string.cmp_book_isbn10, isbn),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -78,7 +80,7 @@ fun BookContentSection(data: BookData) {
 
     if (!hasContent) {
         Text(
-            text = "No detailed information available for this book.",
+            text = stringResource(R.string.cmp_book_no_info),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

@@ -1,6 +1,7 @@
 package com.skeler.scanely.core.actions
 
 import android.util.Log
+import com.skeler.scanely.R
 
 private const val TAG = "ScanActionDetector"
 
@@ -35,7 +36,7 @@ object ScanActionDetector {
         actions.addAll(detectFromPatterns(text))
 
         if (text.isNotBlank() && actions.none { it is ScanAction.CopyText }) {
-            actions.add(ScanAction.CopyText(text, "Copy Text"))
+            actions.add(ScanAction.CopyText(text, R.string.act_copy_text))
         }
 
         Log.d(TAG, "Detected ${actions.size} actions")
@@ -58,7 +59,7 @@ object ScanActionDetector {
             }
 
             actions.add(ScanAction.ConnectWifi(ssid, password, wifiType))
-            actions.add(ScanAction.CopyText(ssid, "Copy SSID"))
+            actions.add(ScanAction.CopyText(ssid, R.string.act_copy_ssid))
             return actions // WiFi format is exclusive
         }
 

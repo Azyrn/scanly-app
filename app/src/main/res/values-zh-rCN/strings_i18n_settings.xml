@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SettingsScreen.kt -->
+    <string name="set_settings_title">设置</string>
+    <string name="set_section_account">账户</string>
+    <string name="set_sign_in">登录</string>
+    <string name="set_sign_in_subtitle">AI 扫描需要登录</string>
+    <string name="set_signed_in">已登录</string>
+    <string name="set_pro_key_title">Scanly Pro 密钥</string>
+    <string name="set_pro_key_active_devices">已激活 · %1$d / %2$d 台设备</string>
+    <string name="set_pro_key_active_here">已在此设备上激活</string>
+    <string name="set_delete_account_title">删除账户</string>
+    <string name="set_delete_account_subtitle">永久删除你的账户和数据</string>
+    <string name="set_section_customize">个性化</string>
+    <string name="set_look_and_feel_title">外观与风格</string>
+    <string name="set_look_and_feel_subtitle">配色方案、深色主题、纯黑</string>
+    <string name="set_text_recognition_title">文字识别</string>
+    <string name="set_text_recognition_subtitle">%1$s · 文字系统与预处理</string>
+    <string name="set_barcode_engine_title">条码扫描引擎</string>
+    <string name="set_custom_endpoint_title">自定义接口</string>
+    <string name="set_custom_endpoint_subtitle">连接你自己的 AI 服务商 · Pro</string>
+    <string name="set_section_about">关于</string>
+    <string name="set_privacy_options_title">隐私选项</string>
+    <string name="set_privacy_options_subtitle">管理广告同意设置</string>
+    <string name="set_rate_title">为 Scanly 评分</string>
+    <string name="set_rate_subtitle">在 Google Play 上告诉其他人你的看法</string>
+    <string name="set_privacy_policy_title">隐私政策</string>
+    <string name="set_privacy_policy_subtitle">Scanly 保存哪些信息，以及由谁处理</string>
+    <string name="set_terms_title">服务条款</string>
+    <string name="set_developer_subtitle">\@Azyrn · 开发者</string>
+    <string name="set_telegram_subtitle">反馈问题或提出功能建议</string>
+    <string name="set_app_version">Scanly %1$s (%2$d)</string>
+    <string name="set_remove_key_title">移除你的密钥？</string>
+    <string name="set_remove_key_message">此设备将恢复为免费版，并释放其名额，以便你在其他设备上使用该密钥。密钥本身仍然有效。</string>
+    <string name="set_remove_key_confirm">移除</string>
+    <string name="set_delete_account_dialog_title">删除账户？</string>
+    <string name="set_delete_account_dialog_message">此操作将永久删除你在我们服务器上的 Scanly 账户、登录信息和使用记录，且无法撤销。\n\n保存在此设备上的扫描内容不会受影响；如有有效的 Pro 订阅，需要单独通过 Paddle 取消。</string>
+    <string name="set_sign_out_dialog_title">退出登录？</string>
+    <string name="set_sign_out_dialog_message">在你重新登录之前，AI 扫描将无法使用。你的扫描历史和离线文字识别仍保留在此设备上。</string>
+    <string name="set_sign_out">退出登录</string>
+    <string name="set_account_options">账户选项</string>
+    <string name="set_account_id_label">账户 ID</string>
+    <string name="set_account_id_copied">账户 ID 已复制</string>
+    <string name="set_barcode_mlkit_description">Google 的端侧扫描器，支持自动变焦</string>
+    <string name="set_barcode_zxing_description">开源解码器，无需 GMS 即可使用</string>
+
+    <!-- LookAndFeelScreen.kt -->
+    <string name="set_palette_wallpaper">壁纸配色</string>
+    <string name="set_palette_subtitle">选择一套配色，为整个应用重新着色</string>
+    <string name="set_section_color_palette">配色方案</string>
+    <string name="set_palette_dynamic">动态</string>
+    <string name="set_section_personalize">个性化设置</string>
+    <string name="set_dark_theme">深色主题</string>
+    <string name="set_on">开</string>
+    <string name="set_off">关</string>
+    <string name="set_pure_black_title">纯黑 M3</string>
+    <string name="set_pure_black_subtitle">在 OLED 屏幕上更省电</string>
+    <string name="set_palette_cerulean_wave">天蓝浪潮</string>
+    <string name="set_palette_lavender_volt">薰衣草伏特</string>
+    <string name="set_palette_amethyst_haze">紫晶薄雾</string>
+    <string name="set_palette_emerald_grove">翡翠林</string>
+    <string name="set_palette_sunset_coral">落日珊瑚</string>
+    <string name="set_palette_rose_blush">玫瑰腮红</string>
+    <string name="set_palette_monochrome">单色</string>
+
+    <!-- TextRecognitionScreen.kt -->
+    <string name="set_section_engine">引擎</string>
+    <string name="set_section_script">文字系统</string>
+    <string name="set_section_preprocessing">预处理</string>
+    <string name="set_auto_rotate_title">自动旋转页面</string>
+    <string name="set_auto_rotate_subtitle">检测横向和颠倒的页面</string>
+    <string name="set_fix_flipped_title">修正翻转的文本行</string>
+    <string name="set_fix_flipped_subtitle">适用于同时包含正向和倒置文本行的页面。对阿拉伯文效果不稳定</string>
+    <string name="set_flatten_curved_title">展平弯曲的页面</string>
+    <string name="set_downloading_percent">正在下载 %1$d%%</string>
+    <string name="set_uvdoc_missing_subtitle">UVDoc 去弯曲校正 · 下载 30 MB</string>
+    <string name="set_uvdoc_ready_subtitle">UVDoc 去弯曲校正，速度较慢，适用于书籍和折痕</string>
+    <string name="set_section_document_structure">文档结构</string>
+    <string name="set_detect_layout_title">检测版面</string>
+    <string name="set_detect_layout_subtitle">在 Markdown 视图中显示标题、段落和阅读顺序</string>
+    <string name="set_recognize_tables_title">识别表格</string>
+    <string name="set_tables_missing_subtitle">SLANet 表格模型 · 下载 8 MB</string>
+    <string name="set_tables_ready_subtitle">将表格重建为可导出为 CSV 的网格</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
+    <string name="set_script_delete_description">删除 %1$s</string>
+    <string name="set_script_download_description">下载 %1$s</string>
+
+    <!-- CustomProviderScreen.kt -->
+    <string name="set_pro_required_title">Pro 专属功能</string>
+    <string name="set_pro_required_message">连接你自己的 AI 服务商是 Scanly Pro 的功能之一。下方表单展示的是你将要设置的内容，开通 Pro 后即可填写。请在“设置”的“账户”部分升级，或兑换你已拥有的密钥。</string>
+    <string name="set_custom_intro_body">可连接任何 AI 服务商。选择其使用的协议，粘贴接口 URL、模型名称和 API 密钥，然后测试连接。</string>
+    <string name="set_custom_intro_hosts">大多数服务商兼容 OpenAI，例如 Groq、OpenAI、OpenRouter、NVIDIA NIM、Together、Fireworks。Claude 和 Gemini 使用各自的协议；你网络内的自托管服务器也可以通过普通 http 访问。</string>
+    <string name="set_custom_intro_pdf_pages">扫描版 PDF 每次最多可发送 %1$d 页，因为它们在一次请求中以图片形式传输。Office 文档仍需使用 Scanly AI。</string>
+    <string name="set_section_protocol">协议</string>
+    <string name="set_section_endpoint">接口</string>
+    <string name="set_endpoint_url_label">接口 URL</string>
+    <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI 会在路径中包含你的账户 ID，请粘贴包含该 ID 的完整 URL。</string>
+    <string name="set_endpoint_hint_openai">通常以 /v1/chat/completions 结尾。</string>
+    <string name="set_endpoint_hint_anthropic">通常以 /v1/messages 结尾。</string>
+    <string name="set_endpoint_hint_gemini">只需填写主机地址，模型和路径会自动添加。</string>
+    <string name="set_model_label">模型</string>
+    <string name="set_model_hint">请与服务商列出的名称完全一致。</string>
+    <string name="set_api_key_label">API 密钥</string>
+    <string name="set_api_key_hint">仅存储在此设备上，绝不会发送到 Scanly 的服务器。</string>
+    <string name="set_header_name_label">请求头名称</string>
+    <string name="set_header_name_hint">你的网关要求密钥所在的请求头。</string>
+    <string name="set_auth_style_label">密钥发送方式</string>
+    <string name="set_endpoint_verified">已验证，此接口响应正确。</string>
+    <string name="set_endpoint_unverified">未验证，请在保存前测试连接。</string>
+    <string name="set_testing">测试中…</string>
+    <string name="set_test_connection">测试连接</string>
+    <string name="set_remove_endpoint">移除接口</string>
+    <string name="set_use_for_ai_title">用于 AI 功能</string>
+    <string name="set_use_for_ai_verified">扫描、数据提取、翻译、草稿和设计都将使用你的接口，而不是 Scanly AI。音频转文字始终使用 Scanly AI，因为聊天接口无法接收音频。</string>
+    <string name="set_use_for_ai_unverified">请先验证接口。</string>
+
+    <!-- AuthScreen.kt / AuthViewModel.kt -->
+    <string name="set_auth_create_title">创建你的账户</string>
+    <string name="set_auth_welcome_title">欢迎回来</string>
+    <string name="set_auth_intro">登录后即可使用 AI 扫描。文字识别和条码扫描无需账户，离线即可继续使用。</string>
+    <string name="set_auth_email_label">邮箱</string>
+    <string name="set_auth_password_hint">至少 6 个字符</string>
+    <string name="set_auth_forgot_password">忘记密码？</string>
+    <string name="set_auth_create_account">创建账户</string>
+    <string name="set_auth_or">或</string>
+    <string name="set_auth_continue_google">使用 Google 继续</string>
+    <string name="set_auth_have_account">已有账户？</string>
+    <string name="set_auth_no_account">还没有账户？</string>
+    <string name="set_auth_create_one">立即创建</string>
+    <string name="set_account_deleted">你的账户已删除。</string>
+
+    <!-- HistoryScreen.kt -->
+    <string name="set_history_title">历史记录</string>
+    <string name="set_history_clear">清空历史记录</string>
+    <string name="set_history_clear_all">全部清空</string>
+    <string name="set_history_clear_message">确定要删除所有历史记录吗？此操作无法撤销。</string>
+    <string name="set_history_delete_all">全部删除</string>
+    <string name="set_history_empty">暂无历史记录</string>
+</resources>

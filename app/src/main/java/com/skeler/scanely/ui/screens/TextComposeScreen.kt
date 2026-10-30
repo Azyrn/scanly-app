@@ -35,10 +35,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.skeler.scanely.R
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.ExportContent
 import com.skeler.scanely.ui.components.ExportMenu
@@ -74,10 +76,13 @@ fun TextComposeScreen() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Text to PDF", fontWeight = FontWeight.SemiBold) },
+                title = { Text(stringResource(R.string.cmp_chip_text_to_pdf), fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = { navigator.back() }) {
-                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Rounded.ArrowBack,
+                            contentDescription = stringResource(R.string.pdf_tools_back)
+                        )
                     }
                 },
                 actions = {
@@ -92,7 +97,7 @@ fun TextComposeScreen() {
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.SaveAlt,
-                                contentDescription = "Export",
+                                contentDescription = stringResource(R.string.cmp_export),
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -133,7 +138,7 @@ fun TextComposeScreen() {
             ) {
                 if (text.isEmpty()) {
                     Text(
-                        text = "Start typing…",
+                        text = stringResource(R.string.scr_text_compose_placeholder),
                         style = readingStyle,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -148,7 +153,7 @@ fun TextComposeScreen() {
             }
 
             Text(
-                text = "${counts.first} words · ${counts.second} characters",
+                text = stringResource(R.string.cmp_word_char_counts, counts.first, counts.second),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp)

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pdf_tool_jpg_mode_pages">पेज JPG में</string>
+    <string name="pdf_tool_jpg_mode_pages_body">हर पेज एक तस्वीर बन जाता है।</string>
+    <string name="pdf_tool_jpg_mode_extract">तस्वीरें निकालें</string>
+    <string name="pdf_tool_jpg_mode_extract_body">PDF के अंदर की फ़ोटो और चित्र उनकी असली क्वालिटी में सेव करें।</string>
+    <string name="pdf_tool_jpg_quality">क्वालिटी</string>
+    <string name="pdf_tool_jpg_quality_normal">सामान्य · 150 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">हाई · 300 dpi</string>
+    <string name="pdf_tool_jpg_action_pages">JPG में बदलें</string>
+    <string name="pdf_tool_jpg_action_extract">तस्वीरें निकालें</string>
+    <plurals name="pdf_tool_jpg_images_skipped">
+        <item quantity="one">%d तस्वीर ऐसे फ़ॉर्मैट में थी जिसे Scanly एक्सपोर्ट नहीं कर सकता, इसलिए छोड़ दी गई।</item>
+        <item quantity="other">%d तस्वीरें ऐसे फ़ॉर्मैट में थीं जिन्हें Scanly एक्सपोर्ट नहीं कर सकता, इसलिए छोड़ दी गईं।</item>
+    </plurals>
+    <string name="pdf_tool_img2pdf_body">हर पेज पर एक तस्वीर, दिखाए गए क्रम में।</string>
+    <string name="pdf_tool_img2pdf_page_size">पेज साइज़</string>
+    <string name="pdf_tool_img2pdf_size_fit">तस्वीर के हिसाब से</string>
+    <string name="pdf_tool_img2pdf_size_a4">A4</string>
+    <string name="pdf_tool_img2pdf_size_letter">Letter</string>
+    <string name="pdf_tool_img2pdf_orientation">ओरिएंटेशन</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">अपने-आप</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">पोर्ट्रेट</string>
+    <string name="pdf_tool_img2pdf_orientation_landscape">लैंडस्केप</string>
+    <string name="pdf_tool_img2pdf_margin">मार्जिन</string>
+    <string name="pdf_tool_img2pdf_margin_none">कोई नहीं</string>
+    <string name="pdf_tool_img2pdf_margin_small">छोटा</string>
+    <string name="pdf_tool_img2pdf_margin_big">बड़ा</string>
+    <string name="pdf_tool_img2pdf_action">PDF बनाएं</string>
+    <plurals name="pdf_tool_img2pdf_unreadable">
+        <item quantity="one">%d फ़ाइल तस्वीर के रूप में पढ़ी नहीं जा सकी और छोड़ दी गई।</item>
+        <item quantity="other">%d फ़ाइलें तस्वीर के रूप में पढ़ी नहीं जा सकीं और छोड़ दी गईं।</item>
+    </plurals>
+</resources>
