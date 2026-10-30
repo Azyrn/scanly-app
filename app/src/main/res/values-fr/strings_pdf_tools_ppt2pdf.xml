@@ -2,17 +2,17 @@
 <!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
 <resources>
     <string name="pdf_tool_ppt2pdf_action">Convertir en PDF</string>
-    <string name="pdf_tool_ppt2pdf_shapes">Certaines formes ont été simplifiées.</string>
-    <string name="pdf_tool_ppt2pdf_fonts">Certaines polices ont été remplacées par des polices similaires.</string>
+    <string name="pdf_tool_ppt2pdf_shapes">Certaines formes simplifiées.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">Polices remplacées par des similaires.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">%d graphique a été retiré.</item>
-        <item quantity="many">%d graphiques ont été retirés.</item>
-        <item quantity="other">%d graphiques ont été retirés.</item>
+        <item quantity="one">%d graphique retiré.</item>
+        <item quantity="many">%d graphiques retirés.</item>
+        <item quantity="other">%d graphiques retirés.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
         <item quantity="one">%d graphique SmartArt a été retiré.</item>
-        <item quantity="many">%d graphiques SmartArt ont été retirés.</item>
-        <item quantity="other">%d graphiques SmartArt ont été retirés.</item>
+        <item quantity="many">%d graphiques SmartArt retirés.</item>
+        <item quantity="other">%d graphiques SmartArt retirés.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
         <item quantity="one">%d objet intégré a été retiré.</item>
@@ -20,28 +20,28 @@
         <item quantity="other">%d objets intégrés ont été retirés.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d vidéo ou son ne peut pas être lu dans un PDF ; seule son image d\'aperçu est affichée.</item>
-        <item quantity="many">%d vidéos ou sons ne peuvent pas être lus dans un PDF ; seules leurs images d\'aperçu sont affichées.</item>
-        <item quantity="other">%d vidéos ou sons ne peuvent pas être lus dans un PDF ; seules leurs images d\'aperçu sont affichées.</item>
+        <item quantity="one">%d vidéo ou son non lisible en PDF ; seule son aperçu s\'affiche.</item>
+        <item quantity="many">%d vidéos ou sons non lisibles en PDF ; seuls leurs aperçus s\'affichent.</item>
+        <item quantity="other">%d vidéos ou sons non lisibles en PDF ; seuls leurs aperçus s\'affichent.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">%d image n\'a pas pu être affichée.</item>
-        <item quantity="many">%d images n\'ont pas pu être affichées.</item>
-        <item quantity="other">%d images n\'ont pas pu être affichées.</item>
+        <item quantity="one">%d image non affichée.</item>
+        <item quantity="many">%d images non affichées.</item>
+        <item quantity="other">%d images non affichées.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
-        <item quantity="one">%d diapositive masquée a été ignorée.</item>
-        <item quantity="many">%d diapositives masquées ont été ignorées.</item>
-        <item quantity="other">%d diapositives masquées ont été ignorées.</item>
+        <item quantity="one">%d diapositive masquée, omise.</item>
+        <item quantity="many">%d diapositives cachées, omises.</item>
+        <item quantity="other">%d diapositives cachées, omises.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d diapositive n\'a pas pu être lue et a été retirée.</item>
-        <item quantity="many">%d diapositives n\'ont pas pu être lues et ont été retirées.</item>
-        <item quantity="other">%d diapositives n\'ont pas pu être lues et ont été retirées.</item>
+        <item quantity="one">%d diapositive illisible, retirée.</item>
+        <item quantity="many">%d diapositives illisibles, retirées.</item>
+        <item quantity="other">%d diapositives illisibles, retirées.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Seule %d diapositive a été convertie.</item>
-        <item quantity="many">Seules les %d premières diapositives ont été converties.</item>
-        <item quantity="other">Seules les %d premières diapositives ont été converties.</item>
+        <item quantity="many">Les %d premières diapositives seulement.</item>
+        <item quantity="other">Les %d premières diapositives seulement.</item>
     </plurals>
 </resources>

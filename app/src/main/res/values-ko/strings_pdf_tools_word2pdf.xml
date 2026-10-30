@@ -11,7 +11,7 @@
         <item quantity="other">SmartArt 다이어그램 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">텍스트 상자 또는 도형 %d개는 제외됐어요.</item>
+        <item quantity="one">텍스트 상자·도형 %d개 제외됨.</item>
         <item quantity="other">텍스트 상자 또는 도형 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">

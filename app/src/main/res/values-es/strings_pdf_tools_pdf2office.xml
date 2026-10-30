@@ -6,21 +6,21 @@
     <string name="pdf2office_word_action">Convertir a Word</string>
     <string name="pdf2office_powerpoint_body">Cada página se convierte en una diapositiva, con su texto en cuadros editables donde estaba en la página. Las páginas escaneadas se añaden como imágenes.</string>
     <string name="pdf2office_powerpoint_action">Convertir a PowerPoint</string>
-    <string name="pdf2office_excel_body">Las tablas se convierten en filas y celdas, una hoja por cada página que tenga tablas. Los números siguen siendo números, así que puedes sumarlos.</string>
+    <string name="pdf2office_excel_body">Las tablas pasan a filas y celdas, una hoja por página con tablas. Los números siguen siendo números para sumarlos.</string>
     <string name="pdf2office_excel_action">Convertir a Excel</string>
 
     <!-- Result notes -->
-    <string name="pdf2office_simplified_word">Se simplificó el diseño: el texto, los títulos, las listas y las tablas se pueden editar, pero no se trasladaron las fuentes, las columnas, los dibujos ni las imágenes.</string>
-    <string name="pdf2office_simplified_powerpoint">Se simplificó el diseño: el texto se puede editar donde estaba en la página, pero no se trasladaron las fuentes, los dibujos ni las imágenes.</string>
+    <string name="pdf2office_simplified_word">Diseño simplificado: el texto, títulos, listas y tablas son editables; no se conservan fuentes, columnas, dibujos ni imágenes.</string>
+    <string name="pdf2office_simplified_powerpoint">Diseño simplificado: el texto es editable en su posición; no se conservan fuentes, dibujos ni imágenes.</string>
     <plurals name="pdf2office_scanned_as_images">
         <item quantity="one">%d página escaneada se añadió como imagen.</item>
         <item quantity="many">%d páginas escaneadas se añadieron como imágenes.</item>
         <item quantity="other">%d páginas escaneadas se añadieron como imágenes.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">%d página muy densa se convirtió como líneas simples.</item>
-        <item quantity="many">%d páginas muy densas se convirtieron como líneas simples.</item>
-        <item quantity="other">%d páginas muy densas se convirtieron como líneas simples.</item>
+        <item quantity="one">%d página muy densa, en líneas simples.</item>
+        <item quantity="many">%d páginas muy densas, en líneas simples.</item>
+        <item quantity="other">%d páginas muy densas, en líneas simples.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
         <item quantity="one">%d página no se pudo leer y se omitió.</item>
@@ -29,10 +29,10 @@
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
         <item quantity="one">%d página escaneada no tiene texto y se omitió.</item>
-        <item quantity="many">%d páginas escaneadas no tienen texto y se omitieron.</item>
-        <item quantity="other">%d páginas escaneadas no tienen texto y se omitieron.</item>
+        <item quantity="many">%d páginas escaneadas sin texto: se omitieron.</item>
+        <item quantity="other">%d páginas escaneadas sin texto: se omitieron.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">No se encontraron tablas; el texto se colocó una línea por fila.</string>
+    <string name="pdf2office_excel_no_tables">No hay tablas; el texto va una línea por fila.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">Página %1$d</string>

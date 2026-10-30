@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">Scanly</string>
     <string name="ai_build_documents_title">AIで書類を作成</string>
-    <string name="ai_build_documents_subtitle">内容を説明するか、ファイルを添付してください：請求書、履歴書、レポート、スライド</string>
-    <string name="design_paywall_fallback">AIで書類を作成する機能は Pro に含まれています。</string>
-    <string name="custom_provider_build_documents_note">AIで書類を作成する処理は2段階に分かれます。お使いのモデルが書類を作成し、Scanly がレイアウトを整えます。より高性能なモデルを使うとデザインが向上します。レイアウト処理には通常の費用ではなく、クレジットを1つ消費します。</string>
+    <string name="ai_build_documents_subtitle">入力、またはファイルを添付：請求書、履歴書、レポート</string>
+    <string name="design_paywall_fallback">AIで書類作成はProに含まれます。</string>
+    <string name="custom_provider_build_documents_note">AIでの書類作成は2段階です。お使いのモデルが書類を作成し、Scanly がレイアウトを整えます。高性能なモデルほどデザインが向上します。レイアウトは通常費用の代わりにクレジット1つ。</string>
     <string name="plan_feature_build_documents">AIで書類を作成：レイアウト、表、スタイル</string>
     <string name="custom_provider_on_your_endpoint_note">スキャン、データ抽出、翻訳はすべて、この端末からお使いのプロバイダーに直接送信されます。Scanly のクレジットは消費されず、料金はプロバイダーから請求されます。</string>
 </resources>

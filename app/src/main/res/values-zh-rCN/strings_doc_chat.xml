@@ -100,13 +100,13 @@
     <string name="chat_file_unreadable">无法读取该文件。请尝试其他文件。</string>
 
     <!-- File actions -->
-    <string name="chat_open_with">用其他应用打开…</string>
+    <string name="chat_open_with">打开方式…</string>
     <string name="chat_no_viewer">手机上没有可以打开此文件的应用。</string>
     <string name="chat_save_failed">无法保存文件。</string>
     <string name="chat_share_failed">无法分享文件。</string>
     <string name="chat_saved_to_downloads">已保存到 Downloads。</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">已将 %d 张图片保存到 Pictures/Scanly。</item>
+        <item quantity="one">已保存 %d 张图片到 Pictures/Scanly。</item>
         <item quantity="other">已将 %d 张图片保存到 Pictures/Scanly。</item>
     </plurals>
     <string name="chat_images_failed">无法保存图片。</string>

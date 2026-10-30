@@ -5,7 +5,7 @@
     <string name="cmp_paywall_credits_left">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر.</string>
     <string name="cmp_paywall_credits_left_upgrade">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر. رقِّ اشتراكك للحصول على المزيد.</string>
     <string name="cmp_paywall_more_credits">أرصدة أكثر، ومستندات أطول، وصيغ ملفات أكثر.</string>
-    <string name="cmp_paywall_ai_scan_credit">يستهلك المسح بالذكاء الاصطناعي رصيدًا واحدًا لكل صفحة. أما أدوات الذكاء الاصطناعي الأخرى فتشارك رصيدك.</string>
+    <string name="cmp_paywall_ai_scan_credit">يستهلك المسح بالذكاء الاصطناعي رصيدًا لكل صفحة. الأدوات الأخرى تشترك في رصيدك.</string>
     <string name="cmp_paywall_plan_active">خطتك مفعّلة على هذا الحساب.</string>
     <string name="cmp_paywall_key_active_here">مفتاحك مفعّل على هذا الجهاز.</string>
     <string name="cmp_paywall_devices_used">%1$d من أصل %2$d أجهزة مستخدمة. أدِر مفتاحك من الإعدادات.</string>
@@ -15,7 +15,7 @@
     <string name="cmp_copied">تم النسخ</string>
     <string name="cmp_copy_address">نسخ العنوان</string>
     <string name="cmp_license_key">مفتاح الترخيص</string>
-    <string name="cmp_hide_key">إخفاء المفتاح</string>
+    <string name="cmp_hide_key">إخفاء مفتاح</string>
     <string name="cmp_show_key">إظهار المفتاح</string>
     <string name="cmp_redeem">استرداد</string>
     <string name="cmp_lost_key_restore">فقدت مفتاحك؟ استعادة الشراء</string>
@@ -23,7 +23,7 @@
     <string name="cmp_send_confirmation_email">إرسال بريد التأكيد</string>
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">نشط</string>
-    <string name="cmp_paywall_feature_credits">%1$d رصيد ذكاء اصطناعي شهريًا</string>
+    <string name="cmp_paywall_feature_credits">%1$d رصيد AI/شهر</string>
     <string name="cmp_paywall_feature_pages">حتى %1$d صفحة في مستند واحد</string>
     <string name="cmp_paywall_feature_office">ملفات Word وPowerPoint وOpenDocument</string>
     <string name="cmp_paywall_feature_translation">الترجمة</string>
@@ -42,8 +42,8 @@
     <string name="cmp_smaller_text">نص أصغر</string>
     <string name="cmp_zoom_percent">%1$d%%</string>
     <string name="cmp_bigger_text">نص أكبر</string>
-    <string name="cmp_reset">إعادة ضبط</string>
-    <string name="cmp_no_table">لا يوجد جدول</string>
+    <string name="cmp_reset">تصفير</string>
+    <string name="cmp_no_table">بدون جدول</string>
     <string name="cmp_word_char_counts">%1$d كلمة · %2$d حرفًا</string>
     <string name="cmp_save_as">حفظ باسم</string>
 
@@ -56,7 +56,7 @@
     <string name="cmp_page_range_use_numbers">استخدم أرقام صفحات بين 1 و%1$d، مثل 1-5 أو 2,4.</string>
     <string name="cmp_page_range_n_of_total">%1$d من %2$d صفحة</string>
     <string name="cmp_page_range_required">مطلوب: يغطي هذا المسح %1$d صفحة</string>
-    <string name="cmp_page_range_leave_empty">اتركه فارغًا لمسح كل الصفحات البالغ عددها %1$d</string>
+    <string name="cmp_page_range_leave_empty">اتركه فارغًا لمسح كل الصفحات (%1$d)</string>
     <string name="cmp_page_range_scan_count">مسح %1$d</string>
     <string name="cmp_page_range_scan_all">مسح الكل</string>
 
@@ -73,17 +73,17 @@
     <string name="cmp_couldnt_read_file">تعذّرت قراءة هذا الملف</string>
     <string name="cmp_no_text_extracted">لم يُستخرج أي نص</string>
     <string name="cmp_try_different_image">جرّب اختيار صورة أخرى</string>
-    <string name="cmp_batch_scanning">جارٍ مسح %1$d من أصل %2$d ملفات…</string>
+    <string name="cmp_batch_scanning">جارٍ مسح %1$d من %2$d ملفات…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">القيم الغذائية</string>
     <string name="cmp_food_serving_size">حجم الحصة: %1$s</string>
     <string name="cmp_food_ingredients">المكونات</string>
-    <string name="cmp_food_allergens">مسببات الحساسية</string>
+    <string name="cmp_food_allergens">الحساسية</string>
     <string name="cmp_food_no_nutrition_info">لا تتوفر معلومات غذائية مفصلة لهذا المنتج.</string>
-    <string name="cmp_food_calories">السعرات الحرارية</string>
-    <string name="cmp_food_fat">الدهون</string>
-    <string name="cmp_food_carbs">الكربوهيدرات</string>
+    <string name="cmp_food_calories">السعرات</string>
+    <string name="cmp_food_fat">دهون</string>
+    <string name="cmp_food_carbs">كربوهيدرات</string>
     <string name="cmp_food_protein">البروتين</string>
     <string name="cmp_food_sugar">السكر</string>
     <string name="cmp_food_salt">الملح</string>
@@ -94,10 +94,10 @@
     <string name="cmp_medicine_manufacturer">الشركة المصنّعة</string>
     <string name="cmp_medicine_active_ingredients">المواد الفعالة</string>
     <string name="cmp_medicine_dosage_form">الشكل الدوائي</string>
-    <string name="cmp_medicine_route">طريقة الاستخدام</string>
+    <string name="cmp_medicine_route">الطريقة</string>
     <string name="cmp_medicine_recalled">⚠️ سحبت FDA هذا المنتج من الأسواق.</string>
     <string name="cmp_medicine_contraindications">موانع الاستعمال</string>
-    <string name="cmp_medicine_indications">دواعي الاستعمال</string>
+    <string name="cmp_medicine_indications">الدواعي</string>
     <string name="cmp_medicine_fda_approved">معتمد من FDA: %1$s</string>
     <string name="cmp_medicine_no_info">لا تتوفر معلومات مفصلة عن هذا الدواء.</string>
     <string name="cmp_medicine_warnings">تحذيرات</string>
@@ -112,7 +112,7 @@
     <string name="cmp_book_no_info">لا تتوفر معلومات مفصلة عن هذا الكتاب.</string>
 
     <!-- ui/components/product/CosmeticsContentSection.kt -->
-    <string name="cmp_cosmetics_labels">الملصقات</string>
+    <string name="cmp_cosmetics_labels">ملصقات</string>
     <string name="cmp_cosmetics_no_info">لا تتوفر معلومات مفصلة لهذا المنتج.</string>
 
     <!-- ui/components/ExportNameDialog.kt -->
@@ -126,8 +126,8 @@
     <string name="cmp_preset_included_pro">احصل على الحقول المصنّفة إلى جانب النص. متاحة مع Pro وما فوقه.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
-    <string name="cmp_sign_in_ai_title">سجّل الدخول لاستخدام المسح بالذكاء الاصطناعي</string>
-    <string name="cmp_sign_in_ai_body">يعمل المسح بالذكاء الاصطناعي بمفتاح مشترك، لذلك يحتاج إلى حساب. أما التعرف على النص ومسح الباركود فيبقيان مجانيين ويعملان دون اتصال، ولا يحتاجان إلى تسجيل الدخول.</string>
+    <string name="cmp_sign_in_ai_title">سجّل الدخول للمسح الذكي</string>
+    <string name="cmp_sign_in_ai_body">يعمل المسح بالذكاء الاصطناعي بمفتاح مشترك، لذا يحتاج إلى حساب. التعرف على النص ومسح الباركود مجانيان ويعملان دون اتصال، بلا حاجة لتسجيل الدخول.</string>
     <string name="cmp_sign_in_create_account">تسجيل الدخول أو إنشاء حساب</string>
 
     <!-- ui/components/MainActionButton.kt -->
@@ -145,7 +145,7 @@
     <string name="cmp_chip_text_to_pdf">نص إلى PDF</string>
 
     <!-- ui/components/AiModeBottomSheet.kt -->
-    <string name="cmp_ai_scan_title">المسح بالذكاء الاصطناعي</string>
+    <string name="cmp_ai_scan_title">مسح ذكي</string>
     <string name="cmp_ai_mode_extract_text_title">استخراج النص</string>
     <string name="cmp_ai_mode_extract_text_subtitle">استخراج النص الظاهر من الصورة</string>
     <string name="cmp_ai_mode_extract_document_title">استخراج المستند</string>
@@ -197,8 +197,8 @@
     <string name="cmp_preview_rendering_pages">جارٍ عرض الصفحات…</string>
     <string name="cmp_preview_render_failed">تعذّر عرض هذا المستند كملف PDF.</string>
     <string name="cmp_preview_page_n_of_total">صفحة %1$d من %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">أول %1$d صفحات من أصل %2$d</string>
-    <string name="cmp_preview_first_n_of_lines">أول %1$d أسطر من أصل %2$d</string>
+    <string name="cmp_preview_first_n_of_pages">أول %1$d من %2$d صفحات</string>
+    <string name="cmp_preview_first_n_of_lines">أول %1$d من %2$d أسطر</string>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">لا يوجد ما يمكن تصديره</string>
@@ -231,10 +231,10 @@
     <string name="act_copy_barcode">نسخ الباركود</string>
     <string name="act_copy_ssid">نسخ SSID</string>
     <string name="act_call">اتصال</string>
-    <string name="act_send_email">إرسال بريد إلكتروني</string>
+    <string name="act_send_email">إرسال بريد</string>
     <string name="act_connect_wifi">الاتصال بشبكة Wi-Fi</string>
-    <string name="act_send_sms">إرسال رسالة SMS</string>
-    <string name="act_add_contact">إضافة جهة اتصال</string>
+    <string name="act_send_sms">إرسال SMS</string>
+    <string name="act_add_contact">حفظ جهة اتصال</string>
     <string name="act_view_text">عرض النص</string>
     <string name="act_add_event">إضافة إلى التقويم</string>
     <string name="act_product_info">معلومات المنتج</string>
@@ -254,9 +254,9 @@
     <string name="tx_fmt_word">Word</string>
     <string name="tx_fmt_word_hint">مستند قابل للتحرير</string>
     <string name="tx_fmt_text">نص</string>
-    <string name="tx_fmt_text_hint">ملف .txt عادي</string>
+    <string name="tx_fmt_text_hint">.txt عادي</string>
     <string name="tx_fmt_md">Markdown</string>
-    <string name="tx_fmt_md_hint">لتطبيقات الملاحظات</string>
+    <string name="tx_fmt_md_hint">لتطبيقات ملاحظات</string>
     <string name="tx_fmt_srt">ترجمات (SRT)</string>
     <string name="tx_fmt_srt_hint">لمحرّري الفيديو</string>
     <string name="tx_fmt_vtt">ترجمات (WebVTT)</string>
@@ -266,7 +266,7 @@
     <string name="pay_headline_on_tier">أنت على خطة %1$s</string>
     <string name="pay_headline_upsell">امسح المزيد مع Pro</string>
     <string name="pay_key_active">مفتاحك مفعّل. استمتع.</string>
-    <string name="pay_key_active_tier">أنت على خطة %1$s. استمتع.</string>
+    <string name="pay_key_active_tier">خطتك %1$s. استمتع.</string>
     <string name="pay_confirm_sent">تحقّق من صندوق الوارد، وافتح الرابط، ثم اضغط «استعادة الشراء» مرة أخرى.</string>
     <string name="pay_confirm_failed">تعذّر إرسال بريد التأكيد. حاول مرة أخرى.</string>
     <string name="pay_key_removed">تمت إزالة المفتاح من هذا الجهاز.</string>
@@ -274,7 +274,7 @@
     <string name="pay_restored">عاد مفتاحك إلى هذا الجهاز.</string>
     <string name="pay_restore_nothing">لا يوجد اشتراك على هذا الحساب. إن دفعت بعنوان بريد إلكتروني مختلف، فسجّل الدخول به وحاول مرة أخرى.</string>
     <string name="pay_plan_title">خطة %1$s</string>
-    <string name="pay_plan_credits_left">متبقٍ %1$d من أصل %2$d رصيد ذكاء اصطناعي هذا الشهر</string>
+    <string name="pay_plan_credits_left">متبقٍ %1$d/%2$d رصيد ذكاء اصطناعي هذا الشهر</string>
     <string name="pay_plan_see_plans">اضغط لعرض الخطط</string>
     <string name="pay_plan_yours">خطتك</string>
     <string name="pay_plan_load_failed">تعذّر تحميل خطتك. اضغط لإعادة المحاولة.</string>

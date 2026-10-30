@@ -65,10 +65,10 @@
     <string name="pdf_tool_saved">已保存到 Downloads/Scanly</string>
     <string name="pdf_tool_share">分享</string>
     <string name="pdf_tool_open">打开</string>
-    <string name="pdf_tool_open_with">用其他应用打开…</string>
+    <string name="pdf_tool_open_with">打开方式…</string>
     <string name="pdf_tool_no_viewer">手机上没有可以打开此文件的应用。</string>
     <string name="pdf_tool_save_failed">无法保存到 Downloads。存储空间可能已满。</string>
-    <string name="pdf_tool_size_change">%1$s → %2$s（%3$s）</string>
+    <string name="pdf_tool_size_change">%1$s→%2$s（%3$s）</string>
     <string name="pdf_tool_another_file">选择其他文件</string>
     <string name="pdf_tool_try_again">重试</string>
 
@@ -100,9 +100,9 @@
     <string name="pdf_tool_protect_already">此 PDF 已设置密码，新密码将替换原密码。</string>
 
     <!-- Rotate -->
-    <string name="pdf_tool_rotate_right">向右旋转 90°</string>
+    <string name="pdf_tool_rotate_right">右旋 90°</string>
     <string name="pdf_tool_rotate_half">180°</string>
-    <string name="pdf_tool_rotate_left">向左旋转 90°</string>
+    <string name="pdf_tool_rotate_left">左旋 90°</string>
     <string name="pdf_tool_rotate_body">旋转所有页面。如需旋转单独的页面，请使用“整理 PDF”。</string>
     <string name="pdf_tool_rotate_action">旋转</string>
 </resources>

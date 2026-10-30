@@ -2,9 +2,9 @@
 <!-- PDF tools: Repair PDF and Extract text. -->
 <resources>
     <!-- Repair -->
-    <string name="pdf_tool_repair_action">Reparieren</string>
+    <string name="pdf_tool_repair_action">Fixen</string>
     <plurals name="pdf_tool_repair_recovered">
-        <item quantity="one">%d Seite wiederhergestellt. Prüfe sie, bevor du das Original löschst.</item>
+        <item quantity="one">%d Seite gerettet. Prüfe sie vor dem Löschen des Originals.</item>
         <item quantity="other">%d Seiten wiederhergestellt. Prüfe sie, bevor du das Original löschst.</item>
     </plurals>
 
@@ -13,9 +13,9 @@
     <string name="pdf_tool_extract_text_separators_body">Fügt vor dem Text jeder Seite eine Zeile wie „Seite 3“ ein.</string>
     <!-- The line written into the .txt file before each page's text; %d is the page number. -->
     <string name="pdf_tool_extract_text_page_separator">----- Seite %d -----</string>
-    <string name="pdf_tool_extract_text_action">Extrahieren</string>
+    <string name="pdf_tool_extract_text_action">Auslesen</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d Seite hat keinen auswählbaren Text (ein Scan). Lies sie mit „PDF in Text“ auf dem Startbildschirm.</item>
-        <item quantity="other">%d Seiten haben keinen auswählbaren Text (Scans). Lies sie mit „PDF in Text“ auf dem Startbildschirm.</item>
+        <item quantity="one">%d Seite ohne auswählbaren Text (Scan). Mit „PDF in Text“ auf dem Startbildschirm lesen.</item>
+        <item quantity="other">%d Seiten ohne auswählbaren Text (Scans). Mit „PDF in Text“ auf dem Startbildschirm lesen.</item>
     </plurals>
 </resources>

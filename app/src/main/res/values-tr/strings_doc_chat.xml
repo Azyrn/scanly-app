@@ -6,9 +6,9 @@
     <string name="chat_menu">Sohbetler ve plan</string>
     <string name="chat_untitled">Adsız belge</string>
     <string name="chat_file_default_name">Belge</string>
-    <string name="chat_new">Yeni sohbet</string>
-    <string name="chat_rename_action">Sohbeti yeniden adlandır</string>
-    <string name="chat_rename_title">Sohbeti yeniden adlandır</string>
+    <string name="chat_new">Yeni konu</string>
+    <string name="chat_rename_action">Adlandır</string>
+    <string name="chat_rename_title">Adlandır</string>
     <string name="chat_rename_label">Ad</string>
     <string name="chat_save">Kaydet</string>
     <string name="chat_cancel">İptal</string>
@@ -17,13 +17,13 @@
     <string name="chat_group_today">Bugün</string>
     <string name="chat_group_yesterday">Dün</string>
     <string name="chat_group_week">Son 7 gün</string>
-    <string name="chat_group_older">Daha eski</string>
-    <string name="chat_search_hint">Sohbetlerde ara</string>
-    <string name="chat_search_clear">Aramayı temizle</string>
+    <string name="chat_group_older">Eski</string>
+    <string name="chat_search_hint">Sohbet ara</string>
+    <string name="chat_search_clear">Aramayı sil</string>
     <string name="chat_search_empty">Aramanızla eşleşen sohbet yok.</string>
-    <string name="chat_history_empty">Henüz sohbet yok. Oluşturduğunuz belgeler burada görünür.</string>
+    <string name="chat_history_empty">Henüz sohbet yok. Belgeleriniz burada görünür.</string>
     <string name="chat_more_actions">Diğer işlemler</string>
-    <string name="chat_delete_title">Bu sohbet silinsin mi?</string>
+    <string name="chat_delete_title">Sohbet silinsin mi?</string>
     <string name="chat_delete_body">“%1$s” ve dosyaları bu telefondan ve hesabınızdan kaldırılır. Downloads klasörüne kaydettiğiniz kopyalar kalır.</string>
     <string name="chat_delete_confirm">Sil</string>
 
@@ -36,22 +36,22 @@
         <item>Word\'de resmi bir mektup yaz</item>
     </string-array>
     <string name="chat_ask_answered">Yanıtladınız.</string>
-    <string name="chat_greeting_body">Anlatın ya da yeniden oluşturmak için bir dosya ekleyin.</string>
+    <string name="chat_greeting_body">Anlatın ya da dosyayla yeniden kurun</string>
 
     <!-- Composer -->
     <string name="chat_composer_hint">Bir belge anlatın…</string>
-    <string name="chat_composer_hint_revise">Bir değişiklik isteyin…</string>
+    <string name="chat_composer_hint_revise">Değişiklik isteyin…</string>
     <string name="chat_attach">Ekle</string>
-    <string name="chat_send">Gönder</string>
-    <string name="chat_stop">Beklemeyi durdur</string>
+    <string name="chat_send">Yolla</string>
+    <string name="chat_stop">Beklemeyi kes</string>
     <plurals name="chat_cost_hint">
         <item quantity="one">~%d kredi</item>
         <item quantity="other">~%d kredi</item>
     </plurals>
-    <string name="chat_cost_agent">Sohbet ücretsiz · dosyalar kredi kullanır</string>
+    <string name="chat_cost_agent">Sohbet ücretsiz · dosya kredisi</string>
     <string name="chat_remove">%1$s kaldır</string>
     <string name="chat_preparing_file">Hazırlanıyor…</string>
-    <string name="chat_preset_clean_up">Temizleyip düzenle</string>
+    <string name="chat_preset_clean_up">Toparla</string>
     <string name="chat_preset_one_page">Tek sayfaya sığdır</string>
     <plurals name="chat_pages">
         <item quantity="one">%d sayfa</item>
@@ -60,14 +60,14 @@
     <string name="chat_preparing_picture">Resim hazırlanıyor…</string>
     <string name="chat_picture_role">Sayfaya yerleştirildi</string>
     <string name="chat_scan_role">Taramalarımdan</string>
-    <string name="chat_image_pending">Yeniden oluşturulsun mu, yerleştirilsin mi?</string>
-    <string name="chat_role_rebuild">Bu belgeyi yeniden oluştur</string>
+    <string name="chat_image_pending">Yeniden mi, koy?</string>
+    <string name="chat_role_rebuild">Belgeyi yeniden oluştur</string>
     <string name="chat_role_place">Bu resmi sayfaya koy</string>
     <string name="chat_role_rebuild_prompt">Bu belgeyi temiz bir PDF olarak yeniden oluştur. Her kelimeyi, adı ve sayıyı koru.</string>
     <string name="chat_role_place_prompt">Bu resmi sayfaya portre ya da logo olarak yerleştir.</string>
-    <string name="chat_role_question">Yeniden mi oluşturulsun, yoksa sayfaya mı yerleştirilsin?</string>
-    <string name="chat_role_question_body">Yeniden oluştur, resmi yeni bir belgeye dönüştürür. Yerleştir ise resmi bir portre ya da logo gibi resim olarak tutar.</string>
-    <string name="chat_role_answer_rebuild">Yeniden oluştur</string>
+    <string name="chat_role_question">Yeniden mi, yoksa sayfaya mı?</string>
+    <string name="chat_role_question_body">Yeniden oluştur: resmi yeni bir belgeye çevirir. Yerleştir: portre ya da logo gibi resim olarak tutar.</string>
+    <string name="chat_role_answer_rebuild">Yenile</string>
     <string name="chat_role_answer_place">Yerleştir</string>
     <string name="chat_attach_error_dismiss">Kapat</string>
 
@@ -75,10 +75,10 @@
     <!-- Attach sheet -->
     <string name="chat_attach_title">Dosya ekle</string>
     <string name="chat_attach_camera">Kamera</string>
-    <string name="chat_attach_photos">Fotoğraflar</string>
-    <string name="chat_attach_files">Dosyalar</string>
-    <string name="chat_attach_scans">Taramalarım</string>
-    <string name="chat_no_scans">Henüz tarama yok. Önce Ana ekrandan bir belge tarayın.</string>
+    <string name="chat_attach_photos">Fotoğraf</string>
+    <string name="chat_attach_files">Dosya</string>
+    <string name="chat_attach_scans">Taramalar</string>
+    <string name="chat_no_scans">Henüz tarama yok. Önce Ana ekrandan tarayın.</string>
     <string name="chat_scans_title">Son taramalarınız</string>
 
 
@@ -88,60 +88,60 @@
     <string name="chat_you_attached">Eklendi: %1$s</string>
 
     <!-- Turn outcomes written into the chat -->
-    <string name="chat_stopped_waiting">Beklemeyi durdurdunuz. Sunucu işi yine de bitirebilir ve kredi kullanabilir. Aynı sonucu iki kez ödemeden almak için yeniden deneyin.</string>
+    <string name="chat_stopped_waiting">Beklemeyi bıraktınız. Sunucu yine bitirip kredi harcayabilir. Yeniden denerseniz sonuç ikinci kez ödenmeden gelir.</string>
     <string name="chat_interrupted">Bu istek kesildi. Mesajınızı yeniden gönderin.</string>
-    <string name="chat_reconnecting">Tasarımınıza yeniden bağlanılıyor…</string>
+    <string name="chat_reconnecting">Tasarıma yeniden bağlanılıyor…</string>
     <string name="chat_design_failed">Tasarım tamamlanamadı. Mesajınız saklandı; yeniden deneyin.</string>
 
     <!-- Attaching -->
-    <string name="chat_photo_unusable">Bu resim kullanılamadı. Başka bir tane deneyin.</string>
-    <string name="chat_file_too_many_pages">Tasarımcı en fazla %1$d sayfayı yeniden oluşturur. Bu dosyada %2$d sayfa var.</string>
-    <string name="chat_file_too_large">Bu dosya yeniden oluşturulamayacak kadar büyük.</string>
-    <string name="chat_file_unreadable">Bu dosya okunamadı. Başka bir tane deneyin.</string>
+    <string name="chat_photo_unusable">Bu resim kullanılamadı. Başkasını deneyin.</string>
+    <string name="chat_file_too_many_pages">En fazla %1$d sayfa yenilenir. Dosyada %2$d sayfa var.</string>
+    <string name="chat_file_too_large">Dosya çok büyük, yenilenemez.</string>
+    <string name="chat_file_unreadable">Dosya okunamadı. Başkasını deneyin.</string>
 
     <!-- File actions -->
     <string name="chat_open_with">Birlikte aç…</string>
-    <string name="chat_no_viewer">Bu telefonda bu dosyayı açabilecek bir uygulama yok.</string>
+    <string name="chat_no_viewer">Bu dosyayı açacak uygulama yok.</string>
     <string name="chat_save_failed">Dosya kaydedilemedi.</string>
     <string name="chat_share_failed">Dosya paylaşılamadı.</string>
-    <string name="chat_saved_to_downloads">Downloads klasörüne kaydedildi.</string>
+    <string name="chat_saved_to_downloads">Downloads\'a kaydedildi</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">%d resim Pictures/Scanly klasörüne kaydedildi.</item>
-        <item quantity="other">%d resim Pictures/Scanly klasörüne kaydedildi.</item>
+        <item quantity="one">%d resim kaydedildi: Pictures/Scanly</item>
+        <item quantity="other">%d resim kaydedildi: Pictures/Scanly</item>
     </plurals>
     <string name="chat_images_failed">Resimler kaydedilemedi.</string>
     <string name="chat_file_missing">Bu dosya alınamadı. Bağlantınızı kontrol edip yeniden deneyin.</string>
-    <string name="chat_file_expired">Bu tasarım artık saklanmıyor. Dosyayı yeniden almak için yeniden oluşturun.</string>
+    <string name="chat_file_expired">Bu tasarım artık saklanmıyor. Yeniden oluşturup dosyayı alın.</string>
 
     <!-- Reply cards -->
     <string name="chat_not_charged">Ücret alınmadı</string>
-    <string name="chat_retry">Yeniden dene</string>
-    <string name="chat_see_plans">Planlara bak</string>
-    <string name="chat_ask_title">Dosyanızı kontrol edin</string>
-    <string name="chat_ask_reason">Bu, %1$s gibi görünüyor.</string>
+    <string name="chat_retry">Tekrar</string>
+    <string name="chat_see_plans">Planları gör</string>
+    <string name="chat_ask_title">Dosyayı denetle</string>
+    <string name="chat_ask_reason">Bu, %1$s gibi duruyor.</string>
     <string name="chat_ask_fallback">Bu dosya istediğiniz belgeye benzemiyor.</string>
     <string name="chat_ask_continue">Yine de devam et</string>
-    <string name="chat_ask_dismiss">Şimdi değil</string>
+    <string name="chat_ask_dismiss">Sonra</string>
     <string name="chat_ask_answered_continue">Yine de devam etmeyi seçtiniz.</string>
     <string name="chat_ask_answered_dismiss">Devam etmemeyi seçtiniz.</string>
     <string name="chat_fields_title">Önce birkaç ayrıntı</string>
-    <string name="chat_fields_body">Belgenizde hiçbir şeyin uydurulmak zorunda kalmaması için bunları ekleyin.</string>
+    <string name="chat_fields_body">Belgede hiçbir şey uydurulmasın diye bunları ekleyin.</string>
     <string name="chat_fields_submit">Belge oluştur</string>
-    <string name="chat_fields_open">Ayrıntıları doldur</string>
+    <string name="chat_fields_open">Ayrıntıları gir</string>
     <string name="chat_file_open">Aç</string>
     <string name="chat_file_share">Paylaş</string>
     <string name="chat_file_download">İndir</string>
     <string name="chat_file_more">Diğer işlemler</string>
-    <string name="chat_file_save_images">Sayfaları resim olarak kaydet</string>
+    <string name="chat_file_save_images">Sayfaları resim kaydet</string>
     <string name="chat_file_revise">Bu sürümü değiştir</string>
-    <string name="chat_file_editing">Düzenleniyor</string>
+    <string name="chat_file_editing">Düzenleme</string>
     <plurals name="chat_credits_used">
         <item quantity="one">%d kredi</item>
         <item quantity="other">%d kredi</item>
     </plurals>
-    <string name="chat_expired">Süresi doldu: yeniden oluştur</string>
-    <string name="chat_expired_hint">Sunucu bu tasarımı artık tutmuyor, bu yüzden değiştirilemez. Düzenlemeye devam etmek için yeniden oluşturun.</string>
-    <string name="chat_thumbnail_description">%1$s dosyasının ilk sayfası</string>
+    <string name="chat_expired">Doldu: yenile</string>
+    <string name="chat_expired_hint">Sunucu bu tasarımı tutmuyor; değiştirilemez. Düzenlemek için yeniden oluşturun.</string>
+    <string name="chat_thumbnail_description">%1$s ilk sayfası</string>
 
     <!-- Background job notification -->
     <string name="chat_notification_channel">Belgeler</string>
@@ -156,33 +156,33 @@
     <string name="chat_step_planning">Düzen planlanıyor</string>
     <string name="chat_step_writing">İçerik yazılıyor</string>
     <string name="chat_step_building">PDF oluşturuluyor</string>
-    <string name="chat_step_checking">Kalite kontrol ediliyor</string>
-    <string name="chat_step_fixing">Düzen düzeltiliyor</string>
+    <string name="chat_step_checking">Kalite kontrolü</string>
+    <string name="chat_step_fixing">Düzeltiliyor</string>
     <string name="chat_step_done">Tamam</string>
-    <string name="chat_step_thinking">Düşünülüyor</string>
+    <string name="chat_step_thinking">Düşünüyor</string>
     <string name="chat_step_reading_guide">Kılavuz okunuyor</string>
     <string name="chat_step_coding">Kod yazılıyor</string>
     <string name="chat_step_previewing">Sayfalara bakılıyor</string>
-    <string name="chat_step_delivering">Dosya teslim ediliyor</string>
+    <string name="chat_step_delivering">Teslim ediliyor</string>
     <string name="chat_agent_done">Tamam. Dosyalarınız aşağıda.</string>
     <string name="chat_agent_failed">Asistan işi tamamlayamadı. Mesajınız saklandı; yeniden deneyin.</string>
     <string name="chat_agent_about_file">(%1$s dosyasıyla ilgili.)</string>
-    <string name="chat_agent_delivered">%1$s teslim edildi</string>
-    <string name="chat_approval_title">Bu web sitesi açılsın mı?</string>
-    <string name="chat_approval_new_url">Bu bağlantı mesajınızda ya da arama sonuçlarında yok; bu yüzden asistanın açabilmesi için onayınız gerekiyor.</string>
+    <string name="chat_agent_delivered">%1$s iletildi</string>
+    <string name="chat_approval_title">Site açılsın mı?</string>
+    <string name="chat_approval_new_url">Bu bağlantı mesajınızda ya da arama sonuçlarında yok, asistanın açması için onayınız gerekir.</string>
     <string name="chat_approval_page_link">Asistan, açtığı bir sayfada bu bağlantıyı buldu ve açabilmesi için onayınız gerekiyor.</string>
-    <string name="chat_approval_warn_query">Bu bağlantı \"?\" işaretinden sonra ek veri taşıyor. Bu siteye güvenmiyorsanız Reddet\'e dokunun: sohbetin bir kısmını alabilir.</string>
-    <string name="chat_approval_warn_long">Bu bağlantı olağandışı derecede uzun. Bu siteye güvenmiyorsanız Reddet\'e dokunun: sohbetin bir kısmını alabilir.</string>
-    <string name="chat_approval_countdown">%1$s içinde yanıt verilmezse cevap hayır olur.</string>
-    <string name="chat_approval_allow_once">Bir kez izin ver</string>
+    <string name="chat_approval_warn_query">Bu bağlantı \"?\" sonrası ek veri taşıyor. Bu siteye güvenmiyorsanız Reddet\'e dokunun: sohbetin bir kısmını alabilir.</string>
+    <string name="chat_approval_warn_long">Bu bağlantı olağandışı uzun. Güvenmiyorsanız Reddet\'e dokunun: sohbetin bir kısmını alabilir.</string>
+    <string name="chat_approval_countdown">%1$s yanıtsız kalırsa hayır.</string>
+    <string name="chat_approval_allow_once">Bir kez izin</string>
     <string name="chat_approval_deny">Reddet</string>
-    <string name="chat_show_thinking">Düşünceyi göster</string>
+    <string name="chat_show_thinking">Düşünceyi aç</string>
     <string name="chat_hide_thinking">Düşünceyi gizle</string>
-    <string name="chat_took">%1$d sn sürdü</string>
+    <string name="chat_took">%1$d sn</string>
     <string name="chat_seconds">%1$d sn</string>
-    <string name="chat_under_a_second">1 saniyeden az</string>
+    <string name="chat_under_a_second">&lt;1 sn</string>
     <string name="chat_background_note">Arka planda çalışıyor. Bir bildirim alacaksınız ve dosya burada görünecek.</string>
-    <string name="chat_stopped_note">Beklemeyi durdurdunuz. Dosya hazır olduğunda yine burada görünecek.</string>
+    <string name="chat_stopped_note">Beklemeyi bıraktınız. Dosya hazır olunca burada görünür.</string>
 
     <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
          Tool names and their arguments are the agent's own and are not translated. -->
@@ -191,13 +191,13 @@
         <item quantity="one">%d adım</item>
         <item quantity="other">%d adım</item>
     </plurals>
-    <string name="chat_log_minutes">%1$d dk %2$d sn</string>
+    <string name="chat_log_minutes">%1$ddk %2$dsn</string>
     <string name="chat_log_seconds">%1$d sn</string>
     <string name="chat_log_worked">Çalışılan süre: %1$s · %2$s</string>
-    <string name="chat_log_show_steps">Adımları göster</string>
-    <string name="chat_log_hide_steps">Adımları gizle</string>
+    <string name="chat_log_show_steps">Adımları gör</string>
+    <string name="chat_log_hide_steps">Gizle</string>
     <string name="chat_log_thought">%1$s düşünüldü</string>
-    <string name="chat_log_thinking">Düşünülüyor</string>
+    <string name="chat_log_thinking">Düşünüyor</string>
     <plurals name="chat_log_read">
         <item quantity="one">%d satır okundu</item>
         <item quantity="other">%d satır okundu</item>
@@ -214,8 +214,8 @@
         <item quantity="one">+%d satır</item>
         <item quantity="other">+%d satır</item>
     </plurals>
-    <string name="chat_log_show_more">Daha fazlasını göster</string>
-    <string name="chat_log_show_less">Daha azını göster</string>
+    <string name="chat_log_show_more">Daha fazla</string>
+    <string name="chat_log_show_less">Daha az</string>
     <plurals name="chat_log_not_shown">
         <item quantity="one">%1$d satır daha (%2$d karakter) gösterilmiyor</item>
         <item quantity="other">%1$d satır daha (%2$d karakter) gösterilmiyor</item>
@@ -224,13 +224,13 @@
         <item quantity="one">%1$d satır (%2$d karakter) saklanmadı</item>
         <item quantity="other">%1$d satır (%2$d karakter) saklanmadı</item>
     </plurals>
-    <string name="chat_log_show_all">Tümünü göster</string>
+    <string name="chat_log_show_all">Tümünü</string>
     <string name="chat_log_loading">Tam çıktı yükleniyor…</string>
-    <string name="chat_log_expired">Tam çıktının süresi doldu</string>
-    <string name="chat_log_unavailable">Tam çıktı yüklenemedi. Yeniden denemek için dokunun.</string>
+    <string name="chat_log_expired">Çıktı süresi doldu</string>
+    <string name="chat_log_unavailable">Tam çıktı yüklenemedi. Tekrar için dokunun.</string>
     <string name="chat_log_past_limit">%1$d karakter daha sınırı aştı ve saklanmadı</string>
     <plurals name="chat_log_dropped">
-        <item quantity="one">Bu telefonda saklanmayan %d önceki satır</item>
+        <item quantity="one">Bu telefonda saklanmayan %d satır</item>
         <item quantity="other">Bu telefonda saklanmayan %d önceki satır</item>
     </plurals>
 </resources>

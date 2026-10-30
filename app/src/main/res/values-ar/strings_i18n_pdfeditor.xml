@@ -2,14 +2,14 @@
 <!-- PDF editor (ui/pdfeditor) user-visible strings, moved out of Compose code for translation. -->
 <resources>
     <string name="pe_menu_merge_hint">إضافة صفحات من ملف PDF آخر</string>
-    <string name="pe_menu_compress_hint">إعدادات جاهزة، أو جودة مخصصة، أو حجم مستهدف</string>
+    <string name="pe_menu_compress_hint">إعدادات جاهزة، وجودة مخصصة، أو حجم مستهدف</string>
     <string name="pe_menu_encrypt_hint">AES-256، مع أذونات لكل إجراء</string>
     <string name="pe_menu_decrypt_hint">إزالة كلمة المرور من نسخة</string>
     <string name="pe_menu_metadata_hint">عرض معلومات المستند وحذفها</string>
     <string name="pe_menu_sign_hint">التوقيع بشهادة لديك بالفعل</string>
     <string name="pe_menu_validate_hint">التحقق من التواقيع الرقمية المضمّنة</string>
     <string name="pe_menu_library_hint">إعادة استخدام توقيع محفوظ</string>
-    <string name="pe_add_a_pdf">إضافة ملف PDF</string>
+    <string name="pe_add_a_pdf">إضافة PDF</string>
     <string name="pe_merge_page_count">%1$d صفحة</string>
     <string name="pe_remove">إزالة</string>
     <string name="pe_merge_page_change">%1$d صفحة → %2$d صفحة</string>
@@ -22,7 +22,7 @@
     <string name="pe_delta_no_saving">+%1$s%% — دون توفير</string>
     <string name="pe_compress_image_quality">جودة الصور</string>
     <string name="pe_compress_min_edge_label">الصور الأعرض من</string>
-    <string name="pe_px_value">%1$s بكسل</string>
+    <string name="pe_px_value">%1$s px</string>
     <string name="pe_compress_custom_hint">أي صورة أضيق من هذا العرض تكون شعارًا أو خطًا، وإعادة ترميزها تكلّف جودة دون أي توفير. النص والرسومات المتجهة لا تُمس أبدًا بأي إعداد.</string>
     <string name="pe_compressing_at">جارٍ الضغط بنسبة %1$s%%…</string>
     <string name="pe_try_these_settings">جرّب هذه الإعدادات</string>
@@ -30,7 +30,7 @@
     <string name="pe_use_these_settings">استخدم هذه الإعدادات</string>
     <string name="pe_no_saving_at_these_settings">لا توفير بهذه الإعدادات</string>
     <string name="pe_get_this_under">اجعله أقل من</string>
-    <string name="pe_unit_mb">ميغابايت</string>
+    <string name="pe_unit_mb">MB</string>
     <string name="pe_searching_pass">جارٍ البحث — المرور %1$d…</string>
     <string name="pe_reached_size_at">%1$s عند %2$s.</string>
     <string name="pe_not_reached_smallest">تعذّر الوصول إلى ذلك. أصغر حجم يصل إليه هذا المستند هو %1$s، عند %2$s.</string>
@@ -58,7 +58,7 @@
     <string name="pe_asked_every_signature">تُطلب مع كل توقيع. ولا تحفظها Scanly أبدًا.</string>
     <string name="pe_unlock">فتح القفل</string>
     <string name="pe_issued_by">صادرة عن %1$s</string>
-    <string name="pe_valid_range">صالحة من %1$s إلى %2$s</string>
+    <string name="pe_valid_range">بين %1$s و%2$s</string>
     <string name="pe_chain_count">%1$d شهادات في السلسلة</string>
     <string name="pe_certificate_expired_hint">هذه الشهادة خارج فترة صلاحيتها. يمكنها التوقيع، لكن القارئات ستُنبّه إلى التوقيع.</string>
     <string name="pe_reason_optional">السبب (اختياري)</string>
@@ -87,7 +87,7 @@
     <string name="pe_time_document_date">مؤرخ في %1$s — غير موثّق</string>
     <string name="pe_time_signed">وُقّع في %1$s</string>
     <string name="pe_no_signatures_saved">لا توجد تواقيع محفوظة بعد. التقط توقيعًا من أداة التوقيع في محرر الصفحات.</string>
-    <string name="pe_no_selectable_text">لا يوجد نص قابل للتحديد هنا، فقد تكون هذه الصفحة ممسوحة ضوئيًا.</string>
+    <string name="pe_no_selectable_text">لا يوجد نص قابل للتحديد هنا، فقد تكون الصفحة ممسوحة ضوئيًا.</string>
     <string name="pe_scanner_unavailable">ماسح المستندات غير متاح على هذا الجهاز.</string>
     <string name="pe_undo">تراجع</string>
     <string name="pe_redo">إعادة</string>
@@ -99,13 +99,13 @@
     <string name="pe_matched_font">تطابق %1$s بحجم %2$d نقطة من النص المحيط.</string>
     <string name="pe_font_match_few_chars">عدد الأحرف قليل جدًا لمطابقة الخط بثقة، تحقّق من النمط أدناه.</string>
     <string name="pe_replacement">الاستبدال</string>
-    <string name="pe_text_to_add">النص المراد إضافته</string>
+    <string name="pe_text_to_add">نص للإضافة</string>
     <string name="pe_replace_explainer">يُغطّى الأصل ويُرسم النص الجديد على خط الأساس نفسه. يُضغط النص الأطول ليتسع للمساحة، ثم يمتد حتى الهامش، ولا يُدفع أبدًا إلى السطر الذي تحته.</string>
     <string name="pe_insert_explainer">يبقى السطر كما هو: تقع الكلمات الجديدة على خط الأساس نفسه بجانبه. لا يمكن إعادة تدفق نص PDF، لذلك لا يتحرك شيء لتوفير مساحة.</string>
     <string name="pe_replace">استبدال</string>
     <string name="pe_insert">إدراج</string>
     <string name="pe_hint_replace_tool">اسحب فوق الكلمات لاستبدالها، أو انقر لاستبدال السطر كاملًا.</string>
-    <string name="pe_hint_insert_tool">انقر على السطر الذي يجب أن تظهر فيه الكلمات الجديدة.</string>
+    <string name="pe_hint_insert_tool">انقر على السطر الذي ستظهر فيه الكلمات.</string>
     <string name="pe_hint_eraser">اسحب لمحو العلامات التي أضفتها.</string>
     <string name="pe_hint_whiteout">يغطي الصفحة: يخفي النص ولا يحذفه.</string>
     <string name="pe_hint_pick_tool">اختر أداة. تبقى مفعّلة حتى تنقر عليها مرة أخرى.</string>
@@ -121,18 +121,18 @@
     <string name="pe_file_encrypted">%1$s مشفّر.</string>
     <string name="pe_signature_risk_body">يحتوي على %1$s. حفظ تعديلاتك يعيد كتابة الملف، ولن يمكن التحقق من %2$s بعد الآن. الملف الأصلي على القرص لا يتأثر.</string>
     <string name="pe_document_signed">هذا المستند موقّع</string>
-    <string name="pe_save_anyway">الحفظ على أي حال</string>
-    <string name="pe_crop_page">اقتصاص الصفحة</string>
+    <string name="pe_save_anyway">احفظ على أي حال</string>
+    <string name="pe_crop_page">قص الصفحة</string>
     <string name="pe_crop_hint">اسحب الزوايا. يُقتطع كل ما هو خارج الإطار.</string>
-    <string name="pe_crop">اقتصاص</string>
+    <string name="pe_crop">قص</string>
     <string name="pe_paywall_reason_studio">الضغط والتشفير وتحرير النص جزء من Scanly Pro.</string>
     <string name="pe_select_all">تحديد الكل</string>
     <string name="pe_selected_count">تم تحديد %1$d</string>
     <string name="pe_clear_selection">إلغاء التحديد</string>
-    <string name="pe_extract_to_new_pdf">استخراج إلى ملف PDF جديد</string>
+    <string name="pe_extract_to_new_pdf">استخراج إلى PDF جديد</string>
     <string name="pe_edit">تحرير</string>
     <string name="pe_tools">الأدوات</string>
-    <string name="pe_cropped">تم الاقتصاص</string>
+    <string name="pe_cropped">تم القص</string>
     <string name="pe_edited">تم التحرير</string>
     <string name="pe_pick_signature_first">اختر توقيعًا أو التقطه أولًا.</string>
     <string name="pe_no_signature_on_page">لم يُعثر على توقيع في تلك الصفحة.</string>
@@ -156,7 +156,7 @@
     <string name="pe_certificate_read_failed">تعذّرت قراءة هذه الشهادة.</string>
     <string name="pe_certificate_file_fallback">الشهادة</string>
     <string name="pe_certificate_password_wrong">كلمة المرور هذه لا تفتح الشهادة.</string>
-    <string name="pe_certificate_no_private_key">هذا الملف لا يحتوي على مفتاح خاص، لذا لا يمكن التوقيع به.</string>
+    <string name="pe_certificate_no_private_key">هذا الملف بلا مفتاح خاص، لذا لا يمكن توقيعه.</string>
     <string name="pe_sign_encrypted_unsupported">لا يمكن توقيع مستند محمي بكلمة مرور. أزِل كلمة المرور أولًا، ولا تجهّز كلمة مرور جديدة، فالتشفير يعيد كتابة الملف ويكسر التوقيع.</string>
     <string name="pe_sign_chain_too_large">سلسلة هذه الشهادة كبيرة جدًا بحيث لا تتسع للتوقيع. جرّب شهادة ذات سلسلة أقصر.</string>
     <plurals name="pe_digital_signatures">
@@ -177,9 +177,9 @@
     </plurals>
     <plurals name="pe_crop_pages">
         <item quantity="zero">اقتصاص %1$d صفحة</item>
-        <item quantity="one">اقتصاص %1$d صفحة</item>
-        <item quantity="two">اقتصاص %1$d صفحتين</item>
-        <item quantity="few">اقتصاص %1$d صفحات</item>
+        <item quantity="one">قص %1$d صفحة</item>
+        <item quantity="two">قص %1$d صفحتين</item>
+        <item quantity="few">قص %1$d صفحات</item>
         <item quantity="many">اقتصاص %1$d صفحة</item>
         <item quantity="other">اقتصاص %1$d صفحة</item>
     </plurals>
@@ -188,13 +188,13 @@
     <string name="pe_pane_compress">ضغط</string>
     <string name="pe_pane_password">كلمة المرور</string>
     <string name="pe_pane_remove_password">إزالة كلمة المرور</string>
-    <string name="pe_pane_metadata">البيانات الوصفية</string>
+    <string name="pe_pane_metadata">الخصائص</string>
     <string name="pe_pane_sign">توقيع المستند</string>
     <string name="pe_pane_signatures">التواقيع</string>
     <string name="pe_pane_library">مكتبة التواقيع</string>
-    <string name="pe_compress_presets">إعدادات جاهزة</string>
+    <string name="pe_compress_presets">جاهزة</string>
     <string name="pe_compress_custom">مخصص</string>
-    <string name="pe_compress_target">الحجم المستهدف</string>
+    <string name="pe_compress_target">حجم مستهدف</string>
     <string name="pe_level_lossless">بدون فقدان</string>
     <string name="pe_level_balanced">متوازن</string>
     <string name="pe_level_smallest">الأصغر</string>
@@ -216,7 +216,7 @@
     <string name="pe_err_open_file">تعذّر فتح هذا الملف.</string>
     <string name="pe_err_read_pages">تعذّرت قراءة صفحات ملف PDF هذا.</string>
     <string name="pe_err_all_deleted">سيتم حذف كل الصفحات.</string>
-    <string name="pe_err_edit_failed">فشل تحرير ملف PDF.</string>
+    <string name="pe_err_edit_failed">فشل تحرير PDF.</string>
     <string name="pe_export_signed_failed">تم التوقيع، لكن تعذّرت الكتابة في Downloads. انقر على حفظ لإعادة المحاولة.</string>
     <string name="pe_export_signed_ok">تم التوقيع وحفظه في Downloads/Scanly</string>
     <string name="sig_err_self">لا يمكن توقيع مستند على نفسه.</string>

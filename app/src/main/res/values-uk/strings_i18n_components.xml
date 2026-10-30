@@ -2,142 +2,142 @@
 <resources>
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">У цьому місяці залишилося %1$d з %2$d кредитів.</string>
-    <string name="cmp_paywall_credits_left_upgrade">У цьому місяці залишилося %1$d з %2$d кредитів. Оновіть план, щоб отримати більше.</string>
-    <string name="cmp_paywall_more_credits">Більше кредитів, довші документи та більше форматів файлів.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI-сканування витрачає 1 кредит на сторінку. Інші інструменти ШІ використовують той самий баланс кредитів.</string>
-    <string name="cmp_paywall_plan_active">Ваш план активний для цього облікового запису.</string>
-    <string name="cmp_paywall_key_active_here">Ваш ключ активний на цьому пристрої.</string>
-    <string name="cmp_paywall_devices_used">Використано %1$d з %2$d пристроїв. Керуйте ключем у налаштуваннях.</string>
-    <string name="cmp_paywall_watch_ad">Перегляньте рекламу, щоб отримати ще %1$d кредитів</string>
-    <string name="cmp_paywall_where_to_buy_before">"AI-сканування має безкоштовну щомісячну квоту. Платні плани доступні на "</string>
+    <string name="cmp_paywall_credits_left">Цього місяця лишилося %1$d з %2$d кредитів.</string>
+    <string name="cmp_paywall_credits_left_upgrade">Лишилося %1$d з %2$d кредитів цього місяця. Оновіть план.</string>
+    <string name="cmp_paywall_more_credits">Більше кредитів, довші документи, більше форматів.</string>
+    <string name="cmp_paywall_ai_scan_credit">AI-сканування: 1 кредит на сторінку. Решта ШІ — з тим самим балансом.</string>
+    <string name="cmp_paywall_plan_active">План активний на цьому акаунті.</string>
+    <string name="cmp_paywall_key_active_here">Ключ діє на цьому пристрої.</string>
+    <string name="cmp_paywall_devices_used">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</string>
+    <string name="cmp_paywall_watch_ad">Дивитися рекламу: +%1$d кредитів</string>
+    <string name="cmp_paywall_where_to_buy_before">"AI-сканування має безкоштовну щомісячну квоту. Платні плани — на "</string>
     <string name="cmp_paywall_where_to_buy_after">. Покупки в цьому застосунку недоступні. Уже маєте підписку? Відновіть покупку нижче.</string>
     <string name="cmp_copied">Скопійовано</string>
     <string name="cmp_copy_address">Копіювати адресу</string>
-    <string name="cmp_license_key">Ліцензійний ключ</string>
-    <string name="cmp_hide_key">Приховати ключ</string>
-    <string name="cmp_show_key">Показати ключ</string>
-    <string name="cmp_redeem">Активувати</string>
-    <string name="cmp_lost_key_restore">Втратили ключ? Відновити покупку</string>
-    <string name="cmp_confirm_email_first">Спершу підтвердіть свою адресу email — саме вона підтверджує, що покупка ваша.</string>
-    <string name="cmp_send_confirmation_email">Надіслати лист із підтвердженням</string>
+    <string name="cmp_license_key">Код ліцензії</string>
+    <string name="cmp_hide_key">Сховати</string>
+    <string name="cmp_show_key">Показати</string>
+    <string name="cmp_redeem">Погасити</string>
+    <string name="cmp_lost_key_restore">Втратили ключ? Відновіть покупку</string>
+    <string name="cmp_confirm_email_first">Спершу підтвердьте email — він підтверджує вашу покупку.</string>
+    <string name="cmp_send_confirmation_email">Надіслати підтвердження</string>
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
-    <string name="cmp_active">Активно</string>
-    <string name="cmp_paywall_feature_credits">%1$d кредитів ШІ на місяць</string>
-    <string name="cmp_paywall_feature_pages">До %1$d сторінок в одному документі</string>
+    <string name="cmp_active">Діє</string>
+    <string name="cmp_paywall_feature_credits">%1$d кредитів ШІ/місяць</string>
+    <string name="cmp_paywall_feature_pages">До %1$d сторінок в документі</string>
     <string name="cmp_paywall_feature_office">Файли Word, PowerPoint і OpenDocument</string>
     <string name="cmp_paywall_feature_translation">Переклад</string>
     <string name="cmp_paywall_feature_extraction">Витягування даних із чеків, рахунків і карток</string>
-    <string name="cmp_paywall_feature_sign">Підписуйте PDF і перевіряйте цифрові підписи</string>
-    <string name="cmp_paywall_feature_edit">Редагуйте текст, стискайте PDF і захищайте їх паролем</string>
-    <string name="cmp_paywall_feature_ai_provider">Підключіть власного провайдера ШІ</string>
+    <string name="cmp_paywall_feature_sign">Підпис PDF і перевірка підписів</string>
+    <string name="cmp_paywall_feature_edit">Редагуйте текст, стискайте й захищайте PDF</string>
+    <string name="cmp_paywall_feature_ai_provider">Власний провайдер ШІ</string>
 
     <!-- ui/components/ResultsComponents.kt -->
-    <string name="cmp_edit_text">Редагувати текст</string>
+    <string name="cmp_edit_text">Редагувати</string>
     <string name="cmp_print">Друк</string>
     <string name="cmp_export">Експорт</string>
-    <string name="cmp_copy_text">Копіювати текст</string>
-    <string name="cmp_reading_options">Параметри читання</string>
-    <string name="cmp_show_preview">Показати попередній перегляд</string>
-    <string name="cmp_smaller_text">Менший текст</string>
+    <string name="cmp_copy_text">Копіювати</string>
+    <string name="cmp_reading_options">Параметри</string>
+    <string name="cmp_show_preview">Перегляд</string>
+    <string name="cmp_smaller_text">Менший</string>
     <string name="cmp_zoom_percent">%1$d%%</string>
-    <string name="cmp_bigger_text">Більший текст</string>
+    <string name="cmp_bigger_text">Більший</string>
     <string name="cmp_reset">Скинути</string>
-    <string name="cmp_no_table">Немає таблиці</string>
+    <string name="cmp_no_table">Немає</string>
     <string name="cmp_word_char_counts">%1$d слів · %2$d символів</string>
     <string name="cmp_save_as">Зберегти як</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
-    <string name="cmp_page_range_title">Які сторінки сканувати?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s має %2$d сторінок, а це сканування читає не більше %3$d. Виберіть найважливіші.</string>
-    <string name="cmp_page_range_intro">%1$s має %2$d сторінок. Кожна відскановану сторінка враховується в межах вашого плану, тож діапазон коштує менше за весь файл.</string>
+    <string name="cmp_page_range_title">Які сторінки?</string>
+    <string name="cmp_page_range_over_ceiling">%1$s має %2$d сторінок, але скан читає до %3$d. Виберіть потрібні.</string>
+    <string name="cmp_page_range_intro">%1$s: %2$d сторінок. Кожна сторінка рахується за планом, тож діапазон коштує менше.</string>
     <string name="cmp_page_range_example">напр. 1-5, 8</string>
     <string name="cmp_page_range_pick_up_to">Виберіть до %1$d сторінок між 1 і %2$d.</string>
-    <string name="cmp_page_range_use_numbers">Використовуйте номери сторінок від 1 до %1$d, наприклад 1-5 або 2,4.</string>
+    <string name="cmp_page_range_use_numbers">Від 1 до %1$d, як 1-5 або 2,4.</string>
     <string name="cmp_page_range_n_of_total">%1$d з %2$d сторінок</string>
-    <string name="cmp_page_range_required">Обов\'язково — це сканування охоплює %1$d сторінок</string>
-    <string name="cmp_page_range_leave_empty">Залиште порожнім, щоб відсканувати всі %1$d сторінок</string>
-    <string name="cmp_page_range_scan_count">Сканувати %1$d</string>
-    <string name="cmp_page_range_scan_all">Сканувати всі</string>
+    <string name="cmp_page_range_required">Обов\'язково: %1$d сторінок</string>
+    <string name="cmp_page_range_leave_empty">Порожньо — всі %1$d сторінок</string>
+    <string name="cmp_page_range_scan_count">Скан %1$d</string>
+    <string name="cmp_page_range_scan_all">Усі</string>
 
     <!-- ui/components/TextDisplayComponents.kt -->
-    <string name="cmp_stage_uploading">Завантаження…</string>
+    <string name="cmp_stage_uploading">Надсилання…</string>
     <string name="cmp_stage_processing">Обробка…</string>
     <string name="cmp_stage_generating">Створення…</string>
     <string name="cmp_stage_complete">Завершено</string>
-    <string name="cmp_processing_file_of">Обробляємо файл %1$d з %2$d...</string>
+    <string name="cmp_processing_file_of">Обробка файлу %1$d з %2$d...</string>
     <string name="cmp_extracting_text">Витягуємо текст...</string>
     <string name="cmp_file_of">Файл %1$d з %2$d</string>
     <string name="cmp_may_take_few_moments">Це може зайняти кілька хвилин</string>
-    <string name="cmp_translating">Перекладаємо...</string>
-    <string name="cmp_couldnt_read_file">Не вдалося прочитати цей файл</string>
+    <string name="cmp_translating">Переклад...</string>
+    <string name="cmp_couldnt_read_file">Не вдалося прочитати</string>
     <string name="cmp_no_text_extracted">Текст не витягнуто</string>
-    <string name="cmp_try_different_image">Спробуйте вибрати інше зображення</string>
-    <string name="cmp_batch_scanning">Сканування файлів: %1$d з %2$d…</string>
+    <string name="cmp_try_different_image">Виберіть інше зображення</string>
+    <string name="cmp_batch_scanning">Скануємо %1$d з %2$d…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
-    <string name="cmp_food_nutrition_facts">Харчова цінність</string>
+    <string name="cmp_food_nutrition_facts">Харчування</string>
     <string name="cmp_food_serving_size">Розмір порції: %1$s</string>
     <string name="cmp_food_ingredients">Склад</string>
     <string name="cmp_food_allergens">Алергени</string>
-    <string name="cmp_food_no_nutrition_info">Для цього продукту немає докладної інформації про харчову цінність.</string>
+    <string name="cmp_food_no_nutrition_info">Немає докладних даних про харчування.</string>
     <string name="cmp_food_calories">Калорії</string>
-    <string name="cmp_food_fat">Жири</string>
+    <string name="cmp_food_fat">Жир</string>
     <string name="cmp_food_carbs">Вуглеводи</string>
     <string name="cmp_food_protein">Білки</string>
     <string name="cmp_food_sugar">Цукор</string>
     <string name="cmp_food_salt">Сіль</string>
-    <string name="cmp_food_fiber">Клітковина</string>
+    <string name="cmp_food_fiber">Волокна</string>
 
     <!-- ui/components/product/MedicineContentSection.kt -->
-    <string name="cmp_medicine_generic_name">Міжнародна назва</string>
+    <string name="cmp_medicine_generic_name">МНН</string>
     <string name="cmp_medicine_manufacturer">Виробник</string>
-    <string name="cmp_medicine_active_ingredients">Активні компоненти</string>
-    <string name="cmp_medicine_dosage_form">Лікарська форма</string>
-    <string name="cmp_medicine_route">Шлях введення</string>
+    <string name="cmp_medicine_active_ingredients">Діючі речовини</string>
+    <string name="cmp_medicine_dosage_form">Форма випуску</string>
+    <string name="cmp_medicine_route">Спосіб</string>
     <string name="cmp_medicine_recalled">⚠️ Цей продукт відкликано FDA.</string>
     <string name="cmp_medicine_contraindications">Протипоказання</string>
     <string name="cmp_medicine_indications">Показання</string>
     <string name="cmp_medicine_fda_approved">Схвалено FDA: %1$s</string>
-    <string name="cmp_medicine_no_info">Для цього лікарського засобу немає докладної інформації.</string>
+    <string name="cmp_medicine_no_info">Немає докладної інформації про ліки.</string>
     <string name="cmp_medicine_warnings">Застереження</string>
 
     <!-- ui/components/product/BookContentSection.kt -->
     <string name="cmp_book_authors">Автори</string>
     <string name="cmp_book_publisher">Видавець</string>
-    <string name="cmp_book_published">Опубліковано</string>
+    <string name="cmp_book_published">Видано</string>
     <string name="cmp_book_categories">Категорії</string>
     <string name="cmp_book_isbn13">ISBN-13: %1$s</string>
     <string name="cmp_book_isbn10">ISBN-10: %1$s</string>
     <string name="cmp_book_no_info">Для цієї книжки немає докладної інформації.</string>
 
     <!-- ui/components/product/CosmeticsContentSection.kt -->
-    <string name="cmp_cosmetics_labels">Позначки</string>
+    <string name="cmp_cosmetics_labels">Мітки</string>
     <string name="cmp_cosmetics_no_info">Для цього продукту немає докладної інформації.</string>
 
     <!-- ui/components/ExportNameDialog.kt -->
     <string name="cmp_export_name_title">Назвіть файл</string>
-    <string name="cmp_export_file_name_label">Назва файлу</string>
-    <string name="cmp_export_name_hint">Якщо можливо, використовується початкова назва файлу.</string>
+    <string name="cmp_export_file_name_label">Ім\'я файлу</string>
+    <string name="cmp_export_name_hint">За можливості — початкова назва файлу.</string>
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
-    <string name="cmp_extract_data">Витягнути дані</string>
-    <string name="cmp_preset_cost">Отримайте позначені поля разом із текстом. Читання сторінки як даних коштує %1$d кредитів з вашого плану. Кожен документ може містити до 8 сторінок.</string>
-    <string name="cmp_preset_included_pro">Отримайте позначені поля разом із текстом. Входить до Pro і вищих планів.</string>
+    <string name="cmp_extract_data">Витягти дані</string>
+    <string name="cmp_preset_cost">Поля разом із текстом. Сторінка як дані коштує %1$d кредитів з плану. До 8 сторінок на документ.</string>
+    <string name="cmp_preset_included_pro">Поля разом із текстом. Входить до Pro і вище.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
-    <string name="cmp_sign_in_ai_title">Увійдіть, щоб користуватися AI-скануванням</string>
-    <string name="cmp_sign_in_ai_body">AI-сканування працює через спільний ключ, тому потрібен обліковий запис. Розпізнавання тексту та сканування штрихкодів залишаються безкоштовними й працюють офлайн — входити не потрібно.</string>
-    <string name="cmp_sign_in_create_account">Увійти або створити обліковий запис</string>
+    <string name="cmp_sign_in_ai_title">Вхід для AI-сканування</string>
+    <string name="cmp_sign_in_ai_body">AI-сканування працює через спільний ключ, тому потрібен обліковий запис. Текст і штрихкоди — безкоштовно й офлайн, без входу.</string>
+    <string name="cmp_sign_in_create_account">Увійти / створити акаунт</string>
 
     <!-- ui/components/MainActionButton.kt -->
-    <string name="cmp_view_previous_extracts">Переглянути попередні витяги</string>
+    <string name="cmp_view_previous_extracts">Попередні витяги</string>
 
     <!-- ui/components/MarkdownContent.kt -->
-    <string name="cmp_embedded_image">Вбудоване зображення</string>
+    <string name="cmp_embedded_image">Вбудоване фото</string>
 
     <!-- ui/components/StorageAccess.kt -->
-    <string name="cmp_storage_allow_settings">Щоб зберігати файли на цьому телефоні, дозвольте доступ до сховища в налаштуваннях.</string>
+    <string name="cmp_storage_allow_settings">Дозвольте доступ до сховища, щоб зберігати файли.</string>
 
     <!-- ui/components/LanguageChipRow.kt -->
     <string name="cmp_chip_original">Оригінал</string>
@@ -145,29 +145,29 @@
     <string name="cmp_chip_text_to_pdf">Текст у PDF</string>
 
     <!-- ui/components/AiModeBottomSheet.kt -->
-    <string name="cmp_ai_scan_title">AI-сканування</string>
-    <string name="cmp_ai_mode_extract_text_title">Витягти текст</string>
-    <string name="cmp_ai_mode_extract_text_subtitle">Витягти видимий текст із зображення</string>
+    <string name="cmp_ai_scan_title">AI-скан</string>
+    <string name="cmp_ai_mode_extract_text_title">Витяг тексту</string>
+    <string name="cmp_ai_mode_extract_text_subtitle">Видимий текст зі зображення</string>
     <string name="cmp_ai_mode_extract_document_title">Витягти документ</string>
-    <string name="cmp_ai_mode_extract_document_subtitle">Файли PDF, Word, PowerPoint і текстові файли</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">PDF, Word, PowerPoint, TXT</string>
     <string name="cmp_ai_mode_extract_data_title">Витягти дані</string>
-    <string name="cmp_ai_mode_extract_data_subtitle">Чеки, рахунки та картки у вигляді позначених полів</string>
+    <string name="cmp_ai_mode_extract_data_subtitle">Чеки, рахунки, картки — як поля</string>
     <string name="cmp_ai_mode_audio_title">Аудіо в текст</string>
     <string name="cmp_ai_mode_audio_subtitle">Записи, зустрічі й відео, розділені за мовцями</string>
 
     <!-- ui/components/BarcodeScannerComponents.kt -->
-    <string name="cmp_barcode_detected">Штрихкод виявлено</string>
+    <string name="cmp_barcode_detected">Знайдено код</string>
     <string name="cmp_barcode_content">Вміст штрихкоду</string>
-    <string name="cmp_copy_to_clipboard">Копіювати в буфер обміну</string>
+    <string name="cmp_copy_to_clipboard">Копіювати в буфер</string>
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Невідомо</string>
     <string name="cmp_product_looking_up">Шукаємо товар...</string>
     <string name="cmp_product_not_found">Товар не знайдено</string>
-    <string name="cmp_product_lookup_failed">Пошук не вдався</string>
+    <string name="cmp_product_lookup_failed">Помилка</string>
     <string name="cmp_product_unknown_error">Невідома помилка</string>
     <string name="cmp_product_unknown_name">Невідомий товар</string>
-    <string name="cmp_product_via_source">через %1$s</string>
+    <string name="cmp_product_via_source">з %1$s</string>
 
     <!-- ui/components/ScanInsightComponents.kt -->
     <plurals name="cmp_passages_hard_to_read">
@@ -177,40 +177,40 @@
         <item quantity="other">%1$d фрагментів важко читати</item>
     </plurals>
     <string name="cmp_check_against_original">Перш ніж покладатися на це, перевірте за оригіналом.</string>
-    <string name="cmp_show_all_count">Показати всі (%1$d)</string>
+    <string name="cmp_show_all_count">Усі (%1$d)</string>
     <string name="cmp_copy_json">Копіювати JSON</string>
     <plurals name="cmp_links_found">
         <item quantity="one">%1$d посилання</item>
         <item quantity="few">%1$d посилання</item>
         <item quantity="many">%1$d посилань</item>
-        <item quantity="other">%1$d посилання</item>
+        <item quantity="other">%1$d посилань</item>
     </plurals>
 
     <!-- ui/components/FilePreviewOverlay.kt -->
-    <string name="cmp_preview_saves_to">Попередній перегляд .%1$s · зберігається в Downloads/Scanly</string>
+    <string name="cmp_preview_saves_to">Перегляд .%1$s · у Downloads/Scanly</string>
     <string name="cmp_export_format">Експорт: %1$s</string>
     <string name="cmp_preview_no_table_csv">У цьому тексті немає таблиці, тож у CSV не буде даних.</string>
-    <string name="cmp_preview_rendering_pages">Створюємо сторінки…</string>
-    <string name="cmp_preview_render_failed">Не вдалося створити PDF із цього документа.</string>
-    <string name="cmp_preview_page_n_of_total">Сторінка %1$d з %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">Перші %1$d з %2$d сторінок</string>
-    <string name="cmp_preview_first_n_of_lines">Перші %1$d з %2$d рядків</string>
+    <string name="cmp_preview_rendering_pages">Готуємо…</string>
+    <string name="cmp_preview_render_failed">Не вдалося створити PDF.</string>
+    <string name="cmp_preview_page_n_of_total">Сторінка %1$d/%2$d</string>
+    <string name="cmp_preview_first_n_of_pages">Перші %1$d/%2$d сторінок</string>
+    <string name="cmp_preview_first_n_of_lines">Перші %1$d/%2$d рядків</string>
 
     <!-- ui/components/TextPdfExport.kt -->
-    <string name="cmp_export_nothing_to_export">Немає що експортувати</string>
-    <string name="cmp_export_no_table_data">Немає даних таблиці для експорту</string>
-    <string name="cmp_export_couldnt_save">Не вдалося зберегти %1$s</string>
+    <string name="cmp_export_nothing_to_export">Експорт порожній</string>
+    <string name="cmp_export_no_table_data">Немає даних таблиці</string>
+    <string name="cmp_export_couldnt_save">Не збережено: %1$s</string>
 
     <!-- ui/viewmodel/DocumentScanViewModel.kt -->
-    <string name="cmp_doc_saved_to_downloads">%1$s збережено в Downloads/Scanly</string>
-    <string name="cmp_doc_couldnt_create">Не вдалося створити %1$s</string>
+    <string name="cmp_doc_saved_to_downloads">%1$s збережено: Downloads/Scanly</string>
+    <string name="cmp_doc_couldnt_create">Не створено: %1$s</string>
     <plurals name="cmp_doc_saved_images">
-        <item quantity="one">Збережено %1$d зображення у галерею</item>
-        <item quantity="few">Збережено %1$d зображення у галерею</item>
-        <item quantity="many">Збережено %1$d зображень у галерею</item>
-        <item quantity="other">Збережено %1$d зображення у галерею</item>
+        <item quantity="one">Збережено: %1$d зображення</item>
+        <item quantity="few">Збережено: %1$d зображення</item>
+        <item quantity="many">Збережено: %1$d зображень</item>
+        <item quantity="other">Збережено: %1$d зображення</item>
     </plurals>
-    <string name="cmp_doc_couldnt_save_images">Не вдалося зберегти зображення</string>
+    <string name="cmp_doc_couldnt_save_images">Фото не збережено</string>
 
     <!-- ui/viewmodel/TranscribeViewModel.kt -->
     <string name="cmp_transcribe_default_title">Аудіо</string>
@@ -219,58 +219,58 @@
 
     <!-- docchat/presentation/screen/ChatReplies.kt -->
     <string name="cmp_chat_reply_field_line">%1$s: %2$s</string>
-    <string name="act_open_link">Відкрити посилання</string>
+    <string name="act_open_link">Відкрити</string>
     <string name="act_copy">Копіювати</string>
-    <string name="act_copy_text">Копіювати текст</string>
-    <string name="act_copy_barcode">Копіювати штрихкод</string>
+    <string name="act_copy_text">Копіювати</string>
+    <string name="act_copy_barcode">Копіювати код</string>
     <string name="act_copy_ssid">Копіювати SSID</string>
     <string name="act_call">Зателефонувати</string>
-    <string name="act_send_email">Надіслати email</string>
-    <string name="act_connect_wifi">Підключитися до Wi-Fi</string>
-    <string name="act_send_sms">Надіслати SMS</string>
+    <string name="act_send_email">Написати</string>
+    <string name="act_connect_wifi">Підключити Wi-Fi</string>
+    <string name="act_send_sms">Написати SMS</string>
     <string name="act_add_contact">Додати контакт</string>
-    <string name="act_view_text">Переглянути текст</string>
-    <string name="act_add_event">Додати до календаря</string>
-    <string name="act_product_info">Інформація про товар</string>
-    <string name="act_copied">Скопійовано до буфера обміну</string>
-    <string name="act_err_url">Не вдалося відкрити посилання</string>
-    <string name="act_err_copy">Не вдалося скопіювати</string>
-    <string name="act_err_dialer">Не вдалося відкрити набірник</string>
-    <string name="act_err_email">Не вдалося відкрити застосунок пошти</string>
-    <string name="act_err_sms">Не вдалося відкрити застосунок для повідомлень</string>
-    <string name="act_err_wifi">Не вдалося підключитися до Wi-Fi</string>
-    <string name="act_wifi_suggested">Пропоновано мережу Wi-Fi: %1$s</string>
-    <string name="act_wifi_open_settings">Відкрийте налаштування Wi-Fi, щоб підключитися до %1$s</string>
-    <string name="act_err_contacts">Не вдалося відкрити контакти</string>
-    <string name="act_err_calendar">Не вдалося відкрити календар</string>
+    <string name="act_view_text">Показати</string>
+    <string name="act_add_event">До календаря</string>
+    <string name="act_product_info">Про товар</string>
+    <string name="act_copied">Скопійовано в буфер</string>
+    <string name="act_err_url">Не вдалося відкрити</string>
+    <string name="act_err_copy">Не скопійовано</string>
+    <string name="act_err_dialer">Не вдалося набрати</string>
+    <string name="act_err_email">Не вдалося відкрити пошту</string>
+    <string name="act_err_sms">Не вдалося відкрити SMS</string>
+    <string name="act_err_wifi">Не вдалося підключитися</string>
+    <string name="act_wifi_suggested">Пропонована мережа: %1$s</string>
+    <string name="act_wifi_open_settings">Відкрийте Wi-Fi і підключіться до %1$s</string>
+    <string name="act_err_contacts">Не відкрилися контакти</string>
+    <string name="act_err_calendar">Не відкрився календар</string>
     <string name="tx_fmt_pdf">PDF</string>
     <string name="tx_fmt_pdf_hint">Мовці й час, готово до друку</string>
     <string name="tx_fmt_word">Word</string>
-    <string name="tx_fmt_word_hint">Документ для редагування</string>
+    <string name="tx_fmt_word_hint">Для редагування</string>
     <string name="tx_fmt_text">Текст</string>
-    <string name="tx_fmt_text_hint">Простий .txt</string>
+    <string name="tx_fmt_text_hint">Текст .txt</string>
     <string name="tx_fmt_md">Markdown</string>
-    <string name="tx_fmt_md_hint">Для застосунків нотаток</string>
+    <string name="tx_fmt_md_hint">Для нотаток</string>
     <string name="tx_fmt_srt">Субтитри (SRT)</string>
-    <string name="tx_fmt_srt_hint">Для відеоредакторів</string>
+    <string name="tx_fmt_srt_hint">Для відеомонтажу</string>
     <string name="tx_fmt_vtt">Субтитри (WebVTT)</string>
     <string name="tx_fmt_vtt_hint">Для вебу, з мовцями</string>
     <string name="pay_headline_pro_feature">Частина Scanly Pro</string>
-    <string name="pay_headline_limit">Ви досягли ліміту свого плану</string>
+    <string name="pay_headline_limit">Ліміт плану вичерпано</string>
     <string name="pay_headline_on_tier">У вас план %1$s</string>
-    <string name="pay_headline_upsell">Скануйте більше з Pro</string>
-    <string name="pay_key_active">Ваш ключ активний. Приємного користування.</string>
-    <string name="pay_key_active_tier">У вас план %1$s. Приємного користування.</string>
-    <string name="pay_confirm_sent">Перевірте скриньку, відкрийте посилання, а потім знову натисніть «Відновити покупку».</string>
-    <string name="pay_confirm_failed">Не вдалося надіслати лист із підтвердженням. Спробуйте ще раз.</string>
-    <string name="pay_key_removed">Ключ видалено з цього пристрою.</string>
-    <string name="pay_restored_tier">Ваш ключ %1$s повернено.</string>
-    <string name="pay_restored">Ваш ключ повернено на цей пристрій.</string>
-    <string name="pay_restore_nothing">На цьому обліковому записі немає підписки. Якщо ви платили з іншою адресою email, увійдіть з нею й спробуйте знову.</string>
+    <string name="pay_headline_upsell">Більше сканів з Pro</string>
+    <string name="pay_key_active">Ключ активний. Приємно!</string>
+    <string name="pay_key_active_tier">План %1$s. Приємно!</string>
+    <string name="pay_confirm_sent">Відкрийте лист із посиланням, потім знову «Відновити покупку».</string>
+    <string name="pay_confirm_failed">Не вдалося надіслати лист. Спробуйте знову.</string>
+    <string name="pay_key_removed">Ключ видалено з пристрою.</string>
+    <string name="pay_restored_tier">Ключ %1$s повернено.</string>
+    <string name="pay_restored">Ключ повернено на пристрій.</string>
+    <string name="pay_restore_nothing">Підписки на цьому акаунті немає. Якщо платили з іншим email, увійдіть з ним і спробуйте знову.</string>
     <string name="pay_plan_title">План %1$s</string>
-    <string name="pay_plan_credits_left">Залишилося %1$d з %2$d кредитів ШІ цього місяця</string>
-    <string name="pay_plan_see_plans">Торкніться, щоб переглянути плани</string>
+    <string name="pay_plan_credits_left">%1$d з %2$d кредитів ШІ на місяць</string>
+    <string name="pay_plan_see_plans">Торкніться: плани</string>
     <string name="pay_plan_yours">Ваш план</string>
-    <string name="pay_plan_load_failed">Не вдалося завантажити ваш план. Торкніться, щоб спробувати знову.</string>
-    <string name="pay_plan_checking">Перевіряємо ваш план…</string>
+    <string name="pay_plan_load_failed">Не вдалося завантажити. Торкніться.</string>
+    <string name="pay_plan_checking">Перевіряємо план…</string>
 </resources>

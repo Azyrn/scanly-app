@@ -3,48 +3,48 @@
     <!-- Notes under image tool results -->
     <plurals name="pdf_tool_img_skipped">
         <item quantity="one">%d fichier n\'a pas pu être lu et a été ignoré</item>
-        <item quantity="many">%d fichiers n\'ont pas pu être lus et ont été ignorés</item>
-        <item quantity="other">%d fichiers n\'ont pas pu être lus et ont été ignorés</item>
+        <item quantity="many">%d fichiers illisibles, ignorés.</item>
+        <item quantity="other">%d fichiers illisibles, ignorés.</item>
     </plurals>
     <plurals name="pdf_tool_img_already_small">
-        <item quantity="one">%d image était déjà aussi légère que possible, elle est donc inchangée</item>
-        <item quantity="many">%d images étaient déjà aussi légères que possible, elles sont donc inchangées</item>
-        <item quantity="other">%d images étaient déjà aussi légères que possible, elles sont donc inchangées</item>
+        <item quantity="one">%d image déjà au minimum, inchangée.</item>
+        <item quantity="many">%d images déjà au minimum, inchangées.</item>
+        <item quantity="other">%d images déjà au minimum, inchangées.</item>
     </plurals>
 
     <!-- Compress image -->
     <string name="pdf_tool_img_compress_recommended">Recommandée</string>
-    <string name="pdf_tool_img_compress_recommended_body">Beaucoup plus légère, aspect identique.</string>
+    <string name="pdf_tool_img_compress_recommended_body">Bien plus léger, aspect identique.</string>
     <string name="pdf_tool_img_compress_strong">Forte</string>
-    <string name="pdf_tool_img_compress_strong_body">Fichiers les plus légers. Les détails fins peuvent s\'adoucir.</string>
+    <string name="pdf_tool_img_compress_strong_body">Fichiers minimaux. Détails fins atténués.</string>
     <string name="pdf_tool_img_compress_light">Légère</string>
     <string name="pdf_tool_img_compress_light_body">Meilleure qualité, gain moindre.</string>
-    <string name="pdf_tool_img_png_to_jpg">Convertir le PNG en JPG pour un fichier plus léger</string>
-    <string name="pdf_tool_img_png_to_jpg_body">Le PNG ne peut perdre que ses détails masqués. Les zones transparentes deviennent blanches.</string>
-    <string name="pdf_tool_img_compress_action">Compresser les images</string>
+    <string name="pdf_tool_img_png_to_jpg">Convertir PNG en JPG, plus léger</string>
+    <string name="pdf_tool_img_png_to_jpg_body">Ne perd que des détails masqués. Transparence en blanc.</string>
+    <string name="pdf_tool_img_compress_action">Compresser</string>
 
     <!-- Convert to JPG -->
-    <string name="pdf_tool_img_to_jpg_body">Chaque image devient un JPG. Les zones transparentes deviennent blanches ; un GIF garde sa première image.</string>
+    <string name="pdf_tool_img_to_jpg_body">Chaque image devient JPG. Transparence en blanc ; GIF : première image.</string>
     <string name="pdf_tool_img_to_jpg_action">Convertir en JPG</string>
 
     <!-- Convert from JPG -->
     <string name="pdf_tool_img_from_jpg_png">PNG</string>
-    <string name="pdf_tool_img_from_jpg_png_body">Pixels exacts, fichiers plus lourds.</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Pixels exacts, plus lourd.</string>
     <string name="pdf_tool_img_from_jpg_webp">WebP</string>
     <string name="pdf_tool_img_from_jpg_webp_body">Aspect identique, souvent plus léger que le JPG.</string>
     <string name="pdf_tool_img_from_jpg_gif">GIF</string>
-    <string name="pdf_tool_img_from_jpg_gif_body">256 couleurs. Bon pour les graphismes ; les photos peuvent présenter des aplats.</string>
-    <string name="pdf_tool_img_from_jpg_action">Convertir les images</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 couleurs. Bon pour graphismes ; photos en aplats.</string>
+    <string name="pdf_tool_img_from_jpg_action">Convertir</string>
 
     <!-- Resize image -->
     <string name="pdf_tool_img_resize_by_percent">En pourcentage</string>
     <string name="pdf_tool_img_resize_by_size">Par taille</string>
     <string name="pdf_tool_img_resize_percent">%d%%</string>
-    <string name="pdf_tool_img_resize_width">Largeur max. (px)</string>
+    <string name="pdf_tool_img_resize_width">Largeur max (px)</string>
     <string name="pdf_tool_img_resize_height">Hauteur max. (px)</string>
-    <string name="pdf_tool_img_resize_size_hint">Saisissez une largeur, une hauteur, ou les deux.</string>
+    <string name="pdf_tool_img_resize_size_hint">Largeur, hauteur ou les deux.</string>
     <string name="pdf_tool_img_resize_size_invalid">Saisissez un nombre de 1 à %d.</string>
-    <string name="pdf_tool_img_resize_keep_aspect">Conserver les proportions</string>
+    <string name="pdf_tool_img_resize_keep_aspect">Garder le ratio</string>
     <string name="pdf_tool_img_resize_no_enlarge">Ne pas agrandir les images</string>
-    <string name="pdf_tool_img_resize_action">Redimensionner les images</string>
+    <string name="pdf_tool_img_resize_action">Redimensionner</string>
 </resources>

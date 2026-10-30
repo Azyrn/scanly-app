@@ -65,9 +65,9 @@
     <string name="cmp_stage_processing">处理中…</string>
     <string name="cmp_stage_generating">生成中…</string>
     <string name="cmp_stage_complete">完成</string>
-    <string name="cmp_processing_file_of">正在处理第 %1$d 个文件，共 %2$d 个...</string>
+    <string name="cmp_processing_file_of">正在处理 %1$d/%2$d...</string>
     <string name="cmp_extracting_text">正在提取文字...</string>
-    <string name="cmp_file_of">第 %1$d 个文件，共 %2$d 个</string>
+    <string name="cmp_file_of">文件 %1$d/%2$d</string>
     <string name="cmp_may_take_few_moments">可能需要一些时间</string>
     <string name="cmp_translating">翻译中...</string>
     <string name="cmp_couldnt_read_file">无法读取此文件</string>
@@ -83,18 +83,18 @@
     <string name="cmp_food_no_nutrition_info">此产品暂无详细的营养信息。</string>
     <string name="cmp_food_calories">热量</string>
     <string name="cmp_food_fat">脂肪</string>
-    <string name="cmp_food_carbs">碳水化合物</string>
+    <string name="cmp_food_carbs">碳水</string>
     <string name="cmp_food_protein">蛋白质</string>
     <string name="cmp_food_sugar">糖</string>
     <string name="cmp_food_salt">盐</string>
-    <string name="cmp_food_fiber">膳食纤维</string>
+    <string name="cmp_food_fiber">纤维</string>
 
     <!-- ui/components/product/MedicineContentSection.kt -->
     <string name="cmp_medicine_generic_name">通用名</string>
     <string name="cmp_medicine_manufacturer">生产商</string>
     <string name="cmp_medicine_active_ingredients">有效成分</string>
     <string name="cmp_medicine_dosage_form">剂型</string>
-    <string name="cmp_medicine_route">给药途径</string>
+    <string name="cmp_medicine_route">途径</string>
     <string name="cmp_medicine_recalled">⚠️ 美国 FDA 已召回此产品。</string>
     <string name="cmp_medicine_contraindications">禁忌</string>
     <string name="cmp_medicine_indications">适应症</string>
@@ -167,7 +167,7 @@
     <string name="cmp_product_lookup_failed">查询失败</string>
     <string name="cmp_product_unknown_error">未知错误</string>
     <string name="cmp_product_unknown_name">未知产品</string>
-    <string name="cmp_product_via_source">来源：%1$s</string>
+    <string name="cmp_product_via_source">来自 %1$s</string>
 
     <!-- ui/components/ScanInsightComponents.kt -->
     <plurals name="cmp_passages_hard_to_read">
@@ -175,10 +175,10 @@
         <item quantity="other">%1$d 段文字难以辨认</item>
     </plurals>
     <string name="cmp_check_against_original">在依赖这些内容之前，请先与原文核对。</string>
-    <string name="cmp_show_all_count">显示全部 %1$d 项</string>
+    <string name="cmp_show_all_count">显示全部 %1$d</string>
     <string name="cmp_copy_json">复制 JSON</string>
     <plurals name="cmp_links_found">
-        <item quantity="one">%1$d 个链接</item>
+        <item quantity="one">%1$d 链接</item>
         <item quantity="other">%1$d 个链接</item>
     </plurals>
 
@@ -188,7 +188,7 @@
     <string name="cmp_preview_no_table_csv">此文本中没有表格，因此 CSV 文件将没有内容。</string>
     <string name="cmp_preview_rendering_pages">正在渲染页面…</string>
     <string name="cmp_preview_render_failed">无法将此文档渲染为 PDF。</string>
-    <string name="cmp_preview_page_n_of_total">第 %1$d 页，共 %2$d 页</string>
+    <string name="cmp_preview_page_n_of_total">第 %1$d/%2$d 页</string>
     <string name="cmp_preview_first_n_of_pages">前 %1$d 页（共 %2$d 页）</string>
     <string name="cmp_preview_first_n_of_lines">前 %1$d 行（共 %2$d 行）</string>
 
@@ -218,7 +218,7 @@
     <string name="act_copy_text">复制文字</string>
     <string name="act_copy_barcode">复制条码</string>
     <string name="act_copy_ssid">复制 SSID</string>
-    <string name="act_call">拨打电话</string>
+    <string name="act_call">拨打</string>
     <string name="act_send_email">发送邮件</string>
     <string name="act_connect_wifi">连接 Wi-Fi</string>
     <string name="act_send_sms">发送短信</string>
@@ -251,10 +251,10 @@
     <string name="tx_fmt_vtt_hint">适用于网页，包含说话人</string>
     <string name="pay_headline_pro_feature">Scanly Pro 功能</string>
     <string name="pay_headline_limit">你已达到套餐上限</string>
-    <string name="pay_headline_on_tier">你当前使用的是 %1$s</string>
+    <string name="pay_headline_on_tier">当前为 %1$s</string>
     <string name="pay_headline_upsell">升级 Pro，扫描更多</string>
-    <string name="pay_key_active">你的密钥已激活，祝你使用愉快。</string>
-    <string name="pay_key_active_tier">你当前使用的是 %1$s，祝你使用愉快。</string>
+    <string name="pay_key_active">密钥已激活，祝你愉快。</string>
+    <string name="pay_key_active_tier">当前为 %1$s，祝你愉快。</string>
     <string name="pay_confirm_sent">请查收邮件，打开其中的链接，然后再次点击“恢复购买”。</string>
     <string name="pay_confirm_failed">无法发送确认邮件，请重试。</string>
     <string name="pay_key_removed">已从此设备移除密钥。</string>

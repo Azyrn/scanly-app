@@ -2,70 +2,70 @@
 <resources>
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">Bu ay %2$d krediniz var, bunlardan %1$d tanesi kaldı.</string>
-    <string name="cmp_paywall_credits_left_upgrade">Bu ay %2$d krediniz var, bunlardan %1$d tanesi kaldı. Daha fazlası için yükseltin.</string>
-    <string name="cmp_paywall_more_credits">Daha fazla kredi, daha uzun belgeler ve daha fazla dosya biçimi.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI Tarama sayfa başına 1 kredi kullanır. Diğer yapay zekâ araçları kredi bakiyenizi paylaşır.</string>
+    <string name="cmp_paywall_credits_left">Bu ay %2$d kredinizden %1$d kaldı.</string>
+    <string name="cmp_paywall_credits_left_upgrade">Bu ay %2$d kredinizden %1$d kaldı. Daha fazlası için yükseltin.</string>
+    <string name="cmp_paywall_more_credits">Daha fazla kredi, uzun belge ve dosya biçimi.</string>
+    <string name="cmp_paywall_ai_scan_credit">AI Tarama sayfa başına 1 kredi. Diğer AI araçları aynı bakiyeyi paylaşır.</string>
     <string name="cmp_paywall_plan_active">Planınız bu hesapta etkin.</string>
     <string name="cmp_paywall_key_active_here">Anahtarınız bu cihazda etkin.</string>
-    <string name="cmp_paywall_devices_used">%2$d cihazdan %1$d tanesi kullanıldı. Anahtarınızı Ayarlar\'dan yönetin.</string>
-    <string name="cmp_paywall_watch_ad">%1$d kredi daha kazanmak için bir reklam izleyin</string>
+    <string name="cmp_paywall_devices_used">%2$d cihazdan %1$d kullanıldı. Anahtarı Ayarlar\'dan yönetin.</string>
+    <string name="cmp_paywall_watch_ad">Reklam izle: +%1$d kredi</string>
     <string name="cmp_paywall_where_to_buy_before">"AI Tarama ücretsiz aylık bir kota içerir. Ücretli planlar şurada sunulur: "</string>
-    <string name="cmp_paywall_where_to_buy_after">. Bu uygulamadan satın alma yapılamaz. Zaten abone misiniz? Aşağıdan satın alımınızı geri yükleyin.</string>
+    <string name="cmp_paywall_where_to_buy_after">. Bu uygulamada satın alma yok. Abone misiniz? Aşağıdan satın alımınızı geri yükleyin.</string>
     <string name="cmp_copied">Kopyalandı</string>
     <string name="cmp_copy_address">Adresi kopyala</string>
-    <string name="cmp_license_key">Lisans anahtarı</string>
-    <string name="cmp_hide_key">Anahtarı gizle</string>
-    <string name="cmp_show_key">Anahtarı göster</string>
+    <string name="cmp_license_key">Lisans kodu</string>
+    <string name="cmp_hide_key">Gizle</string>
+    <string name="cmp_show_key">Göster</string>
     <string name="cmp_redeem">Etkinleştir</string>
-    <string name="cmp_lost_key_restore">Anahtarınızı mı kaybettiniz? Satın alımı geri yükleyin</string>
-    <string name="cmp_confirm_email_first">Önce e-posta adresinizi onaylayın; satın almanın size ait olduğunu kanıtlayan budur.</string>
+    <string name="cmp_lost_key_restore">Anahtarı mı kaybettiniz? Geri yükle</string>
+    <string name="cmp_confirm_email_first">Önce e-postanızı onaylayın; satın almanın size ait olduğunu kanıtlar.</string>
     <string name="cmp_send_confirmation_email">Onay e-postası gönder</string>
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Etkin</string>
-    <string name="cmp_paywall_feature_credits">Ayda %1$d yapay zekâ kredisi</string>
+    <string name="cmp_paywall_feature_credits">Ayda %1$d AI kredisi</string>
     <string name="cmp_paywall_feature_pages">Tek bir belgede en fazla %1$d sayfa</string>
     <string name="cmp_paywall_feature_office">Word, PowerPoint ve OpenDocument dosyaları</string>
     <string name="cmp_paywall_feature_translation">Çeviri</string>
     <string name="cmp_paywall_feature_extraction">Fişlerden, faturalardan ve kartlardan veri çıkarma</string>
-    <string name="cmp_paywall_feature_sign">PDF\'leri imzalayın ve dijital imzaları doğrulayın</string>
-    <string name="cmp_paywall_feature_edit">PDF\'lerde metin düzenleyin, sıkıştırın ve parolayla koruyun</string>
-    <string name="cmp_paywall_feature_ai_provider">Kendi yapay zekâ sağlayıcınızı bağlayın</string>
+    <string name="cmp_paywall_feature_sign">PDF\'leri imzalayın, imzaları doğrulayın</string>
+    <string name="cmp_paywall_feature_edit">PDF\'te metin düzenle, sıkıştır, parola koy</string>
+    <string name="cmp_paywall_feature_ai_provider">Kendi AI sağlayıcınızı bağlayın</string>
 
     <!-- ui/components/ResultsComponents.kt -->
-    <string name="cmp_edit_text">Metni düzenle</string>
+    <string name="cmp_edit_text">Düzenle</string>
     <string name="cmp_print">Yazdır</string>
-    <string name="cmp_export">Dışa aktar</string>
-    <string name="cmp_copy_text">Metni kopyala</string>
-    <string name="cmp_reading_options">Okuma seçenekleri</string>
-    <string name="cmp_show_preview">Önizlemeyi göster</string>
-    <string name="cmp_smaller_text">Daha küçük metin</string>
+    <string name="cmp_export">Aktar</string>
+    <string name="cmp_copy_text">Kopyala</string>
+    <string name="cmp_reading_options">Okuma ayarları</string>
+    <string name="cmp_show_preview">Önizlemeyi aç</string>
+    <string name="cmp_smaller_text">Küçük metin</string>
     <string name="cmp_zoom_percent">%%%1$d</string>
-    <string name="cmp_bigger_text">Daha büyük metin</string>
+    <string name="cmp_bigger_text">Büyük metin</string>
     <string name="cmp_reset">Sıfırla</string>
     <string name="cmp_no_table">Tablo yok</string>
     <string name="cmp_word_char_counts">%1$d kelime · %2$d karakter</string>
     <string name="cmp_save_as">Farklı kaydet</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
-    <string name="cmp_page_range_title">Hangi sayfalar taransın?</string>
+    <string name="cmp_page_range_title">Hangi sayfalar?</string>
     <string name="cmp_page_range_over_ceiling">%1$s %2$d sayfa içeriyor, bu tarama en fazla %3$d sayfayı okur. Önemli olanları seçin.</string>
-    <string name="cmp_page_range_intro">%1$s %2$d sayfa içeriyor. Taradığınız her sayfa planınızdan düşer; bu yüzden bir aralık tüm dosyadan daha az maliyetlidir.</string>
+    <string name="cmp_page_range_intro">%1$s %2$d sayfa içeriyor. Taranan her sayfa planınızdan düşer; aralık tüm dosyadan ucuza gelir.</string>
     <string name="cmp_page_range_example">örn. 1-5, 8</string>
     <string name="cmp_page_range_pick_up_to">1 ile %2$d arasında en fazla %1$d sayfa seçin.</string>
-    <string name="cmp_page_range_use_numbers">1 ile %1$d arasında sayfa numaraları kullanın, örneğin 1-5 ya da 2,4.</string>
+    <string name="cmp_page_range_use_numbers">1-%1$d arası sayfa numarası girin: 1-5 ya da 2,4.</string>
     <string name="cmp_page_range_n_of_total">%2$d sayfadan %1$d</string>
     <string name="cmp_page_range_required">Zorunlu — bu tarama %1$d sayfayı kapsıyor</string>
-    <string name="cmp_page_range_leave_empty">Tüm %1$d sayfayı taramak için boş bırakın</string>
-    <string name="cmp_page_range_scan_count">%1$d sayfayı tara</string>
-    <string name="cmp_page_range_scan_all">Tümünü tara</string>
+    <string name="cmp_page_range_leave_empty">Boş bırakın: tüm %1$d sayfa taranır</string>
+    <string name="cmp_page_range_scan_count">Tara: %1$d</string>
+    <string name="cmp_page_range_scan_all">Tümünü</string>
 
     <!-- ui/components/TextDisplayComponents.kt -->
     <string name="cmp_stage_uploading">Yükleniyor…</string>
     <string name="cmp_stage_processing">İşleniyor…</string>
-    <string name="cmp_stage_generating">Oluşturuluyor…</string>
-    <string name="cmp_stage_complete">Tamamlandı</string>
-    <string name="cmp_processing_file_of">%2$d dosyanın %1$d. dosyası işleniyor...</string>
+    <string name="cmp_stage_generating">Üretiliyor…</string>
+    <string name="cmp_stage_complete">Bitti</string>
+    <string name="cmp_processing_file_of">%1$d/%2$d dosya işleniyor...</string>
     <string name="cmp_extracting_text">Metin çıkarılıyor...</string>
     <string name="cmp_file_of">Dosya %1$d / %2$d</string>
     <string name="cmp_may_take_few_moments">Bu birkaç dakika sürebilir</string>
@@ -73,11 +73,11 @@
     <string name="cmp_couldnt_read_file">Bu dosya okunamadı</string>
     <string name="cmp_no_text_extracted">Metin çıkarılamadı</string>
     <string name="cmp_try_different_image">Farklı bir resim seçmeyi deneyin</string>
-    <string name="cmp_batch_scanning">%2$d dosyadan %1$d tanesi taranıyor…</string>
+    <string name="cmp_batch_scanning">%1$d/%2$d dosya taranıyor…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Besin değerleri</string>
-    <string name="cmp_food_serving_size">Porsiyon boyutu: %1$s</string>
+    <string name="cmp_food_serving_size">Porsiyon: %1$s</string>
     <string name="cmp_food_ingredients">İçindekiler</string>
     <string name="cmp_food_allergens">Alerjenler</string>
     <string name="cmp_food_no_nutrition_info">Bu ürün için ayrıntılı besin bilgisi yok.</string>
@@ -94,10 +94,10 @@
     <string name="cmp_medicine_manufacturer">Üretici</string>
     <string name="cmp_medicine_active_ingredients">Etkin maddeler</string>
     <string name="cmp_medicine_dosage_form">Doz formu</string>
-    <string name="cmp_medicine_route">Uygulama yolu</string>
+    <string name="cmp_medicine_route">Yol</string>
     <string name="cmp_medicine_recalled">⚠️ Bu ürün FDA tarafından geri çağrıldı.</string>
     <string name="cmp_medicine_contraindications">Kontrendikasyonlar</string>
-    <string name="cmp_medicine_indications">Endikasyonlar</string>
+    <string name="cmp_medicine_indications">Endikasyon</string>
     <string name="cmp_medicine_fda_approved">FDA onaylı: %1$s</string>
     <string name="cmp_medicine_no_info">Bu ilaç için ayrıntılı bilgi yok.</string>
     <string name="cmp_medicine_warnings">Uyarılar</string>
@@ -116,19 +116,19 @@
     <string name="cmp_cosmetics_no_info">Bu ürün için ayrıntılı bilgi yok.</string>
 
     <!-- ui/components/ExportNameDialog.kt -->
-    <string name="cmp_export_name_title">Dosyanıza ad verin</string>
+    <string name="cmp_export_name_title">Dosyaya ad verin</string>
     <string name="cmp_export_file_name_label">Dosya adı</string>
     <string name="cmp_export_name_hint">Mümkünse özgün dosya adı kullanılır.</string>
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Veri çıkar</string>
     <string name="cmp_preset_cost">Metnin yanında etiketlenmiş alanları da alın. Bir sayfayı veri olarak okumak planınızdan %1$d kredi harcar. Her belge en fazla 8 sayfa içerebilir.</string>
-    <string name="cmp_preset_included_pro">Metnin yanında etiketlenmiş alanları da alın. Pro ve üzeri planlarda dahildir.</string>
+    <string name="cmp_preset_included_pro">Metinle birlikte etiketli alanlar da alın. Pro ve üzerinde dahil.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
-    <string name="cmp_sign_in_ai_title">AI taramaları için oturum açın</string>
-    <string name="cmp_sign_in_ai_body">AI taramalar ortak bir anahtar üzerinden çalışır, bu yüzden bir hesap gerekir. Metin tanıma ve barkod tarama ücretsiz ve çevrimdışı kalır; oturum açmaya gerek yoktur.</string>
-    <string name="cmp_sign_in_create_account">Oturum açın veya hesap oluşturun</string>
+    <string name="cmp_sign_in_ai_title">AI taraması: oturum açın</string>
+    <string name="cmp_sign_in_ai_body">AI taramalar ortak bir anahtarla çalışır, hesap gerekir. Metin tanıma ve barkod tarama ücretsiz, çevrimdışı, oturum gerektirmez.</string>
+    <string name="cmp_sign_in_create_account">Giriş yap veya kaydol</string>
 
     <!-- ui/components/MainActionButton.kt -->
     <string name="cmp_view_previous_extracts">Önceki çıktıları görüntüle</string>
@@ -137,19 +137,19 @@
     <string name="cmp_embedded_image">Gömülü resim</string>
 
     <!-- ui/components/StorageAccess.kt -->
-    <string name="cmp_storage_allow_settings">Bu telefona dosya kaydetmek için Ayarlar\'da depolama erişimine izin verin.</string>
+    <string name="cmp_storage_allow_settings">Dosya kaydetmek için Ayarlar\'dan depolama izni verin.</string>
 
     <!-- ui/components/LanguageChipRow.kt -->
     <string name="cmp_chip_original">Özgün</string>
     <string name="cmp_chip_translate">Çevir</string>
-    <string name="cmp_chip_text_to_pdf">Metinden PDF\'e</string>
+    <string name="cmp_chip_text_to_pdf">Metni PDF\'e</string>
 
     <!-- ui/components/AiModeBottomSheet.kt -->
-    <string name="cmp_ai_scan_title">AI Tarama</string>
+    <string name="cmp_ai_scan_title">AI tarama</string>
     <string name="cmp_ai_mode_extract_text_title">Metni çıkar</string>
     <string name="cmp_ai_mode_extract_text_subtitle">Resimdeki görünen metni çıkarın</string>
     <string name="cmp_ai_mode_extract_document_title">Belgeyi çıkar</string>
-    <string name="cmp_ai_mode_extract_document_subtitle">PDF, Word, PowerPoint ve metin dosyaları</string>
+    <string name="cmp_ai_mode_extract_document_subtitle">PDF, Word, PowerPoint ve metin</string>
     <string name="cmp_ai_mode_extract_data_title">Veri çıkar</string>
     <string name="cmp_ai_mode_extract_data_subtitle">Fişler, faturalar ve kartlar, etiketli alanlar olarak</string>
     <string name="cmp_ai_mode_audio_title">Sesten Metne</string>
@@ -164,10 +164,10 @@
     <string name="cmp_product_unknown_source">Bilinmiyor</string>
     <string name="cmp_product_looking_up">Ürün aranıyor...</string>
     <string name="cmp_product_not_found">Ürün bulunamadı</string>
-    <string name="cmp_product_lookup_failed">Arama başarısız oldu</string>
+    <string name="cmp_product_lookup_failed">Arama başarısız</string>
     <string name="cmp_product_unknown_error">Bilinmeyen hata</string>
     <string name="cmp_product_unknown_name">Bilinmeyen ürün</string>
-    <string name="cmp_product_via_source">%1$s üzerinden</string>
+    <string name="cmp_product_via_source">%1$s\'den</string>
 
     <!-- ui/components/ScanInsightComponents.kt -->
     <plurals name="cmp_passages_hard_to_read">
@@ -175,30 +175,30 @@
         <item quantity="other">%1$d pasaj okunması zordu</item>
     </plurals>
     <string name="cmp_check_against_original">Bunlara güvenmeden önce özgün metinle karşılaştırın.</string>
-    <string name="cmp_show_all_count">Tümünü göster (%1$d)</string>
-    <string name="cmp_copy_json">JSON\'u kopyala</string>
+    <string name="cmp_show_all_count">Tümü (%1$d)</string>
+    <string name="cmp_copy_json">JSON kopyala</string>
     <plurals name="cmp_links_found">
-        <item quantity="one">%1$d bağlantı</item>
-        <item quantity="other">%1$d bağlantı</item>
+        <item quantity="one">%1$d link</item>
+        <item quantity="other">%1$d link</item>
     </plurals>
 
     <!-- ui/components/FilePreviewOverlay.kt -->
-    <string name="cmp_preview_saves_to">.%1$s önizlemesi · Downloads/Scanly klasörüne kaydedilir</string>
-    <string name="cmp_export_format">%1$s olarak dışa aktar</string>
+    <string name="cmp_preview_saves_to">.%1$s önizleme · Downloads/Scanly\'ye kaydedilir</string>
+    <string name="cmp_export_format">%1$s\'e aktar</string>
     <string name="cmp_preview_no_table_csv">Bu metinde tablo yok, bu yüzden taşınacak bir CSV olmaz.</string>
-    <string name="cmp_preview_rendering_pages">Sayfalar oluşturuluyor…</string>
+    <string name="cmp_preview_rendering_pages">Sayfalar çiziliyor…</string>
     <string name="cmp_preview_render_failed">Bu belge PDF olarak oluşturulamadı.</string>
     <string name="cmp_preview_page_n_of_total">Sayfa %1$d / %2$d</string>
     <string name="cmp_preview_first_n_of_pages">%2$d sayfadan ilk %1$d</string>
     <string name="cmp_preview_first_n_of_lines">%2$d satırdan ilk %1$d</string>
 
     <!-- ui/components/TextPdfExport.kt -->
-    <string name="cmp_export_nothing_to_export">Dışa aktarılacak bir şey yok</string>
-    <string name="cmp_export_no_table_data">Dışa aktarılacak tablo verisi yok</string>
+    <string name="cmp_export_nothing_to_export">Aktarılacak şey yok</string>
+    <string name="cmp_export_no_table_data">Aktarılacak tablo yok</string>
     <string name="cmp_export_couldnt_save">%1$s kaydedilemedi</string>
 
     <!-- ui/viewmodel/DocumentScanViewModel.kt -->
-    <string name="cmp_doc_saved_to_downloads">%1$s, Downloads/Scanly klasörüne kaydedildi</string>
+    <string name="cmp_doc_saved_to_downloads">%1$s kaydedildi: Downloads/Scanly</string>
     <string name="cmp_doc_couldnt_create">%1$s oluşturulamadı</string>
     <plurals name="cmp_doc_saved_images">
         <item quantity="one">Galeriye %1$d resim kaydedildi</item>
@@ -208,63 +208,63 @@
 
     <!-- ui/viewmodel/TranscribeViewModel.kt -->
     <string name="cmp_transcribe_default_title">Ses</string>
-    <string name="cmp_transcribe_nothing_recorded">Hiçbir şey kaydedilmedi. Mikrofonu kontrol edip yeniden deneyin.</string>
+    <string name="cmp_transcribe_nothing_recorded">Kayıt yapılmadı. Mikrofonu kontrol edip yeniden deneyin.</string>
     <string name="cmp_transcribe_recording_title">Kayıt, %1$s</string>
 
     <!-- docchat/presentation/screen/ChatReplies.kt -->
     <string name="cmp_chat_reply_field_line">%1$s: %2$s</string>
-    <string name="act_open_link">Bağlantıyı aç</string>
+    <string name="act_open_link">Linki aç</string>
     <string name="act_copy">Kopyala</string>
-    <string name="act_copy_text">Metni kopyala</string>
-    <string name="act_copy_barcode">Barkodu kopyala</string>
-    <string name="act_copy_ssid">SSID\'yi kopyala</string>
+    <string name="act_copy_text">Kopyala</string>
+    <string name="act_copy_barcode">Barkod kopyala</string>
+    <string name="act_copy_ssid">SSID kopyala</string>
     <string name="act_call">Ara</string>
-    <string name="act_send_email">E-posta gönder</string>
+    <string name="act_send_email">Mail gönder</string>
     <string name="act_connect_wifi">Wi-Fi\'ye bağlan</string>
-    <string name="act_send_sms">SMS gönder</string>
+    <string name="act_send_sms">SMS yolla</string>
     <string name="act_add_contact">Kişi ekle</string>
-    <string name="act_view_text">Metni görüntüle</string>
+    <string name="act_view_text">Metni gör</string>
     <string name="act_add_event">Takvime ekle</string>
     <string name="act_product_info">Ürün bilgisi</string>
     <string name="act_copied">Panoya kopyalandı</string>
     <string name="act_err_url">Bağlantı açılamadı</string>
     <string name="act_err_copy">Kopyalanamadı</string>
-    <string name="act_err_dialer">Telefon uygulaması açılamadı</string>
+    <string name="act_err_dialer">Telefon açılamadı</string>
     <string name="act_err_email">E-posta uygulaması açılamadı</string>
     <string name="act_err_sms">Mesajlaşma uygulaması açılamadı</string>
     <string name="act_err_wifi">Wi-Fi\'ye bağlanılamadı</string>
     <string name="act_wifi_suggested">Wi-Fi ağı önerildi: %1$s</string>
-    <string name="act_wifi_open_settings">%1$s ağına bağlanmak için Wi-Fi ayarlarını açın</string>
+    <string name="act_wifi_open_settings">Wi-Fi ayarlarını açıp %1$s\'e bağlanın</string>
     <string name="act_err_contacts">Kişiler açılamadı</string>
     <string name="act_err_calendar">Takvim açılamadı</string>
     <string name="tx_fmt_pdf">PDF</string>
-    <string name="tx_fmt_pdf_hint">Konuşmacılar ve zamanlar, yazdırmaya hazır</string>
+    <string name="tx_fmt_pdf_hint">Konuşmacı ve zaman, baskıya hazır</string>
     <string name="tx_fmt_word">Word</string>
     <string name="tx_fmt_word_hint">Düzenlenebilir belge</string>
     <string name="tx_fmt_text">Metin</string>
     <string name="tx_fmt_text_hint">Düz .txt</string>
     <string name="tx_fmt_md">Markdown</string>
-    <string name="tx_fmt_md_hint">Not uygulamaları için</string>
+    <string name="tx_fmt_md_hint">Notlar için</string>
     <string name="tx_fmt_srt">Altyazılar (SRT)</string>
-    <string name="tx_fmt_srt_hint">Video düzenleyiciler için</string>
+    <string name="tx_fmt_srt_hint">Video editörleri</string>
     <string name="tx_fmt_vtt">Altyazılar (WebVTT)</string>
     <string name="tx_fmt_vtt_hint">Web için, konuşmacılarla</string>
-    <string name="pay_headline_pro_feature">Scanly Pro\'nun bir parçası</string>
+    <string name="pay_headline_pro_feature">Scanly Pro\'da</string>
     <string name="pay_headline_limit">Planınızın sınırına ulaştınız</string>
-    <string name="pay_headline_on_tier">Şu anda %1$s planındasınız</string>
-    <string name="pay_headline_upsell">Pro ile daha fazla tarayın</string>
-    <string name="pay_key_active">Anahtarınız etkin. İyi kullanımlar.</string>
-    <string name="pay_key_active_tier">%1$s planındasınız. İyi kullanımlar.</string>
-    <string name="pay_confirm_sent">Gelen kutunuzu kontrol edin, bağlantıyı açın, ardından Satın alımı geri yükle\'ye yeniden dokunun.</string>
+    <string name="pay_headline_on_tier">Planınız: %1$s</string>
+    <string name="pay_headline_upsell">Pro ile çok tarayın</string>
+    <string name="pay_key_active">Anahtarınız etkin.</string>
+    <string name="pay_key_active_tier">%1$s planınız aktif.</string>
+    <string name="pay_confirm_sent">Gelen kutunuzdaki bağlantıyı açın, sonra Satın alımı geri yükleyin.</string>
     <string name="pay_confirm_failed">Onay e-postası gönderilemedi. Yeniden deneyin.</string>
     <string name="pay_key_removed">Anahtar bu cihazdan kaldırıldı.</string>
-    <string name="pay_restored_tier">%1$s anahtarınız geri geldi.</string>
+    <string name="pay_restored_tier">%1$s anahtarı geri geldi.</string>
     <string name="pay_restored">Anahtarınız bu cihazda geri geldi.</string>
     <string name="pay_restore_nothing">Bu hesapta abonelik yok. Farklı bir e-posta adresiyle ödeme yaptıysanız o adresle oturum açıp yeniden deneyin.</string>
     <string name="pay_plan_title">%1$s planı</string>
     <string name="pay_plan_credits_left">Bu ay %2$d AI krediden %1$d tanesi kaldı</string>
-    <string name="pay_plan_see_plans">Planları görmek için dokunun</string>
+    <string name="pay_plan_see_plans">Planları gör</string>
     <string name="pay_plan_yours">Planınız</string>
-    <string name="pay_plan_load_failed">Planınız yüklenemedi. Yeniden denemek için dokunun.</string>
-    <string name="pay_plan_checking">Planınız kontrol ediliyor…</string>
+    <string name="pay_plan_load_failed">Plan yüklenemedi. Tekrar için dokunun.</string>
+    <string name="pay_plan_checking">Plan denetleniyor…</string>
 </resources>

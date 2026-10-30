@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -85,7 +86,7 @@ fun ScanelyTheme(
 
     MaterialExpressiveTheme(
         colorScheme = animatedColorScheme,
-        typography = Typography,
+        typography = if (LocalConfiguration.current.locales[0].language == "ar") ArabicTypography else Typography,
         shapes = ScanelyShapes,
     ) {
         Box(

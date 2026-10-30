@@ -5,16 +5,16 @@
     <string name="pdf_tool_ppt2pdf_shapes">Деякі фігури спрощено.</string>
     <string name="pdf_tool_ppt2pdf_fonts">Деякі шрифти замінено схожими.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">Пропущено %d діаграму.</item>
+        <item quantity="one">%d діаграму пропущено.</item>
         <item quantity="few">Пропущено %d діаграми.</item>
         <item quantity="many">Пропущено %d діаграм.</item>
         <item quantity="other">Пропущено %d діаграми.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">Пропущено %d графічний елемент SmartArt.</item>
-        <item quantity="few">Пропущено %d графічні елементи SmartArt.</item>
-        <item quantity="many">Пропущено %d графічних елементів SmartArt.</item>
-        <item quantity="other">Пропущено %d графічних елементів SmartArt.</item>
+        <item quantity="one">Пропущено %d елемент SmartArt.</item>
+        <item quantity="few">Пропущено %d елементи SmartArt.</item>
+        <item quantity="many">Пропущено %d елементів SmartArt.</item>
+        <item quantity="other">Пропущено %d елементів SmartArt.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
         <item quantity="one">Пропущено %d вбудований об\'єкт.</item>
@@ -23,28 +23,28 @@
         <item quantity="other">Пропущено %d вбудованих об\'єктів.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d відео або звук не відтворюється в PDF; показано лише його попереднє зображення.</item>
-        <item quantity="few">%d відео або звуки не відтворюються в PDF; показано лише їхні попередні зображення.</item>
-        <item quantity="many">%d відео або звуків не відтворюються в PDF; показано лише їхні попередні зображення.</item>
-        <item quantity="other">%d відео або звуків не відтворюються в PDF; показано лише їхні попередні зображення.</item>
+        <item quantity="one">%d відео або звук не відтворюється в PDF; показано прев\'ю.</item>
+        <item quantity="few">%d відео або звуки не відтворюються в PDF; показано прев\'ю.</item>
+        <item quantity="many">%d відео або звуків не відтворюються в PDF; показано прев\'ю.</item>
+        <item quantity="other">%d відео або звуків не відтворюються в PDF; показано прев\'ю.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">Не вдалося показати %d зображення.</item>
-        <item quantity="few">Не вдалося показати %d зображення.</item>
-        <item quantity="many">Не вдалося показати %d зображень.</item>
-        <item quantity="other">Не вдалося показати %d зображення.</item>
+        <item quantity="one">Не показано %d зображення.</item>
+        <item quantity="few">Не показано %d зображення.</item>
+        <item quantity="many">Не показано %d зображень.</item>
+        <item quantity="other">Не показано %d зображень.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
-        <item quantity="one">Пропущено %d прихований слайд.</item>
-        <item quantity="few">Пропущено %d приховані слайди.</item>
-        <item quantity="many">Пропущено %d прихованих слайдів.</item>
-        <item quantity="other">Пропущено %d прихованих слайдів.</item>
+        <item quantity="one">Пропущено %d схований слайд.</item>
+        <item quantity="few">Пропущено %d сховані слайди.</item>
+        <item quantity="many">Пропущено %d схованих слайдів.</item>
+        <item quantity="other">Пропущено %d схованих слайдів.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d слайд не вдалося прочитати, тому його пропущено.</item>
-        <item quantity="few">%d слайди не вдалося прочитати, тому їх пропущено.</item>
-        <item quantity="many">%d слайдів не вдалося прочитати, тому їх пропущено.</item>
-        <item quantity="other">%d слайдів не вдалося прочитати, тому їх пропущено.</item>
+        <item quantity="one">Пропущено %d слайд: не прочитано.</item>
+        <item quantity="few">Пропущено %d слайди: не прочитано.</item>
+        <item quantity="many">Пропущено %d слайдів: не прочитано.</item>
+        <item quantity="other">Пропущено %d слайдів: не прочитано.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Перетворено лише %d слайд.</item>

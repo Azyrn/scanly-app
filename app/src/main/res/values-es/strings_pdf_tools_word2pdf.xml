@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
 <resources>
-    <string name="pdf_tool_word_to_pdf_body">Convierte el documento en tu teléfono. Los gráficos, cuadros de texto y ecuaciones todavía no se pueden mostrar, así que se omiten.</string>
+    <string name="pdf_tool_word_to_pdf_body">Convierte el documento en tu teléfono. Gráficos, cuadros de texto y ecuaciones se omiten por ahora.</string>
     <string name="pdf_tool_word_to_pdf_action">Convertir a PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
@@ -15,9 +15,9 @@
         <item quantity="other">Se omitieron %d diagramas SmartArt.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">Se omitió %d cuadro de texto o forma.</item>
-        <item quantity="many">Se omitieron %d cuadros de texto o formas.</item>
-        <item quantity="other">Se omitieron %d cuadros de texto o formas.</item>
+        <item quantity="one">Omitido %d cuadro de texto o forma.</item>
+        <item quantity="many">%d cuadros de texto o formas omitidos.</item>
+        <item quantity="other">%d cuadros de texto o formas omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
         <item quantity="one">Se omitió %d ecuación.</item>
@@ -36,16 +36,16 @@
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
         <item quantity="one">%d fila de tabla era más alta que una página y se cortó.</item>
-        <item quantity="many">%d filas de tabla eran más altas que una página y se cortaron.</item>
-        <item quantity="other">%d filas de tabla eran más altas que una página y se cortaron.</item>
+        <item quantity="many">%d filas de tabla, más altas que una página, se cortaron.</item>
+        <item quantity="other">%d filas de tabla, más altas que una página, se cortaron.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
         <item quantity="one">Solo se convirtió %d página.</item>
-        <item quantity="many">Solo se convirtieron las primeras %d páginas.</item>
-        <item quantity="other">Solo se convirtieron las primeras %d páginas.</item>
+        <item quantity="many">Solo las primeras %d páginas.</item>
+        <item quantity="other">Solo las primeras %d páginas.</item>
     </plurals>
-    <string name="pdf_tool_word_to_pdf_note_fonts">Algunas fuentes se sustituyeron por otras parecidas.</string>
-    <string name="pdf_tool_word_to_pdf_note_headers">Se omitieron los encabezados y pies de página.</string>
-    <string name="pdf_tool_word_to_pdf_note_footnotes">Se omitieron las notas al pie.</string>
-    <string name="pdf_tool_word_to_pdf_note_columns">El texto en columnas se distribuyó en una sola columna.</string>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Algunas fuentes se cambiaron por similares.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Sin encabezados ni pies de página.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Sin notas al pie.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">El texto en columnas quedó en una sola columna.</string>
 </resources>

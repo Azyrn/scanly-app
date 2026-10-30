@@ -21,7 +21,7 @@
     <string name="pe_percent_value">%1$s%%</string>
     <string name="pe_delta_no_saving">+%1$s%% — 没有节省</string>
     <string name="pe_compress_image_quality">图片画质</string>
-    <string name="pe_compress_min_edge_label">仅压缩宽度大于以下值的图片</string>
+    <string name="pe_compress_min_edge_label">仅压缩宽于以下值的图片</string>
     <string name="pe_px_value">%1$s px</string>
     <string name="pe_compress_custom_hint">低于此宽度的图片通常是徽标或分隔线，重新编码会降低画质且几乎不节省空间。文字和矢量图形在任何设置下都不会被改动。</string>
     <string name="pe_compressing_at">正在以 %1$s%% 压缩…</string>
@@ -35,7 +35,7 @@
     <string name="pe_reached_size_at">%1$s，%2$s。</string>
     <string name="pe_not_reached_smallest">无法达到该大小。此文档可压缩到的最小值为 %1$s，对应 %2$s。</string>
     <string name="pe_compress_leftover_hint">剩余内容大多是文字和页面结构，压缩只能重新打包，难以进一步缩小。</string>
-    <string name="pe_use_this">使用此结果</string>
+    <string name="pe_use_this">使用此项</string>
     <string name="pe_find_the_settings">查找设置</string>
     <string name="pe_compress_target_hint">每次尝试都会真实压缩文档，因此需要几秒钟，且显示的大小就是最终得到的大小。</string>
     <string name="pe_allow_printing">允许打印</string>
@@ -58,7 +58,7 @@
     <string name="pe_asked_every_signature">每次签名时都会要求输入。Scanly 从不存储该密码。</string>
     <string name="pe_unlock">解锁</string>
     <string name="pe_issued_by">颁发者：%1$s</string>
-    <string name="pe_valid_range">有效期：%1$s 至 %2$s</string>
+    <string name="pe_valid_range">有效期 %1$s 至 %2$s</string>
     <string name="pe_chain_count">证书链中包含 %1$d 个证书</string>
     <string name="pe_certificate_expired_hint">此证书已超出有效期。仍可用于签名，但阅读器会标记该签名。</string>
     <string name="pe_reason_optional">原因（可选）</string>
@@ -108,7 +108,7 @@
     <string name="pe_hint_insert_tool">点击新文字应放置的行。</string>
     <string name="pe_hint_eraser">拖动以擦除你添加的标记。</string>
     <string name="pe_hint_whiteout">覆盖页面——它只是隐藏文字，并不会删除文字。</string>
-    <string name="pe_hint_pick_tool">选择一个工具。它会保持启用，直到你再次点击它。</string>
+    <string name="pe_hint_pick_tool">选择工具后保持启用，再点一次关闭。</string>
     <string name="pe_previous_page">上一页</string>
     <string name="pe_next_page">下一页</string>
     <string name="pe_width_pt">%1$d pt</string>
@@ -214,6 +214,6 @@
     <string name="sig_err_cert_read">无法读取证书。</string>
     <string name="sig_err_cert_usage">此证书不允许用于签署文档。</string>
     <string name="sig_err_algorithm">不支持使用 %1$s 密钥签名。</string>
-    <string name="pdf_open_with">用其他应用打开 PDF…</string>
+    <string name="pdf_open_with">PDF 打开方式…</string>
     <string name="pdf_share_chooser">分享</string>
 </resources>

@@ -28,11 +28,11 @@
     <string name="pe_size_to_result">%1$s →\u0020</string>
     <string name="pe_use_these_settings">이 설정 사용</string>
     <string name="pe_no_saving_at_these_settings">이 설정에서는 절약되지 않아요</string>
-    <string name="pe_get_this_under">이 크기 이하로 만들기</string>
+    <string name="pe_get_this_under">이 크기 이하로</string>
     <string name="pe_unit_mb">MB</string>
     <string name="pe_searching_pass">검색 중 — %1$d차…</string>
-    <string name="pe_reached_size_at">%1$s, %2$s 설정.</string>
-    <string name="pe_not_reached_smallest">그 크기에는 도달하지 못했어요. 이 문서가 도달할 수 있는 가장 작은 크기는 %1$s이고, %2$s 설정이에요.</string>
+    <string name="pe_reached_size_at">%1$s · %2$s.</string>
+    <string name="pe_not_reached_smallest">그 크기에 도달 못 했어요. 최소는 %1$s, %2$s.</string>
     <string name="pe_compress_leftover_hint">남은 용량의 대부분은 텍스트와 페이지 구조라서, 압축으로 다시 묶을 수는 있어도 크게 줄이기는 어려워요.</string>
     <string name="pe_use_this">이것 사용</string>
     <string name="pe_find_the_settings">설정 찾기</string>
@@ -45,7 +45,7 @@
     <string name="pe_not_password_protected">이 문서는 비밀번호로 보호되어 있지 않아요.</string>
     <string name="pe_decrypt_hint">저장된 사본은 비밀번호 없이 열려요. 기기에 있는 원본 파일은 그대로 남아요.</string>
     <string name="pe_remove_password">비밀번호 제거</string>
-    <string name="pe_no_document_info">이 파일에는 문서 정보가 설정되어 있지 않아요.</string>
+    <string name="pe_no_document_info">이 파일에 문서 정보가 없어요.</string>
     <string name="pe_also_remove_xmp">XMP 메타데이터도 제거</string>
     <string name="pe_metadata_hint">위에 나열된 항목은 모두 저장된 사본에서 제거돼요.</string>
     <string name="pe_remove_metadata">메타데이터 제거</string>
@@ -57,7 +57,7 @@
     <string name="pe_asked_every_signature">서명할 때마다 물어봐요. Scanly는 저장하지 않아요.</string>
     <string name="pe_unlock">잠금 해제</string>
     <string name="pe_issued_by">발급자: %1$s</string>
-    <string name="pe_valid_range">유효 기간: %1$s ~ %2$s</string>
+    <string name="pe_valid_range">유효: %1$s ~ %2$s</string>
     <string name="pe_chain_count">인증 체인의 인증서 %1$d개</string>
     <string name="pe_certificate_expired_hint">이 인증서는 유효 기간이 지났어요. 여전히 서명할 수는 있지만, 문서 열람 앱에서 서명에 경고를 표시할 거예요.</string>
     <string name="pe_reason_optional">사유 (선택)</string>
@@ -74,7 +74,7 @@
     <string name="pe_integrity_intact">서명 이후 내용이 바뀌지 않았어요</string>
     <string name="pe_integrity_tampered">서명 이후 내용이 바뀌었어요</string>
     <string name="pe_integrity_unverifiable">서명을 읽을 수 없었어요</string>
-    <string name="pe_trust_trusted">발급자가 신뢰할 수 있는 루트 인증서까지 이어져요</string>
+    <string name="pe_trust_trusted">신뢰 루트 인증서에 연결됨</string>
     <string name="pe_trust_untrusted_issuer">발급자가 Scanly의 신뢰 저장소에 없어요 — 서명은 암호학적으로 유효하지만, 이 기기에서는 발급자를 확인할 수 없어요</string>
     <string name="pe_trust_expired">서명할 당시 이미 서명 인증서가 만료되어 있었어요</string>
     <string name="pe_trust_not_yet_valid">서명 인증서가 아직 유효하지 않았어요</string>
@@ -86,10 +86,10 @@
     <string name="pe_time_document_date">%1$s 작성 — 인증되지 않음</string>
     <string name="pe_time_signed">%1$s 서명</string>
     <string name="pe_no_signatures_saved">저장된 서명이 아직 없어요. 페이지 편집기의 서명 도구에서 하나를 캡처하세요.</string>
-    <string name="pe_no_selectable_text">이 위치에는 선택할 수 있는 텍스트가 없어요 — 이 페이지는 스캔본일 수 있어요.</string>
+    <string name="pe_no_selectable_text">선택할 텍스트가 없어요. 스캔본일 수 있어요.</string>
     <string name="pe_scanner_unavailable">이 기기에서는 문서 스캐너를 사용할 수 없어요.</string>
-    <string name="pe_undo">실행 취소</string>
-    <string name="pe_redo">다시 실행</string>
+    <string name="pe_undo">되돌리기</string>
+    <string name="pe_redo">재실행</string>
     <string name="pe_add_text">텍스트 추가</string>
     <string name="pe_add">추가</string>
     <string name="pe_paywall_reason_text">서명과 텍스트 편집은 Scanly Pro에 포함돼요.</string>
@@ -116,9 +116,9 @@
     <string name="pe_line_strike">취소선</string>
     <string name="pe_capture_signature">서명 캡처</string>
     <string name="pe_delete_signature">서명 삭제</string>
-    <string name="pe_tap_to_place_signature">페이지를 탭해서 서명을 배치하세요.</string>
-    <string name="pe_file_encrypted">%1$s은(는) 암호화되어 있어요.</string>
-    <string name="pe_signature_risk_body">%1$s이(가) 포함되어 있어요. 편집 내용을 저장하면 파일이 다시 쓰여서 %2$s은(는) 더 이상 검증되지 않아요. 디스크의 원본 파일에는 영향이 없어요.</string>
+    <string name="pe_tap_to_place_signature">페이지를 탭해 배치</string>
+    <string name="pe_file_encrypted">%1$s 암호화됨.</string>
+    <string name="pe_signature_risk_body">%1$s이(가) 있어요. 편집을 저장하면 파일이 다시 쓰여 %2$s을(를) 더 이상 검증할 수 없어요. 원본 파일은 그대로예요.</string>
     <string name="pe_document_signed">이 문서는 서명되어 있어요</string>
     <string name="pe_save_anyway">그래도 저장</string>
     <string name="pe_crop_page">페이지 자르기</string>
@@ -143,7 +143,7 @@
     <string name="pe_extracted_pages">%1$d페이지 추출됨%2$s</string>
     <string name="pe_busy_saving">저장 중</string>
     <string name="pe_busy_checking_signatures">서명 확인 중</string>
-    <string name="pe_nothing_to_save">아직 저장할 내용이 없어요.</string>
+    <string name="pe_nothing_to_save">저장할 내용 없음.</string>
     <string name="pe_write_failed_retry">Downloads에 쓸 수 없어요. 저장을 눌러 다시 시도하세요.</string>
     <string name="pe_write_failed">Downloads에 쓸 수 없어요.</string>
     <string name="pe_compression_staged">압축 준비됨. 저장하면 적용돼요.</string>
@@ -167,8 +167,8 @@
         <item quantity="other">해당 서명</item>
     </plurals>
     <plurals name="pe_crop_pages">
-        <item quantity="one">페이지 %1$d개 자르기</item>
-        <item quantity="other">페이지 %1$d개 자르기</item>
+        <item quantity="one">%1$d페이지 자르기</item>
+        <item quantity="other">%1$d페이지 자르기</item>
     </plurals>
     <string name="pe_pane_menu">문서 도구</string>
     <string name="pe_pane_merge">합치기</string>
@@ -180,7 +180,7 @@
     <string name="pe_pane_signatures">서명</string>
     <string name="pe_pane_library">서명 보관함</string>
     <string name="pe_compress_presets">프리셋</string>
-    <string name="pe_compress_custom">사용자 지정</string>
+    <string name="pe_compress_custom">직접 설정</string>
     <string name="pe_compress_target">목표 크기</string>
     <string name="pe_level_lossless">무손실</string>
     <string name="pe_level_balanced">균형</string>
@@ -195,7 +195,7 @@
     <string name="pe_pos_bottom_left">왼쪽 아래</string>
     <string name="pe_pos_top_right">오른쪽 위</string>
     <string name="pe_pos_top_left">왼쪽 위</string>
-    <string name="pe_shape_box">사각형</string>
+    <string name="pe_shape_box">상자</string>
     <string name="pe_shape_oval">타원</string>
     <string name="pe_shape_line">선</string>
     <string name="pe_shape_arrow">화살표</string>
@@ -203,8 +203,8 @@
     <string name="pe_err_open_file">그 파일을 열 수 없어요.</string>
     <string name="pe_err_read_pages">이 PDF의 페이지를 읽을 수 없어요.</string>
     <string name="pe_err_all_deleted">모든 페이지가 삭제되게 돼요.</string>
-    <string name="pe_err_edit_failed">PDF 편집에 실패했어요.</string>
-    <string name="pe_export_signed_failed">서명은 되었지만 Downloads에 저장할 수 없어요. 저장을 눌러 다시 시도하세요.</string>
+    <string name="pe_err_edit_failed">PDF 편집 실패.</string>
+    <string name="pe_export_signed_failed">서명됐지만 Downloads 저장 실패. 저장을 눌러 재시도하세요.</string>
     <string name="pe_export_signed_ok">서명해서 Downloads/Scanly에 저장했어요</string>
     <string name="sig_err_self">문서를 자기 자신에 서명할 수는 없어요.</string>
     <string name="sig_err_page">그 페이지에는 표시되는 서명을 넣을 수 없어요.</string>
@@ -213,6 +213,6 @@
     <string name="sig_err_cert_read">인증서를 읽을 수 없었어요.</string>
     <string name="sig_err_cert_usage">이 인증서는 문서에 서명할 수 없어요.</string>
     <string name="sig_err_algorithm">%1$s 키로 서명하는 기능은 지원되지 않아요.</string>
-    <string name="pdf_open_with">PDF를 다음 앱으로 열기…</string>
+    <string name="pdf_open_with">PDF를 앱으로 열기…</string>
     <string name="pdf_share_chooser">공유</string>
 </resources>

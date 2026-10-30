@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- PDF to JPG -->
-    <string name="pdf_tool_jpg_mode_pages">Страницы в JPG</string>
-    <string name="pdf_tool_jpg_mode_pages_body">Каждая страница станет одним изображением.</string>
-    <string name="pdf_tool_jpg_mode_extract">Извлечь изображения</string>
+    <string name="pdf_tool_jpg_mode_pages">Стр. → JPG</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Каждая страница — картинка.</string>
+    <string name="pdf_tool_jpg_mode_extract">Извлечь фото</string>
     <string name="pdf_tool_jpg_mode_extract_body">Сохранить фотографии и картинки из PDF в исходном качестве.</string>
-    <string name="pdf_tool_jpg_quality">Качество</string>
+    <string name="pdf_tool_jpg_quality">Уровень</string>
     <string name="pdf_tool_jpg_quality_normal">Обычное · 150 dpi</string>
-    <string name="pdf_tool_jpg_quality_high">Высокое · 300 dpi</string>
-    <string name="pdf_tool_jpg_action_pages">Преобразовать в JPG</string>
-    <string name="pdf_tool_jpg_action_extract">Извлечь изображения</string>
+    <string name="pdf_tool_jpg_quality_high">Высокое 300dpi</string>
+    <string name="pdf_tool_jpg_action_pages">В JPG</string>
+    <string name="pdf_tool_jpg_action_extract">Извлечь фото</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">%d изображение в формате, который Scanly не может экспортировать, пропущено</item>
-        <item quantity="few">%d изображения в форматах, которые Scanly не может экспортировать, пропущены</item>
-        <item quantity="many">%d изображений в форматах, которые Scanly не может экспортировать, пропущены</item>
-        <item quantity="other">%d изображений в форматах, которые Scanly не может экспортировать, пропущены</item>
+        <item quantity="one">%d картинка пропущена: формат не поддерживается.</item>
+        <item quantity="few">%d картинки пропущены: формат не поддерживается.</item>
+        <item quantity="many">%d картинок пропущено: формат не поддерживается.</item>
+        <item quantity="other">%d картинок пропущено: формат не поддерживается.</item>
     </plurals>
 
     <!-- Image to PDF -->
-    <string name="pdf_tool_img2pdf_body">Одно изображение на страницу, в показанном порядке.</string>
-    <string name="pdf_tool_img2pdf_page_size">Размер страницы</string>
-    <string name="pdf_tool_img2pdf_size_fit">По размеру изображения</string>
+    <string name="pdf_tool_img2pdf_body">Одна картинка на страницу, по порядку.</string>
+    <string name="pdf_tool_img2pdf_page_size">Размер</string>
+    <string name="pdf_tool_img2pdf_size_fit">По фото</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">Letter</string>
     <string name="pdf_tool_img2pdf_orientation">Ориентация</string>
@@ -33,9 +33,9 @@
     <string name="pdf_tool_img2pdf_margin_big">Большие</string>
     <string name="pdf_tool_img2pdf_action">Создать PDF</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">%d файл не удалось прочитать как изображение, он не включён</item>
-        <item quantity="few">%d файла не удалось прочитать как изображения, они не включены</item>
-        <item quantity="many">%d файлов не удалось прочитать как изображения, они не включены</item>
-        <item quantity="other">%d файлов не удалось прочитать как изображения, они не включены</item>
+        <item quantity="one">%d файл не прочитан как картинка, пропущен.</item>
+        <item quantity="few">%d файла не прочитаны как картинки, пропущены.</item>
+        <item quantity="many">%d файлов не прочитаны как картинки, пропущены.</item>
+        <item quantity="other">%d файлов не прочитаны как картинки, пропущены.</item>
     </plurals>
 </resources>

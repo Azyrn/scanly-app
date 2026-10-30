@@ -6,24 +6,24 @@
     <string name="chat_menu">チャットとプラン</string>
     <string name="chat_untitled">無題の書類</string>
     <string name="chat_file_default_name">書類</string>
-    <string name="chat_new">新しいチャット</string>
-    <string name="chat_rename_action">チャット名を変更</string>
-    <string name="chat_rename_title">チャット名を変更</string>
+    <string name="chat_new">新規作成</string>
+    <string name="chat_rename_action">名前を変更</string>
+    <string name="chat_rename_title">名前を変更</string>
     <string name="chat_rename_label">名前</string>
     <string name="chat_save">保存</string>
-    <string name="chat_cancel">キャンセル</string>
+    <string name="chat_cancel">取消</string>
 
     <!-- History -->
     <string name="chat_group_today">今日</string>
     <string name="chat_group_yesterday">昨日</string>
     <string name="chat_group_week">過去7日間</string>
-    <string name="chat_group_older">それ以前</string>
+    <string name="chat_group_older">以前</string>
     <string name="chat_search_hint">チャットを検索</string>
     <string name="chat_search_clear">検索をクリア</string>
-    <string name="chat_search_empty">検索に一致するチャットはありません。</string>
-    <string name="chat_history_empty">チャットはまだありません。作成した書類がここに表示されます。</string>
+    <string name="chat_search_empty">一致するチャットはありません</string>
+    <string name="chat_history_empty">チャットはまだありません。書類はここに表示。</string>
     <string name="chat_more_actions">その他の操作</string>
-    <string name="chat_delete_title">このチャットを削除しますか？</string>
+    <string name="chat_delete_title">チャットを削除？</string>
     <string name="chat_delete_body">「%1$s」とそのファイルは、この端末とアカウントから削除されます。Downloads に保存したコピーは残ります。</string>
     <string name="chat_delete_confirm">削除</string>
 
@@ -36,22 +36,22 @@
         <item>Word でフォーマルな手紙を作成</item>
     </string-array>
     <string name="chat_ask_answered">回答しました。</string>
-    <string name="chat_greeting_body">内容を説明するか、ファイルを添付して再構築してください。</string>
+    <string name="chat_greeting_body">説明を入力かファイルを添付して再構築</string>
 
     <!-- Composer -->
-    <string name="chat_composer_hint">書類の内容を説明してください…</string>
-    <string name="chat_composer_hint_revise">変更内容を入力してください…</string>
+    <string name="chat_composer_hint">書類の内容を入力…</string>
+    <string name="chat_composer_hint_revise">変更内容を入力…</string>
     <string name="chat_attach">添付</string>
     <string name="chat_send">送信</string>
     <string name="chat_stop">待機を停止</string>
     <plurals name="chat_cost_hint">
-        <item quantity="one">約 %d クレジット</item>
-        <item quantity="other">約 %d クレジット</item>
+        <item quantity="one">%dクレジット</item>
+        <item quantity="other">%dクレジット</item>
     </plurals>
-    <string name="chat_cost_agent">チャットは無料 · ファイルはクレジットを使用します</string>
+    <string name="chat_cost_agent">チャット無料・書類クレジット</string>
     <string name="chat_remove">%1$s を削除</string>
     <string name="chat_preparing_file">準備中…</string>
-    <string name="chat_preset_clean_up">きれいに整える</string>
+    <string name="chat_preset_clean_up">整える</string>
     <string name="chat_preset_one_page">1ページに収める</string>
     <plurals name="chat_pages">
         <item quantity="one">%d ページ</item>
@@ -59,13 +59,13 @@
     </plurals>
     <string name="chat_preparing_picture">画像を準備中…</string>
     <string name="chat_picture_role">ページに配置</string>
-    <string name="chat_scan_role">自分のスキャンから</string>
-    <string name="chat_image_pending">再構築するか配置しますか？</string>
+    <string name="chat_scan_role">自分のスキャン</string>
+    <string name="chat_image_pending">再構築か配置か？</string>
     <string name="chat_role_rebuild">この書類を再構築</string>
     <string name="chat_role_place">この画像をページに配置</string>
-    <string name="chat_role_rebuild_prompt">この書類をきれいな PDF として再構築してください。すべての文字、名前、数字を残してください。</string>
-    <string name="chat_role_place_prompt">この画像を、写真またはロゴとしてページに配置してください。</string>
-    <string name="chat_role_question">再構築しますか、それともページに配置しますか？</string>
+    <string name="chat_role_rebuild_prompt">書類をきれいな PDF に再構築。文字・名前・数字はすべて残す。</string>
+    <string name="chat_role_place_prompt">この画像を写真またはロゴとしてページに配置</string>
+    <string name="chat_role_question">再構築か、ページに配置か？</string>
     <string name="chat_role_question_body">「再構築」は画像を新しい書類に変換します。「配置」は写真やロゴなどの画像としてそのまま残します。</string>
     <string name="chat_role_answer_rebuild">再構築する</string>
     <string name="chat_role_answer_place">配置する</string>
@@ -73,142 +73,142 @@
 
 
     <!-- Attach sheet -->
-    <string name="chat_attach_title">ファイルを追加</string>
+    <string name="chat_attach_title">追加</string>
     <string name="chat_attach_camera">カメラ</string>
     <string name="chat_attach_photos">写真</string>
     <string name="chat_attach_files">ファイル</string>
-    <string name="chat_attach_scans">自分のスキャン</string>
-    <string name="chat_no_scans">まだスキャンがありません。先にホームから書類をスキャンしてください。</string>
+    <string name="chat_attach_scans">スキャン</string>
+    <string name="chat_no_scans">まだスキャンがありません。先にホームでスキャン。</string>
     <string name="chat_scans_title">最近のスキャン</string>
 
 
     <!-- Message list -->
     <string name="chat_jump_latest">最新へ移動</string>
-    <string name="chat_unknown_message">このメッセージを表示するには、新しいバージョンの Scanly が必要です。</string>
+    <string name="chat_unknown_message">新しい Scanly が必要なメッセージです。</string>
     <string name="chat_you_attached">添付: %1$s</string>
 
     <!-- Turn outcomes written into the chat -->
-    <string name="chat_stopped_waiting">待機を停止しました。サーバーでは処理が完了し、クレジットが使用される場合があります。もう一度試すと、二重に支払うことなく同じ結果を取得できます。</string>
-    <string name="chat_interrupted">このリクエストは中断されました。もう一度メッセージを送信してください。</string>
+    <string name="chat_stopped_waiting">待機を停止。サーバーでは処理が続き、クレジットを使う場合があります。再試行で二重払いなく同じ結果を取得。</string>
+    <string name="chat_interrupted">リクエストが中断されました。再送信してください。</string>
     <string name="chat_reconnecting">デザインに再接続しています…</string>
-    <string name="chat_design_failed">デザインを完成できませんでした。メッセージは保存されています。もう一度お試しください。</string>
+    <string name="chat_design_failed">デザインを完成できませんでした。メッセージは保存済み。</string>
 
     <!-- Attaching -->
-    <string name="chat_photo_unusable">この画像は使用できませんでした。別の画像をお試しください。</string>
-    <string name="chat_file_too_many_pages">デザイナーが再構築できるのは最大 %1$d ページまでです。このファイルは %2$d ページあります。</string>
-    <string name="chat_file_too_large">このファイルは大きすぎて再構築できません。</string>
-    <string name="chat_file_unreadable">このファイルを読み取れませんでした。別のファイルをお試しください。</string>
+    <string name="chat_photo_unusable">この画像は使えません。別の画像で再試行。</string>
+    <string name="chat_file_too_many_pages">再構築は最大 %1$d ページまで。このファイルは %2$d ページ。</string>
+    <string name="chat_file_too_large">大きすぎて再構築できません。</string>
+    <string name="chat_file_unreadable">読み取れません。別のファイルを試して。</string>
 
     <!-- File actions -->
-    <string name="chat_open_with">他のアプリで開く…</string>
-    <string name="chat_no_viewer">この端末には、このファイルを開けるアプリがありません。</string>
-    <string name="chat_save_failed">ファイルを保存できませんでした。</string>
-    <string name="chat_share_failed">ファイルを共有できませんでした。</string>
-    <string name="chat_saved_to_downloads">Downloads に保存しました。</string>
+    <string name="chat_open_with">他アプリで…</string>
+    <string name="chat_no_viewer">このファイルを開けるアプリがありません。</string>
+    <string name="chat_save_failed">保存できませんでした。</string>
+    <string name="chat_share_failed">共有できませんでした。</string>
+    <string name="chat_saved_to_downloads">Downloads に保存済み</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">%d 枚の画像を Pictures/Scanly に保存しました。</item>
-        <item quantity="other">%d 枚の画像を Pictures/Scanly に保存しました。</item>
+        <item quantity="one">%d 枚を Pictures/Scanly に保存</item>
+        <item quantity="other">%d 枚を Pictures/Scanly に保存</item>
     </plurals>
-    <string name="chat_images_failed">画像を保存できませんでした。</string>
-    <string name="chat_file_missing">このファイルを取得できませんでした。接続を確認して、もう一度お試しください。</string>
-    <string name="chat_file_expired">このデザインは保持されなくなりました。ファイルを再取得するには、再構築してください。</string>
+    <string name="chat_images_failed">画像の保存に失敗しました。</string>
+    <string name="chat_file_missing">ファイルを取得できません。接続を確認して再試行。</string>
+    <string name="chat_file_expired">このデザインは保持されていません。再構築してください。</string>
 
     <!-- Reply cards -->
-    <string name="chat_not_charged">課金されていません</string>
+    <string name="chat_not_charged">課金なし</string>
     <string name="chat_retry">再試行</string>
-    <string name="chat_see_plans">プランを見る</string>
+    <string name="chat_see_plans">プラン表示</string>
     <string name="chat_ask_title">ファイルを確認</string>
-    <string name="chat_ask_reason">これは %1$s のように見えます。</string>
+    <string name="chat_ask_reason">%1$s のようです。</string>
     <string name="chat_ask_fallback">このファイルは、ご依頼の書類とは異なるようです。</string>
     <string name="chat_ask_continue">このまま続行</string>
     <string name="chat_ask_dismiss">今はしない</string>
-    <string name="chat_ask_answered_continue">そのまま続行することを選択しました。</string>
-    <string name="chat_ask_answered_dismiss">続行しないことを選択しました。</string>
-    <string name="chat_fields_title">先に詳細をいくつか入力</string>
-    <string name="chat_fields_body">書類の内容を作り上げずに済むよう、以下の情報を追加してください。</string>
+    <string name="chat_ask_answered_continue">続行を選択しました。</string>
+    <string name="chat_ask_answered_dismiss">続行しないことにしました。</string>
+    <string name="chat_fields_title">先に詳細を入力</string>
+    <string name="chat_fields_body">内容を作らずに済むよう、以下を入力。</string>
     <string name="chat_fields_submit">書類を作成</string>
     <string name="chat_fields_open">詳細を入力</string>
     <string name="chat_file_open">開く</string>
     <string name="chat_file_share">共有</string>
-    <string name="chat_file_download">ダウンロード</string>
+    <string name="chat_file_download">保存</string>
     <string name="chat_file_more">その他の操作</string>
     <string name="chat_file_save_images">ページを画像として保存</string>
     <string name="chat_file_revise">このバージョンを変更</string>
     <string name="chat_file_editing">編集中</string>
     <plurals name="chat_credits_used">
-        <item quantity="one">%d クレジット</item>
-        <item quantity="other">%d クレジット</item>
+        <item quantity="one">%dクレジット</item>
+        <item quantity="other">%dクレジット</item>
     </plurals>
     <string name="chat_expired">期限切れ: 再構築</string>
-    <string name="chat_expired_hint">サーバーがこのデザインを保持していないため、変更できません。編集を続けるには再構築してください。</string>
+    <string name="chat_expired_hint">サーバーに保持されていないため変更できません。再構築して編集を続けてください。</string>
     <string name="chat_thumbnail_description">%1$s の1ページ目</string>
 
     <!-- Background job notification -->
     <string name="chat_notification_channel">書類</string>
     <string name="chat_notification_channel_description">バックグラウンドで作成された書類の準備ができたとき</string>
-    <string name="chat_notification_ready">PDF の準備ができました。タップしてチャットを開きます。</string>
+    <string name="chat_notification_ready">PDF の準備完了。タップでチャットへ</string>
     <string name="chat_notification_not_charged">課金されていません。</string>
 
     <!-- Working reply: the live status line and Show thinking -->
     <string name="chat_status_elapsed">%1$s · %2$ds</string>
-    <string name="chat_step_reading">ファイルを読み取り中</string>
+    <string name="chat_step_reading">読み取り中</string>
     <string name="chat_step_extracting">テキストを抽出中</string>
     <string name="chat_step_planning">レイアウトを計画中</string>
     <string name="chat_step_writing">内容を作成中</string>
     <string name="chat_step_building">PDF を作成中</string>
     <string name="chat_step_checking">品質を確認中</string>
-    <string name="chat_step_fixing">レイアウトを修正中</string>
+    <string name="chat_step_fixing">レイアウト修正</string>
     <string name="chat_step_done">完了</string>
     <string name="chat_step_thinking">思考中</string>
     <string name="chat_step_reading_guide">ガイドを読み取り中</string>
     <string name="chat_step_coding">コードを作成中</string>
     <string name="chat_step_previewing">ページを確認中</string>
     <string name="chat_step_delivering">ファイルを送信中</string>
-    <string name="chat_agent_done">完了しました。ファイルは下にあります。</string>
-    <string name="chat_agent_failed">アシスタントは完了できませんでした。メッセージは保存されています。もう一度お試しください。</string>
-    <string name="chat_agent_about_file">（ファイル %1$s について）</string>
-    <string name="chat_agent_delivered">%1$s を送信しました</string>
-    <string name="chat_approval_title">このウェブサイトを開きますか？</string>
-    <string name="chat_approval_new_url">このリンクはメッセージにも検索結果にも含まれていないため、開くにはアシスタントの許可が必要です。</string>
-    <string name="chat_approval_page_link">アシスタントが開いたページでこのリンクが見つかりました。開くには許可が必要です。</string>
-    <string name="chat_approval_warn_query">このリンクには「?」の後に追加のデータが含まれています。このサイトを信頼できない場合は「拒否」をタップしてください。チャットの一部が送信される可能性があります。</string>
-    <string name="chat_approval_warn_long">このリンクは異常に長くなっています。このサイトを信頼できない場合は「拒否」をタップしてください。チャットの一部が送信される可能性があります。</string>
-    <string name="chat_approval_countdown">%1$s 以内に回答がない場合は拒否されます。</string>
+    <string name="chat_agent_done">完了。ファイルは下に。</string>
+    <string name="chat_agent_failed">完了できませんでした。メッセージは保存済み。</string>
+    <string name="chat_agent_about_file">（%1$s について）</string>
+    <string name="chat_agent_delivered">%1$s を送信済み</string>
+    <string name="chat_approval_title">このサイトを開く？</string>
+    <string name="chat_approval_new_url">メッセージにも検索結果にもないリンクです。開くには許可が必要です。</string>
+    <string name="chat_approval_page_link">開いたページで見つかったリンクです。開くには許可が必要です。</string>
+    <string name="chat_approval_warn_query">「?」の後に追加データあり。信頼できなければ「拒否」。チャットの一部が送られる場合があります。</string>
+    <string name="chat_approval_warn_long">異常に長いリンクです。信頼できなければ「拒否」。チャットの一部が送られる場合があります。</string>
+    <string name="chat_approval_countdown">%1$s 以内に回答がなければ拒否</string>
     <string name="chat_approval_allow_once">今回のみ許可</string>
     <string name="chat_approval_deny">拒否</string>
     <string name="chat_show_thinking">思考を表示</string>
     <string name="chat_hide_thinking">思考を非表示</string>
-    <string name="chat_took">%1$d 秒で完了</string>
+    <string name="chat_took">%1$d秒で完了</string>
     <string name="chat_seconds">%1$d秒</string>
     <string name="chat_under_a_second">1秒未満</string>
-    <string name="chat_background_note">バックグラウンドで実行中です。完了すると通知が届き、ファイルがここに表示されます。</string>
-    <string name="chat_stopped_note">待機を停止しました。準備ができたらファイルがここに表示されます。</string>
+    <string name="chat_background_note">バックグラウンドで実行中。完了すると通知し、ここに表示します。</string>
+    <string name="chat_stopped_note">待機を停止。準備ができたらここに表示されます。</string>
 
     <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
          Tool names and their arguments are the agent's own and are not translated. -->
     <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
     <plurals name="chat_log_steps">
-        <item quantity="one">%d ステップ</item>
-        <item quantity="other">%d ステップ</item>
+        <item quantity="one">%d 手順</item>
+        <item quantity="other">%d 手順</item>
     </plurals>
     <string name="chat_log_minutes">%1$d 分 %2$d 秒</string>
     <string name="chat_log_seconds">%1$d秒</string>
     <string name="chat_log_worked">%1$s 作業 · %2$s</string>
-    <string name="chat_log_show_steps">ステップを表示</string>
-    <string name="chat_log_hide_steps">ステップを非表示</string>
+    <string name="chat_log_show_steps">手順を表示</string>
+    <string name="chat_log_hide_steps">手順を隠す</string>
     <string name="chat_log_thought">%1$s 考えました</string>
     <string name="chat_log_thinking">思考中</string>
     <plurals name="chat_log_read">
-        <item quantity="one">%d 行を読み取り</item>
-        <item quantity="other">%d 行を読み取り</item>
+        <item quantity="one">%d行読み取り</item>
+        <item quantity="other">%d行を読み取り</item>
     </plurals>
     <plurals name="chat_log_wrote">
-        <item quantity="one">%d 行を書き込み</item>
+        <item quantity="one">%d行を書き込み</item>
         <item quantity="other">%d 行を書き込み</item>
     </plurals>
-    <string name="chat_log_read_image">画像を読み取り（%1$s）</string>
+    <string name="chat_log_read_image">画像を読取（%1$s）</string>
     <string name="chat_log_no_output">（出力なし）</string>
-    <string name="chat_log_denied">拒否: このジョブでは許可されていません</string>
+    <string name="chat_log_denied">拒否: このジョブでは不許可</string>
     <string name="chat_log_running">実行中…</string>
     <plurals name="chat_log_more_lines">
         <item quantity="one">+%d 行</item>
@@ -221,16 +221,16 @@
         <item quantity="other">残り %1$d 行（%2$d 文字）は表示されていません</item>
     </plurals>
     <plurals name="chat_log_not_kept">
-        <item quantity="one">%1$d 行（%2$d 文字）は保持されていません</item>
-        <item quantity="other">%1$d 行（%2$d 文字）は保持されていません</item>
+        <item quantity="one">%1$d行（%2$d文字）は未保持</item>
+        <item quantity="other">%1$d行（%2$d文字）は未保持</item>
     </plurals>
     <string name="chat_log_show_all">すべて表示</string>
     <string name="chat_log_loading">完全な出力を読み込み中…</string>
-    <string name="chat_log_expired">完全な出力の期限が切れました</string>
-    <string name="chat_log_unavailable">完全な出力を読み込めませんでした。タップして再試行してください。</string>
+    <string name="chat_log_expired">完全な出力は期限切れ</string>
+    <string name="chat_log_unavailable">出力を読み込めません。タップして再試行。</string>
     <string name="chat_log_past_limit">さらに %1$d 文字が上限を超えたため、保持されていません</string>
     <plurals name="chat_log_dropped">
-        <item quantity="one">この端末では、以前の %d 行は保持されていません</item>
-        <item quantity="other">この端末では、以前の %d 行は保持されていません</item>
+        <item quantity="one">この端末では以前の %d 行は未保持</item>
+        <item quantity="other">この端末では以前の %d 行は未保持</item>
     </plurals>
 </resources>

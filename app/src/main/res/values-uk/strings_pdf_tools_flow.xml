@@ -2,27 +2,27 @@
 <!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
 <resources>
     <!-- Inputs on the options screen -->
-    <string name="pdf_tool_flow_add_files">Додати файли</string>
+    <string name="pdf_tool_flow_add_files">Додати</string>
     <string name="pdf_tool_flow_remove">Видалити %1$s</string>
-    <string name="pdf_tool_flow_move_up">Перемістити %1$s вгору</string>
-    <string name="pdf_tool_flow_move_down">Перемістити %1$s вниз</string>
+    <string name="pdf_tool_flow_move_up">Вгору: %1$s</string>
+    <string name="pdf_tool_flow_move_down">Вниз: %1$s</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">Додайте принаймні %d файл, щоб продовжити.</item>
-        <item quantity="few">Додайте принаймні %d файли, щоб продовжити.</item>
-        <item quantity="many">Додайте принаймні %d файлів, щоб продовжити.</item>
-        <item quantity="other">Додайте принаймні %d файлів, щоб продовжити.</item>
+        <item quantity="one">Треба щонайменше %d файл.</item>
+        <item quantity="few">Треба щонайменше %d файли.</item>
+        <item quantity="many">Треба щонайменше %d файлів.</item>
+        <item quantity="other">Треба щонайменше %d файлів.</item>
     </plurals>
-    <string name="pdf_tool_flow_skipped">Файл, який не вдалося відкрити, пропущено.</string>
+    <string name="pdf_tool_flow_skipped">Файл, що не відкрився, пропущено.</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">Обробляємо %d файл…</item>
-        <item quantity="few">Обробляємо %d файли…</item>
-        <item quantity="many">Обробляємо %d файлів…</item>
-        <item quantity="other">Обробляємо %d файлів…</item>
+        <item quantity="one">Обробка: %d файл…</item>
+        <item quantity="few">Обробка: %d файли…</item>
+        <item quantity="many">Обробка: %d файлів…</item>
+        <item quantity="other">Обробка: %d файлів…</item>
     </plurals>
 
     <!-- Result -->
     <string name="pdf_tool_flow_open_output">Відкрити %1$s</string>
-    <string name="pdf_tool_flow_share_all">Поділитися всіма</string>
+    <string name="pdf_tool_flow_share_all">Поділитися</string>
 </resources>

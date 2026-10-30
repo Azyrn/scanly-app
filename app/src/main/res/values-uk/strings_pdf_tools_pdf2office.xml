@@ -6,12 +6,12 @@
     <string name="pdf2office_word_action">Перетворити на Word</string>
     <string name="pdf2office_powerpoint_body">Кожна сторінка стає слайдом; її текст розміщується в редагованих блоках там, де він був на сторінці. Відскановані сторінки додаються як зображення.</string>
     <string name="pdf2office_powerpoint_action">Перетворити на PowerPoint</string>
-    <string name="pdf2office_excel_body">Таблиці стають рядками й клітинками, по одному аркушу на кожну сторінку з таблицею. Числа залишаються числами, тож їх можна підсумовувати.</string>
+    <string name="pdf2office_excel_body">Таблиці стають рядками й клітинками, аркуш на сторінку. Числа лишаються числами.</string>
     <string name="pdf2office_excel_action">Перетворити на Excel</string>
 
     <!-- Result notes -->
-    <string name="pdf2office_simplified_word">Макет спрощено: текст, заголовки, списки та таблиці можна редагувати, але шрифти, колонки, малюнки й зображення не перенесено.</string>
-    <string name="pdf2office_simplified_powerpoint">Макет спрощено: текст можна редагувати там, де він був на сторінці, але шрифти, малюнки й зображення не перенесено.</string>
+    <string name="pdf2office_simplified_word">Макет спрощено: текст і таблиці редаговані; шрифти, колонки, малюнки й зображення не перенесено.</string>
+    <string name="pdf2office_simplified_powerpoint">Макет спрощено: текст редагований на місці; шрифти, малюнки й зображення не перенесено.</string>
     <plurals name="pdf2office_scanned_as_images">
         <item quantity="one">%d відскановану сторінку додано як зображення.</item>
         <item quantity="few">%d відскановані сторінки додано як зображення.</item>
@@ -19,16 +19,16 @@
         <item quantity="other">%d відскановані сторінки додано як зображення.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">%d дуже щільну сторінку перетворено як звичайні рядки.</item>
-        <item quantity="few">%d дуже щільні сторінки перетворено як звичайні рядки.</item>
-        <item quantity="many">%d дуже щільних сторінок перетворено як звичайні рядки.</item>
-        <item quantity="other">%d дуже щільних сторінок перетворено як звичайні рядки.</item>
+        <item quantity="one">%d щільну сторінку перетворено у рядки.</item>
+        <item quantity="few">%d щільні сторінки перетворено у рядки.</item>
+        <item quantity="many">%d щільних сторінок перетворено у рядки.</item>
+        <item quantity="other">%d щільних сторінок перетворено у рядки.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">%d сторінку не вдалося прочитати, тому її пропущено.</item>
-        <item quantity="few">%d сторінки не вдалося прочитати, тому їх пропущено.</item>
-        <item quantity="many">%d сторінок не вдалося прочитати, тому їх пропущено.</item>
-        <item quantity="other">%d сторінки не вдалося прочитати, тому їх пропущено.</item>
+        <item quantity="one">Пропущено %d сторінку: не прочитано.</item>
+        <item quantity="few">Пропущено %d сторінки: не прочитано.</item>
+        <item quantity="many">Пропущено %d сторінок: не прочитано.</item>
+        <item quantity="other">Пропущено %d сторінок: не прочитано.</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
         <item quantity="one">%d відскановану сторінку без тексту пропущено.</item>
@@ -36,9 +36,9 @@
         <item quantity="many">%d відсканованих сторінок без тексту пропущено.</item>
         <item quantity="other">%d відсканованих сторінок без тексту пропущено.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Таблиць не знайдено; текст розміщено по одному рядку в кожному рядку.</string>
+    <string name="pdf2office_excel_no_tables">Таблиць немає; текст — по одному рядку.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
-    <string name="pdf2office_excel_sheet_page">Сторінка %1$d</string>
+    <string name="pdf2office_excel_sheet_page">Стор. %1$d</string>
     <string name="pdf2office_excel_sheet_text">Текст</string>
 </resources>

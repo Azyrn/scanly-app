@@ -4,9 +4,9 @@
     <!-- SettingsScreen.kt -->
     <string name="set_settings_title">الإعدادات</string>
     <string name="set_section_account">الحساب</string>
-    <string name="set_sign_in">تسجيل الدخول</string>
-    <string name="set_sign_in_subtitle">مطلوب للمسح بالذكاء الاصطناعي</string>
-    <string name="set_signed_in">تم تسجيل الدخول</string>
+    <string name="set_sign_in">دخول</string>
+    <string name="set_sign_in_subtitle">مطلوب للمسح الذكي</string>
+    <string name="set_signed_in">مسجّل</string>
     <string name="set_pro_key_title">مفتاح Scanly Pro</string>
     <string name="set_pro_key_active_devices">نشط · %1$d من أصل %2$d أجهزة</string>
     <string name="set_pro_key_active_here">نشط على هذا الجهاز</string>
@@ -34,11 +34,11 @@
     <string name="set_remove_key_title">هل تريد إزالة مفتاحك؟</string>
     <string name="set_remove_key_message">سيعود هذا الجهاز إلى الخطة المجانية وتُحرَّر مساحته، لتتمكن من استخدام المفتاح على جهاز آخر. ويبقى المفتاح نفسه صالحًا.</string>
     <string name="set_remove_key_confirm">إزالة</string>
-    <string name="set_delete_account_dialog_title">هل تريد حذف الحساب؟</string>
+    <string name="set_delete_account_dialog_title">حذف الحساب؟</string>
     <string name="set_delete_account_dialog_message">سيؤدي هذا إلى محو حسابك في Scanly وبيانات تسجيل الدخول وسجلات الاستخدام على خوادمنا نهائيًا. ولا يمكن التراجع عن ذلك.\n\nالمسوحات المحفوظة على هذا الجهاز لن تتأثر، ويجب إلغاء اشتراك Pro النشط بشكل منفصل من خلال Paddle.</string>
-    <string name="set_sign_out_dialog_title">هل تريد تسجيل الخروج؟</string>
+    <string name="set_sign_out_dialog_title">تسجيل خروج؟</string>
     <string name="set_sign_out_dialog_message">ستتوقف عمليات المسح بالذكاء الاصطناعي حتى تسجّل الدخول مرة أخرى. يبقى سجلّ مسحك والتعرف على النص دون اتصال على هذا الجهاز.</string>
-    <string name="set_sign_out">تسجيل الخروج</string>
+    <string name="set_sign_out">خروج</string>
     <string name="set_account_options">خيارات الحساب</string>
     <string name="set_account_id_label">معرّف الحساب</string>
     <string name="set_account_id_copied">تم نسخ معرّف الحساب</string>
@@ -70,7 +70,7 @@
     <string name="set_section_preprocessing">المعالجة المسبقة</string>
     <string name="set_auto_rotate_title">تدوير الصفحة تلقائيًا</string>
     <string name="set_auto_rotate_subtitle">يكتشف الصفحات المائلة والمقلوبة</string>
-    <string name="set_fix_flipped_title">إصلاح الأسطر المقلوبة</string>
+    <string name="set_fix_flipped_title">إصلاح أسطر مقلوبة</string>
     <string name="set_fix_flipped_subtitle">للصفحات التي تجمع أسطرًا مستقيمة وأخرى مقلوبة. غير موثوق في العربية</string>
     <string name="set_flatten_curved_title">تسوية الصفحات المنحنية</string>
     <string name="set_downloading_percent">جارٍ التنزيل %1$d%%</string>
@@ -82,7 +82,7 @@
     <string name="set_recognize_tables_title">التعرف على الجداول</string>
     <string name="set_tables_missing_subtitle">جداول SLANet · تنزيل 8 ميغابايت</string>
     <string name="set_tables_ready_subtitle">يعيد بناء الجداول كشبكات قابلة للتصدير إلى CSV</string>
-    <string name="set_script_missing_subtitle">%1$s · %2$d ميغابايت</string>
+    <string name="set_script_missing_subtitle">%1$s · %2$d MB</string>
     <string name="set_script_delete_description">حذف %1$s</string>
     <string name="set_script_download_description">تنزيل %1$s</string>
 
@@ -111,7 +111,7 @@
     <string name="set_testing">جارٍ الاختبار…</string>
     <string name="set_test_connection">اختبار الاتصال</string>
     <string name="set_remove_endpoint">إزالة نقطة الاتصال</string>
-    <string name="set_use_for_ai_title">استخدام لميزات الذكاء الاصطناعي</string>
+    <string name="set_use_for_ai_title">للذكاء الاصطناعي</string>
     <string name="set_use_for_ai_verified">تستخدم عمليات المسح واستخراج البيانات والترجمة والمسودات والتصاميم نقطة الاتصال الخاصة بك بدلًا من Scanly AI. ويستخدم الصوت إلى نص دائمًا Scanly AI، لأن نقطة اتصال الدردشة لا تقبل الصوت.</string>
     <string name="set_use_for_ai_unverified">تحقّق من نقطة الاتصال أولًا.</string>
 
@@ -119,14 +119,14 @@
     <string name="set_auth_create_title">أنشئ حسابك</string>
     <string name="set_auth_welcome_title">مرحبًا بعودتك</string>
     <string name="set_auth_intro">سجّل الدخول لاستخدام المسح بالذكاء الاصطناعي. يبقى التعرف على النص ومسح الباركود يعملان دون اتصال ودون حساب.</string>
-    <string name="set_auth_email_label">البريد الإلكتروني</string>
+    <string name="set_auth_email_label">البريد</string>
     <string name="set_auth_password_hint">6 أحرف على الأقل</string>
     <string name="set_auth_forgot_password">نسيت كلمة المرور؟</string>
     <string name="set_auth_create_account">إنشاء حساب</string>
     <string name="set_auth_or">أو</string>
     <string name="set_auth_continue_google">المتابعة باستخدام Google</string>
     <string name="set_auth_have_account">لديك حساب بالفعل؟</string>
-    <string name="set_auth_no_account">ليس لديك حساب بعد؟</string>
+    <string name="set_auth_no_account">ليس لديك حساب؟</string>
     <string name="set_auth_create_one">أنشئ حسابًا</string>
     <string name="set_account_deleted">تم حذف حسابك.</string>
 

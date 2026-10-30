@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Scanly</string>
-    <string name="ai_build_documents_title">Створення документів за допомогою ШІ</string>
-    <string name="ai_build_documents_subtitle">Опишіть або додайте файл: рахунки, резюме, звіти, презентації</string>
-    <string name="design_paywall_fallback">Створення документів за допомогою ШІ входить до Pro.</string>
-    <string name="custom_provider_build_documents_note">Створення документів за допомогою ШІ поділено на дві частини: ваша модель пише документ, а Scanly його верстає. Потужніша модель дає кращий дизайн. За верстання Scanly списує один кредит замість звичайної плати.</string>
-    <string name="plan_feature_build_documents">Створення документів за допомогою ШІ: макети, таблиці та оформлення</string>
-    <string name="custom_provider_on_your_endpoint_note">Сканування, витягування даних і переклад надсилаються з цього пристрою безпосередньо до вашого провайдера. Вони не витрачають ваші кредити Scanly, а оплачуються через вашого провайдера.</string>
+    <string name="ai_build_documents_title">Документи з ШІ</string>
+    <string name="ai_build_documents_subtitle">Опишіть або додайте файл: рахунки, CV, звіти, слайди</string>
+    <string name="design_paywall_fallback">Документи з ШІ входять до Pro.</string>
+    <string name="custom_provider_build_documents_note">Документи з ШІ працюють у два етапи: ваша модель пише документ, а Scanly його верстає. Сильніша модель дає кращий дизайн. За верстання Scanly списує один кредит замість звичайної плати.</string>
+    <string name="plan_feature_build_documents">Документи з ШІ: макети, таблиці, оформлення</string>
+    <string name="custom_provider_on_your_endpoint_note">Сканування, витяг даних і переклад ідуть із пристрою прямо до провайдера. Кредити Scanly не витрачаються, оплата йде через провайдера.</string>
 </resources>

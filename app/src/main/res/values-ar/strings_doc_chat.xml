@@ -7,8 +7,8 @@
     <string name="chat_untitled">مستند بلا عنوان</string>
     <string name="chat_file_default_name">مستند</string>
     <string name="chat_new">محادثة جديدة</string>
-    <string name="chat_rename_action">إعادة تسمية المحادثة</string>
-    <string name="chat_rename_title">إعادة تسمية المحادثة</string>
+    <string name="chat_rename_action">تعديل الاسم</string>
+    <string name="chat_rename_title">تعديل الاسم</string>
     <string name="chat_rename_label">الاسم</string>
     <string name="chat_save">حفظ</string>
     <string name="chat_cancel">إلغاء</string>
@@ -18,12 +18,12 @@
     <string name="chat_group_yesterday">أمس</string>
     <string name="chat_group_week">آخر 7 أيام</string>
     <string name="chat_group_older">أقدم</string>
-    <string name="chat_search_hint">البحث في المحادثات</string>
+    <string name="chat_search_hint">بحث المحادثات</string>
     <string name="chat_search_clear">مسح البحث</string>
     <string name="chat_search_empty">لا توجد محادثات تطابق بحثك.</string>
     <string name="chat_history_empty">لا توجد محادثات بعد. تظهر هنا المستندات التي تنشئها.</string>
     <string name="chat_more_actions">مزيد من الإجراءات</string>
-    <string name="chat_delete_title">هل تريد حذف هذه المحادثة؟</string>
+    <string name="chat_delete_title">حذف هذه المحادثة؟</string>
     <string name="chat_delete_body">سيتم حذف «%1$s» وملفاته من هذا الهاتف ومن حسابك. تبقى النسخ التي حفظتها في Downloads.</string>
     <string name="chat_delete_confirm">حذف</string>
 
@@ -52,11 +52,11 @@
         <item quantity="many">~%d رصيدًا</item>
         <item quantity="other">~%d رصيد</item>
     </plurals>
-    <string name="chat_cost_agent">المحادثة مجانية · الملفات تستهلك أرصدة</string>
+    <string name="chat_cost_agent">المحادثة مجانية · الملفات بأرصدة</string>
     <string name="chat_remove">إزالة %1$s</string>
     <string name="chat_preparing_file">جارٍ التحضير…</string>
     <string name="chat_preset_clean_up">تنظيفه</string>
-    <string name="chat_preset_one_page">أن يتسع لصفحة واحدة</string>
+    <string name="chat_preset_one_page">يتسع لصفحة واحدة</string>
     <plurals name="chat_pages">
         <item quantity="zero">%d صفحة</item>
         <item quantity="one">%d صفحة</item>
@@ -68,7 +68,7 @@
     <string name="chat_preparing_picture">جارٍ تحضير الصورة…</string>
     <string name="chat_picture_role">موضوعة على الصفحة</string>
     <string name="chat_scan_role">من مسوحاتي</string>
-    <string name="chat_image_pending">إعادة البناء أم وضع الصورة؟</string>
+    <string name="chat_image_pending">إعادة بناء أم وضع؟</string>
     <string name="chat_role_rebuild">إعادة بناء هذا المستند</string>
     <string name="chat_role_place">وضع هذه الصورة على الصفحة</string>
     <string name="chat_role_rebuild_prompt">أعِد بناء هذا المستند كملف PDF نظيف. واحتفظ بكل كلمة واسم ورقم.</string>
@@ -84,7 +84,7 @@
     <string name="chat_attach_title">إضافة ملف</string>
     <string name="chat_attach_camera">الكاميرا</string>
     <string name="chat_attach_photos">الصور</string>
-    <string name="chat_attach_files">الملفات</string>
+    <string name="chat_attach_files">ملفات</string>
     <string name="chat_attach_scans">مسوحاتي</string>
     <string name="chat_no_scans">لا توجد مسوحات بعد. امسح مستندًا من الشاشة الرئيسية أولًا.</string>
     <string name="chat_scans_title">مسوحاتك الأخيرة</string>
@@ -109,7 +109,7 @@
 
     <!-- File actions -->
     <string name="chat_open_with">فتح باستخدام…</string>
-    <string name="chat_no_viewer">لا يوجد تطبيق على هذا الهاتف يمكنه فتح هذا الملف.</string>
+    <string name="chat_no_viewer">لا يوجد على الهاتف تطبيق يفتح هذا الملف.</string>
     <string name="chat_save_failed">تعذّر حفظ الملف.</string>
     <string name="chat_share_failed">تعذّرت مشاركة الملف.</string>
     <string name="chat_saved_to_downloads">تم الحفظ في Downloads.</string>
@@ -127,7 +127,7 @@
 
     <!-- Reply cards -->
     <string name="chat_not_charged">لم يُخصم شيء</string>
-    <string name="chat_retry">إعادة المحاولة</string>
+    <string name="chat_retry">أعِد</string>
     <string name="chat_see_plans">عرض الخطط</string>
     <string name="chat_ask_title">تحقّق من ملفك</string>
     <string name="chat_ask_reason">يبدو هذا كـ%1$s.</string>
@@ -146,7 +146,7 @@
     <string name="chat_file_more">مزيد من الإجراءات</string>
     <string name="chat_file_save_images">حفظ الصفحات كصور</string>
     <string name="chat_file_revise">تعديل هذه النسخة</string>
-    <string name="chat_file_editing">جارٍ التعديل</string>
+    <string name="chat_file_editing">تعديل</string>
     <plurals name="chat_credits_used">
         <item quantity="zero">%d رصيد</item>
         <item quantity="one">%d رصيد</item>
@@ -190,11 +190,11 @@
     <string name="chat_approval_warn_query">يحمل هذا الرابط بيانات إضافية بعد علامة «؟». إن كنت لا تثق بهذا الموقع، فاضغط رفض: قد يتلقى جزءًا من هذه المحادثة.</string>
     <string name="chat_approval_warn_long">هذا الرابط طويل بشكل غير معتاد. إن كنت لا تثق بهذا الموقع، فاضغط رفض: قد يتلقى جزءًا من هذه المحادثة.</string>
     <string name="chat_approval_countdown">عدم الرد خلال %1$s يعني الرفض.</string>
-    <string name="chat_approval_allow_once">السماح مرة واحدة</string>
+    <string name="chat_approval_allow_once">سماح لمرة</string>
     <string name="chat_approval_deny">رفض</string>
     <string name="chat_show_thinking">إظهار التفكير</string>
     <string name="chat_hide_thinking">إخفاء التفكير</string>
-    <string name="chat_took">استغرق %1$d ث</string>
+    <string name="chat_took">دام %1$dث</string>
     <string name="chat_seconds">%1$d ث</string>
     <string name="chat_under_a_second">أقل من ثانية</string>
     <string name="chat_background_note">يعمل في الخلفية. ستتلقى إشعارًا، وسيظهر الملف هنا.</string>
@@ -266,7 +266,7 @@
     </plurals>
     <string name="chat_log_show_all">إظهار الكل</string>
     <string name="chat_log_loading">جارٍ تحميل الناتج الكامل…</string>
-    <string name="chat_log_expired">انتهت صلاحية الناتج الكامل</string>
+    <string name="chat_log_expired">انتهى الناتج الكامل</string>
     <string name="chat_log_unavailable">تعذّر تحميل الناتج الكامل. انقر لإعادة المحاولة.</string>
     <string name="chat_log_past_limit">%1$d حرفًا إضافيًا تجاوز الحد ولم يُحفظ</string>
     <plurals name="chat_log_dropped">

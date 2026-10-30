@@ -6,33 +6,33 @@
     <string name="pdf2office_word_action">Convertir en Word</string>
     <string name="pdf2office_powerpoint_body">Chaque page devient une diapositive, avec son texte dans des zones modifiables à son emplacement d\'origine. Les pages numérisées sont ajoutées sous forme d\'images.</string>
     <string name="pdf2office_powerpoint_action">Convertir en PowerPoint</string>
-    <string name="pdf2office_excel_body">Les tableaux deviennent des lignes et des cellules, avec une feuille par page qui en contient. Les nombres restent des nombres, vous pouvez donc les additionner.</string>
+    <string name="pdf2office_excel_body">Tableaux en lignes et cellules, une feuille par page. Les nombres restent additionnables.</string>
     <string name="pdf2office_excel_action">Convertir en Excel</string>
 
     <!-- Result notes -->
-    <string name="pdf2office_simplified_word">La mise en page a été simplifiée : le texte, les titres, les listes et les tableaux sont modifiables, mais les polices, colonnes, dessins et images n\'ont pas été repris.</string>
-    <string name="pdf2office_simplified_powerpoint">La mise en page a été simplifiée : le texte est modifiable à son emplacement d\'origine, mais les polices, dessins et images n\'ont pas été repris.</string>
+    <string name="pdf2office_simplified_word">Mise en page simplifiée : texte, titres, listes et tableaux sont modifiables ; polices, colonnes, dessins et images non repris.</string>
+    <string name="pdf2office_simplified_powerpoint">Mise en page simplifiée : texte modifiable à sa place d\'origine ; polices, dessins et images non repris.</string>
     <plurals name="pdf2office_scanned_as_images">
         <item quantity="one">%d page numérisée a été ajoutée sous forme d\'image.</item>
         <item quantity="many">%d pages numérisées ont été ajoutées sous forme d\'images.</item>
         <item quantity="other">%d pages numérisées ont été ajoutées sous forme d\'images.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">%d page très dense a été convertie sous forme de lignes simples.</item>
-        <item quantity="many">%d pages très denses ont été converties sous forme de lignes simples.</item>
-        <item quantity="other">%d pages très denses ont été converties sous forme de lignes simples.</item>
+        <item quantity="one">%d page très dense, convertie en texte brut.</item>
+        <item quantity="many">%d pages très denses converties en texte brut.</item>
+        <item quantity="other">%d pages très denses converties en texte brut.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
         <item quantity="one">%d page n\'a pas pu être lue et a été retirée.</item>
-        <item quantity="many">%d pages n\'ont pas pu être lues et ont été retirées.</item>
-        <item quantity="other">%d pages n\'ont pas pu être lues et ont été retirées.</item>
+        <item quantity="many">%d pages illisibles, retirées.</item>
+        <item quantity="other">%d pages illisibles, retirées.</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">%d page numérisée ne contient pas de texte et a été ignorée.</item>
-        <item quantity="many">%d pages numérisées ne contiennent pas de texte et ont été ignorées.</item>
-        <item quantity="other">%d pages numérisées ne contiennent pas de texte et ont été ignorées.</item>
+        <item quantity="one">%d page numérisée sans texte, ignorée.</item>
+        <item quantity="many">%d pages numérisées sans texte, ignorées.</item>
+        <item quantity="other">%d pages numérisées sans texte, ignorées.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Aucun tableau trouvé ; le texte a été placé à raison d\'une ligne par rangée.</string>
+    <string name="pdf2office_excel_no_tables">Aucun tableau ; texte placé une ligne par rangée.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">Page %1$d</string>

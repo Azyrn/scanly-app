@@ -19,7 +19,7 @@
     <string name="chat_search_empty">검색과 일치하는 채팅이 없어요.</string>
     <string name="chat_history_empty">아직 채팅이 없어요. 만든 문서가 여기에 표시돼요.</string>
     <string name="chat_more_actions">더보기</string>
-    <string name="chat_delete_title">이 채팅을 삭제할까요?</string>
+    <string name="chat_delete_title">채팅을 삭제할까요?</string>
     <string name="chat_delete_body">“%1$s”과(와) 파일은 이 휴대폰과 계정에서 삭제돼요. Downloads에 저장한 사본은 그대로 남아요.</string>
     <string name="chat_delete_confirm">삭제</string>
     <string name="chat_greeting_title">무엇을 만들까요?</string>
@@ -29,9 +29,9 @@
         <item>Word로 격식 있는 편지 쓰기</item>
     </string-array>
     <string name="chat_ask_answered">답변했어요.</string>
-    <string name="chat_greeting_body">설명하거나 파일을 첨부하면 다시 만들어 드려요.</string>
+    <string name="chat_greeting_body">설명하거나 파일을 첨부해 다시 만들어요.</string>
     <string name="chat_composer_hint">만들 문서를 설명하세요…</string>
-    <string name="chat_composer_hint_revise">바꿀 내용을 요청하세요…</string>
+    <string name="chat_composer_hint_revise">수정 요청 입력…</string>
     <string name="chat_attach">첨부</string>
     <string name="chat_send">보내기</string>
     <string name="chat_stop">기다리기 멈추기</string>
@@ -39,10 +39,10 @@
         <item quantity="one">약 %d 크레딧</item>
         <item quantity="other">약 %d 크레딧</item>
     </plurals>
-    <string name="chat_cost_agent">채팅은 무료예요 · 파일은 크레딧을 사용해요</string>
+    <string name="chat_cost_agent">채팅 무료 · 파일은 크레딧 사용</string>
     <string name="chat_remove">%1$s 삭제</string>
     <string name="chat_preparing_file">준비 중…</string>
-    <string name="chat_preset_clean_up">깔끔하게 정리하기</string>
+    <string name="chat_preset_clean_up">깔끔하게 정리</string>
     <string name="chat_preset_one_page">한 페이지에 맞추기</string>
     <plurals name="chat_pages">
         <item quantity="one">%d페이지</item>
@@ -51,12 +51,12 @@
     <string name="chat_preparing_picture">사진 준비 중…</string>
     <string name="chat_picture_role">페이지에 배치됨</string>
     <string name="chat_scan_role">내 스캔에서</string>
-    <string name="chat_image_pending">다시 만들까요, 배치할까요?</string>
+    <string name="chat_image_pending">다시 만들기 · 배치</string>
     <string name="chat_role_rebuild">이 문서 다시 만들기</string>
     <string name="chat_role_place">이 이미지를 페이지에 넣기</string>
     <string name="chat_role_rebuild_prompt">이 문서를 깔끔한 PDF로 다시 만들어 주세요. 모든 단어, 이름, 숫자를 그대로 유지해 주세요.</string>
     <string name="chat_role_place_prompt">이 사진을 인물 사진이나 로고처럼 페이지에 넣어 주세요.</string>
-    <string name="chat_role_question">다시 만들까요, 아니면 페이지에 넣을까요?</string>
+    <string name="chat_role_question">다시 만들까요, 페이지에 넣을까요?</string>
     <string name="chat_role_question_body">다시 만들기는 사진을 새 문서로 바꿔요. 배치하기는 인물 사진이나 로고처럼 사진 그대로 두어요.</string>
     <string name="chat_role_answer_rebuild">다시 만들기</string>
     <string name="chat_role_answer_place">배치하기</string>
@@ -68,31 +68,31 @@
     <string name="chat_attach_scans">내 스캔</string>
     <string name="chat_no_scans">아직 스캔이 없어요. 먼저 홈에서 문서를 스캔하세요.</string>
     <string name="chat_scans_title">최근 스캔</string>
-    <string name="chat_jump_latest">최신 메시지로 이동</string>
+    <string name="chat_jump_latest">최신으로 이동</string>
     <string name="chat_unknown_message">이 메시지를 보려면 더 최신 버전의 Scanly가 필요해요.</string>
     <string name="chat_you_attached">첨부: %1$s</string>
-    <string name="chat_stopped_waiting">기다리기를 멈췄어요. 서버에서는 계속 처리되어 크레딧이 사용될 수 있어요. 다시 시도하면 두 번 결제하지 않고 같은 결과를 받을 수 있어요.</string>
+    <string name="chat_stopped_waiting">기다리기를 멈췄어요. 서버는 계속 처리해 크레딧이 쓰일 수 있어요. 다시 시도하면 중복 결제 없이 같은 결과를 받아요.</string>
     <string name="chat_interrupted">이 요청이 중단됐어요. 메시지를 다시 보내 주세요.</string>
     <string name="chat_reconnecting">디자인에 다시 연결하는 중…</string>
     <string name="chat_design_failed">디자인을 완료하지 못했어요. 메시지는 남아 있으니 다시 시도해 주세요.</string>
-    <string name="chat_photo_unusable">이 이미지는 사용할 수 없어요. 다른 이미지를 시도해 주세요.</string>
-    <string name="chat_file_too_many_pages">디자이너는 최대 %1$d페이지까지 다시 만들 수 있어요. 이 파일은 %2$d페이지예요.</string>
-    <string name="chat_file_too_large">이 파일은 너무 커서 다시 만들 수 없어요.</string>
-    <string name="chat_file_unreadable">이 파일을 읽을 수 없어요. 다른 파일을 시도해 주세요.</string>
-    <string name="chat_open_with">다른 앱으로 열기…</string>
-    <string name="chat_no_viewer">이 휴대폰의 어떤 앱으로도 이 파일을 열 수 없어요.</string>
+    <string name="chat_photo_unusable">이 이미지는 쓸 수 없어요. 다른 이미지를 고르세요.</string>
+    <string name="chat_file_too_many_pages">디자이너는 최대 %1$d페이지. 이 파일은 %2$d페이지예요.</string>
+    <string name="chat_file_too_large">파일이 너무 커서 다시 만들 수 없어요.</string>
+    <string name="chat_file_unreadable">파일을 읽을 수 없어요. 다른 파일을 고르세요.</string>
+    <string name="chat_open_with">앱으로 열기…</string>
+    <string name="chat_no_viewer">이 파일을 열 수 있는 앱이 없어요.</string>
     <string name="chat_save_failed">파일을 저장할 수 없어요.</string>
     <string name="chat_share_failed">파일을 공유할 수 없어요.</string>
-    <string name="chat_saved_to_downloads">Downloads에 저장했어요.</string>
+    <string name="chat_saved_to_downloads">Downloads에 저장됨.</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">이미지 %d개를 Pictures/Scanly에 저장했어요.</item>
-        <item quantity="other">이미지 %d개를 Pictures/Scanly에 저장했어요.</item>
+        <item quantity="one">이미지 %d개 저장: Pictures/Scanly</item>
+        <item quantity="other">이미지 %d개 저장: Pictures/Scanly</item>
     </plurals>
     <string name="chat_images_failed">이미지를 저장할 수 없어요.</string>
     <string name="chat_file_missing">이 파일을 가져올 수 없어요. 연결을 확인하고 다시 시도해 주세요.</string>
-    <string name="chat_file_expired">이 디자인은 더 이상 보관되지 않아요. 파일을 다시 받으려면 다시 만들어 주세요.</string>
+    <string name="chat_file_expired">디자인이 보관되지 않아요. 다시 만들어 파일을 받으세요.</string>
     <string name="chat_not_charged">청구되지 않음</string>
-    <string name="chat_retry">다시 시도</string>
+    <string name="chat_retry">재시도</string>
     <string name="chat_see_plans">요금제 보기</string>
     <string name="chat_ask_title">파일 확인</string>
     <string name="chat_ask_reason">%1$s처럼 보여요.</string>
@@ -101,7 +101,7 @@
     <string name="chat_ask_dismiss">나중에</string>
     <string name="chat_ask_answered_continue">그래도 계속하기로 선택했어요.</string>
     <string name="chat_ask_answered_dismiss">계속하지 않기로 선택했어요.</string>
-    <string name="chat_fields_title">먼저 몇 가지 정보를 입력하세요</string>
+    <string name="chat_fields_title">먼저 정보 입력</string>
     <string name="chat_fields_body">문서에 지어낸 내용이 들어가지 않도록 이 정보를 추가해 주세요.</string>
     <string name="chat_fields_submit">문서 만들기</string>
     <string name="chat_fields_open">정보 입력하기</string>
@@ -137,16 +137,16 @@
     <string name="chat_step_coding">코드 작성 중</string>
     <string name="chat_step_previewing">페이지 확인 중</string>
     <string name="chat_step_delivering">파일 전달 중</string>
-    <string name="chat_agent_done">완료했어요. 파일은 아래에 있어요.</string>
-    <string name="chat_agent_failed">어시스턴트가 완료하지 못했어요. 메시지는 남아 있으니 다시 시도해 주세요.</string>
-    <string name="chat_agent_about_file">(파일 %1$s에 관한 내용이에요.)</string>
+    <string name="chat_agent_done">완료. 파일은 아래에 있어요.</string>
+    <string name="chat_agent_failed">어시스턴트가 완료하지 못했어요. 메시지는 남았어요. 다시 시도하세요.</string>
+    <string name="chat_agent_about_file">(파일 %1$s 관련)</string>
     <string name="chat_agent_delivered">%1$s 전달됨</string>
     <string name="chat_approval_title">이 웹사이트를 열까요?</string>
     <string name="chat_approval_new_url">이 링크는 메시지나 검색 결과에 없어서, 열려면 어시스턴트가 허락을 받아야 해요.</string>
     <string name="chat_approval_page_link">어시스턴트가 연 페이지에서 이 링크를 찾았고, 열려면 허락이 필요해요.</string>
     <string name="chat_approval_warn_query">이 링크에는 \"?\" 뒤에 추가 데이터가 있어요. 이 사이트를 믿을 수 없다면 거부를 누르세요. 채팅 내용 일부를 받을 수 있어요.</string>
     <string name="chat_approval_warn_long">이 링크는 유난히 길어요. 이 사이트를 믿을 수 없다면 거부를 누르세요. 채팅 내용 일부를 받을 수 있어요.</string>
-    <string name="chat_approval_countdown">%1$s 안에 응답이 없으면 거부로 처리돼요.</string>
+    <string name="chat_approval_countdown">%1$s 안에 응답 없으면 거부.</string>
     <string name="chat_approval_allow_once">한 번만 허용</string>
     <string name="chat_approval_deny">거부</string>
     <string name="chat_show_thinking">생각 보기</string>
@@ -178,7 +178,7 @@
     </plurals>
     <string name="chat_log_read_image">이미지 읽음 (%1$s)</string>
     <string name="chat_log_no_output">(출력 없음)</string>
-    <string name="chat_log_denied">거부됨: 이 작업에서는 허용되지 않아요</string>
+    <string name="chat_log_denied">거부됨: 이 작업에서 불가</string>
     <string name="chat_log_running">실행 중…</string>
     <plurals name="chat_log_more_lines">
         <item quantity="one">+%d줄</item>

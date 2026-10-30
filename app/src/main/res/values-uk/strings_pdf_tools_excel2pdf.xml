@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
 <resources>
-    <string name="excel2pdf_options_body">Кожен видимий аркуш стає сторінками PDF у порядку книги. Широкі аркуші продовжуються на наступних сторінках.</string>
+    <string name="excel2pdf_options_body">Кожен видимий аркуш стає сторінками PDF за порядком книги. Широкі продовжуються далі.</string>
     <string name="excel2pdf_convert">Перетворити на PDF</string>
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
-        <item quantity="one">Пропущено %d прихований аркуш.</item>
-        <item quantity="few">Пропущено %d приховані аркуші.</item>
-        <item quantity="many">Пропущено %d прихованих аркушів.</item>
-        <item quantity="other">Пропущено %d прихованих аркушів.</item>
+        <item quantity="one">Пропущено %d схований аркуш.</item>
+        <item quantity="few">Пропущено %d сховані аркуші.</item>
+        <item quantity="many">Пропущено %d схованих аркушів.</item>
+        <item quantity="other">Пропущено %d схованих аркушів.</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">Пропущено %d діаграму.</item>
+        <item quantity="one">%d діаграму пропущено.</item>
         <item quantity="few">Пропущено %d діаграми.</item>
         <item quantity="many">Пропущено %d діаграм.</item>
         <item quantity="other">Пропущено %d діаграми.</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
-        <item quantity="one">Пропущено %d зображення.</item>
-        <item quantity="few">Пропущено %d зображення.</item>
+        <item quantity="one">Пропущено %d фото.</item>
+        <item quantity="few">Пропущено %d фото.</item>
         <item quantity="many">Пропущено %d зображень.</item>
-        <item quantity="other">Пропущено %d зображення.</item>
+        <item quantity="other">Пропущено %d фото.</item>
     </plurals>
-    <string name="excel2pdf_note_formulas_cached">Формули показують останній збережений результат.</string>
+    <string name="excel2pdf_note_formulas_cached">Формули — збережені результати.</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d формула не мала збереженого результату, тому лишилася порожньою.</item>
-        <item quantity="few">%d формули не мали збереженого результату, тому лишилися порожніми.</item>
-        <item quantity="many">%d формул не мали збереженого результату, тому лишилися порожніми.</item>
-        <item quantity="other">%d формули не мали збереженого результату, тому лишилися порожніми.</item>
+        <item quantity="one">%d формула без результату, порожня.</item>
+        <item quantity="few">%d формули без результату, порожні.</item>
+        <item quantity="many">%d формул без результату, порожні.</item>
+        <item quantity="other">%d формул без результату, порожні.</item>
     </plurals>
     <string name="excel2pdf_note_conditional">Умовне форматування не застосовано.</string>
-    <string name="excel2pdf_note_pivots">Зведені таблиці показують останні збережені значення.</string>
+    <string name="excel2pdf_note_pivots">Зведені таблиці — збережені значення.</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">Дуже великі аркуші обрізано на %d рядку.</item>
-        <item quantity="few">Дуже великі аркуші обрізано на %d рядках.</item>
-        <item quantity="many">Дуже великі аркуші обрізано на %d рядках.</item>
-        <item quantity="other">Дуже великі аркуші обрізано на %d рядках.</item>
+        <item quantity="one">Великі аркуші обрізано на %d рядку.</item>
+        <item quantity="few">Великі аркуші обрізано на %d рядках.</item>
+        <item quantity="many">Великі аркуші обрізано на %d рядках.</item>
+        <item quantity="other">Великі аркуші обрізано на %d рядках.</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
-        <item quantity="one">PDF зупиняється на %d сторінці; решту пропущено.</item>
-        <item quantity="few">PDF зупиняється на %d сторінках; решту пропущено.</item>
-        <item quantity="many">PDF зупиняється на %d сторінках; решту пропущено.</item>
-        <item quantity="other">PDF зупиняється на %d сторінках; решту пропущено.</item>
+        <item quantity="one">Ліміт PDF: %d сторінка; решту пропущено.</item>
+        <item quantity="few">Ліміт PDF: %d сторінки; решту пропущено.</item>
+        <item quantity="many">Ліміт PDF: %d сторінок; решту пропущено.</item>
+        <item quantity="other">Ліміт PDF: %d сторінок; решту пропущено.</item>
     </plurals>
 </resources>

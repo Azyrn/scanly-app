@@ -3,27 +3,27 @@
     <!-- PDF to JPG -->
     <string name="pdf_tool_jpg_mode_pages">Seiten in JPG</string>
     <string name="pdf_tool_jpg_mode_pages_body">Jede Seite wird zu einem Bild.</string>
-    <string name="pdf_tool_jpg_mode_extract">Bilder extrahieren</string>
-    <string name="pdf_tool_jpg_mode_extract_body">Speichert die Fotos und Bilder aus dem PDF in ihrer ursprünglichen Qualität.</string>
+    <string name="pdf_tool_jpg_mode_extract">Bilder holen</string>
+    <string name="pdf_tool_jpg_mode_extract_body">Fotos und Bilder aus dem PDF in Originalqualität speichern.</string>
     <string name="pdf_tool_jpg_quality">Qualität</string>
     <string name="pdf_tool_jpg_quality_normal">Normal · 150 dpi</string>
     <string name="pdf_tool_jpg_quality_high">Hoch · 300 dpi</string>
-    <string name="pdf_tool_jpg_action_pages">In JPG umwandeln</string>
-    <string name="pdf_tool_jpg_action_extract">Bilder extrahieren</string>
+    <string name="pdf_tool_jpg_action_pages">In JPG wandeln</string>
+    <string name="pdf_tool_jpg_action_extract">Bilder holen</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">%d Bild in einem Format, das Scanly nicht exportieren kann, wurde übersprungen</item>
-        <item quantity="other">%d Bilder in Formaten, die Scanly nicht exportieren kann, wurden übersprungen</item>
+        <item quantity="one">%d Bild in nicht exportierbarem Format übersprungen</item>
+        <item quantity="other">%d Bilder in nicht exportierbaren Formaten übersprungen</item>
     </plurals>
 
     <!-- Image to PDF -->
-    <string name="pdf_tool_img2pdf_body">Ein Bild pro Seite, in der angezeigten Reihenfolge.</string>
-    <string name="pdf_tool_img2pdf_page_size">Seitengröße</string>
-    <string name="pdf_tool_img2pdf_size_fit">An Bild anpassen</string>
+    <string name="pdf_tool_img2pdf_body">Ein Bild pro Seite, wie angezeigt.</string>
+    <string name="pdf_tool_img2pdf_page_size">Format</string>
+    <string name="pdf_tool_img2pdf_size_fit">Bildgröße</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">Letter</string>
     <string name="pdf_tool_img2pdf_orientation">Ausrichtung</string>
-    <string name="pdf_tool_img2pdf_orientation_auto">Automatisch</string>
-    <string name="pdf_tool_img2pdf_orientation_portrait">Hochformat</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Auto</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Hochkant</string>
     <string name="pdf_tool_img2pdf_orientation_landscape">Querformat</string>
     <string name="pdf_tool_img2pdf_margin">Rand</string>
     <string name="pdf_tool_img2pdf_margin_none">Ohne</string>
@@ -31,7 +31,7 @@
     <string name="pdf_tool_img2pdf_margin_big">Groß</string>
     <string name="pdf_tool_img2pdf_action">PDF erstellen</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">%d Datei konnte nicht als Bild gelesen werden und wurde weggelassen</item>
-        <item quantity="other">%d Dateien konnten nicht als Bilder gelesen werden und wurden weggelassen</item>
+        <item quantity="one">%d Datei ist kein lesbares Bild und fehlt.</item>
+        <item quantity="other">%d Dateien sind keine lesbaren Bilder und fehlen.</item>
     </plurals>
 </resources>

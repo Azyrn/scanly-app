@@ -2,51 +2,51 @@
 <resources>
     <!-- Notes under image tool results -->
     <plurals name="pdf_tool_img_skipped">
-        <item quantity="one">%d файл не вдалося прочитати, тому його пропущено</item>
-        <item quantity="few">%d файли не вдалося прочитати, тому їх пропущено</item>
-        <item quantity="many">%d файлів не вдалося прочитати, тому їх пропущено</item>
-        <item quantity="other">%d файлів не вдалося прочитати, тому їх пропущено</item>
+        <item quantity="one">Пропущено %d файл: не прочитано.</item>
+        <item quantity="few">Пропущено %d файли: не прочитано.</item>
+        <item quantity="many">Пропущено %d файлів: не прочитано.</item>
+        <item quantity="other">Пропущено %d файлів: не прочитано.</item>
     </plurals>
     <plurals name="pdf_tool_img_already_small">
-        <item quantity="one">%d зображення вже було найменшим можливим, тому його не змінено</item>
-        <item quantity="few">%d зображення вже були найменшими можливими, тому їх не змінено</item>
-        <item quantity="many">%d зображень вже були найменшими можливими, тому їх не змінено</item>
-        <item quantity="other">%d зображення вже були найменшими можливими, тому їх не змінено</item>
+        <item quantity="one">%d зображення вже найменше, без змін.</item>
+        <item quantity="few">%d зображення вже найменші, без змін.</item>
+        <item quantity="many">%d зображень вже найменші, без змін.</item>
+        <item quantity="other">%d зображень вже найменші, без змін.</item>
     </plurals>
 
     <!-- Compress image -->
     <string name="pdf_tool_img_compress_recommended">Рекомендовано</string>
-    <string name="pdf_tool_img_compress_recommended_body">Значно менший розмір, вигляд той самий.</string>
+    <string name="pdf_tool_img_compress_recommended_body">Менший розмір, вигляд без змін.</string>
     <string name="pdf_tool_img_compress_strong">Сильне</string>
-    <string name="pdf_tool_img_compress_strong_body">Найменші файли. Дрібні деталі можуть трохи згладитися.</string>
+    <string name="pdf_tool_img_compress_strong_body">Найменші файли, дрібне розмиється.</string>
     <string name="pdf_tool_img_compress_light">Легке</string>
-    <string name="pdf_tool_img_compress_light_body">Найкраща якість, менша економія.</string>
-    <string name="pdf_tool_img_png_to_jpg">Перетворити PNG на JPG для меншого файлу</string>
-    <string name="pdf_tool_img_png_to_jpg_body">PNG може втратити лише приховані деталі. Прозорі ділянки стануть білими.</string>
-    <string name="pdf_tool_img_compress_action">Стиснути зображення</string>
+    <string name="pdf_tool_img_compress_light_body">Краща якість, менша економія.</string>
+    <string name="pdf_tool_img_png_to_jpg">PNG у JPG для меншого файлу</string>
+    <string name="pdf_tool_img_png_to_jpg_body">Втрачаються лише приховані деталі. Прозорі місця — білі.</string>
+    <string name="pdf_tool_img_compress_action">Стиснути фото</string>
 
     <!-- Convert to JPG -->
-    <string name="pdf_tool_img_to_jpg_body">Кожне зображення стане JPG. Прозорі ділянки стануть білими; GIF зберігає перший кадр.</string>
+    <string name="pdf_tool_img_to_jpg_body">Кожне зображення стане JPG. Прозорі місця — білі; GIF — перший кадр.</string>
     <string name="pdf_tool_img_to_jpg_action">Перетворити на JPG</string>
 
     <!-- Convert from JPG -->
     <string name="pdf_tool_img_from_jpg_png">PNG</string>
-    <string name="pdf_tool_img_from_jpg_png_body">Точні пікселі, більші файли.</string>
+    <string name="pdf_tool_img_from_jpg_png_body">Без втрат, більший файл.</string>
     <string name="pdf_tool_img_from_jpg_webp">WebP</string>
     <string name="pdf_tool_img_from_jpg_webp_body">Вигляд той самий, зазвичай менший за JPG.</string>
     <string name="pdf_tool_img_from_jpg_gif">GIF</string>
-    <string name="pdf_tool_img_from_jpg_gif_body">256 кольорів. Добре для графіки; на фотографіях можуть бути смуги.</string>
-    <string name="pdf_tool_img_from_jpg_action">Перетворити зображення</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 кольорів. Добре для графіки, на фото — смуги.</string>
+    <string name="pdf_tool_img_from_jpg_action">Перетворити</string>
 
     <!-- Resize image -->
     <string name="pdf_tool_img_resize_by_percent">За відсотком</string>
-    <string name="pdf_tool_img_resize_by_size">За розміром</string>
+    <string name="pdf_tool_img_resize_by_size">Пікселі</string>
     <string name="pdf_tool_img_resize_percent">%d%%</string>
-    <string name="pdf_tool_img_resize_width">Макс. ширина (px)</string>
+    <string name="pdf_tool_img_resize_width">Ширина до (px)</string>
     <string name="pdf_tool_img_resize_height">Макс. висота (px)</string>
-    <string name="pdf_tool_img_resize_size_hint">Введіть ширину, висоту або обидва значення.</string>
+    <string name="pdf_tool_img_resize_size_hint">Введіть ширину чи висоту.</string>
     <string name="pdf_tool_img_resize_size_invalid">Введіть число від 1 до %d.</string>
     <string name="pdf_tool_img_resize_keep_aspect">Зберегти пропорції</string>
     <string name="pdf_tool_img_resize_no_enlarge">Не збільшувати зображення</string>
-    <string name="pdf_tool_img_resize_action">Змінити розмір зображень</string>
+    <string name="pdf_tool_img_resize_action">Змінити розмір</string>
 </resources>

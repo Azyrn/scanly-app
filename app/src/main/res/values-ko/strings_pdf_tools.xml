@@ -8,7 +8,7 @@
     <string name="pdf_tools_section_edit">편집 및 보안</string>
     <string name="pdf_tools_section_image">이미지</string>
     <string name="pdf_tools_pro_badge">Pro</string>
-    <string name="pdf_tools_paywall_reason">이 도구는 Scanly Pro에 포함돼 있어요.</string>
+    <string name="pdf_tools_paywall_reason">Scanly Pro 전용 도구예요.</string>
     <string name="pdf_tool_compress">PDF 압축</string>
     <string name="pdf_tool_edit">PDF 편집</string>
     <string name="pdf_tool_rotate">PDF 회전</string>
@@ -45,19 +45,19 @@
     </plurals>
     <string name="pdf_tool_password_title">비밀번호 필요</string>
     <string name="pdf_tool_password_body">%1$s은(는) 비밀번호로 보호되어 있어요.</string>
-    <string name="pdf_tool_password_retry">이 비밀번호로는 %1$s을(를) 열 수 없어요.</string>
+    <string name="pdf_tool_password_retry">이 비밀번호로 %1$s을(를) 열 수 없어요.</string>
     <string name="pdf_tool_password_label">비밀번호</string>
     <string name="pdf_tool_password_open">열기</string>
     <string name="pdf_tool_show_password">비밀번호 표시</string>
     <string name="pdf_tool_hide_password">비밀번호 숨기기</string>
     <string name="pdf_tool_done">완료</string>
     <string name="pdf_tool_save">저장</string>
-    <string name="pdf_tool_saved">Downloads/Scanly에 저장했어요</string>
+    <string name="pdf_tool_saved">Downloads/Scanly에 저장됨</string>
     <string name="pdf_tool_share">공유</string>
     <string name="pdf_tool_open">열기</string>
-    <string name="pdf_tool_open_with">다른 앱으로 열기…</string>
-    <string name="pdf_tool_no_viewer">이 휴대폰의 어떤 앱으로도 이 파일을 열 수 없어요.</string>
-    <string name="pdf_tool_save_failed">Downloads에 저장할 수 없어요. 저장 공간이 가득 찼을 수 있어요.</string>
+    <string name="pdf_tool_open_with">앱으로 열기…</string>
+    <string name="pdf_tool_no_viewer">이 파일을 열 수 있는 앱이 없어요.</string>
+    <string name="pdf_tool_save_failed">Downloads 저장 실패. 저장 공간이 부족할 수 있어요.</string>
     <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
     <string name="pdf_tool_another_file">다른 파일 선택</string>
     <string name="pdf_tool_try_again">다시 시도</string>
@@ -75,16 +75,16 @@
     <string name="pdf_tool_compress_balanced">권장</string>
     <string name="pdf_tool_compress_balanced_body">좋은 화질, 훨씬 작은 이미지</string>
     <string name="pdf_tool_compress_smallest">가장 작게</string>
-    <string name="pdf_tool_compress_smallest_body">이미지 화질은 낮아지고 파일은 가장 작아요</string>
+    <string name="pdf_tool_compress_smallest_body">화질 낮음, 파일 가장 작음</string>
     <string name="pdf_tool_compress_action">압축</string>
     <string name="pdf_tool_protect_body">보호된 사본을 여는 사람은 이 비밀번호가 필요해요. AES-256으로 암호화돼요.</string>
     <string name="pdf_tool_protect_confirm">비밀번호 확인</string>
     <string name="pdf_tool_protect_mismatch">비밀번호가 일치하지 않아요.</string>
     <string name="pdf_tool_protect_action">보호</string>
     <string name="pdf_tool_protect_already">이 PDF에는 이미 비밀번호가 있어요. 새 비밀번호로 바뀌어요.</string>
-    <string name="pdf_tool_rotate_right">오른쪽으로 90°</string>
+    <string name="pdf_tool_rotate_right">90° 오른쪽</string>
     <string name="pdf_tool_rotate_half">180°</string>
-    <string name="pdf_tool_rotate_left">왼쪽으로 90°</string>
+    <string name="pdf_tool_rotate_left">90° 왼쪽</string>
     <string name="pdf_tool_rotate_body">모든 페이지를 회전해요. 페이지별로 돌리려면 PDF 정리를 사용하세요.</string>
     <string name="pdf_tool_rotate_action">회전</string>
 </resources>

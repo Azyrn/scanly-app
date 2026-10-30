@@ -5,12 +5,12 @@
     <string name="pdf_tool_flow_move_up">%1$s ऊपर ले जाएं</string>
     <string name="pdf_tool_flow_move_down">%1$s नीचे ले जाएं</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">आगे बढ़ने के लिए कम से कम %d फ़ाइल जोड़ें।</item>
+        <item quantity="one">आगे बढ़ने को कम से कम %d फ़ाइल जोड़ें।</item>
         <item quantity="other">आगे बढ़ने के लिए कम से कम %d फ़ाइलें जोड़ें।</item>
     </plurals>
     <string name="pdf_tool_flow_skipped">जो फ़ाइल खोली नहीं जा सकी, उसे छोड़ दिया गया।</string>
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">%d फ़ाइल पर काम हो रहा है…</item>
+        <item quantity="one">%d फ़ाइल पर काम जारी…</item>
         <item quantity="other">%d फ़ाइलों पर काम हो रहा है…</item>
     </plurals>
     <string name="pdf_tool_flow_open_output">%1$s खोलें</string>

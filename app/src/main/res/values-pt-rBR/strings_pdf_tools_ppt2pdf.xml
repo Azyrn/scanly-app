@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
 <resources>
-    <string name="pdf_tool_ppt2pdf_action">Converter para PDF</string>
-    <string name="pdf_tool_ppt2pdf_shapes">Algumas formas foram simplificadas.</string>
-    <string name="pdf_tool_ppt2pdf_fonts">Algumas fontes foram substituídas por outras semelhantes.</string>
+    <string name="pdf_tool_ppt2pdf_action">Criar PDF</string>
+    <string name="pdf_tool_ppt2pdf_shapes">Algumas formas simplificadas.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">Algumas fontes foram trocadas por similares.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">%d gráfico foi deixado de fora.</item>
-        <item quantity="many">%d gráficos foram deixados de fora.</item>
-        <item quantity="other">%d gráficos foram deixados de fora.</item>
+        <item quantity="one">%d gráfico omitido.</item>
+        <item quantity="many">%d gráficos omitidos.</item>
+        <item quantity="other">%d gráficos omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">%d gráfico SmartArt foi deixado de fora.</item>
-        <item quantity="many">%d gráficos SmartArt foram deixados de fora.</item>
-        <item quantity="other">%d gráficos SmartArt foram deixados de fora.</item>
+        <item quantity="one">%d gráfico SmartArt omitido.</item>
+        <item quantity="many">%d gráficos SmartArt omitidos.</item>
+        <item quantity="other">%d gráficos SmartArt omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
-        <item quantity="one">%d objeto incorporado foi deixado de fora.</item>
-        <item quantity="many">%d objetos incorporados foram deixados de fora.</item>
-        <item quantity="other">%d objetos incorporados foram deixados de fora.</item>
+        <item quantity="one">%d objeto incorporado omitido.</item>
+        <item quantity="many">%d objetos incorporados omitidos.</item>
+        <item quantity="other">%d objetos incorporados omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d vídeo ou som não pode ser reproduzido em um PDF; só a imagem de visualização é mostrada.</item>
-        <item quantity="many">%d vídeos ou sons não podem ser reproduzidos em um PDF; só as imagens de visualização são mostradas.</item>
-        <item quantity="other">%d vídeos ou sons não podem ser reproduzidos em um PDF; só as imagens de visualização são mostradas.</item>
+        <item quantity="one">%d vídeo ou som não toca em PDF; só a imagem de prévia é mostrada.</item>
+        <item quantity="many">%d vídeos ou sons não tocam em PDF; só as imagens de prévia são mostradas.</item>
+        <item quantity="other">%d vídeos ou sons não tocam em PDF; só as imagens de prévia são mostradas.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">%d imagem não pôde ser mostrada.</item>
-        <item quantity="many">%d imagens não puderam ser mostradas.</item>
-        <item quantity="other">%d imagens não puderam ser mostradas.</item>
+        <item quantity="one">%d imagem não foi mostrada.</item>
+        <item quantity="many">%d imagens não mostradas.</item>
+        <item quantity="other">%d imagens não mostradas.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
         <item quantity="one">%d slide oculto foi ignorado.</item>
-        <item quantity="many">%d slides ocultos foram ignorados.</item>
-        <item quantity="other">%d slides ocultos foram ignorados.</item>
+        <item quantity="many">%d slides ocultos ignorados.</item>
+        <item quantity="other">%d slides ocultos ignorados.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d slide não pôde ser lido e foi deixado de fora.</item>
-        <item quantity="many">%d slides não puderam ser lidos e foram deixados de fora.</item>
-        <item quantity="other">%d slides não puderam ser lidos e foram deixados de fora.</item>
+        <item quantity="one">%d slide não foi lido e ficou de fora.</item>
+        <item quantity="many">%d slides não foram lidos e ficaram de fora.</item>
+        <item quantity="other">%d slides não foram lidos e ficaram de fora.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Somente %d slide foi convertido.</item>
-        <item quantity="many">Somente os primeiros %d slides foram convertidos.</item>
-        <item quantity="other">Somente os primeiros %d slides foram convertidos.</item>
+        <item quantity="many">Só os primeiros %d slides convertidos.</item>
+        <item quantity="other">Só os primeiros %d slides convertidos.</item>
     </plurals>
 </resources>

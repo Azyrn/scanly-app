@@ -2,5 +2,5 @@
 <resources>
     <string name="settings_language_title">Sprache</string>
     <string name="settings_language_system">Systemstandard</string>
-    <string name="settings_language_cancel">Abbrechen</string>
+    <string name="settings_language_cancel">Abbruch</string>
 </resources>

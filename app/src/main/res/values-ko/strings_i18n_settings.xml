@@ -16,14 +16,14 @@
     <string name="set_text_recognition_title">텍스트 인식</string>
     <string name="set_text_recognition_subtitle">%1$s · 스크립트 및 전처리</string>
     <string name="set_barcode_engine_title">바코드 스캐너 엔진</string>
-    <string name="set_custom_endpoint_title">사용자 지정 엔드포인트</string>
+    <string name="set_custom_endpoint_title">커스텀 엔드포인트</string>
     <string name="set_custom_endpoint_subtitle">직접 AI 제공자 연결 · Pro</string>
     <string name="set_section_about">정보</string>
     <string name="set_privacy_options_title">개인정보 옵션</string>
     <string name="set_privacy_options_subtitle">광고 동의 설정 관리</string>
-    <string name="set_rate_title">Scanly 평가하기</string>
+    <string name="set_rate_title">Scanly 평가</string>
     <string name="set_rate_subtitle">Google Play에서 의견을 남겨 주세요</string>
-    <string name="set_privacy_policy_title">개인정보 처리방침</string>
+    <string name="set_privacy_policy_title">개인정보처리방침</string>
     <string name="set_privacy_policy_subtitle">Scanly가 보관하는 정보와 처리하는 주체</string>
     <string name="set_terms_title">서비스 이용약관</string>
     <string name="set_developer_subtitle">\@Azyrn · 개발자</string>
@@ -34,7 +34,7 @@
     <string name="set_remove_key_confirm">제거</string>
     <string name="set_delete_account_dialog_title">계정을 삭제할까요?</string>
     <string name="set_delete_account_dialog_message">서버에 있는 Scanly 계정, 로그인 정보, 사용 기록이 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요.\n\n이 기기에 저장된 스캔은 영향을 받지 않아요. 활성 Pro 구독은 Paddle에서 따로 취소해야 해요.</string>
-    <string name="set_sign_out_dialog_title">로그아웃할까요?</string>
+    <string name="set_sign_out_dialog_title">로그아웃?</string>
     <string name="set_sign_out_dialog_message">다시 로그인하기 전까지 AI 스캔을 사용할 수 없어요. 스캔 기록과 오프라인 텍스트 인식은 이 기기에 그대로 남아요.</string>
     <string name="set_sign_out">로그아웃</string>
     <string name="set_account_options">계정 옵션</string>
@@ -60,7 +60,7 @@
     <string name="set_palette_rose_blush">로즈 블러시</string>
     <string name="set_palette_monochrome">모노크롬</string>
     <string name="set_section_engine">엔진</string>
-    <string name="set_section_script">스크립트</string>
+    <string name="set_section_script">문자</string>
     <string name="set_section_preprocessing">전처리</string>
     <string name="set_auto_rotate_title">페이지 자동 회전</string>
     <string name="set_auto_rotate_subtitle">옆으로 누운 페이지와 거꾸로 된 페이지를 감지해요</string>
@@ -69,7 +69,7 @@
     <string name="set_flatten_curved_title">휘어진 페이지 펴기</string>
     <string name="set_downloading_percent">다운로드 중 %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc 왜곡 보정 · 30MB 다운로드</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc 왜곡 보정 — 느리지만 책이나 접힌 페이지에 적합해요</string>
+    <string name="set_uvdoc_ready_subtitle">UVDoc 왜곡 보정 — 느리지만 책·접힌 페이지용</string>
     <string name="set_section_document_structure">문서 구조</string>
     <string name="set_detect_layout_title">레이아웃 감지</string>
     <string name="set_detect_layout_subtitle">Markdown 보기에서 제목, 단락, 읽기 순서를 표시해요</string>
@@ -111,7 +111,7 @@
     <string name="set_auth_intro">AI 스캔을 사용하려면 로그인하세요. 텍스트 인식과 바코드 스캔은 계정 없이도 오프라인에서 계속 작동해요.</string>
     <string name="set_auth_email_label">이메일</string>
     <string name="set_auth_password_hint">6자 이상</string>
-    <string name="set_auth_forgot_password">비밀번호를 잊으셨나요?</string>
+    <string name="set_auth_forgot_password">비밀번호 찾기</string>
     <string name="set_auth_create_account">계정 만들기</string>
     <string name="set_auth_or">또는</string>
     <string name="set_auth_continue_google">Google로 계속하기</string>
@@ -124,5 +124,5 @@
     <string name="set_history_clear_all">모두 지우기</string>
     <string name="set_history_clear_message">모든 기록을 삭제할까요? 이 작업은 되돌릴 수 없어요.</string>
     <string name="set_history_delete_all">모두 삭제</string>
-    <string name="set_history_empty">아직 기록이 없어요</string>
+    <string name="set_history_empty">기록 없음</string>
 </resources>

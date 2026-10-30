@@ -8,7 +8,7 @@
     <string name="pdf_stamp_numbers_format_page_of">Seite %1$d von %2$d</string>
 
     <!-- Page numbers: options -->
-    <string name="pdf_stamp_numbers_body">Die Nummern werden oben auf jede Seite gesetzt. Der ursprüngliche Inhalt bleibt unverändert.</string>
+    <string name="pdf_stamp_numbers_body">Nummern kommen oben auf jede Seite. Der Originalinhalt bleibt unverändert.</string>
     <string name="pdf_stamp_numbers_position">Position</string>
     <string name="pdf_stamp_numbers_top_left">Oben links</string>
     <string name="pdf_stamp_numbers_top_center">Oben Mitte</string>
@@ -17,17 +17,17 @@
     <string name="pdf_stamp_numbers_bottom_center">Unten Mitte</string>
     <string name="pdf_stamp_numbers_bottom_right">Unten rechts</string>
     <string name="pdf_stamp_numbers_format">Format</string>
-    <string name="pdf_stamp_numbers_start">Beginnen bei Nummer</string>
-    <string name="pdf_stamp_numbers_first_page">Nummerieren ab Seite</string>
-    <string name="pdf_stamp_numbers_first_page_hint">Davor liegende Seiten, etwa ein Deckblatt, bleiben ohne Nummer.</string>
+    <string name="pdf_stamp_numbers_start">Ab Nummer</string>
+    <string name="pdf_stamp_numbers_first_page">Nummern ab Seite</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Seiten davor, z. B. Deckblatt, ohne Nummer.</string>
     <string name="pdf_stamp_numbers_start_invalid">Gib eine Zahl von 0 bis 99999 ein.</string>
-    <string name="pdf_stamp_numbers_first_page_invalid">Gib eine Seite von 1 bis %1$d ein.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">Seite 1 bis %1$d eingeben.</string>
     <string name="pdf_stamp_numbers_text_size">Textgröße</string>
     <string name="pdf_stamp_numbers_margin">Abstand zum Rand</string>
     <string name="pdf_stamp_numbers_margin_narrow">Nah</string>
     <string name="pdf_stamp_numbers_margin_normal">Normal</string>
     <string name="pdf_stamp_numbers_margin_wide">Weit</string>
-    <string name="pdf_stamp_numbers_action">Seitenzahlen hinzufügen</string>
+    <string name="pdf_stamp_numbers_action">Nummerieren</string>
 
     <!-- Shared size choices -->
     <string name="pdf_stamp_size_small">Klein</string>
@@ -35,13 +35,13 @@
     <string name="pdf_stamp_size_large">Groß</string>
 
     <!-- Watermark: options -->
-    <string name="pdf_stamp_watermark_body">Das Wasserzeichen wird auf jede Seite gesetzt.</string>
+    <string name="pdf_stamp_watermark_body">Wasserzeichen kommt auf jede Seite.</string>
     <string name="pdf_stamp_watermark_kind">Wasserzeichen</string>
     <string name="pdf_stamp_watermark_kind_text">Text</string>
     <string name="pdf_stamp_watermark_kind_image">Bild</string>
-    <string name="pdf_stamp_watermark_text_label">Text des Wasserzeichens</string>
+    <string name="pdf_stamp_watermark_text_label">Text</string>
     <string name="pdf_stamp_watermark_text_default">VERTRAULICH</string>
-    <string name="pdf_stamp_watermark_text_empty">Gib den Text ein, der gesetzt werden soll.</string>
+    <string name="pdf_stamp_watermark_text_empty">Text eingeben.</string>
     <string name="pdf_stamp_watermark_pick_image">Bild wählen</string>
     <string name="pdf_stamp_watermark_change_image">Bild ändern</string>
     <string name="pdf_stamp_watermark_image_chosen">Gewähltes Bild: %1$s</string>
@@ -50,20 +50,20 @@
     <string name="pdf_stamp_watermark_center">Mitte</string>
     <string name="pdf_stamp_watermark_top">Oben</string>
     <string name="pdf_stamp_watermark_bottom">Unten</string>
-    <string name="pdf_stamp_watermark_tiled">Gekachelt</string>
+    <string name="pdf_stamp_watermark_tiled">Gefüllt</string>
     <string name="pdf_stamp_watermark_rotation">Winkel</string>
-    <string name="pdf_stamp_watermark_rotation_none">Waagerecht</string>
-    <string name="pdf_stamp_watermark_rotation_rising">Steigend 45°</string>
+    <string name="pdf_stamp_watermark_rotation_none">Flach</string>
+    <string name="pdf_stamp_watermark_rotation_rising">Hoch 45°</string>
     <string name="pdf_stamp_watermark_rotation_falling">Fallend 45°</string>
     <string name="pdf_stamp_watermark_opacity">Deckkraft</string>
     <string name="pdf_stamp_watermark_opacity_light">25 %</string>
     <string name="pdf_stamp_watermark_opacity_medium">50 %</string>
     <string name="pdf_stamp_watermark_opacity_strong">75 %</string>
-    <string name="pdf_stamp_watermark_size">Größe</string>
+    <string name="pdf_stamp_watermark_size">Maß</string>
     <string name="pdf_stamp_watermark_layer">Ebene</string>
     <string name="pdf_stamp_watermark_layer_over">Über dem Inhalt</string>
     <string name="pdf_stamp_watermark_layer_over_body">Immer sichtbar. Kann Text verdecken.</string>
     <string name="pdf_stamp_watermark_layer_under">Unter dem Inhalt</string>
-    <string name="pdf_stamp_watermark_layer_under_body">Text bleibt oben. Auf gescannten Seiten verdeckt das Bild ihn vollständig.</string>
-    <string name="pdf_stamp_watermark_action">Wasserzeichen hinzufügen</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Text bleibt oben. Auf Scans verdeckt das Bild ihn ganz.</string>
+    <string name="pdf_stamp_watermark_action">Stempeln</string>
 </resources>

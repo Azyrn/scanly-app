@@ -28,7 +28,7 @@
         <item>बजट स्प्रेडशीट बनाएं</item>
         <item>Word में औपचारिक पत्र लिखें</item>
     </string-array>
-    <string name="chat_ask_answered">आपने जवाब दे दिया है।</string>
+    <string name="chat_ask_answered">जवाब दिया गया।</string>
     <string name="chat_greeting_body">बताएं, या दोबारा बनाने के लिए फ़ाइल जोड़ें।</string>
     <string name="chat_composer_hint">कोई दस्तावेज़ बताएं…</string>
     <string name="chat_composer_hint_revise">बदलाव के लिए पूछें…</string>
@@ -36,7 +36,7 @@
     <string name="chat_send">भेजें</string>
     <string name="chat_stop">इंतज़ार बंद करें</string>
     <plurals name="chat_cost_hint">
-        <item quantity="one">लगभग %d क्रेडिट</item>
+        <item quantity="one">~%d क्रेडिट</item>
         <item quantity="other">लगभग %d क्रेडिट</item>
     </plurals>
     <string name="chat_cost_agent">चैट मुफ़्त है · फ़ाइलों में क्रेडिट लगते हैं</string>
@@ -80,7 +80,7 @@
     <string name="chat_file_too_large">वह फ़ाइल दोबारा बनाने के लिए बहुत बड़ी है।</string>
     <string name="chat_file_unreadable">वह फ़ाइल पढ़ी नहीं जा सकी। कोई और आज़माएं।</string>
     <string name="chat_open_with">इससे खोलें…</string>
-    <string name="chat_no_viewer">इस फ़ोन पर ऐसा कोई ऐप नहीं है जो यह फ़ाइल खोल सके।</string>
+    <string name="chat_no_viewer">इस फ़ोन पर यह फ़ाइल खोलने वाला ऐप नहीं है।</string>
     <string name="chat_save_failed">फ़ाइल सेव नहीं हो सकी।</string>
     <string name="chat_share_failed">फ़ाइल शेयर नहीं हो सकी।</string>
     <string name="chat_saved_to_downloads">Downloads में सेव हो गई।</string>
@@ -92,7 +92,7 @@
     <string name="chat_file_missing">यह फ़ाइल नहीं मिल सकी। कनेक्शन जांचें और फिर से कोशिश करें।</string>
     <string name="chat_file_expired">यह डिज़ाइन अब सहेजा नहीं जाता। फ़ाइल दोबारा पाने के लिए इसे फिर से बनाएं।</string>
     <string name="chat_not_charged">शुल्क नहीं लगा</string>
-    <string name="chat_retry">फिर से कोशिश करें</string>
+    <string name="chat_retry">दोबारा</string>
     <string name="chat_see_plans">प्लान देखें</string>
     <string name="chat_ask_title">अपनी फ़ाइल जांचें</string>
     <string name="chat_ask_reason">यह %1$s जैसी लगती है।</string>
@@ -111,30 +111,30 @@
     <string name="chat_file_more">और विकल्प</string>
     <string name="chat_file_save_images">पेज तस्वीरों के रूप में सेव करें</string>
     <string name="chat_file_revise">यह वर्शन बदलें</string>
-    <string name="chat_file_editing">एडिट हो रहा है</string>
+    <string name="chat_file_editing">एडिट जारी</string>
     <plurals name="chat_credits_used">
         <item quantity="one">%d क्रेडिट</item>
         <item quantity="other">%d क्रेडिट</item>
     </plurals>
     <string name="chat_expired">समाप्त: दोबारा बनाएं</string>
-    <string name="chat_expired_hint">सर्वर अब इस डिज़ाइन को सहेजकर नहीं रखता, इसलिए इसे बदला नहीं जा सकता। एडिट जारी रखने के लिए इसे दोबारा बनाएं।</string>
+    <string name="chat_expired_hint">अब सर्वर पर यह डिज़ाइन नहीं है, इसे बदला नहीं जा सकता। एडिट के लिए दोबारा बनाएं।</string>
     <string name="chat_thumbnail_description">%1$s का पहला पेज</string>
     <string name="chat_notification_channel">दस्तावेज़</string>
     <string name="chat_notification_channel_description">जब बैकग्राउंड में बना दस्तावेज़ तैयार हो</string>
     <string name="chat_notification_ready">आपकी PDF तैयार है। चैट खोलने के लिए टैप करें।</string>
     <string name="chat_notification_not_charged">आपसे शुल्क नहीं लिया गया।</string>
-    <string name="chat_status_elapsed">%1$s · %2$d सेकंड</string>
-    <string name="chat_step_reading">आपकी फ़ाइल पढ़ी जा रही है</string>
-    <string name="chat_step_extracting">टेक्स्ट निकाला जा रहा है</string>
-    <string name="chat_step_planning">लेआउट की योजना बनाई जा रही है</string>
+    <string name="chat_status_elapsed">%1$s · %2$d सेक</string>
+    <string name="chat_step_reading">फ़ाइल पढ़ी जा रही है</string>
+    <string name="chat_step_extracting">टेक्स्ट निकालना</string>
+    <string name="chat_step_planning">लेआउट की योजना</string>
     <string name="chat_step_writing">सामग्री लिखी जा रही है</string>
     <string name="chat_step_building">PDF बनाई जा रही है</string>
     <string name="chat_step_checking">क्वालिटी जांची जा रही है</string>
-    <string name="chat_step_fixing">लेआउट ठीक किया जा रहा है</string>
+    <string name="chat_step_fixing">लेआउट सुधारना</string>
     <string name="chat_step_done">हो गया</string>
-    <string name="chat_step_thinking">सोचा जा रहा है</string>
+    <string name="chat_step_thinking">सोच रहा है</string>
     <string name="chat_step_reading_guide">गाइड पढ़ी जा रही है</string>
-    <string name="chat_step_coding">कोड लिखा जा रहा है</string>
+    <string name="chat_step_coding">कोड लिखना</string>
     <string name="chat_step_previewing">पेज देखे जा रहे हैं</string>
     <string name="chat_step_delivering">फ़ाइल भेजी जा रही है</string>
     <string name="chat_agent_done">हो गया। आपकी फ़ाइलें नीचे हैं।</string>
@@ -145,15 +145,15 @@
     <string name="chat_approval_new_url">यह लिंक आपके मैसेज या सर्च नतीजों में नहीं है, इसलिए इसे खोलने के लिए असिस्टेंट को आपकी मंज़ूरी चाहिए।</string>
     <string name="chat_approval_page_link">असिस्टेंट ने जो पेज खोला, उसमें यह लिंक मिला है और इसे खोलने के लिए आपकी मंज़ूरी चाहिए।</string>
     <string name="chat_approval_warn_query">इस लिंक में \"?\" के बाद अतिरिक्त डेटा है। अगर आप इस साइट पर भरोसा नहीं करते, तो अस्वीकार करें दबाएं: यह इस चैट का कुछ हिस्सा पा सकती है।</string>
-    <string name="chat_approval_warn_long">यह लिंक असामान्य रूप से लंबा है। अगर आप इस साइट पर भरोसा नहीं करते, तो अस्वीकार करें दबाएं: यह इस चैट का कुछ हिस्सा पा सकती है।</string>
-    <string name="chat_approval_countdown">%1$s में जवाब न मिलने पर मना माना जाएगा।</string>
-    <string name="chat_approval_allow_once">एक बार अनुमति दें</string>
-    <string name="chat_approval_deny">अस्वीकार करें</string>
+    <string name="chat_approval_warn_long">असामान्य रूप से लंबा लिंक। भरोसा नहीं तो मना करें: चैट का कुछ हिस्सा मिल सकता है।</string>
+    <string name="chat_approval_countdown">%1$s में जवाब न मिलने पर मना।</string>
+    <string name="chat_approval_allow_once">एक बार अनुमति</string>
+    <string name="chat_approval_deny">मना करें</string>
     <string name="chat_show_thinking">सोच दिखाएं</string>
     <string name="chat_hide_thinking">सोच छिपाएं</string>
     <string name="chat_took">%1$d सेकंड लगे</string>
-    <string name="chat_seconds">%1$d सेकंड</string>
-    <string name="chat_under_a_second">1 सेकंड से कम</string>
+    <string name="chat_seconds">%1$d सेक</string>
+    <string name="chat_under_a_second">1 सेक. से कम</string>
     <string name="chat_background_note">बैकग्राउंड में चल रहा है। आपको सूचना मिलेगी, और फ़ाइल यहाँ दिखेगी।</string>
     <string name="chat_stopped_note">इंतज़ार बंद किया गया। तैयार होने पर फ़ाइल यहाँ दिखेगी।</string>
     <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
@@ -161,13 +161,13 @@
         <item quantity="one">%d चरण</item>
         <item quantity="other">%d चरण</item>
     </plurals>
-    <string name="chat_log_minutes">%1$d मिनट %2$d सेकंड</string>
-    <string name="chat_log_seconds">%1$d सेकंड</string>
+    <string name="chat_log_minutes">%1$d मि %2$d सेक</string>
+    <string name="chat_log_seconds">%1$d सेक</string>
     <string name="chat_log_worked">%1$s तक काम किया · %2$s</string>
     <string name="chat_log_show_steps">चरण दिखाएं</string>
     <string name="chat_log_hide_steps">चरण छिपाएं</string>
     <string name="chat_log_thought">%1$s तक सोचा</string>
-    <string name="chat_log_thinking">सोचा जा रहा है</string>
+    <string name="chat_log_thinking">सोच रहा है</string>
     <plurals name="chat_log_read">
         <item quantity="one">%d लाइन पढ़ी</item>
         <item quantity="other">%d लाइनें पढ़ीं</item>
@@ -177,7 +177,7 @@
         <item quantity="other">%d लाइनें लिखीं</item>
     </plurals>
     <string name="chat_log_read_image">तस्वीर पढ़ी (%1$s)</string>
-    <string name="chat_log_no_output">(कोई आउटपुट नहीं)</string>
+    <string name="chat_log_no_output">(आउटपुट नहीं)</string>
     <string name="chat_log_denied">अस्वीकृत: इस काम में इसकी अनुमति नहीं है</string>
     <string name="chat_log_running">चल रहा है…</string>
     <plurals name="chat_log_more_lines">
@@ -197,7 +197,7 @@
     <string name="chat_log_show_all">सब दिखाएं</string>
     <string name="chat_log_loading">पूरा आउटपुट लोड हो रहा है…</string>
     <string name="chat_log_expired">पूरा आउटपुट समाप्त हो गया</string>
-    <string name="chat_log_unavailable">पूरा आउटपुट लोड नहीं हो सका। फिर से कोशिश करने के लिए टैप करें।</string>
+    <string name="chat_log_unavailable">पूरा आउटपुट लोड नहीं हुआ। टैप करके दोबारा देखें।</string>
     <string name="chat_log_past_limit">%1$d और अक्षर सीमा से बाहर थे और सेव नहीं किए गए</string>
     <plurals name="chat_log_dropped">
         <item quantity="one">इस फ़ोन पर सेव न हुई %d पिछली पंक्ति</item>

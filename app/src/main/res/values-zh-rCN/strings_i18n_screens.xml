@@ -65,7 +65,7 @@
     <string name="scr_export_word_title">Word 文档</string>
     <string name="scr_export_word_subtitle">%1$s，保存为 .docx，每页一次扫描</string>
     <string name="scr_export_images_title">图片保存到相册</string>
-    <string name="scr_export_images_subtitle">%1$s，以 JPEG 格式保存到你的 Scanly 相册</string>
+    <string name="scr_export_images_subtitle">%1$s，以 JPEG 存入 Scanly 相册</string>
     <!-- Text to PDF -->
     <string name="scr_text_compose_placeholder">开始输入…</string>
     <!-- Audio to Text -->

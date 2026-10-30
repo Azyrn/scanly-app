@@ -39,7 +39,7 @@
     <plurals name="pdf2office_excel_scanned_skipped">
         <item quantity="zero">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
         <item quantity="one">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
-        <item quantity="two">%d صفحتان ممسوحتان ضوئيًا لا تحتويان على نص، وتم تخطيهما.</item>
+        <item quantity="two">%d صفحتان ممسوحتان ضوئيًا بلا نص، وتم تخطيهما.</item>
         <item quantity="few">%d صفحات ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
         <item quantity="many">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>
         <item quantity="other">%d صفحة ممسوحة ضوئيًا لا تحتوي على نص، وتم تخطيها.</item>

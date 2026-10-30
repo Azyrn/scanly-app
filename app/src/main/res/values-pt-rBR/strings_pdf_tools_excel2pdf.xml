@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
 <resources>
-    <string name="excel2pdf_options_body">Cada planilha visível se torna páginas do PDF, na ordem da pasta de trabalho. Planilhas largas continuam nas páginas seguintes.</string>
-    <string name="excel2pdf_convert">Converter para PDF</string>
+    <string name="excel2pdf_options_body">Cada planilha visível vira páginas do PDF, na ordem da pasta. Planilhas largas continuam nas seguintes.</string>
+    <string name="excel2pdf_convert">Gerar PDF</string>
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
-        <item quantity="one">%d planilha oculta foi deixada de fora.</item>
-        <item quantity="many">%d planilhas ocultas foram deixadas de fora.</item>
-        <item quantity="other">%d planilhas ocultas foram deixadas de fora.</item>
+        <item quantity="one">%d planilha oculta omitida.</item>
+        <item quantity="many">%d planilhas ocultas omitidas.</item>
+        <item quantity="other">%d planilhas ocultas omitidas.</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">%d gráfico foi deixado de fora.</item>
-        <item quantity="many">%d gráficos foram deixados de fora.</item>
-        <item quantity="other">%d gráficos foram deixados de fora.</item>
+        <item quantity="one">%d gráfico omitido.</item>
+        <item quantity="many">%d gráficos omitidos.</item>
+        <item quantity="other">%d gráficos omitidos.</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
-        <item quantity="one">%d imagem foi deixada de fora.</item>
-        <item quantity="many">%d imagens foram deixadas de fora.</item>
-        <item quantity="other">%d imagens foram deixadas de fora.</item>
+        <item quantity="one">%d imagem omitida.</item>
+        <item quantity="many">%d imagens omitidas.</item>
+        <item quantity="other">%d imagens omitidas.</item>
     </plurals>
-    <string name="excel2pdf_note_formulas_cached">As fórmulas mostram o último resultado salvo.</string>
+    <string name="excel2pdf_note_formulas_cached">Fórmulas: último resultado salvo.</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d fórmula não tinha resultado salvo e está em branco.</item>
-        <item quantity="many">%d fórmulas não tinham resultado salvo e estão em branco.</item>
-        <item quantity="other">%d fórmulas não tinham resultado salvo e estão em branco.</item>
+        <item quantity="one">%d fórmula sem resultado salvo: em branco.</item>
+        <item quantity="many">%d fórmulas sem resultado salvo: em branco.</item>
+        <item quantity="other">%d fórmulas sem resultado salvo: em branco.</item>
     </plurals>
-    <string name="excel2pdf_note_conditional">A formatação condicional não foi aplicada.</string>
-    <string name="excel2pdf_note_pivots">As tabelas dinâmicas mostram os últimos valores salvos.</string>
+    <string name="excel2pdf_note_conditional">Formatação condicional não aplicada.</string>
+    <string name="excel2pdf_note_pivots">Tabelas dinâmicas: últimos valores salvos.</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">Planilhas muito grandes foram cortadas em %d linha.</item>
-        <item quantity="many">Planilhas muito grandes foram cortadas em %d linhas.</item>
-        <item quantity="other">Planilhas muito grandes foram cortadas em %d linhas.</item>
+        <item quantity="one">Planilha grande cortada em %d linha.</item>
+        <item quantity="many">Planilha grande cortada em %d linhas.</item>
+        <item quantity="other">Planilha grande cortada em %d linhas.</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
-        <item quantity="one">O PDF para em %d página; o restante foi deixado de fora.</item>
-        <item quantity="many">O PDF para em %d páginas; o restante foi deixado de fora.</item>
-        <item quantity="other">O PDF para em %d páginas; o restante foi deixado de fora.</item>
+        <item quantity="one">PDF para em %d página; o resto foi omitido.</item>
+        <item quantity="many">PDF para em %d páginas; o resto foi omitido.</item>
+        <item quantity="other">PDF para em %d páginas; o resto foi omitido.</item>
     </plurals>
 </resources>

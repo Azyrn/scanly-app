@@ -17,12 +17,12 @@
     <string name="pdf_stamp_numbers_bottom_center">Alt orta</string>
     <string name="pdf_stamp_numbers_bottom_right">Sağ alt</string>
     <string name="pdf_stamp_numbers_format">Biçim</string>
-    <string name="pdf_stamp_numbers_start">Şu numaradan başla</string>
-    <string name="pdf_stamp_numbers_first_page">Şu sayfadan numaralandır</string>
+    <string name="pdf_stamp_numbers_start">Numaradan başla</string>
+    <string name="pdf_stamp_numbers_first_page">Sayfadan numarala</string>
     <string name="pdf_stamp_numbers_first_page_hint">Kapak gibi önündeki sayfalar numaralandırılmaz.</string>
     <string name="pdf_stamp_numbers_start_invalid">0 ile 99999 arasında bir sayı girin.</string>
-    <string name="pdf_stamp_numbers_first_page_invalid">1 ile %1$d arasında bir sayfa girin.</string>
-    <string name="pdf_stamp_numbers_text_size">Yazı boyutu</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">1–%1$d arası sayfa girin.</string>
+    <string name="pdf_stamp_numbers_text_size">Punto</string>
     <string name="pdf_stamp_numbers_margin">Kenardan uzaklık</string>
     <string name="pdf_stamp_numbers_margin_narrow">Yakın</string>
     <string name="pdf_stamp_numbers_margin_normal">Normal</string>
@@ -45,7 +45,7 @@
     <string name="pdf_stamp_watermark_pick_image">Resim seç</string>
     <string name="pdf_stamp_watermark_change_image">Resmi değiştir</string>
     <string name="pdf_stamp_watermark_image_chosen">Seçilen resim: %1$s</string>
-    <string name="pdf_stamp_watermark_image_none">Henüz bir resim seçilmedi.</string>
+    <string name="pdf_stamp_watermark_image_none">Resim seçilmedi.</string>
     <string name="pdf_stamp_watermark_placement">Konum</string>
     <string name="pdf_stamp_watermark_center">Ortada</string>
     <string name="pdf_stamp_watermark_top">Üstte</string>
@@ -62,7 +62,7 @@
     <string name="pdf_stamp_watermark_size">Boyut</string>
     <string name="pdf_stamp_watermark_layer">Katman</string>
     <string name="pdf_stamp_watermark_layer_over">İçeriğin üstünde</string>
-    <string name="pdf_stamp_watermark_layer_over_body">Her zaman görünür. Bazı metinlerin üstünü kapatabilir.</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Her zaman görünür. Metni örtebilir.</string>
     <string name="pdf_stamp_watermark_layer_under">İçeriğin altında</string>
     <string name="pdf_stamp_watermark_layer_under_body">Metin en üstte kalır. Taranmış sayfalarda resim onu tamamen gizler.</string>
     <string name="pdf_stamp_watermark_action">Filigran ekle</string>

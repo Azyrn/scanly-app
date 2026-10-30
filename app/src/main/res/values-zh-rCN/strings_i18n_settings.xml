@@ -23,7 +23,7 @@
     <string name="set_section_about">关于</string>
     <string name="set_privacy_options_title">隐私选项</string>
     <string name="set_privacy_options_subtitle">管理广告同意设置</string>
-    <string name="set_rate_title">为 Scanly 评分</string>
+    <string name="set_rate_title">评价 Scanly</string>
     <string name="set_rate_subtitle">在 Google Play 上告诉其他人你的看法</string>
     <string name="set_privacy_policy_title">隐私政策</string>
     <string name="set_privacy_policy_subtitle">Scanly 保存哪些信息，以及由谁处理</string>
@@ -66,7 +66,7 @@
 
     <!-- TextRecognitionScreen.kt -->
     <string name="set_section_engine">引擎</string>
-    <string name="set_section_script">文字系统</string>
+    <string name="set_section_script">文字</string>
     <string name="set_section_preprocessing">预处理</string>
     <string name="set_auto_rotate_title">自动旋转页面</string>
     <string name="set_auto_rotate_subtitle">检测横向和颠倒的页面</string>

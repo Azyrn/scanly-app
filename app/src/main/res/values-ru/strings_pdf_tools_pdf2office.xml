@@ -3,15 +3,15 @@
 <resources>
     <!-- Options -->
     <string name="pdf2office_word_body">Текст, заголовки, списки и таблицы станут редактируемыми в Word. Отсканированные страницы добавляются как изображения.</string>
-    <string name="pdf2office_word_action">Преобразовать в Word</string>
+    <string name="pdf2office_word_action">В Word</string>
     <string name="pdf2office_powerpoint_body">Каждая страница станет слайдом; текст будет в редактируемых блоках на тех же местах, что и на странице. Отсканированные страницы добавляются как изображения.</string>
-    <string name="pdf2office_powerpoint_action">Преобразовать в PowerPoint</string>
-    <string name="pdf2office_excel_body">Таблицы превращаются в строки и ячейки, по одному листу на каждую страницу с таблицами. Числа остаются числами, их можно суммировать.</string>
-    <string name="pdf2office_excel_action">Преобразовать в Excel</string>
+    <string name="pdf2office_powerpoint_action">В PowerPoint</string>
+    <string name="pdf2office_excel_body">Таблицы станут строками и ячейками, лист на таблицу. Числа остаются числами.</string>
+    <string name="pdf2office_excel_action">В Excel</string>
 
     <!-- Result notes -->
     <string name="pdf2office_simplified_word">Макет упрощён: текст, заголовки, списки и таблицы редактируемы, но шрифты, колонки, рисунки и изображения не перенесены.</string>
-    <string name="pdf2office_simplified_powerpoint">Макет упрощён: текст редактируем на тех же местах, что и на странице, но шрифты, рисунки и изображения не перенесены.</string>
+    <string name="pdf2office_simplified_powerpoint">Макет упрощён: текст редактируется на месте, шрифты и рисунки не перенесены.</string>
     <plurals name="pdf2office_scanned_as_images">
         <item quantity="one">%d отсканированная страница добавлена как изображение.</item>
         <item quantity="few">%d отсканированные страницы добавлены как изображения.</item>
@@ -19,26 +19,26 @@
         <item quantity="other">%d отсканированных страниц добавлены как изображения.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">%d очень плотная страница преобразована как простые строки.</item>
-        <item quantity="few">%d очень плотные страницы преобразованы как простые строки.</item>
-        <item quantity="many">%d очень плотных страниц преобразованы как простые строки.</item>
-        <item quantity="other">%d очень плотных страниц преобразованы как простые строки.</item>
+        <item quantity="one">%d плотная страница: простые строки.</item>
+        <item quantity="few">%d плотные страницы: простые строки.</item>
+        <item quantity="many">%d плотных страниц: простые строки.</item>
+        <item quantity="other">%d плотных страниц: простые строки.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">%d страница не удалось прочитать, и она не включена.</item>
-        <item quantity="few">%d страницы не удалось прочитать, и они не включены.</item>
-        <item quantity="many">%d страниц не удалось прочитать, и они не включены.</item>
-        <item quantity="other">%d страниц не удалось прочитать, и они не включены.</item>
+        <item quantity="one">%d страница не прочитана, пропущена.</item>
+        <item quantity="few">%d страницы не прочитаны, пропущены.</item>
+        <item quantity="many">%d страниц не прочитаны, пропущены.</item>
+        <item quantity="other">%d страниц не прочитаны, пропущены.</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">%d отсканированная страница без текста пропущена.</item>
-        <item quantity="few">%d отсканированные страницы без текста пропущены.</item>
-        <item quantity="many">%d отсканированных страниц без текста пропущены.</item>
-        <item quantity="other">%d отсканированных страниц без текста пропущены.</item>
+        <item quantity="one">%d скан без текста пропущен.</item>
+        <item quantity="few">%d скана без текста пропущены.</item>
+        <item quantity="many">%d сканов без текста пропущено.</item>
+        <item quantity="other">%d сканов без текста пропущено.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Таблицы не найдены: текст размещён по одной строке в каждой строке листа.</string>
+    <string name="pdf2office_excel_no_tables">Таблиц нет: текст — построчно.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
-    <string name="pdf2office_excel_sheet_page">Страница %1$d</string>
+    <string name="pdf2office_excel_sheet_page">Стр. %1$d</string>
     <string name="pdf2office_excel_sheet_text">Текст</string>
 </resources>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
 <resources>
-    <string name="pdf_tool_word_to_pdf_body">Convertit le document sur votre téléphone. Les graphiques, zones de texte et équations ne peuvent pas encore être affichés et sont retirés.</string>
+    <string name="pdf_tool_word_to_pdf_body">Conversion sur le téléphone. Graphiques, zones de texte et équations retirés pour l\'instant.</string>
     <string name="pdf_tool_word_to_pdf_action">Convertir en PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">%d graphique a été retiré.</item>
-        <item quantity="many">%d graphiques ont été retirés.</item>
-        <item quantity="other">%d graphiques ont été retirés.</item>
+        <item quantity="one">%d graphique retiré.</item>
+        <item quantity="many">%d graphiques retirés.</item>
+        <item quantity="other">%d graphiques retirés.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
         <item quantity="one">%d diagramme SmartArt a été retiré.</item>
-        <item quantity="many">%d diagrammes SmartArt ont été retirés.</item>
-        <item quantity="other">%d diagrammes SmartArt ont été retirés.</item>
+        <item quantity="many">%d diagrammes SmartArt retirés.</item>
+        <item quantity="other">%d diagrammes SmartArt retirés.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">%d zone de texte ou forme a été retirée.</item>
-        <item quantity="many">%d zones de texte ou formes ont été retirées.</item>
-        <item quantity="other">%d zones de texte ou formes ont été retirées.</item>
+        <item quantity="one">%d zone de texte ou forme retirée.</item>
+        <item quantity="many">%d zones de texte ou formes retirées.</item>
+        <item quantity="other">%d zones de texte ou formes retirées.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
         <item quantity="one">%d équation a été retirée.</item>
@@ -30,22 +30,22 @@
         <item quantity="other">%d objets intégrés ont été retirés.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
-        <item quantity="one">%d image est dans un format qui ne peut pas être affiché et a été retirée.</item>
-        <item quantity="many">%d images sont dans un format qui ne peut pas être affiché et ont été retirées.</item>
-        <item quantity="other">%d images sont dans un format qui ne peut pas être affiché et ont été retirées.</item>
+        <item quantity="one">%d image dans un format non affichable, retirée.</item>
+        <item quantity="many">%d images dans un format non affichable, retirées.</item>
+        <item quantity="other">%d images dans un format non affichable, retirées.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
-        <item quantity="one">%d ligne de tableau était plus haute qu\'une page et a été coupée.</item>
-        <item quantity="many">%d lignes de tableau étaient plus hautes qu\'une page et ont été coupées.</item>
-        <item quantity="other">%d lignes de tableau étaient plus hautes qu\'une page et ont été coupées.</item>
+        <item quantity="one">%d ligne de tableau plus haute qu\'une page, coupée.</item>
+        <item quantity="many">%d lignes de tableau plus hautes qu\'une page, coupées.</item>
+        <item quantity="other">%d lignes de tableau plus hautes qu\'une page, coupées.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
         <item quantity="one">Seule %d page a été convertie.</item>
-        <item quantity="many">Seules les %d premières pages ont été converties.</item>
-        <item quantity="other">Seules les %d premières pages ont été converties.</item>
+        <item quantity="many">Les %d premières pages seulement.</item>
+        <item quantity="other">Les %d premières pages seulement.</item>
     </plurals>
-    <string name="pdf_tool_word_to_pdf_note_fonts">Certaines polices ont été remplacées par des polices similaires.</string>
-    <string name="pdf_tool_word_to_pdf_note_headers">Les en-têtes et pieds de page ont été retirés.</string>
-    <string name="pdf_tool_word_to_pdf_note_footnotes">Les notes de bas de page ont été retirées.</string>
-    <string name="pdf_tool_word_to_pdf_note_columns">Le texte en colonnes a été mis en page sur une seule colonne.</string>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Polices remplacées par des similaires.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">En-têtes et pieds de page retirés.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Notes de bas de page retirées.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Texte en colonnes mis sur une seule colonne.</string>
 </resources>

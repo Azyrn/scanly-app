@@ -14,10 +14,10 @@
     <string name="pdf_stamp_numbers_bottom_right">오른쪽 아래</string>
     <string name="pdf_stamp_numbers_format">형식</string>
     <string name="pdf_stamp_numbers_start">시작 번호</string>
-    <string name="pdf_stamp_numbers_first_page">이 페이지부터 번호 매기기</string>
+    <string name="pdf_stamp_numbers_first_page">이 페이지부터 번호</string>
     <string name="pdf_stamp_numbers_first_page_hint">표지처럼 그 앞의 페이지는 번호 없이 남아요.</string>
     <string name="pdf_stamp_numbers_start_invalid">0에서 99999 사이의 숫자를 입력하세요.</string>
-    <string name="pdf_stamp_numbers_first_page_invalid">1에서 %1$d 사이의 페이지를 입력하세요.</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">1~%1$d 페이지 입력.</string>
     <string name="pdf_stamp_numbers_text_size">글자 크기</string>
     <string name="pdf_stamp_numbers_margin">가장자리와의 거리</string>
     <string name="pdf_stamp_numbers_margin_narrow">가깝게</string>
@@ -37,12 +37,12 @@
     <string name="pdf_stamp_watermark_pick_image">이미지 선택</string>
     <string name="pdf_stamp_watermark_change_image">이미지 변경</string>
     <string name="pdf_stamp_watermark_image_chosen">선택한 이미지: %1$s</string>
-    <string name="pdf_stamp_watermark_image_none">아직 선택한 이미지가 없어요.</string>
+    <string name="pdf_stamp_watermark_image_none">선택한 이미지 없음.</string>
     <string name="pdf_stamp_watermark_placement">위치</string>
     <string name="pdf_stamp_watermark_center">가운데</string>
     <string name="pdf_stamp_watermark_top">위</string>
     <string name="pdf_stamp_watermark_bottom">아래</string>
-    <string name="pdf_stamp_watermark_tiled">반복 배치</string>
+    <string name="pdf_stamp_watermark_tiled">반복</string>
     <string name="pdf_stamp_watermark_rotation">각도</string>
     <string name="pdf_stamp_watermark_rotation_none">수평</string>
     <string name="pdf_stamp_watermark_rotation_rising">45° 위로</string>

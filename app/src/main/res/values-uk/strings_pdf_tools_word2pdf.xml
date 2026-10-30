@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
 <resources>
-    <string name="pdf_tool_word_to_pdf_body">Перетворює документ на вашому телефоні. Діаграми, текстові поля та рівняння поки що не відображаються, тому їх пропускаємо.</string>
+    <string name="pdf_tool_word_to_pdf_body">Перетворює документ на телефоні. Діаграми, текстові поля й рівняння пропускаються.</string>
     <string name="pdf_tool_word_to_pdf_action">Перетворити на PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">Пропущено %d діаграму.</item>
+        <item quantity="one">%d діаграму пропущено.</item>
         <item quantity="few">Пропущено %d діаграми.</item>
         <item quantity="many">Пропущено %d діаграм.</item>
         <item quantity="other">Пропущено %d діаграми.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
-        <item quantity="one">Пропущено %d графічний елемент SmartArt.</item>
-        <item quantity="few">Пропущено %d графічні елементи SmartArt.</item>
-        <item quantity="many">Пропущено %d графічних елементів SmartArt.</item>
-        <item quantity="other">Пропущено %d графічних елементів SmartArt.</item>
+        <item quantity="one">Пропущено %d елемент SmartArt.</item>
+        <item quantity="few">Пропущено %d елементи SmartArt.</item>
+        <item quantity="many">Пропущено %d елементів SmartArt.</item>
+        <item quantity="other">Пропущено %d елементів SmartArt.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">Пропущено %d текстове поле або фігуру.</item>
-        <item quantity="few">Пропущено %d текстові поля або фігури.</item>
-        <item quantity="many">Пропущено %d текстових полів або фігур.</item>
-        <item quantity="other">Пропущено %d текстових полів або фігур.</item>
+        <item quantity="one">Пропущено %d текстове поле/фігуру.</item>
+        <item quantity="few">Пропущено %d текстові поля/фігури.</item>
+        <item quantity="many">Пропущено %d текстових полів/фігур.</item>
+        <item quantity="other">Пропущено %d текстових полів/фігур.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
         <item quantity="one">Пропущено %d рівняння.</item>
@@ -35,16 +35,16 @@
         <item quantity="other">Пропущено %d вбудованих об\'єктів.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
-        <item quantity="one">%d зображення має формат, який неможливо показати, тому його пропущено.</item>
-        <item quantity="few">%d зображення мають формат, який неможливо показати, тому їх пропущено.</item>
-        <item quantity="many">%d зображень мають формат, який неможливо показати, тому їх пропущено.</item>
-        <item quantity="other">%d зображення мають формат, який неможливо показати, тому їх пропущено.</item>
+        <item quantity="one">Пропущено %d зображення: формат не підтримується.</item>
+        <item quantity="few">Пропущено %d зображення: формати не підтримуються.</item>
+        <item quantity="many">Пропущено %d зображень: формати не підтримуються.</item>
+        <item quantity="other">Пропущено %d зображень: формати не підтримуються.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
-        <item quantity="one">%d рядок таблиці був вищим за сторінку, тому його обрізано.</item>
-        <item quantity="few">%d рядки таблиці були вищими за сторінку, тому їх обрізано.</item>
-        <item quantity="many">%d рядків таблиці були вищими за сторінку, тому їх обрізано.</item>
-        <item quantity="other">%d рядка таблиці були вищими за сторінку, тому їх обрізано.</item>
+        <item quantity="one">Обрізано %d рядок таблиці: вищий за сторінку.</item>
+        <item quantity="few">Обрізано %d рядки таблиці: вищі за сторінку.</item>
+        <item quantity="many">Обрізано %d рядків таблиці: вищі за сторінку.</item>
+        <item quantity="other">Обрізано %d рядків таблиці: вищі за сторінку.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
         <item quantity="one">Перетворено лише %d сторінку.</item>
@@ -53,7 +53,7 @@
         <item quantity="other">Перетворено лише перші %d сторінки.</item>
     </plurals>
     <string name="pdf_tool_word_to_pdf_note_fonts">Деякі шрифти замінено схожими.</string>
-    <string name="pdf_tool_word_to_pdf_note_headers">Верхні й нижні колонтитули пропущено.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Колонтитули пропущено.</string>
     <string name="pdf_tool_word_to_pdf_note_footnotes">Виноски пропущено.</string>
     <string name="pdf_tool_word_to_pdf_note_columns">Текст у колонках розміщено в одну колонку.</string>
 </resources>

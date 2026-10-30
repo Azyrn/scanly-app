@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
 <resources>
-    <string name="excel2pdf_options_body">Каждый видимый лист становится страницами PDF в порядке книги. Широкие листы продолжаются на следующих страницах.</string>
-    <string name="excel2pdf_convert">Преобразовать в PDF</string>
+    <string name="excel2pdf_options_body">Каждый видимый лист — страницы PDF по порядку книги. Широкие листы продолжаются дальше.</string>
+    <string name="excel2pdf_convert">В PDF</string>
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
@@ -12,36 +12,36 @@
         <item quantity="other">%d скрытых листов не включены.</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">%d диаграмма не включена.</item>
-        <item quantity="few">%d диаграммы не включены.</item>
-        <item quantity="many">%d диаграмм не включены.</item>
-        <item quantity="other">%d диаграмм не включены.</item>
+        <item quantity="one">%d диаграмма скрыта.</item>
+        <item quantity="few">%d диаграммы скрыты.</item>
+        <item quantity="many">%d диаграмм скрыто.</item>
+        <item quantity="other">%d диаграмм скрыто.</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
-        <item quantity="one">%d изображение не включено.</item>
-        <item quantity="few">%d изображения не включены.</item>
-        <item quantity="many">%d изображений не включены.</item>
-        <item quantity="other">%d изображений не включены.</item>
+        <item quantity="one">%d картинка скрыта.</item>
+        <item quantity="few">%d картинки скрыты.</item>
+        <item quantity="many">%d картинок скрыто.</item>
+        <item quantity="other">%d картинок скрыто.</item>
     </plurals>
-    <string name="excel2pdf_note_formulas_cached">Формулы показывают последний сохранённый результат.</string>
+    <string name="excel2pdf_note_formulas_cached">Формулы: сохранённое значение.</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d формула не имела сохранённого результата и пуста.</item>
-        <item quantity="few">%d формулы не имели сохранённого результата и пусты.</item>
-        <item quantity="many">%d формул не имели сохранённого результата и пусты.</item>
-        <item quantity="other">%d формул не имели сохранённого результата и пусты.</item>
+        <item quantity="one">%d формула пуста (нет значения).</item>
+        <item quantity="few">%d формулы пусты (нет значения).</item>
+        <item quantity="many">%d формул пусты (нет значения).</item>
+        <item quantity="other">%d формул пусты (нет значения).</item>
     </plurals>
-    <string name="excel2pdf_note_conditional">Условное форматирование не применено.</string>
-    <string name="excel2pdf_note_pivots">Сводные таблицы показывают последние сохранённые значения.</string>
+    <string name="excel2pdf_note_conditional">Условное оформление не применено.</string>
+    <string name="excel2pdf_note_pivots">Сводные — по сохранённым значениям.</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">Очень большие листы обрезаны: сохранена только %d строка.</item>
-        <item quantity="few">Очень большие листы обрезаны: сохранено только %d строки.</item>
-        <item quantity="many">Очень большие листы обрезаны: сохранено только %d строк.</item>
-        <item quantity="other">Очень большие листы обрезаны: сохранено только %d строк.</item>
+        <item quantity="one">Листы обрезаны: %d строка.</item>
+        <item quantity="few">Листы обрезаны: %d строки.</item>
+        <item quantity="many">Листы обрезаны: %d строк.</item>
+        <item quantity="other">Листы обрезаны: %d строк.</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
-        <item quantity="one">PDF ограничен %d страницей; остальные страницы не включены.</item>
-        <item quantity="few">PDF ограничен %d страницами; остальные не включены.</item>
-        <item quantity="many">PDF ограничен %d страницами; остальные не включены.</item>
-        <item quantity="other">PDF ограничен %d страницами; остальные не включены.</item>
+        <item quantity="one">PDF ограничен %d страницей.</item>
+        <item quantity="few">PDF ограничен %d страницами.</item>
+        <item quantity="many">PDF ограничен %d страницами.</item>
+        <item quantity="other">PDF ограничен %d страницами.</item>
     </plurals>
 </resources>

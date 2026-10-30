@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Scanly</string>
-    <string name="ai_build_documents_title">إنشاء مستندات بالذكاء الاصطناعي</string>
-    <string name="ai_build_documents_subtitle">صِف ما تريده أو أرفِق ملفًا: فواتير، وسير ذاتية، وتقارير، وعروض تقديمية</string>
-    <string name="design_paywall_fallback">إنشاء المستندات بالذكاء الاصطناعي جزء من اشتراك Pro.</string>
+    <string name="ai_build_documents_title">إنشاء مستندات بذكاء اصطناعي</string>
+    <string name="ai_build_documents_subtitle">صِف ما تريده أو أرفِق ملفًا: فواتير، وسير ذاتية، وتقارير، وشرائح</string>
+    <string name="design_paywall_fallback">إنشاء المستندات بالذكاء الاصطناعي ضمن Pro.</string>
     <string name="custom_provider_build_documents_note">يتم إنشاء المستندات بالذكاء الاصطناعي على مرحلتين: يكتب نموذجك المستند، وتتولى Scanly تنسيقه. يمنحك نموذج أقوى تصميمًا أفضل، وتحتسب Scanly رصيدًا واحدًا مقابل التنسيق بدلًا من التكلفة المعتادة.</string>
     <string name="plan_feature_build_documents">إنشاء مستندات بالذكاء الاصطناعي: تخطيطات وجداول وتنسيقات</string>
     <string name="custom_provider_on_your_endpoint_note">تُرسل عمليات المسح واستخراج البيانات والترجمة مباشرةً من هذا الجهاز إلى مزوّدك. لا تستهلك أرصدة Scanly، ويفوترها مزوّدك.</string>

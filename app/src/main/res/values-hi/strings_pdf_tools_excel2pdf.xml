@@ -16,7 +16,7 @@
     </plurals>
     <string name="excel2pdf_note_formulas_cached">फ़ॉर्मूले आखिरी बार सेव किया गया नतीजा दिखाते हैं।</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d फ़ॉर्मूले में सेव किया गया नतीजा नहीं था, इसलिए वह खाली है।</item>
+        <item quantity="one">%d फ़ॉर्मूले का सेव नतीजा नहीं था, इसलिए खाली है।</item>
         <item quantity="other">%d फ़ॉर्मूलों में सेव किया गया नतीजा नहीं था, इसलिए वे खाली हैं।</item>
     </plurals>
     <string name="excel2pdf_note_conditional">कंडीशनल फ़ॉर्मैटिंग लागू नहीं की गई।</string>

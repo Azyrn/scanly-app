@@ -17,20 +17,20 @@
         <item quantity="other">スキャンされたページ %d 枚は画像として追加されました。</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">非常に情報量の多いページ %d 枚は、プレーンな行として変換されました。</item>
-        <item quantity="other">非常に情報量の多いページ %d 枚は、プレーンな行として変換されました。</item>
+        <item quantity="one">情報量の多いページ %d 枚は行単位で変換</item>
+        <item quantity="other">情報量の多いページ %d 枚は行単位で変換</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">読み取れなかったページ %d 枚は除外されました。</item>
-        <item quantity="other">読み取れなかったページ %d 枚は除外されました。</item>
+        <item quantity="one">読み取れなかったページ %d 枚は除外</item>
+        <item quantity="other">読み取れなかったページ %d 枚は除外</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">テキストのないスキャンページ %d 枚はスキップされました。</item>
-        <item quantity="other">テキストのないスキャンページ %d 枚はスキップされました。</item>
+        <item quantity="one">テキストのないスキャンページ %d 枚はスキップ</item>
+        <item quantity="other">テキストのないスキャンページ %d 枚はスキップ</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">表が見つからなかったため、テキストを1行ずつ配置しました。</string>
+    <string name="pdf2office_excel_no_tables">表が見つからず、1行ずつ配置</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">ページ %1$d</string>
-    <string name="pdf2office_excel_sheet_text">テキスト</string>
+    <string name="pdf2office_excel_sheet_text">文字</string>
 </resources>

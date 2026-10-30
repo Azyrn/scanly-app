@@ -11,14 +11,14 @@
     <string name="pdf_tool_jpg_action_pages">JPGに変換</string>
     <string name="pdf_tool_jpg_action_extract">画像を抽出</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">Scanly がエクスポートできない形式の画像 %d 件はスキップされました</item>
-        <item quantity="other">Scanly がエクスポートできない形式の画像 %d 件はスキップされました</item>
+        <item quantity="one">Scanly が書き出せない形式の画像 %d 件をスキップ</item>
+        <item quantity="other">Scanly が書き出せない形式の画像 %d 件をスキップ</item>
     </plurals>
 
     <!-- Image to PDF -->
-    <string name="pdf_tool_img2pdf_body">表示された順序で、1ページに1枚ずつ画像を配置します。</string>
-    <string name="pdf_tool_img2pdf_page_size">ページサイズ</string>
-    <string name="pdf_tool_img2pdf_size_fit">画像に合わせる</string>
+    <string name="pdf_tool_img2pdf_body">表示順に、1ページに1枚ずつ配置します。</string>
+    <string name="pdf_tool_img2pdf_page_size">用紙サイズ</string>
+    <string name="pdf_tool_img2pdf_size_fit">画像に合わせ</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">レター</string>
     <string name="pdf_tool_img2pdf_orientation">向き</string>
@@ -31,7 +31,7 @@
     <string name="pdf_tool_img2pdf_margin_big">大</string>
     <string name="pdf_tool_img2pdf_action">PDFを作成</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">画像として読み取れなかったファイル %d 件は除外されました</item>
-        <item quantity="other">画像として読み取れなかったファイル %d 件は除外されました</item>
+        <item quantity="one">画像として読めなかったファイル %d 件を除外</item>
+        <item quantity="other">画像として読めなかったファイル %d 件を除外</item>
     </plurals>
 </resources>

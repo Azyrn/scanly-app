@@ -3,11 +3,11 @@
 <resources>
     <!-- Options -->
     <string name="pdf2office_word_body">Texto, títulos, listas e tabelas ficam editáveis no Word. Páginas digitalizadas são adicionadas como imagens.</string>
-    <string name="pdf2office_word_action">Converter para Word</string>
+    <string name="pdf2office_word_action">Exportar Word</string>
     <string name="pdf2office_powerpoint_body">Cada página se torna um slide, com o texto em caixas editáveis no mesmo lugar em que estava na página. Páginas digitalizadas são adicionadas como imagens.</string>
-    <string name="pdf2office_powerpoint_action">Converter para PowerPoint</string>
-    <string name="pdf2office_excel_body">As tabelas se tornam linhas e células, com uma planilha para cada página que as tiver. Os números continuam números, para você poder somá-los.</string>
-    <string name="pdf2office_excel_action">Converter para Excel</string>
+    <string name="pdf2office_powerpoint_action">Exportar PowerPoint</string>
+    <string name="pdf2office_excel_body">Tabelas viram linhas e células, uma planilha por página com tabela. Números podem ser somados.</string>
+    <string name="pdf2office_excel_action">Exportar Excel</string>
 
     <!-- Result notes -->
     <string name="pdf2office_simplified_word">O layout foi simplificado: texto, títulos, listas e tabelas são editáveis, mas fontes, colunas, desenhos e imagens não foram mantidos.</string>
@@ -18,21 +18,21 @@
         <item quantity="other">%d páginas digitalizadas foram adicionadas como imagens.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">%d página muito densa foi convertida como linhas simples.</item>
-        <item quantity="many">%d páginas muito densas foram convertidas como linhas simples.</item>
-        <item quantity="other">%d páginas muito densas foram convertidas como linhas simples.</item>
+        <item quantity="one">%d página muito densa virou linhas simples.</item>
+        <item quantity="many">%d páginas muito densas viraram linhas simples.</item>
+        <item quantity="other">%d páginas muito densas viraram linhas simples.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">%d página não pôde ser lida e foi deixada de fora.</item>
-        <item quantity="many">%d páginas não puderam ser lidas e foram deixadas de fora.</item>
-        <item quantity="other">%d páginas não puderam ser lidas e foram deixadas de fora.</item>
+        <item quantity="one">%d página não foi lida e ficou de fora.</item>
+        <item quantity="many">%d páginas não foram lidas e ficaram de fora.</item>
+        <item quantity="other">%d páginas não foram lidas e ficaram de fora.</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">%d página digitalizada não tem texto e foi ignorada.</item>
-        <item quantity="many">%d páginas digitalizadas não têm texto e foram ignoradas.</item>
-        <item quantity="other">%d páginas digitalizadas não têm texto e foram ignoradas.</item>
+        <item quantity="one">%d página digitalizada sem texto foi ignorada.</item>
+        <item quantity="many">%d páginas digitalizadas sem texto foram ignoradas.</item>
+        <item quantity="other">%d páginas digitalizadas sem texto foram ignoradas.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Nenhuma tabela foi encontrada; o texto foi colocado uma linha por linha.</string>
+    <string name="pdf2office_excel_no_tables">Nenhuma tabela; o texto ficou uma linha por linha.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">Página %1$d</string>

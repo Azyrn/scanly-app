@@ -2,30 +2,30 @@
 <resources>
     <!-- PDF to JPG -->
     <string name="pdf_tool_jpg_mode_pages">Сторінки в JPG</string>
-    <string name="pdf_tool_jpg_mode_pages_body">Кожна сторінка стає одним зображенням.</string>
-    <string name="pdf_tool_jpg_mode_extract">Витягти зображення</string>
+    <string name="pdf_tool_jpg_mode_pages_body">Кожна сторінка — зображення.</string>
+    <string name="pdf_tool_jpg_mode_extract">Витягти фото</string>
     <string name="pdf_tool_jpg_mode_extract_body">Зберегти фото й зображення всередині PDF у їхній початковій якості.</string>
     <string name="pdf_tool_jpg_quality">Якість</string>
     <string name="pdf_tool_jpg_quality_normal">Звичайна · 150 dpi</string>
-    <string name="pdf_tool_jpg_quality_high">Висока · 300 dpi</string>
+    <string name="pdf_tool_jpg_quality_high">Висока · 300dpi</string>
     <string name="pdf_tool_jpg_action_pages">Перетворити на JPG</string>
-    <string name="pdf_tool_jpg_action_extract">Витягти зображення</string>
+    <string name="pdf_tool_jpg_action_extract">Витягти фото</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">Пропущено %d зображення у форматі, який Scanly не може експортувати</item>
-        <item quantity="few">Пропущено %d зображення у форматах, які Scanly не може експортувати</item>
-        <item quantity="many">Пропущено %d зображень у форматах, які Scanly не може експортувати</item>
-        <item quantity="other">Пропущено %d зображення у форматах, які Scanly не може експортувати</item>
+        <item quantity="one">Пропущено %d зображення: формат не підтримується.</item>
+        <item quantity="few">Пропущено %d зображення: формати не підтримуються.</item>
+        <item quantity="many">Пропущено %d зображень: формати не підтримуються.</item>
+        <item quantity="other">Пропущено %d зображень: формати не підтримуються.</item>
     </plurals>
 
     <!-- Image to PDF -->
-    <string name="pdf_tool_img2pdf_body">Одне зображення на сторінку, у показаному порядку.</string>
-    <string name="pdf_tool_img2pdf_page_size">Розмір сторінки</string>
-    <string name="pdf_tool_img2pdf_size_fit">За розміром зображення</string>
+    <string name="pdf_tool_img2pdf_body">Одне зображення на сторінку, по порядку.</string>
+    <string name="pdf_tool_img2pdf_page_size">Розмір</string>
+    <string name="pdf_tool_img2pdf_size_fit">Як у фото</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">Letter</string>
     <string name="pdf_tool_img2pdf_orientation">Орієнтація</string>
     <string name="pdf_tool_img2pdf_orientation_auto">Авто</string>
-    <string name="pdf_tool_img2pdf_orientation_portrait">Портретна</string>
+    <string name="pdf_tool_img2pdf_orientation_portrait">Книжна</string>
     <string name="pdf_tool_img2pdf_orientation_landscape">Альбомна</string>
     <string name="pdf_tool_img2pdf_margin">Поля</string>
     <string name="pdf_tool_img2pdf_margin_none">Немає</string>
@@ -33,9 +33,9 @@
     <string name="pdf_tool_img2pdf_margin_big">Великі</string>
     <string name="pdf_tool_img2pdf_action">Створити PDF</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">%d файл не вдалося прочитати як зображення і його пропущено</item>
-        <item quantity="few">%d файли не вдалося прочитати як зображення і їх пропущено</item>
-        <item quantity="many">%d файлів не вдалося прочитати як зображення і їх пропущено</item>
-        <item quantity="other">%d файлів не вдалося прочитати як зображення і їх пропущено</item>
+        <item quantity="one">Пропущено %d файл: не зображення.</item>
+        <item quantity="few">Пропущено %d файли: не зображення.</item>
+        <item quantity="many">Пропущено %d файлів: не зображення.</item>
+        <item quantity="other">Пропущено %d файлів: не зображення.</item>
     </plurals>
 </resources>

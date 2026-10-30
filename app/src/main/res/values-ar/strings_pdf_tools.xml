@@ -66,15 +66,15 @@
     <!-- Result -->
     <string name="pdf_tool_done">تم</string>
     <string name="pdf_tool_save">حفظ</string>
-    <string name="pdf_tool_saved">تم الحفظ في المجلد Downloads/Scanly</string>
+    <string name="pdf_tool_saved">تم الحفظ في Downloads/Scanly</string>
     <string name="pdf_tool_share">مشاركة</string>
     <string name="pdf_tool_open">فتح</string>
     <string name="pdf_tool_open_with">فتح باستخدام…</string>
-    <string name="pdf_tool_no_viewer">لا يوجد تطبيق على هذا الهاتف يمكنه فتح هذا الملف.</string>
+    <string name="pdf_tool_no_viewer">لا يوجد على الهاتف تطبيق يفتح هذا الملف.</string>
     <string name="pdf_tool_save_failed">تعذّر الحفظ في Downloads. قد تكون مساحة التخزين ممتلئة.</string>
     <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
     <string name="pdf_tool_another_file">اختيار ملف آخر</string>
-    <string name="pdf_tool_try_again">إعادة المحاولة</string>
+    <string name="pdf_tool_try_again">أعِد المحاولة</string>
 
     <!-- Failures -->
     <string name="pdf_tool_error_title">تعذّر إكمال العملية</string>
@@ -84,7 +84,7 @@
     <string name="pdf_tool_error_wrong_password">كلمة المرور هذه لا تفتح الملف.</string>
     <string name="pdf_tool_error_not_encrypted">لا يحتوي ملف PDF هذا على كلمة مرور لإزالتها.</string>
     <string name="pdf_tool_error_no_gain">ملف PDF هذا أصغر بالفعل مما يستطيع هذا المستوى تحقيقه. جرّب مستوى أقوى.</string>
-    <string name="pdf_tool_error_nothing_found">لا يحتوي ملف PDF هذا على شيء يمكن لهذه الأداة استخراجه.</string>
+    <string name="pdf_tool_error_nothing_found">لا يوجد في ملف PDF هذا ما يمكن استخراجه.</string>
     <string name="pdf_tool_error_failed">حدث خطأ أثناء معالجة هذا الملف.</string>
 
     <!-- Compress -->
@@ -106,7 +106,7 @@
     <!-- Rotate -->
     <string name="pdf_tool_rotate_right">90° لليمين</string>
     <string name="pdf_tool_rotate_half">180°</string>
-    <string name="pdf_tool_rotate_left">90° لليسار</string>
+    <string name="pdf_tool_rotate_left">90° يسارًا</string>
     <string name="pdf_tool_rotate_body">يدوّر كل الصفحات. لتدوير صفحات منفردة، استخدم تنظيم PDF.</string>
     <string name="pdf_tool_rotate_action">تدوير</string>
 </resources>

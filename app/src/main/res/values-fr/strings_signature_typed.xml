@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Typed signatures (page editor Sign tool) -->
-    <string name="signature_typed_open">Saisir une signature</string>
-    <string name="signature_typed_title">Saisissez votre signature</string>
+    <string name="signature_typed_open">Saisir signature</string>
+    <string name="signature_typed_title">Saisir votre signature</string>
     <string name="signature_typed_name_label">Votre nom</string>
     <string name="signature_typed_preview_empty">Votre signature apparaît ici.</string>
-    <string name="signature_typed_colour">Couleur de l\'encre</string>
-    <string name="signature_typed_colour_option">Couleur de l\'encre %1$d</string>
-    <string name="signature_typed_save">Enregistrer</string>
+    <string name="signature_typed_colour">Couleur</string>
+    <string name="signature_typed_colour_option">Couleur %1$d</string>
+    <string name="signature_typed_save">OK</string>
     <string name="signature_typed_cancel">Annuler</string>
-    <string name="signature_typed_font_missing">La police de signature n\'a pas pu être chargée.</string>
+    <string name="signature_typed_font_missing">Police de signature introuvable.</string>
 
     <!-- Settings → About: licences of the fonts and icons bundled in the app -->
     <string name="font_licenses_title">Licences open source</string>
     <string name="font_licenses_subtitle">Polices et icônes fournies avec Scanly</string>
     <string name="font_licenses_close">Fermer</string>
-    <string name="font_licenses_unreadable">Impossible de lire ce fichier de licence.</string>
+    <string name="font_licenses_unreadable">Impossible de lire cette licence.</string>
 </resources>

@@ -7,15 +7,15 @@
     <string name="pdf_tool_flow_move_up">%1$s yukarı taşı</string>
     <string name="pdf_tool_flow_move_down">%1$s aşağı taşı</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">Devam etmek için en az %d dosya ekleyin.</item>
-        <item quantity="other">Devam etmek için en az %d dosya ekleyin.</item>
+        <item quantity="one">En az %d dosya ekleyin.</item>
+        <item quantity="other">En az %d dosya ekleyin.</item>
     </plurals>
     <string name="pdf_tool_flow_skipped">Açılamayan bir dosya dışarıda bırakıldı.</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">%d dosya üzerinde çalışılıyor…</item>
-        <item quantity="other">%d dosya üzerinde çalışılıyor…</item>
+        <item quantity="one">%d dosya işleniyor…</item>
+        <item quantity="other">%d dosya işleniyor…</item>
     </plurals>
 
     <!-- Result -->

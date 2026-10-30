@@ -8,26 +8,26 @@
     <string name="pdf_stamp_numbers_format_page_of">Página %1$d de %2$d</string>
 
     <!-- Page numbers: options -->
-    <string name="pdf_stamp_numbers_body">Os números são adicionados sobre cada página. O conteúdo original não é alterado.</string>
+    <string name="pdf_stamp_numbers_body">Números são adicionados sobre cada página; o conteúdo original não muda.</string>
     <string name="pdf_stamp_numbers_position">Posição</string>
-    <string name="pdf_stamp_numbers_top_left">Topo à esquerda</string>
-    <string name="pdf_stamp_numbers_top_center">Topo ao centro</string>
-    <string name="pdf_stamp_numbers_top_right">Topo à direita</string>
-    <string name="pdf_stamp_numbers_bottom_left">Base à esquerda</string>
+    <string name="pdf_stamp_numbers_top_left">Topo esq.</string>
+    <string name="pdf_stamp_numbers_top_center">Topo centro</string>
+    <string name="pdf_stamp_numbers_top_right">Topo dir.</string>
+    <string name="pdf_stamp_numbers_bottom_left">Base esq.</string>
     <string name="pdf_stamp_numbers_bottom_center">Base ao centro</string>
     <string name="pdf_stamp_numbers_bottom_right">Base à direita</string>
     <string name="pdf_stamp_numbers_format">Formato</string>
-    <string name="pdf_stamp_numbers_start">Começar no número</string>
-    <string name="pdf_stamp_numbers_first_page">Numerar a partir da página</string>
-    <string name="pdf_stamp_numbers_first_page_hint">Páginas anteriores, como uma capa, ficam sem número.</string>
+    <string name="pdf_stamp_numbers_start">Número inicial</string>
+    <string name="pdf_stamp_numbers_first_page">Numerar da página</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Páginas antes, como a capa, ficam sem número.</string>
     <string name="pdf_stamp_numbers_start_invalid">Digite um número de 0 a 99999.</string>
     <string name="pdf_stamp_numbers_first_page_invalid">Digite uma página de 1 a %1$d.</string>
-    <string name="pdf_stamp_numbers_text_size">Tamanho do texto</string>
+    <string name="pdf_stamp_numbers_text_size">Tamanho</string>
     <string name="pdf_stamp_numbers_margin">Distância da borda</string>
     <string name="pdf_stamp_numbers_margin_narrow">Perto</string>
     <string name="pdf_stamp_numbers_margin_normal">Normal</string>
     <string name="pdf_stamp_numbers_margin_wide">Longe</string>
-    <string name="pdf_stamp_numbers_action">Adicionar números de página</string>
+    <string name="pdf_stamp_numbers_action">Numerar páginas</string>
 
     <!-- Shared size choices -->
     <string name="pdf_stamp_size_small">Pequeno</string>
@@ -35,35 +35,35 @@
     <string name="pdf_stamp_size_large">Grande</string>
 
     <!-- Watermark: options -->
-    <string name="pdf_stamp_watermark_body">A marca d\'água é adicionada a todas as páginas.</string>
+    <string name="pdf_stamp_watermark_body">Marca d\'água em todas as páginas.</string>
     <string name="pdf_stamp_watermark_kind">Marca d\'água</string>
     <string name="pdf_stamp_watermark_kind_text">Texto</string>
     <string name="pdf_stamp_watermark_kind_image">Imagem</string>
-    <string name="pdf_stamp_watermark_text_label">Texto da marca d\'água</string>
+    <string name="pdf_stamp_watermark_text_label">Texto da marca</string>
     <string name="pdf_stamp_watermark_text_default">CONFIDENCIAL</string>
-    <string name="pdf_stamp_watermark_text_empty">Digite o texto a ser carimbado.</string>
-    <string name="pdf_stamp_watermark_pick_image">Escolher imagem</string>
+    <string name="pdf_stamp_watermark_text_empty">Digite o texto.</string>
+    <string name="pdf_stamp_watermark_pick_image">Escolha imagem</string>
     <string name="pdf_stamp_watermark_change_image">Trocar imagem</string>
-    <string name="pdf_stamp_watermark_image_chosen">Imagem escolhida: %1$s</string>
-    <string name="pdf_stamp_watermark_image_none">Nenhuma imagem escolhida ainda.</string>
+    <string name="pdf_stamp_watermark_image_chosen">Imagem: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">Nenhuma imagem.</string>
     <string name="pdf_stamp_watermark_placement">Posição</string>
     <string name="pdf_stamp_watermark_center">Centro</string>
     <string name="pdf_stamp_watermark_top">Topo</string>
     <string name="pdf_stamp_watermark_bottom">Base</string>
-    <string name="pdf_stamp_watermark_tiled">Em mosaico</string>
+    <string name="pdf_stamp_watermark_tiled">Grade</string>
     <string name="pdf_stamp_watermark_rotation">Ângulo</string>
     <string name="pdf_stamp_watermark_rotation_none">Reto</string>
     <string name="pdf_stamp_watermark_rotation_rising">Subindo 45°</string>
-    <string name="pdf_stamp_watermark_rotation_falling">Descendo 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">Caindo 45°</string>
     <string name="pdf_stamp_watermark_opacity">Opacidade</string>
     <string name="pdf_stamp_watermark_opacity_light">25%</string>
     <string name="pdf_stamp_watermark_opacity_medium">50%</string>
     <string name="pdf_stamp_watermark_opacity_strong">75%</string>
-    <string name="pdf_stamp_watermark_size">Tamanho</string>
-    <string name="pdf_stamp_watermark_layer">Camada</string>
+    <string name="pdf_stamp_watermark_size">Escala</string>
+    <string name="pdf_stamp_watermark_layer">Ordem</string>
     <string name="pdf_stamp_watermark_layer_over">Sobre o conteúdo</string>
-    <string name="pdf_stamp_watermark_layer_over_body">Sempre visível. Pode cobrir parte do texto.</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Sempre visível; pode cobrir texto.</string>
     <string name="pdf_stamp_watermark_layer_under">Sob o conteúdo</string>
-    <string name="pdf_stamp_watermark_layer_under_body">O texto fica por cima. Em páginas digitalizadas, a imagem o oculta por completo.</string>
-    <string name="pdf_stamp_watermark_action">Adicionar marca d\'água</string>
+    <string name="pdf_stamp_watermark_layer_under_body">O texto fica por cima. Em páginas digitalizadas, a imagem o oculta.</string>
+    <string name="pdf_stamp_watermark_action">Pôr marca d\'água</string>
 </resources>

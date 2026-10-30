@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- PDF to JPG -->
-    <string name="pdf_tool_jpg_mode_pages">Páginas para JPG</string>
+    <string name="pdf_tool_jpg_mode_pages">Páginas</string>
     <string name="pdf_tool_jpg_mode_pages_body">Cada página se torna uma imagem.</string>
     <string name="pdf_tool_jpg_mode_extract">Extrair imagens</string>
     <string name="pdf_tool_jpg_mode_extract_body">Salva as fotos e imagens do PDF com a qualidade original.</string>
-    <string name="pdf_tool_jpg_quality">Qualidade</string>
+    <string name="pdf_tool_jpg_quality">Nível</string>
     <string name="pdf_tool_jpg_quality_normal">Normal · 150 dpi</string>
     <string name="pdf_tool_jpg_quality_high">Alta · 300 dpi</string>
-    <string name="pdf_tool_jpg_action_pages">Converter para JPG</string>
+    <string name="pdf_tool_jpg_action_pages">Gerar JPG</string>
     <string name="pdf_tool_jpg_action_extract">Extrair imagens</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">%d imagem em um formato que o Scanly não consegue exportar foi ignorada</item>
-        <item quantity="many">%d imagens em formatos que o Scanly não consegue exportar foram ignoradas</item>
-        <item quantity="other">%d imagens em formatos que o Scanly não consegue exportar foram ignoradas</item>
+        <item quantity="one">%d imagem em formato não suportado, ignorada</item>
+        <item quantity="many">%d imagens em formatos não suportados: ignoradas</item>
+        <item quantity="other">%d imagens em formatos não suportados: ignoradas</item>
     </plurals>
 
     <!-- Image to PDF -->
     <string name="pdf_tool_img2pdf_body">Uma imagem por página, na ordem exibida.</string>
-    <string name="pdf_tool_img2pdf_page_size">Tamanho da página</string>
-    <string name="pdf_tool_img2pdf_size_fit">Ajustar à imagem</string>
+    <string name="pdf_tool_img2pdf_page_size">Tamanho</string>
+    <string name="pdf_tool_img2pdf_size_fit">Ajustar</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">Carta</string>
     <string name="pdf_tool_img2pdf_orientation">Orientação</string>
-    <string name="pdf_tool_img2pdf_orientation_auto">Automática</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">Auto</string>
     <string name="pdf_tool_img2pdf_orientation_portrait">Retrato</string>
     <string name="pdf_tool_img2pdf_orientation_landscape">Paisagem</string>
     <string name="pdf_tool_img2pdf_margin">Margem</string>
-    <string name="pdf_tool_img2pdf_margin_none">Nenhuma</string>
-    <string name="pdf_tool_img2pdf_margin_small">Pequena</string>
-    <string name="pdf_tool_img2pdf_margin_big">Grande</string>
+    <string name="pdf_tool_img2pdf_margin_none">Zero</string>
+    <string name="pdf_tool_img2pdf_margin_small">Pouca</string>
+    <string name="pdf_tool_img2pdf_margin_big">Extra</string>
     <string name="pdf_tool_img2pdf_action">Criar PDF</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">%d arquivo não pôde ser lido como imagem e foi deixado de fora</item>
-        <item quantity="many">%d arquivos não puderam ser lidos como imagens e foram deixados de fora</item>
-        <item quantity="other">%d arquivos não puderam ser lidos como imagens e foram deixados de fora</item>
+        <item quantity="one">%d arquivo não lido como imagem, omitido</item>
+        <item quantity="many">%d arquivos não lidos como imagem, omitidos</item>
+        <item quantity="other">%d arquivos não lidos como imagem, omitidos</item>
     </plurals>
 </resources>

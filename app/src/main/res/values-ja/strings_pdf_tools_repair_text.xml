@@ -4,18 +4,18 @@
     <!-- Repair -->
     <string name="pdf_tool_repair_action">修復</string>
     <plurals name="pdf_tool_repair_recovered">
-        <item quantity="one">%d ページを復元しました。元のファイルを削除する前に確認してください。</item>
-        <item quantity="other">%d ページを復元しました。元のファイルを削除する前に確認してください。</item>
+        <item quantity="one">%d ページを復元しました。削除前に確認してください。</item>
+        <item quantity="other">%d ページを復元しました。削除前に確認してください。</item>
     </plurals>
 
     <!-- Extract text -->
     <string name="pdf_tool_extract_text_separators">各ページの開始位置を示す</string>
-    <string name="pdf_tool_extract_text_separators_body">各ページのテキストの前に「3ページ」のような行を追加します。</string>
+    <string name="pdf_tool_extract_text_separators_body">各ページの前に「3ページ」のような行を追加します。</string>
     <!-- The line written into the .txt file before each page's text; %d is the page number. -->
     <string name="pdf_tool_extract_text_page_separator">----- %d ページ -----</string>
     <string name="pdf_tool_extract_text_action">抽出</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d ページには選択可能なテキストがありません（スキャン）。ホーム画面の「PDFをテキストに変換」で読み取れます。</item>
-        <item quantity="other">%d ページには選択可能なテキストがありません（スキャン）。ホーム画面の「PDFをテキストに変換」で読み取れます。</item>
+        <item quantity="one">%d ページはテキストがありません。ホーム画面の「PDFをテキストに変換」で読めます。</item>
+        <item quantity="other">%d ページはテキストがありません。ホーム画面の「PDFをテキストに変換」で読めます。</item>
     </plurals>
 </resources>

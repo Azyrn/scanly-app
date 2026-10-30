@@ -2,25 +2,25 @@
 <!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
 <resources>
     <!-- Inputs on the options screen -->
-    <string name="pdf_tool_flow_add_files">Adicionar arquivos</string>
+    <string name="pdf_tool_flow_add_files">Adicionar</string>
     <string name="pdf_tool_flow_remove">Remover %1$s</string>
-    <string name="pdf_tool_flow_move_up">Mover %1$s para cima</string>
-    <string name="pdf_tool_flow_move_down">Mover %1$s para baixo</string>
+    <string name="pdf_tool_flow_move_up">Subir %1$s</string>
+    <string name="pdf_tool_flow_move_down">Descer %1$s</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">Adicione pelo menos %d arquivo para continuar.</item>
-        <item quantity="many">Adicione pelo menos %d arquivos para continuar.</item>
-        <item quantity="other">Adicione pelo menos %d arquivos para continuar.</item>
+        <item quantity="one">Adicione %d arquivo para seguir.</item>
+        <item quantity="many">Adicione %d arquivos para seguir.</item>
+        <item quantity="other">Adicione %d arquivos para seguir.</item>
     </plurals>
-    <string name="pdf_tool_flow_skipped">Um arquivo que não pôde ser aberto foi deixado de fora.</string>
+    <string name="pdf_tool_flow_skipped">Arquivo que não abriu foi omitido.</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">Processando %d arquivo…</item>
-        <item quantity="many">Processando %d arquivos…</item>
-        <item quantity="other">Processando %d arquivos…</item>
+        <item quantity="one">Lendo %d arquivo…</item>
+        <item quantity="many">Lendo %d arquivos…</item>
+        <item quantity="other">Lendo %d arquivos…</item>
     </plurals>
 
     <!-- Result -->
     <string name="pdf_tool_flow_open_output">Abrir %1$s</string>
-    <string name="pdf_tool_flow_share_all">Compartilhar tudo</string>
+    <string name="pdf_tool_flow_share_all">Enviar</string>
 </resources>

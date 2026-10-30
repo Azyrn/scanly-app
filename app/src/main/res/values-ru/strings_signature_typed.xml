@@ -2,18 +2,18 @@
 <resources>
     <!-- Typed signatures (page editor Sign tool) -->
     <string name="signature_typed_open">Ввести подпись</string>
-    <string name="signature_typed_title">Введите вашу подпись</string>
+    <string name="signature_typed_title">Введите подпись</string>
     <string name="signature_typed_name_label">Ваше имя</string>
     <string name="signature_typed_preview_empty">Ваша подпись появится здесь.</string>
-    <string name="signature_typed_colour">Цвет чернил</string>
-    <string name="signature_typed_colour_option">Цвет чернил %1$d</string>
+    <string name="signature_typed_colour">Цвет</string>
+    <string name="signature_typed_colour_option">Цвет %1$d</string>
     <string name="signature_typed_save">Сохранить</string>
     <string name="signature_typed_cancel">Отмена</string>
     <string name="signature_typed_font_missing">Не удалось загрузить шрифт подписи.</string>
 
     <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Лицензии открытого ПО</string>
-    <string name="font_licenses_subtitle">Шрифты и значки, встроенные в Scanly</string>
+    <string name="font_licenses_title">Лицензии ПО</string>
+    <string name="font_licenses_subtitle">Шрифты и значки в Scanly</string>
     <string name="font_licenses_close">Закрыть</string>
-    <string name="font_licenses_unreadable">Не удалось прочитать файл лицензии.</string>
+    <string name="font_licenses_unreadable">Файл лицензии не прочитан.</string>
 </resources>

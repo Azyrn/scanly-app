@@ -10,14 +10,14 @@
     </plurals>
 
     <!-- Extract text -->
-    <string name="pdf_tool_extract_text_separators">Marquer le début de chaque page</string>
-    <string name="pdf_tool_extract_text_separators_body">Ajoute une ligne comme \"Page 3\" avant le texte de chaque page.</string>
+    <string name="pdf_tool_extract_text_separators">Marquer le début des pages</string>
+    <string name="pdf_tool_extract_text_separators_body">Ajoute \"Page 3\" avant le texte de chaque page.</string>
     <!-- The line written into the .txt file before each page's text; %d is the page number. -->
     <string name="pdf_tool_extract_text_page_separator">----- Page %d -----</string>
     <string name="pdf_tool_extract_text_action">Extraire</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d page ne contient pas de texte sélectionnable (un scan). Utilisez PDF vers texte sur l\'écran d\'accueil pour la lire.</item>
-        <item quantity="many">%d pages ne contiennent pas de texte sélectionnable (des scans). Utilisez PDF vers texte sur l\'écran d\'accueil pour les lire.</item>
-        <item quantity="other">%d pages ne contiennent pas de texte sélectionnable (des scans). Utilisez PDF vers texte sur l\'écran d\'accueil pour les lire.</item>
+        <item quantity="one">%d page sans texte sélectionnable (scan). Utilisez PDF vers texte depuis l\'accueil.</item>
+        <item quantity="many">%d pages sans texte sélectionnable (scans). Utilisez PDF vers texte depuis l\'accueil.</item>
+        <item quantity="other">%d pages sans texte sélectionnable (scans). Utilisez PDF vers texte depuis l\'accueil.</item>
     </plurals>
 </resources>

@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
 <resources>
-    <string name="pdf_tool_ppt2pdf_action">In PDF umwandeln</string>
-    <string name="pdf_tool_ppt2pdf_shapes">Einige Formen wurden vereinfacht.</string>
+    <string name="pdf_tool_ppt2pdf_action">In PDF wandeln</string>
+    <string name="pdf_tool_ppt2pdf_shapes">Einige Formen vereinfacht.</string>
     <string name="pdf_tool_ppt2pdf_fonts">Einige Schriften wurden durch ähnliche ersetzt.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">%d Diagramm wurde weggelassen.</item>
-        <item quantity="other">%d Diagramme wurden weggelassen.</item>
+        <item quantity="one">%d Diagramm fehlt.</item>
+        <item quantity="other">%d Diagramme fehlen.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">%d SmartArt-Grafik wurde weggelassen.</item>
-        <item quantity="other">%d SmartArt-Grafiken wurden weggelassen.</item>
+        <item quantity="one">%d SmartArt-Grafik fehlt.</item>
+        <item quantity="other">%d SmartArt-Grafiken fehlen.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
-        <item quantity="one">%d eingebettetes Objekt wurde weggelassen.</item>
-        <item quantity="other">%d eingebettete Objekte wurden weggelassen.</item>
+        <item quantity="one">%d eingebettetes Objekt fehlt.</item>
+        <item quantity="other">%d eingebettete Objekte fehlen.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d Video oder Ton kann in einem PDF nicht abgespielt werden; es wird nur das Vorschaubild angezeigt.</item>
-        <item quantity="other">%d Videos oder Töne können in einem PDF nicht abgespielt werden; es werden nur ihre Vorschaubilder angezeigt.</item>
+        <item quantity="one">%d Video oder Ton nicht abspielbar; nur das Vorschaubild.</item>
+        <item quantity="other">%d Videos oder Töne nicht abspielbar; nur Vorschaubilder.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">%d Bild konnte nicht angezeigt werden.</item>
-        <item quantity="other">%d Bilder konnten nicht angezeigt werden.</item>
+        <item quantity="one">%d Bild nicht darstellbar.</item>
+        <item quantity="other">%d Bilder nicht darstellbar.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
-        <item quantity="one">%d ausgeblendete Folie wurde übersprungen.</item>
-        <item quantity="other">%d ausgeblendete Folien wurden übersprungen.</item>
+        <item quantity="one">%d versteckte Folie fehlt.</item>
+        <item quantity="other">%d versteckte Folien fehlen.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d Folie konnte nicht gelesen werden und wurde weggelassen.</item>
-        <item quantity="other">%d Folien konnten nicht gelesen werden und wurden weggelassen.</item>
+        <item quantity="one">%d Folie nicht lesbar, weggelassen.</item>
+        <item quantity="other">%d Folien nicht lesbar, weggelassen.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Nur %d Folie wurde umgewandelt.</item>
-        <item quantity="other">Nur die ersten %d Folien wurden umgewandelt.</item>
+        <item quantity="other">Nur die ersten %d Folien umgewandelt.</item>
     </plurals>
 </resources>

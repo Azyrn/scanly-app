@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- PDF to JPG -->
-    <string name="pdf_tool_jpg_mode_pages">الصفحات إلى JPG</string>
+    <string name="pdf_tool_jpg_mode_pages">صفحات إلى JPG</string>
     <string name="pdf_tool_jpg_mode_pages_body">تصبح كل صفحة صورة واحدة.</string>
     <string name="pdf_tool_jpg_mode_extract">استخراج الصور</string>
     <string name="pdf_tool_jpg_mode_extract_body">احفظ الصور والصور الفوتوغرافية الموجودة داخل ملف PDF بجودتها الأصلية.</string>

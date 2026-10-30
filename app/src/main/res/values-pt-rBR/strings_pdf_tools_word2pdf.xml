@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
 <resources>
-    <string name="pdf_tool_word_to_pdf_body">O Scanly converte o documento no seu celular. Gráficos, caixas de texto e equações ainda não podem ser exibidos e são deixados de fora.</string>
-    <string name="pdf_tool_word_to_pdf_action">Converter para PDF</string>
+    <string name="pdf_tool_word_to_pdf_body">Converte o documento no celular. Gráficos, caixas de texto e equações ficam de fora por enquanto.</string>
+    <string name="pdf_tool_word_to_pdf_action">Criar PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">%d gráfico foi deixado de fora.</item>
-        <item quantity="many">%d gráficos foram deixados de fora.</item>
-        <item quantity="other">%d gráficos foram deixados de fora.</item>
+        <item quantity="one">%d gráfico omitido.</item>
+        <item quantity="many">%d gráficos omitidos.</item>
+        <item quantity="other">%d gráficos omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
-        <item quantity="one">%d diagrama SmartArt foi deixado de fora.</item>
-        <item quantity="many">%d diagramas SmartArt foram deixados de fora.</item>
-        <item quantity="other">%d diagramas SmartArt foram deixados de fora.</item>
+        <item quantity="one">%d diagrama SmartArt omitido.</item>
+        <item quantity="many">%d diagramas SmartArt omitidos.</item>
+        <item quantity="other">%d diagramas SmartArt omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">%d caixa de texto ou forma foi deixada de fora.</item>
-        <item quantity="many">%d caixas de texto ou formas foram deixadas de fora.</item>
-        <item quantity="other">%d caixas de texto ou formas foram deixadas de fora.</item>
+        <item quantity="one">%d caixa de texto ou forma omitida.</item>
+        <item quantity="many">%d caixas de texto ou formas omitidas.</item>
+        <item quantity="other">%d caixas de texto ou formas omitidas.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
-        <item quantity="one">%d equação foi deixada de fora.</item>
-        <item quantity="many">%d equações foram deixadas de fora.</item>
-        <item quantity="other">%d equações foram deixadas de fora.</item>
+        <item quantity="one">%d equação omitida.</item>
+        <item quantity="many">%d equações omitidas.</item>
+        <item quantity="other">%d equações omitidas.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_objects">
-        <item quantity="one">%d objeto incorporado foi deixado de fora.</item>
-        <item quantity="many">%d objetos incorporados foram deixados de fora.</item>
-        <item quantity="other">%d objetos incorporados foram deixados de fora.</item>
+        <item quantity="one">%d objeto incorporado omitido.</item>
+        <item quantity="many">%d objetos incorporados omitidos.</item>
+        <item quantity="other">%d objetos incorporados omitidos.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
-        <item quantity="one">%d imagem está em um formato que não pode ser exibido e foi deixada de fora.</item>
-        <item quantity="many">%d imagens estão em um formato que não pode ser exibido e foram deixadas de fora.</item>
-        <item quantity="other">%d imagens estão em um formato que não pode ser exibido e foram deixadas de fora.</item>
+        <item quantity="one">%d imagem em formato não suportado foi omitida.</item>
+        <item quantity="many">%d imagens em formato não suportado foram omitidas.</item>
+        <item quantity="other">%d imagens em formato não suportado foram omitidas.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
-        <item quantity="one">%d linha de tabela era maior que uma página e foi cortada.</item>
-        <item quantity="many">%d linhas de tabela eram maiores que uma página e foram cortadas.</item>
-        <item quantity="other">%d linhas de tabela eram maiores que uma página e foram cortadas.</item>
+        <item quantity="one">%d linha de tabela maior que a página foi cortada.</item>
+        <item quantity="many">%d linhas de tabela maiores que a página foram cortadas.</item>
+        <item quantity="other">%d linhas de tabela maiores que a página foram cortadas.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
         <item quantity="one">Somente %d página foi convertida.</item>
-        <item quantity="many">Somente as primeiras %d páginas foram convertidas.</item>
-        <item quantity="other">Somente as primeiras %d páginas foram convertidas.</item>
+        <item quantity="many">Convertidas só as primeiras %d páginas.</item>
+        <item quantity="other">Convertidas só as primeiras %d páginas.</item>
     </plurals>
-    <string name="pdf_tool_word_to_pdf_note_fonts">Algumas fontes foram substituídas por outras semelhantes.</string>
-    <string name="pdf_tool_word_to_pdf_note_headers">Cabeçalhos e rodapés foram deixados de fora.</string>
-    <string name="pdf_tool_word_to_pdf_note_footnotes">Notas de rodapé foram deixadas de fora.</string>
-    <string name="pdf_tool_word_to_pdf_note_columns">O texto em colunas foi organizado em uma única coluna.</string>
+    <string name="pdf_tool_word_to_pdf_note_fonts">Algumas fontes foram trocadas por similares.</string>
+    <string name="pdf_tool_word_to_pdf_note_headers">Cabeçalhos e rodapés omitidos.</string>
+    <string name="pdf_tool_word_to_pdf_note_footnotes">Notas de rodapé omitidas.</string>
+    <string name="pdf_tool_word_to_pdf_note_columns">Texto em colunas foi organizado em uma coluna.</string>
 </resources>

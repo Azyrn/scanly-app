@@ -5,11 +5,11 @@
     <string name="pdf_tool_ppt2pdf_shapes">Bazı şekiller basitleştirildi.</string>
     <string name="pdf_tool_ppt2pdf_fonts">Bazı yazı tipleri benzerleriyle değiştirildi.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">%d grafik dışarıda bırakıldı.</item>
-        <item quantity="other">%d grafik dışarıda bırakıldı.</item>
+        <item quantity="one">%d grafik atlandı.</item>
+        <item quantity="other">%d grafik atlandı.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">%d SmartArt grafiği dışarıda bırakıldı.</item>
+        <item quantity="one">%d SmartArt grafiği atlandı.</item>
         <item quantity="other">%d SmartArt grafiği dışarıda bırakıldı.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">

@@ -2,24 +2,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Merge -->
     <plurals name="pdf_tool_merge_files">
-        <item quantity="one">%d 件のファイル</item>
-        <item quantity="other">%d 件のファイル</item>
+        <item quantity="one">%d 件</item>
+        <item quantity="other">%d 件</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · 合計 %2$s</string>
-    <string name="pdf_tool_merge_body">上のリストの順序で結合されます。元のファイルにパスワードがあった場合でも、結合後のコピーにはパスワードが設定されません。</string>
-    <string name="pdf_tool_merge_need_more">結合するには、PDFをあと1件以上追加してください。</string>
+    <string name="pdf_tool_merge_body">上のリスト順に結合します。元のファイルにパスワードがあっても、結合後のコピーには設定されません。</string>
+    <string name="pdf_tool_merge_need_more">結合にはあと1件以上のPDFが必要</string>
     <string name="pdf_tool_merge_action">結合</string>
 
     <!-- Split: modes -->
     <string name="pdf_tool_split_mode_ranges">ページ範囲で分割</string>
-    <string name="pdf_tool_split_mode_ranges_body">入力した範囲ごとに新しいファイルを1つ作成</string>
+    <string name="pdf_tool_split_mode_ranges_body">入力した範囲ごとに1ファイル作成</string>
     <string name="pdf_tool_split_mode_every">数ページごとに分割</string>
-    <string name="pdf_tool_split_mode_every_body">設定したページ数ごとに新しいファイルを作成</string>
+    <string name="pdf_tool_split_mode_every_body">設定したページ数ごとに新規作成</string>
     <string name="pdf_tool_split_mode_extract">ページを抽出</string>
-    <string name="pdf_tool_split_mode_extract_body">選択したページを1つのファイルにまとめます</string>
+    <string name="pdf_tool_split_mode_extract_body">選択したページを1ファイルにまとめる</string>
     <string name="pdf_tool_split_mode_delete">ページを削除</string>
     <string name="pdf_tool_split_mode_delete_body">選択したページを除いたコピーを作成</string>
-    <string name="pdf_tool_split_mode_size">ファイルサイズで分割</string>
+    <string name="pdf_tool_split_mode_size">サイズで分割</string>
     <string name="pdf_tool_split_mode_size_body">設定したサイズ以下のファイルを作成</string>
 
     <!-- Split: fields -->
@@ -28,21 +28,21 @@
     <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">例: 1-3, 5, 8-10</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">必要なページを入力してください。例: 1-3, 5</string>
-    <string name="pdf_tool_split_range_syntax">「%1$s」はページまたは範囲ではありません</string>
-    <string name="pdf_tool_split_range_out">「%1$s」はページ 1–%2$d の範囲外です</string>
-    <string name="pdf_tool_split_range_reversed">「%1$s」は逆順になっています。小さいページ番号を先に入力してください</string>
-    <string name="pdf_tool_split_delete_all">すべてのページが対象になっています。少なくとも1ページは残してください。</string>
-    <string name="pdf_tool_split_every_label">ファイルあたりのページ数</string>
-    <string name="pdf_tool_split_every_invalid">1 から %1$d までの数値を入力してください</string>
-    <string name="pdf_tool_split_every_less">ファイルあたりのページ数を減らす</string>
-    <string name="pdf_tool_split_every_more">ファイルあたりのページ数を増やす</string>
-    <string name="pdf_tool_split_size_label">最大ファイルサイズ（MB）</string>
-    <string name="pdf_tool_split_size_invalid">0 MB より大きいサイズを入力してください</string>
-    <string name="pdf_tool_split_size_body">ページは分割されないため、このサイズを超える1ページは単独のファイルになります。</string>
-    <string name="pdf_tool_split_locked">このファイルにはパスワードが設定されており、新しいファイルにも引き継がれます。</string>
+    <string name="pdf_tool_split_range_syntax">「%1$s」は無効な入力</string>
+    <string name="pdf_tool_split_range_out">「%1$s」は範囲外（1–%2$d）</string>
+    <string name="pdf_tool_split_range_reversed">「%1$s」は逆順です。小さい番号を先に</string>
+    <string name="pdf_tool_split_delete_all">全ページが対象です。1ページは残す</string>
+    <string name="pdf_tool_split_every_label">ページ数</string>
+    <string name="pdf_tool_split_every_invalid">1 から %1$d までの数値を入力</string>
+    <string name="pdf_tool_split_every_less">ページ数を減らす</string>
+    <string name="pdf_tool_split_every_more">ページ数を増やす</string>
+    <string name="pdf_tool_split_size_label">最大サイズ（MB）</string>
+    <string name="pdf_tool_split_size_invalid">0 MB 超のサイズを入力</string>
+    <string name="pdf_tool_split_size_body">ページは分割しないので、超過する1ページは単独ファイルになります。</string>
+    <string name="pdf_tool_split_locked">パスワード付き。新しいファイルにも引き継がれます。</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">%d 件のファイルを作成</item>
-        <item quantity="other">%d 件のファイルを作成</item>
+        <item quantity="one">%d 件を作成</item>
+        <item quantity="other">%d 件を作成</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
         <item quantity="one">%d ページを保持</item>

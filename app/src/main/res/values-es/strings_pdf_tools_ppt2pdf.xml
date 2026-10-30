@@ -3,7 +3,7 @@
 <resources>
     <string name="pdf_tool_ppt2pdf_action">Convertir a PDF</string>
     <string name="pdf_tool_ppt2pdf_shapes">Algunas formas se simplificaron.</string>
-    <string name="pdf_tool_ppt2pdf_fonts">Algunas fuentes se sustituyeron por otras parecidas.</string>
+    <string name="pdf_tool_ppt2pdf_fonts">Algunas fuentes se cambiaron por similares.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
         <item quantity="one">Se omitió %d gráfico.</item>
         <item quantity="many">Se omitieron %d gráficos.</item>
@@ -20,28 +20,28 @@
         <item quantity="other">Se omitieron %d objetos incrustados.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d video o sonido no puede reproducirse en un PDF; solo se muestra su imagen de vista previa.</item>
-        <item quantity="many">%d videos o sonidos no pueden reproducirse en un PDF; solo se muestran sus imágenes de vista previa.</item>
-        <item quantity="other">%d videos o sonidos no pueden reproducirse en un PDF; solo se muestran sus imágenes de vista previa.</item>
+        <item quantity="one">%d video o sonido no se reproduce en PDF; solo se ve su miniatura.</item>
+        <item quantity="many">%d videos o sonidos no se reproducen en PDF; solo se ven sus miniaturas.</item>
+        <item quantity="other">%d videos o sonidos no se reproducen en PDF; solo se ven sus miniaturas.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
         <item quantity="one">No se pudo mostrar %d imagen.</item>
-        <item quantity="many">No se pudieron mostrar %d imágenes.</item>
-        <item quantity="other">No se pudieron mostrar %d imágenes.</item>
+        <item quantity="many">No se mostraron %d imágenes.</item>
+        <item quantity="other">No se mostraron %d imágenes.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
         <item quantity="one">Se omitió %d diapositiva oculta.</item>
-        <item quantity="many">Se omitieron %d diapositivas ocultas.</item>
-        <item quantity="other">Se omitieron %d diapositivas ocultas.</item>
+        <item quantity="many">%d diapositivas ocultas omitidas.</item>
+        <item quantity="other">%d diapositivas ocultas omitidas.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
         <item quantity="one">%d diapositiva no se pudo leer y se omitió.</item>
-        <item quantity="many">%d diapositivas no se pudieron leer y se omitieron.</item>
-        <item quantity="other">%d diapositivas no se pudieron leer y se omitieron.</item>
+        <item quantity="many">%d diapositivas ilegibles, omitidas.</item>
+        <item quantity="other">%d diapositivas ilegibles, omitidas.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Solo se convirtió %d diapositiva.</item>
-        <item quantity="many">Solo se convirtieron las primeras %d diapositivas.</item>
-        <item quantity="other">Solo se convirtieron las primeras %d diapositivas.</item>
+        <item quantity="many">Solo las primeras %d diapositivas.</item>
+        <item quantity="other">Solo las primeras %d diapositivas.</item>
     </plurals>
 </resources>

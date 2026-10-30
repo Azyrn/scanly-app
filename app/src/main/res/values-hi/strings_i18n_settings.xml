@@ -2,7 +2,7 @@
 <resources>
     <string name="set_settings_title">सेटिंग्स</string>
     <string name="set_section_account">अकाउंट</string>
-    <string name="set_sign_in">साइन इन करें</string>
+    <string name="set_sign_in">साइन इन</string>
     <string name="set_sign_in_subtitle">AI स्कैन के लिए ज़रूरी है</string>
     <string name="set_signed_in">साइन इन है</string>
     <string name="set_pro_key_title">Scanly Pro की</string>
@@ -18,10 +18,10 @@
     <string name="set_barcode_engine_title">बारकोड स्कैनर इंजन</string>
     <string name="set_custom_endpoint_title">कस्टम एंडपॉइंट</string>
     <string name="set_custom_endpoint_subtitle">अपना AI प्रदाता जोड़ें · Pro</string>
-    <string name="set_section_about">ऐप के बारे में</string>
+    <string name="set_section_about">जानकारी</string>
     <string name="set_privacy_options_title">प्राइवसी विकल्प</string>
     <string name="set_privacy_options_subtitle">विज्ञापन की सहमति के विकल्प मैनेज करें</string>
-    <string name="set_rate_title">Scanly को रेट करें</string>
+    <string name="set_rate_title">Scanly रेट करें</string>
     <string name="set_rate_subtitle">Google Play पर अपनी राय बताएं</string>
     <string name="set_privacy_policy_title">प्राइवसी पॉलिसी</string>
     <string name="set_privacy_policy_subtitle">Scanly क्या सहेजता है, और उसे कौन प्रोसेस करता है</string>
@@ -34,7 +34,7 @@
     <string name="set_remove_key_confirm">हटाएं</string>
     <string name="set_delete_account_dialog_title">अकाउंट हटाएं?</string>
     <string name="set_delete_account_dialog_message">इससे आपका Scanly अकाउंट, साइन-इन की जानकारी और हमारे सर्वर पर आपके इस्तेमाल के रिकॉर्ड हमेशा के लिए मिट जाएंगे। इसे वापस नहीं लाया जा सकता।\n\nइस डिवाइस पर सहेजे गए स्कैन पर कोई असर नहीं होगा, और सक्रिय Pro सब्सक्रिप्शन को Paddle के ज़रिए अलग से रद्द करना होगा।</string>
-    <string name="set_sign_out_dialog_title">साइन आउट करें?</string>
+    <string name="set_sign_out_dialog_title">साइन आउट?</string>
     <string name="set_sign_out_dialog_message">फिर से साइन इन करने तक AI स्कैन काम नहीं करेंगे। आपकी स्कैन हिस्ट्री और ऑफ़लाइन टेक्स्ट रिकग्निशन इसी डिवाइस पर रहेंगे।</string>
     <string name="set_sign_out">साइन आउट</string>
     <string name="set_account_options">अकाउंट विकल्प</string>
@@ -88,8 +88,8 @@
     <string name="set_section_endpoint">एंडपॉइंट</string>
     <string name="set_endpoint_url_label">एंडपॉइंट URL</string>
     <string name="set_endpoint_hint_cloudflare">Cloudflare Workers AI अपना अकाउंट ID पाथ में रखता है — उसके साथ पूरा URL चिपकाएं।</string>
-    <string name="set_endpoint_hint_openai">आम तौर पर /v1/chat/completions पर खत्म होता है।</string>
-    <string name="set_endpoint_hint_anthropic">आम तौर पर /v1/messages पर खत्म होता है।</string>
+    <string name="set_endpoint_hint_openai">अक्सर /v1/chat/completions पर खत्म होता है।</string>
+    <string name="set_endpoint_hint_anthropic">अक्सर /v1/messages पर खत्म होता है।</string>
     <string name="set_endpoint_hint_gemini">सिर्फ़ होस्ट काफ़ी है — मॉडल और पाथ अपने-आप जुड़ जाते हैं।</string>
     <string name="set_model_label">मॉडल</string>
     <string name="set_model_hint">बिल्कुल वैसा ही लिखें जैसा आपका प्रदाता दिखाता है।</string>
@@ -100,10 +100,10 @@
     <string name="set_auth_style_label">की इस तरह भेजें</string>
     <string name="set_endpoint_verified">पुष्ट — इस एंडपॉइंट ने सही जवाब दिया।</string>
     <string name="set_endpoint_unverified">पुष्ट नहीं — सेव करने से पहले कनेक्शन टेस्ट करें।</string>
-    <string name="set_testing">टेस्ट हो रहा है…</string>
+    <string name="set_testing">टेस्ट जारी…</string>
     <string name="set_test_connection">कनेक्शन टेस्ट करें</string>
     <string name="set_remove_endpoint">एंडपॉइंट हटाएं</string>
-    <string name="set_use_for_ai_title">AI फ़ीचर के लिए इस्तेमाल करें</string>
+    <string name="set_use_for_ai_title">AI फ़ीचर के लिए इस्तेमाल</string>
     <string name="set_use_for_ai_verified">स्कैन, डेटा निकालना, अनुवाद, ड्राफ़्ट और डिज़ाइन, सब Scanly AI की जगह आपके एंडपॉइंट से होंगे। ऑडियो से टेक्स्ट हमेशा Scanly AI से होगा, क्योंकि चैट एंडपॉइंट ऑडियो नहीं ले सकता।</string>
     <string name="set_use_for_ai_unverified">पहले एंडपॉइंट की पुष्टि करें।</string>
     <string name="set_auth_create_title">अपना अकाउंट बनाएं</string>
@@ -116,7 +116,7 @@
     <string name="set_auth_or">या</string>
     <string name="set_auth_continue_google">Google से जारी रखें</string>
     <string name="set_auth_have_account">पहले से अकाउंट है?</string>
-    <string name="set_auth_no_account">अभी तक अकाउंट नहीं है?</string>
+    <string name="set_auth_no_account">अकाउंट नहीं है?</string>
     <string name="set_auth_create_one">बनाएं</string>
     <string name="set_account_deleted">आपका अकाउंट हटा दिया गया है।</string>
     <string name="set_history_title">हिस्ट्री</string>
@@ -124,5 +124,5 @@
     <string name="set_history_clear_all">सब साफ़ करें</string>
     <string name="set_history_clear_message">क्या आप सारी हिस्ट्री हटाना चाहते हैं? यह काम वापस नहीं हो सकता।</string>
     <string name="set_history_delete_all">सब हटाएं</string>
-    <string name="set_history_empty">अभी तक कोई हिस्ट्री नहीं है</string>
+    <string name="set_history_empty">हिस्ट्री खाली है</string>
 </resources>

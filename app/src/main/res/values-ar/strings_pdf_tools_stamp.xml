@@ -53,8 +53,8 @@
     <string name="pdf_stamp_watermark_tiled">متكرر</string>
     <string name="pdf_stamp_watermark_rotation">الزاوية</string>
     <string name="pdf_stamp_watermark_rotation_none">أفقي</string>
-    <string name="pdf_stamp_watermark_rotation_rising">صاعد بزاوية 45°</string>
-    <string name="pdf_stamp_watermark_rotation_falling">هابط بزاوية 45°</string>
+    <string name="pdf_stamp_watermark_rotation_rising">صاعد 45°</string>
+    <string name="pdf_stamp_watermark_rotation_falling">هابط 45°</string>
     <string name="pdf_stamp_watermark_opacity">الشفافية</string>
     <string name="pdf_stamp_watermark_opacity_light">25%</string>
     <string name="pdf_stamp_watermark_opacity_medium">50%</string>

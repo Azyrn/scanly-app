@@ -10,16 +10,16 @@
     <string name="pdf_tool_jpg_action_pages">JPG में बदलें</string>
     <string name="pdf_tool_jpg_action_extract">तस्वीरें निकालें</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">%d तस्वीर ऐसे फ़ॉर्मैट में थी जिसे Scanly एक्सपोर्ट नहीं कर सकता, इसलिए छोड़ दी गई।</item>
-        <item quantity="other">%d तस्वीरें ऐसे फ़ॉर्मैट में थीं जिन्हें Scanly एक्सपोर्ट नहीं कर सकता, इसलिए छोड़ दी गईं।</item>
+        <item quantity="one">%d तस्वीर छोड़ी गई, उसका फ़ॉर्मैट समर्थित नहीं।</item>
+        <item quantity="other">%d तस्वीरें छोड़ी गईं, उनका फ़ॉर्मैट समर्थित नहीं।</item>
     </plurals>
     <string name="pdf_tool_img2pdf_body">हर पेज पर एक तस्वीर, दिखाए गए क्रम में।</string>
     <string name="pdf_tool_img2pdf_page_size">पेज साइज़</string>
-    <string name="pdf_tool_img2pdf_size_fit">तस्वीर के हिसाब से</string>
+    <string name="pdf_tool_img2pdf_size_fit">तस्वीर में फिट</string>
     <string name="pdf_tool_img2pdf_size_a4">A4</string>
     <string name="pdf_tool_img2pdf_size_letter">Letter</string>
     <string name="pdf_tool_img2pdf_orientation">ओरिएंटेशन</string>
-    <string name="pdf_tool_img2pdf_orientation_auto">अपने-आप</string>
+    <string name="pdf_tool_img2pdf_orientation_auto">ऑटो</string>
     <string name="pdf_tool_img2pdf_orientation_portrait">पोर्ट्रेट</string>
     <string name="pdf_tool_img2pdf_orientation_landscape">लैंडस्केप</string>
     <string name="pdf_tool_img2pdf_margin">मार्जिन</string>

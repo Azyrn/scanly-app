@@ -2,28 +2,28 @@
 <!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
 <resources>
     <!-- Opening a PDF anywhere in the app -->
-    <string name="pdf_open_damaged">Файл повреждён или не является PDF.</string>
+    <string name="pdf_open_damaged">Файл повреждён или не PDF.</string>
 
     <!-- Grid -->
-    <string name="pdf_tools_title">Инструменты PDF</string>
+    <string name="pdf_tools_title">Утилиты</string>
     <string name="pdf_tools_back">Назад</string>
-    <string name="pdf_tools_section_organize">Упорядочивание и оптимизация</string>
-    <string name="pdf_tools_section_convert">Преобразование</string>
-    <string name="pdf_tools_section_edit">Редактирование и защита</string>
-    <string name="pdf_tools_section_image">Изображения</string>
+    <string name="pdf_tools_section_organize">Порядок и сжатие</string>
+    <string name="pdf_tools_section_convert">Конвертация</string>
+    <string name="pdf_tools_section_edit">Правка и защита</string>
+    <string name="pdf_tools_section_image">Фото</string>
     <string name="pdf_tools_pro_badge">Pro</string>
-    <string name="pdf_tools_paywall_reason">Этот инструмент входит в Scanly Pro.</string>
+    <string name="pdf_tools_paywall_reason">Входит в Scanly Pro.</string>
 
     <!-- Tool names -->
     <string name="pdf_tool_compress">Сжать PDF</string>
-    <string name="pdf_tool_edit">Редактировать PDF</string>
-    <string name="pdf_tool_rotate">Повернуть PDF</string>
-    <string name="pdf_tool_unlock">Разблокировать PDF</string>
-    <string name="pdf_tool_protect">Защитить PDF</string>
-    <string name="pdf_tool_organize">Упорядочить PDF</string>
-    <string name="pdf_tool_sign">Подписать PDF</string>
-    <string name="pdf_tool_merge">Объединить PDF</string>
-    <string name="pdf_tool_split">Разделить PDF</string>
+    <string name="pdf_tool_edit">Править</string>
+    <string name="pdf_tool_rotate">Поворот PDF</string>
+    <string name="pdf_tool_unlock">Без пароля</string>
+    <string name="pdf_tool_protect">Защита PDF</string>
+    <string name="pdf_tool_organize">Порядок PDF</string>
+    <string name="pdf_tool_sign">Подпись</string>
+    <string name="pdf_tool_merge">Объединить</string>
+    <string name="pdf_tool_split">Разделить</string>
     <string name="pdf_tool_pdf_to_word">PDF в Word</string>
     <string name="pdf_tool_pdf_to_powerpoint">PDF в PowerPoint</string>
     <string name="pdf_tool_pdf_to_excel">PDF в Excel</string>
@@ -31,15 +31,15 @@
     <string name="pdf_tool_powerpoint_to_pdf">PowerPoint в PDF</string>
     <string name="pdf_tool_excel_to_pdf">Excel в PDF</string>
     <string name="pdf_tool_pdf_to_jpg">PDF в JPG</string>
-    <string name="pdf_tool_image_to_pdf">Изображение в PDF</string>
-    <string name="pdf_tool_page_numbers">Номера страниц</string>
+    <string name="pdf_tool_image_to_pdf">Фото в PDF</string>
+    <string name="pdf_tool_page_numbers">Нумерация</string>
     <string name="pdf_tool_watermark">Водяной знак</string>
-    <string name="pdf_tool_repair">Восстановить PDF</string>
-    <string name="pdf_tool_extract_text">Извлечь текст</string>
-    <string name="pdf_tool_compress_image">Сжать изображение</string>
-    <string name="pdf_tool_convert_to_jpg">Преобразовать в JPG</string>
-    <string name="pdf_tool_convert_from_jpg">Преобразовать из JPG</string>
-    <string name="pdf_tool_resize_image">Изменить размер изображения</string>
+    <string name="pdf_tool_repair">Починить</string>
+    <string name="pdf_tool_extract_text">Текст из PDF</string>
+    <string name="pdf_tool_compress_image">Сжать фото</string>
+    <string name="pdf_tool_convert_to_jpg">В JPG</string>
+    <string name="pdf_tool_convert_from_jpg">Из JPG</string>
+    <string name="pdf_tool_resize_image">Размер фото</string>
 
     <!-- Shared flow -->
     <string name="pdf_tool_reading">Чтение %1$s…</string>
@@ -48,63 +48,63 @@
     <string name="pdf_tool_cancelled">Отменено.</string>
     <string name="pdf_tool_file_summary">%1$s · %2$s</string>
     <plurals name="pdf_tool_pages">
-        <item quantity="one">%d страница</item>
-        <item quantity="few">%d страницы</item>
-        <item quantity="many">%d страниц</item>
-        <item quantity="other">%d страниц</item>
+        <item quantity="one">%d стр.</item>
+        <item quantity="few">%d стр.</item>
+        <item quantity="many">%d стр.</item>
+        <item quantity="other">%d стр.</item>
     </plurals>
     <string name="pdf_tool_password_title">Нужен пароль</string>
     <string name="pdf_tool_password_body">%1$s защищён паролем.</string>
-    <string name="pdf_tool_password_retry">Этот пароль не открывает файл %1$s.</string>
+    <string name="pdf_tool_password_retry">Пароль не открывает %1$s.</string>
     <string name="pdf_tool_password_label">Пароль</string>
-    <string name="pdf_tool_password_open">Открыть</string>
+    <string name="pdf_tool_password_open">Вход</string>
     <string name="pdf_tool_show_password">Показать пароль</string>
     <string name="pdf_tool_hide_password">Скрыть пароль</string>
 
     <!-- Result -->
     <string name="pdf_tool_done">Готово</string>
     <string name="pdf_tool_save">Сохранить</string>
-    <string name="pdf_tool_saved">Сохранено в Downloads/Scanly</string>
+    <string name="pdf_tool_saved">Сохранено Downloads/Scanly</string>
     <string name="pdf_tool_share">Поделиться</string>
     <string name="pdf_tool_open">Открыть</string>
-    <string name="pdf_tool_open_with">Открыть с помощью…</string>
-    <string name="pdf_tool_no_viewer">Ни одно приложение на этом телефоне не может открыть этот файл.</string>
-    <string name="pdf_tool_save_failed">Не удалось сохранить в Downloads. Возможно, память заполнена.</string>
+    <string name="pdf_tool_open_with">Открыть в…</string>
+    <string name="pdf_tool_no_viewer">Нет приложения для этого файла.</string>
+    <string name="pdf_tool_save_failed">Не сохранено в Downloads. Возможно, нет места.</string>
     <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
-    <string name="pdf_tool_another_file">Выбрать другой файл</string>
+    <string name="pdf_tool_another_file">Другой файл</string>
     <string name="pdf_tool_try_again">Повторить</string>
 
     <!-- Failures -->
-    <string name="pdf_tool_error_title">Не удалось завершить</string>
-    <string name="pdf_tool_error_unreadable">Scanly не смог прочитать этот файл. Возможно, его переместили, или приложение, которое им управляет, отказало в доступе.</string>
-    <string name="pdf_tool_error_damaged">Файл повреждён или не является PDF.</string>
-    <string name="pdf_tool_error_low_storage">На этом телефоне недостаточно свободного места. Освободите место и повторите попытку.</string>
+    <string name="pdf_tool_error_title">Ошибка</string>
+    <string name="pdf_tool_error_unreadable">Scanly не может открыть файл: его переместили или доступ к нему закрыт.</string>
+    <string name="pdf_tool_error_damaged">Файл повреждён или не PDF.</string>
+    <string name="pdf_tool_error_low_storage">Мало места на телефоне. Освободите место и повторите.</string>
     <string name="pdf_tool_error_wrong_password">Этот пароль не открывает файл.</string>
-    <string name="pdf_tool_error_not_encrypted">У этого PDF нет пароля, который можно было бы снять.</string>
-    <string name="pdf_tool_error_no_gain">Этот PDF уже настолько сжат, насколько позволяет этот уровень. Попробуйте более сильный уровень.</string>
-    <string name="pdf_tool_error_nothing_found">В этом PDF нет ничего, что этот инструмент может извлечь.</string>
+    <string name="pdf_tool_error_not_encrypted">В PDF нет пароля для снятия.</string>
+    <string name="pdf_tool_error_no_gain">PDF уже не уменьшить этим уровнем. Выберите сильнее.</string>
+    <string name="pdf_tool_error_nothing_found">В PDF нечего извлечь.</string>
     <string name="pdf_tool_error_failed">Во время обработки файла что-то пошло не так.</string>
 
     <!-- Compress -->
     <string name="pdf_tool_compress_lossless">Без потерь</string>
-    <string name="pdf_tool_compress_lossless_body">Перепаковывает файл. Страницы выглядят точно так же.</string>
+    <string name="pdf_tool_compress_lossless_body">Пересборка. Страницы не меняются.</string>
     <string name="pdf_tool_compress_balanced">Рекомендуется</string>
-    <string name="pdf_tool_compress_balanced_body">Хорошее качество, изображения заметно меньше</string>
-    <string name="pdf_tool_compress_smallest">Минимальный</string>
-    <string name="pdf_tool_compress_smallest_body">Ниже качество изображений, самый маленький файл</string>
+    <string name="pdf_tool_compress_balanced_body">Хорошо, картинки меньше</string>
+    <string name="pdf_tool_compress_smallest">Минимум</string>
+    <string name="pdf_tool_compress_smallest_body">Ниже качество, меньший файл</string>
     <string name="pdf_tool_compress_action">Сжать</string>
 
     <!-- Protect -->
-    <string name="pdf_tool_protect_body">Тому, кто откроет защищённую копию, понадобится этот пароль. Копия зашифрована AES-256.</string>
-    <string name="pdf_tool_protect_confirm">Подтвердите пароль</string>
+    <string name="pdf_tool_protect_body">Чтобы открыть копию, нужен этот пароль. Шифрование AES-256.</string>
+    <string name="pdf_tool_protect_confirm">Пароль ещё раз</string>
     <string name="pdf_tool_protect_mismatch">Пароли не совпадают.</string>
     <string name="pdf_tool_protect_action">Защитить</string>
     <string name="pdf_tool_protect_already">У этого PDF уже есть пароль. Новый заменит его.</string>
 
     <!-- Rotate -->
-    <string name="pdf_tool_rotate_right">90° вправо</string>
+    <string name="pdf_tool_rotate_right">Вправо</string>
     <string name="pdf_tool_rotate_half">180°</string>
-    <string name="pdf_tool_rotate_left">90° влево</string>
-    <string name="pdf_tool_rotate_body">Поворачивает все страницы. Чтобы повернуть отдельные страницы, используйте «Упорядочить PDF».</string>
-    <string name="pdf_tool_rotate_action">Повернуть</string>
+    <string name="pdf_tool_rotate_left">Влево</string>
+    <string name="pdf_tool_rotate_body">Все страницы. Для отдельных — «Порядок PDF».</string>
+    <string name="pdf_tool_rotate_action">Поворот</string>
 </resources>

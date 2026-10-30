@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_language_title">Langue</string>
-    <string name="settings_language_system">Par défaut du système</string>
+    <string name="settings_language_system">Système</string>
     <string name="settings_language_cancel">Annuler</string>
 </resources>

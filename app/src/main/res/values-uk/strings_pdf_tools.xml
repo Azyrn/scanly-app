@@ -2,28 +2,28 @@
 <!-- PDF tools: the tool grid behind the home screen's Edit PDF card, and the flow each tool runs. -->
 <resources>
     <!-- Opening a PDF anywhere in the app -->
-    <string name="pdf_open_damaged">Цей файл пошкоджено або це не PDF.</string>
+    <string name="pdf_open_damaged">Файл пошкоджено або це не PDF.</string>
 
     <!-- Grid -->
-    <string name="pdf_tools_title">Інструменти PDF</string>
+    <string name="pdf_tools_title">PDF засоби</string>
     <string name="pdf_tools_back">Назад</string>
-    <string name="pdf_tools_section_organize">Упорядкування й оптимізація</string>
-    <string name="pdf_tools_section_convert">Перетворення</string>
-    <string name="pdf_tools_section_edit">Редагування й захист</string>
-    <string name="pdf_tools_section_image">Зображення</string>
+    <string name="pdf_tools_section_organize">Порядок і оптимізація</string>
+    <string name="pdf_tools_section_convert">Конвертація</string>
+    <string name="pdf_tools_section_edit">Правка й захист</string>
+    <string name="pdf_tools_section_image">Фото</string>
     <string name="pdf_tools_pro_badge">Pro</string>
-    <string name="pdf_tools_paywall_reason">Цей інструмент входить до Scanly Pro.</string>
+    <string name="pdf_tools_paywall_reason">Входить до Scanly Pro.</string>
 
     <!-- Tool names -->
     <string name="pdf_tool_compress">Стиснути PDF</string>
-    <string name="pdf_tool_edit">Редагувати PDF</string>
-    <string name="pdf_tool_rotate">Повернути PDF</string>
-    <string name="pdf_tool_unlock">Розблокувати PDF</string>
-    <string name="pdf_tool_protect">Захистити PDF</string>
-    <string name="pdf_tool_organize">Упорядкувати PDF</string>
-    <string name="pdf_tool_sign">Підписати PDF</string>
-    <string name="pdf_tool_merge">Об\'єднати PDF</string>
-    <string name="pdf_tool_split">Розділити PDF</string>
+    <string name="pdf_tool_edit">Редагувати</string>
+    <string name="pdf_tool_rotate">Поворот PDF</string>
+    <string name="pdf_tool_unlock">Зняти захист</string>
+    <string name="pdf_tool_protect">Захист PDF</string>
+    <string name="pdf_tool_organize">Порядок PDF</string>
+    <string name="pdf_tool_sign">Підпис</string>
+    <string name="pdf_tool_merge">Злиття PDF</string>
+    <string name="pdf_tool_split">Поділ PDF</string>
     <string name="pdf_tool_pdf_to_word">PDF у Word</string>
     <string name="pdf_tool_pdf_to_powerpoint">PDF у PowerPoint</string>
     <string name="pdf_tool_pdf_to_excel">PDF у Excel</string>
@@ -31,15 +31,15 @@
     <string name="pdf_tool_powerpoint_to_pdf">PowerPoint у PDF</string>
     <string name="pdf_tool_excel_to_pdf">Excel у PDF</string>
     <string name="pdf_tool_pdf_to_jpg">PDF у JPG</string>
-    <string name="pdf_tool_image_to_pdf">Зображення у PDF</string>
-    <string name="pdf_tool_page_numbers">Номери сторінок</string>
+    <string name="pdf_tool_image_to_pdf">Фото у PDF</string>
+    <string name="pdf_tool_page_numbers">Нумерація</string>
     <string name="pdf_tool_watermark">Водяний знак</string>
-    <string name="pdf_tool_repair">Відновити PDF</string>
-    <string name="pdf_tool_extract_text">Витягти текст</string>
-    <string name="pdf_tool_compress_image">Стиснути зображення</string>
+    <string name="pdf_tool_repair">Ремонт PDF</string>
+    <string name="pdf_tool_extract_text">Витяг тексту</string>
+    <string name="pdf_tool_compress_image">Стиснути фото</string>
     <string name="pdf_tool_convert_to_jpg">Перетворити на JPG</string>
     <string name="pdf_tool_convert_from_jpg">Перетворити з JPG</string>
-    <string name="pdf_tool_resize_image">Змінити розмір зображення</string>
+    <string name="pdf_tool_resize_image">Розмір фото</string>
 
     <!-- Shared flow -->
     <string name="pdf_tool_reading">Читаємо %1$s…</string>
@@ -59,52 +59,52 @@
     <string name="pdf_tool_password_label">Пароль</string>
     <string name="pdf_tool_password_open">Відкрити</string>
     <string name="pdf_tool_show_password">Показати пароль</string>
-    <string name="pdf_tool_hide_password">Приховати пароль</string>
+    <string name="pdf_tool_hide_password">Сховати пароль</string>
 
     <!-- Result -->
     <string name="pdf_tool_done">Готово</string>
     <string name="pdf_tool_save">Зберегти</string>
-    <string name="pdf_tool_saved">Збережено в Downloads/Scanly</string>
+    <string name="pdf_tool_saved">Збережено: Downloads/Scanly</string>
     <string name="pdf_tool_share">Поділитися</string>
     <string name="pdf_tool_open">Відкрити</string>
-    <string name="pdf_tool_open_with">Відкрити за допомогою…</string>
-    <string name="pdf_tool_no_viewer">На цьому телефоні немає застосунку, який може відкрити цей файл.</string>
-    <string name="pdf_tool_save_failed">Не вдалося зберегти в Downloads. Можливо, у сховищі закінчилося місце.</string>
+    <string name="pdf_tool_open_with">Відкрити в…</string>
+    <string name="pdf_tool_no_viewer">Немає застосунку для цього файлу.</string>
+    <string name="pdf_tool_save_failed">Не вдалося зберегти в Downloads. Мабуть, нема місця.</string>
     <string name="pdf_tool_size_change">%1$s → %2$s (%3$s)</string>
     <string name="pdf_tool_another_file">Вибрати інший файл</string>
-    <string name="pdf_tool_try_again">Спробувати знову</string>
+    <string name="pdf_tool_try_again">Повторити</string>
 
     <!-- Failures -->
-    <string name="pdf_tool_error_title">Не вдалося завершити</string>
-    <string name="pdf_tool_error_unreadable">Scanly не зміг прочитати цей файл. Його могли перемістити або застосунок, який його зберігає, відмовив у доступі.</string>
-    <string name="pdf_tool_error_damaged">Цей файл пошкоджено або це не PDF.</string>
-    <string name="pdf_tool_error_low_storage">На цьому телефоні недостатньо вільного місця. Звільніть трохи місця й спробуйте знову.</string>
+    <string name="pdf_tool_error_title">Помилка</string>
+    <string name="pdf_tool_error_unreadable">Scanly не зміг прочитати файл. Його могли перемістити або заблокувати доступ.</string>
+    <string name="pdf_tool_error_damaged">Файл пошкоджено або це не PDF.</string>
+    <string name="pdf_tool_error_low_storage">На телефоні замало місця. Звільніть місце й повторіть.</string>
     <string name="pdf_tool_error_wrong_password">Цей пароль не відкриває файл.</string>
-    <string name="pdf_tool_error_not_encrypted">Цей PDF не має пароля, який можна зняти.</string>
-    <string name="pdf_tool_error_no_gain">Цей PDF уже такий малий, наскільки це можливо на цьому рівні. Спробуйте сильніший рівень.</string>
-    <string name="pdf_tool_error_nothing_found">У цьому PDF немає нічого, що може витягнути цей інструмент.</string>
+    <string name="pdf_tool_error_not_encrypted">У PDF немає пароля.</string>
+    <string name="pdf_tool_error_no_gain">Цей рівень не зменшує PDF. Оберіть сильніший.</string>
+    <string name="pdf_tool_error_nothing_found">Немає що витягти з цього PDF.</string>
     <string name="pdf_tool_error_failed">Під час обробки цього файлу щось пішло не так.</string>
 
     <!-- Compress -->
     <string name="pdf_tool_compress_lossless">Без втрат</string>
-    <string name="pdf_tool_compress_lossless_body">Перепаковує файл. Сторінки виглядають абсолютно так само.</string>
+    <string name="pdf_tool_compress_lossless_body">Пакує файл заново. Сторінки без змін.</string>
     <string name="pdf_tool_compress_balanced">Рекомендовано</string>
-    <string name="pdf_tool_compress_balanced_body">Добра якість, значно менші зображення</string>
-    <string name="pdf_tool_compress_smallest">Найменший</string>
-    <string name="pdf_tool_compress_smallest_body">Нижча якість зображень, найменший файл</string>
+    <string name="pdf_tool_compress_balanced_body">Гарна якість, менші зображення</string>
+    <string name="pdf_tool_compress_smallest">Мінімум</string>
+    <string name="pdf_tool_compress_smallest_body">Нижча якість, найменший файл</string>
     <string name="pdf_tool_compress_action">Стиснути</string>
 
     <!-- Protect -->
-    <string name="pdf_tool_protect_body">Кожен, хто відкриватиме захищену копію, потребуватиме цього пароля. Він шифрується за допомогою AES-256.</string>
+    <string name="pdf_tool_protect_body">Потрібен цей пароль. Шифрування AES-256.</string>
     <string name="pdf_tool_protect_confirm">Підтвердіть пароль</string>
     <string name="pdf_tool_protect_mismatch">Паролі не збігаються.</string>
     <string name="pdf_tool_protect_action">Захистити</string>
     <string name="pdf_tool_protect_already">Цей PDF уже має пароль. Новий замінить його.</string>
 
     <!-- Rotate -->
-    <string name="pdf_tool_rotate_right">90° праворуч</string>
+    <string name="pdf_tool_rotate_right">90° вправо</string>
     <string name="pdf_tool_rotate_half">180°</string>
-    <string name="pdf_tool_rotate_left">90° ліворуч</string>
-    <string name="pdf_tool_rotate_body">Повертає кожну сторінку. Щоб повернути окремі сторінки, скористайтеся інструментом «Упорядкувати PDF».</string>
+    <string name="pdf_tool_rotate_left">90° вліво</string>
+    <string name="pdf_tool_rotate_body">Повертає всі сторінки. Окремі — в «Порядок PDF».</string>
     <string name="pdf_tool_rotate_action">Повернути</string>
 </resources>

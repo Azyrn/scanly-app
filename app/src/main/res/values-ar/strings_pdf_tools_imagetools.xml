@@ -22,7 +22,7 @@
     <string name="pdf_tool_img_compress_recommended">موصى به</string>
     <string name="pdf_tool_img_compress_recommended_body">أصغر بكثير، والمظهر يبقى كما هو.</string>
     <string name="pdf_tool_img_compress_strong">قوي</string>
-    <string name="pdf_tool_img_compress_strong_body">أصغر الملفات. قد تفقد التفاصيل الدقيقة بعض وضوحها.</string>
+    <string name="pdf_tool_img_compress_strong_body">أصغر الملفات. قد تضعف التفاصيل الدقيقة.</string>
     <string name="pdf_tool_img_compress_light">خفيف</string>
     <string name="pdf_tool_img_compress_light_body">أفضل جودة، مع توفير أقل.</string>
     <string name="pdf_tool_img_png_to_jpg">تحويل PNG إلى JPG لحجم ملف أصغر</string>
@@ -35,11 +35,11 @@
 
     <!-- Convert from JPG -->
     <string name="pdf_tool_img_from_jpg_png">PNG</string>
-    <string name="pdf_tool_img_from_jpg_png_body">بكسلات مطابقة تمامًا، وملفات أكبر.</string>
+    <string name="pdf_tool_img_from_jpg_png_body">بكسلات مطابقة، وملفات أكبر.</string>
     <string name="pdf_tool_img_from_jpg_webp">WebP</string>
     <string name="pdf_tool_img_from_jpg_webp_body">المظهر نفسه، وغالبًا أصغر من JPG.</string>
     <string name="pdf_tool_img_from_jpg_gif">GIF</string>
-    <string name="pdf_tool_img_from_jpg_gif_body">256 لونًا. مناسب للرسومات، وقد تظهر الصور الفوتوغرافية بتدرجات متقطعة.</string>
+    <string name="pdf_tool_img_from_jpg_gif_body">256 لونًا. مناسب للرسوم، وقد تظهر الصور بتدرجات متقطعة.</string>
     <string name="pdf_tool_img_from_jpg_action">تحويل الصور</string>
 
     <!-- Resize image -->

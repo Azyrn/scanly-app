@@ -37,6 +37,7 @@ internal val BundledFontLicenses: List<Pair<String, String>> = listOf(
     "Carlito" to "fonts/LICENSE-Carlito.txt",
     "Caladea" to "fonts/LICENSE-Caladea.txt",
     "Liberation Serif, Liberation Mono" to "fonts/LICENSE-Liberation.txt",
+    "Noto Naskh Arabic UI" to "fonts/LICENSE-NotoNaskhArabicUI.txt",
     "Tabler Icons (PDF tools icons)" to "licenses/LICENSE-TablerIcons.txt"
 )
 

@@ -135,8 +135,8 @@ android {
         applicationId = "com.skeler.scanely"
         minSdk = 24
         targetSdk = 37
-        versionCode = 24
-        versionName = "3.6.1"
+        versionCode = 25
+        versionName = "3.6.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

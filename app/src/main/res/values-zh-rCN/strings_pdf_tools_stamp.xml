@@ -5,7 +5,7 @@
     <string name="pdf_stamp_numbers_format_plain">%1$d</string>
     <string name="pdf_stamp_numbers_format_page">第 %1$d 页</string>
     <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
-    <string name="pdf_stamp_numbers_format_page_of">第 %1$d 页，共 %2$d 页</string>
+    <string name="pdf_stamp_numbers_format_page_of">第 %1$d/%2$d 页</string>
 
     <!-- Page numbers: options -->
     <string name="pdf_stamp_numbers_body">页码会添加在每一页的上方。原有内容不会被改动。</string>
@@ -53,7 +53,7 @@
     <string name="pdf_stamp_watermark_tiled">平铺</string>
     <string name="pdf_stamp_watermark_rotation">角度</string>
     <string name="pdf_stamp_watermark_rotation_none">水平</string>
-    <string name="pdf_stamp_watermark_rotation_rising">向上倾斜 45°</string>
+    <string name="pdf_stamp_watermark_rotation_rising">向上 45°</string>
     <string name="pdf_stamp_watermark_rotation_falling">向下倾斜 45°</string>
     <string name="pdf_stamp_watermark_opacity">不透明度</string>
     <string name="pdf_stamp_watermark_opacity_light">25%</string>

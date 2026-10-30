@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Excel to PDF (on-device .xlsx renderer). -->
 <resources>
-    <string name="excel2pdf_options_body">Chaque feuille visible devient des pages du PDF, dans l\'ordre du classeur. Les feuilles larges se poursuivent sur les pages suivantes.</string>
+    <string name="excel2pdf_options_body">Chaque feuille visible devient des pages, dans l\'ordre du classeur. Les feuilles larges se poursuivent.</string>
     <string name="excel2pdf_convert">Convertir en PDF</string>
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
-        <item quantity="one">%d feuille masquée a été retirée.</item>
-        <item quantity="many">%d feuilles masquées ont été retirées.</item>
-        <item quantity="other">%d feuilles masquées ont été retirées.</item>
+        <item quantity="one">%d feuille masquée retirée.</item>
+        <item quantity="many">%d feuilles masquées retirées.</item>
+        <item quantity="other">%d feuilles masquées retirées.</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">%d graphique a été retiré.</item>
-        <item quantity="many">%d graphiques ont été retirés.</item>
-        <item quantity="other">%d graphiques ont été retirés.</item>
+        <item quantity="one">%d graphique retiré.</item>
+        <item quantity="many">%d graphiques retirés.</item>
+        <item quantity="other">%d graphiques retirés.</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
         <item quantity="one">%d image a été retirée.</item>
         <item quantity="many">%d images ont été retirées.</item>
         <item quantity="other">%d images ont été retirées.</item>
     </plurals>
-    <string name="excel2pdf_note_formulas_cached">Les formules affichent leur dernier résultat enregistré.</string>
+    <string name="excel2pdf_note_formulas_cached">Formules : dernier résultat enregistré.</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d formule n\'avait pas de résultat enregistré et est vide.</item>
-        <item quantity="many">%d formules n\'avaient pas de résultat enregistré et sont vides.</item>
-        <item quantity="other">%d formules n\'avaient pas de résultat enregistré et sont vides.</item>
+        <item quantity="one">%d formule sans résultat enregistré : vide.</item>
+        <item quantity="many">%d formules sans résultat enregistré : vides.</item>
+        <item quantity="other">%d formules sans résultat enregistré : vides.</item>
     </plurals>
-    <string name="excel2pdf_note_conditional">La mise en forme conditionnelle n\'a pas été appliquée.</string>
-    <string name="excel2pdf_note_pivots">Les tableaux croisés dynamiques affichent leurs dernières valeurs enregistrées.</string>
+    <string name="excel2pdf_note_conditional">Mise en forme conditionnelle ignorée.</string>
+    <string name="excel2pdf_note_pivots">Tableaux croisés : valeurs enregistrées.</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">Les feuilles très volumineuses ont été coupées à %d ligne.</item>
-        <item quantity="many">Les feuilles très volumineuses ont été coupées à %d lignes.</item>
-        <item quantity="other">Les feuilles très volumineuses ont été coupées à %d lignes.</item>
+        <item quantity="one">Feuilles géantes, coupées à %d ligne.</item>
+        <item quantity="many">Feuilles géantes, coupées à %d lignes.</item>
+        <item quantity="other">Feuilles géantes, coupées à %d lignes.</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
         <item quantity="one">Le PDF s\'arrête à %d page ; le reste a été retiré.</item>

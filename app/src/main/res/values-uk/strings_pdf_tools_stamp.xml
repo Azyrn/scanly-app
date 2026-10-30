@@ -3,31 +3,31 @@
 <resources>
     <!-- Page numbers: the text drawn on each page. %1$d is the page's number, %2$d the last number. -->
     <string name="pdf_stamp_numbers_format_plain">%1$d</string>
-    <string name="pdf_stamp_numbers_format_page">Сторінка %1$d</string>
+    <string name="pdf_stamp_numbers_format_page">Стор. %1$d</string>
     <string name="pdf_stamp_numbers_format_slash">%1$d / %2$d</string>
-    <string name="pdf_stamp_numbers_format_page_of">Сторінка %1$d з %2$d</string>
+    <string name="pdf_stamp_numbers_format_page_of">Стор. %1$d з %2$d</string>
 
     <!-- Page numbers: options -->
     <string name="pdf_stamp_numbers_body">Номери додаються поверх кожної сторінки. Початковий вміст не змінюється.</string>
-    <string name="pdf_stamp_numbers_position">Положення</string>
-    <string name="pdf_stamp_numbers_top_left">Зверху ліворуч</string>
-    <string name="pdf_stamp_numbers_top_center">Зверху по центру</string>
-    <string name="pdf_stamp_numbers_top_right">Зверху праворуч</string>
-    <string name="pdf_stamp_numbers_bottom_left">Знизу ліворуч</string>
+    <string name="pdf_stamp_numbers_position">Позиція</string>
+    <string name="pdf_stamp_numbers_top_left">Вгорі зліва</string>
+    <string name="pdf_stamp_numbers_top_center">Вгорі, центр</string>
+    <string name="pdf_stamp_numbers_top_right">Вгорі справа</string>
+    <string name="pdf_stamp_numbers_bottom_left">Внизу зліва</string>
     <string name="pdf_stamp_numbers_bottom_center">Знизу по центру</string>
-    <string name="pdf_stamp_numbers_bottom_right">Знизу праворуч</string>
+    <string name="pdf_stamp_numbers_bottom_right">Внизу справа</string>
     <string name="pdf_stamp_numbers_format">Формат</string>
     <string name="pdf_stamp_numbers_start">Почати з номера</string>
-    <string name="pdf_stamp_numbers_first_page">Нумерувати з сторінки</string>
-    <string name="pdf_stamp_numbers_first_page_hint">Сторінки перед нею, як-от обкладинка, залишаються без номерів.</string>
+    <string name="pdf_stamp_numbers_first_page">Почати з сторінки</string>
+    <string name="pdf_stamp_numbers_first_page_hint">Сторінки перед нею (обкладинка) без номерів.</string>
     <string name="pdf_stamp_numbers_start_invalid">Введіть число від 0 до 99999.</string>
     <string name="pdf_stamp_numbers_first_page_invalid">Введіть сторінку від 1 до %1$d.</string>
-    <string name="pdf_stamp_numbers_text_size">Розмір тексту</string>
+    <string name="pdf_stamp_numbers_text_size">Розмір</string>
     <string name="pdf_stamp_numbers_margin">Відстань від краю</string>
-    <string name="pdf_stamp_numbers_margin_narrow">Близько</string>
-    <string name="pdf_stamp_numbers_margin_normal">Звичайна</string>
+    <string name="pdf_stamp_numbers_margin_narrow">Вузькі</string>
+    <string name="pdf_stamp_numbers_margin_normal">Звичайні</string>
     <string name="pdf_stamp_numbers_margin_wide">Далеко</string>
-    <string name="pdf_stamp_numbers_action">Додати номери сторінок</string>
+    <string name="pdf_stamp_numbers_action">Додати номери</string>
 
     <!-- Shared size choices -->
     <string name="pdf_stamp_size_small">Малий</string>
@@ -35,24 +35,24 @@
     <string name="pdf_stamp_size_large">Великий</string>
 
     <!-- Watermark: options -->
-    <string name="pdf_stamp_watermark_body">Водяний знак додається на кожну сторінку.</string>
+    <string name="pdf_stamp_watermark_body">Водяний знак — на кожній сторінці.</string>
     <string name="pdf_stamp_watermark_kind">Водяний знак</string>
     <string name="pdf_stamp_watermark_kind_text">Текст</string>
-    <string name="pdf_stamp_watermark_kind_image">Зображення</string>
-    <string name="pdf_stamp_watermark_text_label">Текст водяного знака</string>
+    <string name="pdf_stamp_watermark_kind_image">Фото</string>
+    <string name="pdf_stamp_watermark_text_label">Текст знака</string>
     <string name="pdf_stamp_watermark_text_default">КОНФІДЕНЦІЙНО</string>
-    <string name="pdf_stamp_watermark_text_empty">Введіть текст водяного знака.</string>
-    <string name="pdf_stamp_watermark_pick_image">Вибрати зображення</string>
-    <string name="pdf_stamp_watermark_change_image">Змінити зображення</string>
-    <string name="pdf_stamp_watermark_image_chosen">Вибрано зображення: %1$s</string>
-    <string name="pdf_stamp_watermark_image_none">Зображення ще не вибрано.</string>
-    <string name="pdf_stamp_watermark_placement">Положення</string>
-    <string name="pdf_stamp_watermark_center">По центру</string>
-    <string name="pdf_stamp_watermark_top">Зверху</string>
+    <string name="pdf_stamp_watermark_text_empty">Введіть текст.</string>
+    <string name="pdf_stamp_watermark_pick_image">Вибрати фото</string>
+    <string name="pdf_stamp_watermark_change_image">Змінити фото</string>
+    <string name="pdf_stamp_watermark_image_chosen">Вибрано: %1$s</string>
+    <string name="pdf_stamp_watermark_image_none">Ще не вибрано.</string>
+    <string name="pdf_stamp_watermark_placement">Позиція</string>
+    <string name="pdf_stamp_watermark_center">Центр</string>
+    <string name="pdf_stamp_watermark_top">Вгорі</string>
     <string name="pdf_stamp_watermark_bottom">Знизу</string>
-    <string name="pdf_stamp_watermark_tiled">Плиткою</string>
+    <string name="pdf_stamp_watermark_tiled">Сіткою</string>
     <string name="pdf_stamp_watermark_rotation">Кут</string>
-    <string name="pdf_stamp_watermark_rotation_none">Горизонтально</string>
+    <string name="pdf_stamp_watermark_rotation_none">Рівно</string>
     <string name="pdf_stamp_watermark_rotation_rising">Угору, 45°</string>
     <string name="pdf_stamp_watermark_rotation_falling">Униз, 45°</string>
     <string name="pdf_stamp_watermark_opacity">Непрозорість</string>
@@ -62,8 +62,8 @@
     <string name="pdf_stamp_watermark_size">Розмір</string>
     <string name="pdf_stamp_watermark_layer">Шар</string>
     <string name="pdf_stamp_watermark_layer_over">Поверх вмісту</string>
-    <string name="pdf_stamp_watermark_layer_over_body">Завжди видно. Може перекривати частину тексту.</string>
+    <string name="pdf_stamp_watermark_layer_over_body">Завжди видно. Може закрити текст.</string>
     <string name="pdf_stamp_watermark_layer_under">Під вмістом</string>
-    <string name="pdf_stamp_watermark_layer_under_body">Текст залишається зверху. На відсканованих сторінках зображення повністю його приховує.</string>
-    <string name="pdf_stamp_watermark_action">Додати водяний знак</string>
+    <string name="pdf_stamp_watermark_layer_under_body">Текст зверху. На сканах зображення його повністю ховає.</string>
+    <string name="pdf_stamp_watermark_action">Додати знак</string>
 </resources>

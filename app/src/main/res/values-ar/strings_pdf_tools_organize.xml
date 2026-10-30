@@ -15,19 +15,19 @@
     <string name="pdf_tool_merge_action">دمج</string>
 
     <!-- Split: modes -->
-    <string name="pdf_tool_split_mode_ranges">تقسيم حسب النطاقات</string>
+    <string name="pdf_tool_split_mode_ranges">تقسيم بالنطاقات</string>
     <string name="pdf_tool_split_mode_ranges_body">ملف جديد لكل نطاق تكتبه</string>
-    <string name="pdf_tool_split_mode_every">تقسيم كل عدد من الصفحات</string>
+    <string name="pdf_tool_split_mode_every">تقسيم كل عدة صفحات</string>
     <string name="pdf_tool_split_mode_every_body">ملف جديد لكل عدد محدد من الصفحات</string>
     <string name="pdf_tool_split_mode_extract">استخراج صفحات</string>
     <string name="pdf_tool_split_mode_extract_body">الصفحات التي تختارها، معًا في ملف واحد</string>
     <string name="pdf_tool_split_mode_delete">حذف صفحات</string>
     <string name="pdf_tool_split_mode_delete_body">نسخة بدون الصفحات التي تختارها</string>
-    <string name="pdf_tool_split_mode_size">تقسيم حسب حجم الملف</string>
+    <string name="pdf_tool_split_mode_size">تقسيم بحجم الملف</string>
     <string name="pdf_tool_split_mode_size_body">ملفات لا تتجاوز الحجم الذي حددته</string>
 
     <!-- Split: fields -->
-    <string name="pdf_tool_split_ranges_label">الصفحات</string>
+    <string name="pdf_tool_split_ranges_label">صفحات</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">مثال: 1-3، 5، 8-10</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
@@ -36,7 +36,7 @@
     <string name="pdf_tool_split_range_out">«%1$s» خارج الصفحات من 1 إلى %2$d</string>
     <string name="pdf_tool_split_range_reversed">«%1$s» بالترتيب المعكوس؛ اكتب الصفحة الأصغر أولًا</string>
     <string name="pdf_tool_split_delete_all">هذه كل الصفحات. أبقِ صفحة واحدة على الأقل.</string>
-    <string name="pdf_tool_split_every_label">عدد الصفحات لكل ملف</string>
+    <string name="pdf_tool_split_every_label">صفحات لكل ملف</string>
     <string name="pdf_tool_split_every_invalid">أدخل رقمًا من 1 إلى %1$d</string>
     <string name="pdf_tool_split_every_less">صفحات أقل لكل ملف</string>
     <string name="pdf_tool_split_every_more">صفحات أكثر لكل ملف</string>
@@ -55,7 +55,7 @@
     <plurals name="pdf_tool_split_keeps_pages">
         <item quantity="zero">يحتفظ بـ %d صفحة</item>
         <item quantity="one">يحتفظ بـ %d صفحة</item>
-        <item quantity="two">يحتفظ بـ %d صفحتين</item>
+        <item quantity="two">يُبقي %d صفحتين</item>
         <item quantity="few">يحتفظ بـ %d صفحات</item>
         <item quantity="many">يحتفظ بـ %d صفحة</item>
         <item quantity="other">يحتفظ بـ %d صفحة</item>

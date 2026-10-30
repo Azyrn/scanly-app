@@ -2,26 +2,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Merge -->
     <plurals name="pdf_tool_merge_files">
-        <item quantity="one">%d arquivo</item>
-        <item quantity="many">%d arquivos</item>
-        <item quantity="other">%d arquivos</item>
+        <item quantity="one">%d PDF</item>
+        <item quantity="many">%d PDFs</item>
+        <item quantity="other">%d PDFs</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · %2$s no total</string>
-    <string name="pdf_tool_merge_body">Os arquivos são unidos na ordem listada acima. A cópia mesclada não tem senha, mesmo que alguns arquivos tivessem.</string>
-    <string name="pdf_tool_merge_need_more">Adicione pelo menos mais um PDF para mesclar.</string>
+    <string name="pdf_tool_merge_body">Os arquivos são unidos na ordem listada acima. A cópia não tem senha, mesmo que alguns tivessem.</string>
+    <string name="pdf_tool_merge_need_more">Adicione mais um PDF.</string>
     <string name="pdf_tool_merge_action">Mesclar</string>
 
     <!-- Split: modes -->
-    <string name="pdf_tool_split_mode_ranges">Dividir por intervalos</string>
-    <string name="pdf_tool_split_mode_ranges_body">Um arquivo novo para cada intervalo que você digitar</string>
-    <string name="pdf_tool_split_mode_every">Dividir a cada poucas páginas</string>
-    <string name="pdf_tool_split_mode_every_body">Um arquivo novo a cada quantidade definida de páginas</string>
+    <string name="pdf_tool_split_mode_ranges">Por intervalos</string>
+    <string name="pdf_tool_split_mode_ranges_body">Um arquivo por intervalo digitado</string>
+    <string name="pdf_tool_split_mode_every">A cada poucas páginas</string>
+    <string name="pdf_tool_split_mode_every_body">Um arquivo por bloco de páginas</string>
     <string name="pdf_tool_split_mode_extract">Extrair páginas</string>
-    <string name="pdf_tool_split_mode_extract_body">As páginas escolhidas, juntas em um arquivo</string>
+    <string name="pdf_tool_split_mode_extract_body">Páginas escolhidas, num só arquivo</string>
     <string name="pdf_tool_split_mode_delete">Excluir páginas</string>
-    <string name="pdf_tool_split_mode_delete_body">Uma cópia sem as páginas escolhidas</string>
-    <string name="pdf_tool_split_mode_size">Dividir por tamanho do arquivo</string>
-    <string name="pdf_tool_split_mode_size_body">Arquivos que não ultrapassem o tamanho definido</string>
+    <string name="pdf_tool_split_mode_delete_body">Cópia sem as páginas escolhidas</string>
+    <string name="pdf_tool_split_mode_size">Por tamanho</string>
+    <string name="pdf_tool_split_mode_size_body">Arquivos até o limite definido</string>
 
     <!-- Split: fields -->
     <string name="pdf_tool_split_ranges_label">Páginas</string>
@@ -29,27 +29,27 @@
     <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Por exemplo 1-3, 5, 8-10</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Digite as páginas desejadas, por exemplo 1-3, 5</string>
-    <string name="pdf_tool_split_range_syntax">“%1$s” não é uma página nem um intervalo</string>
-    <string name="pdf_tool_split_range_out">“%1$s” está fora das páginas 1–%2$d</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s” é inválido.</string>
+    <string name="pdf_tool_split_range_out">“%1$s” fora das páginas 1–%2$d</string>
     <string name="pdf_tool_split_range_reversed">“%1$s” está invertido; escreva primeiro a página menor</string>
-    <string name="pdf_tool_split_delete_all">São todas as páginas. Deixe pelo menos uma.</string>
-    <string name="pdf_tool_split_every_label">Páginas por arquivo</string>
+    <string name="pdf_tool_split_delete_all">Todas as páginas. Deixe uma.</string>
+    <string name="pdf_tool_split_every_label">Páginas/parte</string>
     <string name="pdf_tool_split_every_invalid">Digite um número de 1 a %1$d</string>
-    <string name="pdf_tool_split_every_less">Menos páginas por arquivo</string>
-    <string name="pdf_tool_split_every_more">Mais páginas por arquivo</string>
-    <string name="pdf_tool_split_size_label">Tamanho máximo do arquivo (MB)</string>
-    <string name="pdf_tool_split_size_invalid">Digite um tamanho maior que 0 MB</string>
-    <string name="pdf_tool_split_size_body">As páginas não são divididas, então uma página maior que isso ganha um arquivo próprio.</string>
-    <string name="pdf_tool_split_locked">Este arquivo tem senha, e os novos arquivos a mantêm.</string>
+    <string name="pdf_tool_split_every_less">Menos páginas/parte</string>
+    <string name="pdf_tool_split_every_more">Mais páginas/parte</string>
+    <string name="pdf_tool_split_size_label">Máximo (MB)</string>
+    <string name="pdf_tool_split_size_invalid">Use mais de 0 MB</string>
+    <string name="pdf_tool_split_size_body">Páginas são inteiras: uma maior que o limite ganha arquivo próprio.</string>
+    <string name="pdf_tool_split_locked">Este arquivo tem senha; os novos também terão.</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">Gera %d arquivo</item>
-        <item quantity="many">Gera %d arquivos</item>
-        <item quantity="other">Gera %d arquivos</item>
+        <item quantity="one">Cria %d arquivo</item>
+        <item quantity="many">Cria %d arquivos</item>
+        <item quantity="other">Cria %d arquivos</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
-        <item quantity="one">Mantém %d página</item>
-        <item quantity="many">Mantém %d páginas</item>
-        <item quantity="other">Mantém %d páginas</item>
+        <item quantity="one">Tem %d página</item>
+        <item quantity="many">Tem %d páginas</item>
+        <item quantity="other">Tem %d páginas</item>
     </plurals>
 
     <!-- Split: actions -->
@@ -59,8 +59,8 @@
 
     <!-- Split: result notes -->
     <plurals name="pdf_tool_split_oversized_pages">
-        <item quantity="one">%d página é maior que o limite de tamanho sozinha, então tem um arquivo próprio.</item>
-        <item quantity="many">%d páginas são maiores que o limite de tamanho sozinhas, então cada uma tem um arquivo próprio.</item>
-        <item quantity="other">%d páginas são maiores que o limite de tamanho sozinhas, então cada uma tem um arquivo próprio.</item>
+        <item quantity="one">%d página é maior que o limite, então tem um arquivo próprio.</item>
+        <item quantity="many">%d páginas são maiores que o limite; cada uma tem arquivo próprio.</item>
+        <item quantity="other">%d páginas são maiores que o limite; cada uma tem arquivo próprio.</item>
     </plurals>
 </resources>

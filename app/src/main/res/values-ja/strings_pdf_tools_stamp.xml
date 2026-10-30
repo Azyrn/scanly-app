@@ -18,10 +18,10 @@
     <string name="pdf_stamp_numbers_bottom_right">右下</string>
     <string name="pdf_stamp_numbers_format">形式</string>
     <string name="pdf_stamp_numbers_start">開始番号</string>
-    <string name="pdf_stamp_numbers_first_page">番号を振り始めるページ</string>
-    <string name="pdf_stamp_numbers_first_page_hint">表紙など、それより前のページには番号が付きません。</string>
-    <string name="pdf_stamp_numbers_start_invalid">0 から 99999 までの数値を入力してください。</string>
-    <string name="pdf_stamp_numbers_first_page_invalid">1 から %1$d までのページ番号を入力してください。</string>
+    <string name="pdf_stamp_numbers_first_page">番号の開始ページ</string>
+    <string name="pdf_stamp_numbers_first_page_hint">表紙など、それより前には番号を付けません。</string>
+    <string name="pdf_stamp_numbers_start_invalid">0 から 99999 までの数値を入力</string>
+    <string name="pdf_stamp_numbers_first_page_invalid">1 から %1$d までの数値を入力</string>
     <string name="pdf_stamp_numbers_text_size">文字サイズ</string>
     <string name="pdf_stamp_numbers_margin">端からの距離</string>
     <string name="pdf_stamp_numbers_margin_narrow">近</string>
@@ -37,20 +37,20 @@
     <!-- Watermark: options -->
     <string name="pdf_stamp_watermark_body">透かしはすべてのページに追加されます。</string>
     <string name="pdf_stamp_watermark_kind">透かし</string>
-    <string name="pdf_stamp_watermark_kind_text">テキスト</string>
+    <string name="pdf_stamp_watermark_kind_text">文字</string>
     <string name="pdf_stamp_watermark_kind_image">画像</string>
     <string name="pdf_stamp_watermark_text_label">透かしのテキスト</string>
     <string name="pdf_stamp_watermark_text_default">機密</string>
-    <string name="pdf_stamp_watermark_text_empty">追加するテキストを入力してください。</string>
+    <string name="pdf_stamp_watermark_text_empty">追加する文字を入力</string>
     <string name="pdf_stamp_watermark_pick_image">画像を選択</string>
     <string name="pdf_stamp_watermark_change_image">画像を変更</string>
     <string name="pdf_stamp_watermark_image_chosen">選択した画像：%1$s</string>
-    <string name="pdf_stamp_watermark_image_none">まだ画像が選択されていません。</string>
+    <string name="pdf_stamp_watermark_image_none">画像が未選択です</string>
     <string name="pdf_stamp_watermark_placement">位置</string>
     <string name="pdf_stamp_watermark_center">中央</string>
     <string name="pdf_stamp_watermark_top">上部</string>
     <string name="pdf_stamp_watermark_bottom">下部</string>
-    <string name="pdf_stamp_watermark_tiled">並べて表示</string>
+    <string name="pdf_stamp_watermark_tiled">タイル</string>
     <string name="pdf_stamp_watermark_rotation">角度</string>
     <string name="pdf_stamp_watermark_rotation_none">水平</string>
     <string name="pdf_stamp_watermark_rotation_rising">45° 上向き</string>
@@ -59,11 +59,11 @@
     <string name="pdf_stamp_watermark_opacity_light">25%</string>
     <string name="pdf_stamp_watermark_opacity_medium">50%</string>
     <string name="pdf_stamp_watermark_opacity_strong">75%</string>
-    <string name="pdf_stamp_watermark_size">サイズ</string>
-    <string name="pdf_stamp_watermark_layer">レイヤー</string>
+    <string name="pdf_stamp_watermark_size">寸法</string>
+    <string name="pdf_stamp_watermark_layer">重ね順</string>
     <string name="pdf_stamp_watermark_layer_over">コンテンツの前面</string>
-    <string name="pdf_stamp_watermark_layer_over_body">常に表示されます。一部のテキストを隠す場合があります。</string>
+    <string name="pdf_stamp_watermark_layer_over_body">常に表示。テキストを隠すことも</string>
     <string name="pdf_stamp_watermark_layer_under">コンテンツの背面</string>
-    <string name="pdf_stamp_watermark_layer_under_body">テキストは最前面に残ります。スキャンされたページでは、画像がテキストを完全に隠します。</string>
+    <string name="pdf_stamp_watermark_layer_under_body">テキストは前面に残る。スキャン画像では完全に隠れます。</string>
     <string name="pdf_stamp_watermark_action">透かしを追加</string>
 </resources>

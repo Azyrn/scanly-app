@@ -5,66 +5,66 @@
         <item quantity="one">%d файл</item>
         <item quantity="few">%d файла</item>
         <item quantity="many">%d файлов</item>
-        <item quantity="other">%d файлов</item>
+        <item quantity="other">%d файла</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · всего %2$s</string>
-    <string name="pdf_tool_merge_body">Файлы объединяются в порядке, показанном выше. В объединённой копии нет пароля, даже если у некоторых файлов он был.</string>
-    <string name="pdf_tool_merge_need_more">Добавьте ещё хотя бы один PDF для объединения.</string>
-    <string name="pdf_tool_merge_action">Объединить</string>
+    <string name="pdf_tool_merge_body">Склеивание по списку сверху. Итог без пароля, даже если он был у исходных.</string>
+    <string name="pdf_tool_merge_need_more">Добавьте ещё один PDF.</string>
+    <string name="pdf_tool_merge_action">Слить</string>
 
     <!-- Split: modes -->
-    <string name="pdf_tool_split_mode_ranges">Разделить по диапазонам</string>
-    <string name="pdf_tool_split_mode_ranges_body">Один новый файл для каждого введённого диапазона</string>
-    <string name="pdf_tool_split_mode_every">Разделить через несколько страниц</string>
-    <string name="pdf_tool_split_mode_every_body">Новый файл через заданное число страниц</string>
-    <string name="pdf_tool_split_mode_extract">Извлечь страницы</string>
-    <string name="pdf_tool_split_mode_extract_body">Выбранные страницы вместе в одном файле</string>
-    <string name="pdf_tool_split_mode_delete">Удалить страницы</string>
+    <string name="pdf_tool_split_mode_ranges">Диапазоны</string>
+    <string name="pdf_tool_split_mode_ranges_body">Файл на каждый введённый диапазон</string>
+    <string name="pdf_tool_split_mode_every">Через страницы</string>
+    <string name="pdf_tool_split_mode_every_body">Файл через заданное число страниц</string>
+    <string name="pdf_tool_split_mode_extract">Извлечь</string>
+    <string name="pdf_tool_split_mode_extract_body">Выбранные страницы в одном файле</string>
+    <string name="pdf_tool_split_mode_delete">Удалить</string>
     <string name="pdf_tool_split_mode_delete_body">Копия без выбранных страниц</string>
-    <string name="pdf_tool_split_mode_size">Разделить по размеру файла</string>
-    <string name="pdf_tool_split_mode_size_body">Файлы не больше заданного размера</string>
+    <string name="pdf_tool_split_mode_size">По размеру</string>
+    <string name="pdf_tool_split_mode_size_body">Не больше заданного размера</string>
 
     <!-- Split: fields -->
-    <string name="pdf_tool_split_ranges_label">Страницы</string>
+    <string name="pdf_tool_split_ranges_label">Стр.</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Например 1-3, 5, 8-10</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">Введите нужные страницы, например 1-3, 5</string>
-    <string name="pdf_tool_split_range_syntax">«%1$s» — не страница и не диапазон</string>
-    <string name="pdf_tool_split_range_out">«%1$s» выходит за пределы страниц 1–%2$d</string>
-    <string name="pdf_tool_split_range_reversed">«%1$s» идёт в обратном порядке; сначала укажите меньшую страницу</string>
-    <string name="pdf_tool_split_delete_all">Это все страницы. Оставьте хотя бы одну.</string>
-    <string name="pdf_tool_split_every_label">Страниц в файле</string>
+    <string name="pdf_tool_split_range_syntax">«%1$s» не номер, не диапазон</string>
+    <string name="pdf_tool_split_range_out">«%1$s» вне 1–%2$d</string>
+    <string name="pdf_tool_split_range_reversed">«%1$s»: сначала меньшая страница</string>
+    <string name="pdf_tool_split_delete_all">Это все страницы. Оставьте одну.</string>
+    <string name="pdf_tool_split_every_label">Стр. в файле</string>
     <string name="pdf_tool_split_every_invalid">Введите число от 1 до %1$d</string>
-    <string name="pdf_tool_split_every_less">Меньше страниц в файле</string>
-    <string name="pdf_tool_split_every_more">Больше страниц в файле</string>
-    <string name="pdf_tool_split_size_label">Максимальный размер файла (МБ)</string>
-    <string name="pdf_tool_split_size_invalid">Введите размер больше 0 МБ</string>
-    <string name="pdf_tool_split_size_body">Страницы не делятся, поэтому страница, которая больше этого размера, получит собственный файл.</string>
-    <string name="pdf_tool_split_locked">У этого файла есть пароль, и новые файлы сохранят его.</string>
+    <string name="pdf_tool_split_every_less">Меньше страниц</string>
+    <string name="pdf_tool_split_every_more">Больше страниц</string>
+    <string name="pdf_tool_split_size_label">Максимум, МБ</string>
+    <string name="pdf_tool_split_size_invalid">Нужно больше 0 МБ</string>
+    <string name="pdf_tool_split_size_body">Страницы целые: слишком большая получит свой файл.</string>
+    <string name="pdf_tool_split_locked">Пароль у файла есть, новые файлы сохранят его.</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">Будет создан %d файл</item>
-        <item quantity="few">Будет создано %d файла</item>
-        <item quantity="many">Будет создано %d файлов</item>
-        <item quantity="other">Будет создано %d файлов</item>
+        <item quantity="one">Будет %d файл</item>
+        <item quantity="few">Будет %d файла</item>
+        <item quantity="many">Файлов: %d</item>
+        <item quantity="other">Файлов: %d</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
-        <item quantity="one">Останется %d страница</item>
-        <item quantity="few">Останется %d страницы</item>
-        <item quantity="many">Останется %d страниц</item>
-        <item quantity="other">Останется %d страниц</item>
+        <item quantity="one">Остаётся %d стр.</item>
+        <item quantity="few">Остаётся %d стр.</item>
+        <item quantity="many">Остаётся %d стр.</item>
+        <item quantity="other">Остаётся %d стр.</item>
     </plurals>
 
     <!-- Split: actions -->
-    <string name="pdf_tool_split_action">Разделить</string>
-    <string name="pdf_tool_split_extract_action">Извлечь страницы</string>
-    <string name="pdf_tool_split_delete_action">Удалить страницы</string>
+    <string name="pdf_tool_split_action">Резать</string>
+    <string name="pdf_tool_split_extract_action">Извлечь</string>
+    <string name="pdf_tool_split_delete_action">Удалить</string>
 
     <!-- Split: result notes -->
     <plurals name="pdf_tool_split_oversized_pages">
-        <item quantity="one">%d страница больше ограничения по размеру сама по себе, поэтому получила отдельный файл.</item>
-        <item quantity="few">%d страницы больше ограничения по размеру сами по себе, поэтому каждая получила отдельный файл.</item>
-        <item quantity="many">%d страниц больше ограничения по размеру сами по себе, поэтому каждая получила отдельный файл.</item>
-        <item quantity="other">%d страниц больше ограничения по размеру сами по себе, поэтому каждая получила отдельный файл.</item>
+        <item quantity="one">%d страница больше лимита, получила свой файл.</item>
+        <item quantity="few">%d страницы больше лимита, получили свой файл.</item>
+        <item quantity="many">%d страниц больше лимита, получили свой файл.</item>
+        <item quantity="other">%d страниц больше лимита, получили свой файл.</item>
     </plurals>
 </resources>

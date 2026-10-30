@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: PowerPoint to PDF. Notes shown under the result when a slide couldn't be drawn exactly. -->
 <resources>
-    <string name="pdf_tool_ppt2pdf_action">Преобразовать в PDF</string>
+    <string name="pdf_tool_ppt2pdf_action">В PDF</string>
     <string name="pdf_tool_ppt2pdf_shapes">Некоторые фигуры упрощены.</string>
     <string name="pdf_tool_ppt2pdf_fonts">Некоторые шрифты заменены похожими.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">%d диаграмма не включена.</item>
-        <item quantity="few">%d диаграммы не включены.</item>
-        <item quantity="many">%d диаграмм не включены.</item>
-        <item quantity="other">%d диаграмм не включены.</item>
+        <item quantity="one">%d диаграмма скрыта.</item>
+        <item quantity="few">%d диаграммы скрыты.</item>
+        <item quantity="many">%d диаграмм скрыто.</item>
+        <item quantity="other">%d диаграмм скрыто.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">%d графический элемент SmartArt не включён.</item>
-        <item quantity="few">%d графических элемента SmartArt не включены.</item>
-        <item quantity="many">%d графических элементов SmartArt не включены.</item>
-        <item quantity="other">%d графических элементов SmartArt не включены.</item>
+        <item quantity="one">%d элемент SmartArt пропущен.</item>
+        <item quantity="few">%d элемента SmartArt пропущены.</item>
+        <item quantity="many">%d элементов SmartArt пропущено.</item>
+        <item quantity="other">%d элементов SmartArt пропущено.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
         <item quantity="one">%d встроенный объект не включён.</item>
-        <item quantity="few">%d встроенных объекта не включены.</item>
-        <item quantity="many">%d встроенных объектов не включены.</item>
-        <item quantity="other">%d встроенных объектов не включены.</item>
+        <item quantity="few">%d объекта пропущены.</item>
+        <item quantity="many">%d объектов пропущено.</item>
+        <item quantity="other">%d объектов пропущено.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d видео или звук нельзя воспроизвести в PDF; показано только его превью.</item>
+        <item quantity="one">%d видео или звук: в PDF только превью.</item>
         <item quantity="few">%d видео или звука нельзя воспроизвести в PDF; показаны только их превью.</item>
         <item quantity="many">%d видео или звуков нельзя воспроизвести в PDF; показаны только их превью.</item>
         <item quantity="other">%d видео или звуков нельзя воспроизвести в PDF; показаны только их превью.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">%d изображение не удалось показать.</item>
-        <item quantity="few">%d изображения не удалось показать.</item>
-        <item quantity="many">%d изображений не удалось показать.</item>
-        <item quantity="other">%d изображений не удалось показать.</item>
+        <item quantity="one">%d картинка не показана.</item>
+        <item quantity="few">%d картинки не показаны.</item>
+        <item quantity="many">%d картинок не показано.</item>
+        <item quantity="other">%d картинок не показано.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
         <item quantity="one">%d скрытый слайд пропущен.</item>
         <item quantity="few">%d скрытых слайда пропущены.</item>
-        <item quantity="many">%d скрытых слайдов пропущены.</item>
-        <item quantity="other">%d скрытых слайдов пропущены.</item>
+        <item quantity="many">%d скрытых слайдов пропущено.</item>
+        <item quantity="other">%d скрытых слайдов пропущено.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d слайд не удалось прочитать, и он не включён.</item>
-        <item quantity="few">%d слайда не удалось прочитать, и они не включены.</item>
-        <item quantity="many">%d слайдов не удалось прочитать, и они не включены.</item>
-        <item quantity="other">%d слайдов не удалось прочитать, и они не включены.</item>
+        <item quantity="one">%d слайд не прочитан, пропущен.</item>
+        <item quantity="few">%d слайда не прочитаны, пропущены.</item>
+        <item quantity="many">%d слайдов не прочитаны, пропущены.</item>
+        <item quantity="other">%d слайдов не прочитаны, пропущены.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
         <item quantity="one">Преобразован только %d слайд.</item>

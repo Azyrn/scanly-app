@@ -6,21 +6,21 @@
         <item quantity="other">%d dosya</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · toplam %2$s</string>
-    <string name="pdf_tool_merge_body">Dosyalar yukarıda listelendikleri sırayla birleştirilir. Birleştirilmiş kopyada parola olmaz; dosyalardan bazılarında parola olsa bile.</string>
-    <string name="pdf_tool_merge_need_more">Birleştirmek için en az bir PDF daha ekleyin.</string>
+    <string name="pdf_tool_merge_body">Dosyalar yukarıdaki sırayla birleştirilir. Birleşik kopyada parola olmaz, bazı dosyalarda olsa bile.</string>
+    <string name="pdf_tool_merge_need_more">En az bir PDF daha ekleyin.</string>
     <string name="pdf_tool_merge_action">Birleştir</string>
 
     <!-- Split: modes -->
-    <string name="pdf_tool_split_mode_ranges">Aralıklara göre böl</string>
+    <string name="pdf_tool_split_mode_ranges">Aralıklara böl</string>
     <string name="pdf_tool_split_mode_ranges_body">Yazdığınız her aralık için yeni bir dosya</string>
     <string name="pdf_tool_split_mode_every">Her birkaç sayfada böl</string>
-    <string name="pdf_tool_split_mode_every_body">Belirlediğiniz sayfa sayısı kadar her seferinde yeni bir dosya</string>
+    <string name="pdf_tool_split_mode_every_body">Belirli sayıda sayfada yeni dosya</string>
     <string name="pdf_tool_split_mode_extract">Sayfaları çıkar</string>
-    <string name="pdf_tool_split_mode_extract_body">Seçtiğiniz sayfalar tek bir dosyada bir arada</string>
+    <string name="pdf_tool_split_mode_extract_body">Seçtiğiniz sayfalar tek dosyada</string>
     <string name="pdf_tool_split_mode_delete">Sayfaları sil</string>
     <string name="pdf_tool_split_mode_delete_body">Seçtiğiniz sayfalar olmayan bir kopya</string>
-    <string name="pdf_tool_split_mode_size">Dosya boyutuna göre böl</string>
-    <string name="pdf_tool_split_mode_size_body">Belirlediğiniz boyuttan büyük olmayan dosyalar</string>
+    <string name="pdf_tool_split_mode_size">Boyuta göre böl</string>
+    <string name="pdf_tool_split_mode_size_body">Belirlenen boyutu aşmayan dosyalar</string>
 
     <!-- Split: fields -->
     <string name="pdf_tool_split_ranges_label">Sayfalar</string>
@@ -28,21 +28,21 @@
     <string name="pdf_tool_split_ranges_hint" tools:ignore="TypographyDashes">Örneğin 1-3, 5, 8-10</string>
     <!-- A hyphen is what the range field accepts, so the example shows the key to press. -->
     <string name="pdf_tool_split_range_empty" tools:ignore="TypographyDashes">İstediğiniz sayfaları yazın, örneğin 1-3, 5</string>
-    <string name="pdf_tool_split_range_syntax">“%1$s” bir sayfa ya da aralık değil</string>
-    <string name="pdf_tool_split_range_out">“%1$s” 1–%2$d sayfa aralığının dışında</string>
+    <string name="pdf_tool_split_range_syntax">“%1$s” sayfa ya da aralık değil</string>
+    <string name="pdf_tool_split_range_out">“%1$s” 1–%2$d aralığının dışında</string>
     <string name="pdf_tool_split_range_reversed">“%1$s” ters yönde; önce küçük sayfa numarasını yazın</string>
-    <string name="pdf_tool_split_delete_all">Bu, her sayfa demek. En az bir sayfa bırakın.</string>
-    <string name="pdf_tool_split_every_label">Dosya başına sayfa</string>
+    <string name="pdf_tool_split_delete_all">Bu tüm sayfalar. En az birini bırakın.</string>
+    <string name="pdf_tool_split_every_label">Sayfa sayısı</string>
     <string name="pdf_tool_split_every_invalid">1 ile %1$d arasında bir sayı girin</string>
-    <string name="pdf_tool_split_every_less">Dosya başına daha az sayfa</string>
-    <string name="pdf_tool_split_every_more">Dosya başına daha fazla sayfa</string>
-    <string name="pdf_tool_split_size_label">En büyük dosya boyutu (MB)</string>
-    <string name="pdf_tool_split_size_invalid">0 MB\'dan büyük bir boyut girin</string>
+    <string name="pdf_tool_split_every_less">Daha az sayfa</string>
+    <string name="pdf_tool_split_every_more">Daha fazla sayfa</string>
+    <string name="pdf_tool_split_size_label">En büyük boyut (MB)</string>
+    <string name="pdf_tool_split_size_invalid">0 MB\'den büyük girin</string>
     <string name="pdf_tool_split_size_body">Sayfalar bölünmez; bu boyuttan büyük tek bir sayfa kendi dosyasını alır.</string>
-    <string name="pdf_tool_split_locked">Bu dosyanın bir parolası var ve yeni dosyalar da bunu korur.</string>
+    <string name="pdf_tool_split_locked">Bu dosyanın parolası var; yeni dosyalar da korur.</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">%d dosya oluşturur</item>
-        <item quantity="other">%d dosya oluşturur</item>
+        <item quantity="one">%d dosya olur</item>
+        <item quantity="other">%d dosya olur</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
         <item quantity="one">%d sayfa tutar</item>

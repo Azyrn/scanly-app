@@ -2,25 +2,25 @@
 <!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
 <resources>
     <!-- Inputs on the options screen -->
-    <string name="pdf_tool_flow_add_files">Añadir archivos</string>
+    <string name="pdf_tool_flow_add_files">Añadir</string>
     <string name="pdf_tool_flow_remove">Quitar %1$s</string>
-    <string name="pdf_tool_flow_move_up">Mover %1$s arriba</string>
+    <string name="pdf_tool_flow_move_up">Subir %1$s</string>
     <string name="pdf_tool_flow_move_down">Mover %1$s abajo</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">Añade al menos %d archivo para continuar.</item>
-        <item quantity="many">Añade al menos %d archivos para continuar.</item>
-        <item quantity="other">Añade al menos %d archivos para continuar.</item>
+        <item quantity="one">Añade %d archivo para continuar.</item>
+        <item quantity="many">Añade %d archivos para continuar.</item>
+        <item quantity="other">Añade %d archivos para continuar.</item>
     </plurals>
     <string name="pdf_tool_flow_skipped">Se omitió un archivo que no se pudo abrir.</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">Procesando %d archivo…</item>
-        <item quantity="many">Procesando %d archivos…</item>
-        <item quantity="other">Procesando %d archivos…</item>
+        <item quantity="one">%d archivo en curso…</item>
+        <item quantity="many">%d archivos en curso…</item>
+        <item quantity="other">%d archivos en curso…</item>
     </plurals>
 
     <!-- Result -->
     <string name="pdf_tool_flow_open_output">Abrir %1$s</string>
-    <string name="pdf_tool_flow_share_all">Compartir todo</string>
+    <string name="pdf_tool_flow_share_all">Compartir</string>
 </resources>

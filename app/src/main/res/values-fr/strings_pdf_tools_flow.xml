@@ -2,22 +2,22 @@
 <!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
 <resources>
     <!-- Inputs on the options screen -->
-    <string name="pdf_tool_flow_add_files">Ajouter des fichiers</string>
+    <string name="pdf_tool_flow_add_files">Ajouter</string>
     <string name="pdf_tool_flow_remove">Retirer %1$s</string>
     <string name="pdf_tool_flow_move_up">Monter %1$s</string>
     <string name="pdf_tool_flow_move_down">Descendre %1$s</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">Ajoutez au moins %d fichier pour continuer.</item>
-        <item quantity="many">Ajoutez au moins %d fichiers pour continuer.</item>
-        <item quantity="other">Ajoutez au moins %d fichiers pour continuer.</item>
+        <item quantity="one">Ajoutez au moins %d fichier.</item>
+        <item quantity="many">Ajoutez au moins %d fichiers.</item>
+        <item quantity="other">Ajoutez au moins %d fichiers.</item>
     </plurals>
-    <string name="pdf_tool_flow_skipped">Un fichier qui n\'a pas pu être ouvert a été retiré.</string>
+    <string name="pdf_tool_flow_skipped">Un fichier non ouvert a été retiré.</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">Traitement de %d fichier…</item>
-        <item quantity="many">Traitement de %d fichiers…</item>
-        <item quantity="other">Traitement de %d fichiers…</item>
+        <item quantity="one">%d fichier en cours…</item>
+        <item quantity="many">%d fichiers en cours…</item>
+        <item quantity="other">%d fichiers en cours…</item>
     </plurals>
 
     <!-- Result -->

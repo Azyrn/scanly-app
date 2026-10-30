@@ -5,15 +5,15 @@
     <string name="signature_typed_title">İmzanızı yazın</string>
     <string name="signature_typed_name_label">Adınız</string>
     <string name="signature_typed_preview_empty">İmzanız burada görünür.</string>
-    <string name="signature_typed_colour">Mürekkep rengi</string>
-    <string name="signature_typed_colour_option">Mürekkep rengi %1$d</string>
+    <string name="signature_typed_colour">Mürekkep</string>
+    <string name="signature_typed_colour_option">Mürekkep %1$d</string>
     <string name="signature_typed_save">Kaydet</string>
     <string name="signature_typed_cancel">İptal</string>
     <string name="signature_typed_font_missing">İmza yazı tipi yüklenemedi.</string>
 
     <!-- Settings → About: licences of the fonts and icons bundled in the app -->
     <string name="font_licenses_title">Açık kaynak lisansları</string>
-    <string name="font_licenses_subtitle">Scanly ile paketlenen yazı tipleri ve simgeler</string>
+    <string name="font_licenses_subtitle">Scanly\'nin yazı tipleri ve simgeleri</string>
     <string name="font_licenses_close">Kapat</string>
     <string name="font_licenses_unreadable">Bu lisans dosyası okunamadı.</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Typed signatures (page editor Sign tool) -->
-    <string name="signature_typed_open">Digitar uma assinatura</string>
+    <string name="signature_typed_open">Digitar assinatura</string>
     <string name="signature_typed_title">Digite sua assinatura</string>
     <string name="signature_typed_name_label">Seu nome</string>
     <string name="signature_typed_preview_empty">Sua assinatura aparece aqui.</string>
@@ -9,11 +9,11 @@
     <string name="signature_typed_colour_option">Cor da tinta %1$d</string>
     <string name="signature_typed_save">Salvar</string>
     <string name="signature_typed_cancel">Cancelar</string>
-    <string name="signature_typed_font_missing">Não foi possível carregar a fonte da assinatura.</string>
+    <string name="signature_typed_font_missing">Falha ao carregar a fonte da assinatura.</string>
 
     <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Licenças de código aberto</string>
+    <string name="font_licenses_title">Licenças open source</string>
     <string name="font_licenses_subtitle">Fontes e ícones incluídos no Scanly</string>
     <string name="font_licenses_close">Fechar</string>
-    <string name="font_licenses_unreadable">Não foi possível ler este arquivo de licença.</string>
+    <string name="font_licenses_unreadable">Não foi possível ler a licença.</string>
 </resources>

@@ -4,27 +4,27 @@
     <!-- Top bar -->
     <string name="chat_title_empty">Scanly AI</string>
     <string name="chat_menu">Чаты и тариф</string>
-    <string name="chat_untitled">Документ без названия</string>
+    <string name="chat_untitled">Без названия</string>
     <string name="chat_file_default_name">Документ</string>
     <string name="chat_new">Новый чат</string>
-    <string name="chat_rename_action">Переименовать чат</string>
-    <string name="chat_rename_title">Переименовать чат</string>
-    <string name="chat_rename_label">Название</string>
+    <string name="chat_rename_action">Переименовать</string>
+    <string name="chat_rename_title">Переименовать</string>
+    <string name="chat_rename_label">Имя</string>
     <string name="chat_save">Сохранить</string>
     <string name="chat_cancel">Отмена</string>
 
     <!-- History -->
     <string name="chat_group_today">Сегодня</string>
     <string name="chat_group_yesterday">Вчера</string>
-    <string name="chat_group_week">Последние 7 дней</string>
+    <string name="chat_group_week">Прошлые 7 дней</string>
     <string name="chat_group_older">Ранее</string>
-    <string name="chat_search_hint">Поиск по чатам</string>
-    <string name="chat_search_clear">Очистить поиск</string>
-    <string name="chat_search_empty">Нет чатов, подходящих под ваш запрос.</string>
-    <string name="chat_history_empty">Чатов пока нет. Созданные вами документы появятся здесь.</string>
-    <string name="chat_more_actions">Другие действия</string>
+    <string name="chat_search_hint">Поиск чатов</string>
+    <string name="chat_search_clear">Очистить</string>
+    <string name="chat_search_empty">Чаты не найдены.</string>
+    <string name="chat_history_empty">Чатов пока нет. Документы появятся здесь.</string>
+    <string name="chat_more_actions">Действия</string>
     <string name="chat_delete_title">Удалить этот чат?</string>
-    <string name="chat_delete_body">«%1$s» и его файлы будут удалены с этого телефона и из вашего аккаунта. Копии, сохранённые в Downloads, останутся.</string>
+    <string name="chat_delete_body">«%1$s» и его файлы удалятся с телефона и из аккаунта. Копии в Downloads останутся.</string>
     <string name="chat_delete_confirm">Удалить</string>
 
     <!-- Empty state -->
@@ -36,11 +36,11 @@
         <item>Написать официальное письмо в Word</item>
     </string-array>
     <string name="chat_ask_answered">Вы ответили.</string>
-    <string name="chat_greeting_body">Опишите документ или прикрепите файл, чтобы пересоздать его.</string>
+    <string name="chat_greeting_body">Опишите или прикрепите файл.</string>
 
     <!-- Composer -->
     <string name="chat_composer_hint">Опишите документ…</string>
-    <string name="chat_composer_hint_revise">Попросите что-нибудь изменить…</string>
+    <string name="chat_composer_hint_revise">Что изменить…</string>
     <string name="chat_attach">Прикрепить</string>
     <string name="chat_send">Отправить</string>
     <string name="chat_stop">Не ждать</string>
@@ -50,147 +50,147 @@
         <item quantity="many">~%d кредитов</item>
         <item quantity="other">~%d кредитов</item>
     </plurals>
-    <string name="chat_cost_agent">Чат бесплатный · файлы расходуют кредиты</string>
+    <string name="chat_cost_agent">Чат бесплатно · файлы: кредиты</string>
     <string name="chat_remove">Удалить %1$s</string>
     <string name="chat_preparing_file">Подготовка…</string>
-    <string name="chat_preset_clean_up">Привести в порядок</string>
-    <string name="chat_preset_one_page">Уместить на одну страницу</string>
+    <string name="chat_preset_clean_up">Почистить</string>
+    <string name="chat_preset_one_page">На 1 страницу</string>
     <plurals name="chat_pages">
-        <item quantity="one">%d страница</item>
-        <item quantity="few">%d страницы</item>
-        <item quantity="many">%d страниц</item>
-        <item quantity="other">%d страниц</item>
+        <item quantity="one">%d стр.</item>
+        <item quantity="few">%d стр.</item>
+        <item quantity="many">%d стр.</item>
+        <item quantity="other">%d стр.</item>
     </plurals>
-    <string name="chat_preparing_picture">Подготовка изображения…</string>
-    <string name="chat_picture_role">Размещено на странице</string>
+    <string name="chat_preparing_picture">Готовим фото…</string>
+    <string name="chat_picture_role">На странице</string>
     <string name="chat_scan_role">Из моих сканов</string>
-    <string name="chat_image_pending">Пересоздать или разместить?</string>
-    <string name="chat_role_rebuild">Пересоздать этот документ</string>
-    <string name="chat_role_place">Разместить это изображение на странице</string>
-    <string name="chat_role_rebuild_prompt">Пересоздайте этот документ как аккуратный PDF. Сохраните каждое слово, имя и число.</string>
-    <string name="chat_role_place_prompt">Разместите это изображение на странице как портрет или логотип.</string>
-    <string name="chat_role_question">Пересоздать его или разместить на странице?</string>
-    <string name="chat_role_question_body">Пересоздание превращает изображение в новый документ. Размещение оставляет его картинкой, например портретом или логотипом.</string>
-    <string name="chat_role_answer_rebuild">Пересоздать</string>
-    <string name="chat_role_answer_place">Разместить</string>
+    <string name="chat_image_pending">Создать/вставить?</string>
+    <string name="chat_role_rebuild">Пересоздать</string>
+    <string name="chat_role_place">Вставить на страницу</string>
+    <string name="chat_role_rebuild_prompt">Пересоздайте как чистый PDF. Сохраните все слова, имена и числа.</string>
+    <string name="chat_role_place_prompt">Вставьте как портрет или логотип.</string>
+    <string name="chat_role_question">Пересоздать или разместить?</string>
+    <string name="chat_role_question_body">Пересоздать — новый документ. Разместить — картинка, например портрет или логотип.</string>
+    <string name="chat_role_answer_rebuild">Создать</string>
+    <string name="chat_role_answer_place">Вставить</string>
     <string name="chat_attach_error_dismiss">Скрыть</string>
 
 
     <!-- Attach sheet -->
-    <string name="chat_attach_title">Добавить файл</string>
+    <string name="chat_attach_title">Добавить</string>
     <string name="chat_attach_camera">Камера</string>
     <string name="chat_attach_photos">Фото</string>
     <string name="chat_attach_files">Файлы</string>
     <string name="chat_attach_scans">Мои сканы</string>
-    <string name="chat_no_scans">Сканов пока нет. Сначала отсканируйте документ на главном экране.</string>
-    <string name="chat_scans_title">Ваши последние сканы</string>
+    <string name="chat_no_scans">Сканов нет. Сначала скан на главном экране.</string>
+    <string name="chat_scans_title">Недавние сканы</string>
 
 
     <!-- Message list -->
-    <string name="chat_jump_latest">К последнему сообщению</string>
-    <string name="chat_unknown_message">Для этого сообщения нужна более новая версия Scanly.</string>
-    <string name="chat_you_attached">Прикреплено: %1$s</string>
+    <string name="chat_jump_latest">К последнему</string>
+    <string name="chat_unknown_message">Нужна новая версия Scanly.</string>
+    <string name="chat_you_attached">Файл: %1$s</string>
 
     <!-- Turn outcomes written into the chat -->
-    <string name="chat_stopped_waiting">Ожидание остановлено. Сервер может всё же завершить работу и списать кредиты. Повторите запрос, чтобы получить тот же результат и не платить дважды.</string>
+    <string name="chat_stopped_waiting">Ожидание остановлено. Сервер может списать кредиты. Повторите, чтобы не платить дважды.</string>
     <string name="chat_interrupted">Запрос прерван. Отправьте сообщение ещё раз.</string>
-    <string name="chat_reconnecting">Переподключение к вашему дизайну…</string>
-    <string name="chat_design_failed">Не удалось завершить дизайн. Ваше сообщение сохранено; попробуйте ещё раз.</string>
+    <string name="chat_reconnecting">Переподключение…</string>
+    <string name="chat_design_failed">Дизайн не готов. Сообщение сохранено; повторите.</string>
 
     <!-- Attaching -->
-    <string name="chat_photo_unusable">Не удалось использовать это изображение. Попробуйте другое.</string>
+    <string name="chat_photo_unusable">Фото не подходит. Попробуйте другое.</string>
     <string name="chat_file_too_many_pages">Дизайнер пересоздаёт до %1$d страниц. В этом файле %2$d.</string>
-    <string name="chat_file_too_large">Этот файл слишком большой для пересоздания.</string>
-    <string name="chat_file_unreadable">Не удалось прочитать этот файл. Попробуйте другой.</string>
+    <string name="chat_file_too_large">Файл слишком большой.</string>
+    <string name="chat_file_unreadable">Файл не читается. Выберите другой.</string>
 
     <!-- File actions -->
-    <string name="chat_open_with">Открыть с помощью…</string>
-    <string name="chat_no_viewer">Ни одно приложение на этом телефоне не может открыть этот файл.</string>
-    <string name="chat_save_failed">Не удалось сохранить файл.</string>
-    <string name="chat_share_failed">Не удалось поделиться файлом.</string>
-    <string name="chat_saved_to_downloads">Сохранено в Downloads.</string>
+    <string name="chat_open_with">Открыть в…</string>
+    <string name="chat_no_viewer">Нет приложения для этого файла.</string>
+    <string name="chat_save_failed">Не удалось сохранить.</string>
+    <string name="chat_share_failed">Не удалось поделиться.</string>
+    <string name="chat_saved_to_downloads">Сохранено: Downloads.</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">Сохранено изображение: %d, папка Pictures/Scanly.</item>
-        <item quantity="few">Сохранено изображения: %d, папка Pictures/Scanly.</item>
-        <item quantity="many">Сохранено изображений: %d, папка Pictures/Scanly.</item>
-        <item quantity="other">Сохранено изображений: %d, папка Pictures/Scanly.</item>
+        <item quantity="one">Сохранено %d фото в Pictures/Scanly.</item>
+        <item quantity="few">Сохранено %d фото в Pictures/Scanly.</item>
+        <item quantity="many">Сохранено %d фото в Pictures/Scanly.</item>
+        <item quantity="other">Сохранено %d фото в Pictures/Scanly.</item>
     </plurals>
-    <string name="chat_images_failed">Не удалось сохранить изображения.</string>
-    <string name="chat_file_missing">Не удалось получить этот файл. Проверьте подключение и попробуйте снова.</string>
-    <string name="chat_file_expired">Этот дизайн больше не хранится. Пересоздайте его, чтобы снова получить файл.</string>
+    <string name="chat_images_failed">Фото не сохранены.</string>
+    <string name="chat_file_missing">Не удалось получить файл. Проверьте сеть и повторите.</string>
+    <string name="chat_file_expired">Дизайн больше не хранится. Пересоздайте файл.</string>
 
     <!-- Reply cards -->
     <string name="chat_not_charged">Без списания</string>
     <string name="chat_retry">Повторить</string>
-    <string name="chat_see_plans">Посмотреть тарифы</string>
-    <string name="chat_ask_title">Проверьте ваш файл</string>
+    <string name="chat_see_plans">Тарифы</string>
+    <string name="chat_ask_title">Проверьте файл</string>
     <string name="chat_ask_reason">Это похоже на %1$s.</string>
-    <string name="chat_ask_fallback">Этот файл не похож на документ, который вы запросили.</string>
-    <string name="chat_ask_continue">Всё равно продолжить</string>
+    <string name="chat_ask_fallback">Файл не похож на запрошенный документ.</string>
+    <string name="chat_ask_continue">Продолжить</string>
     <string name="chat_ask_dismiss">Не сейчас</string>
     <string name="chat_ask_answered_continue">Вы решили продолжить.</string>
     <string name="chat_ask_answered_dismiss">Вы решили не продолжать.</string>
-    <string name="chat_fields_title">Сначала несколько данных</string>
-    <string name="chat_fields_body">Добавьте их, чтобы в документе ничего не пришлось выдумывать.</string>
+    <string name="chat_fields_title">Сначала данные</string>
+    <string name="chat_fields_body">Добавьте их, чтобы ничего не выдумывать.</string>
     <string name="chat_fields_submit">Создать документ</string>
-    <string name="chat_fields_open">Заполнить данные</string>
+    <string name="chat_fields_open">Заполнить</string>
     <string name="chat_file_open">Открыть</string>
     <string name="chat_file_share">Поделиться</string>
     <string name="chat_file_download">Скачать</string>
-    <string name="chat_file_more">Другие действия</string>
-    <string name="chat_file_save_images">Сохранить страницы как изображения</string>
+    <string name="chat_file_more">Действия</string>
+    <string name="chat_file_save_images">Сохранить картинками</string>
     <string name="chat_file_revise">Изменить эту версию</string>
-    <string name="chat_file_editing">Редактирование</string>
+    <string name="chat_file_editing">Правка</string>
     <plurals name="chat_credits_used">
         <item quantity="one">%d кредит</item>
         <item quantity="few">%d кредита</item>
         <item quantity="many">%d кредитов</item>
         <item quantity="other">%d кредитов</item>
     </plurals>
-    <string name="chat_expired">Истёк срок: пересоздать</string>
-    <string name="chat_expired_hint">Сервер больше не хранит этот дизайн, поэтому его нельзя изменить. Пересоздайте его, чтобы продолжить редактирование.</string>
-    <string name="chat_thumbnail_description">Первая страница: %1$s</string>
+    <string name="chat_expired">Истёк: пересоздать</string>
+    <string name="chat_expired_hint">Сервер не хранит дизайн, менять его нельзя. Пересоздайте, чтобы продолжить.</string>
+    <string name="chat_thumbnail_description">Первая стр.: %1$s</string>
 
     <!-- Background job notification -->
     <string name="chat_notification_channel">Документы</string>
     <string name="chat_notification_channel_description">Когда документ, созданный в фоне, готов</string>
-    <string name="chat_notification_ready">Ваш PDF готов. Нажмите, чтобы открыть чат.</string>
+    <string name="chat_notification_ready">PDF готов. Нажмите, чтобы открыть чат.</string>
     <string name="chat_notification_not_charged">Списания не было.</string>
 
     <!-- Working reply: the live status line and Show thinking -->
     <string name="chat_status_elapsed">%1$s · %2$ds</string>
     <string name="chat_step_reading">Чтение файла</string>
-    <string name="chat_step_extracting">Извлечение текста</string>
-    <string name="chat_step_planning">Планирование макета</string>
-    <string name="chat_step_writing">Написание содержимого</string>
+    <string name="chat_step_extracting">Чтение текста</string>
+    <string name="chat_step_planning">Верстка</string>
+    <string name="chat_step_writing">Создание текста</string>
     <string name="chat_step_building">Создание PDF</string>
-    <string name="chat_step_checking">Проверка качества</string>
-    <string name="chat_step_fixing">Исправление макета</string>
+    <string name="chat_step_checking">Проверка</string>
+    <string name="chat_step_fixing">Правка верстки</string>
     <string name="chat_step_done">Готово</string>
-    <string name="chat_step_thinking">Размышление</string>
+    <string name="chat_step_thinking">Думаю</string>
     <string name="chat_step_reading_guide">Чтение руководства</string>
-    <string name="chat_step_coding">Написание кода</string>
+    <string name="chat_step_coding">Код</string>
     <string name="chat_step_previewing">Просмотр страниц</string>
     <string name="chat_step_delivering">Отправка файла</string>
     <string name="chat_agent_done">Готово. Ваши файлы ниже.</string>
-    <string name="chat_agent_failed">Ассистент не смог завершить работу. Ваше сообщение сохранено; попробуйте ещё раз.</string>
+    <string name="chat_agent_failed">Ассистент не справился. Сообщение сохранено, повторите.</string>
     <string name="chat_agent_about_file">(О файле %1$s.)</string>
-    <string name="chat_agent_delivered">Отправлено: %1$s</string>
+    <string name="chat_agent_delivered">Готово: %1$s</string>
     <string name="chat_approval_title">Открыть этот сайт?</string>
-    <string name="chat_approval_new_url">Этой ссылки нет в вашем сообщении и в результатах поиска, поэтому ассистенту нужно ваше разрешение, чтобы открыть её.</string>
-    <string name="chat_approval_page_link">Ассистент нашёл эту ссылку на открытой странице, и для её открытия нужно ваше разрешение.</string>
-    <string name="chat_approval_warn_query">Эта ссылка содержит дополнительные данные после \"?\". Если вы не доверяете этому сайту, нажмите «Запретить»: он может получить часть этого чата.</string>
-    <string name="chat_approval_warn_long">Эта ссылка необычно длинная. Если вы не доверяете этому сайту, нажмите «Запретить»: он может получить часть этого чата.</string>
-    <string name="chat_approval_countdown">Без ответа в течение %1$s — отказ.</string>
-    <string name="chat_approval_allow_once">Разрешить один раз</string>
+    <string name="chat_approval_new_url">Этой ссылки нет в сообщении и поиске, нужно ваше разрешение.</string>
+    <string name="chat_approval_page_link">Ассистент нашёл эту ссылку на открытой странице. Нужно ваше разрешение.</string>
+    <string name="chat_approval_warn_query">Ссылка с данными после \"?\". Не доверяете сайту — «Запретить»: он может получить часть чата.</string>
+    <string name="chat_approval_warn_long">Ссылка необычно длинная. Не доверяете сайту — «Запретить»: он может получить часть чата.</string>
+    <string name="chat_approval_countdown">Без ответа %1$s — отказ.</string>
+    <string name="chat_approval_allow_once">Разово</string>
     <string name="chat_approval_deny">Запретить</string>
-    <string name="chat_show_thinking">Показать ход мыслей</string>
-    <string name="chat_hide_thinking">Скрыть ход мыслей</string>
-    <string name="chat_took">Заняло %1$ds</string>
+    <string name="chat_show_thinking">Показать мысли</string>
+    <string name="chat_hide_thinking">Скрыть мысли</string>
+    <string name="chat_took">За %1$ds</string>
     <string name="chat_seconds">%1$ds</string>
-    <string name="chat_under_a_second">меньше 1 с</string>
+    <string name="chat_under_a_second">&lt; 1 с</string>
     <string name="chat_background_note">Работает в фоне. Вы получите уведомление, и файл появится здесь.</string>
-    <string name="chat_stopped_note">Ожидание остановлено. Файл появится здесь, когда будет готов.</string>
+    <string name="chat_stopped_note">Ожидание остановлено. Файл появится, когда будет готов.</string>
 
     <!-- The document agent's log, as Claude Code's CLI shows it (docchat/presentation/screen/AgentLogView.kt).
          Tool names and their arguments are the agent's own and are not translated. -->
@@ -203,11 +203,11 @@
     </plurals>
     <string name="chat_log_minutes">%1$dм %2$dс</string>
     <string name="chat_log_seconds">%1$dс</string>
-    <string name="chat_log_worked">Работа заняла %1$s · %2$s</string>
+    <string name="chat_log_worked">Заняло %1$s · %2$s</string>
     <string name="chat_log_show_steps">Показать шаги</string>
     <string name="chat_log_hide_steps">Скрыть шаги</string>
-    <string name="chat_log_thought">Размышления заняли %1$s</string>
-    <string name="chat_log_thinking">Размышление</string>
+    <string name="chat_log_thought">Раздумья: %1$s</string>
+    <string name="chat_log_thinking">Думаю</string>
     <plurals name="chat_log_read">
         <item quantity="one">Прочитана %d строка</item>
         <item quantity="few">Прочитаны %d строки</item>
@@ -220,18 +220,18 @@
         <item quantity="many">Записаны %d строк</item>
         <item quantity="other">Записаны %d строк</item>
     </plurals>
-    <string name="chat_log_read_image">Изображение прочитано (%1$s)</string>
+    <string name="chat_log_read_image">Фото (%1$s)</string>
     <string name="chat_log_no_output">(Вывода нет)</string>
-    <string name="chat_log_denied">Отказано: в этой задаче не разрешено</string>
-    <string name="chat_log_running">Выполняется…</string>
+    <string name="chat_log_denied">Запрещено в этой задаче</string>
+    <string name="chat_log_running">В работе…</string>
     <plurals name="chat_log_more_lines">
         <item quantity="one">+%d строка</item>
         <item quantity="few">+%d строки</item>
         <item quantity="many">+%d строк</item>
         <item quantity="other">+%d строк</item>
     </plurals>
-    <string name="chat_log_show_more">Показать больше</string>
-    <string name="chat_log_show_less">Показать меньше</string>
+    <string name="chat_log_show_more">Ещё</string>
+    <string name="chat_log_show_less">Свернуть</string>
     <plurals name="chat_log_not_shown">
         <item quantity="one">ещё %1$d строка (%2$d симв.) не показана</item>
         <item quantity="few">ещё %1$d строки (%2$d симв.) не показаны</item>
@@ -244,15 +244,15 @@
         <item quantity="many">%1$d строк (%2$d симв.) не сохранены</item>
         <item quantity="other">%1$d строк (%2$d симв.) не сохранены</item>
     </plurals>
-    <string name="chat_log_show_all">Показать всё</string>
-    <string name="chat_log_loading">Загрузка полного вывода…</string>
+    <string name="chat_log_show_all">Все</string>
+    <string name="chat_log_loading">Загрузка вывода…</string>
     <string name="chat_log_expired">Полный вывод истёк</string>
-    <string name="chat_log_unavailable">Не удалось загрузить полный вывод. Нажмите, чтобы повторить.</string>
+    <string name="chat_log_unavailable">Не загрузилось. Нажмите, чтобы повторить.</string>
     <string name="chat_log_past_limit">Ещё %1$d симв. вышли за лимит и не сохранены</string>
     <plurals name="chat_log_dropped">
-        <item quantity="one">%d более ранняя строка не сохранена на этом телефоне</item>
-        <item quantity="few">%d более ранние строки не сохранены на этом телефоне</item>
-        <item quantity="many">%d более ранних строк не сохранены на этом телефоне</item>
-        <item quantity="other">%d более ранних строк не сохранены на этом телефоне</item>
+        <item quantity="one">%d ранняя строка не сохранена</item>
+        <item quantity="few">%d ранние строки не сохранены</item>
+        <item quantity="many">%d ранних строк не сохранены</item>
+        <item quantity="other">%d ранних строк не сохранены</item>
     </plurals>
 </resources>

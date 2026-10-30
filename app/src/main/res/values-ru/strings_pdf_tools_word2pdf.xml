@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: Word to PDF. Notes say what the conversion had to leave out or change. -->
 <resources>
-    <string name="pdf_tool_word_to_pdf_body">Преобразует документ прямо на телефоне. Диаграммы, текстовые поля и формулы пока не отображаются, поэтому их не будет.</string>
-    <string name="pdf_tool_word_to_pdf_action">Преобразовать в PDF</string>
+    <string name="pdf_tool_word_to_pdf_body">Конвертация на телефоне. Диаграммы, текстовые поля и формулы пока пропускаются.</string>
+    <string name="pdf_tool_word_to_pdf_action">В PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">%d диаграмма не включена.</item>
-        <item quantity="few">%d диаграммы не включены.</item>
-        <item quantity="many">%d диаграмм не включены.</item>
-        <item quantity="other">%d диаграмм не включены.</item>
+        <item quantity="one">%d диаграмма скрыта.</item>
+        <item quantity="few">%d диаграммы скрыты.</item>
+        <item quantity="many">%d диаграмм скрыто.</item>
+        <item quantity="other">%d диаграмм скрыто.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
         <item quantity="one">%d объект SmartArt не включён.</item>
@@ -17,22 +17,22 @@
         <item quantity="other">%d объектов SmartArt не включены.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">%d текстовое поле или фигура не включены.</item>
-        <item quantity="few">%d текстовых поля или фигуры не включены.</item>
-        <item quantity="many">%d текстовых полей или фигур не включены.</item>
-        <item quantity="other">%d текстовых полей или фигур не включены.</item>
+        <item quantity="one">%d фигура или надпись скрыта.</item>
+        <item quantity="few">%d фигуры или надписи скрыты.</item>
+        <item quantity="many">%d фигур или надписей скрыто.</item>
+        <item quantity="other">%d фигур или надписей скрыто.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
-        <item quantity="one">%d уравнение не включено.</item>
+        <item quantity="one">%d формула пропущена.</item>
         <item quantity="few">%d уравнения не включены.</item>
         <item quantity="many">%d уравнений не включены.</item>
         <item quantity="other">%d уравнений не включены.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_objects">
         <item quantity="one">%d встроенный объект не включён.</item>
-        <item quantity="few">%d встроенных объекта не включены.</item>
-        <item quantity="many">%d встроенных объектов не включены.</item>
-        <item quantity="other">%d встроенных объектов не включены.</item>
+        <item quantity="few">%d объекта пропущены.</item>
+        <item quantity="many">%d объектов пропущено.</item>
+        <item quantity="other">%d объектов пропущено.</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
         <item quantity="one">%d изображение в неподдерживаемом формате не включено.</item>

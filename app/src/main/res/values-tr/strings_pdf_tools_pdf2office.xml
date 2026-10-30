@@ -6,7 +6,7 @@
     <string name="pdf2office_word_action">Word\'e dönüştür</string>
     <string name="pdf2office_powerpoint_body">Her sayfa bir slayt olur; metni sayfadaki konumunda düzenlenebilir kutularda yer alır. Taranmış sayfalar resim olarak eklenir.</string>
     <string name="pdf2office_powerpoint_action">PowerPoint\'e dönüştür</string>
-    <string name="pdf2office_excel_body">Tablolar satır ve hücrelere dönüşür; tablo içeren her sayfa için bir çalışma sayfası oluşur. Sayılar sayı olarak kalır, böylece toplayabilirsiniz.</string>
+    <string name="pdf2office_excel_body">Tablolar satır ve hücre olur; her tablolu sayfa bir çalışma sayfası. Sayılar sayı kalır, toplanabilir.</string>
     <string name="pdf2office_excel_action">Excel\'e dönüştür</string>
 
     <!-- Result notes -->
@@ -28,7 +28,7 @@
         <item quantity="one">Metni olmayan %d taranmış sayfa atlandı.</item>
         <item quantity="other">Metni olmayan %d taranmış sayfa atlandı.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Tablo bulunamadı; metin her satıra bir satır gelecek şekilde yerleştirildi.</string>
+    <string name="pdf2office_excel_no_tables">Tablo bulunamadı; metin satır satır yerleştirildi.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">Sayfa %1$d</string>

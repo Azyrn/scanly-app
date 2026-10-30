@@ -2,7 +2,7 @@
 <!-- PDF tools: the shared pick → options → result flow every one-shot tool runs through. -->
 <resources>
     <!-- Inputs on the options screen -->
-    <string name="pdf_tool_flow_add_files">إضافة ملفات</string>
+    <string name="pdf_tool_flow_add_files">+ ملفات</string>
     <string name="pdf_tool_flow_remove">إزالة %1$s</string>
     <string name="pdf_tool_flow_move_up">نقل %1$s لأعلى</string>
     <string name="pdf_tool_flow_move_down">نقل %1$s لأسفل</string>

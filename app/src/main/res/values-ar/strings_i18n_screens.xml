@@ -22,7 +22,7 @@
     <string name="scr_home_image_to_text">صورة إلى نص</string>
     <string name="scr_home_image_to_text_subtitle">من الصور ولقطات الشاشة</string>
     <string name="scr_home_pdf_to_text">PDF إلى نص</string>
-    <string name="scr_home_pdf_to_text_subtitle">تشمل الصفحات الممسوحة ضوئيًا</string>
+    <string name="scr_home_pdf_to_text_subtitle">تشمل الصفحات الممسوحة</string>
     <string name="scr_home_edit_pdf_subtitle">تعليق وتوقيع ودمج وضغط</string>
     <string name="scr_home_scan_barcode">مسح الباركود/QR</string>
     <string name="scr_home_scan_barcode_subtitle">رمز QR ورموز المنتجات وPDF417</string>
@@ -31,7 +31,7 @@
     <!-- Results -->
     <string name="scr_results_title">النتائج</string>
     <string name="scr_results_extracted_text">النص المستخرج</string>
-    <string name="scr_results_rescan">إعادة المسح</string>
+    <string name="scr_results_rescan">أعِد المسح</string>
     <string name="scr_results_scan_failed">لم يكتمل المسح</string>
     <string name="scr_results_scan_failed_retry">%1$s\n\nانقر على الزر أدناه لإعادة المحاولة.</string>
     <string name="scr_unified_none_detected">لم يتم اكتشاف نص أو باركود</string>
@@ -47,9 +47,9 @@
     <string name="scr_scan_review_open_with">فتح %1$s باستخدام…</string>
     <string name="scr_scan_review_no_app">لا يوجد تطبيق مثبّت لفتح ملفات %1$s</string>
     <string name="scr_scan_review_title">مراجعة المسح</string>
-    <string name="scr_scan_review_no_pages">لا توجد صفحات</string>
-    <string name="scr_scan_review_one_page">صفحة واحدة</string>
-    <string name="scr_scan_review_delete_page_title">هل تريد حذف الصفحة %1$d؟</string>
+    <string name="scr_scan_review_no_pages">لا صفحات</string>
+    <string name="scr_scan_review_one_page">صفحة</string>
+    <string name="scr_scan_review_delete_page_title">حذف الصفحة %1$d؟</string>
     <string name="scr_scan_review_delete_page_body">لن تُدرج هذه الصفحة في التصدير. يمكنك إعادة مسحها في أي وقت.</string>
     <string name="scr_scan_review_keep">إبقاء</string>
     <string name="scr_scan_review_rotate_page">تدوير الصفحة</string>
@@ -71,7 +71,7 @@
     <string name="scr_export_pdf_subtitle">%1$s في ملف واحد · يُفتح بعد الحفظ</string>
     <string name="scr_export_pdf_title">مستند PDF</string>
     <string name="scr_export_word_title">مستند Word</string>
-    <string name="scr_export_word_subtitle">%1$s بصيغة .docx، صفحة مسح لكل صفحة</string>
+    <string name="scr_export_word_subtitle">%1$s بصيغة .docx، مسح لكل صفحة</string>
     <string name="scr_export_images_title">الصور إلى المعرض</string>
     <string name="scr_export_images_subtitle">%1$s بصيغة JPEG في ألبوم Scanly</string>
     <!-- Text to PDF -->
@@ -79,7 +79,7 @@
     <!-- Audio to Text -->
     <string name="scr_transcribe_mic_denied">تحتاج Scanly إلى إذن الميكروفون للتسجيل. فعّله من الإعدادات، أو اختر ملفًا.</string>
     <string name="scr_transcribe_your_transcripts">نصوصك المفرّغة</string>
-    <string name="scr_transcribe_delete_title">هل تريد حذف النص المفرّغ؟</string>
+    <string name="scr_transcribe_delete_title">حذف النص المفرّغ؟</string>
     <string name="scr_transcribe_delete_body">سيتم حذف «%1$s» وتسجيله من هذا الهاتف.</string>
     <string name="scr_transcribe_start_hint">سجّل، أو اختر مذكرة صوتية أو اجتماعًا أو فيديو.</string>
     <string name="scr_transcribe_record">تسجيل</string>
@@ -92,7 +92,7 @@
     <string name="scr_transcribe_uploading_body">إرسال التسجيل إلى Scanly AI.</string>
     <string name="scr_transcribe_transcribing_title">جارٍ التفريغ</string>
     <string name="scr_transcribe_transcribing_body">تستغرق التسجيلات الطويلة بضع دقائق. يمكنك مغادرة هذه الشاشة، وسيُحفظ النص المفرّغ هنا عند الانتهاء.</string>
-    <string name="scr_transcribe_paused">متوقف مؤقتًا</string>
+    <string name="scr_transcribe_paused">متوقف</string>
     <string name="scr_transcribe_recording">جارٍ التسجيل</string>
     <string name="scr_transcribe_up_to_minutes">حتى %1$d دقيقة في خطتك</string>
     <string name="scr_transcribe_discard_recording">تجاهل التسجيل</string>
@@ -103,7 +103,7 @@
     <string name="scr_transcribe_action">تفريغ</string>
     <string name="scr_transcribe_save_again">حفظ مرة أخرى</string>
     <string name="scr_transcribe_discard">تجاهل</string>
-    <string name="scr_transcribe_key_terms">المصطلحات الرئيسية</string>
+    <string name="scr_transcribe_key_terms">أهم الكلمات</string>
     <string name="scr_transcribe_key_terms_empty">أسماء وكلمات يجب كتابتها بدقة</string>
     <string name="scr_transcribe_key_terms_count">%1$d من %2$d</string>
     <string name="scr_transcribe_plan_note">1 رصيد ≈ %1$d دقيقة من الصوت · حتى %2$d دقيقة لكل تسجيل في خطتك.</string>
@@ -127,7 +127,7 @@
     <string name="scr_transcript_copy">نسخ النص المفرّغ</string>
     <string name="scr_transcript_share">مشاركة النص المفرّغ</string>
     <string name="scr_transcript_gone">لم يعد هذا النص المفرّغ موجودًا على هذا الهاتف.</string>
-    <string name="scr_transcript_rename_title">إعادة تسمية النص المفرّغ</string>
+    <string name="scr_transcript_rename_title">تعديل اسم النص المفرّغ</string>
     <string name="scr_transcript_name_speaker_title">تسمية هذا المتحدث</string>
     <string name="scr_transcript_speaker_placeholder">المتحدث %1$d</string>
     <string name="scr_transcript_delete_body">سيتم حذف النص المفرّغ وتسجيله من هذا الهاتف.</string>
@@ -155,7 +155,7 @@
     <string name="scr_copied_to_clipboard">تم النسخ إلى الحافظة</string>
     <string name="scr_save_or_share">حفظ أو مشاركة</string>
     <string name="scr_resume">استئناف</string>
-    <string name="scr_pause">إيقاف مؤقت</string>
+    <string name="scr_pause">إيقاف</string>
     <string name="scr_auto_detect">كشف تلقائي</string>
     <string name="scr_selected">محدد</string>
     <string name="scr_clear_all">مسح الكل</string>
@@ -165,14 +165,14 @@
     <string name="scr_actions">إجراءات</string>
     <string name="auth_err_credential_type">أعادت Google نوع تسجيل دخول غير متوقع. حاول مرة أخرى.</string>
     <string name="auth_err_sign_in_to_confirm">سجّل الدخول أولًا، ثم أكِّد بريدك الإلكتروني.</string>
-    <string name="auth_err_sign_in_first">سجّل الدخول أولًا.</string>
+    <string name="auth_err_sign_in_first">سجّل دخولك.</string>
     <string name="auth_err_cancelled">أُلغي تسجيل الدخول.</string>
     <string name="auth_err_no_google_account">لا يوجد حساب Google على هذا الجهاز. أضِف حسابًا من الإعدادات، ثم حاول مرة أخرى.</string>
     <string name="auth_err_bad_token">أعادت Google رمزًا غير صالح. حاول مرة أخرى.</string>
     <string name="auth_err_google_unavailable">تسجيل الدخول بحساب Google غير متاح حاليًا. حاول مرة أخرى.</string>
     <string name="auth_err_weak_password">كلمة المرور ضعيفة جدًا، استخدم 6 أحرف على الأقل.</string>
     <string name="auth_err_account_exists">يوجد حساب بالفعل لهذا البريد الإلكتروني. سجّل الدخول بدلًا من ذلك.</string>
-    <string name="auth_err_wrong_credentials">البريد الإلكتروني أو كلمة المرور غير صحيحة.</string>
+    <string name="auth_err_wrong_credentials">البريد أو كلمة المرور غير صحيح.</string>
     <string name="auth_err_offline">لا يوجد اتصال بالإنترنت.</string>
     <string name="auth_err_too_many">محاولات كثيرة جدًا. حاول لاحقًا.</string>
     <string name="auth_err_generic">حدث خطأ ما. حاول مرة أخرى.</string>
@@ -180,14 +180,14 @@
     <string name="auth_err_no_account">نجح تسجيل الدخول لكنه لم يُرجع أي حساب.</string>
     <string name="auth_err_too_slow">تسجيل الدخول يستغرق وقتًا طويلًا. تحقّق من اتصالك وحاول مرة أخرى.</string>
     <string name="au_err_unreadable">تعذّر فتح هذا الملف كملف صوتي أو فيديو.</string>
-    <string name="au_err_access_lost">لم تعد Scanly تملك صلاحية الوصول إلى هذا الملف. اختره مرة أخرى.</string>
+    <string name="au_err_access_lost">لم تعد Scanly تملك صلاحية الوصول إلى هذا الملف. اختره مجددًا.</string>
     <string name="au_err_no_audio">لا يحتوي هذا الملف على صوت لتفريغه.</string>
     <string name="au_err_too_long">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</string>
     <string name="au_err_convert">تعذّر تحويل صوت هذا الملف. جرّب ملفًا آخر.</string>
     <string name="au_err_too_large">هذا التسجيل أكبر من أن تستوعبه خطتك، حتى بعد ضغطه.</string>
     <string name="au_err_read">تعذّرت قراءة هذا الملف.</string>
     <string name="auth_val_email_required">أدخل بريدك الإلكتروني أولًا.</string>
-    <string name="auth_reset_sent">إذا كان لـ%1$s كلمة مرور، فرابط إعادة التعيين في الطريق إليك. حسابات Google ليس لها كلمة مرور، لذا استخدم «المتابعة باستخدام Google».</string>
+    <string name="auth_reset_sent">إذا كان لـ%1$s كلمة مرور، فرابط إعادة التعيين في الطريق إليك. حسابات Google بلا كلمة مرور، فاستخدم «المتابعة باستخدام Google».</string>
     <string name="auth_val_invalid_email">أدخل بريدًا إلكترونيًا صالحًا.</string>
     <string name="auth_val_password_short">يجب أن تتكون كلمة المرور من %1$d أحرف على الأقل.</string>
     <string name="auth_val_check_details">تحقّق من بياناتك وحاول مرة أخرى.</string>
@@ -200,10 +200,10 @@
     <string name="tx_key_terms_limit">حتى %1$d مصطلحات رئيسية. لم تُضَف %2$d منها.</string>
     <string name="tx_key_terms_length">يمكن أن تصل المصطلحات الرئيسية إلى %1$d حرفًا.</string>
     <string name="cp_connected">تم الاتصال. نقطة الاتصال هذه جاهزة للحفظ.</string>
-    <string name="cp_saved">تم الحفظ. ستستخدم عمليات المسح نقطة الاتصال هذه.</string>
+    <string name="cp_saved">تم الحفظ. سيستخدم المسح هذا العنوان.</string>
     <string name="cp_removed">تمت إزالة نقطة الاتصال.</string>
     <string name="ai_err_cancelled">أُلغي</string>
-    <string name="ai_err_file_access">انتهت صلاحية الوصول إلى الملف. اختر الملف مرة أخرى.</string>
+    <string name="ai_err_file_access">انتهت صلاحية الوصول إلى الملف. اختره مجددًا.</string>
     <string name="ai_err_request_failed">تعذّر إكمال الطلب. حاول مرة أخرى.</string>
     <string name="ai_nothing_to_translate">لا يوجد ما يُترجم بعد.</string>
     <string name="ai_err_no_text_batch">لم يُستخرج أي نص من أي ملف</string>
@@ -219,11 +219,11 @@
     <string name="ai_err_timeout">استغرق الطلب وقتًا طويلًا. حاول مرة أخرى.</string>
     <string name="ai_retry_network">مشكلة في الاتصال</string>
     <string name="ai_retry_service">مشكلة مؤقتة في الخدمة</string>
-    <string name="ai_retrying">%1$s. جارٍ إعادة المحاولة خلال %2$d ث (%3$d/%4$d).</string>
+    <string name="ai_retrying">%1$s. تُعاد المحاولة بعد %2$dث (%3$d/%4$d).</string>
     <string name="ai_err_bad_response">أرسل %1$s شيئًا لا يستطيع التطبيق قراءته. حاول مرة أخرى.</string>
     <string name="ai_err_unexpected">حدث خطأ أثناء التواصل مع %1$s. حاول مرة أخرى.</string>
-    <string name="ai_err_sign_in">سجّل الدخول لاستخدام المسح بالذكاء الاصطناعي.</string>
-    <string name="ai_err_failed">فشل المسح بالذكاء الاصطناعي. حاول مرة أخرى.</string>
+    <string name="ai_err_sign_in">سجّل الدخول للمسح الذكي.</string>
+    <string name="ai_err_failed">فشل المسح الذكي. حاول مجددًا.</string>
     <string name="ai_err_transcript_incomplete">وصل النص المفرّغ ناقصًا. حاول مرة أخرى.</string>
     <string name="ai_err_design_no_location">لم يحدد المصمم المكان الذي يُبنى فيه مستندك.</string>
     <string name="ai_err_design_empty">أرسل المصمم مستندًا فارغًا.</string>
@@ -234,7 +234,7 @@
     <string name="ai_err_assistant_working">ما زال المساعد يعمل. افتح هذه المحادثة مرة أخرى بعد لحظة.</string>
     <string name="ai_err_assistant_failed">فشل المساعد. حاول مرة أخرى.</string>
     <string name="lic_enter_key">أدخل مفتاح ترخيصك.</string>
-    <string name="lic_check_failed">تعذّر التحقق من هذا المفتاح. حاول مرة أخرى.</string>
+    <string name="lic_check_failed">تعذّر التحقق من المفتاح. حاول مجددًا.</string>
     <string name="lic_sign_in_first">سجّل الدخول أولًا، ثم استرد مفتاحك.</string>
     <string name="plan_sign_in_to_see">سجّل الدخول لعرض خطتك.</string>
     <string name="plan_load_failed">تعذّر تحميل خطتك. حاول مرة أخرى.</string>

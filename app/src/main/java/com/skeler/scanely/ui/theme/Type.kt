@@ -2,10 +2,12 @@ package com.skeler.scanely.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.sp
+import com.skeler.scanely.R
 
 val ScanelyFontFamily = FontFamily.Default
 
@@ -141,5 +143,42 @@ val Typography = BaseTypography.run {
         labelLarge = labelLarge.content(),
         labelMedium = labelMedium.content(),
         labelSmall = labelSmall.content()
+    )
+}
+
+/**
+ * Arabic letters in the bundled Naskh with Roboto's line metrics (see scripts/make_arabic_ui_font.py);
+ * Latin letters, digits and punctuation are not in those files, so they keep the system font.
+ */
+private val ArabicUiFontFamily = FontFamily(
+    Font(R.font.arabic_ui_regular, FontWeight.Normal),
+    Font(R.font.arabic_ui_medium, FontWeight.Medium),
+    Font(R.font.arabic_ui_bold, FontWeight.Bold)
+)
+
+/**
+ * The UI in Arabic. Since Android 15 the system draws Arabic in the tall "elegant" Naskh (about 1.7 em
+ * per line against Roboto's 1.17), and Compose grows every line to the font it draws with, so Arabic
+ * rows, cards and buttons came out about 45% taller and pushed screens past the bottom edge. With the
+ * bundled font an Arabic line is exactly as tall as an English one.
+ */
+val ArabicTypography = Typography.run {
+    fun TextStyle.arabic() = copy(fontFamily = ArabicUiFontFamily)
+    copy(
+        displayLarge = displayLarge.arabic(),
+        displayMedium = displayMedium.arabic(),
+        displaySmall = displaySmall.arabic(),
+        headlineLarge = headlineLarge.arabic(),
+        headlineMedium = headlineMedium.arabic(),
+        headlineSmall = headlineSmall.arabic(),
+        titleLarge = titleLarge.arabic(),
+        titleMedium = titleMedium.arabic(),
+        titleSmall = titleSmall.arabic(),
+        bodyLarge = bodyLarge.arabic(),
+        bodyMedium = bodyMedium.arabic(),
+        bodySmall = bodySmall.arabic(),
+        labelLarge = labelLarge.arabic(),
+        labelMedium = labelMedium.arabic(),
+        labelSmall = labelSmall.arabic()
     )
 }

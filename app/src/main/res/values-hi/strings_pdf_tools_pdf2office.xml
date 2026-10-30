@@ -21,8 +21,8 @@
         <item quantity="other">%d पेज पढ़े नहीं जा सके और छोड़ दिए गए।</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">%d स्कैन किए गए पेज में कोई टेक्स्ट नहीं है, इसलिए उसे छोड़ दिया गया।</item>
-        <item quantity="other">%d स्कैन किए गए पेजों में कोई टेक्स्ट नहीं है, इसलिए उन्हें छोड़ दिया गया।</item>
+        <item quantity="one">%d स्कैन पेज में टेक्स्ट नहीं था, इसलिए छोड़ा गया।</item>
+        <item quantity="other">%d स्कैन पेजों में टेक्स्ट नहीं था, इसलिए छोड़े गए।</item>
     </plurals>
     <string name="pdf2office_excel_no_tables">कोई टेबल नहीं मिली; टेक्स्ट हर पंक्ति में एक-एक लाइन करके रखा गया।</string>
     <string name="pdf2office_excel_sheet_page">पेज %1$d</string>
