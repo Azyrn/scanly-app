@@ -4,7 +4,18 @@
 
 **Scanner & PDF editor for Android — one app, every page.**
 
-<img src="docs/images/scanly-preview.jpg" alt="Scanly: scan documents, offline OCR, PDF tools, AI Scan, audio to text, barcodes and QR codes" width="100%">
+<table>
+<tr>
+<td width="50%" align="center"><img src="docs/images/ai-scan-newspaper.webp" alt="A page of prose about cats, set in a flowing cursive script on aged paper, beside the same page as clean typed text, every sentence in order" width="100%"><br><sub><b>Page in a cursive script → clean, editable text</b></sub></td>
+<td width="50%" align="center"><img src="docs/images/ai-scan-arabic-book.webp" alt="Slightly tilted phone photo of an Arabic textbook page with pen underlines, beside the same page as clean, right-to-left Arabic text with its chapter heading" width="100%"><br><sub><b>Phone photo of an Arabic book → editable Arabic text</b></sub></td>
+</tr>
+<tr>
+<td width="50%" align="center"><img src="docs/images/ai-scan-hindi-handwriting.webp" alt="Photo of a notebook page with a poem handwritten in Hindi, beside the same poem as typed Hindi text, with its title, line breaks and verses" width="100%"><br><sub><b>Handwritten Hindi poem → typed text, every line kept</b></sub></td>
+<td width="50%" align="center"><img src="docs/images/ai-scan-chinese-handwriting.webp" alt="Photo of a grid-paper notebook page handwritten in Chinese, with two pasted pictures, beside the same page as typed Chinese text, with the two pictures in place" width="100%"><br><sub><b>Handwritten Chinese notebook → typed text, pictures kept</b></sub></td>
+</tr>
+</table>
+
+<sub>AI Scan on real pages: the original photo on the left, AI Scan's text on the right, unedited.</sub>
 
 <a href="https://play.google.com/store/apps/details?id=com.skeler.scanely">
   <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">
