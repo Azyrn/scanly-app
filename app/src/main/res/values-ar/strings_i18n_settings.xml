@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">تسوية الصفحات المنحنية</string>
     <string name="set_downloading_percent">جارٍ التنزيل %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">تصحيح انحناء UVDoc · تنزيل 30 ميغابايت</string>
-    <string name="set_uvdoc_ready_subtitle">تصحيح انحناء UVDoc: أبطأ، ومناسب للكتب والطيات</string>
+    <string name="set_uvdoc_ready_subtitle">للصفحات المنحنية فقط، عندما تتحسن القراءة</string>
     <string name="set_section_document_structure">بنية المستند</string>
     <string name="set_detect_layout_title">اكتشاف التخطيط</string>
     <string name="set_detect_layout_subtitle">العناوين والفقرات وترتيب القراءة في عرض Markdown</string>

@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Achatar páginas</string>
     <string name="set_downloading_percent">Baixando %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc · download de 30 MB</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc: mais lento, para livros e dobras</string>
+    <string name="set_uvdoc_ready_subtitle">Só páginas curvadas, se melhorar a leitura</string>
     <string name="set_section_document_structure">Estrutura</string>
     <string name="set_detect_layout_title">Detectar layout</string>
     <string name="set_detect_layout_subtitle">Títulos, parágrafos e ordem de leitura na visualização Markdown</string>

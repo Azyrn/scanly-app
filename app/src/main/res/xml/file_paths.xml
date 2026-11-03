@@ -2,6 +2,8 @@
 <paths>
     <cache-path name="generated_pdfs" path="generated_pdfs/" />
     <cache-path name="scans" path="scans/" />
+    <!-- Photos of one AI scan joined into PDFs (PhotoBundler), uploaded through the content resolver. -->
+    <cache-path name="ai_bundles" path="ai-bundles/" />
     <!-- PDF tool results (ToolWorkspace), shared or opened in another app. -->
     <cache-path name="pdf_tools" path="pdf-tools/" />
     <!-- Files the document chat produced (ChatFiles), opened in another app. -->

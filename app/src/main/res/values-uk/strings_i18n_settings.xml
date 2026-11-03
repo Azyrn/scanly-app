@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Вирівняти сторінки</string>
     <string name="set_downloading_percent">Завантаження %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc · завантаження 30 МБ</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc — повільніше, для книжок і згинів</string>
+    <string name="set_uvdoc_ready_subtitle">Лише вигнуті сторінки, якщо так краще</string>
     <string name="set_section_document_structure">Структура документа</string>
     <string name="set_detect_layout_title">Розмітка</string>
     <string name="set_detect_layout_subtitle">Заголовки, абзаци й порядок читання у вигляді Markdown</string>

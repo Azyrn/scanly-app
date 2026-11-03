@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Kıvrık sayfaları düzleştir</string>
     <string name="set_downloading_percent">İndiriliyor: %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc düzeltme · 30 MB indirme</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc düzeltme — yavaş, kitap ve kıvrımlar için</string>
+    <string name="set_uvdoc_ready_subtitle">Yalnızca kıvrık sayfalar, okuma iyileşirse</string>
     <string name="set_section_document_structure">Belge yapısı</string>
     <string name="set_detect_layout_title">Düzeni algıla</string>
     <string name="set_detect_layout_subtitle">Markdown görünümünde başlıklar, paragraflar ve okuma sırası</string>

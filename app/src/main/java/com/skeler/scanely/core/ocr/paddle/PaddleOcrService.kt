@@ -47,7 +47,16 @@ private const val DENSE_CHARS_PER_LINE = 25
 // bilingual ID card sits near 0.5, a genuine Arabic page at 0.75+.
 private const val MIN_RTL_FRACTION = 0.6f
 
-/** Offline PP-OCR pipeline: orient -> dewarp -> detect -> deskew lines -> recognize. */
+// Share of a page's long lines that must be curled ([Detection.curledShare]) before it is worth
+// dewarping. Curled book photos measured 17-60%, flat pages at most 11%.
+private const val MIN_CURLED_SHARE = 0.15f
+
+// The flattened read must recover this much more confident text to replace the page as shot. A
+// flat table read 0.8% "better" flattened while its rows came out scrambled; the curled pages that
+// dewarping rescues gain 6-60%.
+private const val UNWARP_MARGIN = 1.05f
+
+/** Offline PP-OCR pipeline: orient -> detect -> deskew lines -> recognize, dewarping curled pages. */
 @Singleton
 class PaddleOcrService @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -58,12 +67,12 @@ class PaddleOcrService @Inject constructor(
 
     suspend fun recognize(bitmap: Bitmap): OcrResult = withContext(Dispatchers.Default) {
         val derived = mutableListOf<Bitmap>()
-        var crops = listOf<Bitmap>()
         try {
             val pack = ScriptPack.fromId(settings.getString(SettingsKeys.PADDLE_SCRIPT).first())
             val useDocOrientation = settings.getBoolean(SettingsKeys.PADDLE_DOC_ORIENTATION).first()
             val useUnwarp = settings.getBoolean(SettingsKeys.PADDLE_DOC_UNWARP).first()
             val useLineOrientation = settings.getBoolean(SettingsKeys.PADDLE_LINE_ORIENTATION).first()
+            val options = ReadOptions(pack, useDocOrientation, useLineOrientation)
 
             var page = bitmap
 
@@ -81,40 +90,24 @@ class PaddleOcrService @Inject constructor(
                     derived.add(page)
                 }
             }
-            if (useUnwarp && engine.canUnwarp()) {
-                page = engine.unwarp(page)
-                derived.add(page)
-            }
 
-            var quads = engine.detect(page, DET_LIMIT)
-            if (quads.isEmpty()) return@withContext OcrResult.Empty
+            val detection = engine.detectPage(page, DET_LIMIT)
+            var read = readPage(page, detection.quads, options, derived)
+                ?: return@withContext OcrResult.Empty
 
-            crops = cropLines(page, quads)
-
-            if (useDocOrientation && isUpsideDown(crops, pack)) {
-                // Turned as a page, never per line: the quads carry the reading order, so a page
-                // read bottom-up has to be re-detected on the corrected page, not patched crop by
-                // crop.
-                crops.forEach { it.recycle() }
-                crops = emptyList()
-                page = ImageOps.rotate(page, 180)
-                derived.add(page)
-                quads = engine.detect(page, DET_LIMIT)
-                if (quads.isEmpty()) return@withContext OcrResult.Empty
-                crops = cropLines(page, quads)
-            }
-
-            if (useLineOrientation) {
-                val flipped = engine.detectFlippedLines(crops)
-                crops = crops.mapIndexed { i, crop ->
-                    if (flipped[i]) ImageOps.rotate180(crop).also { crop.recycle() } else crop
+            // Dewarping bends straight lines as readily as it straightens curled ones (on flat
+            // photos it cost 7-15 points of word accuracy), so only a page whose lines are curled
+            // gets it, and the flattened read must beat the page as shot to be kept.
+            if (useUnwarp && engine.canUnwarp() && detection.curledShare >= MIN_CURLED_SHARE) {
+                val flat = engine.unwarp(read.page)
+                derived.add(flat)
+                readPage(flat, engine.detect(flat, DET_LIMIT), options, derived)?.let { flatRead ->
+                    if (confidentText(flatRead.lines) > confidentText(read.lines) * UNWARP_MARGIN) read = flatRead
                 }
             }
-
-            var recognized = engine.recognizeWithLatin(crops, pack)
-            recognized = preferBundledScript(crops, pack, recognized)
-            crops.forEach { it.recycle() }
-            crops = emptyList()
+            page = read.page
+            val quads = read.quads
+            val recognized = read.lines
 
             // Direction is a property of the text, not of the installed pack: an English
             // table must not reverse just because the Arabic pack is selected.
@@ -161,8 +154,53 @@ class PaddleOcrService @Inject constructor(
             OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition))
         } finally {
             // Never recycles [bitmap] itself: the caller owns it.
-            crops.forEach { it.recycle() }
             derived.forEach { it.recycle() }
+        }
+    }
+
+    private class ReadOptions(
+        val pack: ScriptPack,
+        val docOrientation: Boolean,
+        val lineOrientation: Boolean
+    )
+
+    /** One page read: the (possibly turned) page it was read from, its quads and their text. */
+    private class PageRead(val page: Bitmap, val quads: List<Quad>, val lines: List<RecLine>)
+
+    /**
+     * Crops and recognises [quads] on [page], turning the page over first when it reads better
+     * upside down. Pages made along the way go to [derived] for the caller to recycle.
+     */
+    private fun readPage(
+        page: Bitmap,
+        quads: List<Quad>,
+        options: ReadOptions,
+        derived: MutableList<Bitmap>
+    ): PageRead? {
+        if (quads.isEmpty()) return null
+        var current = page
+        var currentQuads = quads
+        var crops = cropLines(current, currentQuads)
+        try {
+            if (options.docOrientation && isUpsideDown(crops, options.pack)) {
+                // Turned as a page, never per line: the quads carry the reading order, so a page
+                // read bottom-up has to be re-detected on the corrected page, not patched crop by
+                // crop.
+                crops.forEach { it.recycle() }
+                crops = emptyList()
+                current = ImageOps.rotate(current, 180)
+                derived.add(current)
+                currentQuads = engine.detect(current, DET_LIMIT)
+                if (currentQuads.isEmpty()) return null
+                crops = cropLines(current, currentQuads)
+            }
+
+            if (options.lineOrientation) crops = turnFlippedLines(crops)
+
+            val recognized = engine.recognizeWithLatin(crops, options.pack)
+            return PageRead(current, currentQuads, preferBundledScript(crops, options.pack, recognized))
+        } finally {
+            crops.forEach { it.recycle() }
         }
     }
 
@@ -214,6 +252,14 @@ class PaddleOcrService @Inject constructor(
                 )
             }
         }
+
+    /** Turns upside-down line crops upright; the crops it replaces are recycled. */
+    private fun turnFlippedLines(crops: List<Bitmap>): List<Bitmap> {
+        val flipped = engine.detectFlippedLines(crops)
+        return crops.mapIndexed { i, crop ->
+            if (flipped[i]) ImageOps.rotate180(crop).also { crop.recycle() } else crop
+        }
+    }
 
     private fun cropLines(page: Bitmap, ordered: List<Quad>): List<Bitmap> {
         val pixels = ImageOps.Page(page)
@@ -393,6 +439,11 @@ internal fun isPageUpsideDown(reads: List<OrientationRead>): Boolean {
     if (maxOf(upright, flipped) < ORIENTATION_MIN_SCORE) return false
     return flipped > upright * FLIP_MARGIN
 }
+
+/** Confidence-weighted characters of the lines kept: how much text a read really recovered. */
+internal fun confidentText(lines: List<RecLine>): Float =
+    lines.sumOf { if (it.confidence >= MIN_CONFIDENCE) (it.confidence * it.text.trim().length).toDouble() else 0.0 }
+        .toFloat()
 
 /** Confident characters in a read: a garbled or wrong-script line is both shorter and less certain. */
 internal fun recognizedChars(lines: List<RecLine>): Int =

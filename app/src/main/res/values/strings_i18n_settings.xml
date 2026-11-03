@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Flatten curved pages</string>
     <string name="set_downloading_percent">Downloading %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc dewarping · 30 MB download</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc dewarping — slower, for books and folds</string>
+    <string name="set_uvdoc_ready_subtitle">Only on curled pages, when it reads better</string>
     <string name="set_section_document_structure">Document structure</string>
     <string name="set_detect_layout_title">Detect layout</string>
     <string name="set_detect_layout_subtitle">Headings, paragraphs and reading order in the Markdown view</string>

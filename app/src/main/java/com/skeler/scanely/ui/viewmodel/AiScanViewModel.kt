@@ -14,6 +14,7 @@ import com.skeler.scanely.core.ai.AiRunInfo
 import com.skeler.scanely.core.ai.AiStage
 import com.skeler.scanely.core.ai.FeatureSwitches
 import com.skeler.scanely.core.ai.GenerativeAiService
+import com.skeler.scanely.core.ai.PhotoBundler
 import com.skeler.scanely.core.ai.ScanExtraction
 import com.skeler.scanely.core.ai.isOffered
 import com.skeler.scanely.core.billing.EntitlementRepository
@@ -28,14 +29,21 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "AiScanViewModel"
+
+/** Free plan limits, used until `/v1/me` has answered; see worker/src/plans.ts. */
+private const val FREE_PAGES_PER_DOC = 3
+private const val FREE_UPLOAD_BYTES = 5L * 1024 * 1024
 
 data class AiScanState(
     val isProcessing: Boolean = false,
@@ -73,8 +81,21 @@ class AiScanViewModel @Inject constructor(
     private val historyManager: HistoryManager,
     private val entitlementRepository: EntitlementRepository,
     private val pdfRenderer: PdfRendererHelper,
-    private val featureSwitches: FeatureSwitches
+    private val featureSwitches: FeatureSwitches,
+    private val photoBundler: PhotoBundler
 ) : ViewModel() {
+
+    /**
+     * Photos one AI scan takes: the plan's per-document page limit, since the photos travel as one
+     * PDF. The Free limit until `/v1/me` has answered; the server enforces the real one either way.
+     */
+    val photoLimit: StateFlow<Int> = entitlementRepository.entitlement
+        .map { it?.maxPagesPerDoc ?: FREE_PAGES_PER_DOC }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            entitlementRepository.entitlement.value?.maxPagesPerDoc ?: FREE_PAGES_PER_DOC
+        )
 
     private val _offeredFeatures = MutableStateFlow(AiFeature.entries.toSet())
 
@@ -216,11 +237,33 @@ class AiScanViewModel @Inject constructor(
                 extractPreset = extractPreset
             )
 
+            val work = if (shouldBundle(uris, extractPreset)) {
+                try {
+                    val me = entitlementRepository.entitlement.value
+                    photoBundler.bundle(
+                        uris,
+                        maxPages = me?.maxPagesPerDoc ?: FREE_PAGES_PER_DOC,
+                        maxBytes = me?.maxUploadBytes ?: FREE_UPLOAD_BYTES
+                    )
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Log.e(TAG, "Joining photos failed", e)
+                    publishFinalResult(AiResult.Error(context.getString(R.string.ai_err_read_file)), null)
+                    return@launch
+                }
+            } else {
+                uris
+            }
+            val bundled = work !== uris
+            _aiState.value = _aiState.value.copy(totalFiles = work.size)
+
             val results = mutableListOf<AiResult>()
-            uris.forEachIndexed { index, uri ->
+            work.forEachIndexed { index, uri ->
                 _aiState.value = _aiState.value.copy(
                     currentFileIndex = index + 1,
-                    lastImageUri = uri
+                    // A joined PDF is not something the preview can show; the first photo is.
+                    lastImageUri = if (bundled) uris.first() else uri
                 )
 
                 results += collectPipeline(uri, range, extractPreset)
@@ -285,6 +328,16 @@ class AiScanViewModel @Inject constructor(
     fun consumeTranslationUpgrade() {
         _aiState.value = _aiState.value.copy(translationUpgrade = null)
     }
+
+    /**
+     * Several photos for a plain scan go to Scanly as one PDF. Extraction stays one request per
+     * photo (each receipt is its own record), and a custom endpoint takes images as they are.
+     */
+    private suspend fun shouldBundle(uris: List<Uri>, extractPreset: String?): Boolean =
+        uris.size > 1 &&
+            extractPreset == null &&
+            uris.all { context.contentResolver.getType(it)?.startsWith("image/") == true } &&
+            !usesCustomProvider()
 
     fun getRescanParams(): RescanParams? {
         val currentState = _aiState.value

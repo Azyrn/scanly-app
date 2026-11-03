@@ -69,7 +69,7 @@
     <string name="set_flatten_curved_title">휘어진 페이지 펴기</string>
     <string name="set_downloading_percent">다운로드 중 %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc 왜곡 보정 · 30MB 다운로드</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc 왜곡 보정 — 느리지만 책·접힌 페이지용</string>
+    <string name="set_uvdoc_ready_subtitle">휜 페이지에만, 인식이 더 나을 때</string>
     <string name="set_section_document_structure">문서 구조</string>
     <string name="set_detect_layout_title">레이아웃 감지</string>
     <string name="set_detect_layout_subtitle">Markdown 보기에서 제목, 단락, 읽기 순서를 표시해요</string>

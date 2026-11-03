@@ -12,7 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-/** Max images/files accepted per AI scan (matches the per-file 20 MB cap in PayloadFactory). */
+/**
+ * Documents accepted per AI scan; each may be as long as the plan allows. Photos follow the plan
+ * instead: see AiScanViewModel.photoLimit.
+ */
 const val MAX_AI_FILES = 3
 
 /** Everything the AI document flow accepts: PDF, Office formats OCR reads natively, plain text. */

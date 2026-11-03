@@ -2,6 +2,34 @@ package com.skeler.scanely.core.ocr.paddle
 
 import kotlin.math.ceil
 
+// A text line's region fills its minimum-area rectangle almost completely when the line is
+// straight; a line bent by a page curling into the spine fills the rectangle around its bend far
+// less. Measured on 50 phone photos at the 960 px detection size: on every curled page 17-60% of
+// the long lines fall below this fill, on every flat page at most 11%.
+private const val CURL_FILL = 0.8f
+
+// Only lines long enough to bend count; a short word or a page number is a rectangle either way.
+private const val CURL_MIN_ASPECT = 8f
+private const val CURL_MIN_PIXELS = 50
+
+/** Detected quads, plus the share of long lines whose region does not fill a straight box. */
+class Detection(val quads: List<Quad>, val curledShare: Float)
+
+/** Tallies, per text region, whether a long line is curled (see [CURL_FILL]). */
+class CurlCounter {
+    private var longLines = 0
+    private var curled = 0
+
+    val share: Float get() = if (longLines == 0) 0f else curled.toFloat() / longLines
+
+    fun add(pixels: Int, rect: RotatedRect) {
+        val longSide = maxOf(rect.width, rect.height)
+        if (pixels < CURL_MIN_PIXELS || longSide < rect.shortSide * CURL_MIN_ASPECT) return
+        longLines++
+        if (pixels < CURL_FILL * rect.width * rect.height) curled++
+    }
+}
+
 /** DBNet probability map to text quads. Params from PP-OCRv6 inference.yml. */
 class DbPostProcessor(
     private val thresh: Float = 0.2f,
@@ -11,7 +39,20 @@ class DbPostProcessor(
     private val maxCandidates: Int = 3000
 ) {
 
-    fun extract(prob: FloatArray, w: Int, h: Int, scaleX: Float, scaleY: Float): List<Quad> {
+    fun extractDetection(prob: FloatArray, w: Int, h: Int, scaleX: Float, scaleY: Float): Detection {
+        val curl = CurlCounter()
+        return Detection(extract(prob, w, h, scaleX, scaleY, curl), curl.share)
+    }
+
+    /** Text quads in source pixels; [curl], when given, tallies every region's curl on the way. */
+    fun extract(
+        prob: FloatArray,
+        w: Int,
+        h: Int,
+        scaleX: Float,
+        scaleY: Float,
+        curl: CurlCounter? = null
+    ): List<Quad> {
         val visited = BooleanArray(w * h)
         val out = ArrayList<Quad>()
         val stack = IntArray(w * h)
@@ -58,6 +99,7 @@ class DbPostProcessor(
 
             val rect = Geometry.minAreaRect(border.toFloatArray())
             if (rect.shortSide < minSize) continue
+            curl?.add(pixels, rect)
             if (polygonScore(prob, w, h, rect.quad) < boxThresh) continue
 
             val expanded = Geometry.minAreaRect(Geometry.unclip(rect.quad, unclipRatio))

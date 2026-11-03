@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Aplanir pages courbes</string>
     <string name="set_downloading_percent">%1$d%% téléchargé</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc · 30 Mo à télécharger</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc : plus lent, pour livres et plis</string>
+    <string name="set_uvdoc_ready_subtitle">Pages courbées seulement, si la lecture gagne</string>
     <string name="set_section_document_structure">Structure document</string>
     <string name="set_detect_layout_title">Mise en page</string>
     <string name="set_detect_layout_subtitle">Titres, paragraphes et ordre de lecture dans l\'affichage Markdown</string>

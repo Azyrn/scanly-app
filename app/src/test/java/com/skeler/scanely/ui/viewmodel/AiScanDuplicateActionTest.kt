@@ -25,8 +25,10 @@ class AiScanDuplicateActionTest {
 
     @Before fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
+        `when`(entitlement.entitlement).thenReturn(kotlinx.coroutines.flow.MutableStateFlow(null))
         vm = AiScanViewModel(EnglishStrings.context(), service, mock(HistoryManager::class.java),
-            entitlement, mock(PdfRendererHelper::class.java), mock(FeatureSwitches::class.java))
+            entitlement, mock(PdfRendererHelper::class.java), mock(FeatureSwitches::class.java),
+            mock(PhotoBundler::class.java))
     }
     @After fun cleanup() { vm.viewModelScope.cancel(); Dispatchers.resetMain() }
 

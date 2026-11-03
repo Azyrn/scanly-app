@@ -86,4 +86,19 @@ class ReadingOrderTest {
     fun emptyInput() {
         assertEquals(emptyList<List<Int>>(), ReadingOrder.orderedLines(emptyList(), false))
     }
+
+    // A magazine page: a title across both columns, then 60 lines per column. The gap under the
+    // title is one line high, far below 2% of the page, but it is the only cut that separates the
+    // title from the columns; without it every row was read straight across both columns.
+    @Test
+    fun fullWidthTitleOverTallColumns() {
+        val title = box(0f, 0f, 700f, 60f)
+        val left = (0 until 60).map { box(0f, 82f + it * 21f, 320f, 17f) }
+        val right = (0 until 60).map { box(345f, 82f + it * 21f, 340f, 17f) }
+        val quads = listOf(title) + left + right
+
+        val order = ReadingOrder.orderedLines(quads, false).flatten()
+
+        assertEquals((0..120).toList(), order)
+    }
 }

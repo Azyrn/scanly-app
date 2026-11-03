@@ -1,6 +1,8 @@
 package com.skeler.scanely.ui.screens
 
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -86,6 +88,22 @@ private const val PDF_MIME_TYPE = "application/pdf"
 /** Server limit for document extraction. */
 private const val EXTRACTION_MAX_PAGES = 8
 
+/**
+ * [planLimit] for the photo picker, or null for the system's own maximum when the plan allows at
+ * least that many: the system picker refuses a request above its limit.
+ */
+private const val SYSTEM_PICKER_DEFAULT_LIMIT = 100
+
+private fun pickerLimit(planLimit: Int): Int? {
+    val systemMax = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        MediaStore.getPickImagesMaxLimit()
+    } else {
+        // Android 11-12 may run the same picker via an SDK extension; 100 is its default limit.
+        SYSTEM_PICKER_DEFAULT_LIMIT
+    }
+    return planLimit.coerceAtLeast(2).takeIf { it < systemMax }
+}
+
 private data class PendingPdfScan(val uri: Uri, val mode: AiMode, val pageCount: Int)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,8 +148,17 @@ fun HomeScreen() {
         }
     }
 
-    val aiMultiGalleryPicker = rememberMultiGalleryPicker(maxItems = MAX_AI_FILES) { uris ->
-        if (uris.isNotEmpty() && pendingAiMode != null) {
+    // Photos travel as one PDF, so the plan's page limit is the photo limit (Free 3, Pro 300, Max 1,000).
+    val photoLimit by aiViewModel.photoLimit.collectAsStateWithLifecycle()
+    val aiMultiGalleryPicker = rememberMultiGalleryPicker(maxItems = pickerLimit(photoLimit)) { picked ->
+        if (picked.isNotEmpty() && pendingAiMode != null) {
+            // The pre-Android 13 fallback picker cannot limit its selection.
+            val uris = picked.take(photoLimit)
+            if (picked.size > photoLimit) {
+                scope.launch {
+                    snackbarHostState.showSnackbar(resources.getString(R.string.scr_home_ai_file_limit, photoLimit))
+                }
+            }
             val mode = pendingAiMode!!
             pendingAiMode = null
             startAiScan(uris, mode)

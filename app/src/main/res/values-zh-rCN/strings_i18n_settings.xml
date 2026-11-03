@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">展平弯曲的页面</string>
     <string name="set_downloading_percent">正在下载 %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc 去弯曲校正 · 下载 30 MB</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc 去弯曲校正，速度较慢，适用于书籍和折痕</string>
+    <string name="set_uvdoc_ready_subtitle">仅用于弯曲页面，且识别更好时</string>
     <string name="set_section_document_structure">文档结构</string>
     <string name="set_detect_layout_title">检测版面</string>
     <string name="set_detect_layout_subtitle">在 Markdown 视图中显示标题、段落和阅读顺序</string>

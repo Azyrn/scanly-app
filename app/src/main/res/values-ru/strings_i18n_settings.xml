@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Выпрямлять изгибы</string>
     <string name="set_downloading_percent">Загрузка %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">Выравнивание UVDoc · загрузка 30 МБ</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc — медленнее, для книг и сгибов</string>
+    <string name="set_uvdoc_ready_subtitle">Только изогнутые страницы, если так лучше</string>
     <string name="set_section_document_structure">Структура документа</string>
     <string name="set_detect_layout_title">Найти макет</string>
     <string name="set_detect_layout_subtitle">Заголовки, абзацы и порядок чтения в виде Markdown</string>

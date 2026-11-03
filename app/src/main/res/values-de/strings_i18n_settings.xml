@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">Wölbung glätten</string>
     <string name="set_downloading_percent">Lädt herunter: %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc-Entzerrung · 30 MB Download</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc-Entzerrung: langsamer, für Bücher und Falze</string>
+    <string name="set_uvdoc_ready_subtitle">Nur gewölbte Seiten, wenn es besser liest</string>
     <string name="set_section_document_structure">Dokumentstruktur</string>
     <string name="set_detect_layout_title">Layout finden</string>
     <string name="set_detect_layout_subtitle">Überschriften, Absätze und Lesereihenfolge in Markdown</string>

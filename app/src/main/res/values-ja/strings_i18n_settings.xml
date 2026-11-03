@@ -75,7 +75,7 @@
     <string name="set_flatten_curved_title">曲がったページを平らに</string>
     <string name="set_downloading_percent">ダウンロード中 %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc ゆがみ補正 · 30 MB ダウンロード</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc のゆがみ補正。遅いが、書籍や折り目向け</string>
+    <string name="set_uvdoc_ready_subtitle">曲がったページのみ、読み取りが向上する場合</string>
     <string name="set_section_document_structure">文書構造</string>
     <string name="set_detect_layout_title">レイアウト検出</string>
     <string name="set_detect_layout_subtitle">Markdown 表示で見出し、段落、読み順を検出します</string>

@@ -69,7 +69,7 @@
     <string name="set_flatten_curved_title">मुड़े हुए पेज सीधे करें</string>
     <string name="set_downloading_percent">डाउनलोड हो रहा है %1$d%%</string>
     <string name="set_uvdoc_missing_subtitle">UVDoc डीवार्पिंग · 30 MB डाउनलोड</string>
-    <string name="set_uvdoc_ready_subtitle">UVDoc डीवार्पिंग — धीमा, किताबों और मोड़ों के लिए</string>
+    <string name="set_uvdoc_ready_subtitle">केवल मुड़े पन्नों पर, जब पढ़ना बेहतर हो</string>
     <string name="set_section_document_structure">दस्तावेज़ की संरचना</string>
     <string name="set_detect_layout_title">लेआउट पहचानें</string>
     <string name="set_detect_layout_subtitle">Markdown व्यू में हेडिंग, पैराग्राफ़ और पढ़ने का क्रम</string>

@@ -4,6 +4,12 @@ import kotlin.math.abs
 
 private const val V_GAP_MIN_FRAC = 0.015f
 private const val H_GAP_MIN_FRAC = 0.02f
+
+// On a tall group, 2% of its height outgrows the gap a layout actually leaves: a title sits one
+// line above the columns under it, and on a full page that is ~1.5% of the height. A gap this share
+// of the group's median line height is a real break between blocks; lines inside a paragraph sit
+// closer than this because detection boxes are already unclipped. Only ever lowers the bar.
+private const val H_GAP_LINE_FACTOR = 0.8f
 private const val V_SIDE_MIN_VEXTENT_FRAC = 0.40f
 private const val V_SIDE_MIN_HEXTENT_FRAC = 0.20f
 private const val V_SIDE_MIN_QUADS = 2
@@ -49,8 +55,9 @@ object ReadingOrder {
                 verticalExtent(right, quads) >= V_SIDE_MIN_VEXTENT_FRAC * groupHeight &&
                 horizontalExtent(left, quads) >= V_SIDE_MIN_HEXTENT_FRAC * groupWidth &&
                 horizontalExtent(right, quads) >= V_SIDE_MIN_HEXTENT_FRAC * groupWidth
+        val horizontalMin = minOf(H_GAP_MIN_FRAC * groupHeight, H_GAP_LINE_FACTOR * medianHeight(indices, quads))
         val horizontalValid =
-            horizontal.width >= maxOf(ABS_MIN_GAP_PX, H_GAP_MIN_FRAC * groupHeight) &&
+            horizontal.width >= maxOf(ABS_MIN_GAP_PX, horizontalMin) &&
                 top.isNotEmpty() &&
                 bottom.isNotEmpty()
 
@@ -109,6 +116,11 @@ object ReadingOrder {
             }
         }
         return Gap(widest, cut)
+    }
+
+    private fun medianHeight(indices: List<Int>, quads: List<Quad>): Float {
+        val heights = indices.map { quads[it].maxY - quads[it].minY }.sorted()
+        return heights[heights.size / 2]
     }
 
     private fun verticalExtent(indices: List<Int>, quads: List<Quad>): Float {

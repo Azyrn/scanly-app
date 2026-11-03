@@ -155,3 +155,12 @@ object RtlText {
         return String(out)
     }
 }
+
+// An alef with hamza below with no Arabic letter or mark after it. The letter only ever starts a
+// word, so this is the recognizer reading "!" as the glyph it resembles: it did so for every
+// exclamation mark on the Arabic test pages, and never wrote a word-final one for real.
+private val STRAY_HAMZA_ALEF = Regex("إ(?![\\u0621-\\u065F\\u0670-\\u06D3])")
+
+/** Turns a misread "!" (read as a word-final "إ", which Arabic never writes) back into "!". */
+internal fun restoreExclamation(s: String): String =
+    if ('إ' in s) s.replace(STRAY_HAMZA_ALEF, "!") else s

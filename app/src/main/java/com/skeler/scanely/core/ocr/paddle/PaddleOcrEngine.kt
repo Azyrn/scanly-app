@@ -163,7 +163,10 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     /** DBNet text detection. Returns quads in [src] pixel coordinates. */
-    fun detect(src: Bitmap, limitSide: Int): List<Quad> = withSessions {
+    fun detect(src: Bitmap, limitSide: Int): List<Quad> = detectPage(src, limitSide).quads
+
+    /** [detect], plus how curled the page's lines are ([Detection.curledShare]). */
+    fun detectPage(src: Bitmap, limitSide: Int): Detection = withSessions {
         val (resized, scaleX, scaleY) = ImageOps.detResize(src, limitSide)
         val tensor = ImageOps.imagenetTensor(resized)
         val w = resized.width
@@ -175,7 +178,7 @@ class PaddleOcrEngine @Inject constructor(
             val ow = shape[3].toInt()
             Triple(FloatArray(oh * ow).also { buf.get(it) }, ow, oh)
         }
-        dbPostProcessor.extract(prob.first, prob.second, prob.third, scaleX, scaleY)
+        dbPostProcessor.extractDetection(prob.first, prob.second, prob.third, scaleX, scaleY)
     }
 
     /** CTC recognition, batched by similar width. Returns text + mean per-character confidence. */
@@ -207,13 +210,13 @@ class PaddleOcrEngine @Inject constructor(
 
     // Keyed off the characters, not the pack: any model can emit an RTL run, and the
     // conversion is a no-op on a string that has none.
-    private fun RecLine.toLogical() = copy(text = RtlText.visualToLogical(text))
+    private fun RecLine.toLogical() = copy(text = restoreExclamation(RtlText.visualToLogical(text)))
 
     // The scan path also restores the word spaces the recognizer dropped, from the gaps its own
     // character positions leave behind. Kept out of [toLogical] so the orientation probes and the
     // plain [recognize] entry point are unaffected.
     private fun RecLine.toLogicalSpaced() =
-        copy(text = RtlText.visualToLogical(RtlText.recoverWordSpaces(chars, text)))
+        copy(text = restoreExclamation(RtlText.visualToLogical(RtlText.recoverWordSpaces(chars, text))))
 
     /** A confident, wholly-script line has nothing for the Latin model to add. */
     private fun mayHideLatin(line: RecLine): Boolean = line.chars.any { c ->
