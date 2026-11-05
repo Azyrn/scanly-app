@@ -157,6 +157,8 @@ fun ScanningOverlay(
     modifier: Modifier = Modifier,
     verticalBias: Float = 0.5f
 ) {
+    // Fixed role: the same tone in light and dark, which is what a camera feed behind it needs.
+    val accentColor = MaterialTheme.colorScheme.primaryFixedDim
     Canvas(modifier = modifier.fillMaxSize()) {
         val scanBoxSize = size.minDimension * 0.7f
         val left = (size.width - scanBoxSize) / 2
@@ -182,7 +184,6 @@ fun ScanningOverlay(
 
         val cornerLength = 40.dp.toPx()
         val cornerStroke = 4.dp.toPx()
-        val accentColor = Color(0xFF6750A4)
 
         drawLine(accentColor, Offset(left, top + 24.dp.toPx()), Offset(left, top + cornerLength), cornerStroke)
         drawLine(accentColor, Offset(left + 24.dp.toPx(), top), Offset(left + cornerLength, top), cornerStroke)

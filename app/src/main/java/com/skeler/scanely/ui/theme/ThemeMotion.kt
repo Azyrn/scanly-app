@@ -52,5 +52,17 @@ fun ColorScheme.animated(
         onError = onError.role("onError"),
         errorContainer = errorContainer.role("errorContainer"),
         onErrorContainer = onErrorContainer.role("onErrorContainer"),
+        primaryFixed = primaryFixed.role("primaryFixed"),
+        primaryFixedDim = primaryFixedDim.role("primaryFixedDim"),
+        onPrimaryFixed = onPrimaryFixed.role("onPrimaryFixed"),
+        onPrimaryFixedVariant = onPrimaryFixedVariant.role("onPrimaryFixedVariant"),
+        secondaryFixed = secondaryFixed.role("secondaryFixed"),
+        secondaryFixedDim = secondaryFixedDim.role("secondaryFixedDim"),
+        onSecondaryFixed = onSecondaryFixed.role("onSecondaryFixed"),
+        onSecondaryFixedVariant = onSecondaryFixedVariant.role("onSecondaryFixedVariant"),
+        tertiaryFixed = tertiaryFixed.role("tertiaryFixed"),
+        tertiaryFixedDim = tertiaryFixedDim.role("tertiaryFixedDim"),
+        onTertiaryFixed = onTertiaryFixed.role("onTertiaryFixed"),
+        onTertiaryFixedVariant = onTertiaryFixedVariant.role("onTertiaryFixedVariant"),
     )
 }

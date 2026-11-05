@@ -73,6 +73,7 @@ import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.components.SignInRequiredSheet
 import com.skeler.scanely.ui.components.rememberMultiDocumentPicker
 import com.skeler.scanely.ui.components.rememberMultiGalleryPicker
+import com.skeler.scanely.ui.theme.harmonizedWith
 import com.skeler.scanely.ui.viewmodel.AiScanViewModel
 import com.skeler.scanely.ui.viewmodel.OcrViewModel
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
@@ -496,27 +497,35 @@ private data class ActionAccents(
     val ai: Color
 )
 
+/**
+ * Each tool keeps its own earthy hue so the grid stays easy to scan, harmonized toward the
+ * palette's primary so the five colours read as one family in every theme the user picks.
+ */
 @Composable
 private fun rememberActionAccents(): ActionAccents {
-    val ai = MaterialTheme.colorScheme.primary
-    return if (LocalDarkMode.current) {
-        ActionAccents(
-            document = Color(0xFFB6A9DC),
-            gallery = Color(0xFFD8B878),
-            pdf = Color(0xFFE0A79B),
-            edit = Color(0xFF8FBBD9),
-            qr = Color(0xFF9CC7AE),
-            ai = ai
-        )
-    } else {
-        ActionAccents(
-            document = Color(0xFF5E4E80),
-            gallery = Color(0xFF9A7B3F),
-            pdf = Color(0xFFA05A4E),
-            edit = Color(0xFF3F6B88),
-            qr = Color(0xFF4F7A63),
-            ai = ai
-        )
+    val primary = MaterialTheme.colorScheme.primary
+    val dark = LocalDarkMode.current
+    return remember(primary, dark) {
+        fun Long.tool() = Color(this).harmonizedWith(primary)
+        if (dark) {
+            ActionAccents(
+                document = 0xFFB6A9DC.tool(),
+                gallery = 0xFFD8B878.tool(),
+                pdf = 0xFFE0A79B.tool(),
+                edit = 0xFF8FBBD9.tool(),
+                qr = 0xFF9CC7AE.tool(),
+                ai = primary
+            )
+        } else {
+            ActionAccents(
+                document = 0xFF5E4E80.tool(),
+                gallery = 0xFF9A7B3F.tool(),
+                pdf = 0xFFA05A4E.tool(),
+                edit = 0xFF3F6B88.tool(),
+                qr = 0xFF4F7A63.tool(),
+                ai = primary
+            )
+        }
     }
 }
 

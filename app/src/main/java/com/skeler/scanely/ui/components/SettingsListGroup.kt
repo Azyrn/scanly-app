@@ -136,10 +136,10 @@ private fun SettingsRowLeading(item: SettingsItem) {
         modifier = Modifier
             .size(38.dp)
             .clip(RoundedCornerShape(13.dp))
-            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f)),
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = IconWashAlpha)),
         contentAlignment = Alignment.Center
     ) {
-        val tint = MaterialTheme.colorScheme.onSecondaryContainer
+        val tint = MaterialTheme.colorScheme.primary
         when {
             item.icon != null -> Icon(
                 imageVector = item.icon,

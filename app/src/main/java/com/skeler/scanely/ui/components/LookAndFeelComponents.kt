@@ -71,18 +71,18 @@ fun SettingSwitchTile(
 ) {
     val iconContainer by animateColorAsState(
         targetValue = if (checked) {
-            MaterialTheme.colorScheme.primaryContainer
+            MaterialTheme.colorScheme.primary
         } else {
-            MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.6f)
+            MaterialTheme.colorScheme.primary.copy(alpha = IconWashAlpha)
         },
         animationSpec = tween(220),
         label = "switchTileIcon"
     )
-    val iconTint = if (checked) {
-        MaterialTheme.colorScheme.onPrimaryContainer
-    } else {
-        MaterialTheme.colorScheme.onSecondaryContainer
-    }
+    val iconTint by animateColorAsState(
+        targetValue = if (checked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+        animationSpec = tween(220),
+        label = "switchTileIconTint"
+    )
 
     ConnectedTile(
         position = position,
@@ -116,6 +116,9 @@ fun SettingSwitchTile(
         )
     }
 }
+
+/** Settings icon boxes: a soft wash of the primary that reads as a glow in dark, a tint in light. */
+const val IconWashAlpha = 0.14f
 
 @Composable
 fun TileIcon(

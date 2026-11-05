@@ -1,163 +1,123 @@
 @file:SuppressLint("RestrictedApi")
-@file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
 
 package com.skeler.scanely.ui.theme
 
 import android.annotation.SuppressLint
 import androidx.annotation.FloatRange
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
-import com.google.android.material.color.utilities.CorePalette
+import com.google.android.material.color.utilities.Blend
+import com.google.android.material.color.utilities.DynamicScheme
 import com.google.android.material.color.utilities.Hct
+import com.google.android.material.color.utilities.TonalPalette
+import com.google.android.material.color.utilities.Variant
+import kotlin.math.max
 
-private class TonalPalettes(seed: SeedColor) {
-    private val mono = seed.monochrome
-    private val primaryCore = CorePalette.of(seed.primary)
-    private val secondaryCore = CorePalette.of(seed.secondary)
-    private val tertiaryCore = CorePalette.of(seed.tertiary)
+/**
+ * Chroma per role. The primary stays as vivid as its seed (at least 48, like the old CorePalette a1),
+ * secondary is a quiet pastel that supports it, tertiary is the brighter counter-accent, and the
+ * neutrals carry a faint tint of the primary hue so surfaces feel warm rather than gray.
+ */
+private const val MinPrimaryChroma = 48.0
+private const val SecondaryChroma = 24.0
+private const val TertiaryChroma = 40.0
+private const val NeutralChroma = 6.0
+private const val NeutralVariantChroma = 10.0
 
-    /** Chroma-zero gray; CorePalette otherwise forces chroma to at least 48. */
-    private fun gray(tone: Int): Color = Color(Hct.from(0.0, 0.0, tone.toDouble()).toInt())
+/** Light on-container text sits at tone 30 as in M3 Expressive, softer than the baseline tone 10. */
+private const val ExpressiveOnContainerTone = 30.0
 
-    private fun blackOrWhite(tone: Int): Color = if (tone >= 50) Color.White else Color.Black
-
-    private fun neutral(tone: Int): Color = when {
-        tone >= 98 -> Color.White
-        tone <= 6 -> Color.Black
-        else -> gray(tone)
-    }
-
-    fun a1(tone: Int): Color = if (mono) blackOrWhite(tone) else Color(primaryCore.a1.tone(tone))
-
-    fun a2(tone: Int): Color = if (mono) blackOrWhite(tone) else Color(secondaryCore.a1.tone(tone))
-
-    fun a3(tone: Int): Color = if (mono) blackOrWhite(tone) else Color(tertiaryCore.a1.tone(tone))
-
-    fun c1(tone: Int): Color = if (mono) gray(tone) else a1(tone)
-
-    fun c2(tone: Int): Color = if (mono) gray(tone) else a2(tone)
-
-    fun c3(tone: Int): Color = if (mono) gray(tone) else a3(tone)
-
-    fun n1(tone: Int): Color = if (mono) neutral(tone) else Color(primaryCore.n1.tone(tone))
-
-    fun onN1(tone: Int): Color = if (mono) blackOrWhite(tone) else n1(tone)
-
-    fun n2(tone: Int): Color = if (mono) gray(tone) else Color(primaryCore.n2.tone(tone))
-
-    fun error(tone: Int): Color = Color(primaryCore.error.tone(tone))
-}
-
-private const val HarmonizeFraction = 0.1f
-
-private val DarkSurface = Color(0xFF141218)
-
-private val NeutralDarkSurface = Color(0xFF0D0D0D)
-
+/**
+ * Builds every role from Material's DynamicScheme, so contrast between pairs is solved by the
+ * colour engine instead of a hand-picked tone table, and the fixed roles follow the seed too.
+ */
 fun seedColorScheme(seed: SeedColor, dark: Boolean): ColorScheme {
-    val palettes = TonalPalettes(seed)
-    return if (dark) darkSeedScheme(palettes) else lightSeedScheme(palettes)
+    val primaryHct = Hct.fromInt(seed.primary)
+    val scheme = if (seed.monochrome) {
+        val gray = TonalPalette.fromHueAndChroma(0.0, 0.0)
+        DynamicScheme(primaryHct, Variant.MONOCHROME, dark, 0.0, gray, gray, gray, gray, gray)
+    } else {
+        val hue = primaryHct.hue
+        DynamicScheme(
+            primaryHct,
+            Variant.VIBRANT,
+            dark,
+            0.0,
+            TonalPalette.fromHueAndChroma(hue, max(primaryHct.chroma, MinPrimaryChroma)),
+            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.secondary).hue, SecondaryChroma),
+            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.tertiary).hue, TertiaryChroma),
+            TonalPalette.fromHueAndChroma(hue, NeutralChroma),
+            TonalPalette.fromHueAndChroma(hue, NeutralVariantChroma),
+        )
+    }
+    return scheme.toColorScheme(expressiveOnContainers = !dark && !seed.monochrome)
 }
 
-private fun lightSeedScheme(p: TonalPalettes): ColorScheme {
-    val primary = p.a1(40)
-    return expressiveLightColorScheme().copy(
-        primary = primary,
-        onPrimary = p.a1(100),
-        primaryContainer = p.c1(90),
-        onPrimaryContainer = p.a1(10),
-        inversePrimary = p.a1(80),
+private fun DynamicScheme.toColorScheme(expressiveOnContainers: Boolean): ColorScheme {
+    fun c(argb: Int) = Color(argb)
+    fun TonalPalette.onContainer(fallback: Int) =
+        c(if (expressiveOnContainers) tone(ExpressiveOnContainerTone.toInt()) else fallback)
 
-        secondary = p.a2(40).harmonize(primary),
-        onSecondary = p.a2(100).harmonize(primary),
-        secondaryContainer = p.c2(90).harmonize(primary),
-        onSecondaryContainer = p.a2(10).harmonize(primary),
-
-        tertiary = p.a3(40).harmonize(primary),
-        onTertiary = p.a3(100).harmonize(primary),
-        tertiaryContainer = p.c3(90).harmonize(primary),
-        onTertiaryContainer = p.a3(10).harmonize(primary),
-
-        background = p.n1(98),
-        onBackground = p.onN1(10),
-        surface = p.n1(98),
-        onSurface = p.onN1(10),
-        surfaceVariant = p.n2(90),
-        onSurfaceVariant = p.n2(30),
-        surfaceDim = p.n1(87),
-        surfaceBright = p.n1(98),
-        surfaceContainerLowest = p.n1(100),
-        surfaceContainerLow = p.n1(96),
-        surfaceContainer = p.n1(94),
-        surfaceContainerHigh = p.n1(92),
-        surfaceContainerHighest = p.n1(90),
-        inverseSurface = p.n1(20),
-        inverseOnSurface = p.onN1(95),
-
-        outline = p.n2(50),
-        outlineVariant = p.n2(80),
-
-        error = p.error(40),
-        onError = p.error(100),
-        errorContainer = p.error(90),
-        onErrorContainer = p.error(10),
-
-        scrim = Color.Black,
+    return ColorScheme(
+        primary = c(primary),
+        onPrimary = c(onPrimary),
+        primaryContainer = c(primaryContainer),
+        onPrimaryContainer = primaryPalette.onContainer(onPrimaryContainer),
+        inversePrimary = c(inversePrimary),
+        secondary = c(secondary),
+        onSecondary = c(onSecondary),
+        secondaryContainer = c(secondaryContainer),
+        onSecondaryContainer = secondaryPalette.onContainer(onSecondaryContainer),
+        tertiary = c(tertiary),
+        onTertiary = c(onTertiary),
+        tertiaryContainer = c(tertiaryContainer),
+        onTertiaryContainer = tertiaryPalette.onContainer(onTertiaryContainer),
+        background = c(background),
+        onBackground = c(onBackground),
+        surface = c(surface),
+        onSurface = c(onSurface),
+        surfaceVariant = c(surfaceVariant),
+        onSurfaceVariant = c(onSurfaceVariant),
+        surfaceTint = c(surfaceTint),
+        inverseSurface = c(inverseSurface),
+        inverseOnSurface = c(inverseOnSurface),
+        error = c(error),
+        onError = c(onError),
+        errorContainer = c(errorContainer),
+        onErrorContainer = errorPalette.onContainer(onErrorContainer),
+        outline = c(outline),
+        outlineVariant = c(outlineVariant),
+        scrim = c(scrim),
+        surfaceBright = c(surfaceBright),
+        surfaceDim = c(surfaceDim),
+        surfaceContainer = c(surfaceContainer),
+        surfaceContainerHigh = c(surfaceContainerHigh),
+        surfaceContainerHighest = c(surfaceContainerHighest),
+        surfaceContainerLow = c(surfaceContainerLow),
+        surfaceContainerLowest = c(surfaceContainerLowest),
+        primaryFixed = c(primaryFixed),
+        primaryFixedDim = c(primaryFixedDim),
+        onPrimaryFixed = c(onPrimaryFixed),
+        onPrimaryFixedVariant = c(onPrimaryFixedVariant),
+        secondaryFixed = c(secondaryFixed),
+        secondaryFixedDim = c(secondaryFixedDim),
+        onSecondaryFixed = c(onSecondaryFixed),
+        onSecondaryFixedVariant = c(onSecondaryFixedVariant),
+        tertiaryFixed = c(tertiaryFixed),
+        tertiaryFixedDim = c(tertiaryFixedDim),
+        onTertiaryFixed = c(onTertiaryFixed),
+        onTertiaryFixedVariant = c(onTertiaryFixedVariant),
     )
 }
 
-private fun darkSeedScheme(p: TonalPalettes): ColorScheme {
-    val primary = p.a1(80)
-    return darkColorScheme(
-        primary = primary,
-        onPrimary = p.a1(20),
-        primaryContainer = p.c1(30),
-        onPrimaryContainer = p.a1(90),
-        inversePrimary = p.a1(40),
-
-        secondary = p.a2(80).harmonize(primary),
-        onSecondary = p.a2(20).harmonize(primary),
-        secondaryContainer = p.c2(30).harmonize(primary),
-        onSecondaryContainer = p.a2(90).harmonize(primary),
-
-        tertiary = p.a3(80).harmonize(primary),
-        onTertiary = p.a3(20).harmonize(primary),
-        tertiaryContainer = p.c3(30).harmonize(primary),
-        onTertiaryContainer = p.a3(90).harmonize(primary),
-
-        background = p.n1(6),
-        onBackground = p.onN1(90),
-        surface = p.n1(6),
-        onSurface = p.onN1(90),
-        surfaceVariant = p.n2(30),
-        onSurfaceVariant = p.n2(80),
-        surfaceDim = p.n1(6),
-        surfaceBright = p.n1(24),
-        surfaceContainerLowest = p.n1(4),
-        surfaceContainerLow = p.n1(10),
-        surfaceContainer = p.n1(12),
-        surfaceContainerHigh = p.n1(17),
-        surfaceContainerHighest = p.n1(22),
-        inverseSurface = p.n1(90),
-        inverseOnSurface = p.onN1(20),
-
-        outline = p.n2(60),
-        outlineVariant = p.n2(30),
-
-        error = p.error(80),
-        onError = p.error(20),
-        errorContainer = p.error(30),
-        onErrorContainer = p.error(90),
-
-        scrim = Color.Black,
-    )
-}
+/**
+ * Pulls a fixed brand/category colour up to 15 degrees of hue toward [primary] (HCT harmonize),
+ * so hand-picked accents sit inside whichever palette the user chose.
+ */
+fun Color.harmonizedWith(primary: Color): Color = Color(Blend.harmonize(toArgb(), primary.toArgb()))
 
 fun ColorScheme.toOledBlack(): ColorScheme = copy(
     background = Color.Black,
@@ -170,15 +130,17 @@ fun ColorScheme.toOledBlack(): ColorScheme = copy(
     surfaceContainerHighest = surfaceContainerHigh,
 )
 
-fun ColorScheme.enlivenDark(neutral: Boolean = false): ColorScheme {
-    // Keep non-OLED dark surfaces above pure black.
-    val floor = if (neutral) NeutralDarkSurface else DarkSurface
-    val base = if (surface.luminance() < 0.02f) floor else surface
-    // Avoid tinting monochrome surfaces with their white primary.
-    val tint = if (neutral) base else primary
+private val DarkSurfaceFloor = Color(0xFF141218)
+
+/**
+ * Wallpaper (dynamic) dark schemes on some devices sit almost on pure black; this lifts them onto
+ * a tinted ladder. Seed schemes get their dark surfaces from [seedColorScheme] and skip this.
+ */
+fun ColorScheme.enlivenDark(): ColorScheme {
+    val base = if (surface.luminance() < 0.02f) DarkSurfaceFloor else surface
 
     fun rung(lift: Float, tintAmount: Float): Color =
-        base.blend(Color.White, lift).blend(tint, tintAmount)
+        base.blend(Color.White, lift).blend(primary, tintAmount)
 
     val bg = rung(0.00f, 0.03f)
     return copy(
@@ -193,8 +155,6 @@ fun ColorScheme.enlivenDark(neutral: Boolean = false): ColorScheme {
         surfaceBright = rung(0.18f, 0.06f),
     )
 }
-
-private fun Color.harmonize(primary: Color): Color = blend(primary, HarmonizeFraction)
 
 fun Color.blend(
     other: Color,
