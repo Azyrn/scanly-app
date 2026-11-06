@@ -28,15 +28,20 @@ private const val TWIPS_PER_POINT = 20f
 
 /** Room past the measured line so a rounding difference never wraps it. */
 private const val SLACK_EM = 2f
+private const val REFLOW_SLACK_PT = 1.5f
 private const val ROTATION_UNITS = 60_000
 private const val QUARTER = 90
 private const val THREE_QUARTERS = 270
 private const val FULL_TURN = 360
 private const val HALF = 0.5f
 
-internal fun boxGeometry(block: Block, pageHeightPt: Float): BoxGeometry {
+/**
+ * [reflow]: the box wraps at its width, so it ends just past the widest line ([REFLOW_SLACK_PT]
+ * absorbs rounding) instead of [SLACK_EM] past it, or the next line's first word would fit.
+ */
+internal fun boxGeometry(block: Block, pageHeightPt: Float, reflow: Boolean = false): BoxGeometry {
     val lines = block.lines
-    val slack = lines.maxOf { it.sizePt } * SLACK_EM
+    val slack = if (reflow) REFLOW_SLACK_PT else lines.maxOf { it.sizePt } * SLACK_EM
     return when {
         block.angleDeg == QUARTER || block.angleDeg == -QUARTER || block.angleDeg == THREE_QUARTERS ->
             quarterTurned(block, pageHeightPt, slack)

@@ -425,6 +425,31 @@ class OfficeWritersTest {
     }
 
     @Test
+    fun `xlsx keeps prose on mixed and surrounding pages without duplicating table cells`() {
+        val before = paragraph.copy(lines = listOf("Before the table"))
+        val after = paragraph.copy(lines = listOf("After the table"))
+        val bytes = ByteArrayOutputStream().also { out ->
+            XlsxWriter(out).apply {
+                addPage("Page 1", PageLayout(listOf(before), positioned = true))
+                addPage("Page 2", PageLayout(listOf(before, table, after), positioned = true))
+                addPage("Page 3", PageLayout(listOf(after), positioned = true))
+                finish("Text")
+            }
+        }.toByteArray()
+        val parts = unzip(bytes)
+        assertPackageConsistent(parts)
+        val first = parts.getValue("xl/worksheets/sheet1.xml").decodeToString()
+        val mixed = parts.getValue("xl/worksheets/sheet2.xml").decodeToString()
+        val last = parts.getValue("xl/worksheets/sheet3.xml").decodeToString()
+        assertTrue(first.contains(">Before the table</t>"))
+        assertTrue(last.contains(">After the table</t>"))
+        assertTrue(mixed.indexOf(">Before the table</t>") < mixed.indexOf(">Apples</t>"))
+        assertTrue(mixed.indexOf(">Apples</t>") < mixed.indexOf(">After the table</t>"))
+        assertEquals(1, Regex(">Apples</t>").findAll(mixed).count())
+        assertTrue(mixed.contains("<v>1200</v>"))
+    }
+
+    @Test
     fun `an xlsx with no sheets still gets one`() {
         val bytes = ByteArrayOutputStream().also { out -> XlsxWriter(out).finish("Text") }.toByteArray()
 

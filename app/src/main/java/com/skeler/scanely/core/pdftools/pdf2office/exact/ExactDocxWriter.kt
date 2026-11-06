@@ -133,8 +133,10 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
 
     private fun boxes(layout: ExactPageLayout, heightPt: Float, behind: Boolean): String {
         val xml = StringBuilder()
-        layout.blocks.forEach { xml.append(textBox(it, heightPt, behind)) }
-        layout.tables.forEach { xml.append(tableBox(it, behind)) }
+        layout.forEachInReadingOrder(
+            onBlock = { xml.append(textBox(it, heightPt, behind)) },
+            onTable = { xml.append(tableBox(it, behind)) }
+        )
         return xml.toString()
     }
 
@@ -193,14 +195,43 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
 
     private fun mediaName(index: Int) = "media$index." + if (media[index - 1].second) "png" else "jpg"
 
-    /** One block as a text box. Geometry follows ExactLayout's model; see [boxGeometry]. */
+    /**
+     * One block as a text box. Geometry follows ExactLayout's model; see [boxGeometry]. A level
+     * left-to-right prose block of several lines is written to reflow when edited: its lines are
+     * one paragraph (a space, or a soft hyphen for a word hyphenated across lines, where the PDF
+     * broke) in a box that wraps at the widest line and grows with its text, so each line still
+     * breaks where it did. Where a line ends short enough that the next line's first word would
+     * have fitted, a new paragraph starts instead, so Word does not pull that word up.
+     */
     internal fun textBox(block: Block, pageHeightPt: Float, behind: Boolean = false): String {
-        val g = boxGeometry(block, pageHeightPt)
+        val reflow = reflows(block, behind)
+        val g = boxGeometry(block, pageHeightPt, reflow)
         val id = ++drawingId
         val paragraph = StringBuilder("<w:p>").append(paragraphProperties(block, g))
+        val leftPt = g.x / EMU_PER_POINT.toFloat()
+        val rightPt = (g.x + g.cx) / EMU_PER_POINT.toFloat()
         block.lines.forEachIndexed { index, line ->
-            if (index > 0) paragraph.append("<w:r><w:br/></w:r>")
-            ExactRuns.runs(line, g.lineStarts[index], measurer).forEach { paragraph.append(runXml(it)) }
+            val runs = ExactRuns.runs(line, g.lineStarts[index], measurer).toMutableList()
+            val next = block.lines.getOrNull(index + 1)
+            val join = if (reflow && next != null) lineJoin(line, next, leftPt, rightPt) else Join.BREAK
+            if (join == Join.SOFT_HYPHEN && runs.last().text.endsWith("-")) {
+                val last = runs.removeAt(runs.lastIndex)
+                if (last.text.length > 1) {
+                    runs += OutRun(last.text.dropLast(1), last.style, last.spacingTwips, last.scalePercent, last.raiseHalfPoints)
+                }
+            }
+            runs.forEach { paragraph.append(runXml(it)) }
+            if (next == null) return@forEachIndexed
+            when (join) {
+                Join.BREAK -> paragraph.append("<w:r><w:br/></w:r>")
+                Join.SPACE -> paragraph.append(runXml(OutRun(" ", runs.last().style, 0, FULL_SCALE, 0)))
+                Join.SOFT_HYPHEN -> paragraph.append(
+                    "<w:r><w:rPr>${fontProperties(runs.last().style)}${adjustments(
+                        OutRun("-", runs.last().style, 0, FULL_SCALE, 0)
+                    )}</w:rPr><w:softHyphen/></w:r>"
+                )
+                Join.PARAGRAPH -> paragraph.append("</w:p><w:p>").append(paragraphProperties(block, g, first = false))
+            }
         }
         paragraph.append("</w:p>")
         val anchor = Anchor(
@@ -213,8 +244,48 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
             name = "Text $id",
             locked = false
         )
-        return textShape(anchor, paragraph, rotation = g.rotation, vertical = g.vertical)
+        return textShape(anchor, paragraph, rotation = g.rotation, vertical = g.vertical, grows = reflow)
     }
+
+    private enum class Join { BREAK, SPACE, SOFT_HYPHEN, PARAGRAPH }
+
+    private fun reflows(block: Block, behind: Boolean): Boolean =
+        !behind && block.lines.size > 1 && block.angleDeg == 0 &&
+            block.lines.none { (it.bidi && !block.rtl) || it.rtl != block.rtl || it.tokens.isEmpty() } &&
+            // A long link broken where it ran out of room: the PDF put no space there and Word would
+            // break it at its own place (a slash or hyphen), so such a block keeps its line breaks.
+            block.lines.zipWithNext().none { (line, next) ->
+                unbreakable(line.tokens.last().text) || unbreakable(next.tokens.first().text) ||
+                    next.tokens.first().text.first() in NO_WORD_START
+            }
+
+    /** How [line] continues into [next] in a reflowing block whose box spans [leftPt]..[rightPt]. */
+    private fun lineJoin(line: Segment, next: Segment, leftPt: Float, rightPt: Float): Join {
+        val lastText = line.tokens.last().text
+        val firstText = next.tokens.first().text
+        val hyphen = !line.rtl && lastText.length > 1 && lastText.endsWith("-") &&
+            lastText[lastText.length - 2].isLetter() && firstText.firstOrNull()?.isLowerCase() == true
+        val style = next.tokens.first().style
+        val space = if (hyphen) 0f else measurer.width(" ", style.family, style.arabic, style.bold, style.italic, style.sizePt)
+        val word = listOf(next.tokens.first()) + next.tokens.drop(1).takeWhile { !it.spaceBefore }
+        val wordWidth = word.maxOf { it.u1 } - word.minOf { it.u0 }
+        val room = when {
+            line.rtl -> line.u0 - leftPt
+            hyphen -> rightPt - (line.tokens.last().u1 - hyphenWidth(line.tokens.last().style))
+            else -> rightPt - line.u1
+        }
+        val fits = space + wordWidth <= room
+        return when {
+            fits -> if (hyphen) Join.BREAK else Join.PARAGRAPH
+            hyphen -> Join.SOFT_HYPHEN
+            else -> Join.SPACE
+        }
+    }
+
+    private fun unbreakable(text: String) =
+        "://" in text || "www." in text || (text.length > LONG_TOKEN && text.any { it in LINK_CHARS })
+
+    private fun hyphenWidth(s: TextStyle) = measurer.width("-", s.family, s.arabic, s.bold, s.italic, s.sizePt)
 
     /**
      * A table as a native Word table inside a text box at the table's place, so the page keeps its
@@ -268,6 +339,9 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
 
     companion object {
         private const val BUFFER_BYTES = 64 * 1024
+        private const val LONG_TOKEN = 20
+        private const val LINK_CHARS = "/%=&_?#"
+        private const val NO_WORD_START = "=/%&_?#)]}.,;:"
         private const val DEFAULT_WIDTH_PT = 595f
         private const val DEFAULT_HEIGHT_PT = 842f
 
@@ -326,29 +400,39 @@ private fun anchorOpen(a: Anchor) =
         "<wp:docPr id=\"${a.id}\" name=\"${xmlText(a.name)}\"/><wp:cNvGraphicFramePr/>"
 
 /** A borderless, unfilled text box holding [content] (block-level WordprocessingML). */
-private fun textShape(anchor: Anchor, content: CharSequence, rotation: Int, vertical: String?): String {
+private fun textShape(
+    anchor: Anchor,
+    content: CharSequence,
+    rotation: Int,
+    vertical: String?,
+    grows: Boolean = false
+): String {
     val rot = if (rotation != 0) " rot=\"$rotation\"" else ""
     return "<w:r><w:drawing>" + anchorOpen(anchor) +
         "<a:graphic><a:graphicData uri=\"$NS_WPS\"><wps:wsp><wps:cNvSpPr txBox=\"1\"/>" +
         "<wps:spPr><a:xfrm$rot><a:off x=\"0\" y=\"0\"/><a:ext cx=\"${anchor.cx}\" cy=\"${anchor.cy}\"/></a:xfrm>" +
         "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:noFill/></a:ln></wps:spPr>" +
         "<wps:txbx><w:txbxContent>$content</w:txbxContent></wps:txbx>" +
-        "<wps:bodyPr rot=\"0\"${vertical?.let { " vert=\"$it\"" } ?: ""} wrap=\"none\"" +
+        "<wps:bodyPr rot=\"0\"${vertical?.let { " vert=\"$it\"" } ?: ""} wrap=\"${if (grows) "square" else "none"}\"" +
         " lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" anchor=\"t\" anchorCtr=\"0\">" +
-        "<a:noAutofit/></wps:bodyPr></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>"
+        (if (grows) "<a:spAutoFit/>" else "<a:noAutofit/>") + "</wps:bodyPr></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>"
 }
 
 /** A block's exact line pitch, indents and direction. */
-private fun paragraphProperties(block: Block, g: BoxGeometry): String {
-    val xml = StringBuilder("<w:pPr><w:spacing w:before=\"0\" w:after=\"0\" ")
+private fun paragraphProperties(block: Block, g: BoxGeometry, first: Boolean = true): String {
+    val xml = StringBuilder("<w:pPr>")
+    if (block.rtl) xml.append("<w:bidi/>")
+    xml.append("<w:spacing w:before=\"0\" w:after=\"0\" ")
         .append("w:line=\"${(block.pitchPt * TWIPS).roundToInt()}\" w:lineRule=\"exact\"/>")
     if (g.indentLeftTwips != 0 || g.firstLineTwips != 0) {
         xml.append("<w:ind w:left=\"${g.indentLeftTwips}\"")
-        if (g.firstLineTwips > 0) xml.append(" w:firstLine=\"${g.firstLineTwips}\"")
-        if (g.firstLineTwips < 0) xml.append(" w:hanging=\"${-g.firstLineTwips}\"")
+        if (first && g.firstLineTwips > 0) xml.append(" w:firstLine=\"${g.firstLineTwips}\"")
+        if (g.firstLineTwips < 0) {
+            // Later paragraphs start at the other lines' edge: indent and hang cancel.
+            xml.append(if (first) " w:hanging=\"${-g.firstLineTwips}\"" else "")
+        }
         xml.append("/>")
     }
-    if (block.rtl) xml.append("<w:bidi/>")
     return xml.append("</w:pPr>").toString()
 }
 

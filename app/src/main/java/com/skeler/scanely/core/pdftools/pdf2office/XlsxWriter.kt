@@ -49,6 +49,17 @@ internal class XlsxWriter(out: OutputStream) {
         zip.closeEntry()
     }
 
+    fun addPage(name: String, layout: PageLayout) {
+        val rows = layout.blocks.asSequence().flatMapIndexed { index, block ->
+            val content = when (block) {
+                is ParagraphBlock -> block.lines.asSequence().map { listOf(it) }
+                is TableBlock -> block.rows.asSequence()
+            }
+            (if (index > 0) sequenceOf(emptyList<String>()) else emptySequence()) + content
+        }
+        addSheet(name, rows)
+    }
+
     val sheetCount: Int get() = sheetNames.size
 
     /** Closes every part and the zip. A workbook must hold a sheet, so an empty one is added if needed. */
