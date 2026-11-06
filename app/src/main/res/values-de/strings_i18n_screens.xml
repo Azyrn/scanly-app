@@ -191,7 +191,6 @@
     <string name="ai_err_read_file">Datei nicht lesbar</string>
     <string name="ai_err_no_text">Kein Text aus dieser Datei lesbar.</string>
     <string name="ai_design_background">Dokument entsteht. App kannst du verlassen, wir melden uns.</string>
-    <string name="ai_err_custom_no_files">Dein eigener KI-Endpunkt kann kein Bild oder PDF lesen. Schalte ihn aus, um dieses Dokument neu zu erstellen, oder gestalte es aus einem Scan.</string>
     <string name="ai_err_translate_empty">Übersetzung war leer.</string>
     <string name="ai_err_offline">Keine Internetverbindung. Netzwerk prüfen, erneut versuchen.</string>
     <string name="ai_err_unstable">%1$s nicht erreichbar – Verbindung instabil. Erneut versuchen.</string>

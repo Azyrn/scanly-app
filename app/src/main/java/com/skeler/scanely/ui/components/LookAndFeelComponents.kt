@@ -73,7 +73,7 @@ fun SettingSwitchTile(
         targetValue = if (checked) {
             MaterialTheme.colorScheme.primary
         } else {
-            MaterialTheme.colorScheme.primary.copy(alpha = IconWashAlpha)
+            MaterialTheme.colorScheme.primary.copy(alpha = ICON_WASH_ALPHA)
         },
         animationSpec = tween(220),
         label = "switchTileIcon"
@@ -118,7 +118,7 @@ fun SettingSwitchTile(
 }
 
 /** Settings icon boxes: a soft wash of the primary that reads as a glow in dark, a tint in light. */
-const val IconWashAlpha = 0.14f
+const val ICON_WASH_ALPHA = 0.14f
 
 @Composable
 fun TileIcon(

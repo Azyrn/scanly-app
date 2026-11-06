@@ -211,7 +211,6 @@
     <string name="ai_err_read_file">فشلت قراءة الملف</string>
     <string name="ai_err_no_text">تعذّرت قراءة أي نص من هذا الملف.</string>
     <string name="ai_design_background">جارٍ إنشاء مستندك. يمكنك مغادرة التطبيق، وسنرسل لك إشعارًا.</string>
-    <string name="ai_err_custom_no_files">نقطة الاتصال الخاصة بك للذكاء الاصطناعي لا تستطيع قراءة صورة أو ملف PDF تم اختياره. أوقف نقطة الاتصال المخصصة لإعادة بناء هذا المستند، أو صمّمه انطلاقًا من مسح ضوئي.</string>
     <string name="ai_err_translate_empty">عادت الترجمة فارغة.</string>
     <string name="ai_err_offline">لا يوجد اتصال بالإنترنت. تحقّق من شبكتك وحاول مرة أخرى.</string>
     <string name="ai_err_unstable">تعذّر الوصول إلى %1$s، ويبدو أن اتصالك غير مستقر. تحقّق منه وحاول مرة أخرى.</string>

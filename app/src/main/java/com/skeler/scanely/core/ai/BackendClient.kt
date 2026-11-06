@@ -75,7 +75,6 @@ data class ScanExtraction(
 /**
  * Maps a backend error envelope onto the two exceptions the retry loop understands.
  *
- * Top-level rather than a method so [BackendClient] and `CustomDesigner` cannot drift apart on it.
  * The distinction it draws is the whole of the retry policy: `provider_error`, `internal` and
  * `rate_limited` may succeed on the next attempt, and everything else is the user's to resolve, so
  * retrying it only wastes their time.

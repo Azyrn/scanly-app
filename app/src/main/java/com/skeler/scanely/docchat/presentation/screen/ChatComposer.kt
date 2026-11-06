@@ -562,7 +562,7 @@ private fun CostCaption(paywall: PaywallState, agent: Boolean, emptyChat: Boolea
     val line = when {
         agent -> stringResource(R.string.chat_cost_agent).takeIf { emptyChat }
         !paywall.isQuotaKnown -> null
-        else -> paywall.quotedDesignPageCost.let { pluralStringResource(R.plurals.chat_cost_hint, it, it) }
+        else -> paywall.designPageCost.let { pluralStringResource(R.plurals.chat_cost_hint, it, it) }
     } ?: return
     Text(
         line,

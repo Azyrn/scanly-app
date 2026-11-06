@@ -191,7 +191,6 @@
     <string name="ai_err_read_file">読み取れません</string>
     <string name="ai_err_no_text">テキストを読み取れませんでした。</string>
     <string name="ai_design_background">書類を作成中です。アプリを離れてもOK。完了時に通知します。</string>
-    <string name="ai_err_custom_no_files">独自の AI エンドポイントでは画像や PDF を読めません。カスタムエンドポイントをオフにするか、スキャンから作成してください。</string>
     <string name="ai_err_translate_empty">翻訳結果が空でした。</string>
     <string name="ai_err_offline">インターネットに接続がありません。接続を確認してください。</string>
     <string name="ai_err_unstable">%1$s に接続できません。接続が不安定です。再試行してください。</string>

@@ -112,7 +112,7 @@
     <string name="set_test_connection">اختبار الاتصال</string>
     <string name="set_remove_endpoint">إزالة نقطة الاتصال</string>
     <string name="set_use_for_ai_title">للذكاء الاصطناعي</string>
-    <string name="set_use_for_ai_verified">تستخدم عمليات المسح واستخراج البيانات والترجمة والمسودات والتصاميم نقطة الاتصال الخاصة بك بدلًا من Scanly AI. ويستخدم الصوت إلى نص دائمًا Scanly AI، لأن نقطة اتصال الدردشة لا تقبل الصوت.</string>
+    <string name="set_use_for_ai_verified">تستخدم عمليات المسح واستخراج البيانات والترجمة نقطة الاتصال الخاصة بك بدلًا من Scanly AI. ويعمل إنشاء المستندات وتحويل الصوت إلى نص على Scanly AI دائمًا.</string>
     <string name="set_use_for_ai_unverified">تحقّق من نقطة الاتصال أولًا.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

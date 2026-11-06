@@ -136,7 +136,7 @@ private fun SettingsRowLeading(item: SettingsItem) {
         modifier = Modifier
             .size(38.dp)
             .clip(RoundedCornerShape(13.dp))
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = IconWashAlpha)),
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = ICON_WASH_ALPHA)),
         contentAlignment = Alignment.Center
     ) {
         val tint = MaterialTheme.colorScheme.primary

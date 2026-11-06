@@ -196,7 +196,6 @@
     <string name="ai_err_read_file">Échec de lecture</string>
     <string name="ai_err_no_text">Aucun texte lisible dans ce fichier.</string>
     <string name="ai_design_background">Création du document. Quittez l\'app : nous vous préviendrons.</string>
-    <string name="ai_err_custom_no_files">Votre point de terminaison ne lit pas les images ni les PDF. Désactivez-le pour refaire ce document, ou partez d\'un scan.</string>
     <string name="ai_err_translate_empty">La traduction est revenue vide.</string>
     <string name="ai_err_offline">Pas de connexion Internet. Vérifiez votre réseau et réessayez.</string>
     <string name="ai_err_unstable">Impossible de joindre %1$s. Connexion instable : réessayez.</string>

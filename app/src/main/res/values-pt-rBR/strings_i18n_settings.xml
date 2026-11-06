@@ -112,7 +112,7 @@
     <string name="set_test_connection">Testar conexão</string>
     <string name="set_remove_endpoint">Remover endpoint</string>
     <string name="set_use_for_ai_title">Usar para IA</string>
-    <string name="set_use_for_ai_verified">Escaneamentos, extração, tradução, rascunhos e designs usam seu endpoint em vez do Scanly AI. Áudio para Texto sempre usa o Scanly AI: chats não aceitam áudio.</string>
+    <string name="set_use_for_ai_verified">Escaneamentos, extração e tradução usam seu endpoint em vez do Scanly AI. Documentos com IA e Áudio para Texto sempre usam o Scanly AI.</string>
     <string name="set_use_for_ai_unverified">Verifique o endpoint.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

@@ -112,7 +112,7 @@
     <string name="set_test_connection">Перевірити</string>
     <string name="set_remove_endpoint">Видалити точку</string>
     <string name="set_use_for_ai_title">Для функцій ШІ</string>
-    <string name="set_use_for_ai_verified">Сканування, витяг даних, переклад, чернетки й дизайни йдуть через вашу точку, а не Scanly AI. Аудіо в текст завжди через Scanly AI: чат-точка аудіо не приймає.</string>
+    <string name="set_use_for_ai_verified">Сканування, витяг даних і переклад ідуть через вашу точку, а не Scanly AI. Документи з ШІ та аудіо в текст завжди через Scanly AI.</string>
     <string name="set_use_for_ai_unverified">Спершу перевірте точку.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

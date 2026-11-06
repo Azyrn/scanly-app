@@ -98,8 +98,8 @@ class FeatureSwitchesTest {
         assertTrue(AiFeature.SCAN.isOffered(off, customProvider = true))
         // Transcription never runs on a custom endpoint, so nothing can stand in for it.
         assertFalse(AiFeature.TRANSCRIBE.isOffered(off, customProvider = true))
-        // The designer's model is the user's; only the compile is Scanly's, and that is not switched.
-        assertTrue(AiFeature.DESIGN.isOffered(off, customProvider = true))
+        // Design always runs on Scanly, so a custom endpoint cannot bring a switched-off one back.
+        assertFalse(AiFeature.DESIGN.isOffered(off, customProvider = true))
         assertTrue(AiFeature.TRANSLATE.isOffered(off, customProvider = false))
     }
 

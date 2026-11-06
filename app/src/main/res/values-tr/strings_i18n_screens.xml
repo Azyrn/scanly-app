@@ -191,7 +191,6 @@
     <string name="ai_err_read_file">Dosya okunamadı</string>
     <string name="ai_err_no_text">Bu dosyadan metin okunamadı.</string>
     <string name="ai_design_background">Belgeniz oluşturuluyor. Uygulamadan çıkabilirsiniz; size bildireceğiz.</string>
-    <string name="ai_err_custom_no_files">Kendi AI uç noktanız seçilen resmi ya da PDF\'yi okuyamaz. Belgeyi yeniden oluşturmak için özel uç noktayı kapatın ya da taramadan tasarlayın.</string>
     <string name="ai_err_translate_empty">Çeviri boş döndü.</string>
     <string name="ai_err_offline">İnternet bağlantısı yok. Ağınızı kontrol edip yeniden deneyin.</string>
     <string name="ai_err_unstable">%1$s ulaşılamadı; bağlantınız kararsız görünüyor. Kontrol edip deneyin.</string>

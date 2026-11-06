@@ -112,7 +112,7 @@
     <string name="set_test_connection">Bağlantıyı test et</string>
     <string name="set_remove_endpoint">Uç noktayı kaldır</string>
     <string name="set_use_for_ai_title">Yapay zekâda kullan</string>
-    <string name="set_use_for_ai_verified">Taramalar, veri çıkarma, çeviri, taslaklar ve tasarımlar Scanly AI yerine uç noktanızı kullanır. Sesten Metne her zaman Scanly AI ile çalışır, çünkü bir sohbet uç noktası ses alamaz.</string>
+    <string name="set_use_for_ai_verified">Taramalar, veri çıkarma ve çeviri Scanly AI yerine uç noktanızı kullanır. AI ile Belge Oluşturma ve Sesten Metne her zaman Scanly AI kullanır.</string>
     <string name="set_use_for_ai_unverified">Önce doğrulayın.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

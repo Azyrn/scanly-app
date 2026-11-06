@@ -72,36 +72,28 @@ class AiFeatureRoutingTest {
      * it reserved and settled quota pages on `/v1/translate` while the screen said it would not.
      */
     @Test
-    fun everythingBillableToTheUsersOwnProviderActuallyRoutesThere() {
-        val stayingOnScanly = AiFeature.entries
-            .filter { it.routing == CustomRouting.SCANLY_ONLY }
+    fun onlyScanAndTranslateRunOnTheUsersOwnEndpoint() {
+        val onEndpoint = AiFeature.entries
+            .filter { it.routing.usesCustomEndpoint }
             .map { it.label }
 
-        // Transcription is the one exception, and the settings sentence names it: a custom
-        // endpoint is a chat API and takes no audio.
         assertEquals(
-            "Settings tells the user their endpoint handles scans, extraction, translation, " +
-                "drafts and designs, and that Audio to Text alone stays on Scanly AI. A feature " +
-                "that stays on Scanly has to be named in that sentence first.",
-            listOf(AiFeature.TRANSCRIBE.label),
-            stayingOnScanly
+            "Settings tells the user their endpoint handles scans, extraction and translation, and " +
+                "that Build Documents with AI and Audio to Text stay on Scanly AI. Change that " +
+                "sentence before changing this list.",
+            listOf(AiFeature.SCAN.label, AiFeature.TRANSLATE.label),
+            onEndpoint
         )
     }
 
     @Test
-    fun designIsTheOnlyFeatureThatStillCostsQuotaOnACustomEndpoint() {
-        val billed = AiFeature.entries
-            .filter { it.routing == CustomRouting.YOUR_MODEL_OUR_COMPILER }
-
-        // A chat endpoint returns text, and only Scanly's container turns Typst into a PDF. Any
-        // other feature landing here would mean quota is being charged for work we did not do.
-        assertEquals(listOf(AiFeature.DESIGN), billed)
+    fun designNeverUsesTheCustomEndpoint() {
+        assertEquals(CustomRouting.SCANLY_ONLY, AiFeature.DESIGN.routing)
     }
 
     @Test
     fun customRoutingKnowsWhichModesUseTheEndpoint() {
         assertTrue(CustomRouting.ON_YOUR_ENDPOINT.usesCustomEndpoint)
-        assertTrue(CustomRouting.YOUR_MODEL_OUR_COMPILER.usesCustomEndpoint)
         assertTrue(!CustomRouting.SCANLY_ONLY.usesCustomEndpoint)
     }
 }

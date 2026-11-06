@@ -112,7 +112,7 @@
     <string name="set_test_connection">测试连接</string>
     <string name="set_remove_endpoint">移除接口</string>
     <string name="set_use_for_ai_title">用于 AI 功能</string>
-    <string name="set_use_for_ai_verified">扫描、数据提取、翻译、草稿和设计都将使用你的接口，而不是 Scanly AI。音频转文字始终使用 Scanly AI，因为聊天接口无法接收音频。</string>
+    <string name="set_use_for_ai_verified">扫描、数据提取和翻译将使用你的接口，而不是 Scanly AI。AI 生成文档和音频转文字始终使用 Scanly AI。</string>
     <string name="set_use_for_ai_unverified">请先验证接口。</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

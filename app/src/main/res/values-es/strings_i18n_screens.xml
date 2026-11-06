@@ -196,7 +196,6 @@
     <string name="ai_err_read_file">No se pudo leer</string>
     <string name="ai_err_no_text">No se pudo leer texto de este archivo.</string>
     <string name="ai_design_background">Creando tu documento. Puedes salir de la aplicación; te avisaremos.</string>
-    <string name="ai_err_custom_no_files">Tu endpoint no puede leer imágenes ni PDF. Desactívalo para recrear este documento, o diseña desde un escaneo.</string>
     <string name="ai_err_translate_empty">La traducción llegó vacía.</string>
     <string name="ai_err_offline">No hay conexión a internet. Revisa tu red e inténtalo de nuevo.</string>
     <string name="ai_err_unstable">No se pudo conectar con %1$s: conexión inestable. Revísala y reintenta.</string>

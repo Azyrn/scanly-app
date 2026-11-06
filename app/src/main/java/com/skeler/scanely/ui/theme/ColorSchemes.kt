@@ -21,14 +21,14 @@ import kotlin.math.max
  * secondary is a quiet pastel that supports it, tertiary is the brighter counter-accent, and the
  * neutrals carry a faint tint of the primary hue so surfaces feel warm rather than gray.
  */
-private const val MinPrimaryChroma = 48.0
-private const val SecondaryChroma = 24.0
-private const val TertiaryChroma = 40.0
-private const val NeutralChroma = 6.0
-private const val NeutralVariantChroma = 10.0
+private const val MIN_PRIMARY_CHROMA = 48.0
+private const val SECONDARY_CHROMA = 24.0
+private const val TERTIARY_CHROMA = 40.0
+private const val NEUTRAL_CHROMA = 6.0
+private const val NEUTRAL_VARIANT_CHROMA = 10.0
 
 /** Light on-container text sits at tone 30 as in M3 Expressive, softer than the baseline tone 10. */
-private const val ExpressiveOnContainerTone = 30.0
+private const val EXPRESSIVE_ON_CONTAINER_TONE = 30.0
 
 /**
  * Builds every role from Material's DynamicScheme, so contrast between pairs is solved by the
@@ -46,20 +46,21 @@ fun seedColorScheme(seed: SeedColor, dark: Boolean): ColorScheme {
             Variant.VIBRANT,
             dark,
             0.0,
-            TonalPalette.fromHueAndChroma(hue, max(primaryHct.chroma, MinPrimaryChroma)),
-            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.secondary).hue, SecondaryChroma),
-            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.tertiary).hue, TertiaryChroma),
-            TonalPalette.fromHueAndChroma(hue, NeutralChroma),
-            TonalPalette.fromHueAndChroma(hue, NeutralVariantChroma),
+            TonalPalette.fromHueAndChroma(hue, max(primaryHct.chroma, MIN_PRIMARY_CHROMA)),
+            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.secondary).hue, SECONDARY_CHROMA),
+            TonalPalette.fromHueAndChroma(Hct.fromInt(seed.tertiary).hue, TERTIARY_CHROMA),
+            TonalPalette.fromHueAndChroma(hue, NEUTRAL_CHROMA),
+            TonalPalette.fromHueAndChroma(hue, NEUTRAL_VARIANT_CHROMA),
         )
     }
     return scheme.toColorScheme(expressiveOnContainers = !dark && !seed.monochrome)
 }
 
+@Suppress("LongMethod")
 private fun DynamicScheme.toColorScheme(expressiveOnContainers: Boolean): ColorScheme {
     fun c(argb: Int) = Color(argb)
     fun TonalPalette.onContainer(fallback: Int) =
-        c(if (expressiveOnContainers) tone(ExpressiveOnContainerTone.toInt()) else fallback)
+        c(if (expressiveOnContainers) tone(EXPRESSIVE_ON_CONTAINER_TONE.toInt()) else fallback)
 
     return ColorScheme(
         primary = c(primary),

@@ -19,10 +19,10 @@ enum class AiFeature(val label: String, val routing: CustomRouting) {
     TRANSLATE("Translate", CustomRouting.ON_YOUR_ENDPOINT),
 
     /**
-     * The model writes Typst; Scanly compiles it. Split because a chat endpoint returns text, and
-     * turning Typst into a PDF needs the container — see `worker/src/typst.ts`.
+     * Always Scanly's designer, with a custom endpoint or without. The custom endpoint is for
+     * scanning; documents are built by Scanly's own model and compiler.
      */
-    DESIGN("Build Documents with AI", CustomRouting.YOUR_MODEL_OUR_COMPILER),
+    DESIGN("Build Documents with AI", CustomRouting.SCANLY_ONLY),
 
     /**
      * Speech to text. A custom endpoint is an OpenAI-compatible *chat* API, which takes no audio,
@@ -35,9 +35,6 @@ enum class AiFeature(val label: String, val routing: CustomRouting) {
 enum class CustomRouting {
     /** The request goes straight from the device to the user's provider. No Scanly quota. */
     ON_YOUR_ENDPOINT,
-
-    /** The user's model does the writing; Scanly still runs the compiler, and bills for that. */
-    YOUR_MODEL_OUR_COMPILER,
 
     /** Always Scanly's backend, whatever the user configured. */
     SCANLY_ONLY;

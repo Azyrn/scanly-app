@@ -122,6 +122,10 @@ class PhotoBundler @Inject constructor(
         val decoded = context.contentResolver.openInputStream(uri)?.use {
             BitmapFactory.decodeStream(it, null, options)
         } ?: return null
+        return scaleDown(decoded)
+    }
+
+    private fun scaleDown(decoded: Bitmap): Bitmap {
         val longest = max(decoded.width, decoded.height)
         if (longest <= MAX_IMAGE_DIMENSION) return decoded
         val ratio = MAX_IMAGE_DIMENSION.toFloat() / longest
@@ -142,7 +146,13 @@ class PhotoBundler @Inject constructor(
                 photos.forEach { photo ->
                     val image = photo.file.inputStream().buffered().use { input ->
                         PDImageXObject(
-                            pdf, input, COSName.DCT_DECODE, photo.width, photo.height, 8, PDDeviceRGB.INSTANCE
+                            pdf,
+                            input,
+                            COSName.DCT_DECODE,
+                            photo.width,
+                            photo.height,
+                            8,
+                            PDDeviceRGB.INSTANCE
                         )
                     }
                     // Page size at PAGE_DPI, so an upright photo lands near A4 rather than poster size.
@@ -161,11 +171,13 @@ class PhotoBundler @Inject constructor(
 
     companion object {
         private const val DIR = "ai-bundles"
+
         /** Same preparation as a single-photo scan; see PayloadFactory. */
         private const val MAX_IMAGE_DIMENSION = 1536
         private const val JPEG_QUALITY = 85
         private const val POINTS_PER_INCH = 72f
         private const val PAGE_DPI = 150f
+
         /** Room for the PDF's own structure on top of the JPEG bytes. */
         private const val BYTE_HEADROOM = 0.95
 

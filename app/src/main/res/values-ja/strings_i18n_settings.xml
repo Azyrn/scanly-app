@@ -112,7 +112,7 @@
     <string name="set_test_connection">接続をテスト</string>
     <string name="set_remove_endpoint">接続先を削除</string>
     <string name="set_use_for_ai_title">AI 機能に使用</string>
-    <string name="set_use_for_ai_verified">スキャン、データ抽出、翻訳、下書き、デザインはこのエンドポイントを使用します。音声からテキストへは、チャットエンドポイントでは扱えないため常に Scanly AI を使用します。</string>
+    <string name="set_use_for_ai_verified">スキャン、データ抽出、翻訳はこのエンドポイントを使用します。AI でドキュメント作成と音声からテキストへは常に Scanly AI を使用します。</string>
     <string name="set_use_for_ai_unverified">接続を確認してください。</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

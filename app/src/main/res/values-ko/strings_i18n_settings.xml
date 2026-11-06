@@ -104,7 +104,7 @@
     <string name="set_test_connection">연결 테스트</string>
     <string name="set_remove_endpoint">엔드포인트 제거</string>
     <string name="set_use_for_ai_title">AI 기능에 사용</string>
-    <string name="set_use_for_ai_verified">스캔, 데이터 추출, 번역, 초안, 디자인이 모두 Scanly AI 대신 사용자의 엔드포인트를 사용해요. 채팅 엔드포인트는 오디오를 받을 수 없으므로 오디오를 텍스트로는 항상 Scanly AI를 사용해요.</string>
+    <string name="set_use_for_ai_verified">스캔, 데이터 추출, 번역은 Scanly AI 대신 사용자의 엔드포인트를 사용해요. AI 문서 만들기와 오디오를 텍스트로는 항상 Scanly AI를 사용해요.</string>
     <string name="set_use_for_ai_unverified">먼저 엔드포인트를 확인하세요.</string>
     <string name="set_auth_create_title">계정 만들기</string>
     <string name="set_auth_welcome_title">다시 오셨네요</string>

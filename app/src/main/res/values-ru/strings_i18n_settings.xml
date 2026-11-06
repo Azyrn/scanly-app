@@ -112,7 +112,7 @@
     <string name="set_test_connection">Проверить связь</string>
     <string name="set_remove_endpoint">Удалить эндпоинт</string>
     <string name="set_use_for_ai_title">Для ИИ-функций</string>
-    <string name="set_use_for_ai_verified">Сканы, данные, перевод, черновики и дизайн — через ваш эндпоинт, не Scanly AI. Аудио в текст всегда через Scanly AI: чат-эндпоинт аудио не принимает.</string>
+    <string name="set_use_for_ai_verified">Сканы, данные и перевод — через ваш эндпоинт, не Scanly AI. Документы с ИИ и аудио в текст всегда через Scanly AI.</string>
     <string name="set_use_for_ai_unverified">Сначала проверьте.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

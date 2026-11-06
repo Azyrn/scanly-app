@@ -66,23 +66,11 @@ data class PaywallState(
     val allowsDesign: Boolean = false,
     val designPageCost: Int = 2,
     val designMaxPageCost: Int = 16,
-    /** What a design costs when the user's own model writes it and only the compile is Scanly's. */
-    val designCompilePageCost: Int = 1,
-    /** The user has switched on their own AI endpoint, so most work costs them nothing here. */
+    /** The user has switched on their own AI endpoint, so scans cost them nothing here. */
     val usesCustomEndpoint: Boolean = false,
     val license: LicenseState = LicenseState(),
     val message: String? = null
-) {
-    /**
-     * The number to put in front of the user before they start a design.
-     *
-     * A design on a custom endpoint is billed for the compile alone, which is a fraction of the
-     * Gemini path. Quoting the larger figure to someone who will be charged the smaller one is the
-     * same failure as quoting the smaller to someone charged the larger — it just fails politely.
-     */
-    val quotedDesignPageCost: Int
-        get() = if (usesCustomEndpoint) designCompilePageCost else designPageCost
-}
+)
 
 @HiltViewModel
 class PaywallViewModel @Inject internal constructor(
@@ -149,7 +137,6 @@ class PaywallViewModel @Inject internal constructor(
             allowsDesign = entitlement?.allowsDesign == true,
             designPageCost = entitlement?.designPageCost ?: 2,
             designMaxPageCost = entitlement?.designMaxPageCost ?: 16,
-            designCompilePageCost = entitlement?.designCompilePageCost ?: 1,
             // The tier matters as well as the switch: a custom endpoint is Pro-only, so a free
             // account with one configured is still routed to Scanly and must be quoted Scanly's
             // price. This mirrors the Pro check inside CustomProviderResolver.resolve.

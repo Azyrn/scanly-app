@@ -196,7 +196,6 @@
     <string name="ai_err_read_file">Erro ao ler arquivo</string>
     <string name="ai_err_no_text">Sem texto legível neste arquivo.</string>
     <string name="ai_design_background">Criando seu documento. Você pode sair do app: avisaremos você.</string>
-    <string name="ai_err_custom_no_files">Seu endpoint de IA não lê imagem nem PDF. Desative-o para recriar o documento ou crie de uma digitalização.</string>
     <string name="ai_err_translate_empty">A tradução voltou vazia.</string>
     <string name="ai_err_offline">Sem internet. Verifique a rede e tente de novo.</string>
     <string name="ai_err_unstable">Sem acesso a %1$s: conexão instável. Verifique e tente de novo.</string>

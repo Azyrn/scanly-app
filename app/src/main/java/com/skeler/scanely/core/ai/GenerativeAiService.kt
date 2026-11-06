@@ -4,8 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.SystemClock
 import com.skeler.scanely.R
-import com.skeler.scanely.core.ai.custom.CustomDesignResult
-import com.skeler.scanely.core.ai.custom.CustomDesigner
 import com.skeler.scanely.core.ai.custom.CustomProviderConfig
 import com.skeler.scanely.core.ai.custom.CustomProviderResolver
 import com.skeler.scanely.core.ai.custom.CustomScanResult
@@ -34,7 +32,6 @@ class GenerativeAiService @Inject internal constructor(
     private val networkObserver: NetworkObserver,
     private val customProviderResolver: CustomProviderResolver,
     private val customScanner: CustomScanner,
-    private val customDesigner: CustomDesigner,
     private val extractionCatalog: ExtractionCatalog,
     private val designStore: DesignStore,
     private val entitlementRepository: com.skeler.scanely.core.billing.EntitlementRepository
@@ -202,10 +199,7 @@ class GenerativeAiService @Inject internal constructor(
      * Designs a PDF. [sourceText] is a scan to lay out, or null to have the model write the content
      * too; [designId] revises an earlier design instead of starting over.
      *
-     * Split across both routes rather than running on one. A chat endpoint cannot return a PDF, but
-     * it is not being asked to: it writes Typst, which is text, and Scanly's container compiles it.
-     * So a user with a stronger model than the one Scanly runs for everybody gets that model's
-     * document — and still pays a page for the compile, which is genuinely ours. See [CustomDesigner].
+     * Always on Scanly's backend, even with a custom endpoint switched on; see [AiFeature.DESIGN].
      */
     @AiEntryPoint(AiFeature.DESIGN)
     fun designDocumentEvents(
@@ -248,20 +242,17 @@ class GenerativeAiService @Inject internal constructor(
                 step = { id, at -> send(DesignEvent.Step(id, at)) }
             )
 
-            // A custom run also bills the user's model and cannot replay that generation.
-            val retrySafe = !usesCustomProvider()
             // One key per user action, reused across this call's retries, so a design that times
             // out on the wire and succeeds on retry is billed once rather than twice.
-            val outcome = executor.run(emit = listeners.stage, retrySafe = retrySafe) {
+            val outcome = executor.run(emit = listeners.stage) {
                 val call = DesignCall(prompt, sourceText, designId, photo, document, template, answer, ocrReceipt, chat)
                 buildDesign(call, requestId, listeners)
             }
-            send(finishedDesign(outcome, retrySafe))
+            send(finishedDesign(outcome))
         }.flowOn(Dispatchers.IO)
 
     private suspend fun ProducerScope<DesignEvent>.finishedDesign(
-        outcome: AiOutcome<DesignBytes>,
-        retrySafe: Boolean
+        outcome: AiOutcome<DesignBytes>
     ): DesignEvent.Finished = when (outcome) {
         is AiOutcome.Success -> {
             val design = outcome.value
@@ -271,51 +262,21 @@ class GenerativeAiService @Inject internal constructor(
         }
         is AiOutcome.Fatal -> DesignEvent.Finished(DesignResult.Failure(outcome.error))
         is AiOutcome.Exhausted -> DesignEvent.Finished(
-            DesignResult.Failure(AiResult.Error(exhaustedMessage(outcome)), canRecoverOnForeground = retrySafe)
+            DesignResult.Failure(AiResult.Error(exhaustedMessage(outcome)), canRecoverOnForeground = true)
         )
     }
 
-    /**
-     * The two halves of a design, behind one routing decision. A custom-endpoint failure is thrown
-     * as fatal rather than returned: the retry loop must not re-run a design the user's own model
-     * already charged them for twice.
-     */
     private suspend fun buildDesign(
         call: DesignCall,
         idempotencyKey: String,
         listeners: DesignListeners
     ): DesignBytes = with(call) {
-        val stage = listeners.stage
-        route(
-            AiFeature.DESIGN,
-            onCustomEndpoint = { config ->
-                // Refused rather than designed without it. /v1/design/prompt hands back text for the
-                // user's own model to complete, and there is nowhere in that exchange to put an image —
-                // so proceeding would drop the document silently and invent one in its place, which is
-                // the exact failure this input was added to fix.
-                if (document != null) {
-                    throw FatalAiException(
-                        AiResult.Error(context.getString(R.string.ai_err_custom_no_files))
-                    )
-                }
-                when (
-                    val result =
-                        customDesigner.design(prompt, sourceText, designId, photo, template, config, stage)
-                ) {
-                    is CustomDesignResult.Success -> result.design
-                    is CustomDesignResult.Failure ->
-                        throw FatalAiException(AiResult.Error(result.message))
-                }
-            },
-            onScanlyBackend = {
-                stage(AiEvent.Stage(AiStage.GENERATING))
-                client.design(
-                    prompt, sourceText, designId, photo, document, idempotencyKey, template, answer, ocrReceipt,
-                    onBackground = listeners.background,
-                    chat = chat,
-                    onStep = listeners.step
-                )
-            }
+        listeners.stage(AiEvent.Stage(AiStage.GENERATING))
+        client.design(
+            prompt, sourceText, designId, photo, document, idempotencyKey, template, answer, ocrReceipt,
+            onBackground = listeners.background,
+            chat = chat,
+            onStep = listeners.step
         )
     }
 

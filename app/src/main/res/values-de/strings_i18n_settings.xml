@@ -112,7 +112,7 @@
     <string name="set_test_connection">Testen</string>
     <string name="set_remove_endpoint">Endpunkt entfernen</string>
     <string name="set_use_for_ai_title">Für KI verwenden</string>
-    <string name="set_use_for_ai_verified">Scans, Datenauslesen, Übersetzung, Entwürfe, Designs nutzen deinen Endpunkt statt Scanly AI. Audio in Text nutzt stets Scanly AI, da Chat-Endpunkte keine Audiodaten annehmen.</string>
+    <string name="set_use_for_ai_verified">Scans, Datenauslesen und Übersetzung nutzen deinen Endpunkt statt Scanly AI. Dokumente mit KI und Audio in Text nutzen stets Scanly AI.</string>
     <string name="set_use_for_ai_unverified">Endpunkt zuerst prüfen.</string>
 
     <!-- AuthScreen.kt / AuthViewModel.kt -->

@@ -201,7 +201,6 @@
     <string name="ai_err_read_file">Файл не прочитан</string>
     <string name="ai_err_no_text">Текст в файле не найден.</string>
     <string name="ai_design_background">Создаём документ. Можно выйти — уведомим.</string>
-    <string name="ai_err_custom_no_files">Ваш эндпоинт не читает изображения и PDF. Выключите его, чтобы пересоздать документ, или создайте по скану.</string>
     <string name="ai_err_translate_empty">Перевод вернулся пустым.</string>
     <string name="ai_err_offline">Нет интернета. Проверьте сеть и повторите.</string>
     <string name="ai_err_unstable">Нет связи с %1$s. Проверьте соединение и повторите.</string>

@@ -104,7 +104,7 @@
     <string name="set_test_connection">कनेक्शन टेस्ट करें</string>
     <string name="set_remove_endpoint">एंडपॉइंट हटाएं</string>
     <string name="set_use_for_ai_title">AI फ़ीचर के लिए इस्तेमाल</string>
-    <string name="set_use_for_ai_verified">स्कैन, डेटा निकालना, अनुवाद, ड्राफ़्ट और डिज़ाइन, सब Scanly AI की जगह आपके एंडपॉइंट से होंगे। ऑडियो से टेक्स्ट हमेशा Scanly AI से होगा, क्योंकि चैट एंडपॉइंट ऑडियो नहीं ले सकता।</string>
+    <string name="set_use_for_ai_verified">स्कैन, डेटा निकालना और अनुवाद Scanly AI की जगह आपके एंडपॉइंट से होंगे। AI से दस्तावेज़ बनाना और ऑडियो से टेक्स्ट हमेशा Scanly AI से होंगे।</string>
     <string name="set_use_for_ai_unverified">पहले एंडपॉइंट की पुष्टि करें।</string>
     <string name="set_auth_create_title">अपना अकाउंट बनाएं</string>
     <string name="set_auth_welcome_title">वापसी पर स्वागत है</string>

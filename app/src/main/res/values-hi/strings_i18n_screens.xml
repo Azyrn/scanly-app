@@ -180,7 +180,6 @@
     <string name="ai_err_read_file">फ़ाइल पढ़ने में विफल</string>
     <string name="ai_err_no_text">इस फ़ाइल से कोई टेक्स्ट नहीं पढ़ा जा सका।</string>
     <string name="ai_design_background">आपका दस्तावेज़ बन रहा है। आप ऐप से बाहर जा सकते हैं; हम आपको सूचना देंगे।</string>
-    <string name="ai_err_custom_no_files">आपका अपना AI एंडपॉइंट चुनी गई तस्वीर या PDF नहीं पढ़ सकता। इस दस्तावेज़ को दोबारा बनाने के लिए कस्टम एंडपॉइंट बंद करें, या इसके बजाय स्कैन से डिज़ाइन करें।</string>
     <string name="ai_err_translate_empty">अनुवाद खाली लौटा।</string>
     <string name="ai_err_offline">इंटरनेट कनेक्शन नहीं है। अपना नेटवर्क जांचें और फिर से कोशिश करें।</string>
     <string name="ai_err_unstable">%1$s तक नहीं पहुँच सके — आपका कनेक्शन अस्थिर लगता है। उसे जांचें और फिर से कोशिश करें।</string>

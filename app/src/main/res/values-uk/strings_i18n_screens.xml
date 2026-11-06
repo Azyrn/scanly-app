@@ -201,7 +201,6 @@
     <string name="ai_err_read_file">Помилка читання</string>
     <string name="ai_err_no_text">Не вдалося прочитати текст із файлу.</string>
     <string name="ai_design_background">Створюємо документ. Можна вийти — надішлемо сповіщення.</string>
-    <string name="ai_err_custom_no_files">Ваша точка доступу ШІ не читає вибрані зображення й PDF. Вимкніть її, щоб перебудувати документ, або створіть його зі скану.</string>
     <string name="ai_err_translate_empty">Переклад порожній.</string>
     <string name="ai_err_offline">Немає інтернету. Перевірте мережу й спробуйте знову.</string>
     <string name="ai_err_unstable">Не вдалося зв\'язатися з %1$s. Зв\'язок, схоже, нестабільний — спробуйте знову.</string>

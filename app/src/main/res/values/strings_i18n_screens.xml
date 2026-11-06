@@ -191,7 +191,6 @@
     <string name="ai_err_read_file">Failed to read file</string>
     <string name="ai_err_no_text">No text could be read from this file.</string>
     <string name="ai_design_background">Building your document. You can leave the app; we\'ll notify you.</string>
-    <string name="ai_err_custom_no_files">Your own AI endpoint can\'t read a picked image or PDF. Turn off the custom endpoint to rebuild this document, or design from a scan instead.</string>
     <string name="ai_err_translate_empty">Translation came back empty.</string>
     <string name="ai_err_offline">No internet connection. Check your network and try again.</string>
     <string name="ai_err_unstable">Couldn\'t reach %1$s — your connection looks unstable. Check it and try again.</string>
