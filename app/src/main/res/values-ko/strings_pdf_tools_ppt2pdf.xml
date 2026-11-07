@@ -4,35 +4,27 @@
     <string name="pdf_tool_ppt2pdf_shapes">일부 도형은 단순하게 표현됐어요.</string>
     <string name="pdf_tool_ppt2pdf_fonts">일부 글꼴은 비슷한 글꼴로 바뀌었어요.</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">차트 %d개는 제외됐어요.</item>
         <item quantity="other">차트 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">SmartArt 그래픽 %d개는 제외됐어요.</item>
         <item quantity="other">SmartArt 그래픽 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
-        <item quantity="one">포함된 개체 %d개는 제외됐어요.</item>
         <item quantity="other">포함된 개체 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">동영상 또는 소리 %d개는 PDF에서 재생할 수 없어 미리보기 이미지만 표시돼요.</item>
         <item quantity="other">동영상 또는 소리 %d개는 PDF에서 재생할 수 없어 미리보기 이미지만 표시돼요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">사진 %d장은 표시할 수 없었어요.</item>
         <item quantity="other">사진 %d장은 표시할 수 없었어요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
-        <item quantity="one">숨김 슬라이드 %d개 건너뜀.</item>
         <item quantity="other">숨김 슬라이드 %d개 건너뜀.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">읽을 수 없는 슬라이드 %d개는 제외됐어요.</item>
         <item quantity="other">읽을 수 없는 슬라이드 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
-        <item quantity="one">처음 슬라이드 %d개만 변환됐어요.</item>
         <item quantity="other">처음 슬라이드 %d개만 변환됐어요.</item>
     </plurals>
 </resources>

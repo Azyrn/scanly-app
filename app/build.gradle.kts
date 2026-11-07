@@ -171,7 +171,7 @@ android {
         generateLocaleConfig = true
     }
 
-    sourceSets.getByName("test").resources.srcDir(rootProject.file("contracts"))
+    sourceSets.getByName("test").resources.directories.add(rootProject.file("contracts").path)
 
     testOptions {
         // Mockito instruments bootstrap classes; CDS is unavailable in this test JVM.
@@ -187,7 +187,9 @@ android {
     bundle {
         abi { enableSplit = true }
         density { enableSplit = true }
-        language { enableSplit = true }
+        // The in-app language picker (AppLanguage) can switch to any shipped language, so every
+        // device needs all of them; a split would install only the device's own languages.
+        language { enableSplit = false }
     }
 
     signingConfigs {
@@ -206,6 +208,8 @@ android {
             applicationIdSuffix = ".debug"
             // One ABI keeps debug builds small; -PdebugAbi=x86_64 for an emulator.
             ndk {
+                // Single-ABI on purpose (see above); release ships x86_64.
+                //noinspection ChromeOsAbiSupport
                 abiFilters += (project.findProperty("debugAbi") as String?)
                     ?.takeUnless { it.isBlank() } ?: "arm64-v8a"
             }
@@ -225,6 +229,8 @@ android {
             // abiFilters restricts what enters the AAB as well as the APK; the bundle DSL only
             // decides how what is already there gets split.
             ndk {
+                // releaseAbis defaults to fullReleaseAbis, which includes x86_64; Lint can't evaluate it.
+                //noinspection ChromeOsAbiSupport
                 abiFilters += releaseAbis
                 // Pinned rather than left to AGP's default, which has moved between versions and
                 // silently changes what lands in BUNDLE-METADATA. SYMBOL_TABLE is what makes a
@@ -245,10 +251,6 @@ android {
                 "ADMOB_REWARDED_AD_UNIT_ID",
                 "\"${secretsProps.getProperty("ADMOB_REWARDED_AD_UNIT_ID") ?: admobTestRewardedUnitId}\""
             )
-
-            for ((name, value) in firebaseResValues("com.skeler.scanely")) {
-                resValue("string", name, value)
-            }
         }
         // Performance measurement only (frame stats): release code (R8, not debuggable) installed over
         // the debug app with the debug key, so its sign-in and data stay. Never shipped.
@@ -262,6 +264,13 @@ android {
             manifestPlaceholders["admobAppId"] = admobTestAppId
             buildConfigField("String", "ADMOB_REWARDED_AD_UNIT_ID", "\"$admobTestRewardedUnitId\"")
             for ((name, value) in firebaseResValues("com.skeler.scanely.debug")) {
+                resValue("string", name, value)
+            }
+        }
+        // Added after benchmark's initWith, which would otherwise copy them and have its own debug
+        // app's set replace every one (AGP RES_VALUE_REPLACED).
+        getByName("release") {
+            for ((name, value) in firebaseResValues("com.skeler.scanely")) {
                 resValue("string", name, value)
             }
         }

@@ -45,7 +45,6 @@
     <string name="chat_send">送信</string>
     <string name="chat_stop">待機を停止</string>
     <plurals name="chat_cost_hint">
-        <item quantity="one">%dクレジット</item>
         <item quantity="other">%dクレジット</item>
     </plurals>
     <string name="chat_cost_agent">チャット無料・書類クレジット</string>
@@ -54,7 +53,6 @@
     <string name="chat_preset_clean_up">整える</string>
     <string name="chat_preset_one_page">1ページに収める</string>
     <plurals name="chat_pages">
-        <item quantity="one">%d ページ</item>
         <item quantity="other">%d ページ</item>
     </plurals>
     <string name="chat_preparing_picture">画像を準備中…</string>
@@ -95,7 +93,9 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">この画像は使えません。別の画像で再試行。</string>
-    <string name="chat_file_too_many_pages">再構築は最大 %1$d ページまで。このファイルは %2$d ページ。</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="other">再構築は最大 %1$d ページまで。このファイルは %2$d ページ。</item>
+    </plurals>
     <string name="chat_file_too_large">大きすぎて再構築できません。</string>
     <string name="chat_file_unreadable">読み取れません。別のファイルを試して。</string>
 
@@ -106,7 +106,6 @@
     <string name="chat_share_failed">共有できませんでした。</string>
     <string name="chat_saved_to_downloads">Downloads に保存済み</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">%d 枚を Pictures/Scanly に保存</item>
         <item quantity="other">%d 枚を Pictures/Scanly に保存</item>
     </plurals>
     <string name="chat_images_failed">画像の保存に失敗しました。</string>
@@ -136,7 +135,6 @@
     <string name="chat_file_revise">このバージョンを変更</string>
     <string name="chat_file_editing">編集中</string>
     <plurals name="chat_credits_used">
-        <item quantity="one">%dクレジット</item>
         <item quantity="other">%dクレジット</item>
     </plurals>
     <string name="chat_expired">期限切れ: 再構築</string>
@@ -188,7 +186,6 @@
          Tool names and their arguments are the agent's own and are not translated. -->
     <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
     <plurals name="chat_log_steps">
-        <item quantity="one">%d 手順</item>
         <item quantity="other">%d 手順</item>
     </plurals>
     <string name="chat_log_minutes">%1$d 分 %2$d 秒</string>
@@ -199,11 +196,9 @@
     <string name="chat_log_thought">%1$s 考えました</string>
     <string name="chat_log_thinking">思考中</string>
     <plurals name="chat_log_read">
-        <item quantity="one">%d行読み取り</item>
         <item quantity="other">%d行を読み取り</item>
     </plurals>
     <plurals name="chat_log_wrote">
-        <item quantity="one">%d行を書き込み</item>
         <item quantity="other">%d 行を書き込み</item>
     </plurals>
     <string name="chat_log_read_image">画像を読取（%1$s）</string>
@@ -211,26 +206,24 @@
     <string name="chat_log_denied">拒否: このジョブでは不許可</string>
     <string name="chat_log_running">実行中…</string>
     <plurals name="chat_log_more_lines">
-        <item quantity="one">+%d 行</item>
         <item quantity="other">+%d 行</item>
     </plurals>
     <string name="chat_log_show_more">さらに表示</string>
     <string name="chat_log_show_less">折りたたむ</string>
     <plurals name="chat_log_not_shown">
-        <item quantity="one">残り %1$d 行（%2$d 文字）は表示されていません</item>
         <item quantity="other">残り %1$d 行（%2$d 文字）は表示されていません</item>
     </plurals>
     <plurals name="chat_log_not_kept">
-        <item quantity="one">%1$d行（%2$d文字）は未保持</item>
         <item quantity="other">%1$d行（%2$d文字）は未保持</item>
     </plurals>
     <string name="chat_log_show_all">すべて表示</string>
     <string name="chat_log_loading">完全な出力を読み込み中…</string>
     <string name="chat_log_expired">完全な出力は期限切れ</string>
     <string name="chat_log_unavailable">出力を読み込めません。タップして再試行。</string>
-    <string name="chat_log_past_limit">さらに %1$d 文字が上限を超えたため、保持されていません</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="other">さらに %1$d 文字が上限を超えたため、保持されていません</item>
+    </plurals>
     <plurals name="chat_log_dropped">
-        <item quantity="one">この端末では以前の %d 行は未保持</item>
         <item quantity="other">この端末では以前の %d 行は未保持</item>
     </plurals>
 </resources>

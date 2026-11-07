@@ -7,6 +7,7 @@ import android.graphics.Paint
 import androidx.core.graphics.createBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.skeler.scanely.core.ocr.paddle.BitmapRotation
 import com.skeler.scanely.core.ocr.paddle.ImageOps
 import com.skeler.scanely.core.ocr.paddle.PaddleModelStore
 import com.skeler.scanely.core.ocr.paddle.PaddleOcrEngine
@@ -75,7 +76,7 @@ class PaddleOcrEngineTest {
         val bitmap = page()
         val quad = engine.detect(bitmap, 960).minBy { it.minY }
         val crop = ImageOps.cropQuad(bitmap, quad)
-        val flipped = ImageOps.rotate180(crop)
+        val flipped = BitmapRotation.rotate180(crop)
 
         val flags = engine.detectFlippedLines(listOf(crop, flipped))
         assertEquals(false, flags[0])

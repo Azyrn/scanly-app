@@ -16,6 +16,8 @@ import java.io.IOException
  * dispatcher thread's default handler and kills the process — a caller's own try/catch cannot
  * stop it. Firebase throws bare FirebaseExceptions here, so every one of them has to be narrowed.
  */
+// Throwable on purpose: anything but IOException escaping an interceptor kills the process (above).
+@Suppress("TooGenericExceptionCaught")
 internal fun <T> awaitToken(context: Context, failureMessage: String, task: () -> Task<T>): T =
     try {
         runBlocking {

@@ -97,7 +97,11 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">Imagem inválida. Tente outra.</string>
-    <string name="chat_file_too_many_pages">O designer refaz até %1$d páginas. Esse arquivo tem %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">O designer refaz até %1$d página. Esse arquivo tem %2$d.</item>
+        <item quantity="many">O designer refaz até %1$d páginas. Esse arquivo tem %2$d.</item>
+        <item quantity="other">O designer refaz até %1$d páginas. Esse arquivo tem %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">Grande demais para refazer.</string>
     <string name="chat_file_unreadable">Arquivo ilegível. Tente outro.</string>
 
@@ -238,7 +242,11 @@
     <string name="chat_log_loading">Carregando saída…</string>
     <string name="chat_log_expired">Saída expirada</string>
     <string name="chat_log_unavailable">Falha ao carregar. Toque para repetir.</string>
-    <string name="chat_log_past_limit">%1$d caracteres além do limite não foram salvos</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d caractere além do limite não foi salvo</item>
+        <item quantity="many">%1$d caracteres além do limite não foram salvos</item>
+        <item quantity="other">%1$d caracteres além do limite não foram salvos</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d linha anterior não salva no celular</item>
         <item quantity="many">%d linhas antigas não salvas no celular</item>

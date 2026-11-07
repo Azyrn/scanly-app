@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">Штрихкодів немає</string>
     <string name="scr_barcode_hint">Наведіть на штрихкод або QR\nЩипок — зум · торкніться — фокус</string>
-    <string name="scr_barcode_scanning">Сканую...</string>
+    <string name="scr_barcode_scanning">Сканую…</string>
     <string name="scr_barcode_upload_gallery">Вибрати з галереї</string>
     <string name="scr_barcode_permission_required">Потрібен доступ до камери\nдля штрихкодів.</string>
     <!-- Document camera -->
@@ -14,8 +14,18 @@
     <string name="scr_camera_focus_hint">Торкніться для фокусу · вирівняйте по краях</string>
     <string name="scr_camera_capture">Зняти</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">До %1$d файлів за скан — перші %1$d.</string>
-    <string name="scr_home_credits">%1$d кредитів</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">До %1$d файлу за скан — перший %1$d.</item>
+        <item quantity="few">До %1$d файлів за скан — перші %1$d.</item>
+        <item quantity="many">До %1$d файлів за скан — перші %1$d.</item>
+        <item quantity="other">До %1$d файлів за скан — перші %1$d.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d кредит</item>
+        <item quantity="few">%1$d кредити</item>
+        <item quantity="many">%1$d кредитів</item>
+        <item quantity="other">%1$d кредиту</item>
+    </plurals>
     <string name="scr_home_question">Що бажаєте відсканувати?</string>
     <string name="scr_home_scan_document">Скан документа</string>
     <string name="scr_home_scan_document_subtitle">Автообрізка й експорт у PDF</string>
@@ -90,7 +100,12 @@
     <string name="scr_transcribe_transcribing_body">Довгі записи займають кілька хвилин. Можна вийти — розшифровка збережеться тут, коли буде готова.</string>
     <string name="scr_transcribe_paused">Пауза</string>
     <string name="scr_transcribe_recording">Запис</string>
-    <string name="scr_transcribe_up_to_minutes">До %1$d хвилин за вашим планом</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">До %1$d хвилини за планом</item>
+        <item quantity="few">До %1$d хвилин за планом</item>
+        <item quantity="many">До %1$d хвилин за планом</item>
+        <item quantity="other">До %1$d хвилини за планом</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Відхилити запис</string>
     <string name="scr_transcribe_stop_and_keep">Зберегти</string>
     <string name="scr_transcribe_reading_file">Читаємо…</string>
@@ -104,7 +119,12 @@
     <string name="scr_transcribe_key_terms_count">%1$d з %2$d</string>
     <string name="scr_transcribe_plan_note">1 кредит ≈ %1$d хв аудіо · до %2$d хв на запис за вашим планом.</string>
     <string name="scr_transcribe_custom_endpoint_note">Аудіо в текст завжди йде через Scanly AI і списує кредити, навіть з власною точкою доступу.</string>
-    <string name="scr_transcribe_speakers">Мовців: %1$d</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">Мовців: %1$d</item>
+        <item quantity="few">Мовців: %1$d</item>
+        <item quantity="many">Мовців: %1$d</item>
+        <item quantity="other">Мовців: %1$d</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Оберіть основну мову розмови. Інші мови в записі все одно розшифровуються як вимовлені; цей вибір визначає, як записувати числа й дати.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Сам визначає мову, але працює двічі: вдвічі більше кредитів.</string>
     <string name="scr_transcribe_key_terms_hint">Імена, назви продуктів і терміни, які треба написати точно. Діють для всіх записів, доки їх не видалите. Вставте кілька через кому.</string>
@@ -172,14 +192,24 @@
     <string name="au_err_unreadable">Не вдалося відкрити файл як аудіо чи відео.</string>
     <string name="au_err_access_lost">Немає доступу до файлу. Виберіть знову.</string>
     <string name="au_err_no_audio">У файлі немає аудіо.</string>
-    <string name="au_err_too_long">Тривалість цього запису — %1$s. Ваш план розшифровує до %2$d хвилин за раз.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">Тривалість запису — %1$s. Ваш план розшифровує до %2$d хвилини за раз.</item>
+        <item quantity="few">Тривалість запису — %1$s. Ваш план розшифровує до %2$d хвилин за раз.</item>
+        <item quantity="many">Тривалість запису — %1$s. Ваш план розшифровує до %2$d хвилин за раз.</item>
+        <item quantity="other">Тривалість запису — %1$s. Ваш план розшифровує до %2$d хвилини за раз.</item>
+    </plurals>
     <string name="au_err_convert">Не вдалося конвертувати аудіо. Спробуйте інший файл.</string>
     <string name="au_err_too_large">Цей запис завеликий для вашого плану навіть після стиснення.</string>
     <string name="au_err_read">Файл не читається.</string>
     <string name="auth_val_email_required">Спершу введіть адресу email.</string>
     <string name="auth_reset_sent">Якщо для %1$s є пароль, надішлемо посилання. В Google пароля немає — «Продовжити з Google».</string>
     <string name="auth_val_invalid_email">Введіть дійсну адресу email.</string>
-    <string name="auth_val_password_short">Пароль — мінімум %1$d символів.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Пароль — мінімум %1$d символ.</item>
+        <item quantity="few">Пароль — мінімум %1$d символи.</item>
+        <item quantity="many">Пароль — мінімум %1$d символів.</item>
+        <item quantity="other">Пароль — мінімум %1$d символу.</item>
+    </plurals>
     <string name="auth_val_check_details">Перевірте дані й спробуйте знову.</string>
     <string name="au_notif_channel_name">Запис</string>
     <string name="au_notif_channel_desc">Показується під час запису</string>
@@ -187,8 +217,18 @@
     <string name="au_notif_text">Запис триває. Торкніться, щоб повернутися.</string>
     <string name="tx_save_failed">Розшифровка готова, але не збереглася на пристрої (%1$s). Звільніть місце й натисніть «Зберегти» знову. Повторної оплати не буде.</string>
     <string name="tx_prepare_failed">Не вдалося підготувати цей запис.</string>
-    <string name="tx_key_terms_limit">Максимум %1$d термінів. %2$d не додано.</string>
-    <string name="tx_key_terms_length">Терміни — до %1$d символів.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">Максимум %1$d термін. %2$d не додано.</item>
+        <item quantity="few">Максимум %1$d терміни. %2$d не додано.</item>
+        <item quantity="many">Максимум %1$d термінів. %2$d не додано.</item>
+        <item quantity="other">Максимум %1$d терміну. %2$d не додано.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Терміни — до %1$d символу.</item>
+        <item quantity="few">Терміни — до %1$d символів.</item>
+        <item quantity="many">Терміни — до %1$d символів.</item>
+        <item quantity="other">Терміни — до %1$d символу.</item>
+    </plurals>
     <string name="cp_connected">Підключено. Можна зберегти.</string>
     <string name="cp_saved">Збережено. Скани йтимуть через неї.</string>
     <string name="cp_removed">Точку видалено.</string>
@@ -234,8 +274,18 @@
     <string name="net_verify_session">Не вдалося перевірити сесію.</string>
     <string name="net_session_expired">Сесію завершено. Увійдіть знову.</string>
     <string name="lk_no_engines">Немає сумісних рушіїв</string>
-    <string name="lk_searched">Перевірено джерел %1$d</string>
-    <string name="lk_searched_partial">Перевірено: %1$d. Немає зв\'язку з %2$s</string>
+    <plurals name="lk_searched">
+        <item quantity="one">Перевірено: %1$d</item>
+        <item quantity="few">Перевірено: %1$d</item>
+        <item quantity="many">Перевірено: %1$d</item>
+        <item quantity="other">Перевірено: %1$d</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">Перевірено: %1$d. Немає зв\'язку з %2$s</item>
+        <item quantity="few">Перевірено: %1$d. Немає зв\'язку з %2$s</item>
+        <item quantity="many">Перевірено: %1$d. Немає зв\'язку з %2$s</item>
+        <item quantity="other">Перевірено: %1$d. Немає зв\'язку з %2$s</item>
+    </plurals>
     <string name="lk_unreachable">Немає зв\'язку з базами товарів. Зв\'язок справний — спробуйте за кілька хвилин.</string>
     <string name="lk_server_problem">Бази товарів недоступні: у них збій. Спробуйте пізніше.</string>
     <string name="ocr_err_load_image">Фото не відкрито</string>

@@ -4,7 +4,6 @@
     <!-- Repair -->
     <string name="pdf_tool_repair_action">修复</string>
     <plurals name="pdf_tool_repair_recovered">
-        <item quantity="one">已恢复 %d 页。删除原文件前请先检查。</item>
         <item quantity="other">已恢复 %d 页。删除原文件前请先检查。</item>
     </plurals>
 
@@ -15,7 +14,6 @@
     <string name="pdf_tool_extract_text_page_separator">----- 第 %d 页 -----</string>
     <string name="pdf_tool_extract_text_action">提取</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d 页没有可选择的文字（扫描件）。请使用主屏幕上的“PDF 转文本”来读取。</item>
         <item quantity="other">%d 页没有可选择的文字（扫描件）。请使用主屏幕上的“PDF 转文本”来读取。</item>
     </plurals>
 </resources>

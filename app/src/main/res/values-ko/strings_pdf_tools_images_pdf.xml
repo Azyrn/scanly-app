@@ -10,7 +10,6 @@
     <string name="pdf_tool_jpg_action_pages">JPG로 변환</string>
     <string name="pdf_tool_jpg_action_extract">이미지 추출</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">Scanly가 내보낼 수 없는 형식의 이미지 %d개는 건너뛰었어요.</item>
         <item quantity="other">Scanly가 내보낼 수 없는 형식의 이미지 %d개는 건너뛰었어요.</item>
     </plurals>
     <string name="pdf_tool_img2pdf_body">이미지 한 장당 한 페이지, 표시 순서대로.</string>
@@ -28,7 +27,6 @@
     <string name="pdf_tool_img2pdf_margin_big">크게</string>
     <string name="pdf_tool_img2pdf_action">PDF 만들기</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">이미지로 읽을 수 없는 파일 %d개는 제외됐어요.</item>
         <item quantity="other">이미지로 읽을 수 없는 파일 %d개는 제외됐어요.</item>
     </plurals>
 </resources>

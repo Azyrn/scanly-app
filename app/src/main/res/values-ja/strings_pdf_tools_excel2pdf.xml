@@ -6,30 +6,24 @@
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
-        <item quantity="one">非表示シート %d 枚を除外</item>
         <item quantity="other">非表示シート %d 枚を除外</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">グラフ %d 件を除外</item>
         <item quantity="other">グラフ %d 件を除外</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
-        <item quantity="one">画像 %d 件を除外</item>
         <item quantity="other">画像 %d 件を除外</item>
     </plurals>
     <string name="excel2pdf_note_formulas_cached">数式は保存された結果を表示</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">保存結果のない数式 %d 件は空欄</item>
         <item quantity="other">保存結果のない数式 %d 件は空欄</item>
     </plurals>
     <string name="excel2pdf_note_conditional">条件付き書式は適用されませんでした。</string>
     <string name="excel2pdf_note_pivots">ピボットは保存された値を表示</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">非常に大きなシートは %d 行目で切り取り</item>
         <item quantity="other">非常に大きなシートは %d 行目で切り取り</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
-        <item quantity="one">PDFは %d ページで止まり、残りは除外されました。</item>
         <item quantity="other">PDFは %d ページで止まり、残りは除外されました。</item>
     </plurals>
 </resources>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- User-visible strings of ui/screens, moved out of Kotlin so the app can be translated. English only. -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">No barcode found</string>
     <string name="scr_barcode_hint">Point camera at barcode or QR code\nPinch to zoom · tap to focus</string>
-    <string name="scr_barcode_scanning">Scanning...</string>
+    <string name="scr_barcode_scanning">Scanning…</string>
     <string name="scr_barcode_upload_gallery">Upload from gallery</string>
     <string name="scr_barcode_permission_required">Camera permission required\nfor barcode scanning.</string>
     <!-- Document camera -->
@@ -14,8 +14,14 @@
     <string name="scr_camera_focus_hint">Tap to focus · line the page up with the edges</string>
     <string name="scr_camera_capture">Capture</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">Up to %1$d files per scan — using the first %1$d.</string>
-    <string name="scr_home_credits">%1$d credits</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">Up to %1$d file per scan — using the first one.</item>
+        <item quantity="other">Up to %1$d files per scan — using the first %1$d.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d credit</item>
+        <item quantity="other">%1$d credits</item>
+    </plurals>
     <string name="scr_home_question">What would you like to scan?</string>
     <string name="scr_home_scan_document">Scan Document</string>
     <string name="scr_home_scan_document_subtitle">Auto-crop, enhance &amp; export PDF</string>
@@ -86,7 +92,10 @@
     <string name="scr_transcribe_transcribing_body">Long recordings take a few minutes. You can leave this screen — the transcript is saved here when it\'s done.</string>
     <string name="scr_transcribe_paused">Paused</string>
     <string name="scr_transcribe_recording">Recording</string>
-    <string name="scr_transcribe_up_to_minutes">Up to %1$d minutes on your plan</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">Up to %1$d minute on your plan</item>
+        <item quantity="other">Up to %1$d minutes on your plan</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Discard recording</string>
     <string name="scr_transcribe_stop_and_keep">Stop and keep</string>
     <string name="scr_transcribe_reading_file">Reading file…</string>
@@ -98,9 +107,13 @@
     <string name="scr_transcribe_key_terms">Key terms</string>
     <string name="scr_transcribe_key_terms_empty">Names and words to spell right</string>
     <string name="scr_transcribe_key_terms_count">%1$d of %2$d</string>
-    <string name="scr_transcribe_plan_note">1 credit ≈ %1$d minutes of audio · up to %2$d minutes per recording on your plan.</string>
+    <!-- Two independent minute counts (per credit, per recording); one plural can follow only one of them. -->
+    <string name="scr_transcribe_plan_note" tools:ignore="PluralsCandidate">1 credit ≈ %1$d minutes of audio · up to %2$d minutes per recording on your plan.</string>
     <string name="scr_transcribe_custom_endpoint_note">Audio to Text always runs on Scanly AI and uses your credits, even with your own endpoint on.</string>
-    <string name="scr_transcribe_speakers">%1$d speakers</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">%1$d speaker</item>
+        <item quantity="other">%1$d speakers</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Pick the main language spoken. Other languages in the recording are still transcribed as spoken; this one decides how numbers and dates are written.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Finds the language itself, but runs twice, so it costs twice the credits.</string>
     <string name="scr_transcribe_key_terms_hint">Names, product words and jargon the transcriber should spell exactly. Used for every recording until you remove them. Paste several separated by commas.</string>
@@ -162,14 +175,20 @@
     <string name="au_err_unreadable">This file couldn\'t be opened as audio or video.</string>
     <string name="au_err_access_lost">Scanly no longer has access to this file. Pick it again.</string>
     <string name="au_err_no_audio">This file has no audio to transcribe.</string>
-    <string name="au_err_too_long">This recording is %1$s long. Your plan transcribes up to %2$d minutes at a time.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">This recording is %1$s long. Your plan transcribes up to %2$d minute at a time.</item>
+        <item quantity="other">This recording is %1$s long. Your plan transcribes up to %2$d minutes at a time.</item>
+    </plurals>
     <string name="au_err_convert">This file\'s audio couldn\'t be converted. Try another file.</string>
     <string name="au_err_too_large">This recording is too large for your plan even after compressing it.</string>
     <string name="au_err_read">This file couldn\'t be read.</string>
     <string name="auth_val_email_required">Enter your email address first.</string>
     <string name="auth_reset_sent">If %1$s has a password, a reset link is on its way. Google accounts have none — use Continue with Google.</string>
     <string name="auth_val_invalid_email">Enter a valid email address.</string>
-    <string name="auth_val_password_short">Password must be at least %1$d characters.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Password must be at least %1$d character.</item>
+        <item quantity="other">Password must be at least %1$d characters.</item>
+    </plurals>
     <string name="auth_val_check_details">Check your details and try again.</string>
     <string name="au_notif_channel_name">Recording</string>
     <string name="au_notif_channel_desc">Shown while Audio to Text is recording</string>
@@ -177,8 +196,14 @@
     <string name="au_notif_text">Scanly is recording for Audio to Text. Tap to return.</string>
     <string name="tx_save_failed">Your transcript is ready but couldn\'t be saved on this device (%1$s). Free some space and tap Save again — you will not be charged again.</string>
     <string name="tx_prepare_failed">This recording couldn\'t be prepared.</string>
-    <string name="tx_key_terms_limit">Up to %1$d key terms. %2$d weren\'t added.</string>
-    <string name="tx_key_terms_length">Key terms can be up to %1$d characters.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">Up to %1$d key term. %2$d weren\'t added.</item>
+        <item quantity="other">Up to %1$d key terms. %2$d weren\'t added.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Key terms can be up to %1$d character.</item>
+        <item quantity="other">Key terms can be up to %1$d characters.</item>
+    </plurals>
     <string name="cp_connected">Connected. This endpoint is ready to save.</string>
     <string name="cp_saved">Saved. Scans will use this endpoint.</string>
     <string name="cp_removed">Endpoint removed.</string>
@@ -224,8 +249,14 @@
     <string name="net_verify_session">Could not verify your session.</string>
     <string name="net_session_expired">Your session expired. Sign in again.</string>
     <string name="lk_no_engines">No compatible engines</string>
-    <string name="lk_searched">Searched %1$d sources</string>
-    <string name="lk_searched_partial">Searched %1$d sources. Couldn\'t reach %2$s</string>
+    <plurals name="lk_searched">
+        <item quantity="one">Searched %1$d source</item>
+        <item quantity="other">Searched %1$d sources</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">Searched %1$d source. Couldn\'t reach %2$s</item>
+        <item quantity="other">Searched %1$d sources. Couldn\'t reach %2$s</item>
+    </plurals>
     <string name="lk_unreachable">Couldn\'t reach the product databases. Your connection looks fine — try again in a few minutes.</string>
     <string name="lk_server_problem">Couldn\'t reach the product databases: their servers are having problems. Try again later.</string>
     <string name="ocr_err_load_image">Failed to load image</string>

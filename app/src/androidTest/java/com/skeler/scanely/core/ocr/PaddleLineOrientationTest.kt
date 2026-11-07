@@ -7,6 +7,7 @@ import android.graphics.Paint
 import androidx.core.graphics.createBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.skeler.scanely.core.ocr.paddle.BitmapRotation
 import com.skeler.scanely.core.ocr.paddle.ImageOps
 import com.skeler.scanely.core.ocr.paddle.PaddleModelStore
 import com.skeler.scanely.core.ocr.paddle.PaddleOcrEngine
@@ -65,7 +66,7 @@ class PaddleLineOrientationTest {
 
     @Test
     fun rotatedArabicLinesAreFlagged() {
-        val lines = crops(page()).map { ImageOps.rotate180(it).also { _ -> it.recycle() } }
+        val lines = crops(page()).map { BitmapRotation.rotate180(it).also { _ -> it.recycle() } }
         val flags = engine.detectFlippedLines(lines)
 
         assertTrue("upside-down lines not detected: ${flags.toList()}", flags.all { it })
@@ -78,7 +79,7 @@ class PaddleLineOrientationTest {
         val bmp = page()
         val lines = crops(bmp)
         val flags = engine.detectFlippedLines(lines)
-        val oriented = lines.mapIndexed { i, c -> if (flags[i]) ImageOps.rotate180(c) else c }
+        val oriented = lines.mapIndexed { i, c -> if (flags[i]) BitmapRotation.rotate180(c) else c }
         val rec = engine.recognize(oriented, ScriptPack.ARABIC)
 
         assertTrue(

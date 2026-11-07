@@ -8,7 +8,14 @@
     <string name="set_sign_in_subtitle">مطلوب للمسح الذكي</string>
     <string name="set_signed_in">مسجّل</string>
     <string name="set_pro_key_title">مفتاح Scanly Pro</string>
-    <string name="set_pro_key_active_devices">نشط · %1$d من أصل %2$d أجهزة</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="zero">نشط · %1$d من أصل %2$d جهاز</item>
+        <item quantity="one">نشط · %1$d من أصل %2$d جهاز</item>
+        <item quantity="two">نشط · %1$d من أصل %2$d جهازين</item>
+        <item quantity="few">نشط · %1$d من أصل %2$d أجهزة</item>
+        <item quantity="many">نشط · %1$d من أصل %2$d جهازًا</item>
+        <item quantity="other">نشط · %1$d من أصل %2$d جهاز</item>
+    </plurals>
     <string name="set_pro_key_active_here">نشط على هذا الجهاز</string>
     <string name="set_delete_account_title">حذف الحساب</string>
     <string name="set_delete_account_subtitle">محو حسابك وبياناتك نهائيًا</string>
@@ -35,7 +42,7 @@
     <string name="set_remove_key_message">سيعود هذا الجهاز إلى الخطة المجانية وتُحرَّر مساحته، لتتمكن من استخدام المفتاح على جهاز آخر. ويبقى المفتاح نفسه صالحًا.</string>
     <string name="set_remove_key_confirm">إزالة</string>
     <string name="set_delete_account_dialog_title">حذف الحساب؟</string>
-    <string name="set_delete_account_dialog_message">سيؤدي هذا إلى محو حسابك في Scanly وبيانات تسجيل الدخول وسجلات الاستخدام على خوادمنا نهائيًا. ولا يمكن التراجع عن ذلك.\n\nالمسوحات المحفوظة على هذا الجهاز لن تتأثر، ويجب إلغاء اشتراك Pro النشط بشكل منفصل من خلال Paddle.</string>
+    <string name="set_delete_account_dialog_message">سيؤدي هذا إلى محو حسابك في Scanly وبيانات تسجيل الدخول وسجلات الاستخدام على خوادمنا نهائيًا. ولا يمكن التراجع عن ذلك. لن تتمكن من إنشاء حساب جديد بهذا البريد الإلكتروني لمدة 30 يومًا.\n\nالمسوحات المحفوظة على هذا الجهاز لن تتأثر، ويجب إلغاء اشتراك Pro النشط بشكل منفصل من خلال Paddle.</string>
     <string name="set_sign_out_dialog_title">تسجيل خروج؟</string>
     <string name="set_sign_out_dialog_message">ستتوقف عمليات المسح بالذكاء الاصطناعي حتى تسجّل الدخول مرة أخرى. يبقى سجلّ مسحك والتعرف على النص دون اتصال على هذا الجهاز.</string>
     <string name="set_sign_out">خروج</string>
@@ -91,7 +98,14 @@
     <string name="set_pro_required_message">ربط مزوّد الذكاء الاصطناعي الخاص بك جزء من Scanly Pro. تُظهر الحقول أدناه ما ستقوم بإعداده بالضبط، وتُفتح بمجرد أن تكون على Pro. رقِّ اشتراكك، أو استرد مفتاحًا تملكه بالفعل، من قسم الحساب في الإعدادات.</string>
     <string name="set_custom_intro_body">اربط أي مزوّد للذكاء الاصطناعي. اختر البروتوكول الذي يستخدمه، والصق رابط نقطة الاتصال واسم النموذج ومفتاح API، ثم اختبر الاتصال.</string>
     <string name="set_custom_intro_hosts">معظم المضيفين متوافقون مع OpenAI: Groq وOpenAI وOpenRouter وNVIDIA NIM وTogether وFireworks. ولكل من Claude وGemini بروتوكولاتهما الخاصة، ويعمل الخادم المستضاف ذاتيًا على شبكتك عبر http العادي.</string>
-    <string name="set_custom_intro_pdf_pages">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="zero">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+        <item quantity="one">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+        <item quantity="two">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحتين في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+        <item quantity="few">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحات في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+        <item quantity="many">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+        <item quantity="other">تُرسل ملفات PDF الممسوحة ضوئيًا حتى %1$d صفحة في المرة الواحدة، لأنها تُنقل كصور في طلب واحد. أما مستندات Office فما زالت تحتاج إلى Scanly AI.</item>
+    </plurals>
     <string name="set_section_protocol">البروتوكول</string>
     <string name="set_section_endpoint">نقطة الاتصال</string>
     <string name="set_endpoint_url_label">رابط نقطة الاتصال</string>

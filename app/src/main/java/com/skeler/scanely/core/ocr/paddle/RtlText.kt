@@ -29,23 +29,6 @@ object RtlText {
             d == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC
     }
 
-    private fun isLtrStrong(c: Char): Boolean =
-        Character.getDirectionality(c) == Character.DIRECTIONALITY_LEFT_TO_RIGHT || c.isDigit()
-
-    // A space joins too, so a multi-word Latin phrase inside an RTL line stays one run: without
-    // it "Version 2.5" is reversed as two runs and comes back out as "2.5 Version". A joiner only
-    // extends a run when another LTR character follows, so Arabic after a space is unaffected.
-    //
-    // Taken from the Unicode bidi class rather than an ASCII set: an Arabic page writes its numbers
-    // with the Arabic comma and decimal separator, and treating those as line text split
-    // "١١٩،٩٢" into two runs that came back out swapped, as "٩٢،١١٩".
-    private fun isRunJoiner(c: Char): Boolean = when (Character.getDirectionality(c)) {
-        Character.DIRECTIONALITY_COMMON_NUMBER_SEPARATOR,
-        Character.DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR,
-        Character.DIRECTIONALITY_ARABIC_NUMBER -> true
-        else -> c == ' '
-    }
-
     /**
      * Whether a line reads right-to-left. Digits are deliberately not counted: they are
      * direction-neutral, so a numeric table cell must never drag a line into RTL order.
@@ -125,32 +108,13 @@ object RtlText {
         // single joiner between two LTR chars extend the run (3.14, A-4471).
         var i = 0
         while (i < out.size) {
-            if (!isLtrStrong(out[i])) {
+            if (isLtrStrong(out[i])) {
+                val end = ltrRunEnd(out, i)
+                out.reverse(i, end + 1)
+                i = end + 1
+            } else {
                 i++
-                continue
             }
-            var end = i
-            var j = i + 1
-            while (j < out.size) {
-                if (isLtrStrong(out[j])) {
-                    end = j
-                    j++
-                } else if (isRunJoiner(out[j]) && j + 1 < out.size && isLtrStrong(out[j + 1])) {
-                    j++
-                } else {
-                    break
-                }
-            }
-            var lo = i
-            var hi = end
-            while (lo < hi) {
-                val t = out[lo]
-                out[lo] = out[hi]
-                out[hi] = t
-                lo++
-                hi--
-            }
-            i = end + 1
         }
         return String(out)
     }
@@ -164,3 +128,37 @@ private val STRAY_HAMZA_ALEF = Regex("إ(?![\\u0621-\\u065F\\u0670-\\u06D3])")
 /** Turns a misread "!" (read as a word-final "إ", which Arabic never writes) back into "!". */
 internal fun restoreExclamation(s: String): String =
     if ('إ' in s) s.replace(STRAY_HAMZA_ALEF, "!") else s
+
+private fun isLtrStrong(c: Char): Boolean =
+    Character.getDirectionality(c) == Character.DIRECTIONALITY_LEFT_TO_RIGHT || c.isDigit()
+
+// A space joins too, so a multi-word Latin phrase inside an RTL line stays one run: without
+// it "Version 2.5" is reversed as two runs and comes back out as "2.5 Version". A joiner only
+// extends a run when another LTR character follows, so Arabic after a space is unaffected.
+//
+// Taken from the Unicode bidi class rather than an ASCII set: an Arabic page writes its numbers
+// with the Arabic comma and decimal separator, and treating those as line text split
+// "١١٩،٩٢" into two runs that came back out swapped, as "٩٢،١١٩".
+private fun isRunJoiner(c: Char): Boolean = when (Character.getDirectionality(c)) {
+    Character.DIRECTIONALITY_COMMON_NUMBER_SEPARATOR,
+    Character.DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR,
+    Character.DIRECTIONALITY_ARABIC_NUMBER -> true
+    else -> c == ' '
+}
+
+/** The last index of the LTR run starting at [start]; a lone joiner between LTR chars extends it. */
+private fun ltrRunEnd(chars: CharArray, start: Int): Int {
+    var end = start
+    var j = start + 1
+    while (j < chars.size) {
+        when {
+            isLtrStrong(chars[j]) -> {
+                end = j
+                j++
+            }
+            isRunJoiner(chars[j]) && j + 1 < chars.size && isLtrStrong(chars[j + 1]) -> j++
+            else -> return end
+        }
+    }
+    return end
+}

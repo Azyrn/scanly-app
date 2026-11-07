@@ -5,35 +5,27 @@
     <string name="pdf_tool_word_to_pdf_action">转换为 PDF</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">已省略 %d 个图表。</item>
         <item quantity="other">已省略 %d 个图表。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
-        <item quantity="one">已省略 %d 个 SmartArt 图形。</item>
         <item quantity="other">已省略 %d 个 SmartArt 图形。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">已省略 %d 个文本框或形状。</item>
         <item quantity="other">已省略 %d 个文本框或形状。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
-        <item quantity="one">已省略 %d 个公式。</item>
         <item quantity="other">已省略 %d 个公式。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_objects">
-        <item quantity="one">已省略 %d 个嵌入对象。</item>
         <item quantity="other">已省略 %d 个嵌入对象。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
-        <item quantity="one">%d 张图片的格式无法显示，已被省略。</item>
         <item quantity="other">%d 张图片的格式无法显示，已被省略。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
-        <item quantity="one">%d 个表格行高于一页，已被截断。</item>
         <item quantity="other">%d 个表格行高于一页，已被截断。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
-        <item quantity="one">仅转换了前 %d 页。</item>
         <item quantity="other">仅转换了前 %d 页。</item>
     </plurals>
     <string name="pdf_tool_word_to_pdf_note_fonts">部分字体已替换为相近的字体。</string>

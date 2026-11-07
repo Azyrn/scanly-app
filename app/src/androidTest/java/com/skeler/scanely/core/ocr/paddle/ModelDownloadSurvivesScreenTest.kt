@@ -27,26 +27,26 @@ class ModelDownloadSurvivesScreenTest {
     private val store = PaddleModelStore(context, OkHttpClient())
 
     @After
-    fun tearDown() = store.deleteTable()
+    fun tearDown() = store.table.delete()
 
     @Test
     fun tableDownloadFinishesAfterTheScreenIsClosed() = runBlocking {
-        store.deleteTable()
+        store.table.delete()
 
         // Stands in for viewModelScope: alive while the screen is, gone when it isn't.
         val screenScope = CoroutineScope(SupervisorJob())
-        screenScope.launch { store.downloadTableAsync() }
+        screenScope.launch { store.table.downloadAsync() }
 
         withTimeout(30_000) {
-            while (store.tableState.value !is PackState.Downloading) delay(50)
+            while (store.table.state.value !is PackState.Downloading) delay(50)
         }
         screenScope.cancel()
 
         val settled = withTimeout(180_000) {
-            store.tableState.first { it is PackState.Installed || it is PackState.Failed }
+            store.table.state.first { it is PackState.Installed || it is PackState.Failed }
         }
 
         assertTrue("Download ended as $settled", settled is PackState.Installed)
-        assertTrue("Model is not on disk", store.hasTable())
+        assertTrue("Model is not on disk", store.table.isInstalled())
     }
 }

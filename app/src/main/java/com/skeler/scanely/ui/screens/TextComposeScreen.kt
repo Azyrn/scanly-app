@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
@@ -153,7 +154,11 @@ fun TextComposeScreen() {
             }
 
             Text(
-                text = stringResource(R.string.cmp_word_char_counts, counts.first, counts.second),
+                text = stringResource(
+                    R.string.cmp_word_char_counts,
+                    pluralStringResource(R.plurals.cmp_word_count, counts.first, counts.first),
+                    pluralStringResource(R.plurals.cmp_char_count, counts.second, counts.second)
+                ),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp)

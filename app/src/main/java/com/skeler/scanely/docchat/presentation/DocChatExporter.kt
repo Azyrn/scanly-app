@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.skeler.scanely.R
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.docchat.data.AgentClient
 import com.skeler.scanely.docchat.data.ChatFileRestorer
@@ -29,7 +30,7 @@ class DocChatExporter @Inject internal constructor(
 ) {
     suspend fun open(context: Context, messageId: String, body: FileBody): DocChatEvent? {
         val file = restorer.ensure(messageId, body) ?: return missing(body)
-        val opened = ScanExporter.openDocument(
+        val opened = DocumentIntents.openDocument(
             context,
             files.shareUri(file),
             body.format.mimeType,
@@ -45,7 +46,7 @@ class DocChatExporter @Inject internal constructor(
     suspend fun share(context: Context, messageId: String, body: FileBody): DocChatEvent? {
         restorer.ensure(messageId, body) ?: return missing(body)
         val saved = saveToDownloads(context, body) ?: return DocChatEvent.Message(R.string.chat_save_failed)
-        return if (ScanExporter.shareDocument(context, saved, body.format.mimeType)) {
+        return if (DocumentIntents.shareDocument(context, saved, body.format.mimeType)) {
             null
         } else {
             DocChatEvent.Message(R.string.chat_share_failed)

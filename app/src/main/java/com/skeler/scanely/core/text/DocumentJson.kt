@@ -32,6 +32,17 @@ object DocumentJson {
     private fun element(index: Int, block: MdBlock): JSONObject {
         val json = JSONObject().put("index", index)
         when (block) {
+            is MdBlock.Heading, is MdBlock.Paragraph, is MdBlock.Quote, is MdBlock.Code, MdBlock.Divider ->
+                putProse(json, block)
+            is MdBlock.Bullet, is MdBlock.Numbered -> putListItem(json, block)
+            is MdBlock.Table, is MdBlock.Equation, is MdBlock.Image -> putStructured(json, block)
+        }
+        return json
+    }
+
+    /** Headings, paragraphs, quotes, code and dividers. */
+    private fun putProse(json: JSONObject, block: MdBlock) {
+        when (block) {
             is MdBlock.Heading ->
                 json
                     .put("type", "heading")
@@ -43,6 +54,25 @@ object DocumentJson {
                     .put("type", "paragraph")
                     .put("text", MarkdownParser.plain(block.lines.joinToString("\n")))
 
+            is MdBlock.Quote ->
+                json
+                    .put("type", "quote")
+                    .put("text", MarkdownParser.plain(block.lines.joinToString("\n")))
+
+            is MdBlock.Code ->
+                json
+                    .put("type", "code")
+                    .put("text", block.text)
+
+            MdBlock.Divider -> json.put("type", "divider")
+
+            else -> Unit
+        }
+    }
+
+    /** Bullets, checkboxes and numbered items. */
+    private fun putListItem(json: JSONObject, block: MdBlock) {
+        when (block) {
             is MdBlock.Bullet -> {
                 json.put("type", if (block.checked != null) "checkbox" else "list_item")
                     .put("text", MarkdownParser.plain(block.text))
@@ -57,16 +87,13 @@ object DocumentJson {
                     .put("text", MarkdownParser.plain(block.text))
                     .put("indent", block.indent)
 
-            is MdBlock.Quote ->
-                json
-                    .put("type", "quote")
-                    .put("text", MarkdownParser.plain(block.lines.joinToString("\n")))
+            else -> Unit
+        }
+    }
 
-            is MdBlock.Code ->
-                json
-                    .put("type", "code")
-                    .put("text", block.text)
-
+    /** Tables, equations and images. */
+    private fun putStructured(json: JSONObject, block: MdBlock) {
+        when (block) {
             is MdBlock.Table ->
                 json
                     .put("type", "table")
@@ -89,9 +116,8 @@ object DocumentJson {
                     .put("alt", block.alt)
                     .put("source", block.url)
 
-            MdBlock.Divider -> json.put("type", "divider")
+            else -> Unit
         }
-        return json
     }
 
     private val WHITESPACE = Regex("\\s+")

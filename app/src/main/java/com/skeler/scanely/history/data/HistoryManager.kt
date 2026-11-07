@@ -13,6 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "HistoryManager"
+private const val MAX_HISTORY_ITEMS = 50
 
 data class HistoryItem(
     val id: String = UUID.randomUUID().toString(),
@@ -70,11 +71,11 @@ class HistoryManager @Inject constructor(
         val item = HistoryItem(text = text, imageUri = persistentUri)
         val currentList = getHistory().toMutableList()
         currentList.add(0, item)
-        if (currentList.size > 50) {
-            val removed = currentList.drop(50)
+        if (currentList.size > MAX_HISTORY_ITEMS) {
+            val removed = currentList.drop(MAX_HISTORY_ITEMS)
             removed.forEach { old -> deleteImage(old.imageUri) }
         }
-        val trimmedList = currentList.take(50)
+        val trimmedList = currentList.take(MAX_HISTORY_ITEMS)
         saveHistory(trimmedList)
         return item
     }

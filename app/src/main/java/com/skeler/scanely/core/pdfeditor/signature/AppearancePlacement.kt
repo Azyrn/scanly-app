@@ -40,28 +40,28 @@ internal object AppearancePlacement {
         displayedHeightPt: Float,
         pageRotationDegrees: Int
     ): PlacedAppearance = when (normalise(pageRotationDegrees)) {
-        90 -> PlacedAppearance(
+        QUARTER_TURN -> PlacedAppearance(
             xPt = boxTopPt,
             yFromTopPt = displayedWidthPt - boxLeftPt - boxWidthPt,
             widthPt = boxHeightPt,
             heightPt = boxWidthPt,
-            bitmapRotationDegrees = 270
+            bitmapRotationDegrees = THREE_QUARTER_TURN
         )
 
-        180 -> PlacedAppearance(
+        HALF_TURN -> PlacedAppearance(
             xPt = displayedWidthPt - boxLeftPt - boxWidthPt,
             yFromTopPt = displayedHeightPt - boxTopPt - boxHeightPt,
             widthPt = boxWidthPt,
             heightPt = boxHeightPt,
-            bitmapRotationDegrees = 180
+            bitmapRotationDegrees = HALF_TURN
         )
 
-        270 -> PlacedAppearance(
+        THREE_QUARTER_TURN -> PlacedAppearance(
             xPt = displayedHeightPt - boxTopPt - boxHeightPt,
             yFromTopPt = boxLeftPt,
             widthPt = boxHeightPt,
             heightPt = boxWidthPt,
-            bitmapRotationDegrees = 90
+            bitmapRotationDegrees = QUARTER_TURN
         )
 
         else -> PlacedAppearance(
@@ -74,5 +74,10 @@ internal object AppearancePlacement {
     }
 
     /** /Rotate is a multiple of 90 but may be negative or past a full turn. */
-    private fun normalise(degrees: Int): Int = ((degrees % 360) + 360) % 360
+    private fun normalise(degrees: Int): Int = ((degrees % FULL_TURN) + FULL_TURN) % FULL_TURN
 }
+
+private const val QUARTER_TURN = 90
+private const val HALF_TURN = 180
+private const val THREE_QUARTER_TURN = 270
+private const val FULL_TURN = 360

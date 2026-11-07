@@ -8,7 +8,11 @@
     <string name="set_sign_in_subtitle">Necessário para IA</string>
     <string name="set_signed_in">Conectado</string>
     <string name="set_pro_key_title">Chave Pro</string>
-    <string name="set_pro_key_active_devices">Ativa · %1$d/%2$d dispositivos</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="one">Ativa · %1$d/%2$d dispositivo</item>
+        <item quantity="many">Ativa · %1$d/%2$d dispositivos</item>
+        <item quantity="other">Ativa · %1$d/%2$d dispositivos</item>
+    </plurals>
     <string name="set_pro_key_active_here">Ativa neste dispositivo</string>
     <string name="set_delete_account_title">Excluir conta</string>
     <string name="set_delete_account_subtitle">Apaga permanentemente conta e dados</string>
@@ -35,7 +39,7 @@
     <string name="set_remove_key_message">Este aparelho volta ao plano gratuito e libera a vaga para outro dispositivo. A chave continua funcionando.</string>
     <string name="set_remove_key_confirm">Remover</string>
     <string name="set_delete_account_dialog_title">Excluir conta?</string>
-    <string name="set_delete_account_dialog_message">Isso apaga sua conta Scanly, seus dados de acesso e seus registros de uso em nossos servidores. Não é possível desfazer.\n\nOs escaneamentos salvos neste dispositivo não são afetados. Uma assinatura Pro ativa precisa ser cancelada à parte, na Paddle.</string>
+    <string name="set_delete_account_dialog_message">Isso apaga sua conta Scanly, seus dados de acesso e seus registros de uso em nossos servidores. Não é possível desfazer. Você não poderá criar uma nova conta com este e-mail por 30 dias.\n\nOs escaneamentos salvos neste dispositivo não são afetados. Uma assinatura Pro ativa precisa ser cancelada à parte, na Paddle.</string>
     <string name="set_sign_out_dialog_title">Sair?</string>
     <string name="set_sign_out_dialog_message">Escaneamentos com IA param até você entrar de novo. Histórico e leitura offline ficam neste aparelho.</string>
     <string name="set_sign_out">Sair</string>
@@ -91,7 +95,11 @@
     <string name="set_pro_required_message">Conectar seu próprio provedor de IA faz parte do Scanly Pro. Os campos abaixo mostram o que você configuraria; liberam-se com o Pro. Assine o Pro ou resgate uma chave na seção Conta das Configurações.</string>
     <string name="set_custom_intro_body">Conecte qualquer provedor de IA. Escolha o protocolo, cole a URL do endpoint, o nome do modelo e sua chave de API, e teste a conexão.</string>
     <string name="set_custom_intro_hosts">A maioria dos hosts é compatível com OpenAI: Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude e Gemini têm protocolos próprios, e um servidor seu na rede funciona com http simples.</string>
-    <string name="set_custom_intro_pdf_pages">PDFs escaneados: até %1$d páginas por vez, como imagens. Documentos do Office precisam do Scanly AI.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="one">PDFs escaneados: até %1$d página por vez, como imagens. Documentos do Office precisam do Scanly AI.</item>
+        <item quantity="many">PDFs escaneados: até %1$d páginas por vez, como imagens. Documentos do Office precisam do Scanly AI.</item>
+        <item quantity="other">PDFs escaneados: até %1$d páginas por vez, como imagens. Documentos do Office precisam do Scanly AI.</item>
+    </plurals>
     <string name="set_section_protocol">Protocolo</string>
     <string name="set_section_endpoint">Endpoint</string>
     <string name="set_endpoint_url_label">URL</string>

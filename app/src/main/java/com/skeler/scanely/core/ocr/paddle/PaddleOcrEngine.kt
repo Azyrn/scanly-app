@@ -1,20 +1,15 @@
 package com.skeler.scanely.core.ocr.paddle
 
 import ai.onnxruntime.OnnxTensor
-import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
-import android.content.ComponentCallbacks2
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import androidx.annotation.VisibleForTesting
 import androidx.core.graphics.scale
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.nio.FloatBuffer
-import java.util.concurrent.locks.ReentrantReadWriteLock
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.concurrent.read
 import kotlin.math.abs
 import kotlin.math.exp
 
@@ -46,73 +41,20 @@ class PaddleOcrEngine @Inject constructor(
     private val store: PaddleModelStore
 ) {
 
-    private val env: OrtEnvironment get() = OrtEnvironment.getEnvironment()
-
-    // XNNPACK and NNAPI both abort natively on these graphs; plain CPU is the safe EP.
-    // Above 4 threads the little cores drag the batch out (~2x slower on big.LITTLE).
-    private val threads = Runtime.getRuntime().availableProcessors().coerceIn(1, 4)
-
-    // The CPU arena keeps the largest buffers any crop or page shape ever needed and never gives
-    // them back (scan_ar_wiki peaked at 1.25 GB); shrinking it after each run keeps its speed
-    // within a run without the growth. Lives as long as the engine, like the environment.
-    private val runOptions = OrtSession.RunOptions().apply {
-        addRunConfigEntry("memory.enable_memory_arena_shrinkage", "cpu:0")
-    }
-
-    // Closed as soon as the session is built: ORT copies the options into the session, and a
-    // SessionOptions left open holds its native handle for the life of the process.
-    private fun createSession(model: ByteArray): OrtSession =
-        OrtSession.SessionOptions().use { options ->
-            options.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT)
-            options.setIntraOpNumThreads(threads)
-            // Memory patterns assume fixed shapes; every crop and page has its own.
-            options.setMemoryPatternOptimization(false)
-            env.createSession(model, options)
-        }
-
-    private val sessions = HashMap<String, OrtSession>()
-
-    // Inference holds the read lock; close() needs the write lock, so it can never
-    // free a session while native code is running on it. If close() arrives mid-run
-    // it defers, and the last finishing inference performs it.
-    private val sessionLock = ReentrantReadWriteLock()
-
-    @Volatile
-    private var closePending = false
-
-    private val recCharsets = HashMap<ScriptPack, List<String>>()
+    private val sessions = OrtSessionPool(context, store)
 
     private val dbPostProcessor = DbPostProcessor()
 
-    /**
-     * Registered only while sessions are open, so memory pressure reaches the one component that
-     * holds native memory without the Application having to build the OCR graph to ask.
-     */
-    private val trimCallback = object : ComponentCallbacks2 {
-        override fun onTrimMemory(level: Int) {
-            if (level >= ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) close()
-        }
-
-        override fun onConfigurationChanged(newConfig: Configuration) = Unit
-
-        @Deprecated("Required by ComponentCallbacks; onTrimMemory covers the same signal.")
-        override fun onLowMemory() = close()
-    }
-
-    private var trimCallbackRegistered = false
-
-    private val detector get() = session("ocr/det_v6_small.onnx")
-    private val textLineCls get() = session("ocr/cls_textline.onnx")
-    private val docOriCls get() = session("ocr/cls_docori.onnx")
-    private val layoutDet get() = session("ocr/layout_s.onnx")
+    private val detector get() = sessions.asset("ocr/det_v6_small.onnx")
+    private val textLineCls get() = sessions.asset("ocr/cls_textline.onnx")
+    private val docOriCls get() = sessions.asset("ocr/cls_docori.onnx")
+    private val layoutDet get() = sessions.asset("ocr/layout_s.onnx")
 
     /** Downloaded, not bundled. */
-    private val unwarper: OrtSession
-        @Synchronized get() = openSession("uvdoc") { createSession(store.uvdocModel()) }
+    private val unwarper: OrtSession get() = sessions.downloaded("uvdoc") { store.uvdoc.bytes() }
 
     /** Downloaded, not bundled. */
-    private val tableRec: OrtSession
-        @Synchronized get() = openSession("table") { createSession(store.tableModel()) }
+    private val tableRec: OrtSession get() = sessions.downloaded("table") { store.table.bytes() }
 
     private val tableVocab: List<String> by lazy {
         TableDecoder.vocabulary(
@@ -123,57 +65,22 @@ class PaddleOcrEngine @Inject constructor(
         )
     }
 
-    fun canUnwarp(): Boolean = store.hasUvdoc()
+    fun canUnwarp(): Boolean = store.uvdoc.isInstalled()
 
-    fun canRecognizeTables(): Boolean = store.hasTable()
-
-    @Synchronized
-    private fun session(asset: String): OrtSession =
-        openSession(asset) { createSession(store.asset(asset)) }
-
-    private fun openSession(key: String, create: () -> OrtSession): OrtSession {
-        val session = sessions.getOrPut(key, create)
-        if (!trimCallbackRegistered) {
-            context.registerComponentCallbacks(trimCallback)
-            trimCallbackRegistered = true
-        }
-        return session
-    }
-
-    // One session per pack, kept until close(). Closing the old session on a pack switch
-    // would free native memory another thread may still be running inference on: the
-    // read lock is shared, so it does not order concurrent recognize() calls.
-    @Synchronized
-    private fun recognizer(pack: ScriptPack): Pair<OrtSession, List<String>> {
-        val effective = if (pack.isBundled || store.isInstalled(pack)) pack else ScriptPack.DEFAULT
-        val session = openSession("rec/${effective.id}") {
-            val (bytes, charset) = store.recModel(effective)
-            recCharsets[effective] = charset
-            createSession(bytes)
-        }
-        return session to recCharsets.getValue(effective)
-    }
-
-    private inline fun <T> withSessions(block: () -> T): T {
-        try {
-            return sessionLock.read(block)
-        } finally {
-            if (closePending) close()
-        }
-    }
+    fun canRecognizeTables(): Boolean = store.table.isInstalled()
 
     /** DBNet text detection. Returns quads in [src] pixel coordinates. */
     fun detect(src: Bitmap, limitSide: Int): List<Quad> = detectPage(src, limitSide).quads
 
     /** [detect], plus how curled the page's lines are ([Detection.curledShare]). */
-    fun detectPage(src: Bitmap, limitSide: Int): Detection = withSessions {
+    fun detectPage(src: Bitmap, limitSide: Int): Detection = sessions.withSessions {
         val (resized, scaleX, scaleY) = ImageOps.detResize(src, limitSide)
         val tensor = ImageOps.imagenetTensor(resized)
         val w = resized.width
         val h = resized.height
         if (resized !== src) resized.recycle()
 
-        val prob = run(detector, tensor, longArrayOf(1, 3, h.toLong(), w.toLong())) { buf, shape ->
+        val prob = sessions.run(detector, tensor, longArrayOf(1, 3, h.toLong(), w.toLong())) { buf, shape ->
             val oh = shape[2].toInt()
             val ow = shape[3].toInt()
             Triple(FloatArray(oh * ow).also { buf.get(it) }, ow, oh)
@@ -182,7 +89,7 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     /** CTC recognition, batched by similar width. Returns text + mean per-character confidence. */
-    fun recognize(crops: List<Bitmap>, pack: ScriptPack): List<RecLine> = withSessions {
+    fun recognize(crops: List<Bitmap>, pack: ScriptPack): List<RecLine> = sessions.withSessions {
         decode(crops, pack).map { it.toLogical() }
     }
 
@@ -192,7 +99,7 @@ class PaddleOcrEngine @Inject constructor(
      * position ([ScriptMerge]), so an Arabic line keeps its Arabic *and* its "Original"/"GPT-5".
      * Costs one extra recognition pass over the crops that need it.
      */
-    fun recognizeWithLatin(crops: List<Bitmap>, pack: ScriptPack): List<RecLine> = withSessions {
+    fun recognizeWithLatin(crops: List<Bitmap>, pack: ScriptPack): List<RecLine> = sessions.withSessions {
         val primary = decode(crops, pack)
         if (pack == ScriptPack.DEFAULT) return@withSessions primary.map { it.toLogicalSpaced() }
 
@@ -208,25 +115,9 @@ class PaddleOcrEngine @Inject constructor(
         }
     }
 
-    // Keyed off the characters, not the pack: any model can emit an RTL run, and the
-    // conversion is a no-op on a string that has none.
-    private fun RecLine.toLogical() = copy(text = restoreExclamation(RtlText.visualToLogical(text)))
-
-    // The scan path also restores the word spaces the recognizer dropped, from the gaps its own
-    // character positions leave behind. Kept out of [toLogical] so the orientation probes and the
-    // plain [recognize] entry point are unaffected.
-    private fun RecLine.toLogicalSpaced() =
-        copy(text = restoreExclamation(RtlText.visualToLogical(RtlText.recoverWordSpaces(chars, text))))
-
-    /** A confident, wholly-script line has nothing for the Latin model to add. */
-    private fun mayHideLatin(line: RecLine): Boolean = line.chars.any { c ->
-        val latin = c.text.all { it.code < RTL_BLOCK_START }
-        c.text.isNotBlank() && (c.confidence < LATIN_SUSPECT_CONFIDENCE || latin)
-    }
-
     private fun decode(crops: List<Bitmap>, pack: ScriptPack): List<RecLine> {
         if (crops.isEmpty()) return emptyList()
-        val (session, charset) = recognizer(pack)
+        val (session, charset) = sessions.recognizer(pack)
 
         val order = crops.indices.sortedBy { crops[it].width.toFloat() / crops[it].height }
         val results = arrayOfNulls<RecLine>(crops.size)
@@ -247,7 +138,7 @@ class PaddleOcrEngine @Inject constructor(
             // FloatArray of batch x steps x classes, and the universal charset makes that ~70 MB
             // per batch — enough GC pressure to dominate a page, for a pass over data the decoder
             // already walks once itself.
-            val decoded = run(session, tensor, shape) { buf, outShape ->
+            val decoded = sessions.run(session, tensor, shape) { buf, outShape ->
                 val steps = outShape[1].toInt()
                 val classes = outShape[2].toInt()
                 CtcDecoder.decodeBatch(buf, batch.size, steps, classes, charset, fill)
@@ -267,7 +158,7 @@ class PaddleOcrEngine @Inject constructor(
      * rotation is near-symmetric for digits, so the answer there is close to a coin toss.
      * A whole page that is upside down is [detectPageRotation]'s job, not this one.
      */
-    fun detectFlippedLines(crops: List<Bitmap>): BooleanArray = withSessions {
+    fun detectFlippedLines(crops: List<Bitmap>): BooleanArray = sessions.withSessions {
         if (crops.isEmpty()) return@withSessions BooleanArray(0)
         val flags = BooleanArray(crops.size)
         crops.chunked(REC_BATCH).forEachIndexed { chunkIndex, chunk ->
@@ -275,7 +166,7 @@ class PaddleOcrEngine @Inject constructor(
             val tensor = concatTensors(scaled.map { ImageOps.imagenetTensor(it) })
             scaled.forEachIndexed { i, s -> if (s !== chunk[i]) s.recycle() }
 
-            val probs = run(
+            val probs = sessions.run(
                 textLineCls,
                 tensor,
                 longArrayOf(chunk.size.toLong(), 3, ORI_HEIGHT.toLong(), ORI_WIDTH.toLong())
@@ -294,11 +185,11 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     /** Page rotation in degrees (0/90/180/270). */
-    fun detectPageRotation(src: Bitmap): Int = withSessions {
+    fun detectPageRotation(src: Bitmap): Int = sessions.withSessions {
         val square = ImageOps.resizeShortCenterCrop(src, 256, 224)
         val tensor = ImageOps.imagenetTensor(square)
         square.recycle()
-        val probs = run(docOriCls, tensor, longArrayOf(1, 3, 224, 224)) { buf, _ ->
+        val probs = sessions.run(docOriCls, tensor, longArrayOf(1, 3, 224, 224)) { buf, _ ->
             FloatArray(4).also { buf.get(it) }
         }
         val best = probs.indices.maxBy { probs[it] }
@@ -306,7 +197,7 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     /** UVDoc dewarping of curved/folded pages. Output matches the input size. */
-    fun unwarp(src: Bitmap): Bitmap = withSessions {
+    fun unwarp(src: Bitmap): Bitmap = sessions.withSessions {
         val ratio = minOf(UNWARP_MAX_SIDE.toFloat() / maxOf(src.width, src.height), 1f)
         val w = (src.width * ratio).toInt().coerceAtLeast(64)
         val h = (src.height * ratio).toInt().coerceAtLeast(64)
@@ -325,7 +216,7 @@ class PaddleOcrEngine @Inject constructor(
             data[2 * plane + i] = (p and 0xFF) / 255f
         }
 
-        val out = run(
+        val out = sessions.run(
             unwarper,
             FloatBuffer.wrap(data),
             longArrayOf(1, 3, h.toLong(), w.toLong()),
@@ -348,7 +239,7 @@ class PaddleOcrEngine @Inject constructor(
     }
 
     /** PP-DocLayout-S. Returns regions in [src] pixel coordinates. */
-    fun detectLayout(src: Bitmap): List<LayoutRegion> = withSessions {
+    fun detectLayout(src: Bitmap): List<LayoutRegion> = sessions.withSessions {
         val square = src.scale(LAYOUT_SIDE, LAYOUT_SIDE)
         val image = ImageOps.imagenetTensor(square)
         // scale() returns src itself when the size already matches; never recycle the caller's page.
@@ -360,40 +251,25 @@ class PaddleOcrEngine @Inject constructor(
         )
 
         OnnxTensor.createTensor(
-            env,
+            sessions.env,
             image,
             longArrayOf(1, 3, LAYOUT_SIDE.toLong(), LAYOUT_SIDE.toLong())
         ).use { imageTensor ->
-            OnnxTensor.createTensor(env, scaleFactor, longArrayOf(1, 2)).use { scaleTensor ->
-                parseLayout(imageTensor, scaleTensor)
+            OnnxTensor.createTensor(sessions.env, scaleFactor, longArrayOf(1, 2)).use { scaleTensor ->
+                layoutDet.run(
+                    mapOf("image" to imageTensor, "scale_factor" to scaleTensor),
+                    sessions.runOptions
+                ).use { result ->
+                    val output = result[0] as OnnxTensor
+                    val rows = output.info.shape[0].toInt()
+                    layoutRegions(FloatArray(rows * 6).also { output.floatBuffer.get(it) }, rows)
+                }
             }
         }
     }
 
-    private fun parseLayout(image: OnnxTensor, scale: OnnxTensor): List<LayoutRegion> =
-        layoutDet.run(mapOf("image" to image, "scale_factor" to scale), runOptions).use { result ->
-            val output = result[0] as OnnxTensor
-            val rows = output.info.shape[0].toInt()
-            val flat = FloatArray(rows * 6).also { output.floatBuffer.get(it) }
-
-            (0 until rows).mapNotNull { i ->
-                val base = i * 6
-                val score = flat[base + 1]
-                val label = LayoutLabel.fromIndex(flat[base].toInt())
-                if (label == null || score < LAYOUT_MIN_SCORE) return@mapNotNull null
-                LayoutRegion(
-                    label = label,
-                    score = score,
-                    left = flat[base + 2],
-                    top = flat[base + 3],
-                    right = flat[base + 4],
-                    bottom = flat[base + 5]
-                )
-            }
-        }
-
     /** SLANet_plus. Cell boxes come back in [crop] pixel coordinates. */
-    fun recognizeTable(crop: Bitmap): TableStructure = withSessions {
+    fun recognizeTable(crop: Bitmap): TableStructure = sessions.withSessions {
         val longest = maxOf(crop.width, crop.height)
         val ratio = TABLE_SIDE.toFloat() / longest
         val w = (crop.width * ratio).toInt().coerceIn(1, TABLE_SIDE)
@@ -404,11 +280,11 @@ class PaddleOcrEngine @Inject constructor(
         if (resized !== crop) resized.recycle()
 
         OnnxTensor.createTensor(
-            env,
+            sessions.env,
             tensor,
             longArrayOf(1, 3, TABLE_SIDE.toLong(), TABLE_SIDE.toLong())
         ).use { input ->
-            tableRec.run(mapOf(tableRec.inputNames.first() to input), runOptions).use { result ->
+            tableRec.run(mapOf(tableRec.inputNames.first() to input), sessions.runOptions).use { result ->
                 val boxOut = result[0] as OnnxTensor
                 val structOut = result[1] as OnnxTensor
                 val steps = structOut.info.shape[1].toInt()
@@ -430,59 +306,57 @@ class PaddleOcrEngine @Inject constructor(
         }
     }
 
-    private fun <T> run(
-        session: OrtSession,
-        input: FloatBuffer,
-        shape: LongArray,
-        inputName: String? = null,
-        decode: (FloatBuffer, LongArray) -> T
-    ): T {
-        val name = inputName ?: session.inputNames.first()
-        OnnxTensor.createTensor(env, input, shape).use { tensor ->
-            session.run(mapOf(name to tensor), runOptions).use { result ->
-                val output = result[0] as OnnxTensor
-                return decode(output.floatBuffer, output.info.shape)
-            }
-        }
-    }
-
-    private fun concatTensors(buffers: List<FloatBuffer>): FloatBuffer {
-        if (buffers.size == 1) return buffers.first()
-        val total = buffers.sumOf { it.remaining() }
-        val out = FloatArray(total)
-        var offset = 0
-        for (b in buffers) {
-            val n = b.remaining()
-            b.get(out, offset, n)
-            offset += n
-        }
-        return FloatBuffer.wrap(out)
-    }
-
-    fun close() {
-        val write = sessionLock.writeLock()
-        if (!write.tryLock()) {
-            closePending = true
-            return
-        }
-        try {
-            closePending = false
-            synchronized(this) {
-                sessions.values.forEach { runCatching { it.close() } }
-                sessions.clear()
-                recCharsets.clear()
-                if (trimCallbackRegistered) {
-                    context.unregisterComponentCallbacks(trimCallback)
-                    trimCallbackRegistered = false
-                }
-            }
-        } finally {
-            write.unlock()
-        }
-    }
+    /** Closes every session now, or as soon as the inference running on them finishes. */
+    fun close() = sessions.close()
 
     @VisibleForTesting
-    fun openSessionCount(): Int = synchronized(this) { sessions.size }
+    fun openSessionCount(): Int = sessions.openSessionCount()
+}
+
+// Keyed off the characters, not the pack: any model can emit an RTL run, and the
+// conversion is a no-op on a string that has none.
+private fun RecLine.toLogical() = copy(text = restoreExclamation(RtlText.visualToLogical(text)))
+
+// The scan path also restores the word spaces the recognizer dropped, from the gaps its own
+// character positions leave behind. Kept out of [toLogical] so the orientation probes and the
+// plain [PaddleOcrEngine.recognize] entry point are unaffected.
+private fun RecLine.toLogicalSpaced() =
+    copy(text = restoreExclamation(RtlText.visualToLogical(RtlText.recoverWordSpaces(chars, text))))
+
+/** A confident, wholly-script line has nothing for the Latin model to add. */
+private fun mayHideLatin(line: RecLine): Boolean = line.chars.any { c ->
+    val latin = c.text.all { it.code < RTL_BLOCK_START }
+    c.text.isNotBlank() && (c.confidence < LATIN_SUSPECT_CONFIDENCE || latin)
+}
+
+/** PP-DocLayout-S output rows of six: label, score, left, top, right, bottom. */
+private fun layoutRegions(flat: FloatArray, rows: Int): List<LayoutRegion> =
+    (0 until rows).mapNotNull { i ->
+        val base = i * 6
+        val score = flat[base + 1]
+        val label = LayoutLabel.fromIndex(flat[base].toInt())
+        if (label == null || score < LAYOUT_MIN_SCORE) return@mapNotNull null
+        LayoutRegion(
+            label = label,
+            score = score,
+            left = flat[base + 2],
+            top = flat[base + 3],
+            right = flat[base + 4],
+            bottom = flat[base + 5]
+        )
+    }
+
+private fun concatTensors(buffers: List<FloatBuffer>): FloatBuffer {
+    if (buffers.size == 1) return buffers.first()
+    val total = buffers.sumOf { it.remaining() }
+    val out = FloatArray(total)
+    var offset = 0
+    for (b in buffers) {
+        val n = b.remaining()
+        b.get(out, offset, n)
+        offset += n
+    }
+    return FloatBuffer.wrap(out)
 }
 
 /**

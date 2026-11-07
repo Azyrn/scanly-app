@@ -38,95 +38,37 @@ object Geometry {
         val order = (0 until n).sortedWith(
             compareBy({ pts[it * 2] }, { pts[it * 2 + 1] })
         )
-        val hull = FloatArray((2 * n + 1) * 2)
-        var k = 0
+        val chain = MonotoneChain(pts, n)
 
-        fun cross(i: Int): Float {
-            val ox = hull[(k - 2) * 2]
-            val oy = hull[(k - 2) * 2 + 1]
-            val ax = hull[(k - 1) * 2]
-            val ay = hull[(k - 1) * 2 + 1]
-            return (ax - ox) * (pts[i * 2 + 1] - oy) - (ay - oy) * (pts[i * 2] - ox)
-        }
-        fun push(i: Int, floor: Int) {
-            while (k >= floor && k >= 2 && cross(i) <= 0f) k--
-            hull[k * 2] = pts[i * 2]
-            hull[k * 2 + 1] = pts[i * 2 + 1]
-            k++
-        }
+        for (i in order) chain.push(i, 2)
+        val upperFloor = chain.k + 1
+        for (idx in n - 2 downTo 0) chain.push(order[idx], upperFloor)
 
-        for (i in order) push(i, 2)
-        val upperFloor = k + 1
-        for (idx in n - 2 downTo 0) push(order[idx], upperFloor)
-
-        val size = k - 1 // closing point repeats the first
-        return if (size < 3) pts else hull.copyOf(size * 2)
+        val size = chain.k - 1 // closing point repeats the first
+        return if (size < 3) pts else chain.hull.copyOf(size * 2)
     }
 
     /** Rotating calipers minimum-area rectangle. */
     fun minAreaRect(pts: FloatArray): RotatedRect {
         val hull = convexHull(pts)
         val n = hull.size / 2
-        if (n < 3) {
-            var x0 = Float.MAX_VALUE
-            var y0 = Float.MAX_VALUE
-            var x1 = -Float.MAX_VALUE
-            var y1 = -Float.MAX_VALUE
-            for (i in 0 until n) {
-                x0 = minOf(x0, hull[i * 2])
-                x1 = maxOf(x1, hull[i * 2])
-                y0 = minOf(y0, hull[i * 2 + 1])
-                y1 = maxOf(y1, hull[i * 2 + 1])
-            }
-            return RotatedRect(
-                Quad(floatArrayOf(x0, y0, x1, y0, x1, y1, x0, y1)),
-                x1 - x0,
-                y1 - y0
-            )
-        }
+        if (n < 3) return boundingRect(hull, n)
 
-        var bestArea = Float.MAX_VALUE
-        var bux = 1f
-        var buy = 0f
-        var bp0 = 0f
-        var bp1 = 0f
-        var bq0 = 0f
-        var bq1 = 0f
-
+        val best = Caliper()
         for (i in 0 until n) {
             val j = (i + 1) % n
             val ex = hull[j * 2] - hull[i * 2]
             val ey = hull[j * 2 + 1] - hull[i * 2 + 1]
             val len = hypot(ex, ey)
-            if (len < 1e-6f) continue
-            val ux = ex / len
-            val uy = ey / len
-            var p0 = Float.MAX_VALUE
-            var p1 = -Float.MAX_VALUE
-            var q0 = Float.MAX_VALUE
-            var q1 = -Float.MAX_VALUE
-            for (h in 0 until n) {
-                val hx = hull[h * 2]
-                val hy = hull[h * 2 + 1]
-                val p = hx * ux + hy * uy
-                val q = -hx * uy + hy * ux
-                if (p < p0) p0 = p
-                if (p > p1) p1 = p
-                if (q < q0) q0 = q
-                if (q > q1) q1 = q
-            }
-            val area = (p1 - p0) * (q1 - q0)
-            if (area < bestArea) {
-                bestArea = area
-                bux = ux
-                buy = uy
-                bp0 = p0
-                bp1 = p1
-                bq0 = q0
-                bq1 = q1
-            }
+            if (len >= 1e-6f) best.offer(hull, n, ex / len, ey / len)
         }
 
+        val bux = best.ux
+        val buy = best.uy
+        val bp0 = best.p0
+        val bp1 = best.p1
+        val bq0 = best.q0
+        val bq1 = best.q1
         val axx = bux
         val axy = buy
         val ayx = -buy
@@ -143,6 +85,25 @@ object Geometry {
         )
     }
 
+    /** Axis-aligned box of the first [n] points; the fallback for a hull too small to rotate. */
+    private fun boundingRect(hull: FloatArray, n: Int): RotatedRect {
+        var x0 = Float.MAX_VALUE
+        var y0 = Float.MAX_VALUE
+        var x1 = -Float.MAX_VALUE
+        var y1 = -Float.MAX_VALUE
+        for (i in 0 until n) {
+            x0 = minOf(x0, hull[i * 2])
+            x1 = maxOf(x1, hull[i * 2])
+            y0 = minOf(y0, hull[i * 2 + 1])
+            y1 = maxOf(y1, hull[i * 2 + 1])
+        }
+        return RotatedRect(
+            Quad(floatArrayOf(x0, y0, x1, y0, x1, y1, x0, y1)),
+            x1 - x0,
+            y1 - y0
+        )
+    }
+
     /** DB unclip: offset each edge outward by area*ratio/perimeter, re-intersect. */
     fun unclip(q: Quad, ratio: Float): FloatArray {
         var area = 0f
@@ -156,23 +117,15 @@ object Geometry {
         if (perim < 1e-6f) return q.pts
         val d = area * ratio / perim
 
-        val ax = FloatArray(4)
-        val ay = FloatArray(4)
-        val bx = FloatArray(4)
-        val by = FloatArray(4)
-        for (i in 0 until 4) {
-            val j = (i + 1) % 4
-            val ex = q.x(j) - q.x(i)
-            val ey = q.y(j) - q.y(i)
-            val len = maxOf(hypot(ex, ey), 1e-6f)
-            val nx = ey / len * d
-            val ny = -ex / len * d
-            ax[i] = q.x(i) + nx
-            ay[i] = q.y(i) + ny
-            bx[i] = q.x(j) + nx
-            by[i] = q.y(j) + ny
-        }
+        return intersectOffsetEdges(OffsetEdges(q, d))
+    }
 
+    /** Corner i of the unclipped quad: where offset edge i-1 meets offset edge i. */
+    private fun intersectOffsetEdges(edges: OffsetEdges): FloatArray {
+        val ax = edges.ax
+        val ay = edges.ay
+        val bx = edges.bx
+        val by = edges.by
         val out = FloatArray(8)
         for (i in 0 until 4) {
             val p = (i + 3) % 4
@@ -223,17 +176,96 @@ object Geometry {
                 bl = i
             }
         }
-        return Quad(
-            floatArrayOf(
-                q.x(tl),
-                q.y(tl),
-                q.x(tr),
-                q.y(tr),
-                q.x(br),
-                q.y(br),
-                q.x(bl),
-                q.y(bl)
-            )
-        )
+        return Quad(floatArrayOf(q.x(tl), q.y(tl), q.x(tr), q.y(tr), q.x(br), q.y(br), q.x(bl), q.y(bl)))
+    }
+}
+
+/** Andrew's monotone chain under construction: [k] points of [hull] are kept so far. */
+private class MonotoneChain(private val pts: FloatArray, n: Int) {
+    val hull = FloatArray((2 * n + 1) * 2)
+    var k = 0
+        private set
+
+    private fun cross(i: Int): Float {
+        val ox = hull[(k - 2) * 2]
+        val oy = hull[(k - 2) * 2 + 1]
+        val ax = hull[(k - 1) * 2]
+        val ay = hull[(k - 1) * 2 + 1]
+        return (ax - ox) * (pts[i * 2 + 1] - oy) - (ay - oy) * (pts[i * 2] - ox)
+    }
+
+    fun push(i: Int, floor: Int) {
+        while (k >= floor && k >= 2 && cross(i) <= 0f) k--
+        hull[k * 2] = pts[i * 2]
+        hull[k * 2 + 1] = pts[i * 2 + 1]
+        k++
+    }
+}
+
+/** The smallest-area caliper offered so far: its axis (ux, uy) and the hull's extent along it. */
+private class Caliper {
+    private var bestArea = Float.MAX_VALUE
+    var ux = 1f
+        private set
+    var uy = 0f
+        private set
+    var p0 = 0f
+        private set
+    var p1 = 0f
+        private set
+    var q0 = 0f
+        private set
+    var q1 = 0f
+        private set
+
+    /** Projects the first [n] hull points onto the axis (ux, uy); keeps it if its box is smaller. */
+    fun offer(hull: FloatArray, n: Int, ux: Float, uy: Float) {
+        var p0 = Float.MAX_VALUE
+        var p1 = -Float.MAX_VALUE
+        var q0 = Float.MAX_VALUE
+        var q1 = -Float.MAX_VALUE
+        for (h in 0 until n) {
+            val hx = hull[h * 2]
+            val hy = hull[h * 2 + 1]
+            val p = hx * ux + hy * uy
+            val q = -hx * uy + hy * ux
+            if (p < p0) p0 = p
+            if (p > p1) p1 = p
+            if (q < q0) q0 = q
+            if (q > q1) q1 = q
+        }
+        val area = (p1 - p0) * (q1 - q0)
+        if (area < bestArea) {
+            bestArea = area
+            this.ux = ux
+            this.uy = uy
+            this.p0 = p0
+            this.p1 = p1
+            this.q0 = q0
+            this.q1 = q1
+        }
+    }
+}
+
+/** Each edge i of a quad pushed outward by d: from (ax, ay)[i] to (bx, by)[i]. */
+private class OffsetEdges(q: Quad, d: Float) {
+    val ax = FloatArray(4)
+    val ay = FloatArray(4)
+    val bx = FloatArray(4)
+    val by = FloatArray(4)
+
+    init {
+        for (i in 0 until 4) {
+            val j = (i + 1) % 4
+            val ex = q.x(j) - q.x(i)
+            val ey = q.y(j) - q.y(i)
+            val len = maxOf(hypot(ex, ey), 1e-6f)
+            val nx = ey / len * d
+            val ny = -ex / len * d
+            ax[i] = q.x(i) + nx
+            ay[i] = q.y(i) + ny
+            bx[i] = q.x(j) + nx
+            by[i] = q.y(j) + ny
+        }
     }
 }

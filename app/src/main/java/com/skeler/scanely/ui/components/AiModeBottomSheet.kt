@@ -151,13 +151,6 @@ private fun AiModeItem(
         )
     ) {
         ListItem(
-            headlineContent = {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium
-                )
-            },
             supportingContent = {
                 Text(
                     text = subtitle,
@@ -166,6 +159,12 @@ private fun AiModeItem(
                 )
             },
             leadingContent = leading
-        )
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }

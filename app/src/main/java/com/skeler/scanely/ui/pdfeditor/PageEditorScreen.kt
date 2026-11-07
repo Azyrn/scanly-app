@@ -69,6 +69,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -80,6 +81,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -97,6 +99,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChanged
@@ -429,7 +432,7 @@ private fun TextStyleDialog(
 ) {
     var text by remember { mutableStateOf(target.original) }
     var font by remember { mutableStateOf(target.font) }
-    var sizePt by remember { mutableStateOf(target.sizePt) }
+    var sizePt by remember { mutableFloatStateOf(target.sizePt) }
 
     val isReplace = target.kind == TextEditKind.REPLACE
 
@@ -543,7 +546,7 @@ private fun PageSurface(
     onSelectionEnd: (Offset, Offset) -> Unit,
     onTap: (Offset) -> Unit
 ) {
-    var zoom by remember(page.originalIndex) { mutableStateOf(1f) }
+    var zoom by remember(page.originalIndex) { mutableFloatStateOf(1f) }
     var pan by remember(page.originalIndex) { mutableStateOf(Offset.Zero) }
     val live = remember(page.originalIndex) { mutableStateListOf<Offset>() }
 
@@ -686,39 +689,43 @@ private fun DrawScope.drawLivePreview(
         EditorTool.INK -> drawInkStroke(InkStroke(points, color, strokeWidthPt))
         EditorTool.WHITEOUT ->
             drawInkStroke(InkStroke(points, whiteoutColor, whiteoutWidthPt))
-        EditorTool.HIGHLIGHT -> {
-            val box = boxOf(points.first(), points.last())
-            drawRect(
-                color = color.copy(alpha = 0.3f),
-                topLeft = Offset(box.left, box.top - LIVE_BAND_PT),
-                size = Size(box.width, box.height + LIVE_BAND_PT * 2)
-            )
-        }
+        EditorTool.HIGHLIGHT -> drawHighlightPreview(points, color)
         EditorTool.UNDERLINE -> drawLine(
             color = color,
             start = points.first(),
             end = Offset(points.last().x, points.first().y),
             strokeWidth = 1.4f
         )
-        EditorTool.SHAPE -> {
-            val box = boxOf(points.first(), points.last())
-            when (shape) {
-                ShapeKind.ELLIPSE -> drawOval(
-                    color,
-                    box.topLeft,
-                    box.size,
-                    style = Stroke(strokeWidthPt)
-                )
-                ShapeKind.RECTANGLE -> drawRect(
-                    color,
-                    box.topLeft,
-                    box.size,
-                    style = Stroke(strokeWidthPt)
-                )
-                else -> drawLine(color, points.first(), points.last(), strokeWidth = strokeWidthPt)
-            }
-        }
+        EditorTool.SHAPE -> drawShapePreview(points, color, strokeWidthPt, shape)
         else -> Unit
+    }
+}
+
+private fun DrawScope.drawHighlightPreview(points: List<Offset>, color: Color) {
+    val box = boxOf(points.first(), points.last())
+    drawRect(
+        color = color.copy(alpha = 0.3f),
+        topLeft = Offset(box.left, box.top - LIVE_BAND_PT),
+        size = Size(box.width, box.height + LIVE_BAND_PT * 2)
+    )
+}
+
+private fun DrawScope.drawShapePreview(points: List<Offset>, color: Color, strokeWidthPt: Float, shape: ShapeKind) {
+    val box = boxOf(points.first(), points.last())
+    when (shape) {
+        ShapeKind.ELLIPSE -> drawOval(
+            color,
+            box.topLeft,
+            box.size,
+            style = Stroke(strokeWidthPt)
+        )
+        ShapeKind.RECTANGLE -> drawRect(
+            color,
+            box.topLeft,
+            box.size,
+            style = Stroke(strokeWidthPt)
+        )
+        else -> drawLine(color, points.first(), points.last(), strokeWidth = strokeWidthPt)
     }
 }
 
@@ -736,44 +743,67 @@ private suspend fun PointerInputScope.pageGestures(
     onTransform: (Offset, Float) -> Unit
 ) = awaitEachGesture {
     val down = awaitFirstDown(requireUnconsumed = false)
-    var stroking = false
-    var transforming = false
-    var travelled = 0f
+    val gesture = PageGesture(drawing, down.position, onStrokeStart, onStrokeMove, onStrokeEnd, onTap, onTransform)
+    do {
+        val fingersDown = gesture.onEvent(awaitPointerEvent())
+    } while (fingersDown)
+    gesture.finish()
+}
 
-    while (true) {
-        val event = awaitPointerEvent()
+/** One gesture from first touch to last lift; see [pageGestures]. */
+private class PageGesture(
+    private val drawing: Boolean,
+    private val downPosition: Offset,
+    private val onStrokeStart: (Offset) -> Unit,
+    private val onStrokeMove: (Offset) -> Unit,
+    private val onStrokeEnd: () -> Unit,
+    private val onTap: (Offset) -> Unit,
+    private val onTransform: (Offset, Float) -> Unit
+) {
+    private var stroking = false
+    private var transforming = false
+    private var travelled = 0f
+
+    /** Handles one pointer event; false once every finger has lifted. */
+    fun onEvent(event: PointerEvent): Boolean {
         val pressed = event.changes.count { it.pressed }
-        if (pressed == 0) break
-
-        if (pressed >= 2) {
-            if (stroking) {
-                onStrokeEnd()
-                stroking = false
-            }
-            transforming = true
-            onTransform(event.calculatePan(), event.calculateZoom())
-            event.changes.forEach { it.consume() }
-            continue
+        when {
+            pressed == 0 -> return false
+            pressed >= 2 -> transform(event)
+            !transforming -> follow(event)
         }
+        return true
+    }
 
-        if (transforming) continue
+    private fun transform(event: PointerEvent) {
+        if (stroking) {
+            onStrokeEnd()
+            stroking = false
+        }
+        transforming = true
+        onTransform(event.calculatePan(), event.calculateZoom())
+        event.changes.forEach { it.consume() }
+    }
 
-        val change = event.changes.firstOrNull { it.pressed } ?: continue
-        if (!change.positionChanged()) continue
+    private fun follow(event: PointerEvent) {
+        val change = event.changes.firstOrNull { it.pressed } ?: return
+        if (!change.positionChanged()) return
         travelled += (change.position - change.previousPosition).getDistance()
-        if (!drawing) continue
+        if (!drawing) return
 
         if (!stroking) {
             stroking = true
-            onStrokeStart(down.position)
+            onStrokeStart(downPosition)
         }
         onStrokeMove(change.position)
         change.consume()
     }
 
-    when {
-        stroking -> onStrokeEnd()
-        !transforming && travelled < TAP_SLOP_PX -> onTap(down.position)
+    fun finish() {
+        when {
+            stroking -> onStrokeEnd()
+            !transforming && travelled < TAP_SLOP_PX -> onTap(downPosition)
+        }
     }
 }
 
@@ -1024,10 +1054,11 @@ private fun WidthSlider(
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        val sliderState = remember(range) { SliderState(width, trackRange = range) }
+        sliderState.value = width
         Slider(
-            value = width,
+            state = sliderState,
             onValueChange = onWidth,
-            valueRange = range,
             modifier = Modifier.width(120.dp)
         )
     }

@@ -99,7 +99,12 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">Фото не подходит. Попробуйте другое.</string>
-    <string name="chat_file_too_many_pages">Дизайнер пересоздаёт до %1$d страниц. В этом файле %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">Дизайнер пересоздаёт до %1$d стр.. В этом файле %2$d.</item>
+        <item quantity="few">Дизайнер пересоздаёт до %1$d стр.. В этом файле %2$d.</item>
+        <item quantity="many">Дизайнер пересоздаёт до %1$d стр.. В этом файле %2$d.</item>
+        <item quantity="other">Дизайнер пересоздаёт до %1$d стр.. В этом файле %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">Файл слишком большой.</string>
     <string name="chat_file_unreadable">Файл не читается. Выберите другой.</string>
 
@@ -248,7 +253,12 @@
     <string name="chat_log_loading">Загрузка вывода…</string>
     <string name="chat_log_expired">Полный вывод истёк</string>
     <string name="chat_log_unavailable">Не загрузилось. Нажмите, чтобы повторить.</string>
-    <string name="chat_log_past_limit">Ещё %1$d симв. вышли за лимит и не сохранены</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">Ещё %1$d симв. вышел за лимит и не сохранён</item>
+        <item quantity="few">Ещё %1$d симв. вышли за лимит и не сохранены</item>
+        <item quantity="many">Ещё %1$d симв. вышли за лимит и не сохранены</item>
+        <item quantity="other">Ещё %1$d симв. вышли за лимит и не сохранены</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d ранняя строка не сохранена</item>
         <item quantity="few">%d ранние строки не сохранены</item>

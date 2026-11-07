@@ -48,7 +48,6 @@
     <string name="pdf_tool_cancelled">キャンセル</string>
     <string name="pdf_tool_file_summary">%1$s · %2$s</string>
     <plurals name="pdf_tool_pages">
-        <item quantity="one">%d ページ</item>
         <item quantity="other">%d ページ</item>
     </plurals>
     <string name="pdf_tool_password_title">パスワードが必要</string>

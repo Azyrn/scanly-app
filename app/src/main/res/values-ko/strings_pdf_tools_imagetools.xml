@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="pdf_tool_img_skipped">
-        <item quantity="one">파일 %d개는 읽을 수 없어 건너뛰었어요.</item>
         <item quantity="other">파일 %d개는 읽을 수 없어 건너뛰었어요.</item>
     </plurals>
     <plurals name="pdf_tool_img_already_small">
-        <item quantity="one">이미지 %d개는 이미 가장 작은 상태라 변경되지 않았어요.</item>
         <item quantity="other">이미지 %d개는 이미 가장 작은 상태라 변경되지 않았어요.</item>
     </plurals>
     <string name="pdf_tool_img_compress_recommended">권장</string>

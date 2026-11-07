@@ -123,13 +123,14 @@ internal fun ScansSheet(scans: List<DesignSource>, onPick: (DesignSource) -> Uni
             LazyColumn(Modifier.padding(bottom = 16.dp)) {
                 items(scans, key = { it.id }) { scan ->
                     ListItem(
-                        headlineContent = { Text(scan.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         supportingContent = {
                             Text(scan.text, maxLines = 2, overflow = TextOverflow.Ellipsis)
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         modifier = Modifier.clickable { onPick(scan) }
-                    )
+                    ) {
+                        Text(scan.label, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
                 }
             }
         }

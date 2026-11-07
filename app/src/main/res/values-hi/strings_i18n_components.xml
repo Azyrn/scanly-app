@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="cmp_paywall_credits_left">इस महीने आपके %2$d में से %1$d क्रेडिट बचे हैं।</string>
-    <string name="cmp_paywall_credits_left_upgrade">इस महीने आपके %2$d में से %1$d क्रेडिट बचे हैं। ज़्यादा के लिए अपग्रेड करें।</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">इस महीने आपके %2$d में से %1$d क्रेडिट बचा है।</item>
+        <item quantity="other">इस महीने आपके %2$d में से %1$d क्रेडिट बचे हैं।</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">इस महीने आपके %2$d में से %1$d क्रेडिट बचा है। ज़्यादा के लिए अपग्रेड करें।</item>
+        <item quantity="other">इस महीने आपके %2$d में से %1$d क्रेडिट बचे हैं। ज़्यादा के लिए अपग्रेड करें।</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">ज़्यादा क्रेडिट, लंबे दस्तावेज़ और ज़्यादा फ़ाइल फ़ॉर्मैट।</string>
     <string name="cmp_paywall_ai_scan_credit">AI स्कैन हर पेज के लिए 1 क्रेडिट लेता है। बाकी AI टूल भी आपका यही क्रेडिट बैलेंस इस्तेमाल करते हैं।</string>
     <string name="cmp_paywall_plan_active">इस अकाउंट पर आपका प्लान सक्रिय है।</string>
     <string name="cmp_paywall_key_active_here">इस डिवाइस पर आपकी की सक्रिय है।</string>
-    <string name="cmp_paywall_devices_used">%2$d में से %1$d डिवाइस इस्तेमाल हो चुके हैं। सेटिंग्स में अपनी की मैनेज करें।</string>
-    <string name="cmp_paywall_watch_ad">%1$d और क्रेडिट के लिए एक विज्ञापन देखें</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">%2$d में से %1$d डिवाइस इस्तेमाल हुआ। सेटिंग्स में अपनी की मैनेज करें।</item>
+        <item quantity="other">%2$d में से %1$d डिवाइस इस्तेमाल हो चुके हैं। सेटिंग्स में अपनी की मैनेज करें।</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">%1$d और क्रेडिट के लिए एक विज्ञापन देखें</item>
+        <item quantity="other">%1$d और क्रेडिट के लिए एक विज्ञापन देखें</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"AI स्कैन में हर महीने मुफ़्त कोटा शामिल है। पेड प्लान यहाँ उपलब्ध हैं: "</string>
     <string name="cmp_paywall_where_to_buy_after">. इस ऐप में खरीदारी उपलब्ध नहीं है। पहले से सब्सक्राइब हैं? नीचे अपनी खरीदारी रिस्टोर करें।</string>
     <string name="cmp_copied">कॉपी हुआ</string>
@@ -22,7 +34,10 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">सक्रिय</string>
     <string name="cmp_paywall_feature_credits">हर महीने %1$d AI क्रेडिट</string>
-    <string name="cmp_paywall_feature_pages">एक दस्तावेज़ में अधिकतम %1$d पेज</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">एक दस्तावेज़ में अधिकतम %1$d पेज</item>
+        <item quantity="other">एक दस्तावेज़ में अधिकतम %1$d पेज</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Word, PowerPoint और OpenDocument फ़ाइलें</string>
     <string name="cmp_paywall_feature_translation">अनुवाद</string>
     <string name="cmp_paywall_feature_extraction">रसीदों, इनवॉइस और कार्ड से डेटा निकालना</string>
@@ -40,32 +55,62 @@
     <string name="cmp_bigger_text">बड़ा टेक्स्ट</string>
     <string name="cmp_reset">रीसेट</string>
     <string name="cmp_no_table">टेबल नहीं</string>
-    <string name="cmp_word_char_counts">%1$d शब्द · %2$d अक्षर</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d शब्द</item>
+        <item quantity="other">%d शब्द</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d अक्षर</item>
+        <item quantity="other">%d अक्षर</item>
+    </plurals>
     <string name="cmp_save_as">नाम से सेव</string>
     <string name="cmp_page_range_title">कौन-से पेज स्कैन करें?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s में %2$d पेज हैं, और यह स्कैन अधिकतम %3$d पेज पढ़ता है। ज़रूरी पेज चुनें।</string>
-    <string name="cmp_page_range_intro">%1$s में %2$d पेज हैं। स्कैन किया हर पेज आपके प्लान में गिना जाता है, इसलिए रेंज पूरी फ़ाइल से सस्ती पड़ती है।</string>
-    <string name="cmp_page_range_example">उदा. 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">1 से %2$d के बीच ज़्यादा से ज़्यादा %1$d पेज चुनें।</string>
-    <string name="cmp_page_range_use_numbers">1 से %1$d के बीच के पेज नंबर इस्तेमाल करें, जैसे 1-5 या 2,4।</string>
-    <string name="cmp_page_range_n_of_total">%2$d में से %1$d पेज</string>
-    <string name="cmp_page_range_required">ज़रूरी — इस स्कैन में %1$d पेज शामिल हैं</string>
-    <string name="cmp_page_range_leave_empty">सभी %1$d पेज स्कैन करने के लिए खाली छोड़ें</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">%1$s में %2$d पेज हैं, और यह स्कैन अधिकतम %3$d पेज पढ़ता है। ज़रूरी पेज चुनें।</item>
+        <item quantity="other">%1$s में %2$d पेज हैं, और यह स्कैन अधिकतम %3$d पेज पढ़ता है। ज़रूरी पेज चुनें।</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">%1$s में %2$d पेज हैं। स्कैन किया हर पेज आपके प्लान में गिना जाता है, इसलिए रेंज पूरी फ़ाइल से सस्ती पड़ती है।</item>
+        <item quantity="other">%1$s में %2$d पेज हैं। स्कैन किया हर पेज आपके प्लान में गिना जाता है, इसलिए रेंज पूरी फ़ाइल से सस्ती पड़ती है।</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">उदा. 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">1 से %2$d के बीच ज़्यादा से ज़्यादा %1$d पेज चुनें।</item>
+        <item quantity="other">1 से %2$d के बीच ज़्यादा से ज़्यादा %1$d पेज चुनें।</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">1 से %1$d के बीच के पेज नंबर इस्तेमाल करें, जैसे 1-5 या 2,4।</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%2$d में से %1$d पेज</item>
+        <item quantity="other">%2$d में से %1$d पेज</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">ज़रूरी — इस स्कैन में %1$d पेज शामिल हैं</item>
+        <item quantity="other">ज़रूरी — इस स्कैन में %1$d पेज शामिल हैं</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">%1$d पेज स्कैन करने के लिए खाली छोड़ें</item>
+        <item quantity="other">सभी %1$d पेज स्कैन करने के लिए खाली छोड़ें</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">%1$d स्कैन करें</string>
     <string name="cmp_page_range_scan_all">सब स्कैन</string>
     <string name="cmp_stage_uploading">अपलोड जारी…</string>
     <string name="cmp_stage_processing">प्रोसेस हो रहा है…</string>
     <string name="cmp_stage_generating">बन रहा है…</string>
     <string name="cmp_stage_complete">पूरा हुआ</string>
-    <string name="cmp_processing_file_of">फ़ाइल %1$d/%2$d प्रोसेस हो रही है...</string>
-    <string name="cmp_extracting_text">टेक्स्ट निकालना...</string>
+    <string name="cmp_processing_file_of">फ़ाइल %1$d/%2$d प्रोसेस हो रही है…</string>
+    <string name="cmp_extracting_text">टेक्स्ट निकालना…</string>
     <string name="cmp_file_of">%2$d में से फ़ाइल %1$d</string>
     <string name="cmp_may_take_few_moments">इसमें कुछ पल लग सकते हैं</string>
-    <string name="cmp_translating">अनुवाद हो रहा है...</string>
+    <string name="cmp_translating">अनुवाद हो रहा है…</string>
     <string name="cmp_couldnt_read_file">यह फ़ाइल पढ़ी नहीं जा सकी</string>
     <string name="cmp_no_text_extracted">कोई टेक्स्ट नहीं निकला</string>
     <string name="cmp_try_different_image">कोई और तस्वीर चुनकर देखें</string>
-    <string name="cmp_batch_scanning">%2$d में से %1$d फ़ाइलें स्कैन हो रहीं…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">%2$d में से %1$d फ़ाइल स्कैन हो रही…</item>
+        <item quantity="other">%2$d में से %1$d फ़ाइलें स्कैन हो रहीं…</item>
+    </plurals>
     <string name="cmp_food_nutrition_facts">पोषण तथ्य</string>
     <string name="cmp_food_serving_size">सर्विंग साइज़: %1$s</string>
     <string name="cmp_food_ingredients">सामग्री</string>
@@ -102,7 +147,10 @@
     <string name="cmp_export_file_name_label">फ़ाइल का नाम</string>
     <string name="cmp_export_name_hint">उपलब्ध होने पर मूल फ़ाइल नाम इस्तेमाल होता है।</string>
     <string name="cmp_extract_data">डेटा निकालें</string>
-    <string name="cmp_preset_cost">टेक्स्ट के साथ लेबल वाले फ़ील्ड भी पाएं। किसी पेज को डेटा के रूप में पढ़ने में आपके प्लान से %1$d क्रेडिट लगते हैं। हर दस्तावेज़ में अधिकतम 8 पेज हो सकते हैं।</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">टेक्स्ट के साथ लेबल वाले फ़ील्ड भी पाएं। किसी पेज को डेटा के रूप में पढ़ने में आपके प्लान से %1$d क्रेडिट लगता है। हर दस्तावेज़ में अधिकतम 8 पेज हो सकते हैं।</item>
+        <item quantity="other">टेक्स्ट के साथ लेबल वाले फ़ील्ड भी पाएं। किसी पेज को डेटा के रूप में पढ़ने में आपके प्लान से %1$d क्रेडिट लगते हैं। हर दस्तावेज़ में अधिकतम 8 पेज हो सकते हैं।</item>
+    </plurals>
     <string name="cmp_preset_included_pro">टेक्स्ट के साथ लेबल वाले फ़ील्ड भी पाएं। Pro और उससे ऊपर के प्लान में शामिल।</string>
     <string name="cmp_sign_in_ai_title">AI स्कैन के लिए साइन इन करें</string>
     <string name="cmp_sign_in_ai_body">AI स्कैन एक साझा की पर चलते हैं, इसलिए इनके लिए अकाउंट चाहिए। टेक्स्ट रिकग्निशन और बारकोड स्कैन मुफ़्त और ऑफ़लाइन रहते हैं — इनके लिए साइन इन की ज़रूरत नहीं।</string>
@@ -126,7 +174,7 @@
     <string name="cmp_barcode_content">बारकोड का कंटेंट</string>
     <string name="cmp_copy_to_clipboard">क्लिपबोर्ड पर कॉपी करें</string>
     <string name="cmp_product_unknown_source">अज्ञात</string>
-    <string name="cmp_product_looking_up">प्रोडक्ट खोजा जा रहा है...</string>
+    <string name="cmp_product_looking_up">प्रोडक्ट खोजा जा रहा है…</string>
     <string name="cmp_product_not_found">प्रोडक्ट नहीं मिला</string>
     <string name="cmp_product_lookup_failed">खोज विफल</string>
     <string name="cmp_product_unknown_error">अज्ञात त्रुटि</string>
@@ -149,8 +197,14 @@
     <string name="cmp_preview_rendering_pages">पेज रेंडर हो रहे हैं…</string>
     <string name="cmp_preview_render_failed">इस दस्तावेज़ को PDF के रूप में रेंडर नहीं कर सके।</string>
     <string name="cmp_preview_page_n_of_total">%2$d में से पेज %1$d</string>
-    <string name="cmp_preview_first_n_of_pages">%2$d पेजों में से पहले %1$d</string>
-    <string name="cmp_preview_first_n_of_lines">%2$d लाइनों में से पहली %1$d</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">%2$d पेज में से पहले %1$d</item>
+        <item quantity="other">%2$d पेजों में से पहले %1$d</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">%2$d लाइन में से पहली %1$d</item>
+        <item quantity="other">%2$d लाइनों में से पहली %1$d</item>
+    </plurals>
     <string name="cmp_export_nothing_to_export">एक्सपोर्ट के लिए कुछ नहीं</string>
     <string name="cmp_export_no_table_data">एक्सपोर्ट के लिए टेबल डेटा नहीं</string>
     <string name="cmp_export_couldnt_save">%1$s सेव नहीं हो सका</string>

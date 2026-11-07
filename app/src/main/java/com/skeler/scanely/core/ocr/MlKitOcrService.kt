@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -47,41 +48,7 @@ class MlKitOcrService @Inject constructor(
         val inputImage = InputImage.fromBitmap(bitmap, 0)
 
         recognizer.process(inputImage)
-            .addOnSuccessListener { visionText ->
-                if (visionText.text.isBlank()) {
-                    continuation.resume(OcrResult.Empty)
-                    return@addOnSuccessListener
-                }
-
-                val blocks = visionText.textBlocks.map { block ->
-                    TextBlockData(
-                        text = block.text,
-                        boundingBoxLeft = block.boundingBox?.left ?: 0,
-                        boundingBoxTop = block.boundingBox?.top ?: 0,
-                        boundingBoxRight = block.boundingBox?.right ?: 0,
-                        boundingBoxBottom = block.boundingBox?.bottom ?: 0
-                    )
-                }
-
-                val allConfidences = visionText.textBlocks.flatMap { block ->
-                    block.lines.flatMap { line ->
-                        line.elements.mapNotNull { it.confidence }
-                    }
-                }
-                val avgConfidence = if (allConfidences.isNotEmpty()) {
-                    allConfidences.average().toFloat()
-                } else {
-                    1.0f
-                }
-
-                continuation.resume(
-                    OcrResult.Success(
-                        text = visionText.text,
-                        blocks = blocks,
-                        confidence = avgConfidence
-                    )
-                )
-            }
+            .addOnSuccessListener { visionText -> continuation.resume(visionText.toOcrResult()) }
             .addOnFailureListener { e ->
                 Log.e(TAG, "ML Kit processing failed", e)
                 continuation.resume(OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition)))
@@ -96,46 +63,51 @@ class MlKitOcrService @Inject constructor(
 
                 recognizeFromBitmap(bitmap)
             } else {
-                val allText = StringBuilder()
-                val allBlocks = mutableListOf<TextBlockData>()
-                var totalConfidence = 0f
-                var successCount = 0
-
-                val opened = pdfRendererHelper.forEachPage(pdfUri) { index, bitmap ->
-                    when (val result = recognizeFromBitmap(bitmap)) {
-                        is OcrResult.Success -> {
-                            if (allText.isNotEmpty()) {
-                                allText.append("\n\n--- Page ${index + 1} ---\n\n")
-                            }
-                            allText.append(result.text)
-                            allBlocks.addAll(result.blocks)
-                            totalConfidence += result.confidence
-                            successCount++
-                        }
-                        is OcrResult.Empty -> { }
-                        is OcrResult.Error -> {
-                            Log.w(TAG, "Page $index failed: ${result.message}")
-                        }
-                    }
-                    bitmap.recycle()
-                }
-                if (!opened) {
-                    return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pages))
-                }
-
-                if (allText.isEmpty()) {
-                    OcrResult.Empty
-                } else {
-                    OcrResult.Success(
-                        text = allText.toString(),
-                        blocks = allBlocks,
-                        confidence = if (successCount > 0) totalConfidence / successCount else 0f
-                    )
-                }
+                recognizeAllPages(pdfUri)
             }
         } catch (e: Exception) {
             Log.e(TAG, "PDF recognition failed", e)
             OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_pdf_processing))
+        }
+    }
+
+    /** Every page, joined with page markers; confidence is the mean over pages that read. */
+    private suspend fun recognizeAllPages(pdfUri: Uri): OcrResult {
+        val allText = StringBuilder()
+        val allBlocks = mutableListOf<TextBlockData>()
+        var totalConfidence = 0f
+        var successCount = 0
+
+        val opened = pdfRendererHelper.forEachPage(pdfUri) { index, bitmap ->
+            when (val result = recognizeFromBitmap(bitmap)) {
+                is OcrResult.Success -> {
+                    if (allText.isNotEmpty()) {
+                        allText.append("\n\n--- Page ${index + 1} ---\n\n")
+                    }
+                    allText.append(result.text)
+                    allBlocks.addAll(result.blocks)
+                    totalConfidence += result.confidence
+                    successCount++
+                }
+                is OcrResult.Empty -> { }
+                is OcrResult.Error -> {
+                    Log.w(TAG, "Page $index failed: ${result.message}")
+                }
+            }
+            bitmap.recycle()
+        }
+        if (!opened) {
+            return OcrResult.Error(context.getString(R.string.ocr_err_render_pages))
+        }
+
+        return if (allText.isEmpty()) {
+            OcrResult.Empty
+        } else {
+            OcrResult.Success(
+                text = allText.toString(),
+                blocks = allBlocks,
+                confidence = if (successCount > 0) totalConfidence / successCount else 0f
+            )
         }
     }
 
@@ -153,4 +125,35 @@ class MlKitOcrService @Inject constructor(
     fun close() {
         recognizer.close()
     }
+}
+
+private fun Text.toOcrResult(): OcrResult {
+    if (text.isBlank()) return OcrResult.Empty
+
+    val blocks = textBlocks.map { block ->
+        TextBlockData(
+            text = block.text,
+            boundingBoxLeft = block.boundingBox?.left ?: 0,
+            boundingBoxTop = block.boundingBox?.top ?: 0,
+            boundingBoxRight = block.boundingBox?.right ?: 0,
+            boundingBoxBottom = block.boundingBox?.bottom ?: 0
+        )
+    }
+
+    val allConfidences = textBlocks.flatMap { block ->
+        block.lines.flatMap { line ->
+            line.elements.mapNotNull { it.confidence }
+        }
+    }
+    val avgConfidence = if (allConfidences.isNotEmpty()) {
+        allConfidences.average().toFloat()
+    } else {
+        1.0f
+    }
+
+    return OcrResult.Success(
+        text = text,
+        blocks = blocks,
+        confidence = avgConfidence
+    )
 }

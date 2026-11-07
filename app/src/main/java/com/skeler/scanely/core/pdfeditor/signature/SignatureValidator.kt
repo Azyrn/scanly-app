@@ -228,13 +228,26 @@ class SignatureValidator @Inject constructor(
             ?: pool.firstOrNull()
             ?: return@runCatching UNREADABLE
 
+        verifiedOutcome(signer, signerCert, pool)
+    }.getOrElse {
+        Log.w(TAG, "CMS verification failed", it)
+        // A signature that parses but fails its digest check throws here too; the range read
+        // succeeded, so the content not matching is the likeliest cause.
+        CmsOutcome(Integrity.TAMPERED, TrustStatus.UNKNOWN, emptyList(), null, TimeSource.NONE)
+    }
+
+    private fun verifiedOutcome(
+        signer: SignerInformation,
+        signerCert: X509Certificate,
+        pool: List<X509Certificate>
+    ): CmsOutcome {
         val timestamp = timestampOf(signer)
         val signedAt = timestamp ?: signingTimeOf(signer)
         val verified = signer.verify(
             JcaSimpleSignerInfoVerifierBuilder().setProvider(provider).build(signerCert)
         )
 
-        CmsOutcome(
+        return CmsOutcome(
             integrity = if (verified) Integrity.INTACT else Integrity.TAMPERED,
             trust = if (verified) {
                 trustOf(signerCert, pool, signedAt ?: Date())
@@ -249,11 +262,6 @@ class SignatureValidator @Inject constructor(
                 else -> TimeSource.NONE
             }
         )
-    }.getOrElse {
-        Log.w(TAG, "CMS verification failed", it)
-        // A signature that parses but fails its digest check throws here too; the range read
-        // succeeded, so the content not matching is the likeliest cause.
-        CmsOutcome(Integrity.TAMPERED, TrustStatus.UNKNOWN, emptyList(), null, TimeSource.NONE)
     }
 
     /**
@@ -320,13 +328,13 @@ class SignatureValidator @Inject constructor(
 
     /** The two spans either side of the /Contents placeholder, concatenated. */
     private fun signedBytes(fileBytes: ByteArray, ranges: JSONArray): ByteArray? {
-        if (ranges.length() < 4) return null
+        if (ranges.length() < BYTE_RANGE_ENTRIES) return null
         val start1 = ranges.getLong(0).toInt()
         val length1 = ranges.getLong(1).toInt()
         val start2 = ranges.getLong(2).toInt()
         val length2 = ranges.getLong(3).toInt()
 
-        if (start1 < 0 || length1 < 0 || start2 < 0 || length2 < 0) return null
+        if (minOf(start1, length1, start2, length2) < 0) return null
         if (start1 + length1 > fileBytes.size || start2 + length2 > fileBytes.size) return null
 
         return ByteArray(length1 + length2).also { out ->
@@ -338,7 +346,7 @@ class SignatureValidator @Inject constructor(
     private fun X509Certificate.summarise() = CertificateSummary(
         subject = subjectX500Principal.name,
         issuer = issuerX500Principal.name,
-        serialNumber = serialNumber.toString(16),
+        serialNumber = serialNumber.toString(HEX_RADIX),
         notBefore = notBefore,
         notAfter = notAfter
     )
@@ -346,7 +354,7 @@ class SignatureValidator @Inject constructor(
     private fun decodeHex(hex: String): ByteArray {
         val clean = hex.filter { !it.isWhitespace() }
         return ByteArray(clean.length / 2) { i ->
-            ((clean[i * 2].digitToInt(16) shl 4) or clean[i * 2 + 1].digitToInt(16)).toByte()
+            ((clean[i * 2].digitToInt(HEX_RADIX) shl NIBBLE_BITS) or clean[i * 2 + 1].digitToInt(HEX_RADIX)).toByte()
         }
     }
 
@@ -356,7 +364,7 @@ class SignatureValidator @Inject constructor(
      */
     private fun parsePdfDate(value: String): Date? {
         val digits = value.removePrefix("D:").takeWhile { it.isDigit() }
-        if (digits.length < 8) return null
+        if (digits.length < PDF_DATE_MIN_DIGITS) return null
 
         return runCatching {
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
@@ -400,3 +408,11 @@ class SignatureValidator @Inject constructor(
         )
     }
 }
+
+/** /ByteRange is [start1 length1 start2 length2]. */
+private const val BYTE_RANGE_ENTRIES = 4
+private const val HEX_RADIX = 16
+private const val NIBBLE_BITS = 4
+
+/** YYYYMMDD, the shortest date a PDF writes. */
+private const val PDF_DATE_MIN_DIGITS = 8

@@ -91,6 +91,7 @@ import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.onClick
@@ -103,7 +104,7 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.skeler.scanely.R
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.navigation.OnScreenExit
@@ -172,7 +173,7 @@ fun PdfStudioScreen() {
             duration = if (saved != null) SnackbarDuration.Long else SnackbarDuration.Short
         )
         if (result == SnackbarResult.ActionPerformed && saved != null) {
-            ScanExporter.openPdf(context, saved)
+            DocumentIntents.openPdf(context, saved)
         }
         vm.consumeMessage()
         vm.consumeSaved()
@@ -357,7 +358,7 @@ private fun SelectionBar(
     TopAppBar(
         title = {
             Text(
-                stringResource(R.string.pe_selected_count, count),
+                pluralStringResource(R.plurals.pe_selected_count, count, count),
                 style = MaterialTheme.typography.titleMedium
             )
         },

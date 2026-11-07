@@ -36,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -159,13 +160,13 @@ fun EditableReadableText(
 
 @Composable
 fun ProcessingContent(
+    modifier: Modifier = Modifier,
     currentFile: Int = 0,
     totalFiles: Int = 0,
     stage: AiStage? = null,
     stageMessage: String? = null,
     streamingText: String? = null,
-    onCancel: (() -> Unit)? = null,
-    modifier: Modifier = Modifier
+    onCancel: (() -> Unit)? = null
 ) {
     Column(
         modifier = modifier
@@ -327,7 +328,12 @@ fun BatchScanProgress(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.cmp_batch_scanning, progress.done.coerceAtLeast(1), progress.total),
+            text = pluralStringResource(
+                R.plurals.cmp_batch_scanning,
+                progress.total,
+                progress.done.coerceAtLeast(1),
+                progress.total
+            ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

@@ -9,6 +9,13 @@ object ScanActionDetector {
 
     private const val TAG = "ScanActionDetector"
 
+    /** Characters of text kept in log lines and in the de-duplication key of text actions. */
+    private const val TEXT_PREVIEW_CHARS = 50
+    private const val MAX_URLS = 5
+    private const val MAX_EMAILS = 3
+    private const val MIN_PHONE_DIGITS = 10
+    private const val MAX_PHONE_DIGITS = 15
+
     private val URL_PATTERN = Regex(
         """(?i)\b(https?://[^\s<>"{}|\\^`\[\]]+|www\.[^\s<>"{}|\\^`\[\]]+\.[a-z]{2,})""",
         RegexOption.IGNORE_CASE
@@ -31,7 +38,7 @@ object ScanActionDetector {
     fun detectActions(text: String): List<ScanAction> {
         val actions = mutableListOf<ScanAction>()
 
-        Log.d(TAG, "Detecting actions for text: ${text.take(50)}...")
+        Log.d(TAG, "Detecting actions for text: ${text.take(TEXT_PREVIEW_CHARS)}...")
 
         actions.addAll(detectFromPatterns(text))
 
@@ -47,24 +54,10 @@ object ScanActionDetector {
         val actions = mutableListOf<ScanAction>()
 
         val wifiMatch = WIFI_PATTERN.find(text)
-        if (wifiMatch != null) {
-            val type = wifiMatch.groupValues[1].uppercase()
-            val ssid = wifiMatch.groupValues[2]
-            val password = wifiMatch.groupValues[3].takeIf { it.isNotEmpty() }
-
-            val wifiType = when (type) {
-                "WPA", "WPA2", "WPA3" -> WifiType.WPA
-                "WEP" -> WifiType.WEP
-                else -> WifiType.OPEN
-            }
-
-            actions.add(ScanAction.ConnectWifi(ssid, password, wifiType))
-            actions.add(ScanAction.CopyText(ssid, R.string.act_copy_ssid))
-            return actions // WiFi format is exclusive
-        }
+        if (wifiMatch != null) return wifiActions(wifiMatch) // WiFi format is exclusive
 
         val urls = URL_PATTERN.findAll(text).map { it.value }.toList()
-        urls.take(5).forEach { url -> // Limit to avoid UI overflow
+        urls.take(MAX_URLS).forEach { url -> // Limit to avoid UI overflow
             val normalized = normalizeUrl(url)
             if (isValidUrl(normalized)) {
                 actions.add(ScanAction.OpenUrl(normalized))
@@ -72,7 +65,7 @@ object ScanActionDetector {
         }
 
         val emails = EMAIL_PATTERN.findAll(text).map { it.value }.toList()
-        emails.take(3).forEach { email ->
+        emails.take(MAX_EMAILS).forEach { email ->
             actions.add(ScanAction.SendEmail(email))
         }
 
@@ -86,6 +79,23 @@ object ScanActionDetector {
         return actions
     }
 
+    private fun wifiActions(wifiMatch: MatchResult): List<ScanAction> {
+        val type = wifiMatch.groupValues[1].uppercase()
+        val ssid = wifiMatch.groupValues[2]
+        val password = wifiMatch.groupValues[3].takeIf { it.isNotEmpty() }
+
+        val wifiType = when (type) {
+            "WPA", "WPA2", "WPA3" -> WifiType.WPA
+            "WEP" -> WifiType.WEP
+            else -> WifiType.OPEN
+        }
+
+        return listOf(
+            ScanAction.ConnectWifi(ssid, password, wifiType),
+            ScanAction.CopyText(ssid, R.string.act_copy_ssid),
+        )
+    }
+
     // Phones: +/00 + 10–15 digits (avoid barcode FPs).
     private fun isValidPhoneNumber(phone: String): Boolean {
         val cleaned = phone.trim()
@@ -96,7 +106,7 @@ object ScanActionDetector {
 
         val digitsOnly = cleaned.filter { it.isDigit() }
 
-        if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+        if (digitsOnly.length !in MIN_PHONE_DIGITS..MAX_PHONE_DIGITS) {
             return false
         }
 
@@ -135,17 +145,13 @@ object ScanActionDetector {
     }
 
     private fun getActionKey(action: ScanAction): String {
+        // Every other action's detail is its single identifying value (url, number, email, ssid, barcode).
         return when (action) {
-            is ScanAction.OpenUrl -> action.url
-            is ScanAction.CopyText -> action.text.take(50)
-            is ScanAction.CallPhone -> action.number
-            is ScanAction.SendEmail -> action.email
-            is ScanAction.ConnectWifi -> action.ssid
-            is ScanAction.SendSms -> action.number
+            is ScanAction.CopyText -> action.text.take(TEXT_PREVIEW_CHARS)
+            is ScanAction.ShowRaw -> action.text.take(TEXT_PREVIEW_CHARS)
             is ScanAction.AddContact -> "${action.name}${action.phone}${action.email}"
             is ScanAction.AddEvent -> "${action.title}${action.startRaw}"
-            is ScanAction.ShowRaw -> action.text.take(50)
-            is ScanAction.LookupProduct -> action.barcode
+            else -> action.detail
         }
     }
 }

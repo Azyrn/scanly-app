@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">لم يُعثر على أي باركود</string>
     <string name="scr_barcode_hint">وجّه الكاميرا نحو الباركود أو رمز QR\nقرّب الإصبعين للتكبير · انقر للتركيز</string>
-    <string name="scr_barcode_scanning">جارٍ المسح...</string>
+    <string name="scr_barcode_scanning">جارٍ المسح…</string>
     <string name="scr_barcode_upload_gallery">رفع من المعرض</string>
     <string name="scr_barcode_permission_required">مطلوب إذن الكاميرا\nلمسح الباركود.</string>
     <!-- Document camera -->
@@ -14,8 +14,22 @@
     <string name="scr_camera_focus_hint">انقر للتركيز · اضبط الصفحة على حوافها</string>
     <string name="scr_camera_capture">التقاط</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">حتى %1$d ملفات لكل مسح، وسيتم استخدام أول %1$d فقط.</string>
-    <string name="scr_home_credits">%1$d رصيد</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="zero">حتى %1$d ملف لكل مسح، ويُستخدم أول %1$d فقط.</item>
+        <item quantity="one">حتى %1$d ملف لكل مسح، ويُستخدم أول %1$d فقط.</item>
+        <item quantity="two">حتى %1$d ملفين لكل مسح، ويُستخدم أول %1$d فقط.</item>
+        <item quantity="few">حتى %1$d ملفات لكل مسح، ويُستخدم أول %1$d فقط.</item>
+        <item quantity="many">حتى %1$d ملفًا لكل مسح، ويُستخدم أول %1$d فقط.</item>
+        <item quantity="other">حتى %1$d ملف لكل مسح، ويُستخدم أول %1$d فقط.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="zero">%1$d رصيد</item>
+        <item quantity="one">%1$d رصيد</item>
+        <item quantity="two">%1$d رصيدان</item>
+        <item quantity="few">%1$d أرصدة</item>
+        <item quantity="many">%1$d رصيدًا</item>
+        <item quantity="other">%1$d رصيد</item>
+    </plurals>
     <string name="scr_home_question">ماذا تريد أن تمسح؟</string>
     <string name="scr_home_scan_document">مسح مستند</string>
     <string name="scr_home_scan_document_subtitle">قص تلقائي وتحسين وتصدير PDF</string>
@@ -94,7 +108,14 @@
     <string name="scr_transcribe_transcribing_body">تستغرق التسجيلات الطويلة بضع دقائق. يمكنك مغادرة هذه الشاشة، وسيُحفظ النص المفرّغ هنا عند الانتهاء.</string>
     <string name="scr_transcribe_paused">متوقف</string>
     <string name="scr_transcribe_recording">جارٍ التسجيل</string>
-    <string name="scr_transcribe_up_to_minutes">حتى %1$d دقيقة في خطتك</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="zero">حتى %1$d دقيقة في خطتك</item>
+        <item quantity="one">حتى %1$d دقيقة في خطتك</item>
+        <item quantity="two">حتى %1$d دقيقتين في خطتك</item>
+        <item quantity="few">حتى %1$d دقائق في خطتك</item>
+        <item quantity="many">حتى %1$d دقيقة في خطتك</item>
+        <item quantity="other">حتى %1$d دقيقة في خطتك</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">تجاهل التسجيل</string>
     <string name="scr_transcribe_stop_and_keep">إيقاف والاحتفاظ</string>
     <string name="scr_transcribe_reading_file">جارٍ قراءة الملف…</string>
@@ -108,7 +129,14 @@
     <string name="scr_transcribe_key_terms_count">%1$d من %2$d</string>
     <string name="scr_transcribe_plan_note">1 رصيد ≈ %1$d دقيقة من الصوت · حتى %2$d دقيقة لكل تسجيل في خطتك.</string>
     <string name="scr_transcribe_custom_endpoint_note">يعمل الصوت إلى نص دائمًا على Scanly AI ويستهلك أرصدتك، حتى مع تفعيل نقطة الاتصال الخاصة بك.</string>
-    <string name="scr_transcribe_speakers">%1$d متحدثًا</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="zero">%1$d متحدث</item>
+        <item quantity="one">%1$d متحدث</item>
+        <item quantity="two">%1$d متحدثان</item>
+        <item quantity="few">%1$d متحدثين</item>
+        <item quantity="many">%1$d متحدثًا</item>
+        <item quantity="other">%1$d متحدث</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">اختر اللغة الرئيسية المنطوقة. تُفرَّغ اللغات الأخرى في التسجيل كما نُطقت؛ أما هذه اللغة فتحدد طريقة كتابة الأرقام والتواريخ.</string>
     <string name="scr_transcribe_auto_detect_subtitle">يكتشف اللغة بنفسه، لكنه يعمل مرتين، لذلك يكلّف ضعف الأرصدة.</string>
     <string name="scr_transcribe_key_terms_hint">أسماء وكلمات منتجات ومصطلحات يجب أن يكتبها المفرّغ بدقة. تُستخدم مع كل تسجيل حتى تحذفها. الصق عدة كلمات مفصولة بفواصل.</string>
@@ -182,14 +210,28 @@
     <string name="au_err_unreadable">تعذّر فتح هذا الملف كملف صوتي أو فيديو.</string>
     <string name="au_err_access_lost">لم تعد Scanly تملك صلاحية الوصول إلى هذا الملف. اختره مجددًا.</string>
     <string name="au_err_no_audio">لا يحتوي هذا الملف على صوت لتفريغه.</string>
-    <string name="au_err_too_long">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="zero">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</item>
+        <item quantity="one">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</item>
+        <item quantity="two">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقتين في المرة الواحدة.</item>
+        <item quantity="few">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقائق في المرة الواحدة.</item>
+        <item quantity="many">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</item>
+        <item quantity="other">مدة هذا التسجيل %1$s. تفرّغ خطتك حتى %2$d دقيقة في المرة الواحدة.</item>
+    </plurals>
     <string name="au_err_convert">تعذّر تحويل صوت هذا الملف. جرّب ملفًا آخر.</string>
     <string name="au_err_too_large">هذا التسجيل أكبر من أن تستوعبه خطتك، حتى بعد ضغطه.</string>
     <string name="au_err_read">تعذّرت قراءة هذا الملف.</string>
     <string name="auth_val_email_required">أدخل بريدك الإلكتروني أولًا.</string>
     <string name="auth_reset_sent">إذا كان لـ%1$s كلمة مرور، فرابط إعادة التعيين في الطريق إليك. حسابات Google بلا كلمة مرور، فاستخدم «المتابعة باستخدام Google».</string>
     <string name="auth_val_invalid_email">أدخل بريدًا إلكترونيًا صالحًا.</string>
-    <string name="auth_val_password_short">يجب أن تتكون كلمة المرور من %1$d أحرف على الأقل.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="zero">يجب أن تتكون كلمة المرور من %1$d حرف على الأقل.</item>
+        <item quantity="one">يجب أن تتكون كلمة المرور من %1$d حرف على الأقل.</item>
+        <item quantity="two">يجب أن تتكون كلمة المرور من %1$d حرفين على الأقل.</item>
+        <item quantity="few">يجب أن تتكون كلمة المرور من %1$d أحرف على الأقل.</item>
+        <item quantity="many">يجب أن تتكون كلمة المرور من %1$d حرفًا على الأقل.</item>
+        <item quantity="other">يجب أن تتكون كلمة المرور من %1$d حرف على الأقل.</item>
+    </plurals>
     <string name="auth_val_check_details">تحقّق من بياناتك وحاول مرة أخرى.</string>
     <string name="au_notif_channel_name">التسجيل</string>
     <string name="au_notif_channel_desc">يظهر أثناء تسجيل الصوت إلى نص</string>
@@ -197,8 +239,22 @@
     <string name="au_notif_text">تسجّل Scanly من أجل الصوت إلى نص. انقر للعودة.</string>
     <string name="tx_save_failed">نصك المفرّغ جاهز، لكن تعذّر حفظه على هذا الجهاز (%1$s). أفرِغ بعض المساحة وانقر على حفظ مرة أخرى، ولن يُخصم منك مجددًا.</string>
     <string name="tx_prepare_failed">تعذّر تجهيز هذا التسجيل.</string>
-    <string name="tx_key_terms_limit">حتى %1$d مصطلحات رئيسية. لم تُضَف %2$d منها.</string>
-    <string name="tx_key_terms_length">يمكن أن تصل المصطلحات الرئيسية إلى %1$d حرفًا.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="zero">حتى %1$d مصطلح رئيسي. لم تُضَف %2$d منها.</item>
+        <item quantity="one">حتى %1$d مصطلح رئيسي. لم تُضَف %2$d منها.</item>
+        <item quantity="two">حتى %1$d مصطلحين رئيسيين. لم تُضَف %2$d منها.</item>
+        <item quantity="few">حتى %1$d مصطلحات رئيسية. لم تُضَف %2$d منها.</item>
+        <item quantity="many">حتى %1$d مصطلحًا رئيسيًا. لم تُضَف %2$d منها.</item>
+        <item quantity="other">حتى %1$d مصطلح رئيسي. لم تُضَف %2$d منها.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="zero">المصطلحات الرئيسية حتى %1$d حرف.</item>
+        <item quantity="one">المصطلحات الرئيسية حتى %1$d حرف.</item>
+        <item quantity="two">المصطلحات الرئيسية حتى %1$d حرفين.</item>
+        <item quantity="few">المصطلحات الرئيسية حتى %1$d أحرف.</item>
+        <item quantity="many">المصطلحات الرئيسية حتى %1$d حرفًا.</item>
+        <item quantity="other">المصطلحات الرئيسية حتى %1$d حرف.</item>
+    </plurals>
     <string name="cp_connected">تم الاتصال. نقطة الاتصال هذه جاهزة للحفظ.</string>
     <string name="cp_saved">تم الحفظ. سيستخدم المسح هذا العنوان.</string>
     <string name="cp_removed">تمت إزالة نقطة الاتصال.</string>
@@ -244,8 +300,22 @@
     <string name="net_verify_session">تعذّر التحقق من جلستك.</string>
     <string name="net_session_expired">انتهت جلستك. سجّل الدخول مرة أخرى.</string>
     <string name="lk_no_engines">لا توجد محركات متوافقة</string>
-    <string name="lk_searched">تم البحث في %1$d مصادر</string>
-    <string name="lk_searched_partial">تم البحث في %1$d مصادر. تعذّر الوصول إلى %2$s</string>
+    <plurals name="lk_searched">
+        <item quantity="zero">تم البحث في %1$d مصدر</item>
+        <item quantity="one">تم البحث في %1$d مصدر</item>
+        <item quantity="two">تم البحث في %1$d مصدرين</item>
+        <item quantity="few">تم البحث في %1$d مصادر</item>
+        <item quantity="many">تم البحث في %1$d مصدرًا</item>
+        <item quantity="other">تم البحث في %1$d مصدر</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="zero">تم البحث في %1$d مصدر. تعذّر الوصول إلى %2$s</item>
+        <item quantity="one">تم البحث في %1$d مصدر. تعذّر الوصول إلى %2$s</item>
+        <item quantity="two">تم البحث في %1$d مصدرين. تعذّر الوصول إلى %2$s</item>
+        <item quantity="few">تم البحث في %1$d مصادر. تعذّر الوصول إلى %2$s</item>
+        <item quantity="many">تم البحث في %1$d مصدرًا. تعذّر الوصول إلى %2$s</item>
+        <item quantity="other">تم البحث في %1$d مصدر. تعذّر الوصول إلى %2$s</item>
+    </plurals>
     <string name="lk_unreachable">تعذّر الوصول إلى قواعد بيانات المنتجات. يبدو اتصالك سليمًا، حاول مرة أخرى بعد بضع دقائق.</string>
     <string name="lk_server_problem">تعذّر الوصول إلى قواعد بيانات المنتجات: خوادمها تواجه مشكلات. حاول لاحقًا.</string>
     <string name="ocr_err_load_image">تعذّر تحميل الصورة</string>

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
 import android.os.LocaleList
+import androidx.core.content.edit
 import java.util.Locale
 
 /**
@@ -52,7 +53,8 @@ object AppLanguage {
             activity.getSystemService(LocaleManager::class.java).applicationLocales =
                 if (tag.isEmpty()) LocaleList.getEmptyLocaleList() else LocaleList.forLanguageTags(tag)
         } else {
-            activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_TAG, tag).commit()
+            // apply() updates the in-memory prefs at once, so wrap() in the recreated activity reads the new tag.
+            activity.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit { putString(KEY_TAG, tag) }
             activity.recreate()
         }
     }

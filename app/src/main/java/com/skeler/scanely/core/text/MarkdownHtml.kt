@@ -8,38 +8,49 @@ object MarkdownHtml {
         page("<div class=\"plain\">${escape(source)}</div>")
 
     fun render(source: String): String {
-        val body = MarkdownParser.parse(source).joinToString("\n") { block ->
-            when (block) {
-                is MdBlock.Heading -> {
-                    val level = block.level.coerceIn(1, 6)
-                    "<h$level>${inline(block.text)}</h$level>"
-                }
-                is MdBlock.Paragraph ->
-                    "<p>" + block.lines.joinToString("<br/>") { inline(it) } + "</p>"
-                is MdBlock.Bullet -> {
-                    val box = when (block.checked) {
-                        true -> "&#9745; "
-                        false -> "&#9744; "
-                        null -> ""
-                    }
-                    "<ul style=\"margin-left:${block.indent * 8}px\"><li>$box${inline(block.text)}</li></ul>"
-                }
-                is MdBlock.Numbered ->
-                    "<div class=\"num\" style=\"margin-left:${block.indent * 8 + 16}px\">" +
-                        "<b>${escape(block.marker)}</b> ${inline(block.text)}</div>"
-                is MdBlock.Quote ->
-                    "<blockquote>" + block.lines.joinToString("<br/>") { inline(it) } + "</blockquote>"
-                is MdBlock.Code -> "<pre>${escape(block.text)}</pre>"
-                is MdBlock.Table -> table(block)
-                is MdBlock.Equation ->
-                    "<div class=\"equation\">" +
-                        escape(MathText.prettify(block.latex)).replace("\n", "<br/>") +
-                        "</div>"
-                is MdBlock.Image -> "<div class=\"figure\">${escape(block.label)}</div>"
-                MdBlock.Divider -> "<hr/>"
-            }
-        }
+        val body = MarkdownParser.parse(source).joinToString("\n") { block -> html(block) }
         return page(body)
+    }
+
+    private fun html(block: MdBlock): String = when (block) {
+        is MdBlock.Heading, is MdBlock.Paragraph, is MdBlock.Quote, is MdBlock.Code, MdBlock.Divider -> prose(block)
+        is MdBlock.Bullet -> bullet(block)
+        is MdBlock.Numbered, is MdBlock.Table, is MdBlock.Equation, is MdBlock.Image -> structured(block)
+    }
+
+    private fun prose(block: MdBlock): String = when (block) {
+        is MdBlock.Heading -> {
+            val level = block.level.coerceIn(1, 6)
+            "<h$level>${inline(block.text)}</h$level>"
+        }
+        is MdBlock.Paragraph ->
+            "<p>" + block.lines.joinToString("<br/>") { inline(it) } + "</p>"
+        is MdBlock.Quote ->
+            "<blockquote>" + block.lines.joinToString("<br/>") { inline(it) } + "</blockquote>"
+        is MdBlock.Code -> "<pre>${escape(block.text)}</pre>"
+        else -> "<hr/>"
+    }
+
+    private fun structured(block: MdBlock): String = when (block) {
+        is MdBlock.Numbered ->
+            "<div class=\"num\" style=\"margin-left:${block.indent * INDENT_PX + NUMBER_GUTTER_PX}px\">" +
+                "<b>${escape(block.marker)}</b> ${inline(block.text)}</div>"
+        is MdBlock.Table -> table(block)
+        is MdBlock.Equation ->
+            "<div class=\"equation\">" +
+                escape(MathText.prettify(block.latex)).replace("\n", "<br/>") +
+                "</div>"
+        is MdBlock.Image -> "<div class=\"figure\">${escape(block.label)}</div>"
+        else -> ""
+    }
+
+    private fun bullet(block: MdBlock.Bullet): String {
+        val box = when (block.checked) {
+            true -> "&#9745; "
+            false -> "&#9744; "
+            null -> ""
+        }
+        return "<ul style=\"margin-left:${block.indent * INDENT_PX}px\"><li>$box${inline(block.text)}</li></ul>"
     }
 
     private fun page(body: String): String = """<!DOCTYPE html>
@@ -93,10 +104,13 @@ $body
             if (span.link != null) html = "<a href=\"${escape(span.link)}\">$html</a>"
             html
         }
-
-    private fun escape(text: String): String = text
-        .replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-        .replace("\"", "&quot;")
 }
+
+private const val INDENT_PX = 8
+private const val NUMBER_GUTTER_PX = 16
+
+private fun escape(text: String): String = text
+    .replace("&", "&amp;")
+    .replace("<", "&lt;")
+    .replace(">", "&gt;")
+    .replace("\"", "&quot;")

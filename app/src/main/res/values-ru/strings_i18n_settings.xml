@@ -8,7 +8,12 @@
     <string name="set_sign_in_subtitle">Для ИИ-сканирования</string>
     <string name="set_signed_in">Вы вошли</string>
     <string name="set_pro_key_title">Ключ Scanly Pro</string>
-    <string name="set_pro_key_active_devices">%1$d из %2$d устройств</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="one">%1$d из %2$d устройства</item>
+        <item quantity="few">%1$d из %2$d устройств</item>
+        <item quantity="many">%1$d из %2$d устройств</item>
+        <item quantity="other">%1$d из %2$d устройства</item>
+    </plurals>
     <string name="set_pro_key_active_here">Активен здесь</string>
     <string name="set_delete_account_title">Удалить аккаунт</string>
     <string name="set_delete_account_subtitle">Безвозвратно удалить аккаунт и данные</string>
@@ -35,7 +40,7 @@
     <string name="set_remove_key_message">Устройство перейдёт на бесплатный тариф, место освободится. Ключ продолжит работать на другом устройстве.</string>
     <string name="set_remove_key_confirm">Удалить</string>
     <string name="set_delete_account_dialog_title">Удалить аккаунт?</string>
-    <string name="set_delete_account_dialog_message">Аккаунт Scanly, данные входа и записи об использовании будут безвозвратно удалены с наших серверов. Отменить нельзя.\n\nСканы на этом устройстве не затрагиваются. Подписку Pro отмените отдельно через Paddle.</string>
+    <string name="set_delete_account_dialog_message">Аккаунт Scanly, данные входа и записи об использовании будут безвозвратно удалены с наших серверов. Отменить нельзя. Новый аккаунт с этим адресом можно будет создать только через 30 дней.\n\nСканы на этом устройстве не затрагиваются. Подписку Pro отмените отдельно через Paddle.</string>
     <string name="set_sign_out_dialog_title">Выйти?</string>
     <string name="set_sign_out_dialog_message">ИИ-сканирование не будет работать до входа. История сканов и офлайн-распознавание останутся здесь.</string>
     <string name="set_sign_out">Выйти</string>
@@ -91,7 +96,12 @@
     <string name="set_pro_required_message">Свой ИИ-провайдер входит в Scanly Pro. Поля ниже покажут настройку и откроются с Pro. Оформите Pro или активируйте ключ в разделе «Аккаунт» в настройках.</string>
     <string name="set_custom_intro_body">Подключите любого ИИ-провайдера: выберите протокол, вставьте URL эндпоинта, модель и API-ключ, затем проверьте связь.</string>
     <string name="set_custom_intro_hosts">Большинство совместимо с OpenAI: Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude и Gemini — свои протоколы. Свой сервер в сети работает и по http.</string>
-    <string name="set_custom_intro_pdf_pages">Сканы PDF — по %1$d страниц за раз, картинками в одном запросе. Офисным документам нужен Scanly AI.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="one">Сканы PDF — по %1$d странице за раз, картинками в одном запросе. Офисным документам нужен Scanly AI.</item>
+        <item quantity="few">Сканы PDF — по %1$d страницы за раз, картинками в одном запросе. Офисным документам нужен Scanly AI.</item>
+        <item quantity="many">Сканы PDF — по %1$d страниц за раз, картинками в одном запросе. Офисным документам нужен Scanly AI.</item>
+        <item quantity="other">Сканы PDF — по %1$d страницы за раз, картинками в одном запросе. Офисным документам нужен Scanly AI.</item>
+    </plurals>
     <string name="set_section_protocol">Протокол</string>
     <string name="set_section_endpoint">Эндпоинт</string>
     <string name="set_endpoint_url_label">URL эндпоинта</string>

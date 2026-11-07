@@ -26,11 +26,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -122,12 +124,18 @@ fun HomeScreen() {
 
     val snackbarHostState = remember { SnackbarHostState() }
     var showAiBottomSheet by remember { mutableStateOf(false) }
-    val aiSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val aiSheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
     var pendingAiMode by remember { mutableStateOf<AiMode?>(null) }
     var pendingPageRange by remember { mutableStateOf<PendingPdfScan?>(null) }
     var pendingExtractPreset by remember { mutableStateOf<String?>(null) }
     var showExtractionSheet by remember { mutableStateOf(false) }
-    val extractionSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val extractionSheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
 
     val showSignInPrompt by scanViewModel.showSignInPrompt.collectAsStateWithLifecycle()
 
@@ -157,7 +165,9 @@ fun HomeScreen() {
             val uris = picked.take(photoLimit)
             if (picked.size > photoLimit) {
                 scope.launch {
-                    snackbarHostState.showSnackbar(resources.getString(R.string.scr_home_ai_file_limit, photoLimit))
+                    snackbarHostState.showSnackbar(
+                        resources.getQuantityString(R.plurals.scr_home_ai_file_limit, photoLimit, photoLimit)
+                    )
                 }
             }
             val mode = pendingAiMode!!
@@ -173,7 +183,7 @@ fun HomeScreen() {
             if (selectedUris.size > MAX_AI_FILES) {
                 scope.launch {
                     snackbarHostState.showSnackbar(
-                        resources.getString(R.string.scr_home_ai_file_limit, MAX_AI_FILES)
+                        resources.getQuantityString(R.plurals.scr_home_ai_file_limit, MAX_AI_FILES, MAX_AI_FILES)
                     )
                 }
             }
@@ -286,7 +296,11 @@ fun HomeScreen() {
                                 onClick = { showPaywall = true },
                                 label = {
                                     Text(
-                                        text = stringResource(R.string.scr_home_credits, quota.pagesRemaining),
+                                        text = pluralStringResource(
+                                            R.plurals.scr_home_credits,
+                                            quota.pagesRemaining,
+                                            quota.pagesRemaining
+                                        ),
                                         style = MaterialTheme.typography.labelMedium,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis

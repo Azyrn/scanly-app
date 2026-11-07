@@ -29,10 +29,9 @@ class PdfiumLayer private constructor(
 
     /** Null when the page can't be loaded. */
     fun readPage(index: Int): PdfiumPage? = locked {
-        @Suppress("UNCHECKED_CAST")
-        val result = nativeReadPage(handle, index) as Array<Any>? ?: return@locked null
+        val result = nativeReadPage(handle, index) as Array<*>? ?: return@locked null
         val data = result[0] as FloatArray
-        val fonts = result[1] as Array<String>
+        val fonts = (result[1] as Array<*>).map { it as String }
         val count = data[2].toInt()
         val chars = List(count) { i ->
             val o = HEADER + i * FIELDS

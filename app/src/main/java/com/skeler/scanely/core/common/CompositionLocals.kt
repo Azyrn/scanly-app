@@ -18,6 +18,7 @@ val LocalDarkMode = staticCompositionLocalOf<Boolean> {
 const val MIN_READING_TEXT_SCALE = 0.8f
 const val MAX_READING_TEXT_SCALE = 1.8f
 const val READING_TEXT_SCALE_STEP = 0.1f
+private const val TENTHS = 10f
 
 /** Reader-controlled font scale for extracted text, with the setter that persists it. */
 @Immutable
@@ -33,7 +34,8 @@ class ReadingTextScale(
     fun reset() = onChange(1f)
 
     private fun step(raw: Float): Float =
-        (Math.round(raw * 10) / 10f).coerceIn(MIN_READING_TEXT_SCALE, MAX_READING_TEXT_SCALE)
+        // Snapped to tenths (the step), so repeated grows and shrinks land on the same values.
+        (Math.round(raw * TENTHS) / TENTHS).coerceIn(MIN_READING_TEXT_SCALE, MAX_READING_TEXT_SCALE)
 }
 
 val LocalReadingTextScale = staticCompositionLocalOf { ReadingTextScale() }

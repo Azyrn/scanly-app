@@ -8,7 +8,10 @@
     <string name="set_sign_in_subtitle">AI taraması için gerekli</string>
     <string name="set_signed_in">Oturumlu</string>
     <string name="set_pro_key_title">Scanly Pro kodu</string>
-    <string name="set_pro_key_active_devices">Etkin · %2$d cihazdan %1$d</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="one">Etkin · %2$d cihazdan %1$d</item>
+        <item quantity="other">Etkin · %2$d cihazdan %1$d</item>
+    </plurals>
     <string name="set_pro_key_active_here">Bu cihazda etkin</string>
     <string name="set_delete_account_title">Hesabı sil</string>
     <string name="set_delete_account_subtitle">Hesabınızı ve verilerinizi kalıcı olarak silin</string>
@@ -35,7 +38,7 @@
     <string name="set_remove_key_message">Bu cihaz ücretsiz plana döner ve yuvası boşalır; anahtarı başka bir cihazda kullanabilirsiniz. Anahtar çalışmaya devam eder.</string>
     <string name="set_remove_key_confirm">Kaldır</string>
     <string name="set_delete_account_dialog_title">Hesap silinsin mi?</string>
-    <string name="set_delete_account_dialog_message">Bu işlem Scanly hesabınızı, oturum açma bilgilerinizi ve sunucularımızdaki kullanım kayıtlarınızı kalıcı olarak siler. Geri alınamaz.\n\nBu cihazda kaydedilen taramalar etkilenmez; etkin bir Pro aboneliğini ise Paddle üzerinden ayrıca iptal etmeniz gerekir.</string>
+    <string name="set_delete_account_dialog_message">Bu işlem Scanly hesabınızı, oturum açma bilgilerinizi ve sunucularımızdaki kullanım kayıtlarınızı kalıcı olarak siler. Geri alınamaz. Bu e-postayla 30 gün boyunca yeni hesap oluşturamazsınız.\n\nBu cihazda kaydedilen taramalar etkilenmez; etkin bir Pro aboneliğini ise Paddle üzerinden ayrıca iptal etmeniz gerekir.</string>
     <string name="set_sign_out_dialog_title">Çıkış yap?</string>
     <string name="set_sign_out_dialog_message">Tekrar oturum açana kadar AI taramaları çalışmaz. Tarama geçmişiniz ve çevrimdışı metin tanıma bu cihazda kalır.</string>
     <string name="set_sign_out">Çıkış yap</string>
@@ -91,7 +94,10 @@
     <string name="set_pro_required_message">Kendi yapay zekâ sağlayıcınızı bağlamak Scanly Pro\'nun bir parçası. Aşağıdaki alanlar Pro\'ya geçtiğinizde açılır. Ayarlar\'daki Hesap bölümünden yükseltin ya da sahip olduğunuz anahtarı kullanın.</string>
     <string name="set_custom_intro_body">Herhangi bir yapay zekâ sağlayıcısını bağlayın. Protokolü seçin; uç nokta URL\'si, model adı ve API anahtarını girin, sonra bağlantıyı test edin.</string>
     <string name="set_custom_intro_hosts">Çoğu sunucu OpenAI ile uyumlu — Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude ve Gemini kendi protokollerini kullanır; ağınızdaki kendi sunucunuz düz http üzerinden çalışır.</string>
-    <string name="set_custom_intro_pdf_pages">Taranmış PDF\'ler bir seferde en fazla %1$d sayfa; resim olarak gönderilir. Ofis belgeleri AI gerektirir.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="one">Taranmış PDF\'ler bir seferde en fazla %1$d sayfa; resim olarak gönderilir. Ofis belgeleri AI gerektirir.</item>
+        <item quantity="other">Taranmış PDF\'ler bir seferde en fazla %1$d sayfa; resim olarak gönderilir. Ofis belgeleri AI gerektirir.</item>
+    </plurals>
     <string name="set_section_protocol">Protokol</string>
     <string name="set_section_endpoint">Uç nokta</string>
     <string name="set_endpoint_url_label">Uç nokta URL\'si</string>

@@ -10,9 +10,13 @@
     <string name="pe_menu_validate_hint">Перевірте вбудовані цифрові підписи</string>
     <string name="pe_menu_library_hint">Збережені підписи</string>
     <string name="pe_add_a_pdf">Додати PDF</string>
-    <string name="pe_merge_page_count">Стор. %1$d</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="one">Стор. %1$d</item>
+        <item quantity="few">Стор. %1$d</item>
+        <item quantity="many">Стор. %1$d</item>
+        <item quantity="other">Стор. %1$d</item>
+    </plurals>
     <string name="pe_remove">Видалити</string>
-    <string name="pe_merge_page_change">Сторінок: %1$d → %2$d</string>
     <string name="pe_add_to_document">Додати в документ</string>
     <string name="pe_compress_now">Зараз %1$s</string>
     <string name="pe_compress_trying_levels">Перевіряємо кожен рівень…</string>
@@ -59,7 +63,12 @@
     <string name="pe_unlock">Відкрити</string>
     <string name="pe_issued_by">Видав: %1$s</string>
     <string name="pe_valid_range">Дійсний %1$s – %2$s</string>
-    <string name="pe_chain_count">Сертифікатів у ланцюгу: %1$d</string>
+    <plurals name="pe_chain_count">
+        <item quantity="one">Сертифікатів у ланцюгу: %1$d</item>
+        <item quantity="few">Сертифікатів у ланцюгу: %1$d</item>
+        <item quantity="many">Сертифікатів у ланцюгу: %1$d</item>
+        <item quantity="other">Сертифікатів у ланцюгу: %1$d</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">Цей сертифікат поза строком дії. Він ще може підписувати, але читачі позначатимуть підпис.</string>
     <string name="pe_reason_optional">Причина (опційно)</string>
     <string name="pe_location_optional">Місце (опційно)</string>
@@ -127,7 +136,12 @@
     <string name="pe_crop">Обрізати</string>
     <string name="pe_paywall_reason_studio">Стиснення, шифрування й редагування тексту — у Scanly Pro.</string>
     <string name="pe_select_all">Обрати всі</string>
-    <string name="pe_selected_count">Вибрано: %1$d</string>
+    <plurals name="pe_selected_count">
+        <item quantity="one">Вибрано: %1$d</item>
+        <item quantity="few">Вибрано: %1$d</item>
+        <item quantity="many">Вибрано: %1$d</item>
+        <item quantity="other">Вибрано: %1$d</item>
+    </plurals>
     <string name="pe_clear_selection">Скасувати вибір</string>
     <string name="pe_extract_to_new_pdf">Витягти в новий PDF</string>
     <string name="pe_edit">Редагувати</string>
@@ -141,7 +155,12 @@
     <string name="pe_busy_extracting">Витягуємо</string>
     <string name="pe_extract_failed">Не вдалося витягти сторінки.</string>
     <string name="pe_staged_edits_not_included">\u0020— без відкладених змін</string>
-    <string name="pe_extracted_pages">Витягнуто: %1$d%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="one">Витягнуто: %1$d%2$s</item>
+        <item quantity="few">Витягнуто: %1$d%2$s</item>
+        <item quantity="many">Витягнуто: %1$d%2$s</item>
+        <item quantity="other">Витягнуто: %1$d%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">Зберігаємо</string>
     <string name="pe_busy_checking_signatures">Перевіряємо підписи</string>
     <string name="pe_nothing_to_save">Немає що зберігати.</string>
@@ -149,7 +168,12 @@
     <string name="pe_write_failed">Запис у Downloads не вдався.</string>
     <string name="pe_compression_staged">Стиснення готове. Збережіть.</string>
     <string name="pe_merge_read_failed">Не вдалося відкрити PDF</string>
-    <string name="pe_documents_staged">Документів готово: %1$d. Збережіть.</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="one">Документів готово: %1$d. Збережіть.</item>
+        <item quantity="few">Документів готово: %1$d. Збережіть.</item>
+        <item quantity="many">Документів готово: %1$d. Збережіть.</item>
+        <item quantity="other">Документів готово: %1$d. Збережіть.</item>
+    </plurals>
     <string name="pe_encryption_staged">Шифрування готове. Збережіть.</string>
     <string name="pe_password_removal_staged">Видалення пароля готове. Збережіть.</string>
     <string name="pe_metadata_removal_staged">Видалення метаданих готове. Збережіть.</string>

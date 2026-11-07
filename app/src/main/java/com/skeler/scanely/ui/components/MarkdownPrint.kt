@@ -17,9 +17,11 @@ import androidx.compose.ui.platform.LocalContext
 import com.skeler.scanely.core.text.MarkdownHtml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.coroutines.resume
 
 /**
  * Prints through the system print dialog (which also offers Save as PDF).
@@ -37,9 +39,6 @@ fun rememberMarkdownPrinter(): (text: String, asMarkdown: Boolean) -> Unit {
     }
 }
 
-/** Keeps the printing WebView alive; the print framework only holds a weak grip on it. */
-private var printJobView: WebView? = null
-
 private suspend fun print(context: Context, text: String, asMarkdown: Boolean) {
     if (text.isBlank()) return
     val html = withContext(Dispatchers.Default) {
@@ -48,21 +47,26 @@ private suspend fun print(context: Context, text: String, asMarkdown: Boolean) {
     val jobName = "Scanly_" +
         SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
 
+    // Nothing else holds the WebView while it loads, so this coroutine keeps it (as a local) until
+    // the page is handed to the print framework, whose adapter then holds it until onFinish.
     val webView = WebView(context)
-    printJobView = webView
-    webView.webViewClient = object : WebViewClient() {
-        override fun onPageFinished(view: WebView, url: String) {
-            val printManager = context.getSystemService(PrintManager::class.java)
-            printManager.print(
-                jobName,
-                releasingAdapter(view.createPrintDocumentAdapter(jobName), view),
-                PrintAttributes.Builder()
-                    .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                    .build()
-            )
+    suspendCancellableCoroutine { done ->
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView, url: String) {
+                if (!done.isActive) return
+                val printManager = context.getSystemService(PrintManager::class.java)
+                printManager.print(
+                    jobName,
+                    releasingAdapter(view.createPrintDocumentAdapter(jobName), view),
+                    PrintAttributes.Builder()
+                        .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                        .build()
+                )
+                done.resume(Unit)
+            }
         }
+        webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
     }
-    webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
 }
 
 /** Frees the WebView (and the Activity it references) once the print job is done with it. */
@@ -87,7 +91,6 @@ private fun releasingAdapter(delegate: PrintDocumentAdapter, view: WebView) =
 
         override fun onFinish() {
             delegate.onFinish()
-            if (printJobView === view) printJobView = null
             view.destroy()
         }
     }

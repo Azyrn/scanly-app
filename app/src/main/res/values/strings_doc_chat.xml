@@ -95,7 +95,10 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">That image couldn\'t be used. Try another.</string>
-    <string name="chat_file_too_many_pages">The designer rebuilds up to %1$d pages. That file has %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">The designer rebuilds up to %1$d page. That file has %2$d.</item>
+        <item quantity="other">The designer rebuilds up to %1$d pages. That file has %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">That file is too large to rebuild.</string>
     <string name="chat_file_unreadable">That file couldn\'t be read. Try another.</string>
 
@@ -228,7 +231,10 @@
     <string name="chat_log_loading">Loading the full output…</string>
     <string name="chat_log_expired">Full output expired</string>
     <string name="chat_log_unavailable">Couldn\'t load the full output. Tap to try again.</string>
-    <string name="chat_log_past_limit">%1$d more characters were past the limit and not kept</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d more character was past the limit and not kept</item>
+        <item quantity="other">%1$d more characters were past the limit and not kept</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d earlier row not kept on this phone</item>
         <item quantity="other">%d earlier rows not kept on this phone</item>

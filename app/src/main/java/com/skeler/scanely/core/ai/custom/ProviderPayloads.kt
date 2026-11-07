@@ -70,7 +70,13 @@ internal object ProviderRequest {
         prompt: String,
         imagesBase64: List<String>
     ): JsonObject = when (protocol) {
-        ProviderProtocol.OPENAI -> buildJsonObject {
+        ProviderProtocol.OPENAI -> openAiCompletion(model, systemInstruction, prompt, imagesBase64)
+        ProviderProtocol.ANTHROPIC -> anthropicCompletion(model, systemInstruction, prompt, imagesBase64)
+        ProviderProtocol.GEMINI -> geminiCompletion(systemInstruction, prompt, imagesBase64)
+    }
+
+    private fun openAiCompletion(model: String, systemInstruction: String, prompt: String, images: List<String>) =
+        buildJsonObject {
             put("model", model)
             put("temperature", 1.0)
             put("stream", false)
@@ -84,12 +90,14 @@ internal object ProviderRequest {
                 add(
                     buildJsonObject {
                         put("role", "user")
-                        put("content", openAiContent(prompt, imagesBase64))
+                        put("content", openAiContent(prompt, images))
                     }
                 )
             }
         }
-        ProviderProtocol.ANTHROPIC -> buildJsonObject {
+
+    private fun anthropicCompletion(model: String, systemInstruction: String, prompt: String, images: List<String>) =
+        buildJsonObject {
             put("model", model)
             put("max_tokens", SCAN_MAX_TOKENS)
             put("system", systemInstruction)
@@ -97,12 +105,14 @@ internal object ProviderRequest {
                 add(
                     buildJsonObject {
                         put("role", "user")
-                        put("content", anthropicContent(prompt, imagesBase64))
+                        put("content", anthropicContent(prompt, images))
                     }
                 )
             }
         }
-        ProviderProtocol.GEMINI -> buildJsonObject {
+
+    private fun geminiCompletion(systemInstruction: String, prompt: String, images: List<String>) =
+        buildJsonObject {
             putJsonObject("systemInstruction") {
                 putJsonArray("parts") { add(buildJsonObject { put("text", systemInstruction) }) }
             }
@@ -110,12 +120,11 @@ internal object ProviderRequest {
                 add(
                     buildJsonObject {
                         put("role", "user")
-                        put("parts", geminiParts(prompt, imagesBase64))
+                        put("parts", geminiParts(prompt, images))
                     }
                 )
             }
         }
-    }
 
     private fun openAiContent(prompt: String, images: List<String>): JsonArray = buildJsonArray {
         add(

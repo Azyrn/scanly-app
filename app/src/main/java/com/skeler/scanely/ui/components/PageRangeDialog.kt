@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -77,9 +78,15 @@ fun PageRangeDialog(
 
                 Text(
                     text = if (mustChoose) {
-                        stringResource(R.string.cmp_page_range_over_ceiling, fileName, totalPages, maxPages ?: 0)
+                        pluralStringResource(
+                            R.plurals.cmp_page_range_over_ceiling,
+                            totalPages,
+                            fileName,
+                            totalPages,
+                            maxPages
+                        )
                     } else {
-                        stringResource(R.string.cmp_page_range_intro, fileName, totalPages)
+                        pluralStringResource(R.plurals.cmp_page_range_intro, totalPages, fileName, totalPages)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -102,13 +109,31 @@ fun PageRangeDialog(
                         Text(
                             when {
                                 invalid && mustChoose ->
-                                    stringResource(R.string.cmp_page_range_pick_up_to, maxPages ?: 0, totalPages)
+                                    pluralStringResource(
+                                        R.plurals.cmp_page_range_pick_up_to,
+                                        maxPages,
+                                        maxPages,
+                                        totalPages
+                                    )
                                 invalid ->
                                     stringResource(R.string.cmp_page_range_use_numbers, totalPages)
                                 selected != null ->
-                                    stringResource(R.string.cmp_page_range_n_of_total, selected.size, totalPages)
-                                mustChoose -> stringResource(R.string.cmp_page_range_required, maxPages ?: 0)
-                                else -> stringResource(R.string.cmp_page_range_leave_empty, totalPages)
+                                    pluralStringResource(
+                                        R.plurals.cmp_page_range_n_of_total,
+                                        totalPages,
+                                        selected.size,
+                                        totalPages
+                                    )
+                                mustChoose -> pluralStringResource(
+                                    R.plurals.cmp_page_range_required,
+                                    maxPages,
+                                    maxPages
+                                )
+                                else -> pluralStringResource(
+                                    R.plurals.cmp_page_range_leave_empty,
+                                    totalPages,
+                                    totalPages
+                                )
                             }
                         )
                     },

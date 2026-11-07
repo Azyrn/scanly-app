@@ -15,7 +15,7 @@ class ScanExporterTest {
 
     @Test
     fun `word keeps the markdown preview's headings, emphasis and table grid`() {
-        val document = ScanExporter.wordMarkdownDocument(
+        val document = wordMarkdownDocument(
             MarkdownParser.parse("# Invoice\n\nDue **now**\n\n| Item | Cost |\n| --- | --- |\n| Pen | 2 |")
         )
 
@@ -35,7 +35,7 @@ class ScanExporterTest {
      */
     @Test
     fun `word tables carry the grid the schema requires`() {
-        val document = ScanExporter.wordMarkdownDocument(
+        val document = wordMarkdownDocument(
             MarkdownParser.parse("| Item | Cost |\n| --- | --- |\n| Pen | 2 |")
         )
 
@@ -52,7 +52,7 @@ class ScanExporterTest {
      */
     @Test
     fun `word keeps the line breaks inside a paragraph`() {
-        val document = ScanExporter.wordMarkdownDocument(
+        val document = wordMarkdownDocument(
             MarkdownParser.parse("**Client:** Acme\n**Date:** today\n**Project:** kitchen")
         )
 
@@ -65,7 +65,7 @@ class ScanExporterTest {
     fun `a document's headings and tables export without colour`() {
         val markdown = "# Invoice\n\n| Item | Cost |\n| --- | --- |\n| Pen | 2 |"
 
-        val plain = ScanExporter.wordMarkdownDocument(MarkdownParser.parse(markdown))
+        val plain = wordMarkdownDocument(MarkdownParser.parse(markdown))
 
         assertFalse(plain.contains("<w:color"))
         assertTrue(plain.contains("w:fill=\"EEEEEE\""))
@@ -78,7 +78,7 @@ class ScanExporterTest {
             TextBlockData("Thank you", 12, 22, 130, 48, confidence = 0.91f, page = 2)
         )
 
-        val json = JSONObject(ScanExporter.buildJson(multiPageText, blocks))
+        val json = JSONObject(TextExporter.buildJson(multiPageText, blocks))
         val pages = json.getJSONArray("pages")
 
         assertEquals(multiPageText, json.getString("text"))
@@ -99,7 +99,7 @@ class ScanExporterTest {
 
     @Test
     fun `json without blocks falls back to text lines`() {
-        val json = JSONObject(ScanExporter.buildJson(multiPageText, emptyList()))
+        val json = JSONObject(TextExporter.buildJson(multiPageText, emptyList()))
         val pages = json.getJSONArray("pages")
 
         assertEquals(2, pages.length())

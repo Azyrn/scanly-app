@@ -5,35 +5,27 @@
     <string name="pdf_tool_ppt2pdf_shapes">部分形状已简化。</string>
     <string name="pdf_tool_ppt2pdf_fonts">部分字体已替换为相近的字体。</string>
     <plurals name="pdf_tool_ppt2pdf_charts">
-        <item quantity="one">已省略 %d 个图表。</item>
         <item quantity="other">已省略 %d 个图表。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_diagrams">
-        <item quantity="one">已省略 %d 个 SmartArt 图形。</item>
         <item quantity="other">已省略 %d 个 SmartArt 图形。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_objects">
-        <item quantity="one">已省略 %d 个嵌入对象。</item>
         <item quantity="other">已省略 %d 个嵌入对象。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_media">
-        <item quantity="one">%d 个视频或音频无法在 PDF 中播放，仅显示其预览图片。</item>
         <item quantity="other">%d 个视频或音频无法在 PDF 中播放，仅显示其预览图片。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_images">
-        <item quantity="one">%d 张图片无法显示。</item>
         <item quantity="other">%d 张图片无法显示。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_hidden">
-        <item quantity="one">已跳过 %d 张隐藏幻灯片。</item>
         <item quantity="other">已跳过 %d 张隐藏幻灯片。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_unreadable">
-        <item quantity="one">%d 张幻灯片无法读取，已被省略。</item>
         <item quantity="other">%d 张幻灯片无法读取，已被省略。</item>
     </plurals>
     <plurals name="pdf_tool_ppt2pdf_truncated">
-        <item quantity="one">仅转换了前 %d 张幻灯片。</item>
         <item quantity="other">仅转换了前 %d 张幻灯片。</item>
     </plurals>
 </resources>

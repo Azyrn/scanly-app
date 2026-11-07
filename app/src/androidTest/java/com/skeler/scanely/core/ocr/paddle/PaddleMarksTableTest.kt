@@ -4,7 +4,7 @@ import android.graphics.BitmapFactory
 import androidx.test.platform.app.InstrumentationRegistry
 import com.skeler.scanely.core.ocr.OcrResult
 import com.skeler.scanely.core.ocr.PdfRendererHelper
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.TextExporter
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
@@ -52,7 +52,7 @@ class PaddleMarksTableTest {
         val store = PaddleModelStore(context, OkHttpClient())
         // The table model is a download, and ModelDownloadSurvivesScreenTest deletes it on the way
         // out; without this the pipe table only appears when that test happens to run afterwards.
-        runBlocking { store.downloadTable() }
+        runBlocking { store.table.download() }
         engine = PaddleOcrEngine(context, store)
         service = PaddleOcrService(context, engine, DefaultSettings(), PdfRendererHelper(context))
     }
@@ -137,7 +137,7 @@ class PaddleMarksTableTest {
         assertTrue("recognition failed: $result", result is OcrResult.Success)
         val success = result as OcrResult.Success
 
-        val json = ScanExporter.buildJson(success.text, success.blocks)
+        val json = TextExporter.buildJson(success.text, success.blocks)
         dump("export.json", json)
 
         val root = JSONObject(json)

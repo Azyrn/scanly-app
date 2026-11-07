@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر.</string>
-    <string name="cmp_paywall_credits_left_upgrade">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر. رقِّ اشتراكك للحصول على المزيد.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="zero">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر.</item>
+        <item quantity="one">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر.</item>
+        <item quantity="two">بقي لديك %1$d من أصل %2$d رصيدين هذا الشهر.</item>
+        <item quantity="few">بقي لديك %1$d من أصل %2$d أرصدة هذا الشهر.</item>
+        <item quantity="many">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر.</item>
+        <item quantity="other">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="zero">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+        <item quantity="one">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+        <item quantity="two">بقي لديك %1$d من أصل %2$d رصيدين هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+        <item quantity="few">بقي لديك %1$d من أصل %2$d أرصدة هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+        <item quantity="many">بقي لديك %1$d من أصل %2$d رصيدًا هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+        <item quantity="other">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر. رقِّ اشتراكك للمزيد.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">أرصدة أكثر، ومستندات أطول، وصيغ ملفات أكثر.</string>
     <string name="cmp_paywall_ai_scan_credit">يستهلك المسح بالذكاء الاصطناعي رصيدًا لكل صفحة. الأدوات الأخرى تشترك في رصيدك.</string>
     <string name="cmp_paywall_plan_active">خطتك مفعّلة على هذا الحساب.</string>
     <string name="cmp_paywall_key_active_here">مفتاحك مفعّل على هذا الجهاز.</string>
-    <string name="cmp_paywall_devices_used">%1$d من أصل %2$d أجهزة مستخدمة. أدِر مفتاحك من الإعدادات.</string>
-    <string name="cmp_paywall_watch_ad">شاهد إعلانًا للحصول على %1$d رصيدًا إضافيًا</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="zero">%1$d من أصل %2$d جهاز مستخدم. أدِر مفتاحك من الإعدادات.</item>
+        <item quantity="one">%1$d من أصل %2$d جهاز مستخدم. أدِر مفتاحك من الإعدادات.</item>
+        <item quantity="two">%1$d من أصل %2$d جهازين مستخدمين. أدِر مفتاحك من الإعدادات.</item>
+        <item quantity="few">%1$d من أصل %2$d أجهزة مستخدمة. أدِر مفتاحك من الإعدادات.</item>
+        <item quantity="many">%1$d من أصل %2$d جهازًا مستخدمًا. أدِر مفتاحك من الإعدادات.</item>
+        <item quantity="other">%1$d من أصل %2$d جهاز مستخدم. أدِر مفتاحك من الإعدادات.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="zero">شاهد إعلانًا: +%1$d رصيد إضافي</item>
+        <item quantity="one">شاهد إعلانًا: +%1$d رصيد إضافي</item>
+        <item quantity="two">شاهد إعلانًا: +%1$d رصيدين إضافيين</item>
+        <item quantity="few">شاهد إعلانًا: +%1$d أرصدة إضافية</item>
+        <item quantity="many">شاهد إعلانًا: +%1$d رصيدًا إضافيًا</item>
+        <item quantity="other">شاهد إعلانًا: +%1$d رصيد إضافي</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"يتضمن المسح بالذكاء الاصطناعي حصة شهرية مجانية. الخطط المدفوعة متاحة على "</string>
     <string name="cmp_paywall_where_to_buy_after">. لا تتوفر عمليات الشراء في هذا التطبيق. هل أنت مشترك بالفعل؟ استعد مشترياتك أدناه.</string>
     <string name="cmp_copied">تم النسخ</string>
@@ -24,7 +52,14 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">نشط</string>
     <string name="cmp_paywall_feature_credits">%1$d رصيد AI/شهر</string>
-    <string name="cmp_paywall_feature_pages">حتى %1$d صفحة في مستند واحد</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="zero">حتى %1$d صفحة في مستند واحد</item>
+        <item quantity="one">حتى %1$d صفحة في مستند واحد</item>
+        <item quantity="two">حتى %1$d صفحتين في مستند واحد</item>
+        <item quantity="few">حتى %1$d صفحات في مستند واحد</item>
+        <item quantity="many">حتى %1$d صفحة في مستند واحد</item>
+        <item quantity="other">حتى %1$d صفحة في مستند واحد</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">ملفات Word وPowerPoint وOpenDocument</string>
     <string name="cmp_paywall_feature_translation">الترجمة</string>
     <string name="cmp_paywall_feature_extraction">استخراج البيانات من الإيصالات والفواتير والبطاقات</string>
@@ -44,19 +79,78 @@
     <string name="cmp_bigger_text">نص أكبر</string>
     <string name="cmp_reset">تصفير</string>
     <string name="cmp_no_table">بدون جدول</string>
-    <string name="cmp_word_char_counts">%1$d كلمة · %2$d حرفًا</string>
+    <plurals name="cmp_word_count">
+        <item quantity="zero">%d كلمة</item>
+        <item quantity="one">%d كلمة</item>
+        <item quantity="two">%d كلمتان</item>
+        <item quantity="few">%d كلمات</item>
+        <item quantity="many">%d كلمة</item>
+        <item quantity="other">%d كلمة</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="zero">%d حرف</item>
+        <item quantity="one">%d حرف</item>
+        <item quantity="two">%d حرفان</item>
+        <item quantity="few">%d أحرف</item>
+        <item quantity="many">%d حرفًا</item>
+        <item quantity="other">%d حرف</item>
+    </plurals>
     <string name="cmp_save_as">حفظ باسم</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">أي صفحات تريد مسحها؟</string>
-    <string name="cmp_page_range_over_ceiling">يحتوي %1$s على %2$d صفحة، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</string>
-    <string name="cmp_page_range_intro">يحتوي %1$s على %2$d صفحة. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</string>
-    <string name="cmp_page_range_example">مثال: 1-5، 8</string>
-    <string name="cmp_page_range_pick_up_to">اختر حتى %1$d صفحات بين 1 و%2$d.</string>
-    <string name="cmp_page_range_use_numbers">استخدم أرقام صفحات بين 1 و%1$d، مثل 1-5 أو 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%1$d من %2$d صفحة</string>
-    <string name="cmp_page_range_required">مطلوب: يغطي هذا المسح %1$d صفحة</string>
-    <string name="cmp_page_range_leave_empty">اتركه فارغًا لمسح كل الصفحات (%1$d)</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="zero">يحتوي %1$s على %2$d صفحة، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+        <item quantity="one">يحتوي %1$s على %2$d صفحة، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+        <item quantity="two">يحتوي %1$s على %2$d صفحتين، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+        <item quantity="few">يحتوي %1$s على %2$d صفحات، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+        <item quantity="many">يحتوي %1$s على %2$d صفحة، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+        <item quantity="other">يحتوي %1$s على %2$d صفحة، ويقرأ هذا المسح %3$d صفحة كحد أقصى. اختر الصفحات المهمة.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="zero">يحتوي %1$s على %2$d صفحة. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+        <item quantity="one">يحتوي %1$s على %2$d صفحة. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+        <item quantity="two">يحتوي %1$s على %2$d صفحتين. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+        <item quantity="few">يحتوي %1$s على %2$d صفحات. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+        <item quantity="many">يحتوي %1$s على %2$d صفحة. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+        <item quantity="other">يحتوي %1$s على %2$d صفحة. كل صفحة تمسحها تُحتسب من خطتك، لذا تكون النطاقات أقل تكلفة من الملف كاملًا.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">مثال: 1-5، 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="zero">اختر حتى %1$d صفحة بين 1 و%2$d.</item>
+        <item quantity="one">اختر حتى %1$d صفحة بين 1 و%2$d.</item>
+        <item quantity="two">اختر حتى %1$d صفحتين بين 1 و%2$d.</item>
+        <item quantity="few">اختر حتى %1$d صفحات بين 1 و%2$d.</item>
+        <item quantity="many">اختر حتى %1$d صفحة بين 1 و%2$d.</item>
+        <item quantity="other">اختر حتى %1$d صفحة بين 1 و%2$d.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">استخدم أرقام صفحات بين 1 و%1$d، مثل 1-5 أو 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="zero">%1$d من %2$d صفحة</item>
+        <item quantity="one">%1$d من %2$d صفحة</item>
+        <item quantity="two">%1$d من %2$d صفحتين</item>
+        <item quantity="few">%1$d من %2$d صفحات</item>
+        <item quantity="many">%1$d من %2$d صفحة</item>
+        <item quantity="other">%1$d من %2$d صفحة</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="zero">مطلوب: يغطي هذا المسح %1$d صفحة</item>
+        <item quantity="one">مطلوب: يغطي هذا المسح %1$d صفحة</item>
+        <item quantity="two">مطلوب: يغطي هذا المسح %1$d صفحتين</item>
+        <item quantity="few">مطلوب: يغطي هذا المسح %1$d صفحات</item>
+        <item quantity="many">مطلوب: يغطي هذا المسح %1$d صفحة</item>
+        <item quantity="other">مطلوب: يغطي هذا المسح %1$d صفحة</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="zero">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+        <item quantity="one">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+        <item quantity="two">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+        <item quantity="few">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+        <item quantity="many">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+        <item quantity="other">اتركه فارغًا لمسح كل الصفحات (%1$d)</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">مسح %1$d</string>
     <string name="cmp_page_range_scan_all">مسح الكل</string>
 
@@ -65,15 +159,22 @@
     <string name="cmp_stage_processing">جارٍ المعالجة…</string>
     <string name="cmp_stage_generating">جارٍ الإنشاء…</string>
     <string name="cmp_stage_complete">اكتمل</string>
-    <string name="cmp_processing_file_of">جارٍ معالجة الملف %1$d من %2$d...</string>
-    <string name="cmp_extracting_text">جارٍ استخراج النص...</string>
+    <string name="cmp_processing_file_of">جارٍ معالجة الملف %1$d من %2$d…</string>
+    <string name="cmp_extracting_text">جارٍ استخراج النص…</string>
     <string name="cmp_file_of">الملف %1$d من %2$d</string>
     <string name="cmp_may_take_few_moments">قد يستغرق ذلك بضع لحظات</string>
-    <string name="cmp_translating">جارٍ الترجمة...</string>
+    <string name="cmp_translating">جارٍ الترجمة…</string>
     <string name="cmp_couldnt_read_file">تعذّرت قراءة هذا الملف</string>
     <string name="cmp_no_text_extracted">لم يُستخرج أي نص</string>
     <string name="cmp_try_different_image">جرّب اختيار صورة أخرى</string>
-    <string name="cmp_batch_scanning">جارٍ مسح %1$d من %2$d ملفات…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="zero">جارٍ مسح %1$d من %2$d ملف…</item>
+        <item quantity="one">جارٍ مسح %1$d من %2$d ملف…</item>
+        <item quantity="two">جارٍ مسح %1$d من %2$d ملفين…</item>
+        <item quantity="few">جارٍ مسح %1$d من %2$d ملفات…</item>
+        <item quantity="many">جارٍ مسح %1$d من %2$d ملفًا…</item>
+        <item quantity="other">جارٍ مسح %1$d من %2$d ملف…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">القيم الغذائية</string>
@@ -122,7 +223,14 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">استخراج البيانات</string>
-    <string name="cmp_preset_cost">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d أرصدة من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="zero">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيد من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+        <item quantity="one">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيد من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+        <item quantity="two">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيدين من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+        <item quantity="few">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d أرصدة من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+        <item quantity="many">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيدًا من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+        <item quantity="other">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيد من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">احصل على الحقول المصنّفة إلى جانب النص. متاحة مع Pro وما فوقه.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +270,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">غير معروف</string>
-    <string name="cmp_product_looking_up">جارٍ البحث عن المنتج...</string>
+    <string name="cmp_product_looking_up">جارٍ البحث عن المنتج…</string>
     <string name="cmp_product_not_found">المنتج غير موجود</string>
     <string name="cmp_product_lookup_failed">تعذّر البحث</string>
     <string name="cmp_product_unknown_error">خطأ غير معروف</string>
@@ -197,8 +305,22 @@
     <string name="cmp_preview_rendering_pages">جارٍ عرض الصفحات…</string>
     <string name="cmp_preview_render_failed">تعذّر عرض هذا المستند كملف PDF.</string>
     <string name="cmp_preview_page_n_of_total">صفحة %1$d من %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">أول %1$d من %2$d صفحات</string>
-    <string name="cmp_preview_first_n_of_lines">أول %1$d من %2$d أسطر</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="zero">أول %1$d من %2$d صفحة</item>
+        <item quantity="one">أول %1$d من %2$d صفحة</item>
+        <item quantity="two">أول %1$d من %2$d صفحتين</item>
+        <item quantity="few">أول %1$d من %2$d صفحات</item>
+        <item quantity="many">أول %1$d من %2$d صفحة</item>
+        <item quantity="other">أول %1$d من %2$d صفحة</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="zero">أول %1$d من %2$d سطر</item>
+        <item quantity="one">أول %1$d من %2$d سطر</item>
+        <item quantity="two">أول %1$d من %2$d سطرين</item>
+        <item quantity="few">أول %1$d من %2$d أسطر</item>
+        <item quantity="many">أول %1$d من %2$d سطرًا</item>
+        <item quantity="other">أول %1$d من %2$d سطر</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">لا يوجد ما يمكن تصديره</string>

@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// Kept whole on purpose: one typed read and write per kind of stored setting.
+@Suppress("TooManyFunctions")
 @Singleton
 class SettingsDataStore @Inject constructor(
     @param:ApplicationContext private val context: Context,

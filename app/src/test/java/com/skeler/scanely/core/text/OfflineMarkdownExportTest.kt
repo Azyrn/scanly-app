@@ -1,6 +1,6 @@
 package com.skeler.scanely.core.text
 
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.wordMarkdownDocument
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -38,7 +38,7 @@ class OfflineMarkdownExportTest {
 
     @Test
     fun `offline markdown exports to word without its escapes`() {
-        val document = ScanExporter.wordMarkdownDocument(MarkdownParser.parse(offlineMarkdown))
+        val document = wordMarkdownDocument(MarkdownParser.parse(offlineMarkdown))
 
         assertTrue(document.contains(">Invoice #42 (final)</w:t>"))
         assertTrue(document.contains(">Pen * blue</w:t>"))

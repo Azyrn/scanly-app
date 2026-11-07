@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">Bu ay %2$d kredinizden %1$d kaldı.</string>
-    <string name="cmp_paywall_credits_left_upgrade">Bu ay %2$d kredinizden %1$d kaldı. Daha fazlası için yükseltin.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">Bu ay %2$d kredinizden %1$d kaldı.</item>
+        <item quantity="other">Bu ay %2$d kredinizden %1$d kaldı.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">Bu ay %2$d kredinizden %1$d kaldı. Daha fazlası için yükseltin.</item>
+        <item quantity="other">Bu ay %2$d kredinizden %1$d kaldı. Daha fazlası için yükseltin.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">Daha fazla kredi, uzun belge ve dosya biçimi.</string>
     <string name="cmp_paywall_ai_scan_credit">AI Tarama sayfa başına 1 kredi. Diğer AI araçları aynı bakiyeyi paylaşır.</string>
     <string name="cmp_paywall_plan_active">Planınız bu hesapta etkin.</string>
     <string name="cmp_paywall_key_active_here">Anahtarınız bu cihazda etkin.</string>
-    <string name="cmp_paywall_devices_used">%2$d cihazdan %1$d kullanıldı. Anahtarı Ayarlar\'dan yönetin.</string>
-    <string name="cmp_paywall_watch_ad">Reklam izle: +%1$d kredi</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">%2$d cihazdan %1$d kullanıldı. Anahtarı Ayarlar\'dan yönetin.</item>
+        <item quantity="other">%2$d cihazdan %1$d kullanıldı. Anahtarı Ayarlar\'dan yönetin.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">Reklam izle: +%1$d kredi</item>
+        <item quantity="other">Reklam izle: +%1$d kredi</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"AI Tarama ücretsiz aylık bir kota içerir. Ücretli planlar şurada sunulur: "</string>
     <string name="cmp_paywall_where_to_buy_after">. Bu uygulamada satın alma yok. Abone misiniz? Aşağıdan satın alımınızı geri yükleyin.</string>
     <string name="cmp_copied">Kopyalandı</string>
@@ -24,7 +36,10 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Etkin</string>
     <string name="cmp_paywall_feature_credits">Ayda %1$d AI kredisi</string>
-    <string name="cmp_paywall_feature_pages">Tek bir belgede en fazla %1$d sayfa</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">Tek bir belgede en fazla %1$d sayfa</item>
+        <item quantity="other">Tek bir belgede en fazla %1$d sayfa</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Word, PowerPoint ve OpenDocument dosyaları</string>
     <string name="cmp_paywall_feature_translation">Çeviri</string>
     <string name="cmp_paywall_feature_extraction">Fişlerden, faturalardan ve kartlardan veri çıkarma</string>
@@ -44,19 +59,46 @@
     <string name="cmp_bigger_text">Büyük metin</string>
     <string name="cmp_reset">Sıfırla</string>
     <string name="cmp_no_table">Tablo yok</string>
-    <string name="cmp_word_char_counts">%1$d kelime · %2$d karakter</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d kelime</item>
+        <item quantity="other">%d kelime</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d karakter</item>
+        <item quantity="other">%d karakter</item>
+    </plurals>
     <string name="cmp_save_as">Farklı kaydet</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">Hangi sayfalar?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s %2$d sayfa içeriyor, bu tarama en fazla %3$d sayfayı okur. Önemli olanları seçin.</string>
-    <string name="cmp_page_range_intro">%1$s %2$d sayfa içeriyor. Taranan her sayfa planınızdan düşer; aralık tüm dosyadan ucuza gelir.</string>
-    <string name="cmp_page_range_example">örn. 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">1 ile %2$d arasında en fazla %1$d sayfa seçin.</string>
-    <string name="cmp_page_range_use_numbers">1-%1$d arası sayfa numarası girin: 1-5 ya da 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%2$d sayfadan %1$d</string>
-    <string name="cmp_page_range_required">Zorunlu — bu tarama %1$d sayfayı kapsıyor</string>
-    <string name="cmp_page_range_leave_empty">Boş bırakın: tüm %1$d sayfa taranır</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">%1$s %2$d sayfa içeriyor, bu tarama en fazla %3$d sayfayı okur. Önemli olanları seçin.</item>
+        <item quantity="other">%1$s %2$d sayfa içeriyor, bu tarama en fazla %3$d sayfayı okur. Önemli olanları seçin.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">%1$s %2$d sayfa içeriyor. Taranan her sayfa planınızdan düşer; aralık tüm dosyadan ucuza gelir.</item>
+        <item quantity="other">%1$s %2$d sayfa içeriyor. Taranan her sayfa planınızdan düşer; aralık tüm dosyadan ucuza gelir.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">örn. 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">1 ile %2$d arasında en fazla %1$d sayfa seçin.</item>
+        <item quantity="other">1 ile %2$d arasında en fazla %1$d sayfa seçin.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">1-%1$d arası sayfa numarası girin: 1-5 ya da 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%2$d sayfadan %1$d</item>
+        <item quantity="other">%2$d sayfadan %1$d</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">Zorunlu — tarama %1$d sayfayı kapsıyor</item>
+        <item quantity="other">Zorunlu — bu tarama %1$d sayfayı kapsıyor</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">Boş bırakın: %1$d sayfa taranır</item>
+        <item quantity="other">Boş bırakın: tüm %1$d sayfa taranır</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">Tara: %1$d</string>
     <string name="cmp_page_range_scan_all">Tümünü</string>
 
@@ -65,15 +107,18 @@
     <string name="cmp_stage_processing">İşleniyor…</string>
     <string name="cmp_stage_generating">Üretiliyor…</string>
     <string name="cmp_stage_complete">Bitti</string>
-    <string name="cmp_processing_file_of">%1$d/%2$d dosya işleniyor...</string>
-    <string name="cmp_extracting_text">Metin çıkarılıyor...</string>
+    <string name="cmp_processing_file_of">%1$d/%2$d dosya işleniyor…</string>
+    <string name="cmp_extracting_text">Metin çıkarılıyor…</string>
     <string name="cmp_file_of">Dosya %1$d / %2$d</string>
     <string name="cmp_may_take_few_moments">Bu birkaç dakika sürebilir</string>
-    <string name="cmp_translating">Çevriliyor...</string>
+    <string name="cmp_translating">Çevriliyor…</string>
     <string name="cmp_couldnt_read_file">Bu dosya okunamadı</string>
     <string name="cmp_no_text_extracted">Metin çıkarılamadı</string>
     <string name="cmp_try_different_image">Farklı bir resim seçmeyi deneyin</string>
-    <string name="cmp_batch_scanning">%1$d/%2$d dosya taranıyor…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">%1$d/%2$d dosya taranıyor…</item>
+        <item quantity="other">%1$d/%2$d dosya taranıyor…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Besin değerleri</string>
@@ -122,7 +167,10 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Veri çıkar</string>
-    <string name="cmp_preset_cost">Metnin yanında etiketlenmiş alanları da alın. Bir sayfayı veri olarak okumak planınızdan %1$d kredi harcar. Her belge en fazla 8 sayfa içerebilir.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">Metnin yanında etiketlenmiş alanları da alın. Bir sayfayı veri olarak okumak planınızdan %1$d kredi harcar. Her belge en fazla 8 sayfa içerebilir.</item>
+        <item quantity="other">Metnin yanında etiketlenmiş alanları da alın. Bir sayfayı veri olarak okumak planınızdan %1$d kredi harcar. Her belge en fazla 8 sayfa içerebilir.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">Metinle birlikte etiketli alanlar da alın. Pro ve üzerinde dahil.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -153,7 +201,8 @@
     <string name="cmp_ai_mode_extract_data_title">Veri çıkar</string>
     <string name="cmp_ai_mode_extract_data_subtitle">Fişler, faturalar ve kartlar, etiketli alanlar olarak</string>
     <string name="cmp_ai_mode_audio_title">Sesten Metne</string>
-    <string name="cmp_ai_mode_audio_subtitle">Kayıtlar, toplantılar ve videolar, konuşmacı konuşmacı</string>
+    <!-- "konuşmacı konuşmacı" is Turkish reduplication for "speaker by speaker", not a repeated word. -->
+    <string name="cmp_ai_mode_audio_subtitle" tools:ignore="Typos">Kayıtlar, toplantılar ve videolar, konuşmacı konuşmacı</string>
 
     <!-- ui/components/BarcodeScannerComponents.kt -->
     <string name="cmp_barcode_detected">Barkod algılandı</string>
@@ -162,7 +211,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Bilinmiyor</string>
-    <string name="cmp_product_looking_up">Ürün aranıyor...</string>
+    <string name="cmp_product_looking_up">Ürün aranıyor…</string>
     <string name="cmp_product_not_found">Ürün bulunamadı</string>
     <string name="cmp_product_lookup_failed">Arama başarısız</string>
     <string name="cmp_product_unknown_error">Bilinmeyen hata</string>
@@ -189,8 +238,14 @@
     <string name="cmp_preview_rendering_pages">Sayfalar çiziliyor…</string>
     <string name="cmp_preview_render_failed">Bu belge PDF olarak oluşturulamadı.</string>
     <string name="cmp_preview_page_n_of_total">Sayfa %1$d / %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">%2$d sayfadan ilk %1$d</string>
-    <string name="cmp_preview_first_n_of_lines">%2$d satırdan ilk %1$d</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">%2$d sayfadan ilk %1$d</item>
+        <item quantity="other">%2$d sayfadan ilk %1$d</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">%2$d satırdan ilk %1$d</item>
+        <item quantity="other">%2$d satırdan ilk %1$d</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">Aktarılacak şey yok</string>

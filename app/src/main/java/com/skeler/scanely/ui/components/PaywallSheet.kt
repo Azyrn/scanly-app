@@ -37,9 +37,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +49,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -79,7 +81,7 @@ fun PaywallSheet(
     onWatchAd: () -> Unit = {},
     onRestore: () -> Unit = {},
     onConfirmEmail: () -> Unit = {},
-    sheetState: SheetState = rememberModalBottomSheetState()
+    sheetState: SheetState = rememberBottomSheetState(initialValue = SheetValue.Hidden)
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -125,14 +127,16 @@ fun PaywallSheet(
                     reason != null -> reason
                     state.isQuotaKnown ->
                         if (onTopPlan) {
-                            stringResource(
-                                R.string.cmp_paywall_credits_left,
+                            pluralStringResource(
+                                R.plurals.cmp_paywall_credits_left,
+                                state.pagesPerMonth,
                                 state.pagesRemaining,
                                 state.pagesPerMonth
                             )
                         } else {
-                            stringResource(
-                                R.string.cmp_paywall_credits_left_upgrade,
+                            pluralStringResource(
+                                R.plurals.cmp_paywall_credits_left_upgrade,
+                                state.pagesPerMonth,
                                 state.pagesRemaining,
                                 state.pagesPerMonth
                             )
@@ -269,8 +273,9 @@ private fun LicenseActive(state: PaywallState) {
     if (entitlement != null && entitlement.maxActivations > 0) {
         Spacer(Modifier.height(4.dp))
         Text(
-            text = stringResource(
-                R.string.cmp_paywall_devices_used,
+            text = pluralStringResource(
+                R.plurals.cmp_paywall_devices_used,
+                entitlement.maxActivations,
                 entitlement.activationsUsed,
                 entitlement.maxActivations
             ),
@@ -290,7 +295,7 @@ private fun WatchAdForPages(pagesPerAd: Int, onWatchAd: () -> Unit) {
             modifier = Modifier.size(18.dp)
         )
         Spacer(Modifier.size(8.dp))
-        Text(stringResource(R.string.cmp_paywall_watch_ad, pagesPerAd))
+        Text(pluralStringResource(R.plurals.cmp_paywall_watch_ad, pagesPerAd, pagesPerAd))
     }
 }
 
@@ -483,7 +488,9 @@ private fun PlanCard(option: PlanOption) {
             Spacer(Modifier.height(8.dp))
 
             PlanFeature(stringResource(R.string.cmp_paywall_feature_credits, plan.pagesPerMonth))
-            PlanFeature(stringResource(R.string.cmp_paywall_feature_pages, plan.maxPagesPerDoc))
+            PlanFeature(
+                pluralStringResource(R.plurals.cmp_paywall_feature_pages, plan.maxPagesPerDoc, plan.maxPagesPerDoc)
+            )
             if (plan.allowsOffice) PlanFeature(stringResource(R.string.cmp_paywall_feature_office))
             if (plan.allowsTranslation) PlanFeature(stringResource(R.string.cmp_paywall_feature_translation))
             if (plan.allowsExtraction) {

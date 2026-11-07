@@ -26,7 +26,12 @@ data class PendingImage(val uri: String, val name: String = "")
 
 /** Why the last pick was refused, shown as a chip in the composer until dismissed or replaced. */
 @Immutable
-data class AttachError(@param:StringRes val text: Int, val args: List<Any> = emptyList())
+data class AttachError(
+    /** A string id, or a plurals id when [quantity] is set. */
+    val text: Int,
+    val args: List<Any> = emptyList(),
+    val quantity: Int? = null
+)
 
 @Immutable
 data class ComposerUi(

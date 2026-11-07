@@ -95,7 +95,10 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">Bu resim kullanılamadı. Başkasını deneyin.</string>
-    <string name="chat_file_too_many_pages">En fazla %1$d sayfa yenilenir. Dosyada %2$d sayfa var.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">En fazla %1$d sayfa yenilenir. Dosyada %2$d sayfa var.</item>
+        <item quantity="other">En fazla %1$d sayfa yenilenir. Dosyada %2$d sayfa var.</item>
+    </plurals>
     <string name="chat_file_too_large">Dosya çok büyük, yenilenemez.</string>
     <string name="chat_file_unreadable">Dosya okunamadı. Başkasını deneyin.</string>
 
@@ -228,7 +231,10 @@
     <string name="chat_log_loading">Tam çıktı yükleniyor…</string>
     <string name="chat_log_expired">Çıktı süresi doldu</string>
     <string name="chat_log_unavailable">Tam çıktı yüklenemedi. Tekrar için dokunun.</string>
-    <string name="chat_log_past_limit">%1$d karakter daha sınırı aştı ve saklanmadı</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d karakter daha sınırı aştı ve saklanmadı</item>
+        <item quantity="other">%1$d karakter daha sınırı aştı ve saklanmadı</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">Bu telefonda saklanmayan %d satır</item>
         <item quantity="other">Bu telefonda saklanmayan %d önceki satır</item>

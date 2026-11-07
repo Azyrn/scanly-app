@@ -41,10 +41,10 @@ object GenerativeAiModule {
             .addInterceptor(authInterceptor)
             // Only the application knows which billed operations have replay keys.
             .retryOnConnectionFailure(false)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             // Large PDF scans can keep the Worker connection open for several minutes.
-            .readTimeout(300, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(SCAN_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .writeTimeout(SCAN_WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build(),
         BuildConfig.SCANLY_API_BASE_URL
     ).create(ScanlyApi::class.java)
@@ -84,8 +84,8 @@ object GenerativeAiModule {
     @Singleton
     fun provideScanlyPublicApi(@BaseHttpClient base: OkHttpClient): ScanlyPublicApi = retrofit(
         base.derive()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(PUBLIC_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build(),
         BuildConfig.SCANLY_API_BASE_URL
     ).create(ScanlyPublicApi::class.java)
@@ -97,6 +97,10 @@ object GenerativeAiModule {
             .addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
             .build()
 
+    private const val CONNECT_TIMEOUT_SECONDS = 30L
+    private const val SCAN_READ_TIMEOUT_SECONDS = 300L
+    private const val SCAN_WRITE_TIMEOUT_SECONDS = 120L
+    private const val PUBLIC_READ_TIMEOUT_SECONDS = 30L
     private const val CONTROL_CONNECT_TIMEOUT_SECONDS = 10L
     private const val CONTROL_TIMEOUT_SECONDS = 20L
 }

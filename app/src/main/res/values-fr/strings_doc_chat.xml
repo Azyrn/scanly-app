@@ -97,7 +97,11 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">Image inutilisable. Essayez-en une autre.</string>
-    <string name="chat_file_too_many_pages">Maximum %1$d pages. Ce fichier en compte %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">Maximum %1$d page. Ce fichier en compte %2$d.</item>
+        <item quantity="many">Maximum %1$d pages. Ce fichier en compte %2$d.</item>
+        <item quantity="other">Maximum %1$d pages. Ce fichier en compte %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">Trop volumineux à refaire.</string>
     <string name="chat_file_unreadable">Fichier illisible. Essayez-en un autre.</string>
 
@@ -238,7 +242,11 @@
     <string name="chat_log_loading">Chargement complet…</string>
     <string name="chat_log_expired">Sortie expirée</string>
     <string name="chat_log_unavailable">Chargement impossible. Touchez pour réessayer.</string>
-    <string name="chat_log_past_limit">%1$d caractères au-delà de la limite, non conservés</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d caractère au-delà de la limite, non conservé</item>
+        <item quantity="many">%1$d caractères au-delà de la limite, non conservés</item>
+        <item quantity="other">%1$d caractères au-delà de la limite, non conservés</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d ligne antérieure non conservée ici</item>
         <item quantity="many">%d lignes antérieures non gardées ici</item>

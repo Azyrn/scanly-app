@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">Barkod bulunamadı</string>
     <string name="scr_barcode_hint">Barkod ya da QR\'a tutun\nYakınlaştır: parmakları aç · Odakla: dokun</string>
-    <string name="scr_barcode_scanning">Taranıyor...</string>
+    <string name="scr_barcode_scanning">Taranıyor…</string>
     <string name="scr_barcode_upload_gallery">Galeriden yükle</string>
     <string name="scr_barcode_permission_required">Barkod taraması için\nkamera izni gerekli.</string>
     <!-- Document camera -->
@@ -14,8 +14,14 @@
     <string name="scr_camera_focus_hint">Odaklamak için dokun · sayfayı kenara hizalayın</string>
     <string name="scr_camera_capture">Çek</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">En fazla %1$d dosya — ilk %1$d kullanılır.</string>
-    <string name="scr_home_credits">%1$d kredi</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">En fazla %1$d dosya — ilk %1$d kullanılır.</item>
+        <item quantity="other">En fazla %1$d dosya — ilk %1$d kullanılır.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d kredi</item>
+        <item quantity="other">%1$d kredi</item>
+    </plurals>
     <string name="scr_home_question">Neyi taramak istersiniz?</string>
     <string name="scr_home_scan_document">Belge tara</string>
     <string name="scr_home_scan_document_subtitle">Kırp, iyileştir, PDF olarak aktar</string>
@@ -86,7 +92,10 @@
     <string name="scr_transcribe_transcribing_body">Uzun kayıtlar birkaç dakika sürer. Bu ekrandan çıkabilirsiniz; metin bittiğinde burada kaydedilir.</string>
     <string name="scr_transcribe_paused">Duraklı</string>
     <string name="scr_transcribe_recording">Kaydediliyor</string>
-    <string name="scr_transcribe_up_to_minutes">Planınızda en fazla %1$d dakika</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">Planınızda en fazla %1$d dakika</item>
+        <item quantity="other">Planınızda en fazla %1$d dakika</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Kaydı at</string>
     <string name="scr_transcribe_stop_and_keep">Durdur ve sakla</string>
     <string name="scr_transcribe_reading_file">Okunuyor…</string>
@@ -100,7 +109,10 @@
     <string name="scr_transcribe_key_terms_count">%1$d/%2$d</string>
     <string name="scr_transcribe_plan_note">1 kredi ≈ %1$d dakika ses · planınızda kayıt başına en fazla %2$d dakika.</string>
     <string name="scr_transcribe_custom_endpoint_note">Sesten Metne her zaman Scanly AI ile çalışır ve kredilerinizi kullanır; kendi uç noktanız açık olsa bile.</string>
-    <string name="scr_transcribe_speakers">%1$d konuşmacı</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">%1$d konuşmacı</item>
+        <item quantity="other">%1$d konuşmacı</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Konuşulan ana dili seçin. Kayıttaki diğer diller konuşulduğu gibi yazılmaya devam eder; bu seçim sayıların ve tarihlerin nasıl yazılacağını belirler.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Dili kendisi bulur, ancak iki kez çalışır; bu yüzden iki kat kredi harcar.</string>
     <string name="scr_transcribe_key_terms_hint">Metin çevirmenin tam olarak yazması gereken adlar, ürün kelimeleri ve terimler. Silene kadar her kayıtta kullanılır. Virgülle ayırarak birkaç tane yapıştırın.</string>
@@ -162,14 +174,20 @@
     <string name="au_err_unreadable">Bu dosya ses ya da video olarak açılamadı.</string>
     <string name="au_err_access_lost">Scanly bu dosyaya erişemiyor. Dosyayı yeniden seçin.</string>
     <string name="au_err_no_audio">Dosyada yazıya dökülecek ses yok.</string>
-    <string name="au_err_too_long">Kayıt %1$s sürüyor. Plan bir seferde en fazla %2$d dakikayı yazar.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">Kayıt %1$s sürüyor. Plan bir seferde en fazla %2$d dakikayı yazar.</item>
+        <item quantity="other">Kayıt %1$s sürüyor. Plan bir seferde en fazla %2$d dakikayı yazar.</item>
+    </plurals>
     <string name="au_err_convert">Dosyanın sesi dönüştürülemedi. Başka dosya deneyin.</string>
     <string name="au_err_too_large">Bu kayıt, sıkıştırılmış hâliyle bile planınız için çok büyük.</string>
     <string name="au_err_read">Bu dosya okunamadı.</string>
     <string name="auth_val_email_required">Önce e-posta adresinizi girin.</string>
     <string name="auth_reset_sent">%1$s için parola varsa sıfırlama bağlantısı gider. Google hesaplarında parola yok; Google ile devam edin.</string>
     <string name="auth_val_invalid_email">Geçerli e-posta adresi girin.</string>
-    <string name="auth_val_password_short">Parola en az %1$d karakter olmalı.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Parola en az %1$d karakter olmalı.</item>
+        <item quantity="other">Parola en az %1$d karakter olmalı.</item>
+    </plurals>
     <string name="auth_val_check_details">Bilgileri kontrol edip deneyin.</string>
     <string name="au_notif_channel_name">Kayıt</string>
     <string name="au_notif_channel_desc">Sesten Metne kayıt sürerken gösterilir</string>
@@ -177,8 +195,14 @@
     <string name="au_notif_text">Scanly, Sesten Metne kaydediyor. Dönmek için dokun.</string>
     <string name="tx_save_failed">Metniniz hazır, ancak bu cihaza kaydedilemedi (%1$s). Biraz yer açıp yeniden Kaydet\'e dokunun — size yeniden ücret alınmayacak.</string>
     <string name="tx_prepare_failed">Bu kayıt hazırlanamadı.</string>
-    <string name="tx_key_terms_limit">En fazla %1$d terim. %2$d eklenmedi.</string>
-    <string name="tx_key_terms_length">Terimler en fazla %1$d karakter olabilir.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">En fazla %1$d terim. %2$d eklenmedi.</item>
+        <item quantity="other">En fazla %1$d terim. %2$d eklenmedi.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Terimler en fazla %1$d karakter olabilir.</item>
+        <item quantity="other">Terimler en fazla %1$d karakter olabilir.</item>
+    </plurals>
     <string name="cp_connected">Bağlandı. Bu uç nokta kaydedilmeye hazır.</string>
     <string name="cp_saved">Kaydedildi. Taramalar bu uçta çalışır.</string>
     <string name="cp_removed">Uç nokta kaldırıldı.</string>
@@ -224,8 +248,14 @@
     <string name="net_verify_session">Oturumunuz doğrulanamadı.</string>
     <string name="net_session_expired">Oturum sona erdi. Yeniden açın.</string>
     <string name="lk_no_engines">Uyumlu motor yok</string>
-    <string name="lk_searched">%1$d kaynakta arandı</string>
-    <string name="lk_searched_partial">%1$d kaynakta arandı. %2$s\'ye ulaşılamadı</string>
+    <plurals name="lk_searched">
+        <item quantity="one">%1$d kaynakta arandı</item>
+        <item quantity="other">%1$d kaynakta arandı</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">%1$d kaynakta arandı. %2$s\'ye ulaşılamadı</item>
+        <item quantity="other">%1$d kaynakta arandı. %2$s\'ye ulaşılamadı</item>
+    </plurals>
     <string name="lk_unreachable">Ürün veritabanlarına ulaşılamadı. Bağlantınız iyi görünüyor — birkaç dakika sonra yeniden deneyin.</string>
     <string name="lk_server_problem">Ürün veritabanlarına ulaşılamadı: sunucularında sorunlar var. Daha sonra yeniden deneyin.</string>
     <string name="ocr_err_load_image">Resim yüklenemedi</string>

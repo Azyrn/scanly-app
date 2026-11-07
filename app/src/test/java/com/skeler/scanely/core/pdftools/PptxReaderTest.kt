@@ -78,7 +78,7 @@ class PptxReaderTest {
         val titleRun = title.text!!.paragraphs.single().runs.single()
         assertEquals(44f, titleRun.size, 0.01f)
         assertEquals(FontKind.SERIF, titleRun.font) // +mj-lt → Georgia
-        assertEquals(TextAlign.CENTER, title.text!!.paragraphs.single().align)
+        assertEquals(TextAlign.CENTER, title.text.paragraphs.single().align)
 
         val body = shapes.single { it.text?.paragraphs?.first()?.runs?.first()?.text == "First point" }
         // Layout body has no xfrm, so the master's position applies.
@@ -103,7 +103,7 @@ class PptxReaderTest {
         assertEquals(Geometry.ROUND_RECT, boxed.geometry)
         assertEquals(Anchor.CENTER, boxed.text!!.anchor)
         assertEquals(0xFF000000.toInt(), boxed.stroke!!.color)
-        assertEquals(2f, boxed.stroke!!.width, 0.01f)
+        assertEquals(2f, boxed.stroke.width, 0.01f)
 
         // accent1 336699 at lumMod 50% is half the lightness: 1A334D.
         val dark = slide.elements.filterIsInstance<ShapeElement>().single { it.frame.x == 400f }
@@ -139,7 +139,7 @@ class PptxReaderTest {
         assertEquals(2, table.rows.size)
         val header = table.rows[0].cells[0]
         assertEquals("Cell A1", header.text!!.paragraphs.single().runs.single().text)
-        assertTrue(header.text!!.paragraphs.single().runs.single().bold)
+        assertTrue(header.text.paragraphs.single().runs.single().bold)
         assertEquals(Fill.Solid(0xFF336699.toInt()), header.fill)
         assertEquals("Cell B2", table.rows[1].cells[1].text!!.paragraphs.single().runs.single().text)
 

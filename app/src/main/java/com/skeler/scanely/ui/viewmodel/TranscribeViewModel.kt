@@ -245,13 +245,15 @@ class TranscribeViewModel @Inject constructor(
             val added = cleaned.filter { seen.add(it.lowercase()) }
             val kept = added.take((TranscribeOptions.MAX_KEY_TERMS - current.size).coerceAtLeast(0))
             val note = when {
-                added.size > kept.size -> context.getString(
-                    R.string.tx_key_terms_limit,
+                added.size > kept.size -> context.resources.getQuantityString(
+                    R.plurals.tx_key_terms_limit,
+                    TranscribeOptions.MAX_KEY_TERMS,
                     TranscribeOptions.MAX_KEY_TERMS,
                     added.size - kept.size
                 )
-                cleaned.size < candidates.size -> context.getString(
-                    R.string.tx_key_terms_length,
+                cleaned.size < candidates.size -> context.resources.getQuantityString(
+                    R.plurals.tx_key_terms_length,
+                    TranscribeOptions.MAX_KEY_TERM_CHARS,
                     TranscribeOptions.MAX_KEY_TERM_CHARS
                 )
                 else -> null

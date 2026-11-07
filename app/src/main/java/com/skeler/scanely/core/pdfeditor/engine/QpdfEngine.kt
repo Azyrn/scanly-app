@@ -218,14 +218,13 @@ class QpdfEngine @Inject constructor() {
         password: String = ""
     ): QpdfResult = onIo {
         val indices = boxes.keys.toIntArray()
-        val flat = FloatArray(indices.size * 4)
+        val flat = FloatArray(indices.size * CROP_BOX_FLOATS)
         indices.forEachIndexed { i, pageIndex ->
             val box = boxes.getValue(pageIndex)
             val height = pageHeights[pageIndex] ?: box.bottom
-            flat[i * 4] = box.left
-            flat[i * 4 + 1] = height - box.bottom
-            flat[i * 4 + 2] = box.right
-            flat[i * 4 + 3] = height - box.top
+            // left, bottom, right, top in PDF user space (origin bottom-left).
+            floatArrayOf(box.left, height - box.bottom, box.right, height - box.top)
+                .copyInto(flat, i * CROP_BOX_FLOATS)
         }
         Qpdf.toResult(
             Qpdf.nativeSetCropBoxes(
@@ -285,25 +284,27 @@ class QpdfEngine @Inject constructor() {
             output.absolutePath
         )
     }
-
-    private fun passwordArgs(password: String): Array<String> =
-        if (password.isEmpty()) emptyArray() else arrayOf("--password=$password")
-
-    private fun permissionArgs(p: PdfPermissions): Array<String> = arrayOf(
-        "--print=" + when {
-            !p.printing -> "none"
-            p.highResPrinting -> "full"
-            else -> "low"
-        },
-        "--modify=" + if (p.modifying) "all" else "none",
-        "--extract=" + yn(p.extracting),
-        "--annotate=" + yn(p.annotating),
-        "--form=" + yn(p.fillingForms),
-        "--assemble=" + yn(p.assembling),
-        "--accessibility=" + yn(p.accessibility)
-    )
-
-    private fun yn(value: Boolean): String = if (value) "y" else "n"
-
-    private suspend fun <T> onIo(block: () -> T): T = withContext(Dispatchers.IO) { block() }
 }
+
+private const val CROP_BOX_FLOATS = 4
+
+private fun passwordArgs(password: String): Array<String> =
+    if (password.isEmpty()) emptyArray() else arrayOf("--password=$password")
+
+private fun permissionArgs(p: PdfPermissions): Array<String> = arrayOf(
+    "--print=" + when {
+        !p.printing -> "none"
+        p.highResPrinting -> "full"
+        else -> "low"
+    },
+    "--modify=" + if (p.modifying) "all" else "none",
+    "--extract=" + yn(p.extracting),
+    "--annotate=" + yn(p.annotating),
+    "--form=" + yn(p.fillingForms),
+    "--assemble=" + yn(p.assembling),
+    "--accessibility=" + yn(p.accessibility)
+)
+
+private fun yn(value: Boolean): String = if (value) "y" else "n"
+
+private suspend fun <T> onIo(block: () -> T): T = withContext(Dispatchers.IO) { block() }

@@ -36,8 +36,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -100,8 +101,14 @@ fun BarcodeScannerScreen(
     var showActionsSheet by remember { mutableStateOf(false) }
     var textToShow by remember { mutableStateOf<String?>(null) }
     var isProcessingGallery by remember { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val textSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
+    val textSheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
 
     var showProductSheet by remember { mutableStateOf(false) }
     var lookupResult by remember { mutableStateOf<LookupResult?>(null) }
@@ -151,7 +158,8 @@ fun BarcodeScannerScreen(
     val barcodeAnalyzer = remember(engineId) {
         engineId?.let { id ->
             BarcodeAnalyzer(engine = BarcodeEngine.fromId(id)) { actions ->
-                if (actions.isNotEmpty() && !showActionsSheet && textToShow == null && !showProductSheet) {
+                val sheetOpen = showActionsSheet || textToShow != null || showProductSheet
+                if (actions.isNotEmpty() && !sheetOpen) {
                     detectedActions = actions
                     showActionsSheet = true
                 }

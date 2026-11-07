@@ -43,8 +43,10 @@ internal fun Interceptor.Chain.proceedWithToken(context: Context, token: (Boolea
         return request().newBuilder().header("Authorization", "Bearer $idToken").build()
     }
     val response = proceed(authorized(false))
-    if (response.code != 401) return response
+    if (response.code != HTTP_UNAUTHORIZED) return response
     response.close()
     // Authentication is checked before any billing. Retry once with a forced refresh.
     return proceed(authorized(true))
 }
+
+private const val HTTP_UNAUTHORIZED = 401

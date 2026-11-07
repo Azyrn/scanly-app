@@ -48,6 +48,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -55,7 +56,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -82,7 +83,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skeler.scanely.R
 import com.skeler.scanely.core.image.ScanFilter
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.rememberStorageAccess
 import com.skeler.scanely.ui.viewmodel.DocumentScanViewModel
@@ -119,7 +120,7 @@ fun ScanReviewScreen() {
 
     LaunchedEffect(state.exportedScan) {
         state.exportedScan?.let { exported ->
-            if (!ScanExporter.openDocument(
+            if (!DocumentIntents.openDocument(
                     context,
                     exported.uri,
                     exported.format.mimeType,
@@ -519,7 +520,7 @@ private fun ExportSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState()
+        sheetState = rememberBottomSheetState(initialValue = SheetValue.Hidden)
     ) {
         Column(
             modifier = Modifier

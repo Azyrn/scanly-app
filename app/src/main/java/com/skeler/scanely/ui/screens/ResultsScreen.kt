@@ -306,10 +306,9 @@ fun ResultsScreen() {
                     }
                     displayText != null -> {
                         val runInfo = aiState.runInfo
+                        val freshAiSuccess = isAiResult && historyText == null && aiState.result is AiResult.Success
                         val credential: (@Composable () -> Unit)? =
-                            if (isAiResult && historyText == null && runInfo != null &&
-                                aiState.result is AiResult.Success
-                            ) {
+                            if (freshAiSuccess && runInfo != null) {
                                 {
                                     CredentialBadge(model = runInfo.model)
                                 }

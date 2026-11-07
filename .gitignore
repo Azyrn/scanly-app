@@ -42,3 +42,11 @@ app/src/main/kotlin/com/google/firebase/dataconnect/generated/
 /output/
 /tmp/
 runner/.typst-packages-cache/
+__pycache__/
+
+# Local only: server deploy settings (host, SSH key, cloud IDs) and agent scratch output
+runner/agent/oci/server.env
+worker/tmp/
+
+# Local agent quality-run artefacts (photos/PDFs of test documents)
+quality-report/

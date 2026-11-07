@@ -2,11 +2,9 @@
 <resources>
     <!-- Notes under image tool results -->
     <plurals name="pdf_tool_img_skipped">
-        <item quantity="one">%d 个文件无法读取，已被跳过</item>
         <item quantity="other">%d 个文件无法读取，已被跳过</item>
     </plurals>
     <plurals name="pdf_tool_img_already_small">
-        <item quantity="one">%d 张图片已经不能再小了，因此保持不变</item>
         <item quantity="other">%d 张图片已经不能再小了，因此保持不变</item>
     </plurals>
 

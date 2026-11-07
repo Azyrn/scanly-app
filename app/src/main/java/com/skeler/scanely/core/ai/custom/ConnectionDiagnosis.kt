@@ -3,6 +3,7 @@ package com.skeler.scanely.core.ai.custom
 import com.skeler.scanely.core.network.LenientJson
 import com.skeler.scanely.core.network.TolerantJson
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import java.io.IOException
@@ -57,9 +58,9 @@ internal object ConnectionDiagnosis {
         if (indicatesModelProblem(detail, body)) return ConnectionFailure.ModelRejected(model, detail)
 
         return when (status) {
-            401, 403 -> ConnectionFailure.InvalidKey(status)
-            404 -> ConnectionFailure.WrongEndpoint
-            429 -> ConnectionFailure.RateLimited
+            HTTP_UNAUTHORIZED, HTTP_FORBIDDEN -> ConnectionFailure.InvalidKey(status)
+            HTTP_NOT_FOUND -> ConnectionFailure.WrongEndpoint
+            HTTP_TOO_MANY_REQUESTS -> ConnectionFailure.RateLimited
             else -> ConnectionFailure.ProviderError(status, detail)
         }
     }
@@ -69,22 +70,7 @@ internal object ConnectionDiagnosis {
         model: String,
         protocol: ProviderProtocol = ProviderProtocol.DEFAULT
     ): ConnectionFailure? {
-        if (body.isNullOrBlank()) return ConnectionFailure.UnexpectedSchema
-
-        // The parser accepts bare tokens, so reject non-object responses before parsing.
-        when (body.trimStart().firstOrNull()) {
-            '{' -> Unit
-            '[' -> return ConnectionFailure.UnexpectedSchema
-            else -> return ConnectionFailure.MalformedJson
-        }
-
-        val root = try {
-            strictJson.parseToJsonElement(body)
-        } catch (_: SerializationException) {
-            return ConnectionFailure.MalformedJson
-        }
-
-        if (root !is JsonObject) return ConnectionFailure.UnexpectedSchema
+        val root = parseSuccessObject(body) { return it }
 
         if (root.containsKey("error")) {
             val detail = extractErrorDetail(body)
@@ -102,6 +88,26 @@ internal object ConnectionDiagnosis {
         }
     }
 
+    /** [body] as a JSON object, or [fail] with why it is not one. */
+    private inline fun parseSuccessObject(body: String?, fail: (ConnectionFailure) -> Nothing): JsonObject {
+        if (body.isNullOrBlank()) fail(ConnectionFailure.UnexpectedSchema)
+
+        // The parser accepts bare tokens, so reject non-object responses before parsing.
+        when (body.trimStart().firstOrNull()) {
+            '{' -> Unit
+            '[' -> fail(ConnectionFailure.UnexpectedSchema)
+            else -> fail(ConnectionFailure.MalformedJson)
+        }
+
+        val root = try {
+            strictJson.parseToJsonElement(body)
+        } catch (_: SerializationException) {
+            fail(ConnectionFailure.MalformedJson)
+        }
+
+        return root as? JsonObject ?: fail(ConnectionFailure.UnexpectedSchema)
+    }
+
     fun extractErrorDetail(body: String?): String? {
         if (body.isNullOrBlank()) return null
 
@@ -113,20 +119,19 @@ internal object ConnectionDiagnosis {
         if (root !is JsonObject) return null
 
         val messages = buildList {
-            when (val error = root["error"]) {
-                is JsonPrimitive -> add(error.content)
-                is JsonObject -> {
-                    (error["message"] as? JsonPrimitive)?.let { add(it.content) }
-                    (error["code"] as? JsonPrimitive)?.let { add(it.content) }
-                    (error["type"] as? JsonPrimitive)?.let { add(it.content) }
-                }
-                else -> Unit
-            }
+            addAll(errorFieldMessages(root["error"]))
             (root["message"] as? JsonPrimitive)?.let { add(it.content) }
             (root["detail"] as? JsonPrimitive)?.let { add(it.content) }
         }.filter { it.isNotBlank() }
 
         return messages.distinct().joinToString(" · ").ifBlank { null }
+    }
+
+    /** The texts an `error` field carries: itself when a string, else its message, code and type. */
+    private fun errorFieldMessages(error: JsonElement?): List<String> = when (error) {
+        is JsonPrimitive -> listOf(error.content)
+        is JsonObject -> listOf("message", "code", "type").mapNotNull { (error[it] as? JsonPrimitive)?.content }
+        else -> emptyList()
     }
 
     private fun indicatesModelProblem(detail: String?, body: String?): Boolean {
@@ -137,6 +142,10 @@ internal object ConnectionDiagnosis {
     }
 
     private const val HTTP_OK = 200
+    private const val HTTP_UNAUTHORIZED = 401
+    private const val HTTP_FORBIDDEN = 403
+    private const val HTTP_NOT_FOUND = 404
+    private const val HTTP_TOO_MANY_REQUESTS = 429
 
     private val MODEL_CODES = listOf(
         "model_not_found",

@@ -1,6 +1,5 @@
 package com.skeler.scanely.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,8 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,24 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-
-data class SettingsItem(
-    val title: String,
-    val subtitle: String? = null,
-    val icon: ImageVector? = null,
-    @param:DrawableRes val iconRes: Int? = null,
-    val avatarUrl: String? = null,
-    val trailingIcon: ImageVector? = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-    val trailingContent: (@Composable () -> Unit)? = null,
-    val onClick: () -> Unit
-)
 
 @Composable
 fun SettingsListSection(

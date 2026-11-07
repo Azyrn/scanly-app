@@ -49,6 +49,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -83,7 +84,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.skeler.scanely.R
 import com.skeler.scanely.core.common.LocalDarkMode
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.TextExporter
 import com.skeler.scanely.core.text.FilenameSuggester
 import com.skeler.scanely.core.transcribe.Transcript
 import com.skeler.scanely.core.transcribe.TranscriptFormats
@@ -465,8 +468,10 @@ private fun PlayerBar(
             var dragging by remember { mutableStateOf(false) }
             var dragValue by remember { mutableFloatStateOf(0f) }
             val duration = player.durationMs.coerceAtLeast(1)
+            val seekState = remember { SliderState() }
+            seekState.value = if (dragging) dragValue else player.positionMs.toFloat() / duration
             Slider(
-                value = if (dragging) dragValue else player.positionMs.toFloat() / duration,
+                state = seekState,
                 onValueChange = {
                     dragging = true
                     dragValue = it
@@ -615,7 +620,7 @@ private fun rememberPlainExporter(): (Transcript, TranscriptExport) -> Unit {
                             else -> TranscriptFormats.plainText(t)
                         }
                         runCatching {
-                            ScanExporter.exportPlainText(
+                            TextExporter.exportPlainText(
                                 context,
                                 body,
                                 "$name.${export.format.extension}",
@@ -628,7 +633,7 @@ private fun rememberPlainExporter(): (Transcript, TranscriptExport) -> Unit {
                                     resources.getString(R.string.pdf_tool_saved),
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                ScanExporter.shareDocument(context, uri, export.format.mimeType)
+                                DocumentIntents.shareDocument(context, uri, export.format.mimeType)
                             },
                             onFailure = {
                                 val label = resources.getString(export.format.label)

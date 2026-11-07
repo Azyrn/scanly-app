@@ -10,9 +10,15 @@
     <string name="pe_menu_validate_hint">التحقق من التواقيع الرقمية المضمّنة</string>
     <string name="pe_menu_library_hint">إعادة استخدام توقيع محفوظ</string>
     <string name="pe_add_a_pdf">إضافة PDF</string>
-    <string name="pe_merge_page_count">%1$d صفحة</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="zero">%1$d صفحة</item>
+        <item quantity="one">%1$d صفحة</item>
+        <item quantity="two">%1$d صفحتان</item>
+        <item quantity="few">%1$d صفحات</item>
+        <item quantity="many">%1$d صفحة</item>
+        <item quantity="other">%1$d صفحة</item>
+    </plurals>
     <string name="pe_remove">إزالة</string>
-    <string name="pe_merge_page_change">%1$d صفحة → %2$d صفحة</string>
     <string name="pe_add_to_document">إضافة إلى المستند</string>
     <string name="pe_compress_now">الحالي: %1$s</string>
     <string name="pe_compress_trying_levels">جارٍ تجربة كل مستوى على هذا المستند…</string>
@@ -59,7 +65,14 @@
     <string name="pe_unlock">فتح القفل</string>
     <string name="pe_issued_by">صادرة عن %1$s</string>
     <string name="pe_valid_range">بين %1$s و%2$s</string>
-    <string name="pe_chain_count">%1$d شهادات في السلسلة</string>
+    <plurals name="pe_chain_count">
+        <item quantity="zero">%1$d شهادة في السلسلة</item>
+        <item quantity="one">%1$d شهادة في السلسلة</item>
+        <item quantity="two">%1$d شهادتان في السلسلة</item>
+        <item quantity="few">%1$d شهادات في السلسلة</item>
+        <item quantity="many">%1$d شهادة في السلسلة</item>
+        <item quantity="other">%1$d شهادة في السلسلة</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">هذه الشهادة خارج فترة صلاحيتها. يمكنها التوقيع، لكن القارئات ستُنبّه إلى التوقيع.</string>
     <string name="pe_reason_optional">السبب (اختياري)</string>
     <string name="pe_location_optional">الموقع (اختياري)</string>
@@ -127,7 +140,14 @@
     <string name="pe_crop">قص</string>
     <string name="pe_paywall_reason_studio">الضغط والتشفير وتحرير النص جزء من Scanly Pro.</string>
     <string name="pe_select_all">تحديد الكل</string>
-    <string name="pe_selected_count">تم تحديد %1$d</string>
+    <plurals name="pe_selected_count">
+        <item quantity="zero">تم تحديد %1$d</item>
+        <item quantity="one">تم تحديد %1$d</item>
+        <item quantity="two">تم تحديد %1$d</item>
+        <item quantity="few">تم تحديد %1$d</item>
+        <item quantity="many">تم تحديد %1$d</item>
+        <item quantity="other">تم تحديد %1$d</item>
+    </plurals>
     <string name="pe_clear_selection">إلغاء التحديد</string>
     <string name="pe_extract_to_new_pdf">استخراج إلى PDF جديد</string>
     <string name="pe_edit">تحرير</string>
@@ -141,7 +161,14 @@
     <string name="pe_busy_extracting">جارٍ الاستخراج</string>
     <string name="pe_extract_failed">تعذّر استخراج هذه الصفحات.</string>
     <string name="pe_staged_edits_not_included">\u0020— التعديلات المجهّزة غير مضمّنة</string>
-    <string name="pe_extracted_pages">تم استخراج %1$d صفحة%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="zero">تم استخراج %1$d صفحة%2$s</item>
+        <item quantity="one">تم استخراج %1$d صفحة%2$s</item>
+        <item quantity="two">تم استخراج %1$d صفحتين%2$s</item>
+        <item quantity="few">تم استخراج %1$d صفحات%2$s</item>
+        <item quantity="many">تم استخراج %1$d صفحة%2$s</item>
+        <item quantity="other">تم استخراج %1$d صفحة%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">جارٍ الحفظ</string>
     <string name="pe_busy_checking_signatures">جارٍ التحقق من التواقيع</string>
     <string name="pe_nothing_to_save">لا يوجد ما يُحفظ بعد.</string>
@@ -149,7 +176,14 @@
     <string name="pe_write_failed">تعذّرت الكتابة في Downloads.</string>
     <string name="pe_compression_staged">الضغط مجهّز. احفظ لتطبيقه.</string>
     <string name="pe_merge_read_failed">تعذّرت قراءة ملف PDF هذا.</string>
-    <string name="pe_documents_staged">تم تجهيز %1$d مستند. احفظ للتطبيق.</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="zero">تم تجهيز %1$d مستند. احفظ للتطبيق.</item>
+        <item quantity="one">تم تجهيز %1$d مستند. احفظ للتطبيق.</item>
+        <item quantity="two">تم تجهيز %1$d مستندين. احفظ للتطبيق.</item>
+        <item quantity="few">تم تجهيز %1$d مستندات. احفظ للتطبيق.</item>
+        <item quantity="many">تم تجهيز %1$d مستندًا. احفظ للتطبيق.</item>
+        <item quantity="other">تم تجهيز %1$d مستند. احفظ للتطبيق.</item>
+    </plurals>
     <string name="pe_encryption_staged">التشفير مجهّز. احفظ لتطبيقه.</string>
     <string name="pe_password_removal_staged">إزالة كلمة المرور مجهّزة. احفظ لتطبيقها.</string>
     <string name="pe_metadata_removal_staged">إزالة البيانات الوصفية مجهّزة. احفظ لتطبيقها.</string>

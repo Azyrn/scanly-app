@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">В этом месяце осталось %1$d из %2$d кредитов.</string>
-    <string name="cmp_paywall_credits_left_upgrade">Осталось %1$d из %2$d кредитов в месяц. Оформите Pro.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">В этом месяце осталось %1$d из %2$d кредита.</item>
+        <item quantity="few">В этом месяце осталось %1$d из %2$d кредитов.</item>
+        <item quantity="many">В этом месяце осталось %1$d из %2$d кредитов.</item>
+        <item quantity="other">В этом месяце осталось %1$d из %2$d кредита.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">Осталось %1$d из %2$d кредита в месяц. Оформите Pro.</item>
+        <item quantity="few">Осталось %1$d из %2$d кредитов в месяц. Оформите Pro.</item>
+        <item quantity="many">Осталось %1$d из %2$d кредитов в месяц. Оформите Pro.</item>
+        <item quantity="other">Осталось %1$d из %2$d кредита в месяц. Оформите Pro.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">Больше кредитов, длиннее документы, форматы файлов.</string>
     <string name="cmp_paywall_ai_scan_credit">ИИ-скан: 1 кредит за страницу. Остальные — из общего баланса.</string>
     <string name="cmp_paywall_plan_active">Тариф активен на этом аккаунте.</string>
     <string name="cmp_paywall_key_active_here">Ключ активен на устройстве.</string>
-    <string name="cmp_paywall_devices_used">Устройств: %1$d из %2$d. Ключ — в настройках.</string>
-    <string name="cmp_paywall_watch_ad">Смотреть рекламу, +%1$d кредитов</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">Устройств: %1$d из %2$d. Ключ — в настройках.</item>
+        <item quantity="few">Устройств: %1$d из %2$d. Ключ — в настройках.</item>
+        <item quantity="many">Устройств: %1$d из %2$d. Ключ — в настройках.</item>
+        <item quantity="other">Устройств: %1$d из %2$d. Ключ — в настройках.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">Смотреть рекламу, +%1$d кредит</item>
+        <item quantity="few">Смотреть рекламу, +%1$d кредита</item>
+        <item quantity="many">Смотреть рекламу, +%1$d кредитов</item>
+        <item quantity="other">Смотреть рекламу, +%1$d кредита</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"ИИ-скан: бесплатный месячный лимит. Платные тарифы есть в "</string>
     <string name="cmp_paywall_where_to_buy_after">. Покупки в этом приложении недоступны. Уже подписаны? Восстановите покупку ниже.</string>
     <string name="cmp_copied">Скопировано</string>
@@ -24,7 +44,12 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Активен</string>
     <string name="cmp_paywall_feature_credits">%1$d ИИ-кредитов в месяц</string>
-    <string name="cmp_paywall_feature_pages">До %1$d страниц в одном документе</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">До %1$d стр. в одном документе</item>
+        <item quantity="few">До %1$d стр. в одном документе</item>
+        <item quantity="many">До %1$d стр. в одном документе</item>
+        <item quantity="other">До %1$d стр. в одном документе</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Файлы Word, PowerPoint и OpenDocument</string>
     <string name="cmp_paywall_feature_translation">Перевод</string>
     <string name="cmp_paywall_feature_extraction">Извлечение данных из чеков, счетов и карт</string>
@@ -44,19 +69,62 @@
     <string name="cmp_bigger_text">Больше</string>
     <string name="cmp_reset">Сброс</string>
     <string name="cmp_no_table">Нет</string>
-    <string name="cmp_word_char_counts">Слов: %1$d · символов: %2$d</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d слово</item>
+        <item quantity="few">%d слова</item>
+        <item quantity="many">%d слов</item>
+        <item quantity="other">%d слова</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d символ</item>
+        <item quantity="few">%d символа</item>
+        <item quantity="many">%d символов</item>
+        <item quantity="other">%d символа</item>
+    </plurals>
     <string name="cmp_save_as">Сохранить</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">Какие страницы?</string>
-    <string name="cmp_page_range_over_ceiling">В %1$s %2$d страниц, а за скан читается до %3$d. Выберите нужные.</string>
-    <string name="cmp_page_range_intro">В %1$s %2$d страниц. Каждая отсканированная страница учитывается в тарифе, поэтому диапазон дешевле.</string>
-    <string name="cmp_page_range_example">1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">Выберите до %1$d страниц от 1 до %2$d.</string>
-    <string name="cmp_page_range_use_numbers">Номера от 1 до %1$d, например 1-5 или 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%1$d из %2$d страниц</string>
-    <string name="cmp_page_range_required">Обязательно: %1$d стр.</string>
-    <string name="cmp_page_range_leave_empty">Пусто — все %1$d стр.</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">В %1$s %2$d страница, а за скан читается до %3$d. Выберите нужные.</item>
+        <item quantity="few">В %1$s %2$d страницы, а за скан читается до %3$d. Выберите нужные.</item>
+        <item quantity="many">В %1$s %2$d страниц, а за скан читается до %3$d. Выберите нужные.</item>
+        <item quantity="other">В %1$s %2$d страницы, а за скан читается до %3$d. Выберите нужные.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">В %1$s %2$d страница. Каждая отсканированная страница учитывается в тарифе, поэтому диапазон дешевле.</item>
+        <item quantity="few">В %1$s %2$d страницы. Каждая отсканированная страница учитывается в тарифе, поэтому диапазон дешевле.</item>
+        <item quantity="many">В %1$s %2$d страниц. Каждая отсканированная страница учитывается в тарифе, поэтому диапазон дешевле.</item>
+        <item quantity="other">В %1$s %2$d страницы. Каждая отсканированная страница учитывается в тарифе, поэтому диапазон дешевле.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">Выберите до %1$d страницы от 1 до %2$d.</item>
+        <item quantity="few">Выберите до %1$d страниц от 1 до %2$d.</item>
+        <item quantity="many">Выберите до %1$d страниц от 1 до %2$d.</item>
+        <item quantity="other">Выберите до %1$d страницы от 1 до %2$d.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">Номера от 1 до %1$d, например 1-5 или 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%1$d из %2$d стр.</item>
+        <item quantity="few">%1$d из %2$d стр.</item>
+        <item quantity="many">%1$d из %2$d стр.</item>
+        <item quantity="other">%1$d из %2$d стр.</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">Обязательно: %1$d стр.</item>
+        <item quantity="few">Обязательно: %1$d стр.</item>
+        <item quantity="many">Обязательно: %1$d стр.</item>
+        <item quantity="other">Обязательно: %1$d стр.</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">Пусто — все %1$d стр.</item>
+        <item quantity="few">Пусто — все %1$d стр.</item>
+        <item quantity="many">Пусто — все %1$d стр.</item>
+        <item quantity="other">Пусто — все %1$d стр.</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">Скан %1$d</string>
     <string name="cmp_page_range_scan_all">Все</string>
 
@@ -65,15 +133,20 @@
     <string name="cmp_stage_processing">Обработка…</string>
     <string name="cmp_stage_generating">Создание…</string>
     <string name="cmp_stage_complete">Готово</string>
-    <string name="cmp_processing_file_of">Файл %1$d из %2$d...</string>
-    <string name="cmp_extracting_text">Чтение текста...</string>
+    <string name="cmp_processing_file_of">Файл %1$d из %2$d…</string>
+    <string name="cmp_extracting_text">Чтение текста…</string>
     <string name="cmp_file_of">Файл %1$d из %2$d</string>
     <string name="cmp_may_take_few_moments">Может занять время</string>
-    <string name="cmp_translating">Перевод...</string>
+    <string name="cmp_translating">Перевод…</string>
     <string name="cmp_couldnt_read_file">Не удалось прочитать</string>
     <string name="cmp_no_text_extracted">Текст не извлечён</string>
     <string name="cmp_try_different_image">Выберите другое фото</string>
-    <string name="cmp_batch_scanning">Сканируем %1$d из %2$d…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">Сканируем %1$d из %2$d…</item>
+        <item quantity="few">Сканируем %1$d из %2$d…</item>
+        <item quantity="many">Сканируем %1$d из %2$d…</item>
+        <item quantity="other">Сканируем %1$d из %2$d…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Питательность</string>
@@ -122,7 +195,12 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Извлечь</string>
-    <string name="cmp_preset_cost">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредитов из тарифа. До 8 страниц в документе.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредит из тарифа. До 8 страниц в документе.</item>
+        <item quantity="few">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредита из тарифа. До 8 страниц в документе.</item>
+        <item quantity="many">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредитов из тарифа. До 8 страниц в документе.</item>
+        <item quantity="other">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредита из тарифа. До 8 страниц в документе.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">Получите размеченные поля вместе с текстом. Входит в Pro и выше.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +240,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Нет данных</string>
-    <string name="cmp_product_looking_up">Поиск товара...</string>
+    <string name="cmp_product_looking_up">Поиск товара…</string>
     <string name="cmp_product_not_found">Товар не найден</string>
     <string name="cmp_product_lookup_failed">Ошибка поиска</string>
     <string name="cmp_product_unknown_error">Ошибка</string>
@@ -193,8 +271,18 @@
     <string name="cmp_preview_rendering_pages">Создание страниц…</string>
     <string name="cmp_preview_render_failed">Не удалось создать PDF.</string>
     <string name="cmp_preview_page_n_of_total">Стр. %1$d из %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">Первые %1$d из %2$d стр.</string>
-    <string name="cmp_preview_first_n_of_lines">%1$d из %2$d строк</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">Первые %1$d из %2$d стр.</item>
+        <item quantity="few">Первые %1$d из %2$d стр.</item>
+        <item quantity="many">Первые %1$d из %2$d стр.</item>
+        <item quantity="other">Первые %1$d из %2$d стр.</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">%1$d из %2$d строки</item>
+        <item quantity="few">%1$d из %2$d строк</item>
+        <item quantity="many">%1$d из %2$d строк</item>
+        <item quantity="other">%1$d из %2$d строки</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">Нечего выгружать</string>

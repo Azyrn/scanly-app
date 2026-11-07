@@ -103,7 +103,14 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">تعذّر استخدام هذه الصورة. جرّب صورة أخرى.</string>
-    <string name="chat_file_too_many_pages">يُعيد المصمم بناء ما يصل إلى %1$d صفحة، وهذا الملف يحتوي على %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="zero">يُعيد المصمم بناء حتى %1$d صفحة، وهذا الملف يحتوي على %2$d.</item>
+        <item quantity="one">يُعيد المصمم بناء حتى %1$d صفحة، وهذا الملف يحتوي على %2$d.</item>
+        <item quantity="two">يُعيد المصمم بناء حتى %1$d صفحتين، وهذا الملف يحتوي على %2$d.</item>
+        <item quantity="few">يُعيد المصمم بناء حتى %1$d صفحات، وهذا الملف يحتوي على %2$d.</item>
+        <item quantity="many">يُعيد المصمم بناء حتى %1$d صفحة، وهذا الملف يحتوي على %2$d.</item>
+        <item quantity="other">يُعيد المصمم بناء حتى %1$d صفحة، وهذا الملف يحتوي على %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">هذا الملف كبير جدًا لإعادة بنائه.</string>
     <string name="chat_file_unreadable">تعذّرت قراءة هذا الملف. جرّب ملفًا آخر.</string>
 
@@ -268,7 +275,14 @@
     <string name="chat_log_loading">جارٍ تحميل الناتج الكامل…</string>
     <string name="chat_log_expired">انتهى الناتج الكامل</string>
     <string name="chat_log_unavailable">تعذّر تحميل الناتج الكامل. انقر لإعادة المحاولة.</string>
-    <string name="chat_log_past_limit">%1$d حرفًا إضافيًا تجاوز الحد ولم يُحفظ</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="zero">%1$d حرف إضافي تجاوز الحد ولم يُحفظ</item>
+        <item quantity="one">%1$d حرف إضافي تجاوز الحد ولم يُحفظ</item>
+        <item quantity="two">%1$d حرفان إضافيان تجاوزا الحد ولم يُحفظا</item>
+        <item quantity="few">%1$d أحرف إضافية تجاوزت الحد ولم تُحفظ</item>
+        <item quantity="many">%1$d حرفًا إضافيًا تجاوز الحد ولم يُحفظ</item>
+        <item quantity="other">%1$d حرف إضافي تجاوز الحد ولم يُحفظ</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="zero">%d سطر سابق غير محفوظ على هذا الهاتف</item>
         <item quantity="one">%d سطر سابق غير محفوظ على هذا الهاتف</item>

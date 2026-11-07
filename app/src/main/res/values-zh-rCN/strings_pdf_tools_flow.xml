@@ -7,14 +7,12 @@
     <string name="pdf_tool_flow_move_up">将 %1$s 上移</string>
     <string name="pdf_tool_flow_move_down">将 %1$s 下移</string>
     <plurals name="pdf_tool_flow_min_inputs">
-        <item quantity="one">至少添加 %d 个文件才能继续。</item>
         <item quantity="other">至少添加 %d 个文件才能继续。</item>
     </plurals>
     <string name="pdf_tool_flow_skipped">无法打开的文件已被排除。</string>
 
     <!-- Progress -->
     <plurals name="pdf_tool_flow_working_files">
-        <item quantity="one">正在处理 %d 个文件…</item>
         <item quantity="other">正在处理 %d 个文件…</item>
     </plurals>
 

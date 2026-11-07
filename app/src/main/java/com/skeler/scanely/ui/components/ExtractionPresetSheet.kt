@@ -17,6 +17,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,7 +51,7 @@ fun ExtractionPresetSheet(
             )
             Text(
                 text = if (included) {
-                    stringResource(R.string.cmp_preset_cost, pageCost)
+                    pluralStringResource(R.plurals.cmp_preset_cost, pageCost, pageCost)
                 } else {
                     stringResource(R.string.cmp_preset_included_pro)
                 },
@@ -70,13 +71,6 @@ fun ExtractionPresetSheet(
                     )
                 ) {
                     ListItem(
-                        headlineContent = {
-                            Text(
-                                text = preset.label,
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Medium
-                            )
-                        },
                         supportingContent = {
                             Text(
                                 text = preset.description,
@@ -92,7 +86,13 @@ fun ExtractionPresetSheet(
                                 modifier = Modifier.size(28.dp)
                             )
                         }
-                    )
+                    ) {
+                        Text(
+                            text = preset.label,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 }
             }
         }

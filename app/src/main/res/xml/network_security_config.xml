@@ -9,8 +9,9 @@
   back to HTTPS-only below, so no amount of user configuration can downgrade Scanly's own traffic,
   the licence calls, or Firebase auth. Only a URL the user typed themselves can be cleartext.
 -->
-<network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+    <!-- InsecureBaseConfiguration is intended: see the note above; Scanly's own hosts are pinned below. -->
+    <base-config cleartextTrafficPermitted="true" tools:ignore="InsecureBaseConfiguration">
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>

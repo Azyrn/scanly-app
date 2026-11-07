@@ -8,7 +8,10 @@
     <string name="set_sign_in_subtitle">Für KI-Scans nötig</string>
     <string name="set_signed_in">Verbunden</string>
     <string name="set_pro_key_title">Pro-Schlüssel</string>
-    <string name="set_pro_key_active_devices">Aktiv · %1$d von %2$d Geräten</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="one">Aktiv · %1$d von %2$d Gerät</item>
+        <item quantity="other">Aktiv · %1$d von %2$d Geräten</item>
+    </plurals>
     <string name="set_pro_key_active_here">Auf diesem Gerät aktiv</string>
     <string name="set_delete_account_title">Konto löschen</string>
     <string name="set_delete_account_subtitle">Konto und Daten endgültig löschen</string>
@@ -35,7 +38,7 @@
     <string name="set_remove_key_message">Gerät wechselt in den kostenlosen Tarif und gibt seinen Platz frei. Der Schlüssel bleibt gültig und ist auf einem anderen Gerät einlösbar.</string>
     <string name="set_remove_key_confirm">Entfernen</string>
     <string name="set_delete_account_dialog_title">Konto löschen?</string>
-    <string name="set_delete_account_dialog_message">Dadurch werden dein Scanly-Konto, deine Anmeldedaten und Nutzungsdaten auf unseren Servern endgültig gelöscht. Nicht rückgängig zu machen.\n\nScans auf diesem Gerät bleiben. Ein aktives Pro-Abo kündigst du separat über Paddle.</string>
+    <string name="set_delete_account_dialog_message">Dadurch werden dein Scanly-Konto, deine Anmeldedaten und Nutzungsdaten auf unseren Servern endgültig gelöscht. Nicht rückgängig zu machen. Mit dieser E-Mail kannst du 30 Tage lang kein neues Konto erstellen.\n\nScans auf diesem Gerät bleiben. Ein aktives Pro-Abo kündigst du separat über Paddle.</string>
     <string name="set_sign_out_dialog_title">Abmelden?</string>
     <string name="set_sign_out_dialog_message">KI-Scans stoppen bis zur neuen Anmeldung. Verlauf und Offline-Texterkennung bleiben auf diesem Gerät.</string>
     <string name="set_sign_out">Abmelden</string>
@@ -91,7 +94,10 @@
     <string name="set_pro_required_message">Den eigenen KI-Anbieter zu verbinden gehört zu Scanly Pro. Die Felder unten zeigen, was du einrichten würdest – sie werden mit Pro freigeschaltet. Upgrade oder löse einen Schlüssel im Bereich Konto der Einstellungen ein.</string>
     <string name="set_custom_intro_body">Verbinde einen KI-Anbieter. Protokoll wählen, Endpunkt-URL, Modellname und API-Schlüssel einfügen, dann Verbindung testen.</string>
     <string name="set_custom_intro_hosts">Die meisten Anbieter sind OpenAI-kompatibel – Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude und Gemini haben eigene Protokolle. Selbst gehostete Server im Netzwerk gehen per einfachem http.</string>
-    <string name="set_custom_intro_pdf_pages">Gescannte PDFs: bis zu %1$d Seiten auf einmal, als Bilder in einer Anfrage. Office-Dokumente brauchen Scanly AI.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="one">Gescannte PDFs: bis zu %1$d Seite auf einmal, als Bilder in einer Anfrage. Office-Dokumente brauchen Scanly AI.</item>
+        <item quantity="other">Gescannte PDFs: bis zu %1$d Seiten auf einmal, als Bilder in einer Anfrage. Office-Dokumente brauchen Scanly AI.</item>
+    </plurals>
     <string name="set_section_protocol">Protokoll</string>
     <string name="set_section_endpoint">Endpunkt</string>
     <string name="set_endpoint_url_label">Endpunkt-URL</string>

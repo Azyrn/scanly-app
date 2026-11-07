@@ -7,6 +7,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Base64
+import androidx.core.graphics.scale
 import androidx.exifinterface.media.ExifInterface
 import com.skeler.scanely.core.pdfeditor.engine.PdfPageReader
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -173,11 +174,9 @@ class DesignInputs @Inject constructor(
         if (edge <= maxEdge) return bitmap
 
         val scale = maxEdge.toFloat() / edge
-        val scaled = Bitmap.createScaledBitmap(
-            bitmap,
+        val scaled = bitmap.scale(
             (bitmap.width * scale).toInt().coerceAtLeast(1),
-            (bitmap.height * scale).toInt().coerceAtLeast(1),
-            true
+            (bitmap.height * scale).toInt().coerceAtLeast(1)
         )
         if (scaled !== bitmap) bitmap.recycle()
         return scaled

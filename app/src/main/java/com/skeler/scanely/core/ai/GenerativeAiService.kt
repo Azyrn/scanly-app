@@ -318,29 +318,6 @@ class GenerativeAiService @Inject internal constructor(
         }
     }
 
-    private fun asResult(
-        result: CustomScanResult,
-        onSuccess: (CustomScanResult.Success) -> String
-    ): AiResult = when (result) {
-        is CustomScanResult.Success -> AiResult.Success(onSuccess(result))
-        is CustomScanResult.Failure -> AiResult.Error(result.failure.message)
-        is CustomScanResult.Unsupported -> AiResult.Error(result.message)
-    }
-
-    /** Names the endpoint that answered, so a result screen can say whose model wrote it. */
-    private fun finished(
-        result: CustomScanResult,
-        config: CustomProviderConfig,
-        onSuccess: (CustomScanResult.Success) -> AiResult
-    ): AiEvent.Finished = when (result) {
-        is CustomScanResult.Success ->
-            AiEvent.Finished(onSuccess(result), AiRunInfo(config.model))
-        is CustomScanResult.Failure ->
-            AiEvent.Finished(AiResult.Error(result.failure.message))
-        is CustomScanResult.Unsupported ->
-            AiEvent.Finished(AiResult.Error(result.message))
-    }
-
     private fun exhaustedMessage(outcome: AiOutcome.Exhausted): String = when {
         outcome.networkProblem && !networkObserver.isCurrentlyOnline() -> context.getString(R.string.ai_err_offline)
         outcome.networkProblem ->
@@ -356,6 +333,29 @@ class GenerativeAiService @Inject internal constructor(
          */
         private const val TRANSCRIBE_ATTEMPT_TIMEOUT_MS = 30 * 60_000L
     }
+}
+
+private fun asResult(
+    result: CustomScanResult,
+    onSuccess: (CustomScanResult.Success) -> String
+): AiResult = when (result) {
+    is CustomScanResult.Success -> AiResult.Success(onSuccess(result))
+    is CustomScanResult.Failure -> AiResult.Error(result.failure.message)
+    is CustomScanResult.Unsupported -> AiResult.Error(result.message)
+}
+
+/** Names the endpoint that answered, so a result screen can say whose model wrote it. */
+private fun finished(
+    result: CustomScanResult,
+    config: CustomProviderConfig,
+    onSuccess: (CustomScanResult.Success) -> AiResult
+): AiEvent.Finished = when (result) {
+    is CustomScanResult.Success ->
+        AiEvent.Finished(onSuccess(result), AiRunInfo(config.model))
+    is CustomScanResult.Failure ->
+        AiEvent.Finished(AiResult.Error(result.failure.message))
+    is CustomScanResult.Unsupported ->
+        AiEvent.Finished(AiResult.Error(result.message))
 }
 
 sealed interface TranscriptionResult {

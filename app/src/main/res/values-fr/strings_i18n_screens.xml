@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">Aucun code-barres</string>
     <string name="scr_barcode_hint">Visez un code-barres ou QR\nPincez : zoom · touchez : netteté</string>
-    <string name="scr_barcode_scanning">Analyse...</string>
+    <string name="scr_barcode_scanning">Analyse…</string>
     <string name="scr_barcode_upload_gallery">Importer de la galerie</string>
     <string name="scr_barcode_permission_required">Accès caméra requis\npour lire les codes-barres.</string>
     <!-- Document camera -->
@@ -14,8 +14,16 @@
     <string name="scr_camera_focus_hint">Touchez : netteté · alignez sur les bords</string>
     <string name="scr_camera_capture">Capturer</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">Jusqu\'à %1$d fichiers : seuls les %1$d premiers.</string>
-    <string name="scr_home_credits">%1$d crédits</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">Jusqu\'à %1$d fichier : seul %1$d est pris.</item>
+        <item quantity="many">Jusqu\'à %1$d fichiers : seuls les %1$d premiers.</item>
+        <item quantity="other">Jusqu\'à %1$d fichiers : seuls les %1$d premiers.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d crédit</item>
+        <item quantity="many">%1$d crédits</item>
+        <item quantity="other">%1$d crédits</item>
+    </plurals>
     <string name="scr_home_question">Que voulez-vous scanner ?</string>
     <string name="scr_home_scan_document">Scanner</string>
     <string name="scr_home_scan_document_subtitle">Recadrage auto et export PDF</string>
@@ -88,7 +96,11 @@
     <string name="scr_transcribe_transcribing_body">Les longs enregistrements prennent quelques minutes. Vous pouvez quitter : la transcription sera gardée ici.</string>
     <string name="scr_transcribe_paused">En pause</string>
     <string name="scr_transcribe_recording">En direct</string>
-    <string name="scr_transcribe_up_to_minutes">Jusqu\'à %1$d min avec votre forfait</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">Jusqu\'à %1$d min avec votre forfait</item>
+        <item quantity="many">Jusqu\'à %1$d min avec votre forfait</item>
+        <item quantity="other">Jusqu\'à %1$d min avec votre forfait</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Abandonner l\'audio</string>
     <string name="scr_transcribe_stop_and_keep">Arrêter, garder</string>
     <string name="scr_transcribe_reading_file">Lecture…</string>
@@ -102,7 +114,11 @@
     <string name="scr_transcribe_key_terms_count">%1$d sur %2$d</string>
     <string name="scr_transcribe_plan_note">1 crédit ≈ %1$d min d\'audio · %2$d min max par enregistrement.</string>
     <string name="scr_transcribe_custom_endpoint_note">Audio vers texte utilise toujours Scanly AI et vos crédits, même avec votre point de terminaison.</string>
-    <string name="scr_transcribe_speakers">%1$d locuteurs</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">%1$d locuteur</item>
+        <item quantity="many">%1$d locuteurs</item>
+        <item quantity="other">%1$d locuteurs</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Langue principale parlée. Les autres langues restent transcrites telles quelles ; elle fixe l\'écriture des nombres et dates.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Détecte la langue, mais deux passes : deux fois plus de crédits.</string>
     <string name="scr_transcribe_key_terms_hint">Noms, produits et jargon à écrire exactement. Utilisés pour tous les enregistrements jusqu\'à suppression. Séparez par virgules.</string>
@@ -167,14 +183,22 @@
     <string name="au_err_unreadable">Fichier audio ou vidéo illisible.</string>
     <string name="au_err_access_lost">Accès perdu à ce fichier. Sélectionnez-le à nouveau.</string>
     <string name="au_err_no_audio">Aucun audio à transcrire.</string>
-    <string name="au_err_too_long">Cet enregistrement dure %1$s. Votre forfait transcrit jusqu\'à %2$d minutes à la fois.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">Cet enregistrement dure %1$s. Votre forfait transcrit jusqu\'à %2$d minute à la fois.</item>
+        <item quantity="many">Cet enregistrement dure %1$s. Votre forfait transcrit jusqu\'à %2$d minutes à la fois.</item>
+        <item quantity="other">Cet enregistrement dure %1$s. Votre forfait transcrit jusqu\'à %2$d minutes à la fois.</item>
+    </plurals>
     <string name="au_err_convert">Conversion audio impossible. Essayez un autre fichier.</string>
     <string name="au_err_too_large">Enregistrement trop lourd pour votre forfait, même compressé.</string>
     <string name="au_err_read">Ce fichier n\'a pas pu être lu.</string>
     <string name="auth_val_email_required">Saisissez votre e-mail.</string>
     <string name="auth_reset_sent">Si %1$s a un mot de passe, un lien de réinitialisation est envoyé. Comptes Google : Continuer avec Google.</string>
     <string name="auth_val_invalid_email">Saisissez un e-mail valide.</string>
-    <string name="auth_val_password_short">Mot de passe : %1$d caractères minimum.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Mot de passe : %1$d caractère minimum.</item>
+        <item quantity="many">Mot de passe : %1$d caractères minimum.</item>
+        <item quantity="other">Mot de passe : %1$d caractères minimum.</item>
+    </plurals>
     <string name="auth_val_check_details">Vérifiez et réessayez.</string>
     <string name="au_notif_channel_name">Capture</string>
     <string name="au_notif_channel_desc">Visible pendant l\'enregistrement</string>
@@ -182,8 +206,16 @@
     <string name="au_notif_text">Enregistrement en cours. Touchez pour revenir.</string>
     <string name="tx_save_failed">Transcription prête, mais non enregistrée sur l\'appareil (%1$s). Libérez de l\'espace et touchez Enregistrer : pas de nouveau débit.</string>
     <string name="tx_prepare_failed">Enregistrement non préparé.</string>
-    <string name="tx_key_terms_limit">Jusqu\'à %1$d termes. %2$d non ajoutés.</string>
-    <string name="tx_key_terms_length">Termes clés : %1$d caractères maximum.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">Jusqu\'à %1$d terme. %2$d non ajoutés.</item>
+        <item quantity="many">Jusqu\'à %1$d termes. %2$d non ajoutés.</item>
+        <item quantity="other">Jusqu\'à %1$d termes. %2$d non ajoutés.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Termes clés : %1$d caractère maximum.</item>
+        <item quantity="many">Termes clés : %1$d caractères maximum.</item>
+        <item quantity="other">Termes clés : %1$d caractères maximum.</item>
+    </plurals>
     <string name="cp_connected">Connecté. Prêt à enregistrer.</string>
     <string name="cp_saved">Enregistré. Les scans l\'utiliseront.</string>
     <string name="cp_removed">Point supprimé.</string>
@@ -229,8 +261,16 @@
     <string name="net_verify_session">Session non vérifiée.</string>
     <string name="net_session_expired">Session expirée. Reconnectez-vous.</string>
     <string name="lk_no_engines">Aucun moteur compatible</string>
-    <string name="lk_searched">%1$d sources consultées</string>
-    <string name="lk_searched_partial">%1$d sources consultées. %2$s injoignable</string>
+    <plurals name="lk_searched">
+        <item quantity="one">%1$d source consultée</item>
+        <item quantity="many">%1$d sources consultées</item>
+        <item quantity="other">%1$d sources consultées</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">%1$d source consultée. %2$s injoignable</item>
+        <item quantity="many">%1$d sources consultées. %2$s injoignable</item>
+        <item quantity="other">%1$d sources consultées. %2$s injoignable</item>
+    </plurals>
     <string name="lk_unreachable">Bases produits injoignables. Connexion correcte : réessayez dans quelques minutes.</string>
     <string name="lk_server_problem">Bases produits injoignables : panne de leurs serveurs. Réessayez plus tard.</string>
     <string name="ocr_err_load_image">Image non chargée</string>

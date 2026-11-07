@@ -69,6 +69,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -212,8 +213,9 @@ fun SettingsScreen(
                                         subtitle = if (entitlement != null &&
                                             entitlement.maxActivations > 0
                                         ) {
-                                            stringResource(
-                                                R.string.set_pro_key_active_devices,
+                                            pluralStringResource(
+                                                R.plurals.set_pro_key_active_devices,
+                                                entitlement.maxActivations,
                                                 entitlement.activationsUsed,
                                                 entitlement.maxActivations
                                             )

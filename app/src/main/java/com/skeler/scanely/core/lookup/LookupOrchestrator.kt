@@ -70,12 +70,15 @@ class LookupOrchestrator @Inject constructor(
         searched: List<LookupEngine>,
         failures: List<Pair<String, Exception>>
     ): LookupResult = when {
-        failures.isEmpty() -> LookupResult.NotFound(context.getString(R.string.lk_searched, searched.size))
+        failures.isEmpty() -> LookupResult.NotFound(
+            context.resources.getQuantityString(R.plurals.lk_searched, searched.size, searched.size)
+        )
         // Someone answered "not found"; the product may still be in a source that did not
         // answer, so say which rather than calling the search complete.
         failures.size < searched.size -> LookupResult.NotFound(
-            context.getString(
-                R.string.lk_searched_partial,
+            context.resources.getQuantityString(
+                R.plurals.lk_searched_partial,
+                searched.size,
                 searched.size,
                 failures.joinToString { it.first }
             )

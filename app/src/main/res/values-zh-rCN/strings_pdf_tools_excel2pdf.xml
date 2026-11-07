@@ -6,30 +6,24 @@
 
     <!-- Result notes: what the PDF had to leave out or simplify -->
     <plurals name="excel2pdf_note_hidden_sheets">
-        <item quantity="one">已省略 %d 个隐藏工作表。</item>
         <item quantity="other">已省略 %d 个隐藏工作表。</item>
     </plurals>
     <plurals name="excel2pdf_note_charts">
-        <item quantity="one">已省略 %d 个图表。</item>
         <item quantity="other">已省略 %d 个图表。</item>
     </plurals>
     <plurals name="excel2pdf_note_pictures">
-        <item quantity="one">已省略 %d 张图片。</item>
         <item quantity="other">已省略 %d 张图片。</item>
     </plurals>
     <string name="excel2pdf_note_formulas_cached">公式显示其上次保存的结果。</string>
     <plurals name="excel2pdf_note_formulas_missing">
-        <item quantity="one">%d 个公式没有已保存的结果，已留空。</item>
         <item quantity="other">%d 个公式没有已保存的结果，已留空。</item>
     </plurals>
     <string name="excel2pdf_note_conditional">未应用条件格式。</string>
     <string name="excel2pdf_note_pivots">数据透视表显示其上次保存的数值。</string>
     <plurals name="excel2pdf_note_cut_rows">
-        <item quantity="one">超大工作表在第 %d 行处被截断。</item>
         <item quantity="other">超大工作表在第 %d 行处被截断。</item>
     </plurals>
     <plurals name="excel2pdf_note_page_cap">
-        <item quantity="one">PDF 在第 %d 页处停止，其余内容已省略。</item>
         <item quantity="other">PDF 在第 %d 页处停止，其余内容已省略。</item>
     </plurals>
 </resources>

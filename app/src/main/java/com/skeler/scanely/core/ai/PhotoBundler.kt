@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import androidx.core.content.FileProvider
+import androidx.core.graphics.scale
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader
 import com.tom_roush.pdfbox.cos.COSName
 import com.tom_roush.pdfbox.io.MemoryUsageSetting
@@ -129,11 +130,9 @@ class PhotoBundler @Inject constructor(
         val longest = max(decoded.width, decoded.height)
         if (longest <= MAX_IMAGE_DIMENSION) return decoded
         val ratio = MAX_IMAGE_DIMENSION.toFloat() / longest
-        val scaled = Bitmap.createScaledBitmap(
-            decoded,
+        val scaled = decoded.scale(
             (decoded.width * ratio).toInt().coerceAtLeast(1),
-            (decoded.height * ratio).toInt().coerceAtLeast(1),
-            true
+            (decoded.height * ratio).toInt().coerceAtLeast(1)
         )
         if (scaled !== decoded) decoded.recycle()
         return scaled

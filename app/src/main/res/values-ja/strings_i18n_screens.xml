@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">バーコードなし</string>
     <string name="scr_barcode_hint">カメラをバーコード・QRに向ける\nピンチで拡大 · タップでピント</string>
-    <string name="scr_barcode_scanning">スキャン中...</string>
+    <string name="scr_barcode_scanning">スキャン中…</string>
     <string name="scr_barcode_upload_gallery">ギャラリーから選択</string>
     <string name="scr_barcode_permission_required">バーコードには\nカメラの許可が必要です。</string>
     <!-- Document camera -->
@@ -14,8 +14,12 @@
     <string name="scr_camera_focus_hint">タップでピント · ページの端をガイドに</string>
     <string name="scr_camera_capture">撮影</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">1回で最大 %1$d 件。最初の %1$d 件を使用。</string>
-    <string name="scr_home_credits">%1$dクレジット</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="other">1回で最大 %1$d 件。最初の %1$d 件を使用。</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="other">%1$dクレジット</item>
+    </plurals>
     <string name="scr_home_question">何をスキャンしますか？</string>
     <string name="scr_home_scan_document">書類をスキャン</string>
     <string name="scr_home_scan_document_subtitle">自動トリミング・補正・PDF 書き出し</string>
@@ -36,7 +40,6 @@
     <string name="scr_results_scan_failed_retry">%1$s\n\n下のボタンで再試行。</string>
     <string name="scr_unified_none_detected">テキスト・バーコードなし</string>
     <plurals name="scr_unified_scanned_codes">
-        <item quantity="one">読取コード</item>
         <item quantity="other">読取コード</item>
     </plurals>
     <!-- Scan review -->
@@ -56,7 +59,6 @@
     <string name="scr_scan_review_empty_body">全ページ削除済み。もう一度スキャンしてください。</string>
     <string name="scr_scan_review_back_to_scanner">スキャナーに戻る</string>
     <plurals name="scr_scan_review_page_count">
-        <item quantity="one">%1$d ページ</item>
         <item quantity="other">%1$d ページ</item>
     </plurals>
     <!-- Scan review: export sheet -->
@@ -86,7 +88,9 @@
     <string name="scr_transcribe_transcribing_body">長い録音には数分かかります。この画面を離れても構いません。完了すると、文字起こしがここに保存されます。</string>
     <string name="scr_transcribe_paused">一時停止</string>
     <string name="scr_transcribe_recording">録音中</string>
-    <string name="scr_transcribe_up_to_minutes">プランで最大 %1$d 分まで</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="other">プランで最大 %1$d 分まで</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">録音を破棄</string>
     <string name="scr_transcribe_stop_and_keep">停止して保存</string>
     <string name="scr_transcribe_reading_file">読み込み中…</string>
@@ -100,13 +104,14 @@
     <string name="scr_transcribe_key_terms_count">%1$d / %2$d</string>
     <string name="scr_transcribe_plan_note">1 クレジット ≈ 音声 %1$d 分 · プランでは録音1件あたり最大 %2$d 分。</string>
     <string name="scr_transcribe_custom_endpoint_note">独自エンドポイントが有効でも、音声→テキストは常に Scanly AI を使い、クレジットを消費します。</string>
-    <string name="scr_transcribe_speakers">話者 %1$d 人</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="other">話者 %1$d 人</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">話されている主な言語を選択してください。録音内の他の言語も話されたとおりに文字起こしされます。この設定は、数字や日付の表記方法を決めます。</string>
     <string name="scr_transcribe_auto_detect_subtitle">言語を自動判定。2回処理されるため、クレジットは2倍。</string>
     <string name="scr_transcribe_key_terms_hint">文字起こしで正確に綴るべき名前、製品名、専門用語。削除するまで、すべての録音に使用されます。カンマで区切って複数入力できます。</string>
     <string name="scr_transcribe_key_terms_placeholder">例: Sebastian, Typst, Mistral OCR</string>
     <plurals name="scr_transcribe_estimate">
-        <item quantity="one">約 %1$d クレジット</item>
         <item quantity="other">約 %1$d クレジット</item>
     </plurals>
     <!-- Transcript -->
@@ -124,11 +129,9 @@
     <string name="scr_player_back_10">10秒戻る</string>
     <string name="scr_player_forward_10">10秒進む</string>
     <plurals name="scr_transcript_speakers">
-        <item quantity="one">話者 %1$d 人</item>
         <item quantity="other">話者 %1$d 人</item>
     </plurals>
     <plurals name="scr_transcript_credits">
-        <item quantity="one">%1$dクレジット</item>
         <item quantity="other">%1$dクレジット</item>
     </plurals>
     <!-- Shared -->
@@ -162,14 +165,18 @@
     <string name="au_err_unreadable">このファイルは音声・動画として開けません。</string>
     <string name="au_err_access_lost">Scanly が開けなくなりました。選び直してください。</string>
     <string name="au_err_no_audio">文字起こしできる音声がありません。</string>
-    <string name="au_err_too_long">この録音の長さは %1$s です。プランでは一度に最大 %2$d 分まで文字起こしできます。</string>
+    <plurals name="au_err_too_long">
+        <item quantity="other">この録音の長さは %1$s です。プランでは一度に最大 %2$d 分まで文字起こしできます。</item>
+    </plurals>
     <string name="au_err_convert">音声を変換できません。別のファイルを試してください。</string>
     <string name="au_err_too_large">圧縮しても、この録音はプランの上限を超えています。</string>
     <string name="au_err_read">読み取れませんでした。</string>
     <string name="auth_val_email_required">メールアドレスが必要です。</string>
     <string name="auth_reset_sent">%1$s にパスワードがあれば再設定リンクを送信しました。Google アカウントは「Google で続行」をご利用ください</string>
     <string name="auth_val_invalid_email">メールアドレスが無効です。</string>
-    <string name="auth_val_password_short">パスワードは %1$d 文字以上にしてください。</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="other">パスワードは %1$d 文字以上にしてください。</item>
+    </plurals>
     <string name="auth_val_check_details">入力内容を確認してください。</string>
     <string name="au_notif_channel_name">録音</string>
     <string name="au_notif_channel_desc">音声からテキストへの録音中に表示</string>
@@ -177,8 +184,12 @@
     <string name="au_notif_text">Scanly が音声からテキストへ録音中。タップで戻る</string>
     <string name="tx_save_failed">文字起こしは完成しましたが、この端末に保存できませんでした（%1$s）。空き容量を確保して「保存」をタップしてください。再課金はありません</string>
     <string name="tx_prepare_failed">この録音を準備できませんでした。</string>
-    <string name="tx_key_terms_limit">用語は最大 %1$d 件。%2$d 件を追加できず</string>
-    <string name="tx_key_terms_length">重要な用語は最大 %1$d 文字までです。</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="other">用語は最大 %1$d 件。%2$d 件を追加できず</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="other">重要な用語は最大 %1$d 文字までです。</item>
+    </plurals>
     <string name="cp_connected">接続しました。保存できます。</string>
     <string name="cp_saved">保存しました。スキャンで使用します。</string>
     <string name="cp_removed">削除しました。</string>
@@ -224,8 +235,12 @@
     <string name="net_verify_session">セッションを確認できません。</string>
     <string name="net_session_expired">セッション切れ。再度サインイン。</string>
     <string name="lk_no_engines">対応エンジンなし</string>
-    <string name="lk_searched">%1$d 件のソースを検索</string>
-    <string name="lk_searched_partial">%1$d 件のソースを検索。%2$s に接続できません</string>
+    <plurals name="lk_searched">
+        <item quantity="other">%1$d 件のソースを検索</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="other">%1$d 件のソースを検索。%2$s に接続できません</item>
+    </plurals>
     <string name="lk_unreachable">製品データベースに接続できませんでした。接続は正常のようです。数分後にもう一度お試しください。</string>
     <string name="lk_server_problem">製品データベースに接続できません。サーバーに障害があります。しばらく待ってください。</string>
     <string name="ocr_err_load_image">画像の読み込みに失敗</string>

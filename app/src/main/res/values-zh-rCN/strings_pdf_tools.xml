@@ -48,7 +48,6 @@
     <string name="pdf_tool_cancelled">已取消。</string>
     <string name="pdf_tool_file_summary">%1$s · %2$s</string>
     <plurals name="pdf_tool_pages">
-        <item quantity="one">%d 页</item>
         <item quantity="other">%d 页</item>
     </plurals>
     <string name="pdf_tool_password_title">需要密码</string>

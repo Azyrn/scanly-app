@@ -58,56 +58,74 @@ class DbPostProcessor(
         val stack = IntArray(w * h)
 
         for (start in 0 until w * h) {
-            if (prob[start] <= thresh || visited[start]) continue
-            if (out.size >= maxCandidates) break
-
-            var top = 0
-            stack[top++] = start
-            visited[start] = true
-            val border = ArrayList<Float>(256)
-            var pixels = 0
-
-            while (top > 0) {
-                val idx = stack[--top]
-                val x = idx % w
-                val y = idx / w
-                pixels++
-
-                var isBorder = false
-                for (d in 0 until 4) {
-                    val nx = x + NX[d]
-                    val ny = y + NY[d]
-                    if (nx < 0 || ny < 0 || nx >= w || ny >= h) {
-                        isBorder = true
-                        continue
-                    }
-                    val n = ny * w + nx
-                    if (prob[n] <= thresh) {
-                        isBorder = true
-                    } else if (!visited[n]) {
-                        visited[n] = true
-                        stack[top++] = n
-                    }
-                }
-                if (isBorder) {
-                    border.add(x.toFloat())
-                    border.add(y.toFloat())
-                }
+            if (prob[start] > thresh && !visited[start]) {
+                if (out.size >= maxCandidates) break
+                val region = floodRegion(prob, w, h, start, visited, stack)
+                regionQuad(prob, w, h, region, curl)?.let { out.add(Geometry.orderQuad(it.scaled(scaleX, scaleY))) }
             }
-
-            if (pixels < 4 || border.size < 6) continue
-
-            val rect = Geometry.minAreaRect(border.toFloatArray())
-            if (rect.shortSide < minSize) continue
-            curl?.add(pixels, rect)
-            if (polygonScore(prob, w, h, rect.quad) < boxThresh) continue
-
-            val expanded = Geometry.minAreaRect(Geometry.unclip(rect.quad, unclipRatio))
-            if (expanded.shortSide < minSize + 2f) continue
-
-            out.add(Geometry.orderQuad(expanded.quad.scaled(scaleX, scaleY)))
         }
         return out
+    }
+
+    /** The 4-connected region above [thresh] around [start], marking it in [visited]. */
+    private fun floodRegion(
+        prob: FloatArray,
+        w: Int,
+        h: Int,
+        start: Int,
+        visited: BooleanArray,
+        stack: IntArray
+    ): Region {
+        var top = 0
+        stack[top++] = start
+        visited[start] = true
+        val border = ArrayList<Float>(256)
+        var pixels = 0
+
+        while (top > 0) {
+            val idx = stack[--top]
+            val x = idx % w
+            val y = idx / w
+            pixels++
+
+            var isBorder = false
+            for (d in 0 until 4) {
+                val nx = x + NX[d]
+                val ny = y + NY[d]
+                if (nx !in 0 until w || ny !in 0 until h) {
+                    isBorder = true
+                    continue
+                }
+                val n = ny * w + nx
+                if (prob[n] <= thresh) {
+                    isBorder = true
+                } else if (!visited[n]) {
+                    visited[n] = true
+                    stack[top++] = n
+                }
+            }
+            if (isBorder) {
+                border.add(x.toFloat())
+                border.add(y.toFloat())
+            }
+        }
+        return Region(pixels, border.toFloatArray())
+    }
+
+    /** The region's expanded box in map pixels, or null when it is too small or too faint. */
+    private fun regionQuad(prob: FloatArray, w: Int, h: Int, region: Region, curl: CurlCounter?): Quad? {
+        val rect = candidateRect(region) ?: return null
+        curl?.add(region.pixels, rect)
+        if (polygonScore(prob, w, h, rect.quad) < boxThresh) return null
+
+        val expanded = Geometry.minAreaRect(Geometry.unclip(rect.quad, unclipRatio))
+        return if (expanded.shortSide < minSize + 2f) null else expanded.quad
+    }
+
+    private fun candidateRect(region: Region): RotatedRect? {
+        if (region.pixels < 4 || region.border.size < 6) return null
+        val rect = Geometry.minAreaRect(region.border)
+        return if (rect.shortSide < minSize) null else rect
     }
 
     /** Mean probability inside the quad (scanline point-in-polygon). */
@@ -152,3 +170,6 @@ class DbPostProcessor(
         val NY = intArrayOf(0, 0, 1, -1)
     }
 }
+
+/** A flooded text region: its pixel count and its border pixels as x, y pairs. */
+private class Region(val pixels: Int, val border: FloatArray)

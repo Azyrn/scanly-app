@@ -46,92 +46,16 @@ class PdfEditorEngine @Inject constructor(
 
         val workspace = File(context.cacheDir, "pdf-edit-${System.nanoTime()}")
             .apply { mkdirs() }
-        var current = source
-        var step = 0
-        // Decryption removes the password from the working copy, so later steps run unencrypted.
-        var activePassword = password
-
-        fun next(): File = File(workspace, "step-${step++}.pdf")
 
         try {
             val originalPageCount = pageReader.pageCount(source, password)
                 ?: return@withContext PdfEditResult.WrongPassword
+            val run = EditRun(workspace, source, password)
 
-            if (plan.structural.any { it is PdfEdit.Decrypt }) {
-                val target = next()
-                qpdf.decrypt(current, target, activePassword).orReturn { return@withContext it }
-                current = target
-                activePassword = ""
-            }
+            val failure = runSteps(plan, run, originalPageCount, stampBitmaps)
+            if (failure != null) return@withContext failure
 
-            val surviving = survivingOrder(plan.structural, originalPageCount)
-            if (surviving.isEmpty()) {
-                return@withContext PdfEditResult.Failed(context.getString(R.string.pe_err_all_deleted))
-            }
-            if (surviving != List(originalPageCount) { it }) {
-                val target = next()
-                qpdf.selectPages(
-                    current,
-                    target,
-                    surviving.joinToString(",") { (it + 1).toString() },
-                    activePassword
-                ).orReturn { return@withContext it }
-                current = target
-            }
-
-            // Everything past this point addresses pages by their position in `surviving`.
-            val remap = surviving.withIndex().associate { (newIndex, old) -> old to newIndex }
-
-            // Markings are authored against the page as the editor showed it: full size, upright.
-            // Stamping them before the page is rotated or cropped is what keeps them where the
-            // user put them — afterwards, the same coordinates would land off the page.
-            current = applyMarkings(
-                plan,
-                remap,
-                current,
-                activePassword,
-                workspace,
-                stampBitmaps,
-                ::next
-            ) ?: return@withContext failure()
-            current = applyCrops(plan, remap, current, activePassword, ::next)
-                ?: return@withContext failure()
-            current = applyAppends(plan, current, ::next)
-                ?: return@withContext failure()
-            current = applyRotations(plan, remap, current, activePassword, ::next)
-                ?: return@withContext failure()
-
-            plan.structural.filterIsInstance<PdfEdit.Compress>().lastOrNull()?.let {
-                val target = next()
-                qpdf.compress(current, target, it.settings, activePassword)
-                    .orReturn { result -> return@withContext result }
-                // A rewrite can come out larger than what it replaced — a file qpdf has already
-                // packed optimally, or one whose images resist re-encoding. Compressing must never
-                // be the thing that grew the document, so the larger result is simply discarded.
-                if (target.length() in 1 until current.length()) current = target
-            }
-
-            plan.structural.filterIsInstance<PdfEdit.StripMetadata>().lastOrNull()?.let {
-                val target = next()
-                qpdf.stripMetadata(current, target, it.stripXmp, activePassword)
-                    .orReturn { result -> return@withContext result }
-                current = target
-            }
-
-            plan.structural.filterIsInstance<PdfEdit.Encrypt>().lastOrNull()?.let {
-                val target = next()
-                qpdf.encrypt(
-                    input = current,
-                    output = target,
-                    userPassword = it.userPassword,
-                    ownerPassword = it.ownerPassword,
-                    permissions = it.permissions,
-                    openPassword = activePassword
-                ).orReturn { result -> return@withContext result }
-                current = target
-            }
-
-            current.copyTo(output, overwrite = true)
+            run.current.copyTo(output, overwrite = true)
             PdfEditResult.Saved(output)
         } catch (e: Exception) {
             PdfEditResult.Failed(e.message ?: context.getString(R.string.pe_err_edit_failed))
@@ -140,23 +64,83 @@ class PdfEditorEngine @Inject constructor(
         }
     }
 
-    /**
-     * Folds deletions and reorders into one list of surviving original page indices, in final
-     * order, so both become a single qpdf `--pages` selection instead of two rewrites.
-     */
-    private fun survivingOrder(
-        structural: List<PdfEdit.Structural>,
-        pageCount: Int
-    ): List<Int> {
-        var order = List(pageCount) { it }
-        structural.forEach { edit ->
-            order = when (edit) {
-                is PdfEdit.DeletePages -> order.filterNot { it in edit.pageIndices }
-                is PdfEdit.ReorderPages -> edit.order.filter { it in order }
-                else -> order
-            }
+    /** The steps in their fixed order, stopping at the first that fails. */
+    private suspend fun runSteps(
+        plan: EditPlan,
+        run: EditRun,
+        originalPageCount: Int,
+        stampBitmaps: Map<String, Bitmap>
+    ): PdfEditResult? = decrypt(plan, run)
+        ?: selectPages(plan, run, originalPageCount)
+        ?: editPages(plan, run, stampBitmaps)
+        ?: compress(plan, run)
+        ?: stripMetadata(plan, run)
+        ?: encrypt(plan, run)
+
+    // Each step below returns null when it succeeded (or had nothing to do), else the result to
+    // stop with.
+
+    /** Decryption removes the password from the working copy, so later steps run unencrypted. */
+    private suspend fun decrypt(plan: EditPlan, run: EditRun): PdfEditResult? {
+        if (plan.structural.none { it is PdfEdit.Decrypt }) return null
+        return run.rewrite { input, target -> qpdf.decrypt(input, target, run.password) }
+            .also { if (it == null) run.password = "" }
+    }
+
+    /** Deletions and reorders as one page selection; sets [EditRun.remap] for the steps after. */
+    private suspend fun selectPages(plan: EditPlan, run: EditRun, originalPageCount: Int): PdfEditResult? {
+        val surviving = survivingOrder(plan.structural, originalPageCount)
+        if (surviving.isEmpty()) return PdfEditResult.Failed(context.getString(R.string.pe_err_all_deleted))
+
+        // Everything past this point addresses pages by their position in `surviving`.
+        run.remap = surviving.withIndex().associate { (newIndex, old) -> old to newIndex }
+        if (surviving == List(originalPageCount) { it }) return null
+        return run.rewrite { input, target ->
+            qpdf.selectPages(input, target, surviving.joinToString(",") { (it + 1).toString() }, run.password)
         }
-        return order
+    }
+
+    private suspend fun editPages(plan: EditPlan, run: EditRun, stampBitmaps: Map<String, Bitmap>): PdfEditResult? {
+        // Markings are authored against the page as the editor showed it: full size, upright.
+        // Stamping them before the page is rotated or cropped is what keeps them where the
+        // user put them — afterwards, the same coordinates would land off the page.
+        val edited = applyMarkings(plan, run.remap, run.current, run.password, run.workspace, stampBitmaps, run::next)
+            ?.let { applyCrops(plan, run.remap, it, run.password, run::next) }
+            ?.let { applyAppends(plan, it, run::next) }
+            ?.let { applyRotations(plan, run.remap, it, run.password, run::next) }
+            ?: return failure()
+        run.current = edited
+        return null
+    }
+
+    private suspend fun compress(plan: EditPlan, run: EditRun): PdfEditResult? {
+        val edit = plan.structural.filterIsInstance<PdfEdit.Compress>().lastOrNull() ?: return null
+        val target = run.next()
+        qpdf.compress(run.current, target, edit.settings, run.password).failure()?.let { return it }
+        // A rewrite can come out larger than what it replaced — a file qpdf has already
+        // packed optimally, or one whose images resist re-encoding. Compressing must never
+        // be the thing that grew the document, so the larger result is simply discarded.
+        if (target.length() in 1 until run.current.length()) run.current = target
+        return null
+    }
+
+    private suspend fun stripMetadata(plan: EditPlan, run: EditRun): PdfEditResult? {
+        val edit = plan.structural.filterIsInstance<PdfEdit.StripMetadata>().lastOrNull() ?: return null
+        return run.rewrite { input, target -> qpdf.stripMetadata(input, target, edit.stripXmp, run.password) }
+    }
+
+    private suspend fun encrypt(plan: EditPlan, run: EditRun): PdfEditResult? {
+        val edit = plan.structural.filterIsInstance<PdfEdit.Encrypt>().lastOrNull() ?: return null
+        return run.rewrite { input, target ->
+            qpdf.encrypt(
+                input = input,
+                output = target,
+                userPassword = edit.userPassword,
+                ownerPassword = edit.ownerPassword,
+                permissions = edit.permissions,
+                openPassword = run.password
+            )
+        }
     }
 
     private suspend fun applyRotations(
@@ -257,13 +241,48 @@ class PdfEditorEngine @Inject constructor(
     private fun failure() = PdfEditResult.Failed(
         Qpdf.nativeLastError().ifBlank { context.getString(R.string.pe_err_edit_failed) }
     )
+}
 
-    private inline fun QpdfResult.orReturn(onFailure: (PdfEditResult) -> Unit) {
-        when (this) {
-            is QpdfResult.Ok -> Unit
-            is QpdfResult.WrongPassword -> onFailure(PdfEditResult.WrongPassword)
-            is QpdfResult.BadUsage -> onFailure(PdfEditResult.Failed(message))
-            is QpdfResult.Failed -> onFailure(PdfEditResult.Failed(message))
+/** The working copy as the edit steps rewrite it, one numbered file per step. */
+private class EditRun(val workspace: File, var current: File, var password: String) {
+    private var step = 0
+
+    /** Original page index to its index after page selection; identity until then. */
+    var remap: Map<Int, Int> = emptyMap()
+
+    fun next(): File = File(workspace, "step-${step++}.pdf")
+
+    /** Runs one qpdf rewrite of [current] into the next step file, which becomes current on success. */
+    inline fun rewrite(op: (input: File, target: File) -> QpdfResult): PdfEditResult? {
+        val target = next()
+        val failure = op(current, target).failure()
+        if (failure == null) current = target
+        return failure
+    }
+}
+
+private fun QpdfResult.failure(): PdfEditResult? = when (this) {
+    is QpdfResult.Ok -> null
+    is QpdfResult.WrongPassword -> PdfEditResult.WrongPassword
+    is QpdfResult.BadUsage -> PdfEditResult.Failed(message)
+    is QpdfResult.Failed -> PdfEditResult.Failed(message)
+}
+
+/**
+ * Folds deletions and reorders into one list of surviving original page indices, in final
+ * order, so both become a single qpdf `--pages` selection instead of two rewrites.
+ */
+private fun survivingOrder(
+    structural: List<PdfEdit.Structural>,
+    pageCount: Int
+): List<Int> {
+    var order = List(pageCount) { it }
+    structural.forEach { edit ->
+        order = when (edit) {
+            is PdfEdit.DeletePages -> order.filterNot { it in edit.pageIndices }
+            is PdfEdit.ReorderPages -> edit.order.filter { it in order }
+            else -> order
         }
     }
+    return order
 }

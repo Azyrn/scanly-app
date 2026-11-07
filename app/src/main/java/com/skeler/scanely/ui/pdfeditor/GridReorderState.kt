@@ -1,5 +1,6 @@
 package com.skeler.scanely.ui.pdfeditor
 
+import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,25 +58,20 @@ class GridReorderState(
         }
 
         dragOffset += delta
+        moveDraggedTile(gridState.layoutInfo.visibleItemsInfo)
+    }
 
-        val current = draggingPosition ?: return
-        val items = gridState.layoutInfo.visibleItemsInfo
-        val dragged = items.firstOrNull { it.index == current } ?: return
+    /** Swaps the dragged tile into whichever visible tile its centre is now over. */
+    private fun moveDraggedTile(items: List<LazyGridItemInfo>) {
+        val dragged = draggingPosition?.let { position -> items.firstOrNull { it.index == position } } ?: return
+        val current = dragged.index
         val centre = Offset(
             dragged.offset.x + dragged.size.width / 2f,
             dragged.offset.y + dragged.size.height / 2f
         ) + dragOffset
 
-        val target = items.firstOrNull { item ->
-            item.index != current &&
-                centre.x >= item.offset.x &&
-                centre.x <= item.offset.x + item.size.width &&
-                centre.y >= item.offset.y &&
-                centre.y <= item.offset.y + item.size.height
-        } ?: return
-
-        val moved = (order ?: return).toMutableList()
-        if (current !in moved.indices || target.index !in moved.indices) return
+        val target = items.firstOrNull { it.index != current && it.contains(centre) } ?: return
+        val moved = order?.toMutableList()?.takeIf { current in it.indices && target.index in it.indices } ?: return
         moved.add(target.index, moved.removeAt(current))
         order = moved
         // The tile has swapped into the target's slot, so the visual offset that carried it there
@@ -128,3 +124,7 @@ fun rememberReorderState(
     LaunchedEffect(order) { if (state.order == order) state.order = null }
     return state
 }
+
+private fun LazyGridItemInfo.contains(point: Offset): Boolean =
+    point.x in offset.x.toFloat()..(offset.x + size.width).toFloat() &&
+        point.y in offset.y.toFloat()..(offset.y + size.height).toFloat()

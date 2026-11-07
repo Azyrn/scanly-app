@@ -83,25 +83,22 @@ class PageTextSnapshot(
         val centre = anchor.center.y
         val tolerance = max(anchor.height, MIN_LINE_HEIGHT_PT) / 2f
 
-        var start = index
-        var end = index
-        var cursor = index
-        while (cursor > 0) {
-            cursor--
+        return lineEdge(index, -1, centre, tolerance)..lineEdge(index, 1, centre, tolerance)
+    }
+
+    /** The last glyph walking from [from] by [step] that still shares the line through [centre]. */
+    private fun lineEdge(from: Int, step: Int, centre: Float, tolerance: Float): Int {
+        var edge = from
+        var cursor = from + step
+        while (cursor in boxes.indices) {
             val box = boxes[cursor]
-            if (!box.isGlyph) continue
-            if (!sharesLine(box, centre, tolerance)) break
-            start = cursor
+            if (box.isGlyph) {
+                if (!sharesLine(box, centre, tolerance)) return edge
+                edge = cursor
+            }
+            cursor += step
         }
-        cursor = index
-        while (cursor + 1 < boxes.size) {
-            cursor++
-            val box = boxes[cursor]
-            if (!box.isGlyph) continue
-            if (!sharesLine(box, centre, tolerance)) break
-            end = cursor
-        }
-        return start..end
+        return edge
     }
 
     /** One rectangle per visual line, which is what a highlight or underline should cover. */
@@ -213,30 +210,12 @@ class PageTextSnapshot(
         return selectionOf(start..end)
     }
 
-    private val Rect.isGlyph: Boolean get() = width > 0f && height > 0f
-
-    private fun sharesLine(box: Rect, centre: Float, tolerance: Float): Boolean =
-        abs(box.center.y - centre) <= tolerance
-
     private fun clamp(range: IntRange): IntRange {
         if (boxes.isEmpty() || range.isEmpty()) return IntRange.EMPTY
         val first = range.first.coerceIn(0, boxes.lastIndex)
         val last = range.last.coerceIn(0, boxes.lastIndex)
         return if (first > last) IntRange.EMPTY else first..last
     }
-
-    private fun distanceTo(box: Rect, point: Offset): Float {
-        val dx = max(max(box.left - point.x, point.x - box.right), 0f)
-        val dy = max(max(box.top - point.y, point.y - box.bottom), 0f)
-        return if (dx == 0f && dy == 0f) 0f else kotlin.math.hypot(dx, dy)
-    }
-
-    private fun Rect.union(other: Rect) = Rect(
-        min(left, other.left),
-        min(top, other.top),
-        max(right, other.right),
-        max(bottom, other.bottom)
-    )
 
     companion object {
         const val HIT_TOLERANCE_PT = 8f
@@ -248,3 +227,21 @@ class PageTextSnapshot(
         private const val BASELINE_BUCKET_PT = 1f
     }
 }
+
+private val Rect.isGlyph: Boolean get() = width > 0f && height > 0f
+
+private fun sharesLine(box: Rect, centre: Float, tolerance: Float): Boolean =
+    abs(box.center.y - centre) <= tolerance
+
+private fun distanceTo(box: Rect, point: Offset): Float {
+    val dx = max(max(box.left - point.x, point.x - box.right), 0f)
+    val dy = max(max(box.top - point.y, point.y - box.bottom), 0f)
+    return if (dx == 0f && dy == 0f) 0f else kotlin.math.hypot(dx, dy)
+}
+
+private fun Rect.union(other: Rect) = Rect(
+    min(left, other.left),
+    min(top, other.top),
+    max(right, other.right),
+    max(bottom, other.bottom)
+)

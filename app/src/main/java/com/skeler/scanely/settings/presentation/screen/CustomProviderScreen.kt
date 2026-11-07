@@ -56,6 +56,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -205,7 +206,11 @@ private fun IntroCard() {
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                stringResource(R.string.set_custom_intro_pdf_pages, CustomScanner.MAX_PAGES),
+                pluralStringResource(
+                    R.plurals.set_custom_intro_pdf_pages,
+                    CustomScanner.MAX_PAGES,
+                    CustomScanner.MAX_PAGES
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

@@ -24,7 +24,7 @@ class App : Application(), SingletonImageLoader.Factory {
         ImageLoader.Builder(context)
             .memoryCache {
                 MemoryCache.Builder()
-                    .maxSizePercent(context, 0.25)
+                    .maxSizePercent(context, MEMORY_CACHE_FRACTION)
                     .build()
             }
             .diskCache {
@@ -41,5 +41,6 @@ class App : Application(), SingletonImageLoader.Factory {
 
     private companion object {
         const val IMAGE_CACHE_BYTES = 100L * 1024 * 1024
+        const val MEMORY_CACHE_FRACTION = 0.25
     }
 }

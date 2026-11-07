@@ -7,6 +7,7 @@ import android.graphics.Paint
 import androidx.core.graphics.createBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.skeler.scanely.core.ocr.paddle.BitmapRotation
 import com.skeler.scanely.core.ocr.paddle.ImageOps
 import com.skeler.scanely.core.ocr.paddle.PaddleModelStore
 import com.skeler.scanely.core.ocr.paddle.PaddleOcrEngine
@@ -107,7 +108,7 @@ class PaddlePageOrientationTest {
     @Test
     fun upsideDownArabicPageIsTurnedBack() {
         val page = arabicPage()
-        val flipped = ImageOps.rotate(page, 180)
+        val flipped = BitmapRotation.rotate(page, 180)
         val text = textOf(flipped)
 
         val top = text.indexOf(first.take(6))
@@ -129,7 +130,7 @@ class PaddlePageOrientationTest {
         val quads = engine.detect(page, 960)
         val pixels = ImageOps.Page(page)
         val upright = quads.map { ImageOps.cropQuad(pixels, it) }
-        val flipped = upright.map { ImageOps.rotate180(it) }
+        val flipped = upright.map { BitmapRotation.rotate180(it) }
         val service = service()
 
         assertEquals(

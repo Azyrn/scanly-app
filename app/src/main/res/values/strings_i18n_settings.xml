@@ -8,7 +8,10 @@
     <string name="set_sign_in_subtitle">Required for AI scans</string>
     <string name="set_signed_in">Signed in</string>
     <string name="set_pro_key_title">Scanly Pro key</string>
-    <string name="set_pro_key_active_devices">Active · %1$d of %2$d devices</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="one">Active · %1$d of %2$d device</item>
+        <item quantity="other">Active · %1$d of %2$d devices</item>
+    </plurals>
     <string name="set_pro_key_active_here">Active on this device</string>
     <string name="set_delete_account_title">Delete account</string>
     <string name="set_delete_account_subtitle">Permanently erase your account and data</string>
@@ -35,7 +38,7 @@
     <string name="set_remove_key_message">This device drops back to the free plan and its slot is freed, so you can use the key on another device. The key itself keeps working.</string>
     <string name="set_remove_key_confirm">Remove</string>
     <string name="set_delete_account_dialog_title">Delete account?</string>
-    <string name="set_delete_account_dialog_message">This permanently erases your Scanly account, your sign-in details, and your usage records on our servers. It cannot be undone.\n\nScans saved on this device are not affected, and an active Pro subscription must be cancelled separately through Paddle.</string>
+    <string name="set_delete_account_dialog_message">This permanently erases your Scanly account, your sign-in details, and your usage records on our servers. It cannot be undone. You can\'t create a new account with this email for 30 days.\n\nScans saved on this device are not affected, and an active Pro subscription must be cancelled separately through Paddle.</string>
     <string name="set_sign_out_dialog_title">Sign out?</string>
     <string name="set_sign_out_dialog_message">AI scans will stop working until you sign in again. Your scan history and offline text recognition stay on this device.</string>
     <string name="set_sign_out">Sign out</string>
@@ -91,7 +94,10 @@
     <string name="set_pro_required_message">Connecting your own AI provider is part of Scanly Pro. The fields below show exactly what you\'d set up — they unlock once you\'re on Pro. Upgrade, or redeem a key you already own, from the Account section in Settings.</string>
     <string name="set_custom_intro_body">Connect any AI provider. Pick the protocol it speaks, paste the endpoint URL, the model name and your API key, then test the connection.</string>
     <string name="set_custom_intro_hosts">Most hosts are OpenAI-compatible — Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude and Gemini have their own protocols, and a self-hosted server on your network works over plain http.</string>
-    <string name="set_custom_intro_pdf_pages">Scanned PDFs go up to %1$d pages at a time, since they travel as images in one request. Office documents still need Scanly AI.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="one">Scanned PDFs go up to %1$d page at a time, since they travel as images in one request. Office documents still need Scanly AI.</item>
+        <item quantity="other">Scanned PDFs go up to %1$d pages at a time, since they travel as images in one request. Office documents still need Scanly AI.</item>
+    </plurals>
     <string name="set_section_protocol">Protocol</string>
     <string name="set_section_endpoint">Endpoint</string>
     <string name="set_endpoint_url_label">Endpoint URL</string>

@@ -4,7 +4,6 @@
     <!-- Repair -->
     <string name="pdf_tool_repair_action">修復</string>
     <plurals name="pdf_tool_repair_recovered">
-        <item quantity="one">%d ページを復元しました。削除前に確認してください。</item>
         <item quantity="other">%d ページを復元しました。削除前に確認してください。</item>
     </plurals>
 
@@ -15,7 +14,6 @@
     <string name="pdf_tool_extract_text_page_separator">----- %d ページ -----</string>
     <string name="pdf_tool_extract_text_action">抽出</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d ページはテキストがありません。ホーム画面の「PDFをテキストに変換」で読めます。</item>
         <item quantity="other">%d ページはテキストがありません。ホーム画面の「PDFをテキストに変換」で読めます。</item>
     </plurals>
 </resources>

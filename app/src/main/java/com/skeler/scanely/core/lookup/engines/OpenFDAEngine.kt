@@ -19,6 +19,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "OpenFDAEngine"
+private const val MAX_DESCRIPTION_CHARS = 500
 
 @Singleton
 class OpenFDAEngine @Inject constructor(
@@ -50,23 +51,25 @@ class OpenFDAEngine @Inject constructor(
             // A 404 is openFDA's "no match", so the other identifier is tried.
             val body = okHttpClient.newCall(request).await().use { it.lookupBody(name) } ?: continue
 
-            try {
-                val fdaResponse = LookupJson.decodeFromString<OpenFDAResponse>(body)
-
-                if (fdaResponse.results?.isNotEmpty() == true) {
-                    val result = fdaResponse.results.first()
-                    val product = mapToProductInfo(barcode, result)
-                    Log.d(TAG, "Found: ${product.name}")
-                    return@withContext LookupResult.Found(product, name)
-                }
-            } catch (e: Exception) {
-                Log.w(TAG, "Parse error for $url: ${e.message}")
-                continue
+            val product = parseProduct(barcode, url, body)
+            if (product != null) {
+                Log.d(TAG, "Found: ${product.name}")
+                return@withContext LookupResult.Found(product, name)
             }
         }
 
         Log.d(TAG, "Not found: $barcode")
         LookupResult.NotFound(name)
+    }
+
+    /** The first label in [body], or null when it has none or does not parse. */
+    private fun parseProduct(barcode: String, url: String, body: String): ProductInfo? = try {
+        LookupJson.decodeFromString<OpenFDAResponse>(body).results?.firstOrNull()?.let {
+            mapToProductInfo(barcode, it)
+        }
+    } catch (e: Exception) {
+        Log.w(TAG, "Parse error for $url: ${e.message}")
+        null
     }
 
     private fun mapToProductInfo(barcode: String, result: DrugLabel): ProductInfo {
@@ -78,7 +81,7 @@ class OpenFDAEngine @Inject constructor(
             category = ProductCategory.MEDICINE,
             name = openFda?.brandName?.firstOrNull() ?: result.splProductDataElements?.firstOrNull(),
             brand = openFda?.manufacturerName?.firstOrNull(),
-            description = result.description?.firstOrNull()?.take(500),
+            description = result.description?.firstOrNull()?.take(MAX_DESCRIPTION_CHARS),
             imageUrl = null,
             medicineData = MedicineData(
                 genericName = openFda?.genericName?.firstOrNull(),

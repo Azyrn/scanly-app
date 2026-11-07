@@ -2,7 +2,6 @@
 <resources>
     <string name="pdf_tool_repair_action">복구</string>
     <plurals name="pdf_tool_repair_recovered">
-        <item quantity="one">%d페이지를 복구했어요. 원본을 삭제하기 전에 확인하세요.</item>
         <item quantity="other">%d페이지를 복구했어요. 원본을 삭제하기 전에 확인하세요.</item>
     </plurals>
     <string name="pdf_tool_extract_text_separators">각 페이지의 시작 위치 표시</string>
@@ -10,7 +9,6 @@
     <string name="pdf_tool_extract_text_page_separator">----- %d페이지 -----</string>
     <string name="pdf_tool_extract_text_action">추출</string>
     <plurals name="pdf_tool_extract_text_empty_pages">
-        <item quantity="one">%d페이지에 선택할 수 있는 텍스트가 없어요(스캔본). 홈 화면의 PDF → 텍스트 기능으로 읽을 수 있어요.</item>
         <item quantity="other">%d페이지에 선택할 수 있는 텍스트가 없어요(스캔본). 홈 화면의 PDF → 텍스트 기능으로 읽을 수 있어요.</item>
     </plurals>
 </resources>

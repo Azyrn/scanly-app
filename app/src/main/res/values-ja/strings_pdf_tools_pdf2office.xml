@@ -13,19 +13,15 @@
     <string name="pdf2office_simplified_word">レイアウトを簡略化しました。テキスト、見出し、リスト、表は編集できますが、フォント、段組み、図形、画像は引き継がれません。</string>
     <string name="pdf2office_simplified_powerpoint">レイアウトを簡略化しました。テキストは元のページと同じ位置で編集できますが、フォント、図形、画像は引き継がれません。</string>
     <plurals name="pdf2office_scanned_as_images">
-        <item quantity="one">スキャンされたページ %d 枚は画像として追加されました。</item>
         <item quantity="other">スキャンされたページ %d 枚は画像として追加されました。</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">情報量の多いページ %d 枚は行単位で変換</item>
         <item quantity="other">情報量の多いページ %d 枚は行単位で変換</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">読み取れなかったページ %d 枚は除外</item>
         <item quantity="other">読み取れなかったページ %d 枚は除外</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">テキストのないスキャンページ %d 枚はスキップ</item>
         <item quantity="other">テキストのないスキャンページ %d 枚はスキップ</item>
     </plurals>
     <string name="pdf2office_excel_no_tables">表が見つからず、1行ずつ配置</string>

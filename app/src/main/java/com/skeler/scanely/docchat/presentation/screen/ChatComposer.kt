@@ -460,7 +460,8 @@ private fun AttachErrorChip(error: AttachError, onDismiss: () -> Unit) {
     Surface(shape = RoundedCornerShape(12.dp), color = MaterialTheme.colorScheme.errorContainer) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 12.dp)) {
             Text(
-                stringResource(error.text, *error.args.toTypedArray()),
+                error.quantity?.let { pluralStringResource(error.text, it, *error.args.toTypedArray()) }
+                    ?: stringResource(error.text, *error.args.toTypedArray()),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onErrorContainer,
                 modifier = Modifier.widthIn(max = ERROR_TEXT_WIDTH)

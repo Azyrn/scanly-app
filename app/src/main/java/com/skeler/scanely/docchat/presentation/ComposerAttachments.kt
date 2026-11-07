@@ -122,7 +122,11 @@ internal class ComposerAttachments(
 }
 
 private fun PickedDocument?.refusal(): AttachError = when (this) {
-    is PickedDocument.TooManyPages -> AttachError(R.string.chat_file_too_many_pages, listOf(limit, pages))
+    is PickedDocument.TooManyPages -> AttachError(
+        R.plurals.chat_file_too_many_pages,
+        listOf(limit, pages),
+        quantity = limit
+    )
     PickedDocument.TooLarge -> AttachError(R.string.chat_file_too_large)
     else -> AttachError(R.string.chat_file_unreadable)
 }

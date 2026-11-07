@@ -34,7 +34,7 @@ class WordExportTest {
 
     @Test
     fun theExportedPackageOpensWithItsTablesAndLineBreaks() = runBlocking {
-        val uri = ScanExporter.exportTextWord(context, quote, asMarkdown = true, baseName = "wordcheck")
+        val uri = TextExporter.exportTextWord(context, quote, asMarkdown = true, baseName = "wordcheck")
         val bytes = context.contentResolver.openInputStream(uri)!!.use { it.readBytes() }
 
         // A .docx is a zip; anything else is not openable at all.

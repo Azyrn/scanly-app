@@ -100,7 +100,7 @@ class SignatureStore @Inject constructor(
                     id = item.getString("id"),
                     label = item.optString("label", "Signature"),
                     createdAt = item.optLong("createdAt"),
-                    aspectRatio = item.optDouble("aspectRatio", 3.0).toFloat()
+                    aspectRatio = item.optDouble("aspectRatio", DEFAULT_ASPECT_RATIO).toFloat()
                 )
             }
         }.getOrElse {
@@ -125,3 +125,6 @@ class SignatureStore @Inject constructor(
         }.onFailure { Log.w(TAG, "Could not write signature index", it) }
     }
 }
+
+/** Width over height assumed for a signature stored before its aspect ratio was recorded. */
+private const val DEFAULT_ASPECT_RATIO = 3.0

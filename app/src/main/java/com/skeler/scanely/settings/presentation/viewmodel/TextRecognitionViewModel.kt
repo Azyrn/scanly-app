@@ -41,7 +41,7 @@ class TextRecognitionViewModel @Inject constructor(
 
     fun download(pack: ScriptPack) = store.downloadAsync(pack)
 
-    val uvdocState: StateFlow<PackState> = store.uvdocState
+    val uvdocState: StateFlow<PackState> = store.uvdoc.state
 
     /** Enables dewarping only after its model finishes downloading. */
     fun setDewarp(enabled: Boolean) {
@@ -50,17 +50,17 @@ class TextRecognitionViewModel @Inject constructor(
             write { settings.setBoolean(SettingsKeys.PADDLE_DOC_UNWARP, false) }
             return
         }
-        store.downloadUvdocAsync {
+        store.uvdoc.downloadAsync {
             settings.setBoolean(SettingsKeys.PADDLE_DOC_UNWARP, true)
         }
     }
 
-    val tableState: StateFlow<PackState> = store.tableState
+    val tableState: StateFlow<PackState> = store.table.state
 
     fun setTables(enabled: Boolean) {
         // Do not delete a model while it is still downloading.
         if (tableState.value is PackState.Downloading) return
-        if (enabled) store.downloadTableAsync() else write { store.deleteTable() }
+        if (enabled) store.table.downloadAsync() else write { store.table.delete() }
     }
 
     /** Falls back to the bundled pack when removing the selected pack. */

@@ -2,7 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Merge -->
     <plurals name="pdf_tool_merge_files">
-        <item quantity="one">%d 件</item>
         <item quantity="other">%d 件</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · 合計 %2$s</string>
@@ -41,11 +40,9 @@
     <string name="pdf_tool_split_size_body">ページは分割しないので、超過する1ページは単独ファイルになります。</string>
     <string name="pdf_tool_split_locked">パスワード付き。新しいファイルにも引き継がれます。</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">%d 件を作成</item>
         <item quantity="other">%d 件を作成</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
-        <item quantity="one">%d ページを保持</item>
         <item quantity="other">%d ページを保持</item>
     </plurals>
 
@@ -56,7 +53,6 @@
 
     <!-- Split: result notes -->
     <plurals name="pdf_tool_split_oversized_pages">
-        <item quantity="one">%d ページは単体でサイズ上限を超えるため、単独のファイルになります。</item>
         <item quantity="other">%d ページは単体でサイズ上限を超えるため、それぞれ単独のファイルになります。</item>
     </plurals>
 </resources>

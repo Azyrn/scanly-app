@@ -10,9 +10,10 @@
     <string name="pe_menu_validate_hint">检查内嵌的数字签名</string>
     <string name="pe_menu_library_hint">复用已捕获的签名</string>
     <string name="pe_add_a_pdf">添加 PDF</string>
-    <string name="pe_merge_page_count">%1$d 页</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="other">%1$d 页</item>
+    </plurals>
     <string name="pe_remove">移除</string>
-    <string name="pe_merge_page_change">%1$d 页 → %2$d 页</string>
     <string name="pe_add_to_document">添加到文档</string>
     <string name="pe_compress_now">当前 %1$s</string>
     <string name="pe_compress_trying_levels">正在对此文档逐一尝试各个级别…</string>
@@ -59,7 +60,9 @@
     <string name="pe_unlock">解锁</string>
     <string name="pe_issued_by">颁发者：%1$s</string>
     <string name="pe_valid_range">有效期 %1$s 至 %2$s</string>
-    <string name="pe_chain_count">证书链中包含 %1$d 个证书</string>
+    <plurals name="pe_chain_count">
+        <item quantity="other">证书链中包含 %1$d 个证书</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">此证书已超出有效期。仍可用于签名，但阅读器会标记该签名。</string>
     <string name="pe_reason_optional">原因（可选）</string>
     <string name="pe_location_optional">位置（可选）</string>
@@ -127,7 +130,9 @@
     <string name="pe_crop">裁剪</string>
     <string name="pe_paywall_reason_studio">压缩、加密和编辑文字属于 Scanly Pro。</string>
     <string name="pe_select_all">全选</string>
-    <string name="pe_selected_count">已选择 %1$d 项</string>
+    <plurals name="pe_selected_count">
+        <item quantity="other">已选择 %1$d 项</item>
+    </plurals>
     <string name="pe_clear_selection">清除选择</string>
     <string name="pe_extract_to_new_pdf">提取到新 PDF</string>
     <string name="pe_edit">编辑</string>
@@ -141,7 +146,9 @@
     <string name="pe_busy_extracting">提取中</string>
     <string name="pe_extract_failed">无法提取这些页面。</string>
     <string name="pe_staged_edits_not_included">\u0020— 未包含暂存的编辑</string>
-    <string name="pe_extracted_pages">已提取 %1$d 页%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="other">已提取 %1$d 页%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">保存中</string>
     <string name="pe_busy_checking_signatures">正在检查签名</string>
     <string name="pe_nothing_to_save">暂无可保存的内容。</string>
@@ -149,7 +156,9 @@
     <string name="pe_write_failed">无法写入 Downloads。</string>
     <string name="pe_compression_staged">压缩已暂存。保存即可应用。</string>
     <string name="pe_merge_read_failed">无法读取该 PDF。</string>
-    <string name="pe_documents_staged">已暂存 %1$d 个文档。保存即可应用。</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="other">已暂存 %1$d 个文档。保存即可应用。</item>
+    </plurals>
     <string name="pe_encryption_staged">加密已暂存。保存即可应用。</string>
     <string name="pe_password_removal_staged">密码移除已暂存。保存即可应用。</string>
     <string name="pe_metadata_removal_staged">元数据移除已暂存。保存即可应用。</string>
@@ -160,15 +169,12 @@
     <string name="pe_sign_encrypted_unsupported">设有密码的文档无法签名。请先移除密码，并且不要暂存新的密码——加密会重写文件，从而破坏签名。</string>
     <string name="pe_sign_chain_too_large">此证书的证书链过大，无法装入签名。请尝试证书链更短的证书。</string>
     <plurals name="pe_digital_signatures">
-        <item quantity="one">一个数字签名</item>
         <item quantity="other">%1$d 个数字签名</item>
     </plurals>
     <plurals name="pe_signature_pronoun">
-        <item quantity="one">该签名</item>
-        <item quantity="other">这些签名</item>
+        <item quantity="other">相关签名</item>
     </plurals>
     <plurals name="pe_crop_pages">
-        <item quantity="one">裁剪 %1$d 页</item>
         <item quantity="other">裁剪 %1$d 页</item>
     </plurals>
     <string name="pe_pane_menu">文档工具</string>

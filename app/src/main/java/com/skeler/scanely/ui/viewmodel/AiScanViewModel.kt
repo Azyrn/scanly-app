@@ -74,6 +74,8 @@ data class RescanParams(
     val extractPreset: String?
 )
 
+// Kept whole on purpose: the AI scan screen's state holder: one function per scan, translate and result intent.
+@Suppress("TooManyFunctions")
 @HiltViewModel
 class AiScanViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -237,24 +239,7 @@ class AiScanViewModel @Inject constructor(
                 extractPreset = extractPreset
             )
 
-            val work = if (shouldBundle(uris, extractPreset)) {
-                try {
-                    val me = entitlementRepository.entitlement.value
-                    photoBundler.bundle(
-                        uris,
-                        maxPages = me?.maxPagesPerDoc ?: FREE_PAGES_PER_DOC,
-                        maxBytes = me?.maxUploadBytes ?: FREE_UPLOAD_BYTES
-                    )
-                } catch (e: CancellationException) {
-                    throw e
-                } catch (e: Exception) {
-                    Log.e(TAG, "Joining photos failed", e)
-                    publishFinalResult(AiResult.Error(context.getString(R.string.ai_err_read_file)), null)
-                    return@launch
-                }
-            } else {
-                uris
-            }
+            val work = workFor(uris, extractPreset) ?: return@launch
             val bundled = work !== uris
             _aiState.value = _aiState.value.copy(totalFiles = work.size)
 
@@ -327,6 +312,25 @@ class AiScanViewModel @Inject constructor(
 
     fun consumeTranslationUpgrade() {
         _aiState.value = _aiState.value.copy(translationUpgrade = null)
+    }
+
+    /** The files to scan: [uris] themselves, or photos joined into one PDF; null when joining failed. */
+    private suspend fun workFor(uris: List<Uri>, extractPreset: String?): List<Uri>? {
+        if (!shouldBundle(uris, extractPreset)) return uris
+        return try {
+            val me = entitlementRepository.entitlement.value
+            photoBundler.bundle(
+                uris,
+                maxPages = me?.maxPagesPerDoc ?: FREE_PAGES_PER_DOC,
+                maxBytes = me?.maxUploadBytes ?: FREE_UPLOAD_BYTES
+            )
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e(TAG, "Joining photos failed", e)
+            publishFinalResult(AiResult.Error(context.getString(R.string.ai_err_read_file)), null)
+            null
+        }
     }
 
     /**

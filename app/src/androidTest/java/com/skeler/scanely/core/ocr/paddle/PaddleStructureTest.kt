@@ -136,8 +136,8 @@ class PaddleStructureTest {
 
     @Test
     fun tableModelRecoversTheGrid() {
-        runBlocking { store.downloadTable() }
-        org.junit.Assume.assumeTrue("SLANet not installed", store.hasTable())
+        runBlocking { store.table.download() }
+        org.junit.Assume.assumeTrue("SLANet not installed", store.table.isInstalled())
 
         val page = document()
         val crop = Bitmap.createBitmap(

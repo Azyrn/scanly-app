@@ -10,9 +10,10 @@
     <string name="pe_menu_validate_hint">埋め込まれたデジタル署名を確認</string>
     <string name="pe_menu_library_hint">保存した署名を再利用</string>
     <string name="pe_add_a_pdf">PDF を追加</string>
-    <string name="pe_merge_page_count">%1$d ページ</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="other">%1$d ページ</item>
+    </plurals>
     <string name="pe_remove">削除</string>
-    <string name="pe_merge_page_change">%1$d ページ → %2$d ページ</string>
     <string name="pe_add_to_document">書類に追加</string>
     <string name="pe_compress_now">現在 %1$s</string>
     <string name="pe_compress_trying_levels">この書類で各レベルを試しています…</string>
@@ -59,7 +60,9 @@
     <string name="pe_unlock">解除</string>
     <string name="pe_issued_by">発行者: %1$s</string>
     <string name="pe_valid_range">有効: %1$s ～ %2$s</string>
-    <string name="pe_chain_count">チェーン内の証明書 %1$d 件</string>
+    <plurals name="pe_chain_count">
+        <item quantity="other">チェーン内の証明書 %1$d 件</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">この証明書は有効期間外です。署名には使えますが、閲覧アプリで署名に警告が表示されます。</string>
     <string name="pe_reason_optional">理由（任意）</string>
     <string name="pe_location_optional">場所（任意）</string>
@@ -127,7 +130,9 @@
     <string name="pe_crop">切抜</string>
     <string name="pe_paywall_reason_studio">圧縮、暗号化、テキスト編集は Scanly Pro の機能です。</string>
     <string name="pe_select_all">すべて選択</string>
-    <string name="pe_selected_count">%1$d 件を選択中</string>
+    <plurals name="pe_selected_count">
+        <item quantity="other">%1$d 件を選択中</item>
+    </plurals>
     <string name="pe_clear_selection">選択を解除</string>
     <string name="pe_extract_to_new_pdf">新しい PDF に抽出</string>
     <string name="pe_edit">編集</string>
@@ -141,7 +146,9 @@
     <string name="pe_busy_extracting">抽出中</string>
     <string name="pe_extract_failed">ページを抽出できませんでした。</string>
     <string name="pe_staged_edits_not_included">\u0020— 準備中の編集は除く</string>
-    <string name="pe_extracted_pages">%1$d ページ抽出%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="other">%1$d ページ抽出%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">保存中</string>
     <string name="pe_busy_checking_signatures">署名を確認中</string>
     <string name="pe_nothing_to_save">保存するものなし。</string>
@@ -149,7 +156,9 @@
     <string name="pe_write_failed">Downloads に書き込めず。</string>
     <string name="pe_compression_staged">圧縮を準備。保存で適用。</string>
     <string name="pe_merge_read_failed">PDF を読めませんでした。</string>
-    <string name="pe_documents_staged">%1$d 件の書類を準備。保存で適用。</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="other">%1$d 件の書類を準備。保存で適用。</item>
+    </plurals>
     <string name="pe_encryption_staged">暗号化を準備。保存で適用。</string>
     <string name="pe_password_removal_staged">パスワード削除を準備。保存で適用。</string>
     <string name="pe_metadata_removal_staged">メタデータ削除を準備。保存で適用。</string>
@@ -160,15 +169,12 @@
     <string name="pe_sign_encrypted_unsupported">パスワードで保護された書類には署名できません。先にパスワードを削除し、新しいパスワードを準備しないでください。暗号化するとファイルが書き換えられ、署名が壊れます。</string>
     <string name="pe_sign_chain_too_large">チェーンが大きすぎて署名に収まりません。短いチェーンの証明書を。</string>
     <plurals name="pe_digital_signatures">
-        <item quantity="one">デジタル署名 1 件</item>
         <item quantity="other">%1$d 件のデジタル署名</item>
     </plurals>
     <plurals name="pe_signature_pronoun">
-        <item quantity="one">その署名</item>
-        <item quantity="other">これらの署名</item>
+        <item quantity="other">その署名</item>
     </plurals>
     <plurals name="pe_crop_pages">
-        <item quantity="one">%1$d ページを切抜</item>
         <item quantity="other">%1$d ページを切抜</item>
     </plurals>
     <string name="pe_pane_menu">書類ツール</string>

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# ./gradlew inside a memory-capped cgroup: a build that outgrows the box fails or slows down instead
+# of pushing the PC into swap until it freezes (it did, 2026-11-07). The daemon it starts stays in
+# the box, so later builds are capped too. Override with GW_MEM_MAX=10G scripts/gw ...
+set -euo pipefail
+cd "$(dirname "$0")/.."
+if ! command -v systemd-run >/dev/null || [ -n "${CI:-}" ]; then exec ./gradlew "$@"; fi
+# A daemon started by a plain ./gradlew is outside the box; stop it so this run starts a capped one.
+if pgrep -f '[G]radleDaemon' >/dev/null && ! systemctl --user list-units --type=scope --no-legend 'gradle-*' | grep -q running; then
+  ./gradlew --stop -q
+fi
+exec systemd-run --user --scope --quiet --unit="gradle-$$" \
+  -p MemoryHigh="${GW_MEM_HIGH:-7G}" -p MemoryMax="${GW_MEM_MAX:-8G}" -p MemorySwapMax=1G \
+  -p CPUWeight=50 -- nice -n 5 ./gradlew "$@"

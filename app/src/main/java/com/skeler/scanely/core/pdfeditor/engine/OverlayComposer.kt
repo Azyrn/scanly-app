@@ -14,6 +14,8 @@ import android.text.TextPaint
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.withSave
+import androidx.core.graphics.withTranslation
 import com.skeler.scanely.core.pdfeditor.model.InkStroke
 import com.skeler.scanely.core.pdfeditor.model.LineStyle
 import com.skeler.scanely.core.pdfeditor.model.OfficialFont
@@ -230,10 +232,7 @@ class OverlayComposer @Inject constructor(
         // roughly a fifth of the size, which is a whole line's worth of drift on a dense page.
         val top = baselinePt?.let { it - layout.getLineBaseline(0) } ?: box.top
 
-        canvas.save()
-        canvas.translate(box.left, top)
-        layout.draw(canvas)
-        canvas.restore()
+        canvas.withTranslation(box.left, top) { layout.draw(this) }
     }
 
     private fun drawStamp(
@@ -244,16 +243,16 @@ class OverlayComposer @Inject constructor(
         val bitmap = stampBitmaps[marking.imageId] ?: return
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { isFilterBitmap = true }
 
-        canvas.save()
-        if (marking.rotationDegrees != 0f) {
-            canvas.rotate(
-                marking.rotationDegrees,
-                marking.box.left + marking.box.width / 2f,
-                marking.box.top + marking.box.height / 2f
-            )
+        canvas.withSave {
+            if (marking.rotationDegrees != 0f) {
+                rotate(
+                    marking.rotationDegrees,
+                    marking.box.left + marking.box.width / 2f,
+                    marking.box.top + marking.box.height / 2f
+                )
+            }
+            drawBitmap(bitmap, null, marking.box.toAndroid(), paint)
         }
-        canvas.drawBitmap(bitmap, null, marking.box.toAndroid(), paint)
-        canvas.restore()
     }
 
     private fun drawShape(canvas: Canvas, marking: PdfEdit.Shape) {

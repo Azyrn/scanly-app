@@ -10,9 +10,13 @@
     <string name="pe_menu_validate_hint">Проверка подписей в файле</string>
     <string name="pe_menu_library_hint">Сохранённые подписи</string>
     <string name="pe_add_a_pdf">Добавить</string>
-    <string name="pe_merge_page_count">%1$d стр.</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="one">%1$d стр.</item>
+        <item quantity="few">%1$d стр.</item>
+        <item quantity="many">%1$d стр.</item>
+        <item quantity="other">%1$d стр.</item>
+    </plurals>
     <string name="pe_remove">Удалить</string>
-    <string name="pe_merge_page_change">Страниц: %1$d → %2$d</string>
     <string name="pe_add_to_document">В документ</string>
     <string name="pe_compress_now">Сейчас %1$s</string>
     <string name="pe_compress_trying_levels">Пробуем все уровни…</string>
@@ -59,7 +63,12 @@
     <string name="pe_unlock">Разблокировать</string>
     <string name="pe_issued_by">Выдан: %1$s</string>
     <string name="pe_valid_range">С %1$s по %2$s</string>
-    <string name="pe_chain_count">Сертификатов в цепочке: %1$d</string>
+    <plurals name="pe_chain_count">
+        <item quantity="one">В цепочке %1$d сертификат</item>
+        <item quantity="few">В цепочке %1$d сертификата</item>
+        <item quantity="many">Сертификатов в цепочке: %1$d</item>
+        <item quantity="other">В цепочке %1$d сертификата</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">Срок действия истёк или не начался. Подписать можно, но читалки пометят подпись.</string>
     <string name="pe_reason_optional">Причина (необяз.)</string>
     <string name="pe_location_optional">Место (необяз.)</string>
@@ -127,7 +136,12 @@
     <string name="pe_crop">Обрезать</string>
     <string name="pe_paywall_reason_studio">Сжатие, шифрование и правка текста — в Scanly Pro.</string>
     <string name="pe_select_all">Все</string>
-    <string name="pe_selected_count">Выбрано: %1$d</string>
+    <plurals name="pe_selected_count">
+        <item quantity="one">Выбрано: %1$d</item>
+        <item quantity="few">Выбрано: %1$d</item>
+        <item quantity="many">Выбрано: %1$d</item>
+        <item quantity="other">Выбрано: %1$d</item>
+    </plurals>
     <string name="pe_clear_selection">Снять выбор</string>
     <string name="pe_extract_to_new_pdf">Извлечь в новый PDF</string>
     <string name="pe_edit">Правка</string>
@@ -141,7 +155,12 @@
     <string name="pe_busy_extracting">Извлекаем</string>
     <string name="pe_extract_failed">Не удалось извлечь страницы.</string>
     <string name="pe_staged_edits_not_included">\u0020— правки не включены</string>
-    <string name="pe_extracted_pages">Извлечено стр.: %1$d%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="one">Извлечено стр.: %1$d%2$s</item>
+        <item quantity="few">Извлечено стр.: %1$d%2$s</item>
+        <item quantity="many">Извлечено стр.: %1$d%2$s</item>
+        <item quantity="other">Извлечено стр.: %1$d%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">Запись</string>
     <string name="pe_busy_checking_signatures">Проверка подписей</string>
     <string name="pe_nothing_to_save">Нечего сохранять.</string>
@@ -149,7 +168,12 @@
     <string name="pe_write_failed">Не записано в Downloads.</string>
     <string name="pe_compression_staged">Сжатие в очереди. Сохраните.</string>
     <string name="pe_merge_read_failed">PDF не прочитан.</string>
-    <string name="pe_documents_staged">Документов в очереди: %1$d. Сохраните.</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="one">%1$d документ в очереди. Сохраните.</item>
+        <item quantity="few">Документов в очереди: %1$d. Сохраните.</item>
+        <item quantity="many">Документов в очереди: %1$d. Сохраните.</item>
+        <item quantity="other">Документов в очереди: %1$d. Сохраните.</item>
+    </plurals>
     <string name="pe_encryption_staged">Шифрование в очереди. Сохраните.</string>
     <string name="pe_password_removal_staged">Снятие пароля в очереди. Сохраните.</string>
     <string name="pe_metadata_removal_staged">Очистка метаданных в очереди. Сохраните.</string>

@@ -76,7 +76,10 @@
     <string name="chat_reconnecting">आपके डिज़ाइन से दोबारा जुड़ रहे हैं…</string>
     <string name="chat_design_failed">डिज़ाइन पूरा नहीं हो सका। आपका मैसेज रखा गया है; फिर से कोशिश करें।</string>
     <string name="chat_photo_unusable">वह तस्वीर इस्तेमाल नहीं हो सकी। कोई और आज़माएं।</string>
-    <string name="chat_file_too_many_pages">डिज़ाइनर अधिकतम %1$d पेज दोबारा बना सकता है। उस फ़ाइल में %2$d पेज हैं।</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">डिज़ाइनर अधिकतम %1$d पेज दोबारा बना सकता है। उस फ़ाइल में %2$d पेज हैं।</item>
+        <item quantity="other">डिज़ाइनर अधिकतम %1$d पेज दोबारा बना सकता है। उस फ़ाइल में %2$d पेज हैं।</item>
+    </plurals>
     <string name="chat_file_too_large">वह फ़ाइल दोबारा बनाने के लिए बहुत बड़ी है।</string>
     <string name="chat_file_unreadable">वह फ़ाइल पढ़ी नहीं जा सकी। कोई और आज़माएं।</string>
     <string name="chat_open_with">इससे खोलें…</string>
@@ -198,7 +201,10 @@
     <string name="chat_log_loading">पूरा आउटपुट लोड हो रहा है…</string>
     <string name="chat_log_expired">पूरा आउटपुट समाप्त हो गया</string>
     <string name="chat_log_unavailable">पूरा आउटपुट लोड नहीं हुआ। टैप करके दोबारा देखें।</string>
-    <string name="chat_log_past_limit">%1$d और अक्षर सीमा से बाहर थे और सेव नहीं किए गए</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d और अक्षर सीमा से बाहर था और सेव नहीं किया गया</item>
+        <item quantity="other">%1$d और अक्षर सीमा से बाहर थे और सेव नहीं किए गए</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">इस फ़ोन पर सेव न हुई %d पिछली पंक्ति</item>
         <item quantity="other">इस फ़ोन पर सेव न हुईं %d पिछली पंक्तियाँ</item>

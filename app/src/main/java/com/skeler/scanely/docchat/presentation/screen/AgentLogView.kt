@@ -283,7 +283,7 @@ private fun CutNotice(row: AgentRow, turnId: String?, actions: ChatActions, mono
     val loaded = output as? RowOutput.Text
     if (loaded != null) {
         FullOutput(loaded.text, failed = row.failed, mono = mono)
-        if (loaded.cut > 0) DimText(stringResource(R.string.chat_log_past_limit, loaded.cut))
+        if (loaded.cut > 0) DimText(pluralStringResource(R.plurals.chat_log_past_limit, loaded.cut, loaded.cut))
         return
     }
     val canFetch = row.full && turnId != null
@@ -302,7 +302,7 @@ private fun CutNotice(row: AgentRow, turnId: String?, actions: ChatActions, mono
                 onClick = {
                     loading = true
                     scope.launch {
-                        output = actions.output(turnId!!, row.row)
+                        output = actions.output(turnId, row.row)
                         loading = false
                     }
                 },

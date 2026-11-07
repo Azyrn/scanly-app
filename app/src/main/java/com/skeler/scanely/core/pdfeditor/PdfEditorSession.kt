@@ -105,6 +105,8 @@ data class CompressionResult(
  * Always a private working copy — the user's file is never opened for writing, so abandoning a
  * session costs nothing and cannot corrupt the original.
  */
+// Kept whole on purpose: the editor's single shared session (see above): one function per document operation.
+@Suppress("TooManyFunctions")
 @Singleton
 class PdfEditorSession @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -253,16 +255,8 @@ class PdfEditorSession @Inject constructor(
             probes++
             onProbe(probe)
 
-            // A hit at a higher quality always wins; a miss only wins while nothing has hit yet.
-            val hit = probe.bytes <= targetBytes
-            val bestHit = best.bytes <= targetBytes
-            if (hit && (!bestHit || probe.bytes > best.bytes)) {
-                best = probe
-            } else if (!hit && !bestHit && probe.bytes < best.bytes) {
-                best = probe
-            }
-
-            if (hit) low = quality + 1 else high = quality - 1
+            if (isCloser(probe, best, targetBytes)) best = probe
+            if (probe.bytes <= targetBytes) low = quality + 1 else high = quality - 1
         }
         best
     }
@@ -407,4 +401,11 @@ class PdfEditorSession @Inject constructor(
         _revision.update { it + 1 }
         return PdfOpenResult.Opened
     }
+}
+
+/** A hit at a higher quality always wins; a miss only wins while nothing has hit yet. */
+private fun isCloser(probe: CompressionResult, best: CompressionResult, targetBytes: Long): Boolean {
+    val hit = probe.bytes <= targetBytes
+    val bestHit = best.bytes <= targetBytes
+    return if (hit) !bestHit || probe.bytes > best.bytes else !bestHit && probe.bytes < best.bytes
 }

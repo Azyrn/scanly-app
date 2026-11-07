@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- PDF tools: PDF to Word, PDF to PowerPoint and PDF to Excel. -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Options -->
     <string name="pdf2office_word_body">Metin, başlıklar, listeler ve tablolar Word\'de düzenlenebilir olur. Taranmış sayfalar resim olarak eklenir.</string>
     <string name="pdf2office_word_action">Word\'e dönüştür</string>
@@ -28,7 +28,8 @@
         <item quantity="one">Metni olmayan %d taranmış sayfa atlandı.</item>
         <item quantity="other">Metni olmayan %d taranmış sayfa atlandı.</item>
     </plurals>
-    <string name="pdf2office_excel_no_tables">Tablo bulunamadı; metin satır satır yerleştirildi.</string>
+    <!-- "satır satır" is Turkish reduplication for "line by line", not a repeated word. -->
+    <string name="pdf2office_excel_no_tables" tools:ignore="Typos">Tablo bulunamadı; metin satır satır yerleştirildi.</string>
 
     <!-- Sheet names in the converted workbook (31 characters at most) -->
     <string name="pdf2office_excel_sheet_page">Sayfa %1$d</string>

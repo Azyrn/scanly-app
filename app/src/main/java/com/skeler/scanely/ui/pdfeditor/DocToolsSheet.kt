@@ -49,11 +49,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -67,6 +69,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLocale
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -76,7 +79,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skeler.scanely.R
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.core.pdfeditor.CompressionResult
 import com.skeler.scanely.core.pdfeditor.PdfFeature
 import com.skeler.scanely.core.pdfeditor.engine.CompressionLevel
@@ -125,7 +128,10 @@ fun DocToolsSheet(
     val activity = LocalActivity.current as ComponentActivity
     val vm: DocToolsViewModel = hiltViewModel(activity)
     val state by vm.uiState.collectAsState()
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
 
     var pane by remember { mutableStateOf(ToolPane.MENU) }
 
@@ -166,7 +172,7 @@ fun DocToolsSheet(
                         modifier = Modifier.weight(1f)
                     )
                     state.savedUri?.let { uri ->
-                        TextButton(onClick = { ScanExporter.openPdf(activity, uri) }) {
+                        TextButton(onClick = { DocumentIntents.openPdf(activity, uri) }) {
                             stringResource(R.string.chat_file_open)
                         }
                     }
@@ -295,7 +301,11 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = stringResource(R.string.pe_merge_page_count, candidate.pageCount),
+                        text = pluralStringResource(
+                            R.plurals.pe_merge_page_count,
+                            candidate.pageCount,
+                            candidate.pageCount
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -307,7 +317,13 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
         }
 
         if (state.merges.isNotEmpty()) {
-            PreviewLine(stringResource(R.string.pe_merge_page_change, state.pageCount, state.mergedPageCount))
+            PreviewLine(
+                stringResource(
+                    R.string.pe_merge_page_change,
+                    pluralStringResource(R.plurals.pe_merge_page_count, state.pageCount, state.pageCount),
+                    pluralStringResource(R.plurals.pe_merge_page_count, state.mergedPageCount, state.mergedPageCount)
+                )
+            )
             Spacer(Modifier.height(12.dp))
             Button(onClick = vm::stageMerge, modifier = Modifier.fillMaxWidth()) {
                 stringResource(R.string.pe_add_to_document)
@@ -521,7 +537,10 @@ private fun SettingSlider(
                 color = MaterialTheme.colorScheme.primary
             )
         }
-        Slider(value = value, onValueChange = onChange, valueRange = range)
+        // The state follows the caller's value each composition; onChange still owns updates.
+        val sliderState = remember(range) { SliderState(value, trackRange = range) }
+        sliderState.value = value
+        Slider(state = sliderState, onValueChange = onChange)
     }
 }
 
@@ -624,13 +643,19 @@ private fun qualityLabel(result: CompressionResult): String =
         "no quality loss"
     }
 
+private const val BYTES_PER_MB = 1_000_000.0
+private const val BYTES_PER_KB = 1_000.0
+private const val WHOLE_MB_FROM = 10.0
+private const val TENTHS_MB_FROM = 0.1
+private const val MIN_TARGET_MB = 0.01
+
 /** Suggests a target below the current size so compression always has work to do. */
 private fun suggestedTargetMb(sizeBytes: Long): String {
-    val half = sizeBytes / 2_000_000.0
+    val half = sizeBytes / (2 * BYTES_PER_MB)
     return when {
-        half >= 10 -> half.roundToInt().toString()
-        half >= 0.1 -> String.format(Locale.US, "%.1f", half)
-        else -> String.format(Locale.US, "%.2f", half.coerceAtLeast(0.01))
+        half >= WHOLE_MB_FROM -> half.roundToInt().toString()
+        half >= TENTHS_MB_FROM -> String.format(Locale.US, "%.1f", half)
+        else -> String.format(Locale.US, "%.2f", half.coerceAtLeast(MIN_TARGET_MB))
     }
 }
 
@@ -934,7 +959,7 @@ private fun UnlockedCertificate(
             stringResource(R.string.pe_valid_range, dates.format(identity.notBefore), dates.format(identity.notAfter))
         )
         if (identity.chain.size > 1) {
-            PreviewLine(stringResource(R.string.pe_chain_count, identity.chain.size))
+            PreviewLine(pluralStringResource(R.plurals.pe_chain_count, identity.chain.size, identity.chain.size))
         }
         if (expired) {
             Spacer(Modifier.height(8.dp))
@@ -1058,11 +1083,13 @@ private fun PageAndPosition(vm: DocToolsViewModel, state: DocToolsUiState) {
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         if (state.pageCount > 1) {
+            val pageSteps = (state.pageCount - 2).coerceAtLeast(0)
+            val pageRange = 0f..(state.pageCount - 1).toFloat()
+            val pageSlider = remember(pageSteps, pageRange) { SliderState(steps = pageSteps, trackRange = pageRange) }
+            pageSlider.value = signing.pageIndex.toFloat()
             Slider(
-                value = signing.pageIndex.toFloat(),
-                onValueChange = { vm.setSigningPage(it.roundToInt()) },
-                valueRange = 0f..(state.pageCount - 1).toFloat(),
-                steps = (state.pageCount - 2).coerceAtLeast(0)
+                state = pageSlider,
+                onValueChange = { vm.setSigningPage(it.roundToInt()) }
             )
         }
         Spacer(Modifier.height(8.dp))
@@ -1297,8 +1324,8 @@ private fun PreviewLine(text: String) {
 }
 
 private fun formatBytes(bytes: Long): String = when {
-    bytes >= 1_000_000L -> String.format(Locale.US, "%.1f MB", bytes / 1_000_000.0)
-    bytes >= 1_000L -> String.format(Locale.US, "%.0f kB", bytes / 1_000.0)
+    bytes >= BYTES_PER_MB -> String.format(Locale.US, "%.1f MB", bytes / BYTES_PER_MB)
+    bytes >= BYTES_PER_KB -> String.format(Locale.US, "%.0f kB", bytes / BYTES_PER_KB)
     else -> "$bytes B"
 }
 

@@ -34,40 +34,47 @@ internal class PayloadFactory @Inject constructor(
         val mimeType = context.contentResolver.getType(uri) ?: "application/octet-stream"
         val uploadLimit = maxUploadBytes.coerceIn(0, MAX_UPLOAD_BYTES)
 
-        if (mimeType == TEXT_MIME_TYPE) {
-            val bytes = loadFileBytes(uri) ?: throw PayloadException("Failed to read text file")
-            return Payload.LocalText(bytes.toString(Charsets.UTF_8))
+        return when {
+            mimeType == TEXT_MIME_TYPE -> textPayload(uri)
+            mimeType.startsWith("image/") -> imagePayload(uri, uploadLimit)
+            mimeType == PDF_MIME_TYPE || mimeType in OFFICE_MIME_TYPES -> documentPayload(uri, mimeType, uploadLimit)
+            else -> throw unsupportedType(mimeType)
         }
-
-        if (mimeType.startsWith("image/")) {
-            val bitmap = loadBitmapFromUri(uri) ?: throw PayloadException("Failed to load image")
-            return try {
-                // Downscaling limits upload size without changing image page cost.
-                val bytes = encodeJpeg(bitmap)
-                if (bytes.size > uploadLimit) throw PayloadException("This image exceeds your plan's upload limit.")
-                Payload.File(bytes, "image/jpeg", "scan.jpg")
-            } finally {
-                bitmap.recycle()
-            }
-        }
-
-        if (mimeType == PDF_MIME_TYPE || mimeType in OFFICE_MIME_TYPES) {
-            val bytes = loadFileBytes(uri, uploadLimit) ?: throw PayloadException("Failed to read document")
-            return Payload.File(bytes, mimeType, if (mimeType == PDF_MIME_TYPE) "document.pdf" else "document")
-        }
-
-        throw PayloadException(
-            "Unsupported file type: $mimeType\n\n" +
-                "Supported:\n" +
-                "• PDF files (.pdf)\n" +
-                "• Word (.doc, .docx)\n" +
-                "• PowerPoint (.ppt, .pptx)\n" +
-                "• OpenDocument (.odt, .odp)\n" +
-                "• Text files (.txt)\n" +
-                "• Images (.jpg, .png, .webp)\n\n" +
-                "For Excel files, please convert to PDF first."
-        )
     }
+
+    private fun textPayload(uri: Uri): Payload {
+        val bytes = loadFileBytes(uri) ?: throw PayloadException("Failed to read text file")
+        return Payload.LocalText(bytes.toString(Charsets.UTF_8))
+    }
+
+    private fun imagePayload(uri: Uri, uploadLimit: Long): Payload {
+        val bitmap = loadBitmapFromUri(uri) ?: throw PayloadException("Failed to load image")
+        return try {
+            // Downscaling limits upload size without changing image page cost.
+            val bytes = encodeJpeg(bitmap)
+            if (bytes.size > uploadLimit) throw PayloadException("This image exceeds your plan's upload limit.")
+            Payload.File(bytes, "image/jpeg", "scan.jpg")
+        } finally {
+            bitmap.recycle()
+        }
+    }
+
+    private fun documentPayload(uri: Uri, mimeType: String, uploadLimit: Long): Payload {
+        val bytes = loadFileBytes(uri, uploadLimit) ?: throw PayloadException("Failed to read document")
+        return Payload.File(bytes, mimeType, if (mimeType == PDF_MIME_TYPE) "document.pdf" else "document")
+    }
+
+    private fun unsupportedType(mimeType: String) = PayloadException(
+        "Unsupported file type: $mimeType\n\n" +
+            "Supported:\n" +
+            "• PDF files (.pdf)\n" +
+            "• Word (.doc, .docx)\n" +
+            "• PowerPoint (.ppt, .pptx)\n" +
+            "• OpenDocument (.odt, .odp)\n" +
+            "• Text files (.txt)\n" +
+            "• Images (.jpg, .png, .webp)\n\n" +
+            "For Excel files, please convert to PDF first."
+    )
 
     private fun encodeJpeg(bitmap: Bitmap): ByteArray {
         val scaled = downscale(bitmap)

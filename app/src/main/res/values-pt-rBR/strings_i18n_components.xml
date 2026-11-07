@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">Restam %1$d de %2$d créditos neste mês.</string>
-    <string name="cmp_paywall_credits_left_upgrade">Restam %1$d de %2$d créditos neste mês. Faça upgrade.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">Resta %1$d de %2$d crédito neste mês.</item>
+        <item quantity="many">Restam %1$d de %2$d créditos neste mês.</item>
+        <item quantity="other">Restam %1$d de %2$d créditos neste mês.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">Resta %1$d de %2$d crédito neste mês. Faça upgrade.</item>
+        <item quantity="many">Restam %1$d de %2$d créditos neste mês. Faça upgrade.</item>
+        <item quantity="other">Restam %1$d de %2$d créditos neste mês. Faça upgrade.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">Mais créditos, documentos maiores e mais formatos.</string>
     <string name="cmp_paywall_ai_scan_credit">Scan com IA: 1 crédito/página. Outras ferramentas usam o mesmo saldo.</string>
     <string name="cmp_paywall_plan_active">Seu plano está ativo nesta conta.</string>
     <string name="cmp_paywall_key_active_here">Sua chave está ativa aqui.</string>
-    <string name="cmp_paywall_devices_used">%1$d de %2$d dispositivos. Gerencie em Configurações.</string>
-    <string name="cmp_paywall_watch_ad">Ver anúncio: +%1$d créditos</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">%1$d de %2$d dispositivo. Gerencie em Configurações.</item>
+        <item quantity="many">%1$d de %2$d dispositivos. Gerencie em Configurações.</item>
+        <item quantity="other">%1$d de %2$d dispositivos. Gerencie em Configurações.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">Ver anúncio: +%1$d crédito</item>
+        <item quantity="many">Ver anúncio: +%1$d créditos</item>
+        <item quantity="other">Ver anúncio: +%1$d créditos</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"Scan com IA tem cota mensal grátis. Planos pagos em "</string>
     <string name="cmp_paywall_where_to_buy_after">. As compras não estão disponíveis neste aplicativo. Já é assinante? Restaure sua compra abaixo.</string>
     <string name="cmp_copied">Copiado</string>
@@ -24,7 +40,11 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Ativo</string>
     <string name="cmp_paywall_feature_credits">%1$d créditos de IA/mês</string>
-    <string name="cmp_paywall_feature_pages">Até %1$d páginas em um documento</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">Até %1$d página em um documento</item>
+        <item quantity="many">Até %1$d páginas em um documento</item>
+        <item quantity="other">Até %1$d páginas em um documento</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Word, PowerPoint e OpenDocument</string>
     <string name="cmp_paywall_feature_translation">Tradução</string>
     <string name="cmp_paywall_feature_extraction">Extração de dados de recibos, faturas e cartões</string>
@@ -44,19 +64,54 @@
     <string name="cmp_bigger_text">Texto maior</string>
     <string name="cmp_reset">Zerar</string>
     <string name="cmp_no_table">Nenhuma</string>
-    <string name="cmp_word_char_counts">%1$d palavras · %2$d caracteres</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d palavra</item>
+        <item quantity="many">%d palavras</item>
+        <item quantity="other">%d palavras</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d caractere</item>
+        <item quantity="many">%d caracteres</item>
+        <item quantity="other">%d caracteres</item>
+    </plurals>
     <string name="cmp_save_as">Salvar</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">Quais páginas?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s tem %2$d páginas, e o scan lê no máximo %3$d. Escolha as importantes.</string>
-    <string name="cmp_page_range_intro">%1$s tem %2$d páginas. Cada página escaneada conta no plano, então um intervalo custa menos.</string>
-    <string name="cmp_page_range_example">ex.: 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">Escolha até %1$d páginas entre 1 e %2$d.</string>
-    <string name="cmp_page_range_use_numbers">Use números de página entre 1 e %1$d, como 1-5 ou 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%1$d de %2$d páginas</string>
-    <string name="cmp_page_range_required">Obrigatório: cobre %1$d páginas</string>
-    <string name="cmp_page_range_leave_empty">Vazio: todas as %1$d páginas</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">%1$s tem %2$d página, e o scan lê no máximo %3$d. Escolha as importantes.</item>
+        <item quantity="many">%1$s tem %2$d páginas, e o scan lê no máximo %3$d. Escolha as importantes.</item>
+        <item quantity="other">%1$s tem %2$d páginas, e o scan lê no máximo %3$d. Escolha as importantes.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">%1$s tem %2$d página. Cada página escaneada conta no plano, então um intervalo custa menos.</item>
+        <item quantity="many">%1$s tem %2$d páginas. Cada página escaneada conta no plano, então um intervalo custa menos.</item>
+        <item quantity="other">%1$s tem %2$d páginas. Cada página escaneada conta no plano, então um intervalo custa menos.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">ex.: 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">Escolha até %1$d página entre 1 e %2$d.</item>
+        <item quantity="many">Escolha até %1$d páginas entre 1 e %2$d.</item>
+        <item quantity="other">Escolha até %1$d páginas entre 1 e %2$d.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">Use números de página entre 1 e %1$d, como 1-5 ou 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%1$d de %2$d página</item>
+        <item quantity="many">%1$d de %2$d páginas</item>
+        <item quantity="other">%1$d de %2$d páginas</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">Obrigatório: cobre %1$d página</item>
+        <item quantity="many">Obrigatório: cobre %1$d páginas</item>
+        <item quantity="other">Obrigatório: cobre %1$d páginas</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">Vazio: %1$d página</item>
+        <item quantity="many">Vazio: todas as %1$d páginas</item>
+        <item quantity="other">Vazio: todas as %1$d páginas</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">Escanear %1$d</string>
     <string name="cmp_page_range_scan_all">Tudo</string>
 
@@ -65,15 +120,19 @@
     <string name="cmp_stage_processing">Processando…</string>
     <string name="cmp_stage_generating">Gerando…</string>
     <string name="cmp_stage_complete">Concluído</string>
-    <string name="cmp_processing_file_of">Processando %1$d de %2$d...</string>
-    <string name="cmp_extracting_text">Extraindo texto...</string>
+    <string name="cmp_processing_file_of">Processando %1$d de %2$d…</string>
+    <string name="cmp_extracting_text">Extraindo texto…</string>
     <string name="cmp_file_of">Arquivo %1$d/%2$d</string>
     <string name="cmp_may_take_few_moments">Isso pode levar alguns instantes</string>
-    <string name="cmp_translating">Traduzindo...</string>
+    <string name="cmp_translating">Traduzindo…</string>
     <string name="cmp_couldnt_read_file">Falha ao ler arquivo</string>
     <string name="cmp_no_text_extracted">Sem texto</string>
     <string name="cmp_try_different_image">Tente selecionar outra imagem</string>
-    <string name="cmp_batch_scanning">Escaneando %1$d de %2$d…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">Escaneando %1$d de %2$d…</item>
+        <item quantity="many">Escaneando %1$d de %2$d…</item>
+        <item quantity="other">Escaneando %1$d de %2$d…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Nutrição</string>
@@ -122,7 +181,11 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Extrair dados</string>
-    <string name="cmp_preset_cost">Inclui campos rotulados além do texto. Ler uma página como dados custa %1$d créditos do plano. Até 8 páginas por documento.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">Inclui campos rotulados além do texto. Ler uma página como dados custa %1$d crédito do plano. Até 8 páginas por documento.</item>
+        <item quantity="many">Inclui campos rotulados além do texto. Ler uma página como dados custa %1$d créditos do plano. Até 8 páginas por documento.</item>
+        <item quantity="other">Inclui campos rotulados além do texto. Ler uma página como dados custa %1$d créditos do plano. Até 8 páginas por documento.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">Inclui campos rotulados além do texto. Incluso no Pro e acima.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +225,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Incerto</string>
-    <string name="cmp_product_looking_up">Buscando o produto...</string>
+    <string name="cmp_product_looking_up">Buscando o produto…</string>
     <string name="cmp_product_not_found">Produto não achado</string>
     <string name="cmp_product_lookup_failed">Falha na busca</string>
     <string name="cmp_product_unknown_error">Erro geral</string>
@@ -191,8 +254,16 @@
     <string name="cmp_preview_rendering_pages">Gerando páginas…</string>
     <string name="cmp_preview_render_failed">Falha ao gerar o PDF.</string>
     <string name="cmp_preview_page_n_of_total">Página %1$d de %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">Primeiras %1$d de %2$d</string>
-    <string name="cmp_preview_first_n_of_lines">%1$d de %2$d linhas</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">Primeiras %1$d de %2$d</item>
+        <item quantity="many">Primeiras %1$d de %2$d</item>
+        <item quantity="other">Primeiras %1$d de %2$d</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">%1$d de %2$d linha</item>
+        <item quantity="many">%1$d de %2$d linhas</item>
+        <item quantity="other">%1$d de %2$d linhas</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">Nada para exportar</string>

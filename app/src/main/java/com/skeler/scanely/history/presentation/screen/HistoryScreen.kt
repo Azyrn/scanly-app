@@ -182,14 +182,6 @@ fun HistoryScreen() {
             ) {
                 items(historyItems, key = { it.id }) { item ->
                     val dismissState = rememberSwipeToDismissBoxState(
-                        confirmValueChange = { value ->
-                            if (value == SwipeToDismissBoxValue.EndToStart) {
-                                historyViewModel.deleteItem(item.id)
-                                true
-                            } else {
-                                false
-                            }
-                        },
                         positionalThreshold = { totalDistance -> totalDistance * 0.5f }
                     )
 
@@ -213,7 +205,13 @@ fun HistoryScreen() {
                                 )
                             }
                         },
+                        // Only the end-to-start anchor exists, so that is the one swipe that deletes.
                         enableDismissFromStartToEnd = false,
+                        onDismiss = { direction ->
+                            if (direction == SwipeToDismissBoxValue.EndToStart) {
+                                historyViewModel.deleteItem(item.id)
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .animateItem()
@@ -321,27 +319,20 @@ private fun LazyListState.shouldFabExpand(
 ): Boolean {
     val currentOffset = firstVisibleItemIndex * 1000 + firstVisibleItemScrollOffset
     val isScrollingUp = currentOffset < lastScrollOffset
-    val isScrollingDown = currentOffset > lastScrollOffset
     onScrollOffsetChanged(currentOffset)
 
     val atTop = firstVisibleItemIndex == 0 && firstVisibleItemScrollOffset == 0
+    // Expanded at the top, when everything fits, and while scrolling up; collapsed otherwise.
+    return atTop || fitsOnScreen() || isScrollingUp
+}
+
+private fun LazyListState.fitsOnScreen(): Boolean {
     val info = layoutInfo
     val visible = info.visibleItemsInfo
     val lastVisible = visible.lastOrNull()
 
-    val fitsOnScreen = if (info.totalItemsCount == 0 || lastVisible == null) {
-        true
-    } else {
-        val allItemsVisible = info.totalItemsCount == visible.size
-        val lastBottom = lastVisible.offset + lastVisible.size
-        allItemsVisible && lastBottom <= info.viewportEndOffset
-    }
-
-    return when {
-        atTop -> true
-        fitsOnScreen -> true
-        isScrollingUp -> true
-        isScrollingDown -> false
-        else -> false
-    }
+    if (info.totalItemsCount == 0 || lastVisible == null) return true
+    val allItemsVisible = info.totalItemsCount == visible.size
+    val lastBottom = lastVisible.offset + lastVisible.size
+    return allItemsVisible && lastBottom <= info.viewportEndOffset
 }

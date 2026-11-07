@@ -2,11 +2,9 @@
 <resources>
     <!-- Notes under image tool results -->
     <plurals name="pdf_tool_img_skipped">
-        <item quantity="one">読み取れないファイル %d 件をスキップ</item>
         <item quantity="other">読み取れないファイル %d 件をスキップ</item>
     </plurals>
     <plurals name="pdf_tool_img_already_small">
-        <item quantity="one">%d 枚の画像はすでに最小のため変更なし</item>
         <item quantity="other">%d 枚の画像はすでにこれ以上小さくできないため、変更されていません</item>
     </plurals>
 

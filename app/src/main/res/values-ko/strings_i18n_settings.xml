@@ -6,7 +6,9 @@
     <string name="set_sign_in_subtitle">AI 스캔에 필요해요</string>
     <string name="set_signed_in">로그인됨</string>
     <string name="set_pro_key_title">Scanly Pro 키</string>
-    <string name="set_pro_key_active_devices">사용 중 · 기기 %2$d대 중 %1$d대</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="other">사용 중 · 기기 %2$d대 중 %1$d대</item>
+    </plurals>
     <string name="set_pro_key_active_here">이 기기에서 사용 중</string>
     <string name="set_delete_account_title">계정 삭제</string>
     <string name="set_delete_account_subtitle">계정과 데이터를 영구적으로 삭제해요</string>
@@ -33,7 +35,7 @@
     <string name="set_remove_key_message">이 기기는 무료 요금제로 돌아가고 슬롯이 비워져서, 키를 다른 기기에서 사용할 수 있어요. 키 자체는 계속 작동해요.</string>
     <string name="set_remove_key_confirm">제거</string>
     <string name="set_delete_account_dialog_title">계정을 삭제할까요?</string>
-    <string name="set_delete_account_dialog_message">서버에 있는 Scanly 계정, 로그인 정보, 사용 기록이 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요.\n\n이 기기에 저장된 스캔은 영향을 받지 않아요. 활성 Pro 구독은 Paddle에서 따로 취소해야 해요.</string>
+    <string name="set_delete_account_dialog_message">서버에 있는 Scanly 계정, 로그인 정보, 사용 기록이 영구적으로 삭제돼요. 이 작업은 되돌릴 수 없어요. 30일 동안 이 이메일로 새 계정을 만들 수 없어요.\n\n이 기기에 저장된 스캔은 영향을 받지 않아요. 활성 Pro 구독은 Paddle에서 따로 취소해야 해요.</string>
     <string name="set_sign_out_dialog_title">로그아웃?</string>
     <string name="set_sign_out_dialog_message">다시 로그인하기 전까지 AI 스캔을 사용할 수 없어요. 스캔 기록과 오프라인 텍스트 인식은 이 기기에 그대로 남아요.</string>
     <string name="set_sign_out">로그아웃</string>
@@ -83,7 +85,9 @@
     <string name="set_pro_required_message">직접 AI 제공자를 연결하는 기능은 Scanly Pro에 포함돼요. 아래 항목은 설정할 내용을 보여 주며, Pro 이용 중이면 입력할 수 있어요. 설정의 계정 항목에서 업그레이드하거나 이미 가진 키를 등록하세요.</string>
     <string name="set_custom_intro_body">어떤 AI 제공자든 연결할 수 있어요. 사용하는 프로토콜을 고르고, 엔드포인트 URL, 모델 이름, API 키를 붙여 넣은 다음 연결을 테스트하세요.</string>
     <string name="set_custom_intro_hosts">대부분의 호스트는 OpenAI 호환이에요 — Groq, OpenAI, OpenRouter, NVIDIA NIM, Together, Fireworks. Claude와 Gemini는 자체 프로토콜을 쓰며, 네트워크의 자체 호스팅 서버는 일반 http로 작동해요.</string>
-    <string name="set_custom_intro_pdf_pages">스캔한 PDF는 한 번에 최대 %1$d페이지까지 전송돼요. 이미지로 한 번의 요청에 담기기 때문이에요. 오피스 문서는 여전히 Scanly AI가 필요해요.</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="other">스캔한 PDF는 한 번에 최대 %1$d페이지까지 전송돼요. 이미지로 한 번의 요청에 담기기 때문이에요. 오피스 문서는 여전히 Scanly AI가 필요해요.</item>
+    </plurals>
     <string name="set_section_protocol">프로토콜</string>
     <string name="set_section_endpoint">엔드포인트</string>
     <string name="set_endpoint_url_label">엔드포인트 URL</string>

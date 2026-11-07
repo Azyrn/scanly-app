@@ -5,35 +5,27 @@
     <string name="pdf_tool_word_to_pdf_action">PDFに変換</string>
 
     <plurals name="pdf_tool_word_to_pdf_note_charts">
-        <item quantity="one">グラフ %d 件を除外</item>
         <item quantity="other">グラフ %d 件を除外</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_diagrams">
-        <item quantity="one">SmartArt %d 件は除外されました。</item>
         <item quantity="other">SmartArt %d 件は除外されました。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_shapes">
-        <item quantity="one">テキストボックスや図形 %d 件は除外</item>
         <item quantity="other">テキストボックスや図形 %d 件は除外</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_equations">
-        <item quantity="one">数式 %d 件を除外</item>
         <item quantity="other">数式 %d 件は除外されました。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_objects">
-        <item quantity="one">埋め込みオブジェクト %d 件は除外</item>
         <item quantity="other">埋め込みオブジェクト %d 件は除外</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_images">
-        <item quantity="one">表示できない形式の画像 %d 件は除外されました。</item>
         <item quantity="other">表示できない形式の画像 %d 件は除外されました。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_rows">
-        <item quantity="one">1ページより高い表の行 %d 件を切り取り</item>
         <item quantity="other">1ページより高い表の行が %d 行あり、切り取られました。</item>
     </plurals>
     <plurals name="pdf_tool_word_to_pdf_note_page_limit">
-        <item quantity="one">最初の %d ページのみ変換されました。</item>
         <item quantity="other">最初の %d ページのみ変換されました。</item>
     </plurals>
     <string name="pdf_tool_word_to_pdf_note_fonts">一部フォントは近いものに置換</string>

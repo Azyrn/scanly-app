@@ -29,12 +29,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object LookupModule {
 
+    private const val LOOKUP_TIMEOUT_SECONDS = 15L
+
     @Provides
     @Singleton
     fun provideOkHttpClient(@BaseHttpClient base: OkHttpClient): OkHttpClient {
         return base.derive()
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(LOOKUP_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(LOOKUP_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .header("User-Agent", OpenFoodFactsApi.USER_AGENT)

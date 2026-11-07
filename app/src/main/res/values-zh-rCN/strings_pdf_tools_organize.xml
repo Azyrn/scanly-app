@@ -2,7 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Merge -->
     <plurals name="pdf_tool_merge_files">
-        <item quantity="one">%d 文件</item>
         <item quantity="other">%d 文件</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · 共 %2$s</string>
@@ -41,11 +40,9 @@
     <string name="pdf_tool_split_size_body">页面不会被拆开，因此单页超过此大小时会单独生成一个文件。</string>
     <string name="pdf_tool_split_locked">此文件设有密码，新生成的文件将保留该密码。</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">生成 %d 个文件</item>
         <item quantity="other">将生成 %d 个文件</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
-        <item quantity="one">保留 %d 页</item>
         <item quantity="other">保留 %d 页</item>
     </plurals>
 
@@ -56,7 +53,6 @@
 
     <!-- Split: result notes -->
     <plurals name="pdf_tool_split_oversized_pages">
-        <item quantity="one">%d 页本身就超过了大小限制，因此它单独生成一个文件。</item>
         <item quantity="other">%d 页本身就超过了大小限制，因此每页各自单独生成一个文件。</item>
     </plurals>
 </resources>

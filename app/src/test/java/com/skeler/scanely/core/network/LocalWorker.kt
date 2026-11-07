@@ -23,6 +23,11 @@ class LocalWorker : AutoCloseable {
     }
 
     private val routes = ConcurrentHashMap<String, Route>()
+    private val apiJson = Json {
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+        explicitNulls = false
+    }
     private val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0).apply {
         executor = Executors.newCachedThreadPool()
         createContext("/") { exchange ->
@@ -73,13 +78,7 @@ class LocalWorker : AutoCloseable {
     fun api(client: OkHttpClient = OkHttpClient()): ScanlyApi = Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(client)
-        .addConverterFactory(
-            Json {
-                ignoreUnknownKeys = true
-                encodeDefaults = true
-                explicitNulls = false
-            }.asConverterFactory("application/json".toMediaType())
-        )
+        .addConverterFactory(apiJson.asConverterFactory("application/json".toMediaType()))
         .build()
         .create(ScanlyApi::class.java)
 

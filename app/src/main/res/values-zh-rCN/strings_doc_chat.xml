@@ -45,7 +45,6 @@
     <string name="chat_send">发送</string>
     <string name="chat_stop">停止等待</string>
     <plurals name="chat_cost_hint">
-        <item quantity="one">~%d 积分</item>
         <item quantity="other">~%d 积分</item>
     </plurals>
     <string name="chat_cost_agent">聊天免费 · 文件消耗积分</string>
@@ -54,7 +53,6 @@
     <string name="chat_preset_clean_up">整理一下</string>
     <string name="chat_preset_one_page">排成一页</string>
     <plurals name="chat_pages">
-        <item quantity="one">%d 页</item>
         <item quantity="other">%d 页</item>
     </plurals>
     <string name="chat_preparing_picture">正在准备图片…</string>
@@ -95,7 +93,9 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">无法使用该图片。请尝试其他图片。</string>
-    <string name="chat_file_too_many_pages">设计工具最多可重建 %1$d 页，该文件共有 %2$d 页。</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="other">设计工具最多可重建 %1$d 页，该文件共有 %2$d 页。</item>
+    </plurals>
     <string name="chat_file_too_large">该文件太大，无法重建。</string>
     <string name="chat_file_unreadable">无法读取该文件。请尝试其他文件。</string>
 
@@ -106,7 +106,6 @@
     <string name="chat_share_failed">无法分享文件。</string>
     <string name="chat_saved_to_downloads">已保存到 Downloads。</string>
     <plurals name="chat_images_saved">
-        <item quantity="one">已保存 %d 张图片到 Pictures/Scanly。</item>
         <item quantity="other">已将 %d 张图片保存到 Pictures/Scanly。</item>
     </plurals>
     <string name="chat_images_failed">无法保存图片。</string>
@@ -136,7 +135,6 @@
     <string name="chat_file_revise">修改此版本</string>
     <string name="chat_file_editing">编辑中</string>
     <plurals name="chat_credits_used">
-        <item quantity="one">%d 积分</item>
         <item quantity="other">%d 积分</item>
     </plurals>
     <string name="chat_expired">已过期：重新生成</string>
@@ -188,7 +186,6 @@
          Tool names and their arguments are the agent's own and are not translated. -->
     <string name="chat_log_status">%1$s… · %2$s · %3$s</string>
     <plurals name="chat_log_steps">
-        <item quantity="one">%d 个步骤</item>
         <item quantity="other">%d 个步骤</item>
     </plurals>
     <string name="chat_log_minutes">%1$d 分 %2$d 秒</string>
@@ -199,11 +196,9 @@
     <string name="chat_log_thought">思考了 %1$s</string>
     <string name="chat_log_thinking">思考中</string>
     <plurals name="chat_log_read">
-        <item quantity="one">已读取 %d 行</item>
         <item quantity="other">已读取 %d 行</item>
     </plurals>
     <plurals name="chat_log_wrote">
-        <item quantity="one">已写入 %d 行</item>
         <item quantity="other">已写入 %d 行</item>
     </plurals>
     <string name="chat_log_read_image">已读取图片（%1$s）</string>
@@ -211,26 +206,24 @@
     <string name="chat_log_denied">已拒绝：此任务中不允许</string>
     <string name="chat_log_running">运行中…</string>
     <plurals name="chat_log_more_lines">
-        <item quantity="one">+%d 行</item>
         <item quantity="other">+%d 行</item>
     </plurals>
     <string name="chat_log_show_more">显示更多</string>
     <string name="chat_log_show_less">收起</string>
     <plurals name="chat_log_not_shown">
-        <item quantity="one">另外 %1$d 行（%2$d 个字符）未显示</item>
         <item quantity="other">另外 %1$d 行（%2$d 个字符）未显示</item>
     </plurals>
     <plurals name="chat_log_not_kept">
-        <item quantity="one">%1$d 行（%2$d 个字符）未保留</item>
         <item quantity="other">%1$d 行（%2$d 个字符）未保留</item>
     </plurals>
     <string name="chat_log_show_all">显示全部</string>
     <string name="chat_log_loading">正在加载完整输出…</string>
     <string name="chat_log_expired">完整输出已过期</string>
     <string name="chat_log_unavailable">无法加载完整输出。点击重试。</string>
-    <string name="chat_log_past_limit">另外 %1$d 个字符超出限制，未保留</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="other">另外 %1$d 个字符超出限制，未保留</item>
+    </plurals>
     <plurals name="chat_log_dropped">
-        <item quantity="one">此手机上未保留 %d 行较早的记录</item>
         <item quantity="other">此手机上未保留 %d 行较早的记录</item>
     </plurals>
 </resources>

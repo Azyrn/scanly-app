@@ -23,35 +23,42 @@ import kotlin.math.sqrt
 fun PdfEdit.Marking.eraseWith(centre: Offset, radius: Float): List<PdfEdit.Marking>? = when (this) {
     is PdfEdit.Ink -> {
         val survivors = strokes.flatMap { it.erase(centre, radius) }
-        when {
-            survivors == strokes -> null
-            survivors.isEmpty() -> emptyList()
-            else -> listOf(copy(strokes = survivors))
-        }
+        erased(unchanged = survivors == strokes, survivors) { copy(strokes = it) }
     }
 
     is PdfEdit.Highlight -> {
         val kept = quads.filterNot { it.touches(centre, radius) }
-        when {
-            kept.size == quads.size -> null
-            kept.isEmpty() -> emptyList()
-            else -> listOf(copy(quads = kept))
-        }
+        erased(unchanged = kept.size == quads.size, kept) { copy(quads = it) }
     }
 
     is PdfEdit.Underline -> {
         val kept = quads.filterNot { it.touches(centre, radius) }
-        when {
-            kept.size == quads.size -> null
-            kept.isEmpty() -> emptyList()
-            else -> listOf(copy(quads = kept))
-        }
+        erased(unchanged = kept.size == quads.size, kept) { copy(quads = it) }
     }
 
-    is PdfEdit.TextBox -> if (box.touches(centre, radius)) emptyList() else null
-    is PdfEdit.ReplaceText -> if (cover.touches(centre, radius)) emptyList() else null
-    is PdfEdit.Stamp -> if (box.touches(centre, radius)) emptyList() else null
-    is PdfEdit.Shape -> if (touches(centre, radius)) emptyList() else null
+    // The rest erase whole or not at all.
+    is PdfEdit.TextBox, is PdfEdit.ReplaceText, is PdfEdit.Stamp, is PdfEdit.Shape ->
+        if (wholeTouches(centre, radius)) emptyList() else null
+}
+
+/** Null when nothing was erased, empty when nothing survived, else the marking rebuilt from [kept]. */
+private inline fun <T> erased(
+    unchanged: Boolean,
+    kept: List<T>,
+    rebuild: (List<T>) -> PdfEdit.Marking
+): List<PdfEdit.Marking>? = when {
+    unchanged -> null
+    kept.isEmpty() -> emptyList()
+    else -> listOf(rebuild(kept))
+}
+
+/** Whether the disc touches a marking that can only be erased as a whole. */
+private fun PdfEdit.Marking.wholeTouches(centre: Offset, radius: Float): Boolean = when (this) {
+    is PdfEdit.TextBox -> box.touches(centre, radius)
+    is PdfEdit.ReplaceText -> cover.touches(centre, radius)
+    is PdfEdit.Stamp -> box.touches(centre, radius)
+    is PdfEdit.Shape -> touches(centre, radius)
+    else -> false
 }
 
 /** Half the stroke counts as reach, so rubbing the visible edge of a fat stroke erases it. */
@@ -77,38 +84,46 @@ private fun List<Offset>.cutAround(centre: Offset, radius: Float): List<List<Off
         return if ((this[0] - centre).getDistance() <= radius) emptyList() else listOf(this)
     }
 
-    val pieces = mutableListOf<List<Offset>>()
-    var piece = mutableListOf<Offset>()
-
-    fun closePiece() {
-        if (piece.size >= 2) pieces += piece.toList()
-        piece = mutableListOf()
-    }
-
+    val pieces = Pieces()
     for (index in 0 until size - 1) {
         val from = this[index]
         val to = this[index + 1]
         val covered = segmentInside(from, to, centre, radius)
 
         if (covered == null) {
-            if (piece.isEmpty()) piece += from
-            piece += to
+            pieces.extend(from, to)
             continue
         }
 
         val (enter, exit) = covered
-        if (enter > 0f) {
-            if (piece.isEmpty()) piece += from
-            piece += pointOn(from, to, enter)
-        }
-        closePiece()
-        if (exit < 1f) {
-            piece += pointOn(from, to, exit)
-            piece += to
-        }
+        if (enter > 0f) pieces.extend(from, pointOn(from, to, enter))
+        pieces.close()
+        if (exit < 1f) pieces.start(pointOn(from, to, exit), to)
     }
-    closePiece()
-    return pieces
+    pieces.close()
+    return pieces.done
+}
+
+/** A polyline being cut into pieces; a piece of fewer than two points is dropped. */
+private class Pieces {
+    val done = mutableListOf<List<Offset>>()
+    private var piece = mutableListOf<Offset>()
+
+    /** Continues the open piece to [to], starting it at [from] when there is none. */
+    fun extend(from: Offset, to: Offset) {
+        if (piece.isEmpty()) piece += from
+        piece += to
+    }
+
+    fun start(from: Offset, to: Offset) {
+        piece += from
+        piece += to
+    }
+
+    fun close() {
+        if (piece.size >= 2) done += piece.toList()
+        piece = mutableListOf()
+    }
 }
 
 /** The `[enter, exit]` span of the segment lying inside the disc, or null when it stays clear. */

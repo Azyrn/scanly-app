@@ -30,7 +30,8 @@ fun DynamicColorImageVectors.noSearchResult(): ImageVector {
         )
         addPath(
             pathData = PathParser().parsePathString(
-                "M164 100H336A14 14 0 0 1 350 114V206A14 14 0 0 1 336 220H164A14 14 0 0 1 150 206V114A14 14 0 0 1 164 100Z"
+                "M164 100H336A14 14 0 0 1 350 114V206A14 14 0 0 1 336 220" +
+                    "H164A14 14 0 0 1 150 206V114A14 14 0 0 1 164 100Z"
             ).toNodes(),
             fill = SolidColor(MaterialTheme.colorScheme.surfaceContainer),
             stroke = SolidColor(MaterialTheme.colorScheme.primary.copy(alpha = 0.9f)),

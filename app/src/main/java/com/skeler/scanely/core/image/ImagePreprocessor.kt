@@ -7,13 +7,15 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.Matrix
 import android.graphics.Paint
 import android.util.Log
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 
 private const val TAG = "ImagePreprocessor"
 
 object ImagePreprocessor {
 
     fun enhanceContrast(bitmap: Bitmap, contrast: Float = 1.4f): Bitmap {
-        val result = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        val result = createBitmap(bitmap.width, bitmap.height)
         val canvas = Canvas(result)
         val paint = Paint()
 
@@ -68,11 +70,11 @@ object ImagePreprocessor {
 
         Log.d(TAG, "Scaling image from ${width}x$height to ${newWidth}x$newHeight")
 
-        return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+        return bitmap.scale(newWidth, newHeight)
     }
 
     fun adjustBrightness(bitmap: Bitmap, brightness: Float = 20f): Bitmap {
-        val result = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        val result = createBitmap(bitmap.width, bitmap.height)
         val canvas = Canvas(result)
         val paint = Paint()
 

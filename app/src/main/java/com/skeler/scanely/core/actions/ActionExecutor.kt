@@ -28,33 +28,14 @@ object ActionExecutor {
     fun execute(context: Context, action: ScanAction) {
         when (action) {
             is ScanAction.OpenUrl -> openUrl(context, action.url)
-            is ScanAction.CopyText -> copyText(context, action.text)
+            // ShowRaw copies its text too; for both, detail is the text.
+            is ScanAction.CopyText, is ScanAction.ShowRaw -> copyText(context, action.detail)
             is ScanAction.CallPhone -> callPhone(context, action.number)
             is ScanAction.SendEmail -> sendEmail(context, action.email, action.subject, action.body)
             is ScanAction.SendSms -> sendSms(context, action.number, action.message)
             is ScanAction.ConnectWifi -> connectWifi(context, action.ssid, action.password, action.type)
-            is ScanAction.AddContact -> addContact(context, action)
-            is ScanAction.AddEvent -> addEvent(context, action)
-            is ScanAction.ShowRaw -> copyText(context, action.text)
+            is ScanAction.AddContact, is ScanAction.AddEvent -> insertRecord(context, action)
             is ScanAction.LookupProduct -> { /* Handled in BarcodeScannerScreen */ }
-        }
-    }
-
-    /** Runs an action, toasting [errorToast] on the failures launching intents can produce. */
-    private inline fun tryAction(context: Context, @StringRes errorToast: Int, block: () -> Unit) {
-        val failure = try {
-            block()
-            null
-        } catch (e: ActivityNotFoundException) {
-            e
-        } catch (e: SecurityException) {
-            e
-        } catch (e: IllegalArgumentException) {
-            e
-        }
-        if (failure != null) {
-            Log.w(TAG, "Action failed", failure)
-            Toast.makeText(context, errorToast, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -141,56 +122,78 @@ object ActionExecutor {
         }
     }
 
-    private fun addContact(context: Context, action: ScanAction.AddContact) {
-        tryAction(context, R.string.act_err_contacts) {
-            val intent = Intent(Intent.ACTION_INSERT).apply {
-                type = ContactsContract.Contacts.CONTENT_TYPE
-                action.name?.let { putExtra(ContactsContract.Intents.Insert.NAME, it) }
-                action.phone?.let { putExtra(ContactsContract.Intents.Insert.PHONE, it) }
-                action.email?.let { putExtra(ContactsContract.Intents.Insert.EMAIL, it) }
-                action.organization?.let { putExtra(ContactsContract.Intents.Insert.COMPANY, it) }
-            }
+    /** Opens the contacts or calendar insert screen pre-filled from [action]. */
+    private fun insertRecord(context: Context, action: ScanAction) {
+        val (errorToast, buildIntent) = when (action) {
+            is ScanAction.AddContact -> R.string.act_err_contacts to { contactInsertIntent(action) }
+            is ScanAction.AddEvent -> R.string.act_err_calendar to { eventInsertIntent(action) }
+            else -> return
+        }
+        tryAction(context, errorToast) {
+            val intent = buildIntent()
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }
+}
 
-    private fun addEvent(context: Context, action: ScanAction.AddEvent) {
-        tryAction(context, R.string.act_err_calendar) {
-            val intent = Intent(Intent.ACTION_INSERT).apply {
-                data = CalendarContract.Events.CONTENT_URI
-                action.title?.let { putExtra(CalendarContract.Events.TITLE, it) }
-                action.location?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
-                action.description?.let { putExtra(CalendarContract.Events.DESCRIPTION, it) }
-                parseEventMillis(action.startRaw)?.let {
-                    putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, it)
-                }
-                parseEventMillis(action.endRaw)?.let {
-                    putExtra(CalendarContract.EXTRA_EVENT_END_TIME, it)
-                }
-            }
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+/** Runs an action, toasting [errorToast] on the failures launching intents can produce. */
+private inline fun tryAction(context: Context, @StringRes errorToast: Int, block: () -> Unit) {
+    val failure = try {
+        block()
+        null
+    } catch (e: ActivityNotFoundException) {
+        e
+    } catch (e: SecurityException) {
+        e
+    } catch (e: IllegalArgumentException) {
+        e
+    }
+    if (failure != null) {
+        Log.w(TAG, "Action failed", failure)
+        Toast.makeText(context, errorToast, Toast.LENGTH_SHORT).show()
+    }
+}
+
+private fun contactInsertIntent(action: ScanAction.AddContact): Intent =
+    Intent(Intent.ACTION_INSERT).apply {
+        type = ContactsContract.Contacts.CONTENT_TYPE
+        action.name?.let { putExtra(ContactsContract.Intents.Insert.NAME, it) }
+        action.phone?.let { putExtra(ContactsContract.Intents.Insert.PHONE, it) }
+        action.email?.let { putExtra(ContactsContract.Intents.Insert.EMAIL, it) }
+        action.organization?.let { putExtra(ContactsContract.Intents.Insert.COMPANY, it) }
+    }
+
+private fun eventInsertIntent(action: ScanAction.AddEvent): Intent =
+    Intent(Intent.ACTION_INSERT).apply {
+        data = CalendarContract.Events.CONTENT_URI
+        action.title?.let { putExtra(CalendarContract.Events.TITLE, it) }
+        action.location?.let { putExtra(CalendarContract.Events.EVENT_LOCATION, it) }
+        action.description?.let { putExtra(CalendarContract.Events.DESCRIPTION, it) }
+        parseEventMillis(action.startRaw)?.let {
+            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, it)
+        }
+        parseEventMillis(action.endRaw)?.let {
+            putExtra(CalendarContract.EXTRA_EVENT_END_TIME, it)
         }
     }
 
-    /** iCal basic: yyyyMMdd['T'HHmmss['Z']]; null if unparseable. */
-    private fun parseEventMillis(raw: String?): Long? {
-        if (raw.isNullOrBlank()) return null
-        val value = raw.trim()
-        val (pattern, utc) = when {
-            value.endsWith("Z") -> "yyyyMMdd'T'HHmmss'Z'" to true
-            value.contains("T") -> "yyyyMMdd'T'HHmmss" to false
-            else -> "yyyyMMdd" to false
+/** iCal basic: yyyyMMdd['T'HHmmss['Z']]; null if unparseable. */
+private fun parseEventMillis(raw: String?): Long? {
+    if (raw.isNullOrBlank()) return null
+    val value = raw.trim()
+    val (pattern, utc) = when {
+        value.endsWith("Z") -> "yyyyMMdd'T'HHmmss'Z'" to true
+        value.contains("T") -> "yyyyMMdd'T'HHmmss" to false
+        else -> "yyyyMMdd" to false
+    }
+    return try {
+        val format = SimpleDateFormat(pattern, Locale.US).apply {
+            isLenient = false
+            if (utc) timeZone = TimeZone.getTimeZone("UTC")
         }
-        return try {
-            val format = SimpleDateFormat(pattern, Locale.US).apply {
-                isLenient = false
-                if (utc) timeZone = TimeZone.getTimeZone("UTC")
-            }
-            format.parse(value)?.time
-        } catch (e: ParseException) {
-            null
-        }
+        format.parse(value)?.time
+    } catch (e: ParseException) {
+        null
     }
 }

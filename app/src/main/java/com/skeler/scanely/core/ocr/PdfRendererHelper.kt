@@ -7,6 +7,7 @@ import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
+import androidx.core.graphics.createBitmap
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -30,10 +31,9 @@ class PdfRendererHelper @Inject constructor(
 
     private fun renderPage(page: PdfRenderer.Page, longSide: Int = TARGET_LONG_SIDE): Bitmap {
         val scale = scaleFor(page.width, page.height, longSide)
-        val bitmap = Bitmap.createBitmap(
+        val bitmap = createBitmap(
             (page.width * scale).toInt().coerceAtLeast(1),
-            (page.height * scale).toInt().coerceAtLeast(1),
-            Bitmap.Config.ARGB_8888
+            (page.height * scale).toInt().coerceAtLeast(1)
         )
         // PDFs may be transparent.
         bitmap.eraseColor(Color.WHITE)

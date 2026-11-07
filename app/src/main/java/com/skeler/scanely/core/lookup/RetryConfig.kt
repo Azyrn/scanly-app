@@ -39,23 +39,26 @@ suspend fun <T> withRetry(
     error("Retry failed")
 }
 
-fun Exception.isRetryable(): Boolean {
+fun Exception.isRetryable(): Boolean = retryableByType() ?: retryableByMessage()
+
+/** Whether the exception's type alone decides it, or null when it does not. */
+private fun Exception.retryableByType(): Boolean? = when (this) {
+    // A per-attempt withTimeout inside the retry block. Any other cancellation is the caller
+    // giving up, which must never be retried.
+    is TimeoutCancellationException -> true
+    is CancellationException -> false
+    is LookupServerException -> true
+    is LookupRejectedException -> false
+    is java.net.SocketTimeoutException,
+    is java.net.UnknownHostException,
+    is java.net.ConnectException,
+    is java.io.InterruptedIOException -> true
+    else -> null
+}
+
+private val RETRYABLE_MESSAGE_WORDS = listOf("timeout", "connection", "reset", "refused")
+
+private fun Exception.retryableByMessage(): Boolean {
     val message = message?.lowercase() ?: ""
-    return when {
-        // A per-attempt withTimeout inside the retry block. Any other cancellation is the caller
-        // giving up, which must never be retried.
-        this is TimeoutCancellationException -> true
-        this is CancellationException -> false
-        this is LookupServerException -> true
-        this is LookupRejectedException -> false
-        this is java.net.SocketTimeoutException -> true
-        this is java.net.UnknownHostException -> true
-        this is java.net.ConnectException -> true
-        this is java.io.InterruptedIOException -> true
-        message.contains("timeout") -> true
-        message.contains("connection") -> true
-        message.contains("reset") -> true
-        message.contains("refused") -> true
-        else -> false
-    }
+    return RETRYABLE_MESSAGE_WORDS.any { message.contains(it) }
 }

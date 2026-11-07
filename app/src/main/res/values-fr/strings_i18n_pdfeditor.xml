@@ -10,9 +10,12 @@
     <string name="pe_menu_validate_hint">Vérifier les signatures intégrées</string>
     <string name="pe_menu_library_hint">Réutiliser une signature</string>
     <string name="pe_add_a_pdf">Ajouter PDF</string>
-    <string name="pe_merge_page_count">%1$d pages</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="one">%1$d page</item>
+        <item quantity="many">%1$d pages</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
     <string name="pe_remove">Retirer</string>
-    <string name="pe_merge_page_change">%1$d pages → %2$d pages</string>
     <string name="pe_add_to_document">Ajouter au PDF</string>
     <string name="pe_compress_now">Actuel %1$s</string>
     <string name="pe_compress_trying_levels">Essai de chaque niveau…</string>
@@ -59,7 +62,11 @@
     <string name="pe_unlock">Ouvrir</string>
     <string name="pe_issued_by">Délivré par %1$s</string>
     <string name="pe_valid_range">Du %1$s au %2$s</string>
-    <string name="pe_chain_count">%1$d certificats dans la chaîne</string>
+    <plurals name="pe_chain_count">
+        <item quantity="one">%1$d certificat dans la chaîne</item>
+        <item quantity="many">%1$d certificats dans la chaîne</item>
+        <item quantity="other">%1$d certificats dans la chaîne</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">Hors de sa période de validité. Il peut signer, mais les lecteurs signaleront la signature.</string>
     <string name="pe_reason_optional">Motif (facultatif)</string>
     <string name="pe_location_optional">Lieu (facultatif)</string>
@@ -127,7 +134,11 @@
     <string name="pe_crop">Cadrer</string>
     <string name="pe_paywall_reason_studio">Compression, chiffrement et édition de texte : Scanly Pro.</string>
     <string name="pe_select_all">Tout</string>
-    <string name="pe_selected_count">%1$d coché(s)</string>
+    <plurals name="pe_selected_count">
+        <item quantity="one">%1$d coché</item>
+        <item quantity="many">%1$d cochés</item>
+        <item quantity="other">%1$d cochés</item>
+    </plurals>
     <string name="pe_clear_selection">Désélectionner</string>
     <string name="pe_extract_to_new_pdf">Extraire en PDF</string>
     <string name="pe_edit">Modifier</string>
@@ -141,7 +152,11 @@
     <string name="pe_busy_extracting">Extraction</string>
     <string name="pe_extract_failed">Impossible d\'extraire ces pages.</string>
     <string name="pe_staged_edits_not_included">\u0020— modifs en attente exclues</string>
-    <string name="pe_extracted_pages">%1$d pages extraites%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="one">%1$d page extraite%2$s</item>
+        <item quantity="many">%1$d pages extraites%2$s</item>
+        <item quantity="other">%1$d pages extraites%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">En cours</string>
     <string name="pe_busy_checking_signatures">Contrôle signatures</string>
     <string name="pe_nothing_to_save">Rien à enregistrer.</string>
@@ -149,7 +164,11 @@
     <string name="pe_write_failed">Échec dans Téléchargements.</string>
     <string name="pe_compression_staged">Compression prête. Enregistrez.</string>
     <string name="pe_merge_read_failed">Impossible de lire ce PDF.</string>
-    <string name="pe_documents_staged">%1$d document(s) prêt(s). Enregistrez.</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="one">%1$d document prêt. Enregistrez.</item>
+        <item quantity="many">%1$d documents prêts. Enregistrez.</item>
+        <item quantity="other">%1$d documents prêts. Enregistrez.</item>
+    </plurals>
     <string name="pe_encryption_staged">Chiffrement prêt. Enregistrez.</string>
     <string name="pe_password_removal_staged">Retrait du mot de passe prêt. Enregistrez.</string>
     <string name="pe_metadata_removal_staged">Métadonnées à effacer. Enregistrez.</string>

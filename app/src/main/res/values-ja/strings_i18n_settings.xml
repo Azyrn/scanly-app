@@ -8,7 +8,9 @@
     <string name="set_sign_in_subtitle">AIスキャンに必要</string>
     <string name="set_signed_in">サインイン済み</string>
     <string name="set_pro_key_title">Scanly Pro キー</string>
-    <string name="set_pro_key_active_devices">有効 · %1$d / %2$d 台の端末</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="other">有効 · %1$d / %2$d 台の端末</item>
+    </plurals>
     <string name="set_pro_key_active_here">この端末で有効</string>
     <string name="set_delete_account_title">アカウントを削除</string>
     <string name="set_delete_account_subtitle">アカウントとデータを完全に消去します</string>
@@ -35,7 +37,7 @@
     <string name="set_remove_key_message">この端末は無料プランに戻り、枠が解放されるため、キーを別の端末で使用できます。キー自体は引き続き有効です。</string>
     <string name="set_remove_key_confirm">削除</string>
     <string name="set_delete_account_dialog_title">アカウント削除？</string>
-    <string name="set_delete_account_dialog_message">この操作により、当社サーバー上の Scanly アカウント、サインイン情報、利用記録が完全に削除されます。元に戻すことはできません。\n\nこの端末に保存されたスキャンには影響しません。有効な Pro サブスクリプションは、Paddle から別途キャンセルしてください。</string>
+    <string name="set_delete_account_dialog_message">この操作により、当社サーバー上の Scanly アカウント、サインイン情報、利用記録が完全に削除されます。元に戻すことはできません。このメールアドレスでは30日間、新しいアカウントを作成できません。\n\nこの端末に保存されたスキャンには影響しません。有効な Pro サブスクリプションは、Paddle から別途キャンセルしてください。</string>
     <string name="set_sign_out_dialog_title">サインアウト？</string>
     <string name="set_sign_out_dialog_message">再サインインするまでAIスキャンは使えません。履歴とオフラインのテキスト認識は、この端末に残ります。</string>
     <string name="set_sign_out">サインアウト</string>
@@ -91,7 +93,9 @@
     <string name="set_pro_required_message">独自のAIプロバイダーへの接続は Scanly Pro の機能です。以下の項目は設定内容のプレビューで、Pro に登録すると入力できます。設定の「アカウント」セクションからアップグレードするか、お持ちのキーを引き換えてください。</string>
     <string name="set_custom_intro_body">任意のAIプロバイダーに接続できます。プロトコルを選び、URL、モデル名、APIキーを入力して接続をテストしてください。</string>
     <string name="set_custom_intro_hosts">ほとんどのホストは OpenAI 互換です（Groq、OpenAI、OpenRouter、NVIDIA NIM、Together、Fireworks など）。Claude と Gemini は独自プロトコル。ネットワーク内のセルフホストサーバーは http でも利用できます。</string>
-    <string name="set_custom_intro_pdf_pages">スキャン PDF は画像で送るため、一度に最大 %1$d ページ。Office 文書には Scanly AI が必要です。</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="other">スキャン PDF は画像で送るため、一度に最大 %1$d ページ。Office 文書には Scanly AI が必要です。</item>
+    </plurals>
     <string name="set_section_protocol">形式</string>
     <string name="set_section_endpoint">接続先</string>
     <string name="set_endpoint_url_label">接続先 URL</string>

@@ -50,6 +50,17 @@ object TableGrid {
         return grid.map { row -> row.subList(first, last + 1).toList() }
     }
 
+    /** A blank column with a heading, directly between two columns that hold data. */
+    private fun strandedColumns(header: List<String>, body: List<List<String>>): List<Boolean> {
+        val hasData = header.indices.map { column ->
+            body.any { row -> row.getOrElse(column) { "" }.isNotBlank() }
+        }
+        return header.indices.map { column ->
+            val betweenData = hasData.getOrElse(column - 1) { false } && hasData.getOrElse(column + 1) { false }
+            !hasData[column] && header[column].isNotBlank() && betweenData
+        }
+    }
+
     /**
      * Folds a heading sitting over an empty column into the neighbour that holds the data.
      *
@@ -67,15 +78,7 @@ object TableGrid {
         val body = grid.drop(1)
         if (body.isEmpty()) return grid
 
-        val hasData = header.indices.map { column ->
-            body.any { row -> row.getOrElse(column) { "" }.isNotBlank() }
-        }
-        val stranded = header.indices.map { column ->
-            !hasData[column] &&
-                header[column].isNotBlank() &&
-                hasData.getOrElse(column - 1) { false } &&
-                hasData.getOrElse(column + 1) { false }
-        }
+        val stranded = strandedColumns(header, body)
         if (stranded.none { it }) return grid
 
         val headings = header.toMutableList()

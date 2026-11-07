@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import androidx.compose.ui.geometry.Rect
+import androidx.core.graphics.createBitmap
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.legere.pdfiumandroid.PdfiumCore
 import kotlinx.coroutines.Dispatchers
@@ -94,7 +95,7 @@ class PdfPageReader @Inject constructor(
             val width = targetWidthPx.coerceAtLeast(1)
             val height = (width * heightPt / widthPt).roundToInt().coerceAtLeast(1)
 
-            Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
+            createBitmap(width, height).apply {
                 // Pages are transparent where nothing is drawn; without this, dark theme shows
                 // through the paper.
                 eraseColor(Color.WHITE)

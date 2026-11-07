@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">Цього місяця лишилося %1$d з %2$d кредитів.</string>
-    <string name="cmp_paywall_credits_left_upgrade">Лишилося %1$d з %2$d кредитів цього місяця. Оновіть план.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">Цього місяця лишилося %1$d з %2$d кредиту.</item>
+        <item quantity="few">Цього місяця лишилося %1$d з %2$d кредитів.</item>
+        <item quantity="many">Цього місяця лишилося %1$d з %2$d кредитів.</item>
+        <item quantity="other">Цього місяця лишилося %1$d з %2$d кредиту.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">Лишилося %1$d з %2$d кредиту цього місяця. Оновіть план.</item>
+        <item quantity="few">Лишилося %1$d з %2$d кредитів цього місяця. Оновіть план.</item>
+        <item quantity="many">Лишилося %1$d з %2$d кредитів цього місяця. Оновіть план.</item>
+        <item quantity="other">Лишилося %1$d з %2$d кредиту цього місяця. Оновіть план.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">Більше кредитів, довші документи, більше форматів.</string>
     <string name="cmp_paywall_ai_scan_credit">AI-сканування: 1 кредит на сторінку. Решта ШІ — з тим самим балансом.</string>
     <string name="cmp_paywall_plan_active">План активний на цьому акаунті.</string>
     <string name="cmp_paywall_key_active_here">Ключ діє на цьому пристрої.</string>
-    <string name="cmp_paywall_devices_used">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</string>
-    <string name="cmp_paywall_watch_ad">Дивитися рекламу: +%1$d кредитів</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</item>
+        <item quantity="few">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</item>
+        <item quantity="many">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</item>
+        <item quantity="other">Пристроїв: %1$d з %2$d. Ключ — у налаштуваннях.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">Дивитися рекламу: +%1$d кредит</item>
+        <item quantity="few">Дивитися рекламу: +%1$d кредити</item>
+        <item quantity="many">Дивитися рекламу: +%1$d кредитів</item>
+        <item quantity="other">Дивитися рекламу: +%1$d кредиту</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"AI-сканування має безкоштовну щомісячну квоту. Платні плани — на "</string>
     <string name="cmp_paywall_where_to_buy_after">. Покупки в цьому застосунку недоступні. Уже маєте підписку? Відновіть покупку нижче.</string>
     <string name="cmp_copied">Скопійовано</string>
@@ -24,7 +44,12 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Діє</string>
     <string name="cmp_paywall_feature_credits">%1$d кредитів ШІ/місяць</string>
-    <string name="cmp_paywall_feature_pages">До %1$d сторінок в документі</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">До %1$d сторінки в документі</item>
+        <item quantity="few">До %1$d сторінок в документі</item>
+        <item quantity="many">До %1$d сторінок в документі</item>
+        <item quantity="other">До %1$d сторінки в документі</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Файли Word, PowerPoint і OpenDocument</string>
     <string name="cmp_paywall_feature_translation">Переклад</string>
     <string name="cmp_paywall_feature_extraction">Витягування даних із чеків, рахунків і карток</string>
@@ -44,19 +69,62 @@
     <string name="cmp_bigger_text">Більший</string>
     <string name="cmp_reset">Скинути</string>
     <string name="cmp_no_table">Немає</string>
-    <string name="cmp_word_char_counts">%1$d слів · %2$d символів</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d слово</item>
+        <item quantity="few">%d слова</item>
+        <item quantity="many">%d слів</item>
+        <item quantity="other">%d слова</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d символ</item>
+        <item quantity="few">%d символи</item>
+        <item quantity="many">%d символів</item>
+        <item quantity="other">%d символу</item>
+    </plurals>
     <string name="cmp_save_as">Зберегти як</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">Які сторінки?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s має %2$d сторінок, але скан читає до %3$d. Виберіть потрібні.</string>
-    <string name="cmp_page_range_intro">%1$s: %2$d сторінок. Кожна сторінка рахується за планом, тож діапазон коштує менше.</string>
-    <string name="cmp_page_range_example">напр. 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">Виберіть до %1$d сторінок між 1 і %2$d.</string>
-    <string name="cmp_page_range_use_numbers">Від 1 до %1$d, як 1-5 або 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%1$d з %2$d сторінок</string>
-    <string name="cmp_page_range_required">Обов\'язково: %1$d сторінок</string>
-    <string name="cmp_page_range_leave_empty">Порожньо — всі %1$d сторінок</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">%1$s має %2$d сторінку, але скан читає до %3$d. Виберіть потрібні.</item>
+        <item quantity="few">%1$s має %2$d сторінки, але скан читає до %3$d. Виберіть потрібні.</item>
+        <item quantity="many">%1$s має %2$d сторінок, але скан читає до %3$d. Виберіть потрібні.</item>
+        <item quantity="other">%1$s має %2$d сторінки, але скан читає до %3$d. Виберіть потрібні.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">%1$s: %2$d сторінка. Кожна сторінка рахується за планом, тож діапазон коштує менше.</item>
+        <item quantity="few">%1$s: %2$d сторінки. Кожна сторінка рахується за планом, тож діапазон коштує менше.</item>
+        <item quantity="many">%1$s: %2$d сторінок. Кожна сторінка рахується за планом, тож діапазон коштує менше.</item>
+        <item quantity="other">%1$s: %2$d сторінки. Кожна сторінка рахується за планом, тож діапазон коштує менше.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">напр. 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">Виберіть до %1$d сторінки між 1 і %2$d.</item>
+        <item quantity="few">Виберіть до %1$d сторінок між 1 і %2$d.</item>
+        <item quantity="many">Виберіть до %1$d сторінок між 1 і %2$d.</item>
+        <item quantity="other">Виберіть до %1$d сторінки між 1 і %2$d.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">Від 1 до %1$d, як 1-5 або 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%1$d з %2$d стор.</item>
+        <item quantity="few">%1$d з %2$d стор.</item>
+        <item quantity="many">%1$d з %2$d стор.</item>
+        <item quantity="other">%1$d з %2$d стор.</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">Обов\'язково: %1$d сторінка</item>
+        <item quantity="few">Обов\'язково: %1$d сторінки</item>
+        <item quantity="many">Обов\'язково: %1$d сторінок</item>
+        <item quantity="other">Обов\'язково: %1$d сторінки</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">Порожньо — %1$d сторінка</item>
+        <item quantity="few">Порожньо — всі %1$d сторінки</item>
+        <item quantity="many">Порожньо — всі %1$d сторінок</item>
+        <item quantity="other">Порожньо — всі %1$d сторінки</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">Скан %1$d</string>
     <string name="cmp_page_range_scan_all">Усі</string>
 
@@ -65,15 +133,20 @@
     <string name="cmp_stage_processing">Обробка…</string>
     <string name="cmp_stage_generating">Створення…</string>
     <string name="cmp_stage_complete">Завершено</string>
-    <string name="cmp_processing_file_of">Обробка файлу %1$d з %2$d...</string>
-    <string name="cmp_extracting_text">Витягуємо текст...</string>
+    <string name="cmp_processing_file_of">Обробка файлу %1$d з %2$d…</string>
+    <string name="cmp_extracting_text">Витягуємо текст…</string>
     <string name="cmp_file_of">Файл %1$d з %2$d</string>
     <string name="cmp_may_take_few_moments">Це може зайняти кілька хвилин</string>
-    <string name="cmp_translating">Переклад...</string>
+    <string name="cmp_translating">Переклад…</string>
     <string name="cmp_couldnt_read_file">Не вдалося прочитати</string>
     <string name="cmp_no_text_extracted">Текст не витягнуто</string>
     <string name="cmp_try_different_image">Виберіть інше зображення</string>
-    <string name="cmp_batch_scanning">Скануємо %1$d з %2$d…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">Скануємо %1$d з %2$d…</item>
+        <item quantity="few">Скануємо %1$d з %2$d…</item>
+        <item quantity="many">Скануємо %1$d з %2$d…</item>
+        <item quantity="other">Скануємо %1$d з %2$d…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Харчування</string>
@@ -122,7 +195,12 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Витягти дані</string>
-    <string name="cmp_preset_cost">Поля разом із текстом. Сторінка як дані коштує %1$d кредитів з плану. До 8 сторінок на документ.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">Поля разом із текстом. Сторінка як дані коштує %1$d кредит з плану. До 8 сторінок на документ.</item>
+        <item quantity="few">Поля разом із текстом. Сторінка як дані коштує %1$d кредити з плану. До 8 сторінок на документ.</item>
+        <item quantity="many">Поля разом із текстом. Сторінка як дані коштує %1$d кредитів з плану. До 8 сторінок на документ.</item>
+        <item quantity="other">Поля разом із текстом. Сторінка як дані коштує %1$d кредиту з плану. До 8 сторінок на документ.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">Поля разом із текстом. Входить до Pro і вище.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +240,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Невідомо</string>
-    <string name="cmp_product_looking_up">Шукаємо товар...</string>
+    <string name="cmp_product_looking_up">Шукаємо товар…</string>
     <string name="cmp_product_not_found">Товар не знайдено</string>
     <string name="cmp_product_lookup_failed">Помилка</string>
     <string name="cmp_product_unknown_error">Невідома помилка</string>
@@ -193,8 +271,18 @@
     <string name="cmp_preview_rendering_pages">Готуємо…</string>
     <string name="cmp_preview_render_failed">Не вдалося створити PDF.</string>
     <string name="cmp_preview_page_n_of_total">Сторінка %1$d/%2$d</string>
-    <string name="cmp_preview_first_n_of_pages">Перші %1$d/%2$d сторінок</string>
-    <string name="cmp_preview_first_n_of_lines">Перші %1$d/%2$d рядків</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">Перші %1$d/%2$d стор.</item>
+        <item quantity="few">Перші %1$d/%2$d стор.</item>
+        <item quantity="many">Перші %1$d/%2$d стор.</item>
+        <item quantity="other">Перші %1$d/%2$d стор.</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">Перші %1$d/%2$d рядка</item>
+        <item quantity="few">Перші %1$d/%2$d рядків</item>
+        <item quantity="many">Перші %1$d/%2$d рядків</item>
+        <item quantity="other">Перші %1$d/%2$d рядка</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">Експорт порожній</string>

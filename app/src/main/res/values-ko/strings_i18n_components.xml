@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="cmp_paywall_credits_left">이번 달 남은 크레딧은 %2$d개 중 %1$d개예요.</string>
-    <string name="cmp_paywall_credits_left_upgrade">이번 달 크레딧 %2$d개 중 %1$d개 남음. 업그레이드하세요.</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="other">이번 달 남은 크레딧은 %2$d개 중 %1$d개예요.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="other">이번 달 크레딧 %2$d개 중 %1$d개 남음. 업그레이드하세요.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">더 많은 크레딧, 더 긴 문서, 더 많은 파일 형식을 쓸 수 있어요.</string>
     <string name="cmp_paywall_ai_scan_credit">AI 스캔은 페이지당 크레딧 1개. 다른 AI 도구도 같은 잔액을 써요.</string>
     <string name="cmp_paywall_plan_active">이 계정에서 요금제가 활성화되어 있어요.</string>
     <string name="cmp_paywall_key_active_here">이 기기에서 키가 활성화되어 있어요.</string>
-    <string name="cmp_paywall_devices_used">기기 %2$d대 중 %1$d대를 사용 중이에요. 설정에서 키를 관리하세요.</string>
-    <string name="cmp_paywall_watch_ad">광고를 보고 크레딧 %1$d개 더 받기</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="other">기기 %2$d대 중 %1$d대를 사용 중이에요. 설정에서 키를 관리하세요.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="other">광고를 보고 크레딧 %1$d개 더 받기</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"AI 스캔에는 매달 무료 사용량이 포함돼요. 유료 요금제는 "</string>
     <string name="cmp_paywall_where_to_buy_after">. 이 앱에서는 구매할 수 없어요. 이미 구독 중이라면 아래에서 구매 내역을 복원하세요.</string>
     <string name="cmp_copied">복사됨</string>
@@ -22,7 +30,9 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">사용 중</string>
     <string name="cmp_paywall_feature_credits">월 AI 크레딧 %1$d개</string>
-    <string name="cmp_paywall_feature_pages">문서 하나에 최대 %1$d페이지</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="other">문서 하나에 최대 %1$d페이지</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Word, PowerPoint, OpenDocument 파일</string>
     <string name="cmp_paywall_feature_translation">번역</string>
     <string name="cmp_paywall_feature_extraction">영수증, 송장, 카드에서 데이터 추출</string>
@@ -40,32 +50,53 @@
     <string name="cmp_bigger_text">글자 크게</string>
     <string name="cmp_reset">초기화</string>
     <string name="cmp_no_table">표 없음</string>
-    <string name="cmp_word_char_counts">단어 %1$d개 · 글자 %2$d자</string>
+    <plurals name="cmp_word_count">
+        <item quantity="other">단어 %d개</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="other">글자 %d자</item>
+    </plurals>
     <string name="cmp_save_as">다른 이름</string>
     <string name="cmp_page_range_title">스캔할 페이지 선택</string>
-    <string name="cmp_page_range_over_ceiling">%1$s 페이지 %2$d개 중 최대 %3$d페이지만 읽어요. 중요한 페이지를 고르세요.</string>
-    <string name="cmp_page_range_intro">%1$s에는 페이지가 %2$d개 있어요. 스캔하는 페이지마다 요금제에서 차감되므로, 범위를 고르면 전체 파일보다 적게 들어요.</string>
-    <string name="cmp_page_range_example">예: 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">1부터 %2$d 사이에서 최대 %1$d페이지를 고르세요.</string>
-    <string name="cmp_page_range_use_numbers">1부터 %1$d 사이의 페이지 번호를 사용하세요. 예: 1-5 또는 2,4</string>
-    <string name="cmp_page_range_n_of_total">%1$d/%2$d 페이지</string>
-    <string name="cmp_page_range_required">필수 — 이번 스캔은 %1$d페이지를 대상으로 해요</string>
-    <string name="cmp_page_range_leave_empty">비워 두면 전체 %1$d페이지를 스캔해요</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="other">%1$s 페이지 %2$d개 중 최대 %3$d페이지만 읽어요. 중요한 페이지를 고르세요.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="other">%1$s에는 페이지가 %2$d개 있어요. 스캔하는 페이지마다 요금제에서 차감되므로, 범위를 고르면 전체 파일보다 적게 들어요.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">예: 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="other">1부터 %2$d 사이에서 최대 %1$d페이지를 고르세요.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">1부터 %1$d 사이의 페이지 번호를 사용하세요. 예: 1-5 또는 2,4</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="other">%1$d/%2$d 페이지</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="other">필수 — 이번 스캔은 %1$d페이지를 대상으로 해요</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="other">비워 두면 전체 %1$d페이지를 스캔해요</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">%1$d장 스캔</string>
     <string name="cmp_page_range_scan_all">모두 스캔</string>
     <string name="cmp_stage_uploading">업로드 중…</string>
     <string name="cmp_stage_processing">처리 중…</string>
     <string name="cmp_stage_generating">생성 중…</string>
     <string name="cmp_stage_complete">완료</string>
-    <string name="cmp_processing_file_of">파일 %2$d개 중 %1$d번째 처리 중...</string>
-    <string name="cmp_extracting_text">텍스트 추출 중...</string>
+    <string name="cmp_processing_file_of">파일 %2$d개 중 %1$d번째 처리 중…</string>
+    <string name="cmp_extracting_text">텍스트 추출 중…</string>
     <string name="cmp_file_of">파일 %1$d/%2$d</string>
     <string name="cmp_may_take_few_moments">시간이 조금 걸릴 수 있어요</string>
-    <string name="cmp_translating">번역 중...</string>
+    <string name="cmp_translating">번역 중…</string>
     <string name="cmp_couldnt_read_file">이 파일을 읽을 수 없어요</string>
     <string name="cmp_no_text_extracted">텍스트 없음</string>
     <string name="cmp_try_different_image">다른 이미지를 선택해 보세요</string>
-    <string name="cmp_batch_scanning">파일 %2$d개 중 %1$d개 스캔 중…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="other">파일 %2$d개 중 %1$d개 스캔 중…</item>
+    </plurals>
     <string name="cmp_food_nutrition_facts">영양 정보</string>
     <string name="cmp_food_serving_size">1회 제공량: %1$s</string>
     <string name="cmp_food_ingredients">재료</string>
@@ -102,7 +133,9 @@
     <string name="cmp_export_file_name_label">파일 이름</string>
     <string name="cmp_export_name_hint">가능하면 원본 파일 이름을 사용해요.</string>
     <string name="cmp_extract_data">데이터 추출</string>
-    <string name="cmp_preset_cost">텍스트와 함께 항목별 필드도 가져와요. 페이지를 데이터로 읽으면 요금제에서 크레딧 %1$d개가 사용돼요. 문서당 최대 8페이지까지 가능해요.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="other">텍스트와 함께 항목별 필드도 가져와요. 페이지를 데이터로 읽으면 요금제에서 크레딧 %1$d개가 사용돼요. 문서당 최대 8페이지까지 가능해요.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">텍스트와 함께 항목별 필드도 가져와요. Pro 이상에 포함돼요.</string>
     <string name="cmp_sign_in_ai_title">로그인하면 AI 스캔 사용</string>
     <string name="cmp_sign_in_ai_body">AI 스캔은 공유 키로 실행되므로 계정이 필요해요. 텍스트 인식과 바코드 스캔은 무료이며 로그인 없이 오프라인에서 쓸 수 있어요.</string>
@@ -126,21 +159,19 @@
     <string name="cmp_barcode_content">바코드 내용</string>
     <string name="cmp_copy_to_clipboard">클립보드에 복사</string>
     <string name="cmp_product_unknown_source">알 수 없음</string>
-    <string name="cmp_product_looking_up">제품 조회 중...</string>
+    <string name="cmp_product_looking_up">제품 조회 중…</string>
     <string name="cmp_product_not_found">제품을 찾을 수 없음</string>
     <string name="cmp_product_lookup_failed">조회 실패</string>
     <string name="cmp_product_unknown_error">알 수 없는 오류</string>
     <string name="cmp_product_unknown_name">알 수 없는 제품</string>
     <string name="cmp_product_via_source">%1$s 제공</string>
     <plurals name="cmp_passages_hard_to_read">
-        <item quantity="one">읽기 어려운 구절 %1$d개</item>
         <item quantity="other">읽기 어려운 구절 %1$d개</item>
     </plurals>
     <string name="cmp_check_against_original">사용하기 전에 원본과 대조해 확인하세요.</string>
     <string name="cmp_show_all_count">전체 %1$d개 보기</string>
     <string name="cmp_copy_json">JSON 복사</string>
     <plurals name="cmp_links_found">
-        <item quantity="one">%1$d개</item>
         <item quantity="other">링크 %1$d개</item>
     </plurals>
     <string name="cmp_preview_saves_to">.%1$s 미리보기 · Downloads/Scanly에 저장됨</string>
@@ -149,15 +180,18 @@
     <string name="cmp_preview_rendering_pages">페이지를 그리는 중…</string>
     <string name="cmp_preview_render_failed">이 문서를 PDF로 만들 수 없어요.</string>
     <string name="cmp_preview_page_n_of_total">%1$d/%2$d 페이지</string>
-    <string name="cmp_preview_first_n_of_pages">%2$d페이지 중 앞 %1$d</string>
-    <string name="cmp_preview_first_n_of_lines">%2$d줄 중 처음 %1$d줄</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="other">%2$d페이지 중 앞 %1$d</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="other">%2$d줄 중 처음 %1$d줄</item>
+    </plurals>
     <string name="cmp_export_nothing_to_export">내보낼 내용이 없어요</string>
     <string name="cmp_export_no_table_data">내보낼 표 데이터가 없어요</string>
     <string name="cmp_export_couldnt_save">%1$s 저장 실패</string>
     <string name="cmp_doc_saved_to_downloads">%1$s 저장됨: Downloads/Scanly</string>
     <string name="cmp_doc_couldnt_create">%1$s 만들기 실패</string>
     <plurals name="cmp_doc_saved_images">
-        <item quantity="one">이미지 %1$d장 갤러리 저장</item>
         <item quantity="other">이미지 %1$d장 갤러리 저장</item>
     </plurals>
     <string name="cmp_doc_couldnt_save_images">이미지를 저장할 수 없어요</string>

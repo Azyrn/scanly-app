@@ -1,11 +1,13 @@
 package com.skeler.scanely.ui.viewmodel
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.util.Log
+import androidx.core.graphics.scale
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,6 +34,9 @@ import kotlin.math.max
 private const val TAG = "DocumentScanViewModel"
 private const val MAX_DIMENSION = 2200
 private const val PREVIEW_DIMENSION = 220
+private const val QUARTER_TURN_DEGREES = 90f
+private const val HALF_TURN_DEGREES = 180f
+private const val THREE_QUARTER_TURN_DEGREES = 270f
 
 enum class ScanExportFormat(val label: String, val mimeType: String) {
     PDF("PDF", ScanExporter.PDF_MIME_TYPE),
@@ -85,7 +90,7 @@ class DocumentScanViewModel @Inject constructor(
             val loaded = withContext(Dispatchers.IO) {
                 uris.mapNotNull {
                     runCatching {
-                        val bitmap = decodeScaled(it)
+                        val bitmap = decodeScaled(appContext.contentResolver, it)
                         if (preprocess) ImagePreprocessor.preprocessForDocument(bitmap) else bitmap
                     }.getOrNull()
                 }
@@ -128,7 +133,7 @@ class DocumentScanViewModel @Inject constructor(
         if (index !in current.indices) return
         viewModelScope.launch {
             val (rotatedOriginal, rotatedPage) = withContext(Dispatchers.Default) {
-                rotate(original, 90f) to rotate(current[index], 90f)
+                rotate(original, QUARTER_TURN_DEGREES) to rotate(current[index], QUARTER_TURN_DEGREES)
             }
             originals = originals.toMutableList().also { it[index] = rotatedOriginal }
             _uiState.update { state ->
@@ -214,87 +219,83 @@ class DocumentScanViewModel @Inject constructor(
         originals = emptyList()
         _uiState.value = DocumentScanUiState()
     }
+}
 
-    private fun applyFilter(sources: List<Bitmap>, filter: ScanFilter): List<Bitmap> =
-        sources.map { DocumentFilters.apply(it, filter) }
+private fun applyFilter(sources: List<Bitmap>, filter: ScanFilter): List<Bitmap> =
+    sources.map { DocumentFilters.apply(it, filter) }
 
-    // Compose may still be drawing bitmaps replaced by rotate or delete.
-    private fun rotate(source: Bitmap, degrees: Float): Bitmap {
-        val matrix = Matrix().apply { postRotate(degrees) }
-        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+// Compose may still be drawing bitmaps replaced by rotate or delete.
+private fun rotate(source: Bitmap, degrees: Float): Bitmap {
+    val matrix = Matrix().apply { postRotate(degrees) }
+    return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+}
+
+private fun scaleToThumbnail(source: Bitmap): Bitmap {
+    val longest = max(source.width, source.height).coerceAtLeast(1)
+    val scale = PREVIEW_DIMENSION.toFloat() / longest
+    if (scale >= 1f) return source
+    return source.scale(
+        (source.width * scale).toInt().coerceAtLeast(1),
+        (source.height * scale).toInt().coerceAtLeast(1)
+    )
+}
+
+private fun decodeScaled(resolver: ContentResolver, uri: Uri): Bitmap {
+    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    resolver.openInputStream(uri)?.use {
+        BitmapFactory.decodeStream(it, null, bounds)
     }
+    val longest = max(bounds.outWidth, bounds.outHeight).coerceAtLeast(1)
+    var sample = 1
+    while (longest / sample > MAX_DIMENSION) sample *= 2
 
-    private fun scaleToThumbnail(source: Bitmap): Bitmap {
-        val longest = max(source.width, source.height).coerceAtLeast(1)
-        val scale = PREVIEW_DIMENSION.toFloat() / longest
-        if (scale >= 1f) return source
-        return Bitmap.createScaledBitmap(
-            source,
-            (source.width * scale).toInt().coerceAtLeast(1),
-            (source.height * scale).toInt().coerceAtLeast(1),
-            true
-        )
+    val opts = BitmapFactory.Options().apply {
+        inSampleSize = sample
+        inPreferredConfig = Bitmap.Config.ARGB_8888
     }
+    val bitmap = resolver.openInputStream(uri)?.use {
+        BitmapFactory.decodeStream(it, null, opts)
+    } ?: error("Unable to decode $uri")
+    return capDimension(applyExifRotation(resolver, uri, bitmap))
+}
 
-    private fun decodeScaled(uri: Uri): Bitmap {
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        appContext.contentResolver.openInputStream(uri)?.use {
-            BitmapFactory.decodeStream(it, null, bounds)
-        }
-        val longest = max(bounds.outWidth, bounds.outHeight).coerceAtLeast(1)
-        var sample = 1
-        while (longest / sample > MAX_DIMENSION) sample *= 2
+// Enforce the final cap after BitmapFactory's power-of-two sampling.
+private fun capDimension(bitmap: Bitmap): Bitmap {
+    val longest = max(bitmap.width, bitmap.height)
+    if (longest <= MAX_DIMENSION) return bitmap
+    val scale = MAX_DIMENSION.toFloat() / longest
+    val resized = bitmap.scale(
+        (bitmap.width * scale).toInt().coerceAtLeast(1),
+        (bitmap.height * scale).toInt().coerceAtLeast(1)
+    )
+    if (resized != bitmap) bitmap.recycle()
+    return resized
+}
 
-        val opts = BitmapFactory.Options().apply {
-            inSampleSize = sample
-            inPreferredConfig = Bitmap.Config.ARGB_8888
-        }
-        val bitmap = appContext.contentResolver.openInputStream(uri)?.use {
-            BitmapFactory.decodeStream(it, null, opts)
-        } ?: error("Unable to decode $uri")
-        return capDimension(applyExifRotation(uri, bitmap))
-    }
+// ONNX corner detection requires orientation-corrected CameraX images.
+private fun applyExifRotation(resolver: ContentResolver, uri: Uri, bitmap: Bitmap): Bitmap {
+    val degrees = runCatching {
+        resolver.openInputStream(uri)?.use { stream ->
+            rotationDegrees(
+                ExifInterface(stream).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            )
+        } ?: 0f
+    }.getOrDefault(0f)
+    if (degrees == 0f) return bitmap
 
-    // Enforce the final cap after BitmapFactory's power-of-two sampling.
-    private fun capDimension(bitmap: Bitmap): Bitmap {
-        val longest = max(bitmap.width, bitmap.height)
-        if (longest <= MAX_DIMENSION) return bitmap
-        val scale = MAX_DIMENSION.toFloat() / longest
-        val resized = Bitmap.createScaledBitmap(
-            bitmap,
-            (bitmap.width * scale).toInt().coerceAtLeast(1),
-            (bitmap.height * scale).toInt().coerceAtLeast(1),
-            true
-        )
-        if (resized != bitmap) bitmap.recycle()
-        return resized
-    }
+    val matrix = Matrix().apply { postRotate(degrees) }
+    val rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    if (rotated != bitmap) bitmap.recycle()
+    return rotated
+}
 
-    // ONNX corner detection requires orientation-corrected CameraX images.
-    private fun applyExifRotation(uri: Uri, bitmap: Bitmap): Bitmap {
-        val degrees = runCatching {
-            appContext.contentResolver.openInputStream(uri)?.use { stream ->
-                when (
-                    ExifInterface(stream).getAttributeInt(
-                        ExifInterface.TAG_ORIENTATION,
-                        ExifInterface.ORIENTATION_NORMAL
-                    )
-                ) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> 90f
-                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
-                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
-                    else -> 0f
-                }
-            } ?: 0f
-        }.getOrDefault(0f)
-        if (degrees == 0f) return bitmap
+private fun timestampName(): String =
+    "Scan_" + SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
 
-        val matrix = Matrix().apply { postRotate(degrees) }
-        val rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-        if (rotated != bitmap) bitmap.recycle()
-        return rotated
-    }
-
-    private fun timestampName(): String =
-        "Scan_" + SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
+/** The clockwise turn an EXIF orientation asks for; mirrored orientations are left as they are. */
+private fun rotationDegrees(orientation: Int): Float = when (orientation) {
+    ExifInterface.ORIENTATION_ROTATE_90 -> QUARTER_TURN_DEGREES
+    ExifInterface.ORIENTATION_ROTATE_180 -> HALF_TURN_DEGREES
+    ExifInterface.ORIENTATION_ROTATE_270 -> THREE_QUARTER_TURN_DEGREES
+    else -> 0f
 }

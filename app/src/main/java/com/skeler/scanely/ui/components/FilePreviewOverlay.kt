@@ -1,6 +1,5 @@
 package com.skeler.scanely.ui.components
 
-import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,6 +50,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -61,9 +61,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import androidx.core.graphics.drawable.toDrawable
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdf.PdfPreview
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.TextExporter
 
 private const val MAX_PREVIEW_PAGES = 3
 private const val MAX_PREVIEW_LINES = 1500
@@ -203,7 +204,7 @@ private fun DimmedWindow() {
     val window = (LocalView.current.parent as? DialogWindowProvider)?.window
     SideEffect {
         window?.apply {
-            setBackgroundDrawable(ColorDrawable(BACKDROP))
+            setBackgroundDrawable(BACKDROP.toDrawable())
             setDimAmount(0.25f)
             setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
@@ -292,7 +293,7 @@ private fun PreviewPage(
 
         TextExportFormat.JSON -> {
             val json = remember(content, asMarkdown) {
-                ScanExporter.buildJson(content.text, content.blocks, asMarkdown)
+                TextExporter.buildJson(content.text, content.blocks, asMarkdown)
             }
             Sheet(height = height, color = CodePaper) {
                 FileTextBody(json)
@@ -336,7 +337,7 @@ private fun PdfPages(
     val rendered by produceState<Result<PdfPreview>?>(null, text, asMarkdown, widthPx) {
         value = null
         value = runCatching {
-            ScanExporter.renderTextPdfPages(
+            TextExporter.renderTextPdfPages(
                 context = context,
                 text = text,
                 asMarkdown = asMarkdown,
@@ -389,7 +390,12 @@ private fun PdfPages(
 
             if (preview.pageCount > preview.pages.size) {
                 Text(
-                    text = stringResource(R.string.cmp_preview_first_n_of_pages, preview.pages.size, preview.pageCount),
+                    text = pluralStringResource(
+                        R.plurals.cmp_preview_first_n_of_pages,
+                        preview.pageCount,
+                        preview.pages.size,
+                        preview.pageCount
+                    ),
                     style = MaterialTheme.typography.labelSmall,
                     color = PillInk,
                     textAlign = TextAlign.Center,
@@ -478,13 +484,15 @@ private fun SheetCell(
     }
 }
 
+private const val LETTERS = 26
+
 /** Spreadsheet column names: A…Z, then AA, AB and on. */
 private fun columnLabel(index: Int): String {
     var remaining = index
     return buildString {
         do {
-            insert(0, 'A' + remaining % 26)
-            remaining = remaining / 26 - 1
+            insert(0, 'A' + remaining % LETTERS)
+            remaining = remaining / LETTERS - 1
         } while (remaining >= 0)
     }
 }
@@ -523,7 +531,7 @@ private fun FileTextBody(text: String) {
 
         if (lines.size > shown.size) {
             Text(
-                text = stringResource(R.string.cmp_preview_first_n_of_lines, shown.size, lines.size),
+                text = pluralStringResource(R.plurals.cmp_preview_first_n_of_lines, lines.size, shown.size, lines.size),
                 style = MaterialTheme.typography.labelSmall,
                 color = PaperMuted,
                 modifier = Modifier

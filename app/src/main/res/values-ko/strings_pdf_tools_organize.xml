@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <plurals name="pdf_tool_merge_files">
-        <item quantity="one">%d개</item>
         <item quantity="other">파일 %d개</item>
     </plurals>
     <string name="pdf_tool_merge_summary">%1$s · 총 %2$s</string>
@@ -34,18 +33,15 @@
     <string name="pdf_tool_split_size_body">페이지는 쪼개지지 않아요. 그래서 이 크기보다 큰 페이지 하나는 자체 파일이 돼요.</string>
     <string name="pdf_tool_split_locked">이 파일에는 비밀번호가 있고, 새 파일에도 그대로 유지돼요.</string>
     <plurals name="pdf_tool_split_makes_files">
-        <item quantity="one">파일 %d개 생성</item>
         <item quantity="other">파일 %d개 생성</item>
     </plurals>
     <plurals name="pdf_tool_split_keeps_pages">
-        <item quantity="one">페이지 %d개 유지</item>
         <item quantity="other">페이지 %d개 유지</item>
     </plurals>
     <string name="pdf_tool_split_action">나누기</string>
     <string name="pdf_tool_split_extract_action">페이지 추출</string>
     <string name="pdf_tool_split_delete_action">페이지 삭제</string>
     <plurals name="pdf_tool_split_oversized_pages">
-        <item quantity="one">크기 제한을 넘는 페이지 %d개는 각각 별도의 파일이 돼요.</item>
         <item quantity="other">크기 제한을 넘는 페이지 %d개는 각각 별도의 파일이 돼요.</item>
     </plurals>
 </resources>

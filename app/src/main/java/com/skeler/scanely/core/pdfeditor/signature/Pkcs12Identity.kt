@@ -139,16 +139,19 @@ object Pkcs12Loader {
             .toMutableList()
             .apply { removeAll { it == leaf } }
 
-        while (true) {
-            val last = ordered.last()
-            if (last.subjectX500Principal == last.issuerX500Principal) break
-            val issuer = remaining.firstOrNull {
-                it.subjectX500Principal == last.issuerX500Principal
-            } ?: break
+        // Up the chain until a self-signed root, or until no certificate issued the last one.
+        var issuer = issuerOf(ordered.last(), remaining)
+        while (issuer != null) {
             ordered += issuer
             remaining -= issuer
+            issuer = issuerOf(issuer, remaining)
         }
         return ordered
+    }
+
+    private fun issuerOf(cert: X509Certificate, pool: List<X509Certificate>): X509Certificate? {
+        if (cert.subjectX500Principal == cert.issuerX500Principal) return null
+        return pool.firstOrNull { it.subjectX500Principal == cert.issuerX500Principal }
     }
 
     /**

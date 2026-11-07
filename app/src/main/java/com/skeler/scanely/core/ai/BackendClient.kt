@@ -93,23 +93,15 @@ internal fun backendFailure(
     error: BackendError?,
     waitForDesign: Boolean = false
 ): Exception {
-    val code = error?.code ?: when (status) {
-        401 -> "unauthenticated"
-        429 -> "rate_limited"
-        in 400..499 -> "bad_request"
-        else -> "internal"
-    }
-    val message = error?.message ?: when (status) {
-        401 -> context.getString(R.string.ai_err_sign_in)
-        else -> context.getString(R.string.ai_err_failed)
-    }
-
-    if (waitForDesign && code == "bad_request" && error?.reason == "duplicate_request") {
-        return DesignStillProcessingException()
-    }
+    val code = error?.code ?: statusCode(status)
+    val message = error?.message ?: statusMessage(context, status)
 
     if (code == "bad_request" && error?.reason == "duplicate_request") {
-        return TransientAiException(message, 5)
+        return if (waitForDesign) {
+            DesignStillProcessingException()
+        } else {
+            TransientAiException(message, DUPLICATE_RETRY_SECONDS)
+        }
     }
 
     return when (code) {
@@ -125,6 +117,26 @@ internal fun backendFailure(
             )
         )
     }
+}
+
+/** Seconds to wait before retrying a request the backend is still processing under the same key. */
+private const val DUPLICATE_RETRY_SECONDS = 5
+private const val HTTP_UNAUTHORIZED = 401
+private const val HTTP_TOO_MANY_REQUESTS = 429
+private const val DESIGN_RESPONSE_TIMEOUT_MS = 300_000L
+
+/** The message a status implies when the body carries none. */
+private fun statusMessage(context: Context, status: Int): String = when (status) {
+    HTTP_UNAUTHORIZED -> context.getString(R.string.ai_err_sign_in)
+    else -> context.getString(R.string.ai_err_failed)
+}
+
+/** The error code a status implies when the body carries none. */
+private fun statusCode(status: Int): String = when (status) {
+    HTTP_UNAUTHORIZED -> "unauthenticated"
+    HTTP_TOO_MANY_REQUESTS -> "rate_limited"
+    in 400..499 -> "bad_request"
+    else -> "internal"
 }
 
 private fun designAsk(code: String, error: BackendError?): DesignAsk? = when (code) {
@@ -339,12 +351,16 @@ internal class BackendClient @Inject constructor(
             while (true) {
                 currentCoroutineContext().ensureActive()
                 val line = runInterruptible(Dispatchers.IO) { source.readUtf8Line() } ?: return
-                if (!line.startsWith("data:")) continue
-                val payload = line.substring(DATA_PREFIX.length).trim()
-                val event = runCatching { json.decodeFromString(DesignJobEvent.serializer(), payload) }.getOrNull()
-                    ?: continue
-                onEvent(event)
-                if (event.type != "step") return
+                val event = if (line.startsWith(DATA_PREFIX)) {
+                    val payload = line.substring(DATA_PREFIX.length).trim()
+                    runCatching { json.decodeFromString(DesignJobEvent.serializer(), payload) }.getOrNull()
+                } else {
+                    null
+                }
+                if (event != null) {
+                    onEvent(event)
+                    if (event.type != "step") return
+                }
             }
         }
     }
@@ -373,27 +389,20 @@ internal class BackendClient @Inject constructor(
         val start = SystemClock.elapsedRealtime()
         var lastEmit = 0L
 
-        try {
-            consumeSse(body) { payload ->
-                val piece = json.decodeFromString<ChatStreamChunk>(payload)
-                    .choices.firstOrNull()?.delta?.content
-                if (!piece.isNullOrEmpty()) {
-                    if (accumulated.isEmpty()) emit(AiEvent.Stage(AiStage.GENERATING))
-                    accumulated.append(piece)
-                    val now = SystemClock.elapsedRealtime()
-                    if (now - lastEmit >= DELTA_THROTTLE_MS) {
-                        lastEmit = now
-                        emit(AiEvent.Delta(accumulated.toString()))
-                    }
+        // Failures propagate as they are: the operation key protects chat replay, including a lost
+        // partial response.
+        consumeSse(body) { payload ->
+            val piece = json.decodeFromString<ChatStreamChunk>(payload)
+                .choices.firstOrNull()?.delta?.content
+            if (!piece.isNullOrEmpty()) {
+                if (accumulated.isEmpty()) emit(AiEvent.Stage(AiStage.GENERATING))
+                accumulated.append(piece)
+                val now = SystemClock.elapsedRealtime()
+                if (now - lastEmit >= DELTA_THROTTLE_MS) {
+                    lastEmit = now
+                    emit(AiEvent.Delta(accumulated.toString()))
                 }
             }
-        } catch (e: FatalAiException) {
-            throw e
-        } catch (e: kotlinx.coroutines.CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            // The operation key now protects chat replay, including a lost partial response.
-            throw e
         }
 
         val result = accumulated.toString().trim()
@@ -410,10 +419,11 @@ internal class BackendClient @Inject constructor(
             while (true) {
                 currentCoroutineContext().ensureActive()
                 val line = source.readUtf8Line() ?: throw java.io.IOException("Incomplete chat response")
-                if (!line.startsWith("data:")) continue
-                val payload = line.substring(5).trim()
-                if (payload == "[DONE]") break
-                if (payload.isNotEmpty()) onData(payload)
+                if (line.startsWith(DATA_PREFIX)) {
+                    val payload = line.substring(DATA_PREFIX.length).trim()
+                    if (payload == "[DONE]") break
+                    if (payload.isNotEmpty()) onData(payload)
+                }
             }
         }
     }
@@ -504,7 +514,7 @@ internal suspend fun awaitDesignResponse(
     context: Context,
     pollDelayMs: Long = 5_000L,
     call: suspend () -> Response<ResponseBody>
-): Response<ResponseBody> = withTimeout(300_000L) {
+): Response<ResponseBody> = withTimeout(DESIGN_RESPONSE_TIMEOUT_MS) {
     var response = call()
     while (!response.isSuccessful) {
         val failure = HttpException(response).toAiException(context, waitForDesign = true)

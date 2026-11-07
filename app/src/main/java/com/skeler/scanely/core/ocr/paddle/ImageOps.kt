@@ -145,24 +145,6 @@ object ImageOps {
     }
 
     /**
-     * Halves a crop repeatedly before the final resize. A line cropped at full camera resolution
-     * and taken to height 48 in one bilinear step reads every source pixel to place 2x2 of them;
-     * halving first measured 14% faster on a 4x-oversampled page and left the text unchanged
-     * (+0.1 pts against the same pages at native resolution). A no-op below 2x, so pages that are
-     * already near recognition size are untouched.
-     */
-    private fun resampleTo(crop: Bitmap, w: Int, h: Int): Bitmap {
-        var current = crop
-        while (current.width >= w * 2 && current.height >= h * 2) {
-            val half = current.scale(current.width / 2, current.height / 2)
-            if (current !== crop) current.recycle()
-            current = half
-        }
-        if (current.width == w && current.height == h) return current
-        return current.scale(w, h).also { if (current !== crop) current.recycle() }
-    }
-
-    /**
      * A page whose pixels are pulled out of the Bitmap at most once. Every skewed quad
      * samples the whole page, and getPixels on a 12 MP photo moves 48 MB — doing that per
      * line turned cropping into the slowest stage of an offline scan.
@@ -212,34 +194,7 @@ object ImageOps {
         val out = createBitmap(w, h)
         out.setPixels(dst, 0, w, 0, 0, w, h)
         if (h <= w * 1.5f) return out
-        return rotate90(out).also { out.recycle() }
-    }
-
-    /** Most document lines are square-on: a native subrect copy beats per-pixel warping. */
-    private fun axisAlignedCrop(src: Bitmap, q: Quad, w: Int, h: Int): Bitmap? {
-        val skew = maxOf(
-            abs(q.y(0) - q.y(1)),
-            abs(q.y(3) - q.y(2)),
-            abs(q.x(0) - q.x(3)),
-            abs(q.x(1) - q.x(2))
-        )
-        if (skew > maxOf(1f, h * 0.04f)) return null
-
-        val left = q.minX.roundToInt().coerceIn(0, src.width - 1)
-        val top = q.minY.roundToInt().coerceIn(0, src.height - 1)
-        val right = (left + w).coerceAtMost(src.width)
-        val bottom = (top + h).coerceAtMost(src.height)
-        if (right - left < 2 || bottom - top < 2) return null
-
-        // createBitmap returns src itself for a full-bitmap rect; callers recycle crops.
-        val sub = Bitmap.createBitmap(src, left, top, right - left, bottom - top)
-        val crop = if (sub === src) {
-            src.copy(src.config ?: Bitmap.Config.ARGB_8888, false)
-        } else {
-            sub
-        }
-        if (crop.height <= crop.width * 1.5f) return crop
-        return rotate90(crop).also { crop.recycle() }
+        return BitmapRotation.rotate90(out).also { out.recycle() }
     }
 
     /** PaddleClas eval transform: scale short side to [shortSide], centre-crop [crop] square. */
@@ -252,101 +207,49 @@ object ImageOps {
         if (scaled !== src && scaled !== out) scaled.recycle()
         return if (out === src) src.copy(src.config ?: Bitmap.Config.ARGB_8888, false) else out
     }
+}
 
-    fun rotate90(bmp: Bitmap): Bitmap {
-        val w = bmp.width
-        val h = bmp.height
-        val px = IntArray(w * h)
-        bmp.getPixels(px, 0, w, 0, 0, w, h)
-        val out = IntArray(w * h)
-        for (y in 0 until h) {
-            for (x in 0 until w) {
-                out[(w - 1 - x) * h + y] = px[y * w + x]
-            }
-        }
-        return createBitmap(h, w).apply { setPixels(out, 0, h, 0, 0, h, w) }
+/**
+ * Halves a crop repeatedly before the final resize. A line cropped at full camera resolution
+ * and taken to height 48 in one bilinear step reads every source pixel to place 2x2 of them;
+ * halving first measured 14% faster on a 4x-oversampled page and left the text unchanged
+ * (+0.1 pts against the same pages at native resolution). A no-op below 2x, so pages that are
+ * already near recognition size are untouched.
+ */
+private fun resampleTo(crop: Bitmap, w: Int, h: Int): Bitmap {
+    var current = crop
+    while (current.width >= w * 2 && current.height >= h * 2) {
+        val half = current.scale(current.width / 2, current.height / 2)
+        if (current !== crop) current.recycle()
+        current = half
     }
+    if (current.width == w && current.height == h) return current
+    return current.scale(w, h).also { if (current !== crop) current.recycle() }
+}
 
-    fun rotate180(bmp: Bitmap): Bitmap {
-        val w = bmp.width
-        val h = bmp.height
-        val px = IntArray(w * h)
-        bmp.getPixels(px, 0, w, 0, 0, w, h)
-        px.reverse()
-        return createBitmap(w, h).apply { setPixels(px, 0, w, 0, 0, w, h) }
+/** Most document lines are square-on: a native subrect copy beats per-pixel warping. */
+private fun axisAlignedCrop(src: Bitmap, q: Quad, w: Int, h: Int): Bitmap? {
+    val skew = maxOf(
+        abs(q.y(0) - q.y(1)),
+        abs(q.y(3) - q.y(2)),
+        abs(q.x(0) - q.x(3)),
+        abs(q.x(1) - q.x(2))
+    )
+    if (skew > maxOf(1f, h * 0.04f)) return null
+
+    val left = q.minX.roundToInt().coerceIn(0, src.width - 1)
+    val top = q.minY.roundToInt().coerceIn(0, src.height - 1)
+    val right = (left + w).coerceAtMost(src.width)
+    val bottom = (top + h).coerceAtMost(src.height)
+    if (right - left < 2 || bottom - top < 2) return null
+
+    // createBitmap returns src itself for a full-bitmap rect; callers recycle crops.
+    val sub = Bitmap.createBitmap(src, left, top, right - left, bottom - top)
+    val crop = if (sub === src) {
+        src.copy(src.config ?: Bitmap.Config.ARGB_8888, false)
+    } else {
+        sub
     }
-
-    /** Never recycles its input; callers own both bitmaps. */
-    fun rotate(bmp: Bitmap, degrees: Int): Bitmap = when (((degrees % 360) + 360) % 360) {
-        90 -> rotate90(bmp)
-        180 -> rotate180(bmp)
-        270 -> rotate180(bmp).let { flipped -> rotate90(flipped).also { flipped.recycle() } }
-        else -> bmp
-    }
-
-    private fun sampleBilinear(px: IntArray, w: Int, h: Int, x: Float, y: Float): Int {
-        val cx = x.coerceIn(0f, (w - 1).toFloat())
-        val cy = y.coerceIn(0f, (h - 1).toFloat())
-        val x0 = cx.toInt()
-        val y0 = cy.toInt()
-        val x1 = minOf(x0 + 1, w - 1)
-        val y1 = minOf(y0 + 1, h - 1)
-        val fx = cx - x0
-        val fy = cy - y0
-
-        val p00 = px[y0 * w + x0]
-        val p01 = px[y0 * w + x1]
-        val p10 = px[y1 * w + x0]
-        val p11 = px[y1 * w + x1]
-
-        fun ch(shift: Int): Int {
-            val a = (p00 shr shift and 0xFF) * (1 - fx) + (p01 shr shift and 0xFF) * fx
-            val b = (p10 shr shift and 0xFF) * (1 - fx) + (p11 shr shift and 0xFF) * fx
-            return (a * (1 - fy) + b * fy).roundToInt().coerceIn(0, 255)
-        }
-        return (0xFF shl 24) or (ch(16) shl 16) or (ch(8) shl 8) or ch(0)
-    }
-
-    /** Homography mapping dst rect -> src quad (used to inverse-sample). */
-    private fun perspectiveInverse(q: Quad, w: Float, h: Float): FloatArray {
-        val dst = floatArrayOf(0f, 0f, w, 0f, w, h, 0f, h)
-        val a = Array(8) { DoubleArray(9) }
-        for (i in 0 until 4) {
-            val dx = dst[i * 2].toDouble()
-            val dy = dst[i * 2 + 1].toDouble()
-            val sx = q.x(i).toDouble()
-            val sy = q.y(i).toDouble()
-            a[i * 2] = doubleArrayOf(dx, dy, 1.0, 0.0, 0.0, 0.0, -dx * sx, -dy * sx, sx)
-            a[i * 2 + 1] = doubleArrayOf(0.0, 0.0, 0.0, dx, dy, 1.0, -dx * sy, -dy * sy, sy)
-        }
-        val sol = solve8(a)
-        return floatArrayOf(
-            sol[0].toFloat(), sol[1].toFloat(), sol[2].toFloat(),
-            sol[3].toFloat(), sol[4].toFloat(), sol[5].toFloat(),
-            sol[6].toFloat(), sol[7].toFloat(), 1f
-        )
-    }
-
-    /** Gauss-Jordan with partial pivoting; rows are [8][9] augmented. */
-    private fun solve8(a: Array<DoubleArray>): DoubleArray {
-        for (col in 0 until 8) {
-            var pivot = col
-            for (r in col + 1 until 8) {
-                if (kotlin.math.abs(a[r][col]) > kotlin.math.abs(a[pivot][col])) pivot = r
-            }
-            val tmp = a[col]
-            a[col] = a[pivot]
-            a[pivot] = tmp
-            val p = a[col][col]
-            if (kotlin.math.abs(p) < 1e-12) continue
-            for (c in col until 9) a[col][c] /= p
-            for (r in 0 until 8) {
-                if (r == col) continue
-                val f = a[r][col]
-                if (f == 0.0) continue
-                for (c in col until 9) a[r][c] -= f * a[col][c]
-            }
-        }
-        return DoubleArray(8) { a[it][8] }
-    }
+    if (crop.height <= crop.width * 1.5f) return crop
+    return BitmapRotation.rotate90(crop).also { crop.recycle() }
 }

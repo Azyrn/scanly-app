@@ -8,7 +8,9 @@
     <string name="set_sign_in_subtitle">AI 扫描需要登录</string>
     <string name="set_signed_in">已登录</string>
     <string name="set_pro_key_title">Scanly Pro 密钥</string>
-    <string name="set_pro_key_active_devices">已激活 · %1$d / %2$d 台设备</string>
+    <plurals name="set_pro_key_active_devices">
+        <item quantity="other">已激活 · %1$d / %2$d 台设备</item>
+    </plurals>
     <string name="set_pro_key_active_here">已在此设备上激活</string>
     <string name="set_delete_account_title">删除账户</string>
     <string name="set_delete_account_subtitle">永久删除你的账户和数据</string>
@@ -35,7 +37,7 @@
     <string name="set_remove_key_message">此设备将恢复为免费版，并释放其名额，以便你在其他设备上使用该密钥。密钥本身仍然有效。</string>
     <string name="set_remove_key_confirm">移除</string>
     <string name="set_delete_account_dialog_title">删除账户？</string>
-    <string name="set_delete_account_dialog_message">此操作将永久删除你在我们服务器上的 Scanly 账户、登录信息和使用记录，且无法撤销。\n\n保存在此设备上的扫描内容不会受影响；如有有效的 Pro 订阅，需要单独通过 Paddle 取消。</string>
+    <string name="set_delete_account_dialog_message">此操作将永久删除你在我们服务器上的 Scanly 账户、登录信息和使用记录，且无法撤销。30 天内无法使用此邮箱创建新账户。\n\n保存在此设备上的扫描内容不会受影响；如有有效的 Pro 订阅，需要单独通过 Paddle 取消。</string>
     <string name="set_sign_out_dialog_title">退出登录？</string>
     <string name="set_sign_out_dialog_message">在你重新登录之前，AI 扫描将无法使用。你的扫描历史和离线文字识别仍保留在此设备上。</string>
     <string name="set_sign_out">退出登录</string>
@@ -91,7 +93,9 @@
     <string name="set_pro_required_message">连接你自己的 AI 服务商是 Scanly Pro 的功能之一。下方表单展示的是你将要设置的内容，开通 Pro 后即可填写。请在“设置”的“账户”部分升级，或兑换你已拥有的密钥。</string>
     <string name="set_custom_intro_body">可连接任何 AI 服务商。选择其使用的协议，粘贴接口 URL、模型名称和 API 密钥，然后测试连接。</string>
     <string name="set_custom_intro_hosts">大多数服务商兼容 OpenAI，例如 Groq、OpenAI、OpenRouter、NVIDIA NIM、Together、Fireworks。Claude 和 Gemini 使用各自的协议；你网络内的自托管服务器也可以通过普通 http 访问。</string>
-    <string name="set_custom_intro_pdf_pages">扫描版 PDF 每次最多可发送 %1$d 页，因为它们在一次请求中以图片形式传输。Office 文档仍需使用 Scanly AI。</string>
+    <plurals name="set_custom_intro_pdf_pages">
+        <item quantity="other">扫描版 PDF 每次最多可发送 %1$d 页，因为它们在一次请求中以图片形式传输。Office 文档仍需使用 Scanly AI。</item>
+    </plurals>
     <string name="set_section_protocol">协议</string>
     <string name="set_section_endpoint">接口</string>
     <string name="set_endpoint_url_label">接口 URL</string>

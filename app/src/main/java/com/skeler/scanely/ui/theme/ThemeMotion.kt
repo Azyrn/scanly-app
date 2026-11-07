@@ -8,11 +8,11 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-const val ThemeSwitchDurationMillis = 220
+const val THEME_SWITCH_DURATION_MILLIS = 220
 
 @Composable
 fun ColorScheme.animated(
-    spec: AnimationSpec<Color> = tween(ThemeSwitchDurationMillis, easing = FastOutSlowInEasing)
+    spec: AnimationSpec<Color> = tween(THEME_SWITCH_DURATION_MILLIS, easing = FastOutSlowInEasing)
 ): ColorScheme {
     @Composable
     fun Color.role(label: String): Color = animateColorAsState(this, spec, label = label).value

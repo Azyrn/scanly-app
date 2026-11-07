@@ -78,71 +78,89 @@ internal class BackendExecutor @Inject constructor(
         attemptTimeoutMs: Long = ATTEMPT_TIMEOUT_MS,
         call: suspend () -> T
     ): AiOutcome<T> {
-        var lastFailureMessage: String? = null
-        var lastFailureWasNetwork = false
-        var serverRetryAfterSeconds: Int? = null
+        var lastFailure = RetryState()
 
         repeat(if (retrySafe) MAX_ATTEMPTS else 1) { attempt ->
             if (attempt > 0) {
-                val wait = backoffDelay(attempt, serverRetryAfterSeconds)
-                countDown(wait, attempt, lastFailureWasNetwork, emit)
+                val wait = backoffDelay(attempt, lastFailure.retryAfterSeconds)
+                countDown(wait, attempt, lastFailure.network, emit)
             }
 
-            try {
-                emit(AiEvent.Stage(AiStage.UPLOADING))
-                val start = SystemClock.elapsedRealtime()
-                val result = withTimeout(attemptTimeoutMs) { call() }
-                aiDebug { "attempt ${attempt + 1} ok in ${SystemClock.elapsedRealtime() - start} ms" }
-                return AiOutcome.Success(result)
-            } catch (_: TimeoutCancellationException) {
-                aiDebug { "attempt ${attempt + 1} timed out" }
-                lastFailureWasNetwork = false
-                serverRetryAfterSeconds = null
-                lastFailureMessage = context.getString(R.string.ai_err_timeout)
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: FatalAiException) {
-                return AiOutcome.Fatal(e.result)
-            } catch (e: TransientAiException) {
-                aiDebug { "attempt ${attempt + 1} transient: ${e.message}" }
-                lastFailureWasNetwork = false
-                lastFailureMessage = e.message
-                serverRetryAfterSeconds = e.retryAfterSeconds
-
-                // A hint longer than we are ever willing to wait is the server saying this will not
-                // clear on any timescale the user is sitting through — a daily provider quota, not a
-                // busy minute. Retrying it spends a minute to arrive at the same answer, so the
-                // message goes straight through instead.
-                if (!worthRetrying(e.retryAfterSeconds)) {
-                    return AiOutcome.Fatal(AiResult.Error(e.message ?: unexpectedMessage()))
-                }
-            } catch (e: TokenUnavailableException) {
-                // A session the server rejected. Retrying cannot fix it, and the message is written
-                // for the user — it used to be dropped here for "your connection looks unstable".
-                aiDebug { "attempt ${attempt + 1} session: ${e.message}" }
-                return AiOutcome.Fatal(
-                    AiResult.Error(e.message ?: unexpectedMessage(), code = "unauthenticated")
-                )
-            } catch (e: IOException) {
-                aiDebug { "attempt ${attempt + 1} IO: ${e.message}" }
-                lastFailureMessage = null
-                serverRetryAfterSeconds = null
-                lastFailureWasNetwork = true
-                if (!networkObserver.isCurrentlyOnline()) {
-                    return AiOutcome.Exhausted(networkProblem = true)
-                }
-            } catch (e: SerializationException) {
-                aiDebug { "attempt ${attempt + 1} unparsable body: ${e.message}" }
-                return AiOutcome.Fatal(
-                    AiResult.Error(context.getString(R.string.ai_err_bad_response, AI_PROVIDER_NAME))
-                )
-            } catch (e: Exception) {
-                aiDebug { "attempt ${attempt + 1} ${e::class.simpleName}: ${e.message}" }
-                return AiOutcome.Fatal(AiResult.Error(unexpectedMessage()))
+            when (val step = attemptOnce(attempt, attemptTimeoutMs, emit, call)) {
+                is AttemptStep.Done -> return step.outcome
+                is AttemptStep.Retry -> lastFailure = step.state
             }
         }
 
-        return AiOutcome.Exhausted(networkProblem = lastFailureWasNetwork, message = lastFailureMessage)
+        return AiOutcome.Exhausted(networkProblem = lastFailure.network, message = lastFailure.message)
+    }
+
+    private suspend fun <T> attemptOnce(
+        attempt: Int,
+        attemptTimeoutMs: Long,
+        emit: suspend (AiEvent) -> Unit,
+        call: suspend () -> T
+    ): AttemptStep<T> = try {
+        emit(AiEvent.Stage(AiStage.UPLOADING))
+        val start = SystemClock.elapsedRealtime()
+        val result = withTimeout(attemptTimeoutMs) { call() }
+        aiDebug { "attempt ${attempt + 1} ok in ${SystemClock.elapsedRealtime() - start} ms" }
+        AttemptStep.Done(AiOutcome.Success(result))
+    } catch (e: Exception) {
+        failureStep(attempt, e)
+    }
+
+    /** What one failed attempt means: a final outcome, or the state the next attempt retries from. */
+    private fun failureStep(attempt: Int, e: Exception): AttemptStep<Nothing> = when (e) {
+        is TimeoutCancellationException -> {
+            aiDebug { "attempt ${attempt + 1} timed out" }
+            AttemptStep.Retry(RetryState(message = context.getString(R.string.ai_err_timeout)))
+        }
+        is CancellationException -> throw e
+        is FatalAiException -> AttemptStep.Done(AiOutcome.Fatal(e.result))
+        is TransientAiException -> {
+            aiDebug { "attempt ${attempt + 1} transient: ${e.message}" }
+            // A hint longer than we are ever willing to wait is the server saying this will not
+            // clear on any timescale the user is sitting through — a daily provider quota, not a
+            // busy minute. Retrying it spends a minute to arrive at the same answer, so the
+            // message goes straight through instead.
+            if (worthRetrying(e.retryAfterSeconds)) {
+                AttemptStep.Retry(RetryState(message = e.message, retryAfterSeconds = e.retryAfterSeconds))
+            } else {
+                AttemptStep.Done(AiOutcome.Fatal(AiResult.Error(e.message ?: unexpectedMessage())))
+            }
+        }
+        else -> finalStep(attempt, e)
+    }
+
+    /** The failures past the retryable ones: a session, the connection, a body, or the unknown. */
+    private fun finalStep(attempt: Int, e: Exception): AttemptStep<Nothing> = when (e) {
+        is TokenUnavailableException -> {
+            // A session the server rejected. Retrying cannot fix it, and the message is written
+            // for the user — it used to be dropped here for "your connection looks unstable".
+            aiDebug { "attempt ${attempt + 1} session: ${e.message}" }
+            AttemptStep.Done(
+                AiOutcome.Fatal(AiResult.Error(e.message ?: unexpectedMessage(), code = "unauthenticated"))
+            )
+        }
+        is IOException -> {
+            aiDebug { "attempt ${attempt + 1} IO: ${e.message}" }
+            if (networkObserver.isCurrentlyOnline()) {
+                AttemptStep.Retry(RetryState(network = true))
+            } else {
+                AttemptStep.Done(AiOutcome.Exhausted(networkProblem = true))
+            }
+        }
+        is SerializationException -> {
+            aiDebug { "attempt ${attempt + 1} unparsable body: ${e.message}" }
+            AttemptStep.Done(
+                AiOutcome.Fatal(AiResult.Error(context.getString(R.string.ai_err_bad_response, AI_PROVIDER_NAME)))
+            )
+        }
+        else -> {
+            aiDebug { "attempt ${attempt + 1} ${e::class.simpleName}: ${e.message}" }
+            AttemptStep.Done(AiOutcome.Fatal(AiResult.Error(unexpectedMessage())))
+        }
     }
 
     /**
@@ -183,4 +201,16 @@ internal class BackendExecutor @Inject constructor(
 
         private const val ATTEMPT_TIMEOUT_MS = 300_000L
     }
+}
+
+/** Why the last attempt failed, which shapes the countdown before the next one and the final answer. */
+private data class RetryState(
+    val message: String? = null,
+    val network: Boolean = false,
+    val retryAfterSeconds: Int? = null,
+)
+
+private sealed interface AttemptStep<out T> {
+    data class Done<T>(val outcome: AiOutcome<T>) : AttemptStep<T>
+    data class Retry(val state: RetryState) : AttemptStep<Nothing>
 }

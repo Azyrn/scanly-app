@@ -4,7 +4,7 @@
     <!-- Barcode scanner -->
     <string name="scr_barcode_not_found">Kein Code gefunden</string>
     <string name="scr_barcode_hint">Auf Barcode oder QR richten\nZoom: zusammenziehen · Fokus: tippen</string>
-    <string name="scr_barcode_scanning">Scannen...</string>
+    <string name="scr_barcode_scanning">Scannen…</string>
     <string name="scr_barcode_upload_gallery">Aus Galerie hochladen</string>
     <string name="scr_barcode_permission_required">Kamera-Berechtigung nötig\nfür Barcode-Scan.</string>
     <!-- Document camera -->
@@ -14,8 +14,14 @@
     <string name="scr_camera_focus_hint">Tippen zum Fokus · Seite an Rändern ausrichten</string>
     <string name="scr_camera_capture">Scannen</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">Bis zu %1$d Dateien pro Scan – nur die ersten %1$d.</string>
-    <string name="scr_home_credits">%1$d Credits</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">Bis zu %1$d Datei pro Scan – nur die erste zählt.</item>
+        <item quantity="other">Bis zu %1$d Dateien pro Scan – nur die ersten %1$d.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d Credit</item>
+        <item quantity="other">%1$d Credits</item>
+    </plurals>
     <string name="scr_home_question">Was möchtest du scannen?</string>
     <string name="scr_home_scan_document">Dokumentscan</string>
     <string name="scr_home_scan_document_subtitle">Auto-Zuschnitt, verbessern, als PDF</string>
@@ -86,7 +92,10 @@
     <string name="scr_transcribe_transcribing_body">Lange Aufnahmen dauern einige Minuten. Du kannst gehen – das Transkript wird hier gespeichert.</string>
     <string name="scr_transcribe_paused">Pausiert</string>
     <string name="scr_transcribe_recording">Aufnahme</string>
-    <string name="scr_transcribe_up_to_minutes">Bis zu %1$d Minuten im Tarif</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">Bis zu %1$d Minute im Tarif</item>
+        <item quantity="other">Bis zu %1$d Minuten im Tarif</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Aufnahme löschen</string>
     <string name="scr_transcribe_stop_and_keep">Stopp, behalten</string>
     <string name="scr_transcribe_reading_file">Datei lesen…</string>
@@ -100,7 +109,10 @@
     <string name="scr_transcribe_key_terms_count">%1$d von %2$d</string>
     <string name="scr_transcribe_plan_note">1 Credit ≈ %1$d Minuten Audio · mit deinem Tarif bis zu %2$d Minuten pro Aufnahme.</string>
     <string name="scr_transcribe_custom_endpoint_note">Audio in Text läuft immer über Scanly AI und verbraucht Credits, auch mit eigenem Endpunkt.</string>
-    <string name="scr_transcribe_speakers">%1$d Sprecher</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">%1$d Sprecher</item>
+        <item quantity="other">%1$d Sprecher</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Wähle die Hauptsprache. Andere Sprachen werden wie gesprochen übernommen. Sie legt Zahlen- und Datumsformat fest.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Erkennt die Sprache selbst, läuft zweimal, doppelte Credits.</string>
     <string name="scr_transcribe_key_terms_hint">Namen, Produktbegriffe und Fachwörter, die exakt geschrieben werden sollen. Gilt für alle Aufnahmen, bis du sie entfernst. Mehrere mit Komma trennen.</string>
@@ -162,14 +174,20 @@
     <string name="au_err_unreadable">Datei nicht als Audio oder Video lesbar.</string>
     <string name="au_err_access_lost">Kein Zugriff mehr auf diese Datei. Wähle sie erneut.</string>
     <string name="au_err_no_audio">Kein Audio zum Transkribieren.</string>
-    <string name="au_err_too_long">Diese Aufnahme ist %1$s lang. Dein Tarif transkribiert jeweils bis zu %2$d Minuten.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">Diese Aufnahme ist %1$s lang. Dein Tarif transkribiert jeweils bis zu %2$d Minute.</item>
+        <item quantity="other">Diese Aufnahme ist %1$s lang. Dein Tarif transkribiert jeweils bis zu %2$d Minuten.</item>
+    </plurals>
     <string name="au_err_convert">Audio nicht konvertierbar. Probiere eine andere Datei.</string>
     <string name="au_err_too_large">Diese Aufnahme ist auch komprimiert zu groß für deinen Tarif.</string>
     <string name="au_err_read">Datei nicht lesbar.</string>
     <string name="auth_val_email_required">Gib zuerst deine E-Mail ein.</string>
     <string name="auth_reset_sent">Falls für %1$s ein Passwort existiert, kommt ein Link zum Zurücksetzen. Google-Konten: „Mit Google fortfahren“.</string>
     <string name="auth_val_invalid_email">Gültige E-Mail eingeben.</string>
-    <string name="auth_val_password_short">Passwort: mindestens %1$d Zeichen.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Passwort: mindestens %1$d Zeichen.</item>
+        <item quantity="other">Passwort: mindestens %1$d Zeichen.</item>
+    </plurals>
     <string name="auth_val_check_details">Angaben prüfen, erneut versuchen.</string>
     <string name="au_notif_channel_name">Aufnahme</string>
     <string name="au_notif_channel_desc">Während Audio in Text aufnimmt</string>
@@ -177,8 +195,14 @@
     <string name="au_notif_text">Audio in Text nimmt auf. Tippen zum Öffnen.</string>
     <string name="tx_save_failed">Transkript fertig, aber nicht gespeichert (%1$s). Speicher freigeben und erneut auf Speichern tippen. Keine neue Berechnung.</string>
     <string name="tx_prepare_failed">Aufnahme nicht vorbereitet.</string>
-    <string name="tx_key_terms_limit">Bis zu %1$d Stichwörter. %2$d verworfen.</string>
-    <string name="tx_key_terms_length">Stichwörter: höchstens %1$d Zeichen.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">Bis zu %1$d Stichwort. %2$d verworfen.</item>
+        <item quantity="other">Bis zu %1$d Stichwörter. %2$d verworfen.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Stichwörter: höchstens %1$d Zeichen.</item>
+        <item quantity="other">Stichwörter: höchstens %1$d Zeichen.</item>
+    </plurals>
     <string name="cp_connected">Verbunden. Bereit zum Speichern.</string>
     <string name="cp_saved">Gespeichert. Scans nutzen ihn.</string>
     <string name="cp_removed">Endpunkt entfernt.</string>
@@ -224,8 +248,14 @@
     <string name="net_verify_session">Sitzung nicht prüfbar.</string>
     <string name="net_session_expired">Sitzung abgelaufen. Neu anmelden.</string>
     <string name="lk_no_engines">Keine passenden Engines</string>
-    <string name="lk_searched">%1$d Quellen durchsucht</string>
-    <string name="lk_searched_partial">%1$d Quellen geprüft. %2$s nicht erreichbar</string>
+    <plurals name="lk_searched">
+        <item quantity="one">%1$d Quelle durchsucht</item>
+        <item quantity="other">%1$d Quellen durchsucht</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">%1$d Quelle geprüft. %2$s nicht erreichbar</item>
+        <item quantity="other">%1$d Quellen geprüft. %2$s nicht erreichbar</item>
+    </plurals>
     <string name="lk_unreachable">Produktdatenbanken nicht erreichbar. Verbindung ist okay – später erneut versuchen.</string>
     <string name="lk_server_problem">Produktdatenbanken nicht erreichbar: Server haben Probleme. Später erneut versuchen.</string>
     <string name="ocr_err_load_image">Bild nicht geladen</string>

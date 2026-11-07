@@ -62,17 +62,21 @@ fun ProductDto.toDomain(): FoodProduct? {
     return FoodProduct(
         barcode = barcode ?: "",
         name = productName,
-        brand = brand?.takeIf { it.isNotBlank() },
+        brand = brand.nonBlank(),
         imageUrl = imageUrl ?: imageFallbackUrl,
         nutriScore = nutriScore?.uppercase(),
         novaGroup = novaGroup,
-        ingredients = ingredients?.takeIf { it.isNotBlank() },
+        ingredients = ingredients.nonBlank(),
         calories = nutriments?.calories?.let { "${it.toInt()} kcal" },
-        fat = nutriments?.fat?.let { "%.1fg".format(it) },
-        carbs = nutriments?.carbs?.let { "%.1fg".format(it) },
-        proteins = nutriments?.proteins?.let { "%.1fg".format(it) },
-        sugar = nutriments?.sugar?.let { "%.1fg".format(it) },
-        salt = nutriments?.salt?.let { "%.2fg".format(it) },
+        fat = nutriments?.fat.formatted("%.1fg"),
+        carbs = nutriments?.carbs.formatted("%.1fg"),
+        proteins = nutriments?.proteins.formatted("%.1fg"),
+        sugar = nutriments?.sugar.formatted("%.1fg"),
+        salt = nutriments?.salt.formatted("%.2fg"),
         categories = categories?.split(",")?.firstOrNull()?.trim()
     )
 }
+
+private fun String?.nonBlank(): String? = this?.takeIf { it.isNotBlank() }
+
+private fun Double?.formatted(pattern: String): String? = this?.let { pattern.format(it) }

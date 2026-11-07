@@ -59,7 +59,7 @@ import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.skeler.scanely.R
-import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.core.pdftools.PdfTool
 import com.skeler.scanely.core.pdftools.ToolOutput
 import com.skeler.scanely.navigation.LocalNavigator
@@ -192,15 +192,15 @@ fun PdfToolScreen(tool: PdfTool) {
                             val uris = outputs.mapIndexedNotNull { index, output -> outputUri(index, output) }
                             val shared = when {
                                 uris.isEmpty() || uris.size < outputs.size -> false
-                                uris.size == 1 -> ScanExporter.shareDocument(context, uris[0], outputs[0].mimeType)
-                                else -> ScanExporter.shareDocuments(context, uris, sharedMimeType(outputs))
+                                uris.size == 1 -> DocumentIntents.shareDocument(context, uris[0], outputs[0].mimeType)
+                                else -> DocumentIntents.shareDocuments(context, uris, sharedMimeType(outputs))
                             }
                             if (!shared) showMessage(R.string.pdf_tool_no_viewer)
                         },
                         onOpen = { index ->
                             val output = outputs.getOrNull(index) ?: return@ToolDoneContent
                             val uri = outputUri(index, output)
-                            val opened = uri != null && ScanExporter.openDocument(
+                            val opened = uri != null && DocumentIntents.openDocument(
                                 context,
                                 uri,
                                 output.mimeType,

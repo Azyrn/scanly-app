@@ -2,7 +2,7 @@
 <resources>
     <string name="scr_barcode_not_found">바코드 없음</string>
     <string name="scr_barcode_hint">바코드 또는 QR 코드를 카메라로 비추세요\n핀치하여 확대 · 탭하여 초점 맞추기</string>
-    <string name="scr_barcode_scanning">스캔 중...</string>
+    <string name="scr_barcode_scanning">스캔 중…</string>
     <string name="scr_barcode_upload_gallery">갤러리에서 올리기</string>
     <string name="scr_barcode_permission_required">바코드 스캔에는\n카메라 권한이 필요해요.</string>
     <string name="scr_camera_capture_failed">촬영 실패 — 다시 시도</string>
@@ -10,8 +10,12 @@
     <string name="scr_camera_capture_document">문서 촬영</string>
     <string name="scr_camera_focus_hint">탭하여 초점 맞추기 · 페이지 가장자리에 맞춰 주세요</string>
     <string name="scr_camera_capture">촬영</string>
-    <string name="scr_home_ai_file_limit">스캔 한 번에 최대 %1$d개 — 처음 %1$d개 사용.</string>
-    <string name="scr_home_credits">크레딧 %1$d개</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="other">스캔 한 번에 최대 %1$d개 — 처음 %1$d개 사용.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="other">크레딧 %1$d개</item>
+    </plurals>
     <string name="scr_home_question">무엇을 스캔할까요?</string>
     <string name="scr_home_scan_document">문서 스캔</string>
     <string name="scr_home_scan_document_subtitle">자동 자르기, 보정 &amp; PDF 내보내기</string>
@@ -31,7 +35,6 @@
     <string name="scr_results_scan_failed_retry">%1$s\n\n아래 버튼을 눌러 다시 시도하세요.</string>
     <string name="scr_unified_none_detected">텍스트·바코드 없음</string>
     <plurals name="scr_unified_scanned_codes">
-        <item quantity="one">스캔한 코드</item>
         <item quantity="other">스캔한 코드</item>
     </plurals>
     <string name="scr_scan_review_open_with">%1$s 앱으로 열기…</string>
@@ -50,7 +53,6 @@
     <string name="scr_scan_review_empty_body">모든 페이지가 삭제됐어요. 다시 스캔하세요.</string>
     <string name="scr_scan_review_back_to_scanner">스캐너로 돌아가기</string>
     <plurals name="scr_scan_review_page_count">
-        <item quantity="one">%1$d페이지</item>
         <item quantity="other">%1$d페이지</item>
     </plurals>
     <string name="scr_export_pdf_subtitle">%1$s을(를) 하나의 파일로 · 저장 후 열림</string>
@@ -77,7 +79,9 @@
     <string name="scr_transcribe_transcribing_body">긴 녹음은 몇 분 걸려요. 이 화면을 떠나도 괜찮아요. 완료되면 전사본이 여기에 저장돼요.</string>
     <string name="scr_transcribe_paused">일시정지</string>
     <string name="scr_transcribe_recording">녹음 중</string>
-    <string name="scr_transcribe_up_to_minutes">요금제에서 최대 %1$d분</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="other">요금제에서 최대 %1$d분</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">녹음 버리기</string>
     <string name="scr_transcribe_stop_and_keep">중지하고 저장</string>
     <string name="scr_transcribe_reading_file">파일 읽는 중…</string>
@@ -91,13 +95,14 @@
     <string name="scr_transcribe_key_terms_count">%1$d/%2$d</string>
     <string name="scr_transcribe_plan_note">1 크레딧 ≈ 오디오 %1$d분 · 요금제에서 녹음 한 건당 최대 %2$d분.</string>
     <string name="scr_transcribe_custom_endpoint_note">사용자 지정 엔드포인트를 켜도 오디오→텍스트는 항상 Scanly AI를 쓰고 크레딧을 차감해요.</string>
-    <string name="scr_transcribe_speakers">화자 %1$d명</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="other">화자 %1$d명</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">주로 쓰는 언어를 고르세요. 녹음 속 다른 언어도 말한 그대로 전사되며, 이 설정은 숫자와 날짜를 쓰는 방식을 정해요.</string>
     <string name="scr_transcribe_auto_detect_subtitle">언어를 자동으로 찾지만 두 번 실행되므로 크레딧이 두 배 들어요.</string>
     <string name="scr_transcribe_key_terms_hint">전사기가 정확하게 써야 하는 이름, 제품 용어, 전문 용어예요. 삭제할 때까지 모든 녹음에 적용돼요. 쉼표로 구분해 여러 개를 붙여 넣을 수 있어요.</string>
     <string name="scr_transcribe_key_terms_placeholder">예: Sebastian, Typst, Mistral OCR</string>
     <plurals name="scr_transcribe_estimate">
-        <item quantity="one">약 %1$d크레딧</item>
         <item quantity="other">약 %1$d크레딧</item>
     </plurals>
     <string name="scr_transcript_title_default">전사본</string>
@@ -114,11 +119,9 @@
     <string name="scr_player_back_10">10초 뒤로</string>
     <string name="scr_player_forward_10">10초 앞으로</string>
     <plurals name="scr_transcript_speakers">
-        <item quantity="one">화자 %1$d명</item>
         <item quantity="other">화자 %1$d명</item>
     </plurals>
     <plurals name="scr_transcript_credits">
-        <item quantity="one">크레딧 %1$d개</item>
         <item quantity="other">크레딧 %1$d개</item>
     </plurals>
     <string name="scr_copied_to_clipboard">클립보드에 복사됨</string>
@@ -151,14 +154,18 @@
     <string name="au_err_unreadable">이 파일은 오디오나 영상으로 열 수 없어요.</string>
     <string name="au_err_access_lost">Scanly가 이 파일에 더 이상 접근할 수 없어요. 다시 선택하세요.</string>
     <string name="au_err_no_audio">이 파일에는 전사할 오디오가 없어요.</string>
-    <string name="au_err_too_long">이 녹음은 %1$s 길이예요. 요금제에서는 한 번에 최대 %2$d분까지 전사할 수 있어요.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="other">이 녹음은 %1$s 길이예요. 요금제에서는 한 번에 최대 %2$d분까지 전사할 수 있어요.</item>
+    </plurals>
     <string name="au_err_convert">이 파일의 오디오를 변환할 수 없어요. 다른 파일을 시도하세요.</string>
     <string name="au_err_too_large">압축해도 이 녹음은 요금제에서 처리하기에 너무 커요.</string>
     <string name="au_err_read">이 파일을 읽을 수 없어요.</string>
     <string name="auth_val_email_required">먼저 이메일 주소를 입력하세요.</string>
     <string name="auth_reset_sent">%1$s에 비밀번호가 있다면 재설정 링크를 보냈어요. Google 계정에는 비밀번호가 없으니 Google로 계속하기를 사용하세요.</string>
     <string name="auth_val_invalid_email">올바른 이메일 주소를 입력하세요.</string>
-    <string name="auth_val_password_short">비밀번호는 최소 %1$d자 이상이어야 해요.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="other">비밀번호는 최소 %1$d자 이상이어야 해요.</item>
+    </plurals>
     <string name="auth_val_check_details">정보를 확인하고 다시 시도하세요.</string>
     <string name="au_notif_channel_name">녹음</string>
     <string name="au_notif_channel_desc">오디오→텍스트 녹음 중 표시</string>
@@ -166,8 +173,12 @@
     <string name="au_notif_text">Scanly 녹음 중(오디오→텍스트). 탭해서 돌아가기.</string>
     <string name="tx_save_failed">전사본은 준비되었지만 이 기기에 저장하지 못했어요 (%1$s). 공간을 확보한 뒤 다시 저장을 누르세요 — 요금이 다시 청구되지 않아요.</string>
     <string name="tx_prepare_failed">이 녹음을 준비하지 못했어요.</string>
-    <string name="tx_key_terms_limit">핵심 용어 최대 %1$d개. %2$d개는 추가 안 됨.</string>
-    <string name="tx_key_terms_length">핵심 용어는 최대 %1$d자까지 가능해요.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="other">핵심 용어 최대 %1$d개. %2$d개는 추가 안 됨.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="other">핵심 용어는 최대 %1$d자까지 가능해요.</item>
+    </plurals>
     <string name="cp_connected">연결됨. 저장할 준비가 됐어요.</string>
     <string name="cp_saved">저장됨. 이 엔드포인트를 사용해요.</string>
     <string name="cp_removed">엔드포인트 삭제됨.</string>
@@ -213,8 +224,12 @@
     <string name="net_verify_session">세션을 확인할 수 없어요.</string>
     <string name="net_session_expired">세션이 만료되었어요. 다시 로그인하세요.</string>
     <string name="lk_no_engines">호환되는 엔진이 없어요</string>
-    <string name="lk_searched">%1$d개 출처에서 검색했어요</string>
-    <string name="lk_searched_partial">%1$d개 출처 검색. %2$s 연결 실패</string>
+    <plurals name="lk_searched">
+        <item quantity="other">%1$d개 출처에서 검색했어요</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="other">%1$d개 출처 검색. %2$s 연결 실패</item>
+    </plurals>
     <string name="lk_unreachable">제품 데이터베이스에 연결할 수 없어요. 연결은 정상으로 보여요 — 몇 분 후에 다시 시도하세요.</string>
     <string name="lk_server_problem">제품 데이터베이스에 연결할 수 없어요. 해당 서버에 문제가 있어요. 나중에 다시 시도하세요.</string>
     <string name="ocr_err_load_image">이미지 불러오기 실패</string>

@@ -62,23 +62,35 @@ fun ScoreCard(title: String, value: String, color: Color) {
     }
 }
 
+// Open Food Facts' own Nutri-Score and NOVA badge colours, so a grade reads as it does on the pack.
+private val GRADE_DARK_GREEN = Color(0xFF038141)
+private val GRADE_LIGHT_GREEN = Color(0xFF85BB2F)
+private val GRADE_YELLOW = Color(0xFFFECB02)
+private val GRADE_ORANGE = Color(0xFFEE8100)
+private val GRADE_RED = Color(0xFFE63E11)
+
+private const val NOVA_UNPROCESSED = 1
+private const val NOVA_INGREDIENTS = 2
+private const val NOVA_PROCESSED = 3
+private const val NOVA_ULTRA_PROCESSED = 4
+
 fun nutriScoreColor(score: String): Color {
     return when (score.uppercase()) {
-        "A" -> Color(0xFF038141)
-        "B" -> Color(0xFF85BB2F)
-        "C" -> Color(0xFFFECB02)
-        "D" -> Color(0xFFEE8100)
-        "E" -> Color(0xFFE63E11)
+        "A" -> GRADE_DARK_GREEN
+        "B" -> GRADE_LIGHT_GREEN
+        "C" -> GRADE_YELLOW
+        "D" -> GRADE_ORANGE
+        "E" -> GRADE_RED
         else -> Color.Gray
     }
 }
 
 fun novaColor(group: Int): Color {
     return when (group) {
-        1 -> Color(0xFF038141)
-        2 -> Color(0xFF85BB2F)
-        3 -> Color(0xFFEE8100)
-        4 -> Color(0xFFE63E11)
+        NOVA_UNPROCESSED -> GRADE_DARK_GREEN
+        NOVA_INGREDIENTS -> GRADE_LIGHT_GREEN
+        NOVA_PROCESSED -> GRADE_ORANGE
+        NOVA_ULTRA_PROCESSED -> GRADE_RED
         else -> Color.Gray
     }
 }

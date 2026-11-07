@@ -7,6 +7,10 @@ import android.graphics.Bitmap
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.blue
+import androidx.core.graphics.get
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skeler.scanely.R
@@ -100,6 +104,8 @@ data class PageEditorUiState(
     val message: String? = null
 )
 
+// Kept whole on purpose: the page editor's state holder: one function per canvas intent the screen sends.
+@Suppress("TooManyFunctions", "LargeClass")
 @HiltViewModel
 class PageEditorViewModel @Inject constructor(
     private val session: PdfEditorSession,
@@ -125,7 +131,11 @@ class PageEditorViewModel @Inject constructor(
     }
     private val memoryCallbacks = object : ComponentCallbacks2 {
         override fun onTrimMemory(level: Int) = clearRenderedPages()
+
+        // Deprecated but still abstract in ComponentCallbacks, and older Android versions still call it.
+        @Deprecated("Deprecated in Java; onTrimMemory is the replacement")
         override fun onLowMemory() = clearRenderedPages()
+
         override fun onConfigurationChanged(newConfig: Configuration) = Unit
     }
 
@@ -140,7 +150,6 @@ class PageEditorViewModel @Inject constructor(
     override fun onCleared() {
         context.unregisterComponentCallbacks(memoryCallbacks)
         clearRenderedPages()
-        super.onCleared()
     }
 
     init {
@@ -180,7 +189,7 @@ class PageEditorViewModel @Inject constructor(
 
     fun geometryOf(originalIndex: Int): Pair<Float, Float> {
         val geometry = session.document.value?.geometries?.getOrNull(originalIndex)
-        return (geometry?.widthPt ?: 595f) to (geometry?.heightPt ?: 842f)
+        return (geometry?.widthPt ?: A4_WIDTH_PT) to (geometry?.heightPt ?: A4_HEIGHT_PT)
     }
 
     fun requestPage(originalIndex: Int) {
@@ -543,10 +552,10 @@ class PageEditorViewModel @Inject constructor(
         var x = left
         while (x < right) {
             for (y in top until bottom) {
-                val pixel = bitmap.getPixel(x, y)
-                red += (pixel shr 16) and 0xFF
-                green += (pixel shr 8) and 0xFF
-                blue += pixel and 0xFF
+                val pixel = bitmap[x, y]
+                red += pixel.red
+                green += pixel.green
+                blue += pixel.blue
                 count++
             }
             x += step
@@ -608,3 +617,7 @@ val TextPalette: List<Color> = listOf(
     Color(0xFF1E88E5),
     Color(0xFF43A047)
 )
+
+/** A4 in points, for a page whose geometry has not been read yet. */
+private const val A4_WIDTH_PT = 595f
+private const val A4_HEIGHT_PT = 842f

@@ -37,7 +37,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,13 +55,6 @@ import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AI_PROVIDER_NAME
 import com.skeler.scanely.core.common.LocalReadingTextScale
 import kotlin.math.roundToInt
-
-@Stable
-class ExtractedTextState internal constructor(initial: String) {
-    var editing by mutableStateOf(false)
-        internal set
-    var draft by mutableStateOf(initial)
-}
 
 /**
  * Section title for a results screen. Kept deliberately short so the header costs little vertical
@@ -409,7 +402,11 @@ fun ExtractedTextSection(
         }
 
         Text(
-            text = stringResource(R.string.cmp_word_char_counts, counts.first, counts.second),
+            text = stringResource(
+                R.string.cmp_word_char_counts,
+                pluralStringResource(R.plurals.cmp_word_count, counts.first, counts.first),
+                pluralStringResource(R.plurals.cmp_char_count, counts.second, counts.second)
+            ),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 4.dp)

@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">Il vous reste %1$d crédits sur %2$d ce mois-ci.</string>
-    <string name="cmp_paywall_credits_left_upgrade">%1$d/%2$d crédits restants ce mois-ci. Passez à un forfait supérieur.</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="one">Il vous reste %1$d crédit sur %2$d ce mois-ci.</item>
+        <item quantity="many">Il vous reste %1$d crédits sur %2$d ce mois-ci.</item>
+        <item quantity="other">Il vous reste %1$d crédits sur %2$d ce mois-ci.</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="one">%1$d/%2$d crédit restant ce mois-ci. Passez à un forfait supérieur.</item>
+        <item quantity="many">%1$d/%2$d crédits restants ce mois-ci. Passez à un forfait supérieur.</item>
+        <item quantity="other">%1$d/%2$d crédits restants ce mois-ci. Passez à un forfait supérieur.</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">Plus de crédits, documents longs et formats.</string>
     <string name="cmp_paywall_ai_scan_credit">Scan IA : 1 crédit par page. Les autres outils IA partagent votre solde.</string>
     <string name="cmp_paywall_plan_active">Votre forfait est actif sur ce compte.</string>
     <string name="cmp_paywall_key_active_here">Votre clé est active sur cet appareil.</string>
-    <string name="cmp_paywall_devices_used">%1$d/%2$d appareils. Gérez votre clé dans Paramètres.</string>
-    <string name="cmp_paywall_watch_ad">Voir une pub : +%1$d crédits</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="one">%1$d/%2$d appareil. Gérez votre clé dans Paramètres.</item>
+        <item quantity="many">%1$d/%2$d appareils. Gérez votre clé dans Paramètres.</item>
+        <item quantity="other">%1$d/%2$d appareils. Gérez votre clé dans Paramètres.</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="one">Voir une pub : +%1$d crédit</item>
+        <item quantity="many">Voir une pub : +%1$d crédits</item>
+        <item quantity="other">Voir une pub : +%1$d crédits</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"Scan IA : quota gratuit mensuel. Forfaits payants sur "</string>
     <string name="cmp_paywall_where_to_buy_after">. Achats indisponibles dans l\'appli. Déjà abonné ? Restaurez votre achat ci-dessous.</string>
     <string name="cmp_copied">Copié</string>
@@ -24,7 +40,11 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">Actif</string>
     <string name="cmp_paywall_feature_credits">%1$d crédits IA par mois</string>
-    <string name="cmp_paywall_feature_pages">Jusqu\'à %1$d pages dans un document</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="one">Jusqu\'à %1$d page par document</item>
+        <item quantity="many">Jusqu\'à %1$d pages par document</item>
+        <item quantity="other">Jusqu\'à %1$d pages par document</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Fichiers Word, PowerPoint et OpenDocument</string>
     <string name="cmp_paywall_feature_translation">Traduction</string>
     <string name="cmp_paywall_feature_extraction">Extraction de données : reçus, factures, cartes</string>
@@ -44,19 +64,54 @@
     <string name="cmp_bigger_text">Plus grand</string>
     <string name="cmp_reset">Défaut</string>
     <string name="cmp_no_table">Aucun</string>
-    <string name="cmp_word_char_counts">%1$d mots · %2$d caractères</string>
+    <plurals name="cmp_word_count">
+        <item quantity="one">%d mot</item>
+        <item quantity="many">%d mots</item>
+        <item quantity="other">%d mots</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="one">%d caractère</item>
+        <item quantity="many">%d caractères</item>
+        <item quantity="other">%d caractères</item>
+    </plurals>
     <string name="cmp_save_as">Exporter</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">Quelles pages ?</string>
-    <string name="cmp_page_range_over_ceiling">%1$s compte %2$d pages ; ce scan en lit %3$d au plus. Choisissez-les.</string>
-    <string name="cmp_page_range_intro">%1$s compte %2$d pages. Chaque page scannée compte dans votre forfait : une plage coûte moins que le fichier.</string>
-    <string name="cmp_page_range_example">ex. 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">Choisissez jusqu\'à %1$d pages entre 1 et %2$d.</string>
-    <string name="cmp_page_range_use_numbers">Pages de 1 à %1$d, ex. 1-5 ou 2,4.</string>
-    <string name="cmp_page_range_n_of_total">%1$d pages sur %2$d</string>
-    <string name="cmp_page_range_required">Obligatoire : ce scan couvre %1$d pages</string>
-    <string name="cmp_page_range_leave_empty">Vide pour scanner les %1$d pages</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="one">%1$s compte %2$d page ; ce scan en lit %3$d au plus. Choisissez-les.</item>
+        <item quantity="many">%1$s compte %2$d pages ; ce scan en lit %3$d au plus. Choisissez-les.</item>
+        <item quantity="other">%1$s compte %2$d pages ; ce scan en lit %3$d au plus. Choisissez-les.</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="one">%1$s compte %2$d page. Chaque page scannée compte dans votre forfait : une plage coûte moins que le fichier.</item>
+        <item quantity="many">%1$s compte %2$d pages. Chaque page scannée compte dans votre forfait : une plage coûte moins que le fichier.</item>
+        <item quantity="other">%1$s compte %2$d pages. Chaque page scannée compte dans votre forfait : une plage coûte moins que le fichier.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">ex. 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="one">Choisissez jusqu\'à %1$d page entre 1 et %2$d.</item>
+        <item quantity="many">Choisissez jusqu\'à %1$d pages entre 1 et %2$d.</item>
+        <item quantity="other">Choisissez jusqu\'à %1$d pages entre 1 et %2$d.</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">Pages de 1 à %1$d, ex. 1-5 ou 2,4.</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="one">%1$d page sur %2$d</item>
+        <item quantity="many">%1$d pages sur %2$d</item>
+        <item quantity="other">%1$d pages sur %2$d</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="one">Obligatoire : ce scan couvre %1$d page</item>
+        <item quantity="many">Obligatoire : ce scan couvre %1$d pages</item>
+        <item quantity="other">Obligatoire : ce scan couvre %1$d pages</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="one">Vide pour scanner %1$d page</item>
+        <item quantity="many">Vide pour scanner les %1$d pages</item>
+        <item quantity="other">Vide pour scanner les %1$d pages</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">Scanner %1$d</string>
     <string name="cmp_page_range_scan_all">Tout</string>
 
@@ -65,15 +120,19 @@
     <string name="cmp_stage_processing">Traitement…</string>
     <string name="cmp_stage_generating">Génération…</string>
     <string name="cmp_stage_complete">Terminé</string>
-    <string name="cmp_processing_file_of">Fichier %1$d sur %2$d...</string>
-    <string name="cmp_extracting_text">Lecture du texte...</string>
+    <string name="cmp_processing_file_of">Fichier %1$d sur %2$d…</string>
+    <string name="cmp_extracting_text">Lecture du texte…</string>
     <string name="cmp_file_of">Fichier %1$d/%2$d</string>
     <string name="cmp_may_take_few_moments">Peut prendre un moment</string>
-    <string name="cmp_translating">Traduction...</string>
+    <string name="cmp_translating">Traduction…</string>
     <string name="cmp_couldnt_read_file">Fichier illisible</string>
     <string name="cmp_no_text_extracted">Aucun texte extrait</string>
     <string name="cmp_try_different_image">Essayez une autre image</string>
-    <string name="cmp_batch_scanning">Scan de %1$d fichiers sur %2$d…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="one">Scan de %1$d fichier sur %2$d…</item>
+        <item quantity="many">Scan de %1$d fichiers sur %2$d…</item>
+        <item quantity="other">Scan de %1$d fichiers sur %2$d…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Nutrition</string>
@@ -122,7 +181,11 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">Extraire</string>
-    <string name="cmp_preset_cost">Champs étiquetés en plus du texte. Une page en données coûte %1$d crédits de votre forfait. Jusqu\'à 8 pages par document.</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="one">Champs étiquetés en plus du texte. Une page en données coûte %1$d crédit de votre forfait. Jusqu\'à 8 pages par document.</item>
+        <item quantity="many">Champs étiquetés en plus du texte. Une page en données coûte %1$d crédits de votre forfait. Jusqu\'à 8 pages par document.</item>
+        <item quantity="other">Champs étiquetés en plus du texte. Une page en données coûte %1$d crédits de votre forfait. Jusqu\'à 8 pages par document.</item>
+    </plurals>
     <string name="cmp_preset_included_pro">Champs étiquetés en plus du texte. Inclus dès Pro.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +225,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">Inconnu</string>
-    <string name="cmp_product_looking_up">Recherche du produit...</string>
+    <string name="cmp_product_looking_up">Recherche du produit…</string>
     <string name="cmp_product_not_found">Produit introuvable</string>
     <string name="cmp_product_lookup_failed">Échec</string>
     <string name="cmp_product_unknown_error">Erreur inconnue</string>
@@ -191,8 +254,16 @@
     <string name="cmp_preview_rendering_pages">Rendu des pages…</string>
     <string name="cmp_preview_render_failed">Conversion en PDF impossible.</string>
     <string name="cmp_preview_page_n_of_total">Page %1$d sur %2$d</string>
-    <string name="cmp_preview_first_n_of_pages">Pages 1 à %1$d sur %2$d</string>
-    <string name="cmp_preview_first_n_of_lines">Lignes 1 à %1$d sur %2$d</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="one">Pages 1 à %1$d sur %2$d</item>
+        <item quantity="many">Pages 1 à %1$d sur %2$d</item>
+        <item quantity="other">Pages 1 à %1$d sur %2$d</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="one">Lignes 1 à %1$d sur %2$d</item>
+        <item quantity="many">Lignes 1 à %1$d sur %2$d</item>
+        <item quantity="other">Lignes 1 à %1$d sur %2$d</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">Rien à exporter</string>

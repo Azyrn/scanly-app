@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  project_id is a resValue from firebaseResValues() in build.gradle.kts. Nothing references it as
+  R.string.project_id: FirebaseOptions.fromResource() looks it up by name at startup, which neither
+  Lint nor the release resource shrinker can see, so it is kept explicitly here.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@string/project_id" />

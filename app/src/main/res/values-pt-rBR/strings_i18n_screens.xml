@@ -14,8 +14,16 @@
     <string name="scr_camera_focus_hint">Toque para focar · alinhe a página com as bordas</string>
     <string name="scr_camera_capture">Capturar</string>
     <!-- Home -->
-    <string name="scr_home_ai_file_limit">Até %1$d arquivos: usando os %1$d primeiros.</string>
-    <string name="scr_home_credits">%1$d créditos</string>
+    <plurals name="scr_home_ai_file_limit">
+        <item quantity="one">Até %1$d arquivo: só %1$d é usado.</item>
+        <item quantity="many">Até %1$d arquivos: usando os %1$d primeiros.</item>
+        <item quantity="other">Até %1$d arquivos: usando os %1$d primeiros.</item>
+    </plurals>
+    <plurals name="scr_home_credits">
+        <item quantity="one">%1$d crédito</item>
+        <item quantity="many">%1$d créditos</item>
+        <item quantity="other">%1$d créditos</item>
+    </plurals>
     <string name="scr_home_question">O que você quer escanear?</string>
     <string name="scr_home_scan_document">Digitalizar</string>
     <string name="scr_home_scan_document_subtitle">Recorte auto, realce e PDF</string>
@@ -88,7 +96,11 @@
     <string name="scr_transcribe_transcribing_body">Gravações longas levam alguns minutos. Pode sair desta tela: a transcrição será salva aqui.</string>
     <string name="scr_transcribe_paused">Pausado</string>
     <string name="scr_transcribe_recording">Gravando</string>
-    <string name="scr_transcribe_up_to_minutes">Até %1$d minutos no seu plano</string>
+    <plurals name="scr_transcribe_up_to_minutes">
+        <item quantity="one">Até %1$d minuto no seu plano</item>
+        <item quantity="many">Até %1$d minutos no seu plano</item>
+        <item quantity="other">Até %1$d minutos no seu plano</item>
+    </plurals>
     <string name="scr_transcribe_discard_recording">Descartar gravação</string>
     <string name="scr_transcribe_stop_and_keep">Parar e salvar</string>
     <string name="scr_transcribe_reading_file">Lendo…</string>
@@ -102,7 +114,11 @@
     <string name="scr_transcribe_key_terms_count">%1$d de %2$d</string>
     <string name="scr_transcribe_plan_note">1 crédito ≈ %1$d minutos de áudio · até %2$d minutos por gravação no seu plano.</string>
     <string name="scr_transcribe_custom_endpoint_note">Áudio para Texto sempre roda no Scanly AI e usa seus créditos, mesmo com o seu endpoint ativado.</string>
-    <string name="scr_transcribe_speakers">%1$d falantes</string>
+    <plurals name="scr_transcribe_speakers">
+        <item quantity="one">%1$d falante</item>
+        <item quantity="many">%1$d falantes</item>
+        <item quantity="other">%1$d falantes</item>
+    </plurals>
     <string name="scr_transcribe_language_hint">Escolha o idioma principal falado. Os outros idiomas da gravação continuam sendo transcritos como falados; este define como números e datas são escritos.</string>
     <string name="scr_transcribe_auto_detect_subtitle">Detecta o idioma, mas roda duas vezes: custa o dobro de créditos.</string>
     <string name="scr_transcribe_key_terms_hint">Nomes, palavras de produtos e jargões que o transcritor deve escrever exatamente. Usados em toda gravação até você remover. Cole vários separados por vírgulas.</string>
@@ -167,14 +183,22 @@
     <string name="au_err_unreadable">Arquivo não abre como áudio nem vídeo.</string>
     <string name="au_err_access_lost">Sem acesso a este arquivo. Escolha-o de novo.</string>
     <string name="au_err_no_audio">Arquivo sem áudio para transcrever.</string>
-    <string name="au_err_too_long">Esta gravação tem %1$s. Seu plano transcreve até %2$d minutos por vez.</string>
+    <plurals name="au_err_too_long">
+        <item quantity="one">Esta gravação tem %1$s. Seu plano transcreve até %2$d minuto por vez.</item>
+        <item quantity="many">Esta gravação tem %1$s. Seu plano transcreve até %2$d minutos por vez.</item>
+        <item quantity="other">Esta gravação tem %1$s. Seu plano transcreve até %2$d minutos por vez.</item>
+    </plurals>
     <string name="au_err_convert">Áudio não convertido. Tente outro arquivo.</string>
     <string name="au_err_too_large">Gravação grande demais para o seu plano, mesmo compactada.</string>
     <string name="au_err_read">Falha ao ler o arquivo.</string>
     <string name="auth_val_email_required">Digite primeiro o seu e-mail.</string>
     <string name="auth_reset_sent">Se %1$s tiver senha, link de redefinição enviado. Contas Google não usam senha: use Continuar com o Google.</string>
     <string name="auth_val_invalid_email">Digite um e-mail válido.</string>
-    <string name="auth_val_password_short">Senha: mínimo de %1$d caracteres.</string>
+    <plurals name="auth_val_password_short">
+        <item quantity="one">Senha: mínimo de %1$d caractere.</item>
+        <item quantity="many">Senha: mínimo de %1$d caracteres.</item>
+        <item quantity="other">Senha: mínimo de %1$d caracteres.</item>
+    </plurals>
     <string name="auth_val_check_details">Confira os dados e tente de novo.</string>
     <string name="au_notif_channel_name">Gravação</string>
     <string name="au_notif_channel_desc">Exibida ao gravar Áudio para Texto</string>
@@ -182,8 +206,16 @@
     <string name="au_notif_text">Gravando para Áudio para Texto. Toque para voltar.</string>
     <string name="tx_save_failed">Transcrição pronta, mas não foi salva neste aparelho (%1$s). Libere espaço e toque em Salvar de novo: sem nova cobrança.</string>
     <string name="tx_prepare_failed">Falha ao preparar a gravação.</string>
-    <string name="tx_key_terms_limit">Até %1$d termos. %2$d ficaram de fora.</string>
-    <string name="tx_key_terms_length">Termos-chave: até %1$d caracteres.</string>
+    <plurals name="tx_key_terms_limit">
+        <item quantity="one">Até %1$d termo. %2$d ficaram de fora.</item>
+        <item quantity="many">Até %1$d termos. %2$d ficaram de fora.</item>
+        <item quantity="other">Até %1$d termos. %2$d ficaram de fora.</item>
+    </plurals>
+    <plurals name="tx_key_terms_length">
+        <item quantity="one">Termos-chave: até %1$d caractere.</item>
+        <item quantity="many">Termos-chave: até %1$d caracteres.</item>
+        <item quantity="other">Termos-chave: até %1$d caracteres.</item>
+    </plurals>
     <string name="cp_connected">Conectado. Endpoint pronto para salvar.</string>
     <string name="cp_saved">Salvo. Scans usarão este endpoint.</string>
     <string name="cp_removed">Endpoint removido.</string>
@@ -229,8 +261,16 @@
     <string name="net_verify_session">Falha ao verificar sessão.</string>
     <string name="net_session_expired">Sua sessão expirou. Entre novamente.</string>
     <string name="lk_no_engines">Sem motor compatível</string>
-    <string name="lk_searched">%1$d fontes pesquisadas</string>
-    <string name="lk_searched_partial">%1$d fontes buscadas. Sem acesso a %2$s</string>
+    <plurals name="lk_searched">
+        <item quantity="one">%1$d fonte pesquisada</item>
+        <item quantity="many">%1$d fontes pesquisadas</item>
+        <item quantity="other">%1$d fontes pesquisadas</item>
+    </plurals>
+    <plurals name="lk_searched_partial">
+        <item quantity="one">%1$d fonte buscada. Sem acesso a %2$s</item>
+        <item quantity="many">%1$d fontes buscadas. Sem acesso a %2$s</item>
+        <item quantity="other">%1$d fontes buscadas. Sem acesso a %2$s</item>
+    </plurals>
     <string name="lk_unreachable">Sem acesso aos bancos de produtos. Sua conexão parece boa: tente em alguns minutos.</string>
     <string name="lk_server_problem">Servidores dos bancos de produtos com problemas. Tente mais tarde.</string>
     <string name="ocr_err_load_image">Erro ao abrir imagem</string>

@@ -11,7 +11,6 @@
     <string name="pdf_tool_jpg_action_pages">转换为 JPG</string>
     <string name="pdf_tool_jpg_action_extract">提取图像</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">已跳过 %d 张 Scanly 无法导出格式的图片</item>
         <item quantity="other">已跳过 %d 张 Scanly 无法导出格式的图片</item>
     </plurals>
 
@@ -31,7 +30,6 @@
     <string name="pdf_tool_img2pdf_margin_big">大</string>
     <string name="pdf_tool_img2pdf_action">创建 PDF</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">%d 个文件无法作为图片读取，已被省略</item>
         <item quantity="other">%d 个文件无法作为图片读取，已被省略</item>
     </plurals>
 </resources>

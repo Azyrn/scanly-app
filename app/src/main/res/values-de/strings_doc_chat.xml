@@ -95,7 +95,10 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">Bild nicht verwendbar. Probiere ein anderes.</string>
-    <string name="chat_file_too_many_pages">Der Designer erstellt bis zu %1$d Seiten. Die Datei hat %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">Der Designer erstellt bis zu %1$d Seite. Die Datei hat %2$d.</item>
+        <item quantity="other">Der Designer erstellt bis zu %1$d Seiten. Die Datei hat %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">Datei zu groß zum Neuerstellen.</string>
     <string name="chat_file_unreadable">Datei nicht lesbar. Probiere eine andere.</string>
 
@@ -228,7 +231,10 @@
     <string name="chat_log_loading">Volle Ausgabe lädt…</string>
     <string name="chat_log_expired">Ausgabe abgelaufen</string>
     <string name="chat_log_unavailable">Ausgabe nicht geladen. Nochmal tippen.</string>
-    <string name="chat_log_past_limit">%1$d weitere Zeichen über dem Limit verworfen</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d weiteres Zeichen über dem Limit verworfen</item>
+        <item quantity="other">%1$d weitere Zeichen über dem Limit verworfen</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d ältere Zeile lokal verworfen</item>
         <item quantity="other">%d ältere Zeilen lokal verworfen</item>

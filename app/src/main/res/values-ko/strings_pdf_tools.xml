@@ -40,7 +40,6 @@
     <string name="pdf_tool_cancelled">취소되었어요.</string>
     <string name="pdf_tool_file_summary">%1$s · %2$s</string>
     <plurals name="pdf_tool_pages">
-        <item quantity="one">%d페이지</item>
         <item quantity="other">%d페이지</item>
     </plurals>
     <string name="pdf_tool_password_title">비밀번호 필요</string>

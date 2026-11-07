@@ -111,7 +111,7 @@ class DocChatViewModel @Inject internal constructor(
         scans,
         exporting
     ) { (id, chat, messages), active, composer, scans, exporting ->
-        val working = messages.lastOrNull { it.body is WorkingBody && !(it.body as WorkingBody).stopped }
+        val working = messages.lastOrNull { (it.body as? WorkingBody)?.stopped == false }
         DocChatUiState(
             chatId = id,
             title = chat?.title.orEmpty(),

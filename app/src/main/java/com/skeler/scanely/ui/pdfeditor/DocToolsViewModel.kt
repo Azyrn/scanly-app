@@ -101,17 +101,13 @@ data class SigningState(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is SigningState) return false
-        return fileName == other.fileName &&
-            certificateBytes.contentEqualsOrBothNull(other.certificateBytes) &&
-            identity == other.identity &&
-            reason == other.reason &&
-            location == other.location &&
-            appearanceId == other.appearanceId &&
-            pageIndex == other.pageIndex &&
-            position == other.position &&
-            isSigning == other.isSigning &&
-            error == other.error
+        return certificateBytes.contentEqualsOrBothNull(other.certificateBytes) &&
+            comparableFields() == other.comparableFields()
     }
+
+    /** Every field but the certificate bytes, which [equals] compares by content. */
+    private fun comparableFields(): List<Any?> =
+        listOf(fileName, identity, reason, location, appearanceId, pageIndex, position, isSigning, error)
 
     override fun hashCode(): Int {
         var result = fileName?.hashCode() ?: 0
@@ -165,6 +161,8 @@ private const val APPEARANCE_MARGIN_FRACTION = 0.07f
 private const val A4_WIDTH_PT = 595f
 private const val A4_HEIGHT_PT = 842f
 
+// Kept whole on purpose: the document-tools sheet's state holder: one function per tool action the sheet sends.
+@Suppress("TooManyFunctions", "LargeClass")
 @HiltViewModel
 class DocToolsViewModel @Inject constructor(
     @param:ApplicationContext private val appContext: Context,
@@ -340,7 +338,11 @@ class DocToolsViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 merges = emptyList(),
-                message = appContext.getString(R.string.pe_documents_staged, merges.size)
+                message = appContext.resources.getQuantityString(
+                    R.plurals.pe_documents_staged,
+                    merges.size,
+                    merges.size
+                )
             )
         }
     }
@@ -463,6 +465,18 @@ class DocToolsViewModel @Inject constructor(
 
     fun clearCertificate() = _uiState.update { it.copy(signing = SigningState()) }
 
+    /** The visible signature the user placed, or null for an invisible one. */
+    private suspend fun appearanceFor(signing: SigningState): SignatureAppearance? =
+        signing.appearanceId?.let { id ->
+            signatureStore.bitmapFor(id)?.let { bitmap ->
+                SignatureAppearance(
+                    pageIndex = signing.pageIndex,
+                    box = appearanceBox(signing, bitmap),
+                    bitmap = bitmap
+                )
+            }
+        }
+
     fun signDocument() {
         val state = _uiState.value
         val identity = state.signing.identity ?: return
@@ -470,16 +484,7 @@ class DocToolsViewModel @Inject constructor(
 
         _uiState.update { it.copy(signing = it.signing.copy(isSigning = true, error = null)) }
         viewModelScope.launch {
-            val appearance = state.signing.appearanceId?.let { id ->
-                signatureStore.bitmapFor(id)?.let { bitmap ->
-                    SignatureAppearance(
-                        pageIndex = state.signing.pageIndex,
-                        box = appearanceBox(state.signing, bitmap),
-                        bitmap = bitmap
-                    )
-                }
-            }
-
+            val appearance = appearanceFor(state.signing)
             val result = session.signDocument(
                 SignRequest(
                     identity = identity,

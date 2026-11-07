@@ -11,7 +11,6 @@
     <string name="pdf_tool_jpg_action_pages">JPGに変換</string>
     <string name="pdf_tool_jpg_action_extract">画像を抽出</string>
     <plurals name="pdf_tool_jpg_images_skipped">
-        <item quantity="one">Scanly が書き出せない形式の画像 %d 件をスキップ</item>
         <item quantity="other">Scanly が書き出せない形式の画像 %d 件をスキップ</item>
     </plurals>
 
@@ -31,7 +30,6 @@
     <string name="pdf_tool_img2pdf_margin_big">大</string>
     <string name="pdf_tool_img2pdf_action">PDFを作成</string>
     <plurals name="pdf_tool_img2pdf_unreadable">
-        <item quantity="one">画像として読めなかったファイル %d 件を除外</item>
         <item quantity="other">画像として読めなかったファイル %d 件を除外</item>
     </plurals>
 </resources>

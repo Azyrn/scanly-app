@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!--
+      Bouncy Castle's EST client (org.bouncycastle.est.jcajce.JcaJceUtils) ships an opt-in
+      trust-all manager. Scanly uses bcpkix only for CMS / PDF signing, never EST or any TLS,
+      so that code is unreachable here (and R8 removes it from release). App code is still checked.
+    -->
+    <issue id="TrustAllX509TrustManager">
+        <ignore path="**/bcpkix-jdk18on-*.jar" />
+    </issue>
+</lint>

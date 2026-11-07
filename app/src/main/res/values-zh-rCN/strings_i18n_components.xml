@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ui/components/PaywallSheet.kt -->
-    <string name="cmp_paywall_credits_left">本月你还剩 %1$d / %2$d 积分。</string>
-    <string name="cmp_paywall_credits_left_upgrade">本月你还剩 %1$d / %2$d 积分。升级可获得更多积分。</string>
+    <plurals name="cmp_paywall_credits_left">
+        <item quantity="other">本月你还剩 %1$d / %2$d 积分。</item>
+    </plurals>
+    <plurals name="cmp_paywall_credits_left_upgrade">
+        <item quantity="other">本月你还剩 %1$d / %2$d 积分。升级可获得更多积分。</item>
+    </plurals>
     <string name="cmp_paywall_more_credits">更多积分、更长的文档，以及更多文件格式。</string>
     <string name="cmp_paywall_ai_scan_credit">AI 扫描每页消耗 1 积分。其他 AI 工具共用你的积分余额。</string>
     <string name="cmp_paywall_plan_active">你的套餐已在此账户上生效。</string>
     <string name="cmp_paywall_key_active_here">你的密钥已在此设备上激活。</string>
-    <string name="cmp_paywall_devices_used">已使用 %1$d / %2$d 台设备。请在“设置”中管理你的密钥。</string>
-    <string name="cmp_paywall_watch_ad">观看广告，再获得 %1$d 积分</string>
+    <plurals name="cmp_paywall_devices_used">
+        <item quantity="other">已使用 %1$d / %2$d 台设备。请在“设置”中管理你的密钥。</item>
+    </plurals>
+    <plurals name="cmp_paywall_watch_ad">
+        <item quantity="other">观看广告，再获得 %1$d 积分</item>
+    </plurals>
     <string name="cmp_paywall_where_to_buy_before">"AI 扫描包含每月免费额度。付费套餐可在 "</string>
     <string name="cmp_paywall_where_to_buy_after">。本应用内无法购买。已订阅？请在下方恢复购买。</string>
     <string name="cmp_copied">已复制</string>
@@ -24,7 +32,9 @@
     <string name="cmp_paywall_plan_name">Scanly %1$s</string>
     <string name="cmp_active">已激活</string>
     <string name="cmp_paywall_feature_credits">每月 %1$d 个 AI 积分</string>
-    <string name="cmp_paywall_feature_pages">单个文档最多 %1$d 页</string>
+    <plurals name="cmp_paywall_feature_pages">
+        <item quantity="other">单个文档最多 %1$d 页</item>
+    </plurals>
     <string name="cmp_paywall_feature_office">Word、PowerPoint 和 OpenDocument 文件</string>
     <string name="cmp_paywall_feature_translation">翻译</string>
     <string name="cmp_paywall_feature_extraction">从收据、发票和卡片中提取数据</string>
@@ -44,19 +54,38 @@
     <string name="cmp_bigger_text">放大文字</string>
     <string name="cmp_reset">重置</string>
     <string name="cmp_no_table">没有表格</string>
-    <string name="cmp_word_char_counts">%1$d 个词 · %2$d 个字符</string>
+    <plurals name="cmp_word_count">
+        <item quantity="other">%d 个词</item>
+    </plurals>
+    <plurals name="cmp_char_count">
+        <item quantity="other">%d 个字符</item>
+    </plurals>
     <string name="cmp_save_as">另存为</string>
 
     <!-- ui/components/PageRangeDialog.kt -->
     <string name="cmp_page_range_title">扫描哪些页面？</string>
-    <string name="cmp_page_range_over_ceiling">%1$s 共有 %2$d 页，本次扫描最多读取 %3$d 页。请选择重要的页面。</string>
-    <string name="cmp_page_range_intro">%1$s 共有 %2$d 页。每扫描一页都会计入你的套餐，因此扫描部分页面比整个文件更省。</string>
-    <string name="cmp_page_range_example">例如 1-5, 8</string>
-    <string name="cmp_page_range_pick_up_to">请在 1 至 %2$d 页之间选择最多 %1$d 页。</string>
-    <string name="cmp_page_range_use_numbers">请使用 1 到 %1$d 之间的页码，例如 1-5 或 2,4。</string>
-    <string name="cmp_page_range_n_of_total">%1$d / %2$d 页</string>
-    <string name="cmp_page_range_required">必填，本次扫描涵盖 %1$d 页</string>
-    <string name="cmp_page_range_leave_empty">留空即可扫描全部 %1$d 页</string>
+    <plurals name="cmp_page_range_over_ceiling">
+        <item quantity="other">%1$s 共有 %2$d 页，本次扫描最多读取 %3$d 页。请选择重要的页面。</item>
+    </plurals>
+    <plurals name="cmp_page_range_intro">
+        <item quantity="other">%1$s 共有 %2$d 页。每扫描一页都会计入你的套餐，因此扫描部分页面比整个文件更省。</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_example" tools:ignore="TypographyDashes">例如 1-5, 8</string>
+    <plurals name="cmp_page_range_pick_up_to">
+        <item quantity="other">请在 1 至 %2$d 页之间选择最多 %1$d 页。</item>
+    </plurals>
+    <!-- A literal example of what to type: the page-range parser (core/ai/PageRange) takes an ASCII hyphen, so an en dash here would teach the wrong key. -->
+    <string name="cmp_page_range_use_numbers" tools:ignore="TypographyDashes">请使用 1 到 %1$d 之间的页码，例如 1-5 或 2,4。</string>
+    <plurals name="cmp_page_range_n_of_total">
+        <item quantity="other">%1$d / %2$d 页</item>
+    </plurals>
+    <plurals name="cmp_page_range_required">
+        <item quantity="other">必填，本次扫描涵盖 %1$d 页</item>
+    </plurals>
+    <plurals name="cmp_page_range_leave_empty">
+        <item quantity="other">留空即可扫描全部 %1$d 页</item>
+    </plurals>
     <string name="cmp_page_range_scan_count">扫描 %1$d 页</string>
     <string name="cmp_page_range_scan_all">扫描全部</string>
 
@@ -65,15 +94,17 @@
     <string name="cmp_stage_processing">处理中…</string>
     <string name="cmp_stage_generating">生成中…</string>
     <string name="cmp_stage_complete">完成</string>
-    <string name="cmp_processing_file_of">正在处理 %1$d/%2$d...</string>
-    <string name="cmp_extracting_text">正在提取文字...</string>
+    <string name="cmp_processing_file_of">正在处理 %1$d/%2$d…</string>
+    <string name="cmp_extracting_text">正在提取文字…</string>
     <string name="cmp_file_of">文件 %1$d/%2$d</string>
     <string name="cmp_may_take_few_moments">可能需要一些时间</string>
-    <string name="cmp_translating">翻译中...</string>
+    <string name="cmp_translating">翻译中…</string>
     <string name="cmp_couldnt_read_file">无法读取此文件</string>
     <string name="cmp_no_text_extracted">未提取到文字</string>
     <string name="cmp_try_different_image">请尝试选择其他图片</string>
-    <string name="cmp_batch_scanning">正在扫描第 %1$d / %2$d 个文件…</string>
+    <plurals name="cmp_batch_scanning">
+        <item quantity="other">正在扫描第 %1$d / %2$d 个文件…</item>
+    </plurals>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">营养成分表</string>
@@ -122,7 +153,9 @@
 
     <!-- ui/components/ExtractionPresetSheet.kt -->
     <string name="cmp_extract_data">提取数据</string>
-    <string name="cmp_preset_cost">除文字外，还可获得带标签的字段。将页面作为数据读取会从你的套餐中扣除 %1$d 积分。每份文档最多可包含 8 页。</string>
+    <plurals name="cmp_preset_cost">
+        <item quantity="other">除文字外，还可获得带标签的字段。将页面作为数据读取会从你的套餐中扣除 %1$d 积分。每份文档最多可包含 8 页。</item>
+    </plurals>
     <string name="cmp_preset_included_pro">除文字外，还可获得带标签的字段。Pro 及以上套餐均包含此功能。</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
@@ -162,7 +195,7 @@
 
     <!-- ui/components/ProductDetailSheet.kt -->
     <string name="cmp_product_unknown_source">未知</string>
-    <string name="cmp_product_looking_up">正在查询产品...</string>
+    <string name="cmp_product_looking_up">正在查询产品…</string>
     <string name="cmp_product_not_found">未找到产品</string>
     <string name="cmp_product_lookup_failed">查询失败</string>
     <string name="cmp_product_unknown_error">未知错误</string>
@@ -171,14 +204,12 @@
 
     <!-- ui/components/ScanInsightComponents.kt -->
     <plurals name="cmp_passages_hard_to_read">
-        <item quantity="one">有一段文字难以辨认</item>
         <item quantity="other">%1$d 段文字难以辨认</item>
     </plurals>
     <string name="cmp_check_against_original">在依赖这些内容之前，请先与原文核对。</string>
     <string name="cmp_show_all_count">显示全部 %1$d</string>
     <string name="cmp_copy_json">复制 JSON</string>
     <plurals name="cmp_links_found">
-        <item quantity="one">%1$d 链接</item>
         <item quantity="other">%1$d 个链接</item>
     </plurals>
 
@@ -189,8 +220,12 @@
     <string name="cmp_preview_rendering_pages">正在渲染页面…</string>
     <string name="cmp_preview_render_failed">无法将此文档渲染为 PDF。</string>
     <string name="cmp_preview_page_n_of_total">第 %1$d/%2$d 页</string>
-    <string name="cmp_preview_first_n_of_pages">前 %1$d 页（共 %2$d 页）</string>
-    <string name="cmp_preview_first_n_of_lines">前 %1$d 行（共 %2$d 行）</string>
+    <plurals name="cmp_preview_first_n_of_pages">
+        <item quantity="other">前 %1$d 页（共 %2$d 页）</item>
+    </plurals>
+    <plurals name="cmp_preview_first_n_of_lines">
+        <item quantity="other">前 %1$d 行（共 %2$d 行）</item>
+    </plurals>
 
     <!-- ui/components/TextPdfExport.kt -->
     <string name="cmp_export_nothing_to_export">没有可导出的内容</string>
@@ -201,7 +236,6 @@
     <string name="cmp_doc_saved_to_downloads">%1$s 已保存到 Downloads/Scanly</string>
     <string name="cmp_doc_couldnt_create">无法创建 %1$s</string>
     <plurals name="cmp_doc_saved_images">
-        <item quantity="one">已将 %1$d 张图片保存到相册</item>
         <item quantity="other">已将 %1$d 张图片保存到相册</item>
     </plurals>
     <string name="cmp_doc_couldnt_save_images">无法保存图片</string>

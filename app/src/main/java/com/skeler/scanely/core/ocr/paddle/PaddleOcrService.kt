@@ -22,6 +22,7 @@ import kotlin.math.abs
 
 private const val TAG = "PaddleOcrService"
 private const val DET_LIMIT = 960
+private const val HALF_TURN_DEGREES = 180
 private const val MIN_CONFIDENCE = 0.3f
 private const val MIN_TABLE_SIDE = 32
 
@@ -65,90 +66,21 @@ class PaddleOcrService @Inject constructor(
     private val pdfRendererHelper: PdfRendererHelper
 ) {
 
+    // Throwable on purpose: ORT runs native code, and an OutOfMemoryError on a huge page must end
+    // as a failed scan rather than a crash.
+    @Suppress("TooGenericExceptionCaught")
     suspend fun recognize(bitmap: Bitmap): OcrResult = withContext(Dispatchers.Default) {
         val derived = mutableListOf<Bitmap>()
         try {
-            val pack = ScriptPack.fromId(settings.getString(SettingsKeys.PADDLE_SCRIPT).first())
-            val useDocOrientation = settings.getBoolean(SettingsKeys.PADDLE_DOC_ORIENTATION).first()
-            val useUnwarp = settings.getBoolean(SettingsKeys.PADDLE_DOC_UNWARP).first()
-            val useLineOrientation = settings.getBoolean(SettingsKeys.PADDLE_LINE_ORIENTATION).first()
-            val options = ReadOptions(pack, useDocOrientation, useLineOrientation)
-
-            var page = bitmap
-
-            if (useDocOrientation) {
-                // Only the sideways decision comes from the classifier. It centre-crops to 224,
-                // so on a photo where the page does not fill the frame it judges mostly margin
-                // and answers "180" whichever way up the page is (0.90 confidence on both a real
-                // upright photo and its flip). The 90/270 axis survives that framing; the
-                // upright-vs-upside-down call does not, and acting on it reverses the reading
-                // order of the whole page. That call is settled below, by recognition, which is
-                // the only signal here that knows what text is supposed to look like.
-                val degrees = engine.detectPageRotation(page)
-                if (degrees % 180 != 0) {
-                    page = ImageOps.rotate(page, degrees)
-                    derived.add(page)
-                }
-            }
-
-            val detection = engine.detectPage(page, DET_LIMIT)
-            var read = readPage(page, detection.quads, options, derived)
-                ?: return@withContext OcrResult.Empty
-
-            // Dewarping bends straight lines as readily as it straightens curled ones (on flat
-            // photos it cost 7-15 points of word accuracy), so only a page whose lines are curled
-            // gets it, and the flattened read must beat the page as shot to be kept.
-            if (useUnwarp && engine.canUnwarp() && detection.curledShare >= MIN_CURLED_SHARE) {
-                val flat = engine.unwarp(read.page)
-                derived.add(flat)
-                readPage(flat, engine.detect(flat, DET_LIMIT), options, derived)?.let { flatRead ->
-                    if (confidentText(flatRead.lines) > confidentText(read.lines) * UNWARP_MARGIN) read = flatRead
-                }
-            }
-            page = read.page
-            val quads = read.quads
-            val recognized = read.lines
-
-            // Direction is a property of the text, not of the installed pack: an English
-            // table must not reverse just because the Arabic pack is selected.
-            val pageRtl = RtlText.isRtlDominant(recognized.joinToString(" ") { it.text })
-            val orderedLines = ReadingOrder.orderedLines(quads, pageRtl)
-            val order = orderedLines.flatMap { line ->
-                val text = line.joinToString("") { recognized[it].text }
-                if (RtlText.isRtlDominant(text)) line.asReversed() else line
-            }
-            val ordered = order.map { quads[it] }
-            val lines = order.map { recognized[it] }
-
-            val kept = lines.indices.filter {
-                lines[it].text.isNotBlank() && lines[it].confidence >= MIN_CONFIDENCE
-            }
-            if (kept.isEmpty()) return@withContext OcrResult.Empty
-
-            val markdown = if (settings.getBoolean(SettingsKeys.PADDLE_STRUCTURE).first()) {
-                structuredMarkdown(page, ordered, kept, lines)
-            } else {
-                null
-            }
-
-            val blocks = kept.map { i ->
-                val q = ordered[i]
-                TextBlockData(
-                    text = lines[i].text,
-                    boundingBoxLeft = q.minX.toInt(),
-                    boundingBoxTop = q.minY.toInt(),
-                    boundingBoxRight = q.maxX.toInt(),
-                    boundingBoxBottom = q.maxY.toInt(),
-                    confidence = lines[i].confidence
-                )
-            }
-            OcrResult.Success(
-                text = groupIntoLines(ordered, kept, lines),
-                blocks = blocks,
-                confidence = kept.map { lines[it].confidence }.average().toFloat(),
-                source = OcrSource.PADDLE,
-                markdown = markdown
+            val options = ReadOptions(
+                pack = ScriptPack.fromId(settings.getString(SettingsKeys.PADDLE_SCRIPT).first()),
+                docOrientation = settings.getBoolean(SettingsKeys.PADDLE_DOC_ORIENTATION).first(),
+                unwarp = settings.getBoolean(SettingsKeys.PADDLE_DOC_UNWARP).first(),
+                lineOrientation = settings.getBoolean(SettingsKeys.PADDLE_LINE_ORIENTATION).first()
             )
+            val read = bestRead(orientedPage(bitmap, options, derived), options, derived)
+                ?: return@withContext OcrResult.Empty
+            toResult(read)
         } catch (e: Throwable) {
             Log.e(TAG, "Paddle recognition failed", e)
             OcrResult.Error(e.message ?: context.getString(R.string.ocr_err_recognition))
@@ -158,9 +90,87 @@ class PaddleOcrService @Inject constructor(
         }
     }
 
+    /** [bitmap] turned a quarter when the classifier finds it sideways; a new page goes to [derived]. */
+    private fun orientedPage(bitmap: Bitmap, options: ReadOptions, derived: MutableList<Bitmap>): Bitmap {
+        if (!options.docOrientation) return bitmap
+        // Only the sideways decision comes from the classifier. It centre-crops to 224,
+        // so on a photo where the page does not fill the frame it judges mostly margin
+        // and answers "180" whichever way up the page is (0.90 confidence on both a real
+        // upright photo and its flip). The 90/270 axis survives that framing; the
+        // upright-vs-upside-down call does not, and acting on it reverses the reading
+        // order of the whole page. That call is settled below, by recognition, which is
+        // the only signal here that knows what text is supposed to look like.
+        val degrees = engine.detectPageRotation(bitmap)
+        if (degrees % HALF_TURN_DEGREES == 0) return bitmap
+        return BitmapRotation.rotate(bitmap, degrees).also { derived.add(it) }
+    }
+
+    /** The page read as shot, or flattened when that reads clearly better. */
+    private fun bestRead(page: Bitmap, options: ReadOptions, derived: MutableList<Bitmap>): PageRead? {
+        val detection = engine.detectPage(page, DET_LIMIT)
+        val read = readPage(page, detection.quads, options, derived) ?: return null
+
+        // Dewarping bends straight lines as readily as it straightens curled ones (on flat
+        // photos it cost 7-15 points of word accuracy), so only a page whose lines are curled
+        // gets it, and the flattened read must beat the page as shot to be kept.
+        if (!options.unwarp || !engine.canUnwarp() || detection.curledShare < MIN_CURLED_SHARE) return read
+        val flat = engine.unwarp(read.page)
+        derived.add(flat)
+        val flatRead = readPage(flat, engine.detect(flat, DET_LIMIT), options, derived) ?: return read
+        return if (confidentText(flatRead.lines) > confidentText(read.lines) * UNWARP_MARGIN) flatRead else read
+    }
+
+    /** [read]'s lines in reading order, low-confidence ones dropped, as the scan's result. */
+    private suspend fun toResult(read: PageRead): OcrResult {
+        val quads = read.quads
+        val recognized = read.lines
+
+        // Direction is a property of the text, not of the installed pack: an English
+        // table must not reverse just because the Arabic pack is selected.
+        val pageRtl = RtlText.isRtlDominant(recognized.joinToString(" ") { it.text })
+        val orderedLines = ReadingOrder.orderedLines(quads, pageRtl)
+        val order = orderedLines.flatMap { line ->
+            val text = line.joinToString("") { recognized[it].text }
+            if (RtlText.isRtlDominant(text)) line.asReversed() else line
+        }
+        val ordered = order.map { quads[it] }
+        val lines = order.map { recognized[it] }
+
+        val kept = lines.indices.filter {
+            lines[it].text.isNotBlank() && lines[it].confidence >= MIN_CONFIDENCE
+        }
+        if (kept.isEmpty()) return OcrResult.Empty
+
+        val markdown = if (settings.getBoolean(SettingsKeys.PADDLE_STRUCTURE).first()) {
+            structuredMarkdown(read.page, ordered, kept, lines)
+        } else {
+            null
+        }
+
+        val blocks = kept.map { i ->
+            val q = ordered[i]
+            TextBlockData(
+                text = lines[i].text,
+                boundingBoxLeft = q.minX.toInt(),
+                boundingBoxTop = q.minY.toInt(),
+                boundingBoxRight = q.maxX.toInt(),
+                boundingBoxBottom = q.maxY.toInt(),
+                confidence = lines[i].confidence
+            )
+        }
+        return OcrResult.Success(
+            text = groupIntoLines(ordered, kept, lines),
+            blocks = blocks,
+            confidence = kept.map { lines[it].confidence }.average().toFloat(),
+            source = OcrSource.PADDLE,
+            markdown = markdown
+        )
+    }
+
     private class ReadOptions(
         val pack: ScriptPack,
         val docOrientation: Boolean,
+        val unwarp: Boolean,
         val lineOrientation: Boolean
     )
 
@@ -188,7 +198,7 @@ class PaddleOcrService @Inject constructor(
                 // crop.
                 crops.forEach { it.recycle() }
                 crops = emptyList()
-                current = ImageOps.rotate(current, 180)
+                current = BitmapRotation.rotate(current, 180)
                 derived.add(current)
                 currentQuads = engine.detect(current, DET_LIMIT)
                 if (currentQuads.isEmpty()) return null
@@ -206,28 +216,10 @@ class PaddleOcrService @Inject constructor(
 
     suspend fun recognizeFromPdf(pdfUri: Uri, pageIndex: Int? = null): OcrResult =
         withContext(Dispatchers.IO) {
-            val text = StringBuilder()
-            val markdown = StringBuilder()
-            val blocks = mutableListOf<TextBlockData>()
-            var confidence = 0f
-            var pages = 0
+            val pages = PdfPages()
 
             suspend fun process(index: Int, bitmap: Bitmap) {
-                when (val result = recognize(bitmap)) {
-                    is OcrResult.Success -> {
-                        if (text.isNotEmpty()) text.append("\n\n--- Page ${index + 1} ---\n\n")
-                        text.append(result.text)
-                        result.markdown?.let { page ->
-                            if (markdown.isNotEmpty()) markdown.append("\n\n---\n\n")
-                            markdown.append(page.trimEnd())
-                        }
-                        blocks.addAll(result.blocks.map { it.copy(page = index + 1) })
-                        confidence += result.confidence
-                        pages++
-                    }
-                    is OcrResult.Error -> Log.w(TAG, "Page $index: ${result.message}")
-                    OcrResult.Empty -> Unit
-                }
+                pages.add(index, recognize(bitmap))
                 bitmap.recycle()
             }
 
@@ -240,24 +232,14 @@ class PaddleOcrService @Inject constructor(
                 if (!opened) return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pdf))
             }
 
-            if (text.isEmpty()) {
-                OcrResult.Empty
-            } else {
-                OcrResult.Success(
-                    text = text.toString(),
-                    blocks = blocks,
-                    confidence = if (pages > 0) confidence / pages else 0f,
-                    source = OcrSource.PADDLE,
-                    markdown = markdown.toString().ifBlank { null }
-                )
-            }
+            pages.result()
         }
 
     /** Turns upside-down line crops upright; the crops it replaces are recycled. */
     private fun turnFlippedLines(crops: List<Bitmap>): List<Bitmap> {
         val flipped = engine.detectFlippedLines(crops)
         return crops.mapIndexed { i, crop ->
-            if (flipped[i]) ImageOps.rotate180(crop).also { crop.recycle() } else crop
+            if (flipped[i]) BitmapRotation.rotate180(crop).also { crop.recycle() } else crop
         }
     }
 
@@ -282,7 +264,7 @@ class PaddleOcrService @Inject constructor(
             .take(ORIENTATION_SAMPLE)
         if (sample.isEmpty()) return false
 
-        val flipped = sample.map { ImageOps.rotate180(it) }
+        val flipped = sample.map { BitmapRotation.rotate180(it) }
         try {
             val reads = (listOf(pack) + ScriptPack.entries.filter { it.isBundled && it != pack })
                 .map { candidate ->
@@ -297,13 +279,6 @@ class PaddleOcrService @Inject constructor(
         } finally {
             flipped.forEach { it.recycle() }
         }
-    }
-
-    /** Confident characters per line: a garbled read is both shorter and less certain. */
-    private fun orientationScore(lines: List<RecLine>): Float {
-        if (lines.isEmpty()) return 0f
-        val score = lines.sumOf { (it.confidence * it.text.trim().length).toDouble() }
-        return (score / lines.size).toFloat()
     }
 
     /**
@@ -382,28 +357,6 @@ class PaddleOcrService @Inject constructor(
         val crop = Bitmap.createBitmap(page, left, top, width, height)
         return RegionCrop(crop, left.toFloat(), top.toFloat())
     }
-
-    private fun groupIntoLines(
-        quads: List<Quad>,
-        kept: List<Int>,
-        lines: List<RecLine>
-    ): String {
-        val sb = StringBuilder()
-        var previous: Quad? = null
-        for (i in kept) {
-            val q = quads[i]
-            val prev = previous
-            if (prev != null) {
-                val sameLine = abs(
-                    (q.minY + q.maxY) / 2f - (prev.minY + prev.maxY) / 2f
-                ) < (prev.maxY - prev.minY) * 0.6f
-                sb.append(if (sameLine) " " else "\n")
-            }
-            sb.append(lines[i].text)
-            previous = q
-        }
-        return sb.toString()
-    }
 }
 
 /** See [PaddleOcrService.preferBundledScript]'s contract above: shared with [PaddleLineReader]. */
@@ -461,3 +414,71 @@ internal fun isDenseLatinRead(primary: List<RecLine>, detectedLines: Int): Boole
 internal fun isBetterScriptRead(current: List<RecLine>, candidate: List<RecLine>): Boolean =
     recognizedChars(candidate) > recognizedChars(current) &&
         RtlText.rtlFraction(candidate.joinToString("") { it.text }) >= MIN_RTL_FRACTION
+
+/** A PDF's page results joined into one, with page markers between the pages that read. */
+private class PdfPages {
+    private val text = StringBuilder()
+    private val markdown = StringBuilder()
+    private val blocks = mutableListOf<TextBlockData>()
+    private var confidence = 0f
+    private var pages = 0
+
+    fun add(index: Int, result: OcrResult) {
+        when (result) {
+            is OcrResult.Success -> {
+                if (text.isNotEmpty()) text.append("\n\n--- Page ${index + 1} ---\n\n")
+                text.append(result.text)
+                result.markdown?.let { page ->
+                    if (markdown.isNotEmpty()) markdown.append("\n\n---\n\n")
+                    markdown.append(page.trimEnd())
+                }
+                blocks.addAll(result.blocks.map { it.copy(page = index + 1) })
+                confidence += result.confidence
+                pages++
+            }
+            is OcrResult.Error -> Log.w(TAG, "Page $index: ${result.message}")
+            OcrResult.Empty -> Unit
+        }
+    }
+
+    fun result(): OcrResult = if (text.isEmpty()) {
+        OcrResult.Empty
+    } else {
+        OcrResult.Success(
+            text = text.toString(),
+            blocks = blocks,
+            confidence = if (pages > 0) confidence / pages else 0f,
+            source = OcrSource.PADDLE,
+            markdown = markdown.toString().ifBlank { null }
+        )
+    }
+}
+
+/** Confident characters per line: a garbled read is both shorter and less certain. */
+private fun orientationScore(lines: List<RecLine>): Float {
+    if (lines.isEmpty()) return 0f
+    val score = lines.sumOf { (it.confidence * it.text.trim().length).toDouble() }
+    return (score / lines.size).toFloat()
+}
+
+private fun groupIntoLines(
+    quads: List<Quad>,
+    kept: List<Int>,
+    lines: List<RecLine>
+): String {
+    val sb = StringBuilder()
+    var previous: Quad? = null
+    for (i in kept) {
+        val q = quads[i]
+        val prev = previous
+        if (prev != null) {
+            val sameLine = abs(
+                (q.minY + q.maxY) / 2f - (prev.minY + prev.maxY) / 2f
+            ) < (prev.maxY - prev.minY) * 0.6f
+            sb.append(if (sameLine) " " else "\n")
+        }
+        sb.append(lines[i].text)
+        previous = q
+    }
+    return sb.toString()
+}

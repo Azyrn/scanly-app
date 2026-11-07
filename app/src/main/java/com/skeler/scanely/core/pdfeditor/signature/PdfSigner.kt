@@ -90,40 +90,14 @@ class PdfSigner @Inject constructor(
         }
         ensureResources()
 
+        // Closed once signing is over, whichever way it ends.
         var options: SignatureOptions? = null
         try {
-            PDDocument.load(source).use { document ->
-                if (document.isEncrypted) return@withContext SignResult.EncryptedNotSupported
-
-                val signature = PDSignature().apply {
-                    setFilter(PDSignature.FILTER_ADOBE_PPKLITE)
-                    setSubFilter(PDSignature.SUBFILTER_ETSI_CADES_DETACHED)
-                    name = commonNameOf(request.identity)
-                    request.reason.takeIf { it.isNotBlank() }?.let { reason = it }
-                    request.location.takeIf { it.isNotBlank() }?.let { location = it }
-                    request.contactInfo.takeIf { it.isNotBlank() }?.let { contactInfo = it }
-                    signDate = Calendar.getInstance()
-                }
-
-                options = SignatureOptions().apply {
-                    preferredSignatureSize = CmsSigner.reservedBytesFor(request.identity)
-                }
-                request.appearance?.let { appearance ->
-                    val applied = applyAppearance(document, appearance, request, options)
-                    if (!applied) {
-                        return@withContext SignResult.Failed(context.getString(R.string.sig_err_page))
-                    }
-                }
-
-                document.addSignature(signature, options)
-
-                output.outputStream().buffered().use { out ->
-                    val external = document.saveIncrementalForExternalSigning(out)
-                    val cms = CmsSigner.sign(context, request.identity) { external.content }
-                    external.setSignature(cms)
-                }
+            val signOptions = SignatureOptions().apply {
+                preferredSignatureSize = CmsSigner.reservedBytesFor(request.identity)
             }
-            SignResult.Saved(output)
+            options = signOptions
+            PDDocument.load(source).use { document -> signLoaded(document, request, signOptions, output) }
         } catch (e: Exception) {
             output.delete()
             Log.w(TAG, "Signing failed", e)
@@ -193,8 +167,46 @@ class PdfSigner @Inject constructor(
         return true
     }
 
+    /** Signs the open [document] into [output]; a failure it can name comes back as the result. */
+    private fun signLoaded(
+        document: PDDocument,
+        request: SignRequest,
+        options: SignatureOptions,
+        output: File
+    ): SignResult {
+        if (document.isEncrypted) return SignResult.EncryptedNotSupported
+
+        val signature = newSignature(request)
+
+        request.appearance?.let { appearance ->
+            val applied = applyAppearance(document, appearance, request, options)
+            if (!applied) {
+                return SignResult.Failed(context.getString(R.string.sig_err_page))
+            }
+        }
+
+        document.addSignature(signature, options)
+
+        output.outputStream().buffered().use { out ->
+            val external = document.saveIncrementalForExternalSigning(out)
+            val cms = CmsSigner.sign(context, request.identity) { external.content }
+            external.setSignature(cms)
+        }
+        return SignResult.Saved(output)
+    }
+
+    private fun newSignature(request: SignRequest) = PDSignature().apply {
+        setFilter(PDSignature.FILTER_ADOBE_PPKLITE)
+        setSubFilter(PDSignature.SUBFILTER_ETSI_CADES_DETACHED)
+        name = commonNameOf(request.identity)
+        request.reason.takeIf { it.isNotBlank() }?.let { reason = it }
+        request.location.takeIf { it.isNotBlank() }?.let { location = it }
+        request.contactInfo.takeIf { it.isNotBlank() }?.let { contactInfo = it }
+        signDate = Calendar.getInstance()
+    }
+
     private fun Bitmap.turned(degrees: Int): Bitmap {
-        if (degrees % 360 == 0) return this
+        if (degrees % FULL_TURN_DEGREES == 0) return this
         val matrix = Matrix().apply { postRotate(degrees.toFloat()) }
         return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
     }
@@ -230,3 +242,5 @@ class PdfSigner @Inject constructor(
         }
     }
 }
+
+private const val FULL_TURN_DEGREES = 360

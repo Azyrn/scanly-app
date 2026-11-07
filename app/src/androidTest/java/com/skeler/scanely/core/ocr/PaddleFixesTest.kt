@@ -10,6 +10,7 @@ import androidx.core.graphics.createBitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.skeler.scanely.core.ocr.paddle.CtcDecoder
+import com.skeler.scanely.core.ocr.paddle.BitmapRotation
 import com.skeler.scanely.core.ocr.paddle.ImageOps
 import com.skeler.scanely.core.ocr.paddle.PaddleModelStore
 import com.skeler.scanely.core.ocr.paddle.PaddleOcrEngine
@@ -122,9 +123,9 @@ class PaddleFixesTest {
         val results = StringBuilder()
 
         for (applied in listOf(0, 90, 180, 270)) {
-            val rotated = ImageOps.rotate(page, applied)
+            val rotated = BitmapRotation.rotate(page, applied)
             val detected = engine.detectPageRotation(rotated)
-            val corrected = ImageOps.rotate(rotated, detected)
+            val corrected = BitmapRotation.rotate(rotated, detected)
             val residual = engine.detectPageRotation(corrected)
             results.append("applied=$applied detected=$detected residual=$residual; ")
 

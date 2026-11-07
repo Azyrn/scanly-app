@@ -2,6 +2,8 @@ package com.skeler.scanely.core.pdfeditor.signature
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -44,7 +46,7 @@ class SignatureExtractor @Inject constructor() {
             // Distance below the local paper level, ramped over INK_RAMP so edge pixels get
             // partial alpha rather than snapping to opaque.
             val depth = localMean[i] - INK_BIAS - luminance[i]
-            alpha[i] = ((depth.toFloat() / INK_RAMP) * 255f).roundToInt().coerceIn(0, 255)
+            alpha[i] = ((depth.toFloat() / INK_RAMP) * MAX_ALPHA).roundToInt().coerceIn(0, MAX_ALPHA)
         }
 
         despeckle(alpha, width, height)
@@ -60,16 +62,14 @@ class SignatureExtractor @Inject constructor() {
         val longest = maxOf(source.width, source.height)
         if (longest <= MAX_EDGE) return source
         val scale = MAX_EDGE.toFloat() / longest
-        return Bitmap.createScaledBitmap(
-            source,
+        return source.scale(
             (source.width * scale).roundToInt().coerceAtLeast(1),
-            (source.height * scale).roundToInt().coerceAtLeast(1),
-            true
+            (source.height * scale).roundToInt().coerceAtLeast(1)
         )
     }
 
     private fun luminanceOf(pixel: Int): Int =
-        ((pixel shr 16 and 0xFF) * 30 + (pixel shr 8 and 0xFF) * 59 + (pixel and 0xFF) * 11) / 100
+        (Color.red(pixel) * LUMA_RED + Color.green(pixel) * LUMA_GREEN + Color.blue(pixel) * LUMA_BLUE) / 100
 
     /** O(1) per-pixel box mean via a summed-area table. */
     private fun localMeans(luminance: IntArray, width: Int, height: Int): IntArray {
@@ -111,36 +111,14 @@ class SignatureExtractor @Inject constructor() {
      */
     private fun despeckle(alpha: IntArray, width: Int, height: Int) {
         val visited = BooleanArray(alpha.size)
-        val stack = ArrayDeque<Int>()
         val blob = ArrayList<Int>()
+        val flood = InkFlood(alpha, width, height, visited, SPECKLE_ALPHA)
 
         for (start in alpha.indices) {
-            if (visited[start] || alpha[start] < SPECKLE_ALPHA) continue
-
-            blob.clear()
-            stack.addLast(start)
-            visited[start] = true
-
-            while (stack.isNotEmpty()) {
-                val index = stack.removeLast()
-                blob.add(index)
-                val x = index % width
-                val y = index / width
-
-                for (dy in -1..1) for (dx in -1..1) {
-                    if (dx == 0 && dy == 0) continue
-                    val nx = x + dx
-                    val ny = y + dy
-                    if (nx !in 0 until width || ny !in 0 until height) continue
-                    val neighbour = ny * width + nx
-                    if (!visited[neighbour] && alpha[neighbour] >= SPECKLE_ALPHA) {
-                        visited[neighbour] = true
-                        stack.addLast(neighbour)
-                    }
-                }
+            if (!visited[start] && alpha[start] >= SPECKLE_ALPHA) {
+                flood.fill(start, blob)
+                if (blob.size < MIN_BLOB_PIXELS) blob.forEach { alpha[it] = 0 }
             }
-
-            if (blob.size < MIN_BLOB_PIXELS) blob.forEach { alpha[it] = 0 }
         }
     }
 
@@ -152,36 +130,37 @@ class SignatureExtractor @Inject constructor() {
         for (i in alpha.indices) {
             if (alpha[i] < CORE_INK_ALPHA) continue
             val p = pixels[i]
-            r += (p shr 16 and 0xFF)
-            g += (p shr 8 and 0xFF)
-            b += (p and 0xFF)
+            r += Color.red(p)
+            g += Color.green(p)
+            b += Color.blue(p)
             count++
         }
         if (count == 0L) return Color.BLACK
         return Color.rgb((r / count).toInt(), (g / count).toInt(), (b / count).toInt())
     }
 
-    private fun inkBounds(alpha: IntArray, width: Int, height: Int): IntArray? {
+    private fun inkBounds(alpha: IntArray, width: Int, height: Int): InkBounds? {
         var minX = width
         var minY = height
         var maxX = -1
         var maxY = -1
         for (y in 0 until height) for (x in 0 until width) {
-            if (alpha[y * width + x] < SPECKLE_ALPHA) continue
-            if (x < minX) minX = x
-            if (x > maxX) maxX = x
-            if (y < minY) minY = y
-            if (y > maxY) maxY = y
+            if (alpha[y * width + x] >= SPECKLE_ALPHA) {
+                minX = minOf(minX, x)
+                maxX = maxOf(maxX, x)
+                minY = minOf(minY, y)
+                maxY = maxOf(maxY, y)
+            }
         }
         if (maxX < 0) return null
 
         val padX = ((maxX - minX) * CROP_PAD).roundToInt()
         val padY = ((maxY - minY) * CROP_PAD).roundToInt()
-        return intArrayOf(
-            (minX - padX).coerceAtLeast(0),
-            (minY - padY).coerceAtLeast(0),
-            (maxX + padX).coerceAtMost(width - 1),
-            (maxY + padY).coerceAtMost(height - 1)
+        return InkBounds(
+            left = (minX - padX).coerceAtLeast(0),
+            top = (minY - padY).coerceAtLeast(0),
+            right = (maxX + padX).coerceAtMost(width - 1),
+            bottom = (maxY + padY).coerceAtMost(height - 1)
         )
     }
 
@@ -191,11 +170,12 @@ class SignatureExtractor @Inject constructor() {
         ink: Int,
         preserveOriginalColor: Boolean,
         sourceWidth: Int,
-        bounds: IntArray
+        bounds: InkBounds
     ): Bitmap {
-        val (left, top, right, bottom) = bounds
-        val width = right - left + 1
-        val height = bottom - top + 1
+        val left = bounds.left
+        val top = bounds.top
+        val width = bounds.right - left + 1
+        val height = bounds.bottom - top + 1
         val out = IntArray(width * height)
 
         for (y in 0 until height) for (x in 0 until width) {
@@ -205,11 +185,11 @@ class SignatureExtractor @Inject constructor() {
                 Color.TRANSPARENT
             } else {
                 val rgb = if (preserveOriginalColor) pixels[sourceIndex] else ink
-                (a shl 24) or (rgb and 0x00FFFFFF)
+                Color.argb(a, Color.red(rgb), Color.green(rgb), Color.blue(rgb))
             }
         }
 
-        return Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
+        return createBitmap(width, height).apply {
             setPixels(out, 0, width, 0, 0, width, height)
         }
     }
@@ -227,5 +207,54 @@ class SignatureExtractor @Inject constructor() {
         const val CORE_INK_ALPHA = 180
         const val MIN_BLOB_PIXELS = 24
         const val CROP_PAD = 0.04f
+    }
+}
+
+private const val MAX_ALPHA = 255
+
+// Integer Rec. 601 luma weights, in percent.
+private const val LUMA_RED = 30
+private const val LUMA_GREEN = 59
+private const val LUMA_BLUE = 11
+
+/** The padded crop around the ink, inclusive pixel edges. */
+private class InkBounds(val left: Int, val top: Int, val right: Int, val bottom: Int)
+
+/** Flood fill over the pixels of at least [minAlpha], 8-connected, marking [visited]. */
+private class InkFlood(
+    private val alpha: IntArray,
+    private val width: Int,
+    private val height: Int,
+    private val visited: BooleanArray,
+    private val minAlpha: Int
+) {
+    private val stack = ArrayDeque<Int>()
+
+    /** Collects into [blob] the connected ink around [start]. */
+    fun fill(start: Int, blob: MutableList<Int>) {
+        blob.clear()
+        stack.addLast(start)
+        visited[start] = true
+        while (stack.isNotEmpty()) {
+            val pixel = stack.removeLast()
+            blob.add(pixel)
+            pushNeighbours(pixel % width, pixel / width)
+        }
+    }
+
+    private fun pushNeighbours(x: Int, y: Int) {
+        for (dy in -1..1) for (dx in -1..1) {
+            val nx = x + dx
+            val ny = y + dy
+            val neighbour = dx != 0 || dy != 0
+            if (neighbour && nx in 0 until width && ny in 0 until height) push(ny * width + nx)
+        }
+    }
+
+    private fun push(index: Int) {
+        if (!visited[index] && alpha[index] >= minAlpha) {
+            visited[index] = true
+            stack.addLast(index)
+        }
     }
 }

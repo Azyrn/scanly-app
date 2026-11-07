@@ -68,11 +68,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -466,7 +467,7 @@ private fun RecordingPanel(
             )
             LevelMeter(level = state.level)
             Text(
-                stringResource(R.string.scr_transcribe_up_to_minutes, maxMinutes),
+                pluralStringResource(R.plurals.scr_transcribe_up_to_minutes, maxMinutes, maxMinutes),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -782,8 +783,9 @@ private fun RecentRow(summary: TranscriptSummary, onOpen: () -> Unit, onDelete: 
                 val facts = listOfNotNull(
                     DateUtils.getRelativeTimeSpanString(summary.createdAt).toString(),
                     TranscriptFormats.clock(summary.durationMs),
-                    stringResource(
-                        R.string.scr_transcribe_speakers,
+                    pluralStringResource(
+                        R.plurals.scr_transcribe_speakers,
+                        summary.speakerCount,
                         summary.speakerCount
                     ).takeIf { summary.speakerCount > 1 }
                 )
@@ -819,7 +821,10 @@ private fun LanguageSheet(
     onSelect: (String?) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
     val sorted = remember(languages) { languages.sortedBy { TranscriptFormats.languageName(it) } }
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Text(
@@ -891,7 +896,10 @@ private fun KeyTermsSheet(
     onClear: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
     var input by remember { mutableStateOf("") }
     var note by remember { mutableStateOf<String?>(null) }
     val add = {

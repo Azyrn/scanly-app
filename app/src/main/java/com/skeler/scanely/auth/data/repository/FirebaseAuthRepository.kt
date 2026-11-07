@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
@@ -161,11 +162,38 @@ class FirebaseAuthRepository @Inject constructor(
 
     private fun Exception.toUserMessage(): String = when (this) {
         is AuthException -> message.orEmpty()
+        is GetCredentialException, is GoogleIdTokenParsingException, is FirebaseException -> providerMessage()
+        // Prefer the backend's user-facing error message.
+        is HttpException -> backendMessage() ?: context.getString(R.string.auth_err_generic)
+        is IOException -> connectionMessage()
+        else -> message ?: context.getString(R.string.auth_err_generic)
+    }
+
+    // An IOException is anything below HTTP: refused, reset, TLS, DNS, timeout. Only the
+    // device knows whether that is because it is offline.
+    private fun connectionMessage(): String = context.getString(
+        if (networkObserver.isCurrentlyOnline()) {
+            R.string.auth_err_server_unreachable
+        } else {
+            R.string.auth_err_offline
+        }
+    )
+
+    /** Google sign-in and Firebase failures, each worded for the user. */
+    private fun Exception.providerMessage(): String = when (this) {
+        is GetCredentialException -> credentialMessage()
+        is FirebaseException -> firebaseMessage()
+        else -> context.getString(R.string.auth_err_bad_token)
+    }
+
+    private fun GetCredentialException.credentialMessage(): String = when (this) {
         is GetCredentialCancellationException -> context.getString(R.string.auth_err_cancelled)
         is NoCredentialException ->
             context.getString(R.string.auth_err_no_google_account)
-        is GoogleIdTokenParsingException -> context.getString(R.string.auth_err_bad_token)
-        is GetCredentialException -> context.getString(R.string.auth_err_google_unavailable)
+        else -> context.getString(R.string.auth_err_google_unavailable)
+    }
+
+    private fun FirebaseException.firebaseMessage(): String = when (this) {
         is FirebaseAuthWeakPasswordException ->
             reason ?: context.getString(R.string.auth_err_weak_password)
         is FirebaseAuthUserCollisionException ->
@@ -175,18 +203,6 @@ class FirebaseAuthRepository @Inject constructor(
         is FirebaseAuthInvalidUserException -> context.getString(R.string.auth_err_wrong_credentials)
         is FirebaseNetworkException -> context.getString(R.string.auth_err_offline)
         is FirebaseTooManyRequestsException -> context.getString(R.string.auth_err_too_many)
-        // Prefer the backend's user-facing error message.
-        is HttpException -> backendMessage() ?: context.getString(R.string.auth_err_generic)
-        // An IOException is anything below HTTP: refused, reset, TLS, DNS, timeout. Only the
-        // device knows whether that is because it is offline.
-        is IOException ->
-            context.getString(
-                if (networkObserver.isCurrentlyOnline()) {
-                    R.string.auth_err_server_unreachable
-                } else {
-                    R.string.auth_err_offline
-                }
-            )
         else -> message ?: context.getString(R.string.auth_err_generic)
     }
 

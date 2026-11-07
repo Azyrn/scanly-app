@@ -58,6 +58,8 @@ data class PdfStudioUiState(
     val isSelecting: Boolean get() = selection.isNotEmpty()
 }
 
+// Kept whole on purpose: the studio screen's state holder: one function per page-grid intent.
+@Suppress("TooManyFunctions")
 @HiltViewModel
 class PdfStudioViewModel @Inject constructor(
     @param:ApplicationContext private val appContext: Context,
@@ -243,7 +245,12 @@ class PdfStudioViewModel @Inject constructor(
                 publish(
                     extracted,
                     "${baseName()}_pages",
-                    appContext.getString(R.string.pe_extracted_pages, selection.size, note)
+                    appContext.resources.getQuantityString(
+                        R.plurals.pe_extracted_pages,
+                        selection.size,
+                        selection.size,
+                        note
+                    )
                 )
                 clearSelection()
             }

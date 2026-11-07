@@ -10,9 +10,11 @@
     <string name="pe_menu_validate_hint">Gömülü dijital imzaları denetleyin</string>
     <string name="pe_menu_library_hint">Kayıtlı imzayı kullan</string>
     <string name="pe_add_a_pdf">PDF ekle</string>
-    <string name="pe_merge_page_count">%1$d sayfa</string>
+    <plurals name="pe_merge_page_count">
+        <item quantity="one">%1$d sayfa</item>
+        <item quantity="other">%1$d sayfa</item>
+    </plurals>
     <string name="pe_remove">Kaldır</string>
-    <string name="pe_merge_page_change">%1$d sayfa → %2$d sayfa</string>
     <string name="pe_add_to_document">Belgeye ekle</string>
     <string name="pe_compress_now">Şimdi %1$s</string>
     <string name="pe_compress_trying_levels">Bu belgede her düzey deneniyor…</string>
@@ -59,7 +61,10 @@
     <string name="pe_unlock">Kilidi aç</string>
     <string name="pe_issued_by">Veren: %1$s</string>
     <string name="pe_valid_range">%1$s–%2$s geçerli</string>
-    <string name="pe_chain_count">Zincirde %1$d sertifika</string>
+    <plurals name="pe_chain_count">
+        <item quantity="one">Zincirde %1$d sertifika</item>
+        <item quantity="other">Zincirde %1$d sertifika</item>
+    </plurals>
     <string name="pe_certificate_expired_hint">Bu sertifika geçerlilik süresinin dışında. Yine de imzalayabilir, ancak okuyucular imzayı işaretler.</string>
     <string name="pe_reason_optional">Neden (isteğe bağlı)</string>
     <string name="pe_location_optional">Konum (isteğe bağlı)</string>
@@ -127,7 +132,10 @@
     <string name="pe_crop">Kırp</string>
     <string name="pe_paywall_reason_studio">Sıkıştırma, şifreleme ve metin düzenleme Scanly Pro\'nun bir parçası.</string>
     <string name="pe_select_all">Tümü seç</string>
-    <string name="pe_selected_count">%1$d seçili</string>
+    <plurals name="pe_selected_count">
+        <item quantity="one">%1$d seçili</item>
+        <item quantity="other">%1$d seçili</item>
+    </plurals>
     <string name="pe_clear_selection">Seçimi temizle</string>
     <string name="pe_extract_to_new_pdf">Yeni bir PDF\'e ayıkla</string>
     <string name="pe_edit">Düzenle</string>
@@ -141,7 +149,10 @@
     <string name="pe_busy_extracting">Ayıklanıyor</string>
     <string name="pe_extract_failed">Bu sayfalar ayıklanamadı.</string>
     <string name="pe_staged_edits_not_included">\u0020— bekleyenler dahil değil</string>
-    <string name="pe_extracted_pages">%1$d sayfa ayıklandı%2$s</string>
+    <plurals name="pe_extracted_pages">
+        <item quantity="one">%1$d sayfa ayıklandı%2$s</item>
+        <item quantity="other">%1$d sayfa ayıklandı%2$s</item>
+    </plurals>
     <string name="pe_busy_saving">Kaydediliyor</string>
     <string name="pe_busy_checking_signatures">İmzalar denetleniyor</string>
     <string name="pe_nothing_to_save">Kaydedilecek şey yok.</string>
@@ -149,7 +160,10 @@
     <string name="pe_write_failed">Downloads\'a yazılamadı.</string>
     <string name="pe_compression_staged">Sıkıştırma hazır. Kaydedince uygulanır.</string>
     <string name="pe_merge_read_failed">Bu PDF okunamadı.</string>
-    <string name="pe_documents_staged">%1$d belge hazır. Kaydedince uygulanır.</string>
+    <plurals name="pe_documents_staged">
+        <item quantity="one">%1$d belge hazır. Kaydedince uygulanır.</item>
+        <item quantity="other">%1$d belge hazır. Kaydedince uygulanır.</item>
+    </plurals>
     <string name="pe_encryption_staged">Şifreleme hazır. Kaydedince uygulanır.</string>
     <string name="pe_password_removal_staged">Parola kaldırma hazır. Kaydedince uygulanır.</string>
     <string name="pe_metadata_removal_staged">Meta veri silme hazır. Kaydedince uygulanır.</string>

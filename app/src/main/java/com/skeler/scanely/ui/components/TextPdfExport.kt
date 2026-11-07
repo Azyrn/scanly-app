@@ -15,7 +15,9 @@ import androidx.compose.ui.platform.LocalResources
 import com.skeler.scanely.R
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.ocr.TextBlockData
+import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.core.pdf.ScanExporter
+import com.skeler.scanely.core.pdf.TextExporter
 import com.skeler.scanely.core.text.FilenameSuggester
 import com.skeler.scanely.core.text.TextTables
 import kotlinx.coroutines.Dispatchers
@@ -143,20 +145,20 @@ private suspend fun write(context: Context, export: PendingExport, name: String)
     runCatching {
         when (format) {
             TextExportFormat.PDF ->
-                ScanExporter.exportTextPdf(context, text, asMarkdown, name)
+                TextExporter.exportTextPdf(context, text, asMarkdown, name)
             TextExportFormat.WORD ->
-                ScanExporter.exportTextWord(context, text, asMarkdown, name)
+                TextExporter.exportTextWord(context, text, asMarkdown, name)
             TextExportFormat.MARKDOWN ->
-                ScanExporter.exportTextMarkdown(context, text, name)
+                TextExporter.exportTextMarkdown(context, text, name)
             TextExportFormat.CSV ->
-                ScanExporter.exportTextCsv(context, export.rows, name)
+                TextExporter.exportTextCsv(context, export.rows, name)
             TextExportFormat.JSON ->
-                ScanExporter.exportTextJson(context, text, content.blocks, name, asMarkdown)
+                TextExporter.exportTextJson(context, text, content.blocks, name, asMarkdown)
         }
     }.fold(
         onSuccess = { uri ->
             toast(context, context.getString(R.string.pdf_tool_saved))
-            ScanExporter.shareDocument(context, uri, format.mimeType)
+            DocumentIntents.shareDocument(context, uri, format.mimeType)
         },
         onFailure = {
             toast(context, context.getString(R.string.cmp_export_couldnt_save, format.name))

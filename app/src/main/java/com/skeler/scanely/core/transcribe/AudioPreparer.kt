@@ -102,11 +102,13 @@ class AudioPreparer @Inject constructor(
     ): PreparedAudio = withContext(Dispatchers.IO) {
         val probe = probe(uri, mimeTypeHint)
         if (probe.durationMs > maxAudioMs) {
+            val maxMinutes = (maxAudioMs / MS_PER_MINUTE).toInt()
             throw PrepareException(
-                context.getString(
-                    R.string.au_err_too_long,
+                context.resources.getQuantityString(
+                    R.plurals.au_err_too_long,
+                    maxMinutes,
                     TranscriptFormats.clock(probe.durationMs),
-                    maxAudioMs / MS_PER_MINUTE
+                    maxMinutes
                 )
             )
         }

@@ -9,19 +9,15 @@
     <string name="pdf2office_simplified_word">레이아웃이 단순화됐어요. 텍스트, 제목, 목록, 표는 편집할 수 있지만 글꼴, 단, 도형, 그림은 옮겨지지 않았어요.</string>
     <string name="pdf2office_simplified_powerpoint">레이아웃이 단순화됐어요. 텍스트는 페이지에 있던 위치에서 편집할 수 있지만 글꼴, 도형, 그림은 옮겨지지 않았어요.</string>
     <plurals name="pdf2office_scanned_as_images">
-        <item quantity="one">스캔한 페이지 %d개는 이미지로 추가됐어요.</item>
         <item quantity="other">스캔한 페이지 %d개는 이미지로 추가됐어요.</item>
     </plurals>
     <plurals name="pdf2office_dense_pages">
-        <item quantity="one">아주 빽빽한 페이지 %d개는 일반 줄로 변환됐어요.</item>
         <item quantity="other">아주 빽빽한 페이지 %d개는 일반 줄로 변환됐어요.</item>
     </plurals>
     <plurals name="pdf2office_unreadable_pages">
-        <item quantity="one">읽을 수 없는 페이지 %d개는 제외됐어요.</item>
         <item quantity="other">읽을 수 없는 페이지 %d개는 제외됐어요.</item>
     </plurals>
     <plurals name="pdf2office_excel_scanned_skipped">
-        <item quantity="one">텍스트가 없는 스캔 페이지 %d개는 건너뛰었어요.</item>
         <item quantity="other">텍스트가 없는 스캔 페이지 %d개는 건너뛰었어요.</item>
     </plurals>
     <string name="pdf2office_excel_no_tables">표를 찾지 못해 텍스트를 행마다 한 줄씩 넣었어요.</string>

@@ -97,7 +97,11 @@
 
     <!-- Attaching -->
     <string name="chat_photo_unusable">No se pudo usar la imagen. Prueba otra.</string>
-    <string name="chat_file_too_many_pages">Se rehacen hasta %1$d páginas. Este archivo tiene %2$d.</string>
+    <plurals name="chat_file_too_many_pages">
+        <item quantity="one">Se rehace hasta %1$d página. Este archivo tiene %2$d.</item>
+        <item quantity="many">Se rehacen hasta %1$d páginas. Este archivo tiene %2$d.</item>
+        <item quantity="other">Se rehacen hasta %1$d páginas. Este archivo tiene %2$d.</item>
+    </plurals>
     <string name="chat_file_too_large">Demasiado grande para rehacer.</string>
     <string name="chat_file_unreadable">No se pudo leer el archivo. Prueba otro.</string>
 
@@ -238,7 +242,11 @@
     <string name="chat_log_loading">Cargando salida…</string>
     <string name="chat_log_expired">Salida caducada</string>
     <string name="chat_log_unavailable">No se pudo cargar. Toca para reintentar.</string>
-    <string name="chat_log_past_limit">%1$d caracteres más superaron el límite, omitidos</string>
+    <plurals name="chat_log_past_limit">
+        <item quantity="one">%1$d carácter más superó el límite, omitido</item>
+        <item quantity="many">%1$d caracteres más superaron el límite, omitidos</item>
+        <item quantity="other">%1$d caracteres más superaron el límite, omitidos</item>
+    </plurals>
     <plurals name="chat_log_dropped">
         <item quantity="one">%d fila previa no guardada en el teléfono</item>
         <item quantity="many">%d filas previas sin guardar en el teléfono</item>

@@ -6,6 +6,8 @@ import com.skeler.scanely.core.network.NetworkObserver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -61,16 +63,17 @@ class CustomProviderTester @Inject internal constructor(
             )
         }
 
-        val failure = if (response.isSuccessful) {
-            ConnectionDiagnosis.fromSuccessBody(response.body()?.string(), trimmedModel, protocol)
-        } else {
-            ConnectionDiagnosis.fromHttpStatus(
-                response.code(),
-                response.errorBody()?.string(),
-                trimmedModel
-            )
-        }
+        diagnose(response, trimmedModel, protocol)?.let { ConnectionTestResult.Failure(it) }
+            ?: ConnectionTestResult.Success
+    }
 
-        failure?.let { ConnectionTestResult.Failure(it) } ?: ConnectionTestResult.Success
+    private fun diagnose(
+        response: Response<ResponseBody>,
+        model: String,
+        protocol: ProviderProtocol
+    ): ConnectionFailure? = if (response.isSuccessful) {
+        ConnectionDiagnosis.fromSuccessBody(response.body()?.string(), model, protocol)
+    } else {
+        ConnectionDiagnosis.fromHttpStatus(response.code(), response.errorBody()?.string(), model)
     }
 }

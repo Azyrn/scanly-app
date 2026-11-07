@@ -134,7 +134,11 @@ class AuthViewModel @Inject constructor(
 
     private fun AuthUiState.validationError(): String = when {
         !isEmailValid -> appContext.getString(R.string.auth_val_invalid_email)
-        !isPasswordValid -> appContext.getString(R.string.auth_val_password_short, MIN_PASSWORD_LENGTH)
+        !isPasswordValid -> appContext.resources.getQuantityString(
+            R.plurals.auth_val_password_short,
+            MIN_PASSWORD_LENGTH,
+            MIN_PASSWORD_LENGTH
+        )
         else -> appContext.getString(R.string.auth_val_check_details)
     }
 }
