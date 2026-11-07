@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">İptal</string>
     <string name="signature_typed_font_missing">İmza yazı tipi yüklenemedi.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Açık kaynak lisansları</string>
-    <string name="font_licenses_subtitle">Scanly\'nin yazı tipleri ve simgeleri</string>
     <string name="font_licenses_close">Kapat</string>
-    <string name="font_licenses_unreadable">Bu lisans dosyası okunamadı.</string>
 </resources>

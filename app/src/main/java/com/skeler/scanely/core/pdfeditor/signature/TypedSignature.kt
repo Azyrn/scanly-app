@@ -19,9 +19,8 @@ private const val TAG = "TypedSignature"
  */
 object TypedSignature {
 
-    /** Great Vibes, SIL Open Font License 1.1; the licence ships next to it and is shown in Settings. */
+    /** Great Vibes, SIL Open Font License 1.1. */
     const val FONT_ASSET = "fonts/GreatVibes-Regular.ttf"
-    const val LICENSE_ASSET = "fonts/LICENSE-GreatVibes.txt"
 
     const val MAX_LENGTH = 60
 

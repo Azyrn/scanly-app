@@ -48,6 +48,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -80,14 +81,15 @@ import com.skeler.scanely.R
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.viewmodel.DocumentScanViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 import kotlin.math.roundToInt
 
 private const val TAG = "CameraScreen"
@@ -359,18 +361,28 @@ private fun BindCamera(
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val preview = remember { Preview.Builder().build() }
+    val imageCapture = remember {
+        ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+            .build()
+    }
+    val boundProvider = remember { arrayOfNulls<ProcessCameraProvider>(1) }
+
+    // CameraX keeps the last session's use cases after the lifecycle ends; a Preview still
+    // holding the PreviewView's surface provider would then pin the destroyed activity.
+    DisposableEffect(preview) {
+        onDispose {
+            preview.surfaceProvider = null
+            boundProvider[0]?.unbind(preview, imageCapture)
+        }
+    }
 
     LaunchedEffect(Unit) {
         try {
             val cameraProvider = context.getCameraProvider()
-
-            val preview = Preview.Builder().build().also {
-                it.surfaceProvider = previewView.surfaceProvider
-            }
-
-            val imageCapture = ImageCapture.Builder()
-                .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
-                .build()
+            boundProvider[0] = cameraProvider
+            preview.surfaceProvider = previewView.surfaceProvider
 
             cameraProvider.unbindAll()
             val camera = cameraProvider.bindToLifecycle(
@@ -381,6 +393,8 @@ private fun BindCamera(
             )
 
             onCameraReady(imageCapture, camera)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.e(TAG, "Camera binding failed", e)
         }
@@ -417,7 +431,7 @@ private fun captureImage(
 }
 
 private suspend fun Context.getCameraProvider(): ProcessCameraProvider =
-    suspendCoroutine { continuation ->
+    suspendCancellableCoroutine { continuation ->
         ProcessCameraProvider.getInstance(this).also { future ->
             future.addListener(
                 {

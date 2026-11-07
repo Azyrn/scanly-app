@@ -21,6 +21,9 @@ enum class PdfFeature(val requiresPro: Boolean, val title: String) {
     MERGE(false, "Merge"),
     REMOVE_METADATA(false, "Remove metadata"),
 
+    /** PDF to and from Word, PowerPoint and Excel: on-device, so free like the everyday tools. */
+    OFFICE_CONVERSION(false, "Office conversion"),
+
     COMPRESS(true, "Compress"),
     EDIT_TEXT(true, "Edit text"),
     ENCRYPT(true, "Encrypt"),
@@ -28,10 +31,7 @@ enum class PdfFeature(val requiresPro: Boolean, val title: String) {
     SIGNATURE(true, "Signature"),
     VALIDATE_SIGNATURES(true, "Validate signatures"),
     REPAIR(true, "Repair"),
-    WATERMARK(true, "Watermark"),
-
-    /** PDF to and from Word, PowerPoint and Excel. */
-    OFFICE_CONVERSION(true, "Office conversion")
+    WATERMARK(true, "Watermark")
 }
 
 /**

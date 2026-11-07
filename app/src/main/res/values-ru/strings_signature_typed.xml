@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Отмена</string>
     <string name="signature_typed_font_missing">Не удалось загрузить шрифт подписи.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Лицензии ПО</string>
-    <string name="font_licenses_subtitle">Шрифты и значки в Scanly</string>
     <string name="font_licenses_close">Закрыть</string>
-    <string name="font_licenses_unreadable">Файл лицензии не прочитан.</string>
 </resources>

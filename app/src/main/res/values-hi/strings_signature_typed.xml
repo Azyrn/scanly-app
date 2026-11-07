@@ -9,8 +9,5 @@
     <string name="signature_typed_save">सेव करें</string>
     <string name="signature_typed_cancel">रद्द करें</string>
     <string name="signature_typed_font_missing">हस्ताक्षर वाला फ़ॉन्ट लोड नहीं हो सका।</string>
-    <string name="font_licenses_title">ओपन-सोर्स लाइसेंस</string>
-    <string name="font_licenses_subtitle">Scanly के साथ आने वाले फ़ॉन्ट और आइकन</string>
     <string name="font_licenses_close">बंद करें</string>
-    <string name="font_licenses_unreadable">यह लाइसेंस फ़ाइल पढ़ी नहीं जा सकी।</string>
 </resources>

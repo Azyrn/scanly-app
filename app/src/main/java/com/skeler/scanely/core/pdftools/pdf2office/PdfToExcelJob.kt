@@ -46,7 +46,12 @@ class PdfToExcelJob @Inject constructor(
                 coroutineContext.ensureActive()
                 writer.finish(textSheet)
             }
-            val notes = tally.notes(simplified = null, scannedNote = R.plurals.pdf2office_excel_scanned_skipped)
-            if (hasText && !hasTables) listOf(ToolNote(R.string.pdf2office_excel_no_tables)) + notes else notes
+            excelNotes(tally, noTables = hasText && !hasTables)
         }
+}
+
+/** The page tally's notes, led by "no tables found" when the PDF had text but no table in it. */
+private fun excelNotes(tally: PageTally, noTables: Boolean): List<ToolNote> {
+    val notes = tally.notes(simplified = null, scannedNote = R.plurals.pdf2office_excel_scanned_skipped)
+    return if (noTables) listOf(ToolNote(R.string.pdf2office_excel_no_tables)) + notes else notes
 }

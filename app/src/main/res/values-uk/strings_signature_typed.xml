@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Скасувати</string>
     <string name="signature_typed_font_missing">Не вдалося завантажити шрифт підпису.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Ліцензії відкритого коду</string>
-    <string name="font_licenses_subtitle">Шрифти й іконки в Scanly</string>
     <string name="font_licenses_close">Закрити</string>
-    <string name="font_licenses_unreadable">Не вдалося прочитати ліцензію.</string>
 </resources>

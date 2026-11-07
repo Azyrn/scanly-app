@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Cancel</string>
     <string name="signature_typed_font_missing">The signature font could not be loaded.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Open-source licences</string>
-    <string name="font_licenses_subtitle">Fonts and icons bundled with Scanly</string>
     <string name="font_licenses_close">Close</string>
-    <string name="font_licenses_unreadable">This licence file could not be read.</string>
 </resources>

@@ -84,10 +84,21 @@ fun BarcodeCameraPreview(
     val lifecycleOwner = LocalLifecycleOwner.current
     val previewView = remember { PreviewView(context) }
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
+    val preview = remember { Preview.Builder().build() }
+    // Set once bound; disposed blocks a bind that lands after the screen left.
+    val boundProvider = remember { arrayOfNulls<ProcessCameraProvider>(1) }
+    val boundAnalysis = remember { arrayOfNulls<ImageAnalysis>(1) }
+    val disposed = remember { booleanArrayOf(false) }
 
+    // CameraX keeps the last session's use cases after the lifecycle ends; a Preview still
+    // holding the PreviewView's surface provider would then pin the destroyed activity.
     DisposableEffect(Unit) {
         onDispose {
+            disposed[0] = true
             barcodeAnalyzer.onZoomSuggested = null
+            preview.surfaceProvider = null
+            boundAnalysis[0]?.clearAnalyzer()
+            boundProvider[0]?.unbind(*listOfNotNull(preview, boundAnalysis[0]).toTypedArray())
             cameraExecutor.shutdown()
         }
     }
@@ -95,11 +106,10 @@ fun BarcodeCameraPreview(
     LaunchedEffect(Unit) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
         cameraProviderFuture.addListener({
+            if (disposed[0]) return@addListener
             val cameraProvider = cameraProviderFuture.get()
-
-            val preview = Preview.Builder().build().also {
-                it.surfaceProvider = previewView.surfaceProvider
-            }
+            boundProvider[0] = cameraProvider
+            preview.surfaceProvider = previewView.surfaceProvider
 
             val resolutionSelector = ResolutionSelector.Builder()
                 .setResolutionStrategy(
@@ -115,6 +125,7 @@ fun BarcodeCameraPreview(
                 .setResolutionSelector(resolutionSelector)
                 .build()
                 .also { it.setAnalyzer(cameraExecutor, barcodeAnalyzer) }
+            boundAnalysis[0] = imageAnalysis
 
             try {
                 cameraProvider.unbindAll()

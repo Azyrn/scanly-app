@@ -42,6 +42,7 @@ private const val REL_STYLES = "$NS_OFFICE_RELS/styles"
  * background pictures are files the caller keeps on disk until [finish] copies them in.
  */
 class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
+    private val lineJoin = DocxLineJoin(measurer)
 
     private val zip = ZipOutputStream(BufferedOutputStream(out, BUFFER_BYTES))
     private val writer: Writer = OutputStreamWriter(zip, Charsets.UTF_8)
@@ -204,34 +205,18 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
      * have fitted, a new paragraph starts instead, so Word does not pull that word up.
      */
     internal fun textBox(block: Block, pageHeightPt: Float, behind: Boolean = false): String {
-        val reflow = reflows(block, behind)
+        val reflow = docxReflows(block, behind)
         val g = boxGeometry(block, pageHeightPt, reflow)
         val id = ++drawingId
         val paragraph = StringBuilder("<w:p>").append(paragraphProperties(block, g))
         val leftPt = g.x / EMU_PER_POINT.toFloat()
         val rightPt = (g.x + g.cx) / EMU_PER_POINT.toFloat()
         block.lines.forEachIndexed { index, line ->
-            val runs = ExactRuns.runs(line, g.lineStarts[index], measurer).toMutableList()
             val next = block.lines.getOrNull(index + 1)
-            val join = if (reflow && next != null) lineJoin(line, next, leftPt, rightPt) else Join.BREAK
-            if (join == Join.SOFT_HYPHEN && runs.last().text.endsWith("-")) {
-                val last = runs.removeAt(runs.lastIndex)
-                if (last.text.length > 1) {
-                    runs += OutRun(last.text.dropLast(1), last.style, last.spacingTwips, last.scalePercent, last.raiseHalfPoints)
-                }
-            }
+            val join = if (reflow && next != null) lineJoin.join(line, next, leftPt, rightPt) else Join.BREAK
+            val runs = lineRuns(line, g.lineStarts[index], join)
             runs.forEach { paragraph.append(runXml(it)) }
-            if (next == null) return@forEachIndexed
-            when (join) {
-                Join.BREAK -> paragraph.append("<w:r><w:br/></w:r>")
-                Join.SPACE -> paragraph.append(runXml(OutRun(" ", runs.last().style, 0, FULL_SCALE, 0)))
-                Join.SOFT_HYPHEN -> paragraph.append(
-                    "<w:r><w:rPr>${fontProperties(runs.last().style)}${adjustments(
-                        OutRun("-", runs.last().style, 0, FULL_SCALE, 0)
-                    )}</w:rPr><w:softHyphen/></w:r>"
-                )
-                Join.PARAGRAPH -> paragraph.append("</w:p><w:p>").append(paragraphProperties(block, g, first = false))
-            }
+            if (next != null) paragraph.append(joinXml(join, runs.last().style, block, g))
         }
         paragraph.append("</w:p>")
         val anchor = Anchor(
@@ -247,45 +232,23 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
         return textShape(anchor, paragraph, rotation = g.rotation, vertical = g.vertical, grows = reflow)
     }
 
-    private enum class Join { BREAK, SPACE, SOFT_HYPHEN, PARAGRAPH }
-
-    private fun reflows(block: Block, behind: Boolean): Boolean =
-        !behind && block.lines.size > 1 && block.angleDeg == 0 &&
-            block.lines.none { (it.bidi && !block.rtl) || it.rtl != block.rtl || it.tokens.isEmpty() } &&
-            // A long link broken where it ran out of room: the PDF put no space there and Word would
-            // break it at its own place (a slash or hyphen), so such a block keeps its line breaks.
-            block.lines.zipWithNext().none { (line, next) ->
-                unbreakable(line.tokens.last().text) || unbreakable(next.tokens.first().text) ||
-                    next.tokens.first().text.first() in NO_WORD_START
+    /** A line's runs; before a soft-hyphen join the line's own trailing hyphen is dropped. */
+    private fun lineRuns(line: Segment, startPt: Float, join: Join): List<OutRun> {
+        val runs = ExactRuns.runs(line, startPt, measurer).toMutableList()
+        if (join == Join.SOFT_HYPHEN && runs.last().text.endsWith("-")) {
+            val last = runs.removeAt(runs.lastIndex)
+            if (last.text.length > 1) {
+                runs += OutRun(
+                    last.text.dropLast(1),
+                    last.style,
+                    last.spacingTwips,
+                    last.scalePercent,
+                    last.raiseHalfPoints
+                )
             }
-
-    /** How [line] continues into [next] in a reflowing block whose box spans [leftPt]..[rightPt]. */
-    private fun lineJoin(line: Segment, next: Segment, leftPt: Float, rightPt: Float): Join {
-        val lastText = line.tokens.last().text
-        val firstText = next.tokens.first().text
-        val hyphen = !line.rtl && lastText.length > 1 && lastText.endsWith("-") &&
-            lastText[lastText.length - 2].isLetter() && firstText.firstOrNull()?.isLowerCase() == true
-        val style = next.tokens.first().style
-        val space = if (hyphen) 0f else measurer.width(" ", style.family, style.arabic, style.bold, style.italic, style.sizePt)
-        val word = listOf(next.tokens.first()) + next.tokens.drop(1).takeWhile { !it.spaceBefore }
-        val wordWidth = word.maxOf { it.u1 } - word.minOf { it.u0 }
-        val room = when {
-            line.rtl -> line.u0 - leftPt
-            hyphen -> rightPt - (line.tokens.last().u1 - hyphenWidth(line.tokens.last().style))
-            else -> rightPt - line.u1
         }
-        val fits = space + wordWidth <= room
-        return when {
-            fits -> if (hyphen) Join.BREAK else Join.PARAGRAPH
-            hyphen -> Join.SOFT_HYPHEN
-            else -> Join.SPACE
-        }
+        return runs
     }
-
-    private fun unbreakable(text: String) =
-        "://" in text || "www." in text || (text.length > LONG_TOKEN && text.any { it in LINK_CHARS })
-
-    private fun hyphenWidth(s: TextStyle) = measurer.width("-", s.family, s.arabic, s.bold, s.italic, s.sizePt)
 
     /**
      * A table as a native Word table inside a text box at the table's place, so the page keeps its
@@ -339,9 +302,6 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
 
     companion object {
         private const val BUFFER_BYTES = 64 * 1024
-        private const val LONG_TOKEN = 20
-        private const val LINK_CHARS = "/%=&_?#"
-        private const val NO_WORD_START = "=/%&_?#)]}.,;:"
         private const val DEFAULT_WIDTH_PT = 595f
         private const val DEFAULT_HEIGHT_PT = 842f
 
@@ -415,7 +375,18 @@ private fun textShape(
         "<wps:txbx><w:txbxContent>$content</w:txbxContent></wps:txbx>" +
         "<wps:bodyPr rot=\"0\"${vertical?.let { " vert=\"$it\"" } ?: ""} wrap=\"${if (grows) "square" else "none"}\"" +
         " lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" anchor=\"t\" anchorCtr=\"0\">" +
-        (if (grows) "<a:spAutoFit/>" else "<a:noAutofit/>") + "</wps:bodyPr></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>"
+        (if (grows) "<a:spAutoFit/>" else "<a:noAutofit/>") +
+        "</wps:bodyPr></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>"
+}
+
+/** What goes between two lines of a block, by how they [Join]. */
+private fun joinXml(join: Join, style: TextStyle, block: Block, g: BoxGeometry): String = when (join) {
+    Join.BREAK -> "<w:r><w:br/></w:r>"
+    Join.SPACE -> runXml(OutRun(" ", style, 0, FULL_SCALE, 0))
+    Join.SOFT_HYPHEN ->
+        "<w:r><w:rPr>${fontProperties(style)}${adjustments(OutRun("-", style, 0, FULL_SCALE, 0))}</w:rPr>" +
+            "<w:softHyphen/></w:r>"
+    Join.PARAGRAPH -> "</w:p><w:p>" + paragraphProperties(block, g, first = false)
 }
 
 /** A block's exact line pitch, indents and direction. */

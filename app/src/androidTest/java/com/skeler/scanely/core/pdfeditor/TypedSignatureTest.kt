@@ -5,8 +5,6 @@ import android.graphics.Typeface
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.skeler.scanely.core.pdfeditor.signature.TypedSignature
-import com.skeler.scanely.settings.presentation.BundledFontLicenses
-import com.skeler.scanely.settings.presentation.readLicense
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -15,7 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * The typed-signature font and the licence the OFL obliges us to ship with it.
+ * The typed-signature font.
  *
  * TypedSignature.loadTypeface swallows a missing asset (the dialog then says the font failed), so
  * only a test on the real APK notices a dropped file.
@@ -31,21 +29,6 @@ class TypedSignatureTest {
         assertTrue("${TypedSignature.FONT_ASSET} is only ${bytes.size} bytes", bytes.size > 10_000)
         assertNotNull(Typeface.createFromAsset(context.assets, TypedSignature.FONT_ASSET))
         assertNotNull(TypedSignature.loadTypeface(context))
-    }
-
-    @Test
-    fun oflTextShipsWithTheFont() {
-        val text = context.assets.open(TypedSignature.LICENSE_ASSET).bufferedReader().use { it.readText() }
-        assertTrue(text.contains("SIL Open Font License"))
-        assertTrue(text.contains("Great Vibes"))
-    }
-
-    @Test
-    fun everyLicenceShownInSettingsIsReadable() {
-        for ((name, path) in BundledFontLicenses) {
-            val text = readLicense(context, path)
-            assertTrue("$name: $path missing or empty", !text.isNullOrBlank())
-        }
     }
 
     @Test

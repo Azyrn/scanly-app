@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">取消</string>
     <string name="signature_typed_font_missing">无法加载签名字体。</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">开源许可</string>
-    <string name="font_licenses_subtitle">Scanly 内置的字体和图标</string>
     <string name="font_licenses_close">关闭</string>
-    <string name="font_licenses_unreadable">无法读取此许可文件。</string>
 </resources>

@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Annuler</string>
     <string name="signature_typed_font_missing">Police de signature introuvable.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Licences open source</string>
-    <string name="font_licenses_subtitle">Polices et icônes fournies avec Scanly</string>
     <string name="font_licenses_close">Fermer</string>
-    <string name="font_licenses_unreadable">Impossible de lire cette licence.</string>
 </resources>

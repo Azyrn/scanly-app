@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Cancelar</string>
     <string name="signature_typed_font_missing">No se pudo cargar la tipografía de la firma.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Licencias libres</string>
-    <string name="font_licenses_subtitle">Tipografías e iconos incluidos en Scanly</string>
     <string name="font_licenses_close">Cerrar</string>
-    <string name="font_licenses_unreadable">No se pudo leer la licencia.</string>
 </resources>

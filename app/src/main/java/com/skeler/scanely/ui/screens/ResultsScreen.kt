@@ -166,10 +166,10 @@ fun ResultsScreen() {
     // real reason instead of a generic pitch.
     // A translation refused for the same class of reason gets the same sheet, instead of a toast
     // telling the user to retry a call their plan will refuse again.
-    val upgradeReason = (aiState.result as? AiResult.Error)
+    val upgradeError = (aiState.result as? AiResult.Error)
         ?.takeIf { it.isUpgradePath }
-        ?.message
-        ?: aiState.translationUpgrade?.message
+        ?: aiState.translationUpgrade
+    val upgradeReason = upgradeError?.message
     var paywallDismissed by remember(upgradeReason) { mutableStateOf(false) }
 
     var showLanguageMenu by remember { mutableStateOf(false) }
@@ -208,6 +208,7 @@ fun ResultsScreen() {
         PaywallSheet(
             state = paywallState,
             reason = upgradeReason,
+            isFeatureLock = upgradeError?.isFeatureLock == true,
             onDismiss = {
                 paywallDismissed = true
                 paywallViewModel.consumeMessage()

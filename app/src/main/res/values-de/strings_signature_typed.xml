@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">Abbruch</string>
     <string name="signature_typed_font_missing">Signaturschrift nicht geladen.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">Open-Source-Lizenzen</string>
-    <string name="font_licenses_subtitle">Schriften und Symbole in Scanly</string>
     <string name="font_licenses_close">Fertig</string>
-    <string name="font_licenses_unreadable">Lizenzdatei nicht lesbar.</string>
 </resources>

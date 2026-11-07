@@ -9,7 +9,6 @@ import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactTableCell
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactTableRow
 import com.skeler.scanely.core.pdftools.pdf2office.exact.OfficeFamily
 import com.skeler.scanely.core.pdftools.pdf2office.exact.OutRun
-import com.skeler.scanely.core.pdftools.pdf2office.exact.Segment
 import com.skeler.scanely.core.pdftools.pdf2office.exact.TextMeasurer
 import com.skeler.scanely.core.pdftools.pdf2office.exact.boxGeometry
 import com.skeler.scanely.core.pdftools.pdf2office.exact.forEachInReadingOrder
@@ -26,9 +25,6 @@ internal const val FIRST_SHAPE_ID = 2
 
 private const val EMU_PER_TWIP = 635L
 private const val DESCENT_EM = 0.21f
-private const val REFLOW_SLACK_PT = 1.5f
-private const val REFLOW_SLACK_EM = 1f
-private const val FULL_SCALE_PERCENT = 100
 private const val SOFT_HYPHEN = '\u00AD'
 
 // a:rPr baseline is in thousandths of a percent of the size: half-points x 0.5 / size x 100 x 1000.
@@ -123,6 +119,72 @@ internal class ExactSlide(
     }
 }
 
+/** A text box's place and size on the slide, in EMU. */
+private class ShapeBox(val x: Long, val y: Long, val cx: Long, val cy: Long)
+
+/**
+ * The block's lines into [content]. With [rightPt] (a reflowed box) a PDF line break becomes a
+ * space, or a soft hyphen for a hyphenated word, unless the next line's first word would have fitted.
+ */
+@Suppress("LongParameterList")
+private fun appendLines(
+    content: StringBuilder,
+    block: Block,
+    lineStarts: List<Float>,
+    rightPt: Float?,
+    scale: Float,
+    measurer: TextMeasurer
+) {
+    // Before each line after the first: does the PDF's break stay a line break?
+    val breaks = block.lines.zipWithNext { previous, line ->
+        rightPt == null || fitsAfter(previous, line, rightPt, measurer)
+    }
+    val hyphenated = block.lines.zipWithNext { previous, line -> hyphenJoins(previous, line) }
+    block.lines.forEachIndexed { index, line ->
+        val runs = ExactRuns.runs(line, lineStarts[index], measurer).toMutableList()
+        if (index > 0) {
+            when {
+                breaks[index - 1] -> content.append(
+                    "<a:br><a:rPr lang=\"en-US\" sz=\"${(line.sizePt * scale * HUNDREDTHS).roundToInt()}\"/></a:br>"
+                )
+                !hyphenated[index - 1] ->
+                    content.append(PptxRuns.run(joiningSpace(block.lines[index - 1]), scale, measurer))
+            }
+        }
+        if (index < breaks.size && !breaks[index] && hyphenated[index]) {
+            val last = runs.removeAt(runs.lastIndex)
+            runs += OutRun(
+                last.text.dropLast(1) + SOFT_HYPHEN,
+                last.style,
+                last.spacingTwips,
+                last.scalePercent,
+                last.raiseHalfPoints
+            )
+        }
+        runs.forEach { content.append(PptxRuns.run(it, scale, measurer)) }
+    }
+}
+
+@Suppress("LongParameterList")
+private fun textShapeXml(
+    id: Int,
+    box: ShapeBox,
+    rotationDeg: Int,
+    verticalMode: String?,
+    reflow: Boolean,
+    content: CharSequence
+): String {
+    val rotation = if (rotationDeg != 0) " rot=\"$rotationDeg\"" else ""
+    val vertical = verticalMode?.let { " vert=\"$it\"" } ?: ""
+    return "<p:sp><p:nvSpPr><p:cNvPr id=\"$id\" name=\"Text $id\"/><p:cNvSpPr txBox=\"1\"/><p:nvPr/></p:nvSpPr>" +
+        "<p:spPr><a:xfrm$rotation><a:off x=\"${box.x}\" y=\"${box.y}\"/>" +
+        "<a:ext cx=\"${box.cx.coerceAtLeast(1)}\" cy=\"${box.cy.coerceAtLeast(1)}\"/></a:xfrm>" +
+        "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>" +
+        "<p:txBody><a:bodyPr$vertical wrap=\"${if (reflow) "square" else "none"}\"" +
+        " lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" rtlCol=\"0\" anchor=\"t\">" +
+        "${if (reflow) "<a:spAutoFit/>" else "<a:noAutofit/>"}</a:bodyPr><a:lstStyle/>$content</p:txBody></p:sp>"
+}
+
 /** Exact-layout text on a slide: text boxes, native tables and the runs inside both. */
 internal object PptxExactShapes {
 
@@ -132,98 +194,21 @@ internal object PptxExactShapes {
      */
     fun textBox(id: Int, frame: SlideFrame, block: Block, pageHeightPt: Float, measurer: TextMeasurer): String {
         val g = boxGeometry(block, pageHeightPt)
-        val scale = frame.scale
         val content = StringBuilder(paragraphStart(block, g.indentLeftTwips, g.firstLineTwips, frame))
-        val reflow = reflows(block)
-        // A reflowed box is as wide as its longest line plus a little rounding room, so PowerPoint
-        // breaks the joined lines where the PDF did and rewraps them when the text is edited.
-        val rightPt = block.lines.maxOf { it.u1 } +
-            maxOf(REFLOW_SLACK_PT, block.lines.maxOf { it.sizePt } * REFLOW_SLACK_EM)
-        val boxWidth = if (reflow) {
-            (rightPt * EMU_PER_POINT).roundToLong() - g.x
-        } else {
-            g.cx
-        }
-        // Before each line after the first: does the PDF's break stay a line break?
-        val breaks = block.lines.zipWithNext { previous, line ->
-            !reflow || fitsAfter(previous, line, rightPt, measurer)
-        }
-        val hyphenated = block.lines.zipWithNext { previous, line -> hyphenJoins(previous, line) }
-        block.lines.forEachIndexed { index, line ->
-            val runs = ExactRuns.runs(line, g.lineStarts[index], measurer).toMutableList()
-            if (index > 0) {
-                when {
-                    breaks[index - 1] -> content.append(
-                        "<a:br><a:rPr lang=\"en-US\" sz=\"${(line.sizePt * scale * HUNDREDTHS).roundToInt()}\"/></a:br>"
-                    )
-                    !hyphenated[index - 1] ->
-                        content.append(PptxRuns.run(joiningSpace(block.lines[index - 1]), scale, measurer))
-                }
-            }
-            if (index < breaks.size && !breaks[index] && hyphenated[index]) {
-                val last = runs.removeAt(runs.lastIndex)
-                runs += OutRun(
-                    last.text.dropLast(1) + SOFT_HYPHEN,
-                    last.style,
-                    last.spacingTwips,
-                    last.scalePercent,
-                    last.raiseHalfPoints
-                )
-            }
-            runs.forEach { content.append(PptxRuns.run(it, scale, measurer)) }
-        }
+        val reflow = pptxReflows(block)
+        val rightPt = reflowRightPt(block)
+        val boxWidth = if (reflow) (rightPt * EMU_PER_POINT).roundToLong() - g.x else g.cx
+        appendLines(content, block, g.lineStarts, if (reflow) rightPt else null, frame.scale, measurer)
         content.append("</a:p>")
-        val rotation = if (g.rotation != 0) " rot=\"${g.rotation}\"" else ""
-        val vertical = g.vertical?.let { " vert=\"$it\"" } ?: ""
         val lift = if (g.rotation == 0 && g.vertical == null) {
-            lift(
-                block.pitchPt,
-                block.lines.maxOf { it.sizePt }
-            )
+            lift(block.pitchPt, block.lines.maxOf { it.sizePt })
         } else {
             0f
         }
         val top = frame.yEmu(g.y - (lift * EMU_PER_POINT).roundToLong())
-        return "<p:sp><p:nvSpPr><p:cNvPr id=\"$id\" name=\"Text $id\"/><p:cNvSpPr txBox=\"1\"/><p:nvPr/></p:nvSpPr>" +
-            "<p:spPr><a:xfrm$rotation><a:off x=\"${frame.xEmu(g.x)}\" y=\"$top\"/>" +
-            "<a:ext cx=\"${frame.scaled(
-                boxWidth
-            ).coerceAtLeast(1)}\" cy=\"${frame.scaled(g.cy).coerceAtLeast(1)}\"/></a:xfrm>" +
-            "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>" +
-            "<p:txBody><a:bodyPr$vertical wrap=\"${if (reflow) "square" else "none"}\"" +
-            " lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" rtlCol=\"0\" anchor=\"t\">" +
-            "${if (reflow) "<a:spAutoFit/>" else "<a:noAutofit/>"}</a:bodyPr><a:lstStyle/>$content</p:txBody></p:sp>"
+        val box = ShapeBox(frame.xEmu(g.x), top, frame.scaled(boxWidth), frame.scaled(g.cy))
+        return textShapeXml(id, box, g.rotation, g.vertical, reflow, content)
     }
-
-    /**
-     * Upright left-to-right prose of several lines is one wrapping paragraph; anything else keeps its
-     * line breaks. So does a block with raised or lowered text (BERT_LARGE, footnote marks): Impress
-     * sets it narrower than the PDF, the joined lines rewrap and every line below them moves.
-     */
-    private fun reflows(block: Block): Boolean =
-        block.lines.size > 1 && block.angleDeg == 0 &&
-            block.lines.none { line -> line.rtl || line.bidi || line.tokens.any { it.raisePt != 0f } }
-
-    /**
-     * The PDF ended [previous] early (a paragraph's last line, a list item) when the next line's
-     * first word would have fit after it: that break stays a line break, or the word would move up.
-     */
-    private fun fitsAfter(previous: Segment, line: Segment, rightPt: Float, measurer: TextMeasurer): Boolean {
-        val first = line.tokens.first()
-        val s = previous.tokens.last().style
-        val space = measurer.width(" ", s.family, s.arabic, s.bold, s.italic, s.sizePt)
-        return previous.u1 + space + (first.u1 - first.u0) <= rightPt
-    }
-
-    /** "exam-" then "ple": one word again, its hyphen a soft one that shows only where the line still breaks. */
-    private fun hyphenJoins(previous: Segment, line: Segment): Boolean {
-        val end = previous.tokens.last().text
-        return end.length > 1 && end.endsWith('-') && end[end.length - 2].isLetter() &&
-            line.tokens.first().text.firstOrNull()?.isLowerCase() == true
-    }
-
-    private fun joiningSpace(previous: Segment): OutRun =
-        OutRun(" ", previous.tokens.last().style, 0, FULL_SCALE_PERCENT, 0)
 
     private fun paragraphStart(block: Block, indentLeftTwips: Int, firstLineTwips: Int, frame: SlideFrame): String {
         val pitch = (block.pitchPt * frame.scale * HUNDREDTHS).roundToInt().coerceAtLeast(1)

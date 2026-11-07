@@ -32,7 +32,6 @@ import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.FontDownload
 import androidx.compose.material.icons.rounded.Gavel
 import androidx.compose.material.icons.rounded.Hub
 import androidx.compose.material.icons.rounded.Key
@@ -85,7 +84,6 @@ import com.skeler.scanely.core.ocr.TextOcrEngine
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.settings.data.SettingsKeys
-import com.skeler.scanely.settings.presentation.FontLicensesDialog
 import com.skeler.scanely.settings.presentation.LegalLinks
 import com.skeler.scanely.settings.presentation.viewmodel.SettingsViewModel
 import com.skeler.scanely.ui.components.PaywallSheet
@@ -117,7 +115,6 @@ fun SettingsScreen(
     val isPrivacyOptionsRequired by paywallViewModel.isPrivacyOptionsRequired.collectAsState()
     var showPaywall by remember { mutableStateOf(false) }
     var showRemoveKeyDialog by remember { mutableStateOf(false) }
-    var showFontLicenses by remember { mutableStateOf(false) }
 
     val engineId by settingsViewModel.getString(SettingsKeys.BARCODE_ENGINE)
         .collectAsState(initial = BarcodeEngine.DEFAULT.id)
@@ -313,12 +310,6 @@ fun SettingsScreen(
                             onClick = { uriHandler.openUri(LegalLinks.TERMS) }
                         ),
                         SettingsItem(
-                            title = stringResource(R.string.font_licenses_title),
-                            subtitle = stringResource(R.string.font_licenses_subtitle),
-                            icon = Icons.Rounded.FontDownload,
-                            onClick = { showFontLicenses = true }
-                        ),
-                        SettingsItem(
                             title = "Azyrn",
                             subtitle = stringResource(R.string.set_developer_subtitle),
                             avatarUrl = DEVELOPER_AVATAR_URL,
@@ -348,10 +339,6 @@ fun SettingsScreen(
                 )
             }
         }
-    }
-
-    if (showFontLicenses) {
-        FontLicensesDialog(onDismiss = { showFontLicenses = false })
     }
 
     if (showPaywall) {

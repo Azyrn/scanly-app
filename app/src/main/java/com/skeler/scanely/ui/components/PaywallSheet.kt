@@ -192,7 +192,9 @@ fun PaywallSheet(
                 )
 
                 else -> {
-                    if (canWatchAd && state.rewardPagesPerAd > 0) {
+                    // An ad grants credits, not Pro tools: offered for a locked tool, the user would
+                    // watch it and be refused again.
+                    if (canWatchAd && !isFeatureLock && state.rewardPagesPerAd > 0) {
                         WatchAdForPages(
                             pagesPerAd = state.rewardPagesPerAd,
                             onWatchAd = onWatchAd

@@ -38,6 +38,13 @@ sealed class AiResult {
         val isUpgradePath: Boolean
             get() = code in setOf("quota_exceeded", "format_not_in_plan", "budget_exhausted") ||
                 (code == "doc_too_large" && requiredTier != null)
+
+        /**
+         * The plan does not include this tool at all (translation or extraction on Free), so the
+         * paywall must say "Part of Scanly Pro" — not "You've hit your plan's limit".
+         */
+        val isFeatureLock: Boolean
+            get() = code == "format_not_in_plan"
     }
 }
 

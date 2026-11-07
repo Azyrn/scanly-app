@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">إلغاء</string>
     <string name="signature_typed_font_missing">تعذّر تحميل خط التوقيع.</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">تراخيص المصادر المفتوحة</string>
-    <string name="font_licenses_subtitle">الخطوط والأيقونات المضمّنة في Scanly</string>
     <string name="font_licenses_close">إغلاق</string>
-    <string name="font_licenses_unreadable">تعذّرت قراءة ملف الترخيص هذا.</string>
 </resources>

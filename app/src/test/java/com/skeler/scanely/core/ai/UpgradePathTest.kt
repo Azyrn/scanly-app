@@ -41,4 +41,17 @@ class UpgradePathTest {
     fun `running out of credits still opens the paywall`() {
         assertTrue(errorFor("quota_exceeded", "You've used your 20 free credits this month.").isUpgradePath)
     }
+
+    @Test
+    fun `a tool the plan does not include is a feature lock, not a used-up limit`() {
+        val translation = errorFor(
+            "format_not_in_plan",
+            "Translation is available on Pro and above.",
+            requiredTier = "pro"
+        )
+
+        assertTrue(translation.isUpgradePath)
+        assertTrue(translation.isFeatureLock)
+        assertFalse(errorFor("quota_exceeded", "You've used your 20 free credits this month.").isFeatureLock)
+    }
 }

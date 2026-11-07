@@ -11,9 +11,5 @@
     <string name="signature_typed_cancel">キャンセル</string>
     <string name="signature_typed_font_missing">署名用フォントを読み込めませんでした。</string>
 
-    <!-- Settings → About: licences of the fonts and icons bundled in the app -->
-    <string name="font_licenses_title">OSSライセンス</string>
-    <string name="font_licenses_subtitle">Scanly 同梱のフォントとアイコン</string>
     <string name="font_licenses_close">閉じる</string>
-    <string name="font_licenses_unreadable">ライセンスファイルを読めません。</string>
 </resources>
