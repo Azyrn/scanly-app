@@ -214,7 +214,7 @@ class PaddleOcrService @Inject constructor(
         }
     }
 
-    suspend fun recognizeFromPdf(pdfUri: Uri, pageIndex: Int? = null): OcrResult =
+    suspend fun recognizeFromPdf(pdfUri: Uri, pageIndex: Int? = null, onPage: (Int) -> Unit = {}): OcrResult =
         withContext(Dispatchers.IO) {
             val pages = PdfPages()
 
@@ -228,7 +228,10 @@ class PaddleOcrService @Inject constructor(
                     ?: return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pdf))
                 process(pageIndex, bitmap)
             } else {
-                val opened = pdfRendererHelper.forEachPage(pdfUri) { i, bmp -> process(i, bmp) }
+                val opened = pdfRendererHelper.forEachPage(pdfUri) { i, bmp ->
+                    process(i, bmp)
+                    onPage(i)
+                }
                 if (!opened) return@withContext OcrResult.Error(context.getString(R.string.ocr_err_render_pdf))
             }
 

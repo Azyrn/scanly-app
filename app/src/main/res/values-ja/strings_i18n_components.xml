@@ -105,6 +105,7 @@
     <plurals name="cmp_batch_scanning">
         <item quantity="other">%1$d/%2$d 件をスキャン中…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">%1$d/%2$d ページ読み取り中…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">栄養成分表示</string>

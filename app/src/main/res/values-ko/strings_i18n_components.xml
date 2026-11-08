@@ -97,6 +97,7 @@
     <plurals name="cmp_batch_scanning">
         <item quantity="other">파일 %2$d개 중 %1$d개 스캔 중…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">%1$d/%2$d페이지 읽는 중…</string>
     <string name="cmp_food_nutrition_facts">영양 정보</string>
     <string name="cmp_food_serving_size">1회 제공량: %1$s</string>
     <string name="cmp_food_ingredients">재료</string>

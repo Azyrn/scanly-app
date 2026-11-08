@@ -328,12 +328,21 @@ fun BatchScanProgress(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = pluralStringResource(
-                R.plurals.cmp_batch_scanning,
-                progress.total,
-                progress.done.coerceAtLeast(1),
-                progress.total
-            ),
+            text = if (progress.pages) {
+                // The page being read now, so the count starts at 1 and stops at the last page.
+                stringResource(
+                    R.string.cmp_pdf_reading_page,
+                    (progress.done + 1).coerceAtMost(progress.total),
+                    progress.total
+                )
+            } else {
+                pluralStringResource(
+                    R.plurals.cmp_batch_scanning,
+                    progress.total,
+                    progress.done.coerceAtLeast(1),
+                    progress.total
+                )
+            },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

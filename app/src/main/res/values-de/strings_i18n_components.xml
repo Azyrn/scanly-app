@@ -119,6 +119,7 @@
         <item quantity="one">Scanne %1$d/%2$d Datei…</item>
         <item quantity="other">Scanne %1$d/%2$d Dateien…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">Seite %1$d/%2$d wird gelesen…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Nährwerte</string>

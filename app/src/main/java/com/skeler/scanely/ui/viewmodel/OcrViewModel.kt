@@ -52,16 +52,11 @@ class OcrViewModel @Inject constructor(
         val sourceUri = pdfUris.first()
         processingJob?.cancel()
         processingJob = viewModelScope.launch {
-            _uiState.value = OcrUiState(
-                isProcessing = true,
-                sourceUri = sourceUri,
-                progress = BatchProgress(0, pdfUris.size).takeIf { pdfUris.size > 1 }
-            )
+            _uiState.value = OcrUiState(isProcessing = true, sourceUri = sourceUri)
 
-            val result = ocrService.recognizeFromPdfs(pdfUris) { done ->
-                if (pdfUris.size > 1) {
-                    _uiState.update { it.copy(progress = BatchProgress(done, pdfUris.size)) }
-                }
+            // Page progress across all the PDFs; a single page needs no counter.
+            val result = ocrService.recognizeFromPdfs(pdfUris) { progress ->
+                if (progress.total > 1) _uiState.update { it.copy(progress = progress) }
             }
             _uiState.value = OcrUiState(
                 isProcessing = false,

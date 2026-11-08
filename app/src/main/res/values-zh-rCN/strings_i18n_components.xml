@@ -105,6 +105,7 @@
     <plurals name="cmp_batch_scanning">
         <item quantity="other">正在扫描第 %1$d / %2$d 个文件…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">正在读取第 %1$d/%2$d 页…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">营养成分表</string>

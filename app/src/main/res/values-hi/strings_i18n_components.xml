@@ -111,6 +111,7 @@
         <item quantity="one">%2$d में से %1$d फ़ाइल स्कैन हो रही…</item>
         <item quantity="other">%2$d में से %1$d फ़ाइलें स्कैन हो रहीं…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">पेज %1$d / %2$d पढ़ा जा रहा है…</string>
     <string name="cmp_food_nutrition_facts">पोषण तथ्य</string>
     <string name="cmp_food_serving_size">सर्विंग साइज़: %1$s</string>
     <string name="cmp_food_ingredients">सामग्री</string>

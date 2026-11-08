@@ -175,6 +175,7 @@
         <item quantity="many">جارٍ مسح %1$d من %2$d ملفًا…</item>
         <item quantity="other">جارٍ مسح %1$d من %2$d ملف…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">جارٍ قراءة الصفحة %1$d من %2$d…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">القيم الغذائية</string>

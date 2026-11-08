@@ -119,6 +119,7 @@
         <item quantity="one">%1$d/%2$d dosya taranıyor…</item>
         <item quantity="other">%1$d/%2$d dosya taranıyor…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">Sayfa %1$d / %2$d okunuyor…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Besin değerleri</string>

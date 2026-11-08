@@ -24,6 +24,7 @@ class TextOcrService @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val mlKit: MlKitOcrService,
     private val paddle: PaddleOcrService,
+    private val pdfRendererHelper: PdfRendererHelper,
     private val settings: SettingsRepository
 ) {
 
@@ -48,28 +49,52 @@ class TextOcrService @Inject constructor(
         TextOcrEngine.ML_KIT -> mlKit.recognizeFromUri(uri)
     }
 
-    suspend fun recognizeFromPdf(pdfUri: Uri, pageIndex: Int? = null): OcrResult = when (engine()) {
-        TextOcrEngine.PADDLE -> paddle.recognizeFromPdf(pdfUri, pageIndex)
-            .orFallback { mlKit.recognizeFromPdf(pdfUri, pageIndex) }
-        TextOcrEngine.ML_KIT -> mlKit.recognizeFromPdf(pdfUri, pageIndex)
+    /** [onPage] gets the zero-based index of each page as it finishes (whole-PDF runs only). */
+    suspend fun recognizeFromPdf(
+        pdfUri: Uri,
+        pageIndex: Int? = null,
+        onPage: (Int) -> Unit = {}
+    ): OcrResult = when (engine()) {
+        TextOcrEngine.PADDLE -> paddle.recognizeFromPdf(pdfUri, pageIndex, onPage)
+            .orFallback { mlKit.recognizeFromPdf(pdfUri, pageIndex, onPage) }
+        TextOcrEngine.ML_KIT -> mlKit.recognizeFromPdf(pdfUri, pageIndex, onPage)
     }
 
+    /**
+     * Reads every page of every PDF. [onProgress] counts pages across all the files (first with 0 done,
+     * once the page total is known), so one long PDF shows progress too. It never goes backwards, even
+     * when a Paddle failure makes ML Kit read the same file again.
+     */
     suspend fun recognizeFromPdfs(
         uris: List<Uri>,
-        onProgress: (Int) -> Unit = {}
+        onProgress: (BatchProgress) -> Unit = {}
     ): OcrResult {
+        val counts = uris.map { pdfRendererHelper.getPageCount(it) }
+        val total = counts.sum()
+        var reported = 0
+        onProgress(BatchProgress(0, total, pages = true))
+        fun report(done: Int) {
+            if (done > reported) {
+                reported = done.coerceAtMost(total)
+                onProgress(BatchProgress(reported, total, pages = true))
+            }
+        }
+
         if (uris.size == 1) {
-            return recognizeFromPdf(uris.first()).also { onProgress(1) }
+            return recognizeFromPdf(uris.first()) { page -> report(page + 1) }
         }
 
         val batch = OcrBatchBuilder()
+        var offset = 0
         uris.forEachIndexed { index, uri ->
-            when (val result = recognizeFromPdf(uri)) {
+            val start = offset
+            when (val result = recognizeFromPdf(uri) { page -> report(start + page + 1) }) {
                 is OcrResult.Success -> batch.add(labelFor(uri, index), result)
                 is OcrResult.Error -> batch.addError(result.message)
                 OcrResult.Empty -> Unit
             }
-            onProgress(index + 1)
+            offset += counts[index]
+            report(offset)
         }
         return batch.build()
     }

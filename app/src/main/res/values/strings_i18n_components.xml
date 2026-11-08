@@ -120,6 +120,7 @@
         <item quantity="one">Scanning %1$d of %2$d file…</item>
         <item quantity="other">Scanning %1$d of %2$d files…</item>
     </plurals>
+    <string name="cmp_pdf_reading_page">Reading page %1$d of %2$d…</string>
 
     <!-- ui/components/product/FoodContentSection.kt -->
     <string name="cmp_food_nutrition_facts">Nutrition Facts</string>

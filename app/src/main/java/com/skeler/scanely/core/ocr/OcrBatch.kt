@@ -1,6 +1,7 @@
 package com.skeler.scanely.core.ocr
 
-data class BatchProgress(val done: Int, val total: Int) {
+/** [done] of [total] items finished; [pages] when the items are PDF pages rather than files. */
+data class BatchProgress(val done: Int, val total: Int, val pages: Boolean = false) {
     val fraction: Float get() = if (total > 0) done.toFloat() / total else 0f
 }
 

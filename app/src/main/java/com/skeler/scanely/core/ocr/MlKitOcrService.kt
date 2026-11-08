@@ -55,7 +55,11 @@ class MlKitOcrService @Inject constructor(
             }
     }
 
-    suspend fun recognizeFromPdf(pdfUri: Uri, pageIndex: Int? = null): OcrResult = withContext(Dispatchers.IO) {
+    suspend fun recognizeFromPdf(
+        pdfUri: Uri,
+        pageIndex: Int? = null,
+        onPage: (Int) -> Unit = {}
+    ): OcrResult = withContext(Dispatchers.IO) {
         try {
             if (pageIndex != null) {
                 val bitmap = pdfRendererHelper.renderPage(pdfUri, pageIndex)
@@ -63,7 +67,7 @@ class MlKitOcrService @Inject constructor(
 
                 recognizeFromBitmap(bitmap)
             } else {
-                recognizeAllPages(pdfUri)
+                recognizeAllPages(pdfUri, onPage)
             }
         } catch (e: Exception) {
             Log.e(TAG, "PDF recognition failed", e)
@@ -72,7 +76,7 @@ class MlKitOcrService @Inject constructor(
     }
 
     /** Every page, joined with page markers; confidence is the mean over pages that read. */
-    private suspend fun recognizeAllPages(pdfUri: Uri): OcrResult {
+    private suspend fun recognizeAllPages(pdfUri: Uri, onPage: (Int) -> Unit): OcrResult {
         val allText = StringBuilder()
         val allBlocks = mutableListOf<TextBlockData>()
         var totalConfidence = 0f
@@ -95,6 +99,7 @@ class MlKitOcrService @Inject constructor(
                 }
             }
             bitmap.recycle()
+            onPage(index)
         }
         if (!opened) {
             return OcrResult.Error(context.getString(R.string.ocr_err_render_pages))
