@@ -5,24 +5,41 @@ import android.graphics.Canvas
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
+import androidx.annotation.StringRes
 import androidx.core.graphics.createBitmap
+import com.skeler.scanely.R
+import com.skeler.scanely.core.scan.ScanMode
 
-enum class ScanFilter(val label: String) {
-    ORIGINAL("Original"),
-    AUTO("Auto"),
-    MAGIC_COLOR("Magic Color"),
-    BLACK_WHITE("Black & White"),
-    GRAYSCALE("Grayscale")
+enum class ScanFilter(@param:StringRes val labelRes: Int) {
+    ORIGINAL(R.string.scan_filter_original),
+    AUTO(R.string.scan_filter_auto),
+    MAGIC_COLOR(R.string.scan_filter_magic_color),
+    WHITEBOARD(R.string.scan_filter_whiteboard),
+    BLACK_WHITE(R.string.scan_filter_black_white),
+    GRAYSCALE(R.string.scan_filter_grayscale)
 }
 
 object DocumentFilters {
 
-    fun apply(source: Bitmap, filter: ScanFilter): Bitmap = when (filter) {
+    /** [mode] decides what AUTO does (ScanMode.autoEnhance); the other filters are the same for all. */
+    fun apply(source: Bitmap, filter: ScanFilter, mode: ScanMode = ScanMode.DOCUMENT): Bitmap = when (filter) {
         ScanFilter.ORIGINAL -> source.copy(source.config ?: Bitmap.Config.ARGB_8888, false)
-        ScanFilter.AUTO -> applyMatrix(source, autoMatrix())
+        ScanFilter.AUTO -> pixelFilter(source, mode::autoEnhance)
         ScanFilter.MAGIC_COLOR -> applyMatrix(source, magicColorMatrix())
         ScanFilter.GRAYSCALE -> applyMatrix(source, grayscaleMatrix())
         ScanFilter.BLACK_WHITE -> binarize(source)
+        ScanFilter.WHITEBOARD -> pixelFilter(source, WhiteboardEnhancer::enhance)
+    }
+
+    /** Runs a pure ARGB filter (pixels, width, height) -> pixels on a bitmap. */
+    private fun pixelFilter(source: Bitmap, filter: (IntArray, Int, Int) -> IntArray): Bitmap {
+        val width = source.width
+        val height = source.height
+        val pixels = IntArray(width * height)
+        source.getPixels(pixels, 0, width, 0, 0, width, height)
+        val result = createBitmap(width, height)
+        result.setPixels(filter(pixels, width, height), 0, width, 0, 0, width, height)
+        return result
     }
 
     private fun applyMatrix(source: Bitmap, matrix: ColorMatrix): Bitmap {
@@ -33,19 +50,6 @@ object DocumentFilters {
         }
         canvas.drawBitmap(source, 0f, 0f, paint)
         return result
-    }
-
-    private fun autoMatrix(): ColorMatrix {
-        val scale = 1.18f
-        val translate = (1f - scale) / 2f * 255f + 8f
-        return ColorMatrix(
-            floatArrayOf(
-                scale, 0f, 0f, 0f, translate,
-                0f, scale, 0f, 0f, translate,
-                0f, 0f, scale, 0f, translate,
-                0f, 0f, 0f, 1f, 0f
-            )
-        )
     }
 
     private fun magicColorMatrix(): ColorMatrix {

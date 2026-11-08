@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">تعذّر الالتقاط، حاول مرة أخرى</string>
     <string name="scr_camera_permission_required">مطلوب إذن الكاميرا.</string>
-    <string name="scr_camera_capture_document">التقاط المستند</string>
-    <string name="scr_camera_focus_hint">انقر للتركيز · اضبط الصفحة على حوافها</string>
-    <string name="scr_camera_capture">التقاط</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="zero">حتى %1$d ملف لكل مسح، ويُستخدم أول %1$d فقط.</item>
@@ -31,6 +28,7 @@
         <item quantity="other">%1$d رصيد</item>
     </plurals>
     <string name="scr_home_question">ماذا تريد أن تمسح؟</string>
+    <string name="scr_home_update_available">يتوفر تحديث</string>
     <string name="scr_home_scan_document">مسح مستند</string>
     <string name="scr_home_scan_document_subtitle">قص تلقائي وتحسين وتصدير PDF</string>
     <string name="scr_home_image_to_text">صورة إلى نص</string>

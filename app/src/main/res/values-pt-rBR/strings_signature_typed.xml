@@ -11,5 +11,4 @@
     <string name="signature_typed_cancel">Cancelar</string>
     <string name="signature_typed_font_missing">Falha ao carregar a fonte da assinatura.</string>
 
-    <string name="font_licenses_close">Fechar</string>
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">Orijinal</string>
+    <string name="scan_filter_auto">Otomatik</string>
+    <string name="scan_filter_magic_color">Sihirli renk</string>
+    <string name="scan_filter_whiteboard">Beyaz tahta</string>
+    <string name="scan_filter_black_white">Siyah beyaz</string>
+    <string name="scan_filter_grayscale">Gri tonlama</string>
+    <string name="id_title">Kimlik kopyası</string>
+    <string name="id_title_passport">Pasaport kopyası</string>
+    <string name="id_preview_description">A4 kopyanın önizlemesi</string>
+    <string name="id_side_front">Ön yüz</string>
+    <string name="id_side_back">Arka yüz</string>
+    <string name="id_side_page">Fotoğraf sayfası</string>
+    <string name="id_off_shape">Kart biçiminde değil, bu yüzden esnetilmedi. Daha sıkı kırparak yeniden tarayın.</string>
+    <string name="id_rotate">Döndür</string>
+    <string name="id_retake">Yeniden tara</string>
+    <string name="id_add_back">Arka yüzü ekle</string>
+    <string name="id_swap">Ön ve arka yüzü değiştir</string>
+    <string name="id_size">Boyut</string>
+    <string name="id_size_actual">Gerçek boyut</string>
+    <string name="id_look_colour">Renkli</string>
+    <string name="id_look_grey">Gri</string>
+    <string name="id_look_photocopy">Fotokopi</string>
+    <string name="id_watermark_label">Şunun için kopya (isteğe bağlı)</string>
+    <string name="id_watermark_hint">örn. Banka hesabı – Kas 2026</string>
+    <string name="id_watermark_why">Kopya başka yerde kullanılmasın diye kartın üzerine basılır.</string>
+    <string name="id_watermark_clear">Temizle</string>
+    <string name="id_save_pdf">PDF kaydet</string>
+    <string name="id_save_image">Görüntü kaydet</string>
+    <string name="id_print">Yazdır</string>
+    <string name="id_share">Paylaş</string>
+    <string name="id_print_job">Kimlik kopyası</string>
+    <string name="id_saved_pdf">İndirilenler\'e kaydedildi</string>
+    <string name="id_saved_image">Galeriye kaydedildi</string>
+    <string name="id_save_failed">Kopya oluşturulamadı. Tekrar deneyin.</string>
+    <string name="id_extra_scans_ignored">Yalnızca ilk taramalar kullanıldı</string>
+    <string name="id_scan_unreadable">Tarama okunamadı. Tekrar deneyin.</string>
+</resources>

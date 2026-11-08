@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">मूल</string>
+    <string name="scan_filter_auto">ऑटो</string>
+    <string name="scan_filter_magic_color">मैजिक कलर</string>
+    <string name="scan_filter_whiteboard">व्हाइटबोर्ड</string>
+    <string name="scan_filter_black_white">श्वेत-श्याम</string>
+    <string name="scan_filter_grayscale">ग्रेस्केल</string>
+    <string name="id_title">आईडी कॉपी</string>
+    <string name="id_title_passport">पासपोर्ट कॉपी</string>
+    <string name="id_preview_description">A4 कॉपी का पूर्वावलोकन</string>
+    <string name="id_side_front">आगे</string>
+    <string name="id_side_back">पीछे</string>
+    <string name="id_side_page">फ़ोटो पेज</string>
+    <string name="id_off_shape">कार्ड के आकार में नहीं है, इसलिए खींचा नहीं गया। कसकर क्रॉप करके फिर स्कैन करें।</string>
+    <string name="id_rotate">घुमाएँ</string>
+    <string name="id_retake">फिर स्कैन करें</string>
+    <string name="id_add_back">पीछे की तरफ़ जोड़ें</string>
+    <string name="id_swap">आगे और पीछे बदलें</string>
+    <string name="id_size">आकार</string>
+    <string name="id_size_actual">असली आकार</string>
+    <string name="id_look_colour">रंगीन</string>
+    <string name="id_look_grey">ग्रे</string>
+    <string name="id_look_photocopy">फ़ोटोकॉपी</string>
+    <string name="id_watermark_label">किसके लिए कॉपी (वैकल्पिक)</string>
+    <string name="id_watermark_hint">जैसे बैंक खाता – नवं 2026</string>
+    <string name="id_watermark_why">कार्ड पर छपता है ताकि कॉपी कहीं और इस्तेमाल न हो।</string>
+    <string name="id_watermark_clear">साफ़ करें</string>
+    <string name="id_save_pdf">PDF सेव करें</string>
+    <string name="id_save_image">इमेज सेव करें</string>
+    <string name="id_print">प्रिंट</string>
+    <string name="id_share">शेयर</string>
+    <string name="id_print_job">आईडी कॉपी</string>
+    <string name="id_saved_pdf">डाउनलोड में सेव हुआ</string>
+    <string name="id_saved_image">गैलरी में सेव हुआ</string>
+    <string name="id_save_failed">कॉपी नहीं बन सकी। फिर कोशिश करें।</string>
+    <string name="id_extra_scans_ignored">सिर्फ़ पहले स्कैन इस्तेमाल हुए</string>
+    <string name="id_scan_unreadable">वह स्कैन पढ़ा नहीं जा सका। फिर कोशिश करें।</string>
+</resources>

@@ -8,6 +8,7 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -20,6 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -45,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -62,6 +66,8 @@ import com.skeler.scanely.core.ai.AiMode
 import com.skeler.scanely.core.ai.showsAiScanCard
 import com.skeler.scanely.core.common.LocalDarkMode
 import com.skeler.scanely.core.common.UriNames
+import com.skeler.scanely.core.update.openStoreListing
+import com.skeler.scanely.core.update.rememberPlayUpdateAvailable
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.ScanViewModel
@@ -266,6 +272,8 @@ fun HomeScreen() {
         }
     }
 
+    val updateAvailable = rememberPlayUpdateAvailable()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -323,16 +331,29 @@ fun HomeScreen() {
                             )
                         }
 
-                        IconButton(
-                            onClick = { navigator.go(Destination.Settings) },
+                        Row(
                             modifier = Modifier
                                 .align(Alignment.CenterEnd)
                                 .padding(end = 4.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_settings_expressive),
-                                contentDescription = stringResource(R.string.set_settings_title)
-                            )
+                            // Shown only while Play has a newer version; gone once updated.
+                            if (updateAvailable) {
+                                IconButton(onClick = { context.openStoreListing() }) {
+                                    BadgedBox(badge = { Badge() }) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.ic_sym_download),
+                                            contentDescription = stringResource(R.string.scr_home_update_available),
+                                            tint = MaterialTheme.colorScheme.primary
+                                        )
+                                    }
+                                }
+                            }
+                            IconButton(onClick = { navigator.go(Destination.Settings) }) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_settings_expressive),
+                                    contentDescription = stringResource(R.string.set_settings_title)
+                                )
+                            }
                         }
                     }
                 },
@@ -373,15 +394,17 @@ fun HomeScreen() {
                 )
 
                 val accents = rememberActionAccents()
-                val startDocumentScan = rememberDocumentScanStarter()
 
+                // Order (spec 2): the scanner first, then the two offline text tools, then AI Scan. AI Scan is the
+                // revenue tile, so it sits high; when it is not offered the next card follows at the same gap.
                 MainActionButton(
                     iconRes = R.drawable.ic_action_aperture,
                     title = stringResource(R.string.scr_home_scan_document),
                     subtitle = stringResource(R.string.scr_home_scan_document_subtitle),
-                    onClick = startDocumentScan,
+                    onClick = { navigator.go(Destination.ScanCamera()) },
                     accentTint = accents.document,
-                    contentPadding = cardPadding
+                    contentPadding = cardPadding,
+                    modifier = Modifier.testTag("scan_home_scan_document")
                 )
 
                 MainActionButton(
@@ -390,7 +413,8 @@ fun HomeScreen() {
                     subtitle = stringResource(R.string.scr_home_image_to_text_subtitle),
                     onClick = { launchGalleryPicker() },
                     accentTint = accents.gallery,
-                    contentPadding = cardPadding
+                    contentPadding = cardPadding,
+                    modifier = Modifier.testTag("scan_home_image_to_text")
                 )
 
                 MainActionButton(
@@ -399,25 +423,8 @@ fun HomeScreen() {
                     subtitle = stringResource(R.string.scr_home_pdf_to_text_subtitle),
                     onClick = { pdfLauncher() },
                     accentTint = accents.pdf,
-                    contentPadding = cardPadding
-                )
-
-                MainActionButton(
-                    iconRes = R.drawable.ic_action_pdf_edit,
-                    title = stringResource(R.string.pdf_tool_edit),
-                    subtitle = stringResource(R.string.scr_home_edit_pdf_subtitle),
-                    onClick = { navigator.go(Destination.PdfTools) },
-                    accentTint = accents.edit,
-                    contentPadding = cardPadding
-                )
-
-                MainActionButton(
-                    iconRes = R.drawable.ic_action_qr,
-                    title = stringResource(R.string.scr_home_scan_barcode),
-                    subtitle = stringResource(R.string.scr_home_scan_barcode_subtitle),
-                    onClick = { navigator.go(Destination.BarcodeScanner) },
-                    accentTint = accents.qr,
-                    contentPadding = cardPadding
+                    contentPadding = cardPadding,
+                    modifier = Modifier.testTag("scan_home_pdf_to_text")
                 )
 
                 if (showsAiScanCard(offeredFeatures)) {
@@ -427,9 +434,30 @@ fun HomeScreen() {
                         subtitle = stringResource(R.string.scr_home_ai_scan_subtitle),
                         onClick = { if (scanViewModel.requireSignInForAi()) showAiBottomSheet = true },
                         accentTint = accents.ai,
-                        contentPadding = cardPadding
+                        contentPadding = cardPadding,
+                        modifier = Modifier.testTag("scan_home_ai_scan")
                     )
                 }
+
+                MainActionButton(
+                    iconRes = R.drawable.ic_action_pdf_edit,
+                    title = stringResource(R.string.pdf_tool_edit),
+                    subtitle = stringResource(R.string.scr_home_edit_pdf_subtitle),
+                    onClick = { navigator.go(Destination.PdfTools) },
+                    accentTint = accents.edit,
+                    contentPadding = cardPadding,
+                    modifier = Modifier.testTag("scan_home_edit_pdf")
+                )
+
+                MainActionButton(
+                    iconRes = R.drawable.ic_action_qr,
+                    title = stringResource(R.string.scr_home_scan_barcode),
+                    subtitle = stringResource(R.string.scr_home_scan_barcode_subtitle),
+                    onClick = { navigator.go(Destination.BarcodeScanner) },
+                    accentTint = accents.qr,
+                    contentPadding = cardPadding,
+                    modifier = Modifier.testTag("scan_home_scan_barcode")
+                )
 
                 HistoryPillButton(onClick = { navigator.go(Destination.History) })
             }

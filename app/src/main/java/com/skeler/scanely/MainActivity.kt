@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.skeler.scanely.core.ads.RewardedAdManager
@@ -19,6 +21,7 @@ import com.skeler.scanely.core.billing.ProEntitlementGate
 import com.skeler.scanely.core.common.AppLanguage
 import com.skeler.scanely.core.common.CompositionLocals
 import com.skeler.scanely.core.license.LicenseRepository
+import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.ScanelyNavHost
 import com.skeler.scanely.settings.presentation.viewmodel.SettingsViewModel
 import com.skeler.scanely.ui.theme.ScanelyTheme
@@ -75,18 +78,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // Not on a recreation: the chat was opened then, and rotating must not open it again.
         if (savedInstanceState == null) chatToOpen.value = intent.chatToOpen()
+        val debugRoute = if (BuildConfig.DEBUG && savedInstanceState == null) intent.scanDebugRoute() else null
         enableEdgeToEdge()
         startAdsIfNotPro()
         setContent {
             CompositionLocals {
                 ScanelyTheme {
                     Surface(
-                        modifier = Modifier.fillMaxSize(),
+                        // Test tags show as resource-id in uiautomator dumps (scripts/verify_scan_ui.py).
+                        modifier = Modifier.fillMaxSize().semantics { testTagsAsResourceId = true },
                         color = MaterialTheme.colorScheme.background
                     ) {
                         ScanelyNavHost(
                             restoredAfterProcessDeath = restoredAfterProcessDeath,
-                            chatToOpen = chatToOpen
+                            chatToOpen = chatToOpen,
+                            debugRoute = debugRoute
                         )
                     }
                 }
@@ -124,6 +130,12 @@ class MainActivity : ComponentActivity() {
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 )
     }
+}
+
+/** Debug builds: `adb shell am start -n com.skeler.scanely/.MainActivity --es scan_debug_route camera`. */
+private fun Intent.scanDebugRoute(): Destination? = when (getStringExtra("scan_debug_route")) {
+    "camera" -> Destination.ScanCamera()
+    else -> null
 }
 
 private fun Intent.chatToOpen(): String? =

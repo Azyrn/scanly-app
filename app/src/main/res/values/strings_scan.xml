@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">Close</string>
+    <string name="scan_auto_capture">Auto</string>
+    <string name="scan_flash">Flash</string>
+    <string name="scan_import">Import from gallery</string>
+    <string name="scan_take_photo">Take photo</string>
+    <plurals name="scan_pages_review">
+        <item quantity="one">%d page, review</item>
+        <item quantity="other">%d pages, review</item>
+    </plurals>
+    <string name="scan_mode_document">Document</string>
+    <string name="scan_mode_id">ID card</string>
+    <string name="scan_mode_whiteboard">Whiteboard</string>
+    <string name="scan_kind_card">Card</string>
+    <string name="scan_kind_passport">Passport</string>
+    <string name="scan_side_front">Front — %1$d of %2$d</string>
+    <string name="scan_side_back">Back — %1$d of %2$d</string>
+    <string name="scan_side_photo_page">Photo page</string>
+    <string name="scan_guide_document">Fit the page in the frame</string>
+    <string name="scan_guide_whiteboard">Fit the board in the frame</string>
+    <string name="scan_retake">Retake</string>
+    <string name="scan_crop_title">Adjust corners</string>
+    <string name="scan_rotate">Rotate</string>
+    <string name="scan_crop_auto">Auto</string>
+    <string name="scan_crop_full">Full image</string>
+    <string name="scan_add_page">Add page</string>
+    <string name="scan_done">Done</string>
+    <string name="scan_next_back">Next: back</string>
+    <string name="scan_make_copy">Make copy</string>
+</resources>

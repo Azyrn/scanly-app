@@ -11,5 +11,4 @@
     <string name="signature_typed_cancel">キャンセル</string>
     <string name="signature_typed_font_missing">署名用フォントを読み込めませんでした。</string>
 
-    <string name="font_licenses_close">閉じる</string>
 </resources>

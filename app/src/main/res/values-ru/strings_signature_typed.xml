@@ -11,5 +11,4 @@
     <string name="signature_typed_cancel">Отмена</string>
     <string name="signature_typed_font_missing">Не удалось загрузить шрифт подписи.</string>
 
-    <string name="font_licenses_close">Закрыть</string>
 </resources>

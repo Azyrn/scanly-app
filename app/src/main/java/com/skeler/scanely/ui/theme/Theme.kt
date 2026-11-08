@@ -8,6 +8,7 @@ import android.view.Window
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -42,32 +43,39 @@ private fun clearLegacyBarScrims(window: Window) {
     }
 }
 
+/**
+ * The user's colour scheme — wallpaper (dynamic) or seed, OLED black when chosen — in its light or [dark]
+ * variant. The app theme uses the system's choice; the scan camera and crop always the dark one (spec R3).
+ */
 @Composable
-fun ScanelyTheme(
-    content: @Composable () -> Unit
-) {
+fun appColorScheme(dark: Boolean): ColorScheme {
     val context = LocalContext.current
     val settings = LocalSettings.current
-    val darkTheme = LocalDarkMode.current
-
     val supportsDynamic = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val useDynamic = settings.useDynamicColors && supportsDynamic
     val seed = remember(settings.seedColorIndex) { SeedPalettes.seedAt(settings.seedColorIndex) }
 
-    val baseScheme = remember(seed, darkTheme, useDynamic, context) {
+    val baseScheme = remember(seed, dark, useDynamic, context) {
         when {
-            useDynamic && darkTheme -> dynamicDarkColorScheme(context)
+            useDynamic && dark -> dynamicDarkColorScheme(context)
             useDynamic -> dynamicLightColorScheme(context)
-            else -> seedColorScheme(seed, darkTheme)
+            else -> seedColorScheme(seed, dark)
         }
     }
 
-    val colorScheme = when {
-        darkTheme && settings.isOledModeEnabled -> baseScheme.toOledBlack()
-        darkTheme && useDynamic -> baseScheme.enlivenDark()
+    return when {
+        dark && settings.isOledModeEnabled -> baseScheme.toOledBlack()
+        dark && useDynamic -> baseScheme.enlivenDark()
         else -> baseScheme
     }
-    val animatedColorScheme = colorScheme.animated()
+}
+
+@Composable
+fun ScanelyTheme(
+    content: @Composable () -> Unit
+) {
+    val darkTheme = LocalDarkMode.current
+    val animatedColorScheme = appColorScheme(darkTheme).animated()
 
     // Transparent system bars so the animated Compose surface paints edge-to-edge without bar lag.
     val view = LocalView.current

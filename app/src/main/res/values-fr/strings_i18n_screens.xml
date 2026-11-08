@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">Capture impossible, réessayez</string>
     <string name="scr_camera_permission_required">Accès caméra requis.</string>
-    <string name="scr_camera_capture_document">Capturer document</string>
-    <string name="scr_camera_focus_hint">Touchez : netteté · alignez sur les bords</string>
-    <string name="scr_camera_capture">Capturer</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">Jusqu\'à %1$d fichier : seul %1$d est pris.</item>
@@ -25,6 +22,7 @@
         <item quantity="other">%1$d crédits</item>
     </plurals>
     <string name="scr_home_question">Que voulez-vous scanner ?</string>
+    <string name="scr_home_update_available">Mise à jour disponible</string>
     <string name="scr_home_scan_document">Scanner</string>
     <string name="scr_home_scan_document_subtitle">Recadrage auto et export PDF</string>
     <string name="scr_home_image_to_text">Image en texte</string>

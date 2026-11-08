@@ -1,4 +1,4 @@
-package com.skeler.scanely.core.ocr.paddle
+package com.skeler.scanely.core.geometry
 
 import kotlin.math.abs
 import kotlin.math.hypot

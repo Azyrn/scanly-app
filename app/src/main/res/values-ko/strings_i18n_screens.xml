@@ -7,9 +7,6 @@
     <string name="scr_barcode_permission_required">바코드 스캔에는\n카메라 권한이 필요해요.</string>
     <string name="scr_camera_capture_failed">촬영 실패 — 다시 시도</string>
     <string name="scr_camera_permission_required">카메라 권한이 필요해요.</string>
-    <string name="scr_camera_capture_document">문서 촬영</string>
-    <string name="scr_camera_focus_hint">탭하여 초점 맞추기 · 페이지 가장자리에 맞춰 주세요</string>
-    <string name="scr_camera_capture">촬영</string>
     <plurals name="scr_home_ai_file_limit">
         <item quantity="other">스캔 한 번에 최대 %1$d개 — 처음 %1$d개 사용.</item>
     </plurals>
@@ -17,6 +14,7 @@
         <item quantity="other">크레딧 %1$d개</item>
     </plurals>
     <string name="scr_home_question">무엇을 스캔할까요?</string>
+    <string name="scr_home_update_available">업데이트 가능</string>
     <string name="scr_home_scan_document">문서 스캔</string>
     <string name="scr_home_scan_document_subtitle">자동 자르기, 보정 &amp; PDF 내보내기</string>
     <string name="scr_home_image_to_text">이미지→텍스트</string>

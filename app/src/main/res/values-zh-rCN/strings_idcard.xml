@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">原图</string>
+    <string name="scan_filter_auto">自动</string>
+    <string name="scan_filter_magic_color">魔法色彩</string>
+    <string name="scan_filter_whiteboard">白板</string>
+    <string name="scan_filter_black_white">黑白</string>
+    <string name="scan_filter_grayscale">灰度</string>
+    <string name="id_title">证件复印件</string>
+    <string name="id_title_passport">护照复印件</string>
+    <string name="id_preview_description">A4 复印件预览</string>
+    <string name="id_side_front">正面</string>
+    <string name="id_side_back">反面</string>
+    <string name="id_side_page">照片页</string>
+    <string name="id_off_shape">形状不像证件，因此未拉伸。请重新扫描并裁剪得更紧。</string>
+    <string name="id_rotate">旋转</string>
+    <string name="id_retake">重新扫描</string>
+    <string name="id_add_back">添加反面</string>
+    <string name="id_swap">交换正反面</string>
+    <string name="id_size">尺寸</string>
+    <string name="id_size_actual">实际尺寸</string>
+    <string name="id_look_colour">彩色</string>
+    <string name="id_look_grey">灰色</string>
+    <string name="id_look_photocopy">复印效果</string>
+    <string name="id_watermark_label">仅供（可选）</string>
+    <string name="id_watermark_hint">例如：银行开户 – 2026年11月</string>
+    <string name="id_watermark_why">印在证件上，防止复印件被挪作他用。</string>
+    <string name="id_watermark_clear">清除</string>
+    <string name="id_save_pdf">保存 PDF</string>
+    <string name="id_save_image">保存图片</string>
+    <string name="id_print">打印</string>
+    <string name="id_share">分享</string>
+    <string name="id_print_job">证件复印件</string>
+    <string name="id_saved_pdf">已保存到“下载”</string>
+    <string name="id_saved_image">已保存到相册</string>
+    <string name="id_save_failed">无法生成复印件，请重试。</string>
+    <string name="id_extra_scans_ignored">仅使用了前几次扫描</string>
+    <string name="id_scan_unreadable">无法读取该扫描，请重试。</string>
+</resources>

@@ -2,11 +2,9 @@
 
 package com.skeler.scanely.settings.presentation.screen
 
-import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
@@ -74,7 +72,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skeler.scanely.BuildConfig
 import com.skeler.scanely.R
@@ -82,6 +79,7 @@ import com.skeler.scanely.auth.presentation.viewmodel.AuthViewModel
 import com.skeler.scanely.core.barcode.BarcodeEngine
 import com.skeler.scanely.core.common.AppLanguage
 import com.skeler.scanely.core.ocr.TextOcrEngine
+import com.skeler.scanely.core.update.openStoreListing
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.settings.data.SettingsKeys
@@ -518,23 +516,6 @@ private fun Context.copyAccountId(uid: String) {
     getSystemService(ClipboardManager::class.java)
         ?.setPrimaryClip(ClipData.newPlainText("Scanly account ID", uid))
     Toast.makeText(this, getString(R.string.set_account_id_copied), Toast.LENGTH_SHORT).show()
-}
-
-/** The Play listing's id; debug builds carry a ".debug" suffix that has no listing. */
-private const val PLAY_LISTING_ID = "com.skeler.scanely"
-
-/** Opens Scanly's Play listing in the Play Store app, or in the browser when there is none. */
-private fun Context.openStoreListing() {
-    val market = Intent(Intent.ACTION_VIEW, "market://details?id=$PLAY_LISTING_ID".toUri())
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    try {
-        startActivity(market)
-    } catch (_: ActivityNotFoundException) {
-        startActivity(
-            Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$PLAY_LISTING_ID".toUri())
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        )
-    }
 }
 
 @Composable

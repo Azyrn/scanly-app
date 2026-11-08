@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">オリジナル</string>
+    <string name="scan_filter_auto">自動</string>
+    <string name="scan_filter_magic_color">マジックカラー</string>
+    <string name="scan_filter_whiteboard">ホワイトボード</string>
+    <string name="scan_filter_black_white">白黒</string>
+    <string name="scan_filter_grayscale">グレースケール</string>
+    <string name="id_title">身分証のコピー</string>
+    <string name="id_title_passport">パスポートのコピー</string>
+    <string name="id_preview_description">A4 コピーのプレビュー</string>
+    <string name="id_side_front">表面</string>
+    <string name="id_side_back">裏面</string>
+    <string name="id_side_page">顔写真ページ</string>
+    <string name="id_off_shape">カードの形ではないため引き伸ばしていません。もっと狭く切り抜いて撮り直してください。</string>
+    <string name="id_rotate">回転</string>
+    <string name="id_retake">撮り直す</string>
+    <string name="id_add_back">裏面を追加</string>
+    <string name="id_swap">表裏を入れ替え</string>
+    <string name="id_size">サイズ</string>
+    <string name="id_size_actual">実寸</string>
+    <string name="id_look_colour">カラー</string>
+    <string name="id_look_grey">グレー</string>
+    <string name="id_look_photocopy">コピー機風</string>
+    <string name="id_watermark_label">提出先（任意）</string>
+    <string name="id_watermark_hint">例：銀行口座開設 – 2026年11月</string>
+    <string name="id_watermark_why">カード上に印字し、他の用途への流用を防ぎます。</string>
+    <string name="id_watermark_clear">クリア</string>
+    <string name="id_save_pdf">PDF を保存</string>
+    <string name="id_save_image">画像を保存</string>
+    <string name="id_print">印刷</string>
+    <string name="id_share">共有</string>
+    <string name="id_print_job">身分証のコピー</string>
+    <string name="id_saved_pdf">ダウンロードに保存しました</string>
+    <string name="id_saved_image">ギャラリーに保存しました</string>
+    <string name="id_save_failed">コピーを作成できませんでした。もう一度お試しください。</string>
+    <string name="id_extra_scans_ignored">最初のスキャンのみ使用しました</string>
+    <string name="id_scan_unreadable">スキャンを読み取れませんでした。もう一度お試しください。</string>
+</resources>

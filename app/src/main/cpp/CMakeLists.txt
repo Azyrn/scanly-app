@@ -15,6 +15,8 @@ set(JPEG_PREFIX ${DEPS_PREFIX}/jpeg)
 set(QPDF_PREFIX ${DEPS_PREFIX}/qpdf)
 set(JPEG_LIB ${JPEG_PREFIX}/lib/libjpeg.a)
 set(QPDF_LIB ${QPDF_PREFIX}/lib/libqpdf.a)
+# Compile jobs per ABI for the dependency builds; Gradle builds the ABIs side by side.
+set(NATIVE_JOBS 3)
 
 # Both dependencies are built as ExternalProjects rather than pulled in with FetchContent.
 # libjpeg-turbo hard-fails with FATAL_ERROR when it detects add_subdirectory(), and qpdf's
@@ -44,6 +46,9 @@ ExternalProject_Add(jpeg_ext
         -DENABLE_STATIC=ON
         -DWITH_TURBOJPEG=OFF
         -DWITH_JAVA=OFF
+    # Each ExternalProject runs its own ninja, which ignores the outer build's job pools and starts
+    # one compile per core for every ABI at once (45+ clang, ~7 GB: froze the PC on 2026-11-08).
+    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> -j ${NATIVE_JOBS}
     BUILD_BYPRODUCTS ${JPEG_LIB}
     UPDATE_COMMAND "")
 
@@ -88,6 +93,7 @@ ExternalProject_Add(qpdf_ext
         -DPKG_CONFIG_EXECUTABLE=PKG_CONFIG_EXECUTABLE-NOTFOUND
         -DLIBJPEG_H_PATH=${JPEG_PREFIX}/include
         -DLIBJPEG_LIB_PATH=${JPEG_LIB}
+    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> -j ${NATIVE_JOBS}
     BUILD_BYPRODUCTS ${QPDF_LIB}
     UPDATE_COMMAND "")
 

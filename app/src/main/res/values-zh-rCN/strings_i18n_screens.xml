@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">拍摄失败，请重试</string>
     <string name="scr_camera_permission_required">需要相机权限。</string>
-    <string name="scr_camera_capture_document">拍摄文档</string>
-    <string name="scr_camera_focus_hint">点击对焦 · 将页面与边缘对齐</string>
-    <string name="scr_camera_capture">拍摄</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="other">每次扫描最多 %1$d 个文件，将使用前 %1$d 个。</item>
@@ -21,6 +18,7 @@
         <item quantity="other">%1$d 积分</item>
     </plurals>
     <string name="scr_home_question">你想扫描什么？</string>
+    <string name="scr_home_update_available">有可用更新</string>
     <string name="scr_home_scan_document">扫描文档</string>
     <string name="scr_home_scan_document_subtitle">自动裁剪、增强并导出 PDF</string>
     <string name="scr_home_image_to_text">图片转文字</string>

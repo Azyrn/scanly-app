@@ -99,12 +99,4 @@ object ImagePreprocessor {
         processed = adjustBrightness(processed, 15f)
         return processed
     }
-
-    /** GMS-less fallback: contrast/scale only (no edge crop). */
-    fun preprocessForDocument(bitmap: Bitmap): Bitmap {
-        var processed = scaleToMinDimension(bitmap, 1400)
-        processed = enhanceContrast(processed, 1.25f)
-        processed = adjustBrightness(processed, 10f)
-        return processed
-    }
 }

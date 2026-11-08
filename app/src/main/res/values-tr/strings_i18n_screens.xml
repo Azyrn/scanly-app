@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">Çekilemedi — yeniden deneyin</string>
     <string name="scr_camera_permission_required">Kamera izni gerekli.</string>
-    <string name="scr_camera_capture_document">Belge çek</string>
-    <string name="scr_camera_focus_hint">Odaklamak için dokun · sayfayı kenara hizalayın</string>
-    <string name="scr_camera_capture">Çek</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">En fazla %1$d dosya — ilk %1$d kullanılır.</item>
@@ -23,6 +20,7 @@
         <item quantity="other">%1$d kredi</item>
     </plurals>
     <string name="scr_home_question">Neyi taramak istersiniz?</string>
+    <string name="scr_home_update_available">Güncelleme mevcut</string>
     <string name="scr_home_scan_document">Belge tara</string>
     <string name="scr_home_scan_document_subtitle">Kırp, iyileştir, PDF olarak aktar</string>
     <string name="scr_home_image_to_text">Resimden metin</string>

@@ -17,8 +17,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.skeler.scanely.auth.presentation.screen.AuthScreen
+import com.skeler.scanely.core.idcard.IdDocumentKind
 import com.skeler.scanely.core.lookup.LookupOrchestrator
 import com.skeler.scanely.core.pdftools.PdfTool
+import com.skeler.scanely.core.scan.ScanMode
 import com.skeler.scanely.docchat.presentation.screen.DocChatScreen
 import com.skeler.scanely.docchat.presentation.screen.OPEN_CHAT_RESULT
 import com.skeler.scanely.history.presentation.screen.HistoryScreen
@@ -30,9 +32,11 @@ import com.skeler.scanely.ui.pdfeditor.PageEditorScreen
 import com.skeler.scanely.ui.pdfeditor.PdfStudioScreen
 import com.skeler.scanely.ui.pdftools.PdfToolScreen
 import com.skeler.scanely.ui.pdftools.PdfToolsScreen
+import com.skeler.scanely.ui.scan.ScanCameraScreen
+import com.skeler.scanely.ui.scan.ScanCropScreen
 import com.skeler.scanely.ui.screens.BarcodeScannerScreen
-import com.skeler.scanely.ui.screens.DocumentCaptureScreen
 import com.skeler.scanely.ui.screens.HomeScreen
+import com.skeler.scanely.ui.screens.IdCardScreen
 import com.skeler.scanely.ui.screens.ResultsScreen
 import com.skeler.scanely.ui.screens.ScanReviewScreen
 import com.skeler.scanely.ui.screens.TextComposeScreen
@@ -56,7 +60,9 @@ fun ScanelyNavHost(
     navController: NavHostController = rememberNavController(),
     restoredAfterProcessDeath: Boolean = false,
     /** A chat a notification asked to open; cleared once it is open. */
-    chatToOpen: MutableStateFlow<String?> = MutableStateFlow(null)
+    chatToOpen: MutableStateFlow<String?> = MutableStateFlow(null),
+    /** Debug builds only: a screen `adb shell am start` asked for (MainActivity's scan_debug_route). */
+    debugRoute: Destination? = null
 ) {
     val context = LocalContext.current
 
@@ -74,6 +80,8 @@ fun ScanelyNavHost(
             navController.popBackStack(Destination.Home, inclusive = false)
         }
     }
+
+    LaunchedEffect(debugRoute) { debugRoute?.let { navController.navigate(it) } }
 
     // From a "your document is ready" notification. The chat on top takes it as a result, so
     // there is never a second chat screen stacked on the first.
@@ -121,11 +129,23 @@ fun ScanelyNavHost(
 
         composable<Destination.Auth> { Screen(navController, it) { AuthScreen() } }
 
-        composable<Destination.DocumentCapture> {
-            Screen(navController, it) { DocumentCaptureScreen() }
+        composable<Destination.ScanReview> { Screen(navController, it) { ScanReviewScreen() } }
+
+        composable<Destination.ScanCamera> { entry ->
+            val route = entry.toRoute<Destination.ScanCamera>()
+            Screen(navController, entry) {
+                ScanCameraScreen(
+                    sessionKey = entry.id,
+                    mode = ScanMode.entries.firstOrNull { it.name == route.mode },
+                    kind = IdDocumentKind.entries.firstOrNull { it.name == route.kind },
+                    replaceSide = route.replaceSide
+                )
+            }
         }
 
-        composable<Destination.ScanReview> { Screen(navController, it) { ScanReviewScreen() } }
+        composable<Destination.ScanCrop> { Screen(navController, it) { ScanCropScreen() } }
+
+        composable<Destination.IdCard> { Screen(navController, it) { IdCardScreen() } }
 
         composable<Destination.TextCompose> { Screen(navController, it) { TextComposeScreen() } }
 

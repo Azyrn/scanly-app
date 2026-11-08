@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">Kapat</string>
+    <string name="scan_auto_capture">Oto</string>
+    <string name="scan_flash">Flaş</string>
+    <string name="scan_import">Galeriden al</string>
+    <string name="scan_take_photo">Fotoğraf çek</string>
+    <plurals name="scan_pages_review">
+        <item quantity="one">%d sayfa, incele</item>
+        <item quantity="other">%d sayfa, incele</item>
+    </plurals>
+    <string name="scan_mode_document">Belge</string>
+    <string name="scan_mode_id">Kimlik</string>
+    <string name="scan_mode_whiteboard">Tahta</string>
+    <string name="scan_kind_card">Kart</string>
+    <string name="scan_kind_passport">Pasaport</string>
+    <string name="scan_side_front">Ön — %1$d/%2$d</string>
+    <string name="scan_side_back">Arka — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">Foto sayfası</string>
+    <string name="scan_guide_document">Sayfayı çerçevele</string>
+    <string name="scan_guide_whiteboard">Tahtayı çerçevele</string>
+    <string name="scan_retake">Tekrar</string>
+    <string name="scan_crop_title">Köşeleri ayarla</string>
+    <string name="scan_rotate">Döndür</string>
+    <string name="scan_crop_auto">Oto</string>
+    <string name="scan_crop_full">Tümü</string>
+    <string name="scan_add_page">Ekle</string>
+    <string name="scan_done">Bitti</string>
+    <string name="scan_next_back">Arka yüz</string>
+    <string name="scan_make_copy">Kopyala</string>
+</resources>

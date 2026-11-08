@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">닫기</string>
+    <string name="scan_auto_capture">자동</string>
+    <string name="scan_flash">플래시</string>
+    <string name="scan_import">갤러리에서</string>
+    <string name="scan_take_photo">사진 촬영</string>
+    <plurals name="scan_pages_review">
+        <item quantity="other">%d페이지, 검토</item>
+    </plurals>
+    <string name="scan_mode_document">문서</string>
+    <string name="scan_mode_id">신분증</string>
+    <string name="scan_mode_whiteboard">화이트보드</string>
+    <string name="scan_kind_card">카드</string>
+    <string name="scan_kind_passport">여권</string>
+    <string name="scan_side_front">앞면 — %1$d/%2$d</string>
+    <string name="scan_side_back">뒷면 — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">사진 페이지</string>
+    <string name="scan_guide_document">문서를 틀에 맞추세요</string>
+    <string name="scan_guide_whiteboard">보드를 틀에 맞추세요</string>
+    <string name="scan_retake">다시 찍기</string>
+    <string name="scan_crop_title">모서리 조정</string>
+    <string name="scan_rotate">회전</string>
+    <string name="scan_crop_auto">자동</string>
+    <string name="scan_crop_full">전체 이미지</string>
+    <string name="scan_add_page">페이지 추가</string>
+    <string name="scan_done">완료</string>
+    <string name="scan_next_back">다음: 뒷면</string>
+    <string name="scan_make_copy">사본 만들기</string>
+</resources>

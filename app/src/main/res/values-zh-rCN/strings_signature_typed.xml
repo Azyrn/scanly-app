@@ -11,5 +11,4 @@
     <string name="signature_typed_cancel">取消</string>
     <string name="signature_typed_font_missing">无法加载签名字体。</string>
 
-    <string name="font_licenses_close">关闭</string>
 </resources>

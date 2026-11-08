@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">撮影に失敗。再試行</string>
     <string name="scr_camera_permission_required">カメラの許可が必要です。</string>
-    <string name="scr_camera_capture_document">書類を撮影</string>
-    <string name="scr_camera_focus_hint">タップでピント · ページの端をガイドに</string>
-    <string name="scr_camera_capture">撮影</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="other">1回で最大 %1$d 件。最初の %1$d 件を使用。</item>
@@ -21,6 +18,7 @@
         <item quantity="other">%1$dクレジット</item>
     </plurals>
     <string name="scr_home_question">何をスキャンしますか？</string>
+    <string name="scr_home_update_available">アップデートがあります</string>
     <string name="scr_home_scan_document">書類をスキャン</string>
     <string name="scr_home_scan_document_subtitle">自動トリミング・補正・PDF 書き出し</string>
     <string name="scr_home_image_to_text">画像→テキスト</string>

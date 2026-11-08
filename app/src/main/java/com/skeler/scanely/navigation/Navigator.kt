@@ -1,5 +1,6 @@
 package com.skeler.scanely.navigation
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.ComposeNavigator
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.reflect.KClass
 
 /**
  * The only way a screen may move the back stack.
@@ -47,6 +49,16 @@ class Navigator internal constructor(
 
     fun back() {
         if (isTop) controller.popBackStack()
+    }
+
+    /** Opens [destination] in place of the newest [replacing] and everything above it: a finished flow. */
+    fun goInPlaceOf(destination: Destination, replacing: KClass<out Destination>) {
+        if (isTop) controller.navigate(destination) { popUpTo(replacing) { inclusive = true } }
+    }
+
+    /** Goes back past the newest [destination], to the screen that opened it. */
+    fun backPast(destination: KClass<out Destination>) {
+        if (isTop) controller.popBackStack(destination, inclusive = true)
     }
 
     /** Goes back and hands [value] to the screen underneath, which reads it with [result]. */
@@ -88,11 +100,16 @@ val LocalNavigator = staticCompositionLocalOf<Navigator> { error("No Navigator p
 @Composable
 fun OnScreenExit(onExit: () -> Unit) {
     val navigator = LocalNavigator.current
+    val activity = LocalActivity.current
     val currentOnExit by rememberUpdatedState(onExit)
 
     DisposableEffect(navigator) {
         var fired = false
         fun fire() {
+            // A configuration change (language, theme, font size) destroys the activity and with it every
+            // entry's lifecycle, then restores the same entries: the screen did not leave. Seen on the
+            // scan crop screen, whose photo was dropped by a language switch.
+            if (activity?.isChangingConfigurations == true) return
             if (!fired) {
                 fired = true
                 currentOnExit()

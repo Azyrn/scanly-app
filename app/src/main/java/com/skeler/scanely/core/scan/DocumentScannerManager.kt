@@ -19,10 +19,10 @@ object DocumentScannerManager {
             .isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
 
     /** SCANNER_MODE_FULL + JPEG so we can re-filter pages ourselves. */
-    fun getStartScanIntent(activity: Activity): Task<IntentSender> {
+    fun getStartScanIntent(activity: Activity, pageLimit: Int = PAGE_LIMIT): Task<IntentSender> {
         val options = GmsDocumentScannerOptions.Builder()
             .setGalleryImportAllowed(true)
-            .setPageLimit(PAGE_LIMIT)
+            .setPageLimit(pageLimit)
             .setResultFormats(GmsDocumentScannerOptions.RESULT_FORMAT_JPEG)
             .setScannerMode(GmsDocumentScannerOptions.SCANNER_MODE_FULL)
             .build()

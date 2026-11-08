@@ -7,9 +7,6 @@
     <string name="scr_barcode_permission_required">बारकोड स्कैन के लिए\nकैमरा की अनुमति चाहिए।</string>
     <string name="scr_camera_capture_failed">कैप्चर नहीं हुआ — दोबारा कोशिश करें</string>
     <string name="scr_camera_permission_required">कैमरा की अनुमति चाहिए।</string>
-    <string name="scr_camera_capture_document">दस्तावेज़ कैप्चर करें</string>
-    <string name="scr_camera_focus_hint">फ़ोकस के लिए टैप करें · पेज को किनारों से मिलाएं</string>
-    <string name="scr_camera_capture">कैप्चर</string>
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">एक स्कैन में अधिकतम %1$d फ़ाइल — पहली %1$d लेंगे।</item>
         <item quantity="other">एक स्कैन में अधिकतम %1$d फ़ाइलें — पहली %1$d लेंगे।</item>
@@ -19,6 +16,7 @@
         <item quantity="other">%1$d क्रेडिट</item>
     </plurals>
     <string name="scr_home_question">आप क्या स्कैन करना चाहेंगे?</string>
+    <string name="scr_home_update_available">अपडेट उपलब्ध है</string>
     <string name="scr_home_scan_document">दस्तावेज़ स्कैन करें</string>
     <string name="scr_home_scan_document_subtitle">ऑटो-क्रॉप, एन्हांस और PDF एक्सपोर्ट</string>
     <string name="scr_home_image_to_text">तस्वीर से टेक्स्ट</string>

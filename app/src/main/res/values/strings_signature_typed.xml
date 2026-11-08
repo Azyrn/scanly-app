@@ -11,5 +11,4 @@
     <string name="signature_typed_cancel">Cancel</string>
     <string name="signature_typed_font_missing">The signature font could not be loaded.</string>
 
-    <string name="font_licenses_close">Close</string>
 </resources>

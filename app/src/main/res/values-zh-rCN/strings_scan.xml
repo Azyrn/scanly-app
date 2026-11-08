@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">关闭</string>
+    <string name="scan_auto_capture">自动</string>
+    <string name="scan_flash">闪光灯</string>
+    <string name="scan_import">从相册导入</string>
+    <string name="scan_take_photo">拍照</string>
+    <plurals name="scan_pages_review">
+        <item quantity="other">%d 页，查看</item>
+    </plurals>
+    <string name="scan_mode_document">文档</string>
+    <string name="scan_mode_id">身份证</string>
+    <string name="scan_mode_whiteboard">白板</string>
+    <string name="scan_kind_card">卡片</string>
+    <string name="scan_kind_passport">护照</string>
+    <string name="scan_side_front">正面 — %1$d/%2$d</string>
+    <string name="scan_side_back">背面 — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">照片页</string>
+    <string name="scan_guide_document">将页面置于框内</string>
+    <string name="scan_guide_whiteboard">将白板置于框内</string>
+    <string name="scan_retake">重拍</string>
+    <string name="scan_crop_title">调整四角</string>
+    <string name="scan_rotate">旋转</string>
+    <string name="scan_crop_auto">自动</string>
+    <string name="scan_crop_full">全图</string>
+    <string name="scan_add_page">添加页面</string>
+    <string name="scan_done">完成</string>
+    <string name="scan_next_back">下一步：背面</string>
+    <string name="scan_make_copy">生成复印件</string>
+</resources>

@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skeler.scanely.R
 import com.skeler.scanely.core.image.DocumentFilters
-import com.skeler.scanely.core.image.ImagePreprocessor
 import com.skeler.scanely.core.image.ScanFilter
 import com.skeler.scanely.core.pdf.ScanExporter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -77,22 +76,20 @@ class DocumentScanViewModel @Inject constructor(
     private var workJob: Job? = null
     private var previewJob: Job? = null
 
-    fun loadPages(uris: List<Uri>) = load(uris, preprocess = false)
+    /** Straightened pages from the scan flow; [filter] is the mode's default look (Whiteboard for boards). */
+    fun loadPages(uris: List<Uri>, filter: ScanFilter? = null) {
+        if (filter != null) _uiState.update { it.copy(filter = filter) }
+        load(uris)
+    }
 
-    // CameraX fallback has no ML Kit auto-crop.
-    fun loadCapturedPages(uris: List<Uri>) = load(uris, preprocess = true)
-
-    private fun load(uris: List<Uri>, preprocess: Boolean) {
+    private fun load(uris: List<Uri>) {
         if (uris.isEmpty()) return
         workJob?.cancel()
         _uiState.update { it.copy(isLoading = true, exportedScan = null) }
         workJob = viewModelScope.launch {
             val loaded = withContext(Dispatchers.IO) {
                 uris.mapNotNull {
-                    runCatching {
-                        val bitmap = decodeScaled(appContext.contentResolver, it)
-                        if (preprocess) ImagePreprocessor.preprocessForDocument(bitmap) else bitmap
-                    }.getOrNull()
+                    runCatching { decodeScaled(appContext.contentResolver, it) }.getOrNull()
                 }
             }
             originals = loaded
@@ -240,7 +237,8 @@ private fun scaleToThumbnail(source: Bitmap): Bitmap {
     )
 }
 
-private fun decodeScaled(resolver: ContentResolver, uri: Uri): Bitmap {
+/** Decodes a picked or scanned image upright (EXIF), at most 2200 px on its longest side. */
+internal fun decodeScaled(resolver: ContentResolver, uri: Uri): Bitmap {
     val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
     resolver.openInputStream(uri)?.use {
         BitmapFactory.decodeStream(it, null, bounds)
@@ -272,7 +270,7 @@ private fun capDimension(bitmap: Bitmap): Bitmap {
     return resized
 }
 
-// ONNX corner detection requires orientation-corrected CameraX images.
+// Photos must be upright (EXIF applied) before page detection and filters.
 private fun applyExifRotation(resolver: ContentResolver, uri: Uri, bitmap: Bitmap): Bitmap {
     val degrees = runCatching {
         resolver.openInputStream(uri)?.use { stream ->

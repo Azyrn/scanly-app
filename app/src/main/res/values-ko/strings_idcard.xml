@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">원본</string>
+    <string name="scan_filter_auto">자동</string>
+    <string name="scan_filter_magic_color">매직 컬러</string>
+    <string name="scan_filter_whiteboard">화이트보드</string>
+    <string name="scan_filter_black_white">흑백</string>
+    <string name="scan_filter_grayscale">회색조</string>
+    <string name="id_title">신분증 사본</string>
+    <string name="id_title_passport">여권 사본</string>
+    <string name="id_preview_description">A4 사본 미리보기</string>
+    <string name="id_side_front">앞면</string>
+    <string name="id_side_back">뒷면</string>
+    <string name="id_side_page">사진 페이지</string>
+    <string name="id_off_shape">카드 모양이 아니어서 늘리지 않았습니다. 더 꼭 맞게 잘라 다시 스캔하세요.</string>
+    <string name="id_rotate">회전</string>
+    <string name="id_retake">다시 스캔</string>
+    <string name="id_add_back">뒷면 추가</string>
+    <string name="id_swap">앞뒷면 바꾸기</string>
+    <string name="id_size">크기</string>
+    <string name="id_size_actual">실제 크기</string>
+    <string name="id_look_colour">컬러</string>
+    <string name="id_look_grey">회색</string>
+    <string name="id_look_photocopy">복사본</string>
+    <string name="id_watermark_label">제출처 (선택)</string>
+    <string name="id_watermark_hint">예: 은행 계좌 개설 – 2026년 11월</string>
+    <string name="id_watermark_why">카드 위에 인쇄되어 사본을 다른 용도로 쓸 수 없게 합니다.</string>
+    <string name="id_watermark_clear">지우기</string>
+    <string name="id_save_pdf">PDF 저장</string>
+    <string name="id_save_image">이미지 저장</string>
+    <string name="id_print">인쇄</string>
+    <string name="id_share">공유</string>
+    <string name="id_print_job">신분증 사본</string>
+    <string name="id_saved_pdf">다운로드에 저장됨</string>
+    <string name="id_saved_image">갤러리에 저장됨</string>
+    <string name="id_save_failed">사본을 만들 수 없습니다. 다시 시도하세요.</string>
+    <string name="id_extra_scans_ignored">처음 스캔만 사용했습니다</string>
+    <string name="id_scan_unreadable">스캔을 읽을 수 없습니다. 다시 시도하세요.</string>
+</resources>

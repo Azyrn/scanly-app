@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">Couldn\'t capture — try again</string>
     <string name="scr_camera_permission_required">Camera permission required.</string>
-    <string name="scr_camera_capture_document">Capture document</string>
-    <string name="scr_camera_focus_hint">Tap to focus · line the page up with the edges</string>
-    <string name="scr_camera_capture">Capture</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">Up to %1$d file per scan — using the first one.</item>
@@ -23,6 +20,7 @@
         <item quantity="other">%1$d credits</item>
     </plurals>
     <string name="scr_home_question">What would you like to scan?</string>
+    <string name="scr_home_update_available">Update available</string>
     <string name="scr_home_scan_document">Scan Document</string>
     <string name="scr_home_scan_document_subtitle">Auto-crop, enhance &amp; export PDF</string>
     <string name="scr_home_image_to_text">Image to Text</string>

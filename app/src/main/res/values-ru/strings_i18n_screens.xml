@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">Не удалось снять. Повторите.</string>
     <string name="scr_camera_permission_required">Нужен доступ к камере.</string>
-    <string name="scr_camera_capture_document">Снять документ</string>
-    <string name="scr_camera_focus_hint">Касание — фокус · совместите с краями кадра</string>
-    <string name="scr_camera_capture">Снять</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">До %1$d файла за скан. Берётся первый %1$d.</item>
@@ -27,6 +24,7 @@
         <item quantity="other">%1$d кредита</item>
     </plurals>
     <string name="scr_home_question">Что вы хотите отсканировать?</string>
+    <string name="scr_home_update_available">Доступно обновление</string>
     <string name="scr_home_scan_document">Сканировать</string>
     <string name="scr_home_scan_document_subtitle">Автообрезка, улучшение, PDF</string>
     <string name="scr_home_image_to_text">Фото в текст</string>

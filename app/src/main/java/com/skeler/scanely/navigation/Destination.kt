@@ -9,9 +9,23 @@ import kotlin.reflect.KClass
 sealed interface Destination {
     @Serializable data object Home : Destination
 
-    @Serializable data object DocumentCapture : Destination
-
     @Serializable data object ScanReview : Destination
+
+    /**
+     * The scan camera. [mode] is a `core.scan.ScanMode` name and [kind] an `IdDocumentKind` name (null: Document,
+     * ID card); [replaceSide] retakes that side of the ID copy already open.
+     */
+    @Serializable data class ScanCamera(
+        val mode: String? = null,
+        val kind: String? = null,
+        val replaceSide: Int? = null
+    ) : Destination
+
+    /** The crop after a photo; its photo lives in `ScanSessionViewModel`. */
+    @Serializable data object ScanCrop : Destination
+
+    /** The ID / passport copy; its scans live only in [com.skeler.scanely.ui.viewmodel.IdCardViewModel]. */
+    @Serializable data object IdCard : Destination
 
     @Serializable data object TextCompose : Destination
 
@@ -65,6 +79,10 @@ sealed interface Destination {
  */
 private val IN_MEMORY_ONLY: Set<KClass<out Destination>> = setOf(
     Destination.ScanReview::class,
+    // The photo being cropped lives only in the scan session.
+    Destination.ScanCrop::class,
+    // ID scans are kept in memory only, on purpose (privacy); a cold restore goes Home.
+    Destination.IdCard::class,
     Destination.TextCompose::class,
     Destination.Results::class,
     Destination.UnifiedResults::class,

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">Original</string>
+    <string name="scan_filter_auto">Auto</string>
+    <string name="scan_filter_magic_color">Color mágico</string>
+    <string name="scan_filter_whiteboard">Pizarra</string>
+    <string name="scan_filter_black_white">Blanco y negro</string>
+    <string name="scan_filter_grayscale">Escala de grises</string>
+    <string name="id_title">Copia del documento</string>
+    <string name="id_title_passport">Copia del pasaporte</string>
+    <string name="id_preview_description">Vista previa de la copia A4</string>
+    <string name="id_side_front">Anverso</string>
+    <string name="id_side_back">Reverso</string>
+    <string name="id_side_page">Página de la foto</string>
+    <string name="id_off_shape">No tiene forma de tarjeta, así que no se estira. Repite con un recorte más ajustado.</string>
+    <string name="id_rotate">Girar</string>
+    <string name="id_retake">Repetir</string>
+    <string name="id_add_back">Añadir reverso</string>
+    <string name="id_swap">Cambiar anverso y reverso</string>
+    <string name="id_size">Tamaño</string>
+    <string name="id_size_actual">Tamaño real</string>
+    <string name="id_look_colour">Color</string>
+    <string name="id_look_grey">Gris</string>
+    <string name="id_look_photocopy">Fotocopia</string>
+    <string name="id_watermark_label">Copia para (opcional)</string>
+    <string name="id_watermark_hint">p. ej. Cuenta bancaria – nov. 2026</string>
+    <string name="id_watermark_why">Se imprime sobre la tarjeta para que la copia no sirva para otra cosa.</string>
+    <string name="id_watermark_clear">Borrar</string>
+    <string name="id_save_pdf">Guardar PDF</string>
+    <string name="id_save_image">Guardar imagen</string>
+    <string name="id_print">Imprimir</string>
+    <string name="id_share">Compartir</string>
+    <string name="id_print_job">Copia de documento</string>
+    <string name="id_saved_pdf">Guardado en Descargas</string>
+    <string name="id_saved_image">Guardado en la galería</string>
+    <string name="id_save_failed">No se pudo crear la copia. Inténtalo de nuevo.</string>
+    <string name="id_extra_scans_ignored">Solo se usaron los primeros escaneos</string>
+    <string name="id_scan_unreadable">No se pudo leer ese escaneo. Inténtalo de nuevo.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">बंद करें</string>
+    <string name="scan_auto_capture">ऑटो</string>
+    <string name="scan_flash">फ़्लैश</string>
+    <string name="scan_import">गैलरी से लें</string>
+    <string name="scan_take_photo">फ़ोटो लें</string>
+    <plurals name="scan_pages_review">
+        <item quantity="one">%d पेज, देखें</item>
+        <item quantity="other">%d पेज, देखें</item>
+    </plurals>
+    <string name="scan_mode_document">दस्तावेज़</string>
+    <string name="scan_mode_id">आईडी कार्ड</string>
+    <string name="scan_mode_whiteboard">व्हाइटबोर्ड</string>
+    <string name="scan_kind_card">कार्ड</string>
+    <string name="scan_kind_passport">पासपोर्ट</string>
+    <string name="scan_side_front">आगे — %1$d/%2$d</string>
+    <string name="scan_side_back">पीछे — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">फ़ोटो पेज</string>
+    <string name="scan_guide_document">पेज फ़्रेम में रखें</string>
+    <string name="scan_guide_whiteboard">बोर्ड फ़्रेम में रखें</string>
+    <string name="scan_retake">फिर लें</string>
+    <string name="scan_crop_title">कोने ठीक करें</string>
+    <string name="scan_rotate">घुमाएँ</string>
+    <string name="scan_crop_auto">ऑटो</string>
+    <string name="scan_crop_full">पूरी इमेज</string>
+    <string name="scan_add_page">पेज जोड़ें</string>
+    <string name="scan_done">हो गया</string>
+    <string name="scan_next_back">अगला: पीछे</string>
+    <string name="scan_make_copy">कॉपी बनाएँ</string>
+</resources>

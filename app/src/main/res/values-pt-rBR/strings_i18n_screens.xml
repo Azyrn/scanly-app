@@ -10,9 +10,6 @@
     <!-- Document camera -->
     <string name="scr_camera_capture_failed">Captura falhou. Tente de novo.</string>
     <string name="scr_camera_permission_required">É preciso permissão da câmera.</string>
-    <string name="scr_camera_capture_document">Capturar documento</string>
-    <string name="scr_camera_focus_hint">Toque para focar · alinhe a página com as bordas</string>
-    <string name="scr_camera_capture">Capturar</string>
     <!-- Home -->
     <plurals name="scr_home_ai_file_limit">
         <item quantity="one">Até %1$d arquivo: só %1$d é usado.</item>
@@ -25,6 +22,7 @@
         <item quantity="other">%1$d créditos</item>
     </plurals>
     <string name="scr_home_question">O que você quer escanear?</string>
+    <string name="scr_home_update_available">Atualização disponível</string>
     <string name="scr_home_scan_document">Digitalizar</string>
     <string name="scr_home_scan_document_subtitle">Recorte auto, realce e PDF</string>
     <string name="scr_home_image_to_text">Ler imagem</string>

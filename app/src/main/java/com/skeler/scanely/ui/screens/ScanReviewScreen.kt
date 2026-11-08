@@ -74,6 +74,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -86,6 +87,7 @@ import com.skeler.scanely.core.image.ScanFilter
 import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.rememberStorageAccess
+import com.skeler.scanely.ui.theme.ScanTokens
 import com.skeler.scanely.ui.viewmodel.DocumentScanViewModel
 import com.skeler.scanely.ui.viewmodel.FilterPreview
 
@@ -457,7 +459,7 @@ private fun FilterThumbnail(
         }
         Spacer(Modifier.height(6.dp))
         Text(
-            text = preview.filter.label,
+            text = stringResource(preview.filter.labelRes),
             style = MaterialTheme.typography.labelSmall,
             maxLines = 2,
             textAlign = TextAlign.Center,
@@ -487,11 +489,13 @@ private fun ExportBar(enabled: Boolean, onClick: () -> Unit) {
                 enabled = enabled,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .height(ScanTokens.MediumControlSize)
+                    .testTag("scan_review_export"),
                 shape = CircleShape
             ) {
-                Icon(Icons.Rounded.IosShare, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(Modifier.size(10.dp))
+                // Button M (spec 5): 56 dp, 24 dp icon, 8 dp icon–label.
+                Icon(Icons.Rounded.IosShare, contentDescription = null, modifier = Modifier.size(ScanTokens.IconSize))
+                Spacer(Modifier.size(ScanTokens.Space2))
                 Text(
                     stringResource(R.string.scr_save_or_share),
                     style = MaterialTheme.typography.titleMedium,

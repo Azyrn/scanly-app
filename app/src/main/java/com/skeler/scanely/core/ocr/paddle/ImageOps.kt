@@ -3,6 +3,8 @@ package com.skeler.scanely.core.ocr.paddle
 import android.graphics.Bitmap
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
+import com.skeler.scanely.core.geometry.perspectiveInverse
+import com.skeler.scanely.core.geometry.sampleBilinear
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer

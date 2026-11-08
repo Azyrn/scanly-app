@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">Original</string>
+    <string name="scan_filter_auto">Auto</string>
+    <string name="scan_filter_magic_color">Magische Farbe</string>
+    <string name="scan_filter_whiteboard">Whiteboard</string>
+    <string name="scan_filter_black_white">Schwarzweiß</string>
+    <string name="scan_filter_grayscale">Graustufen</string>
+    <string name="id_title">Ausweiskopie</string>
+    <string name="id_title_passport">Passkopie</string>
+    <string name="id_preview_description">Vorschau der A4-Kopie</string>
+    <string name="id_side_front">Vorderseite</string>
+    <string name="id_side_back">Rückseite</string>
+    <string name="id_side_page">Fotoseite</string>
+    <string name="id_off_shape">Keine Kartenform, daher nicht gestreckt. Für engeren Zuschnitt neu scannen.</string>
+    <string name="id_rotate">Drehen</string>
+    <string name="id_retake">Neu scannen</string>
+    <string name="id_add_back">Rückseite hinzufügen</string>
+    <string name="id_swap">Vorder- und Rückseite tauschen</string>
+    <string name="id_size">Größe</string>
+    <string name="id_size_actual">Originalgröße</string>
+    <string name="id_look_colour">Farbe</string>
+    <string name="id_look_grey">Grau</string>
+    <string name="id_look_photocopy">Fotokopie</string>
+    <string name="id_watermark_label">Kopie für (optional)</string>
+    <string name="id_watermark_hint">z. B. Bankkonto – Nov. 2026</string>
+    <string name="id_watermark_why">Wird über die Karte gedruckt, damit die Kopie nur dafür gilt.</string>
+    <string name="id_watermark_clear">Löschen</string>
+    <string name="id_save_pdf">PDF speichern</string>
+    <string name="id_save_image">Bild speichern</string>
+    <string name="id_print">Drucken</string>
+    <string name="id_share">Teilen</string>
+    <string name="id_print_job">Ausweiskopie</string>
+    <string name="id_saved_pdf">In Downloads gespeichert</string>
+    <string name="id_saved_image">In der Galerie gespeichert</string>
+    <string name="id_save_failed">Kopie konnte nicht erstellt werden. Bitte erneut versuchen.</string>
+    <string name="id_extra_scans_ignored">Nur die ersten Scans wurden verwendet</string>
+    <string name="id_scan_unreadable">Scan nicht lesbar. Bitte erneut versuchen.</string>
+</resources>

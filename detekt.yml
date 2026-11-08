@@ -73,6 +73,7 @@ style:
       - "**/*.kts"
       - "**/ui/theme/**"
       - "**/core/ocr/paddle/**"
+      - "**/core/geometry/**"
       - "**/core/image/**"
     ignoreNumbers: ["-1", "0", "1", "2", "60", "100", "1000"]
     ignoreHashCodeFunction: true

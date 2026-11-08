@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">الأصل</string>
+    <string name="scan_filter_auto">تلقائي</string>
+    <string name="scan_filter_magic_color">ألوان سحرية</string>
+    <string name="scan_filter_whiteboard">سبورة</string>
+    <string name="scan_filter_black_white">أبيض وأسود</string>
+    <string name="scan_filter_grayscale">تدرج رمادي</string>
+    <string name="id_title">نسخة البطاقة</string>
+    <string name="id_title_passport">نسخة جواز السفر</string>
+    <string name="id_preview_description">معاينة نسخة A4</string>
+    <string name="id_side_front">الوجه</string>
+    <string name="id_side_back">الظهر</string>
+    <string name="id_side_page">صفحة الصورة</string>
+    <string name="id_off_shape">شكلها ليس شكل بطاقة، لذلك لم تُمدَّد. أعد المسح بقصّ أدق.</string>
+    <string name="id_rotate">تدوير</string>
+    <string name="id_retake">إعادة المسح</string>
+    <string name="id_add_back">أضف الظهر</string>
+    <string name="id_swap">بدّل الوجه والظهر</string>
+    <string name="id_size">الحجم</string>
+    <string name="id_size_actual">الحجم الفعلي</string>
+    <string name="id_look_colour">ألوان</string>
+    <string name="id_look_grey">رمادي</string>
+    <string name="id_look_photocopy">نسخة مصورة</string>
+    <string name="id_watermark_label">نسخة مخصصة لـ (اختياري)</string>
+    <string name="id_watermark_hint">مثال: ملف البنك – نونبر 2026</string>
+    <string name="id_watermark_why">يُطبع على البطاقة حتى لا تُستعمل النسخة لغرض آخر.</string>
+    <string name="id_watermark_clear">مسح</string>
+    <string name="id_save_pdf">حفظ PDF</string>
+    <string name="id_save_image">حفظ الصورة</string>
+    <string name="id_print">طباعة</string>
+    <string name="id_share">مشاركة</string>
+    <string name="id_print_job">نسخة بطاقة التعريف</string>
+    <string name="id_saved_pdf">حُفظت في التنزيلات</string>
+    <string name="id_saved_image">حُفظت في المعرض</string>
+    <string name="id_save_failed">تعذّر إنشاء النسخة. حاول مرة أخرى.</string>
+    <string name="id_extra_scans_ignored">استُعملت المسوحات الأولى فقط</string>
+    <string name="id_scan_unreadable">تعذّرت قراءة هذا المسح. حاول مرة أخرى.</string>
+</resources>

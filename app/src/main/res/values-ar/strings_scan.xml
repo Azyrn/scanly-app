@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">إغلاق</string>
+    <string name="scan_auto_capture">تلقائي</string>
+    <string name="scan_flash">الفلاش</string>
+    <string name="scan_import">من المعرض</string>
+    <string name="scan_take_photo">التقاط</string>
+    <plurals name="scan_pages_review">
+        <item quantity="zero">%d صفحة، مراجعة</item>
+        <item quantity="one">%d صفحة، مراجعة</item>
+        <item quantity="two">%d صفحتان، مراجعة</item>
+        <item quantity="few">%d صفحات، مراجعة</item>
+        <item quantity="many">%d صفحة، مراجعة</item>
+        <item quantity="other">%d صفحة، مراجعة</item>
+    </plurals>
+    <string name="scan_mode_document">مستند</string>
+    <string name="scan_mode_id">بطاقة هوية</string>
+    <string name="scan_mode_whiteboard">سبورة</string>
+    <string name="scan_kind_card">بطاقة</string>
+    <string name="scan_kind_passport">جواز سفر</string>
+    <string name="scan_side_front">الوجه — %1$d من %2$d</string>
+    <string name="scan_side_back">الظهر — %1$d من %2$d</string>
+    <string name="scan_side_photo_page">صفحة الصورة</string>
+    <string name="scan_guide_document">ضع الصفحة في الإطار</string>
+    <string name="scan_guide_whiteboard">ضع السبورة في الإطار</string>
+    <string name="scan_retake">إعادة</string>
+    <string name="scan_crop_title">ضبط الزوايا</string>
+    <string name="scan_rotate">تدوير</string>
+    <string name="scan_crop_auto">تلقائي</string>
+    <string name="scan_crop_full">كاملة</string>
+    <string name="scan_add_page">إضافة</string>
+    <string name="scan_done">تم</string>
+    <string name="scan_next_back">التالي: الظهر</string>
+    <string name="scan_make_copy">نسخة</string>
+</resources>

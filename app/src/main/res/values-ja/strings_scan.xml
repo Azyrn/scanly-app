@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">閉じる</string>
+    <string name="scan_auto_capture">自動</string>
+    <string name="scan_flash">ライト</string>
+    <string name="scan_import">ギャラリーから</string>
+    <string name="scan_take_photo">撮影</string>
+    <plurals name="scan_pages_review">
+        <item quantity="other">%d ページ、確認</item>
+    </plurals>
+    <string name="scan_mode_document">書類</string>
+    <string name="scan_mode_id">IDカード</string>
+    <string name="scan_mode_whiteboard">ボード</string>
+    <string name="scan_kind_card">カード</string>
+    <string name="scan_kind_passport">パスポート</string>
+    <string name="scan_side_front">表面 — %1$d/%2$d</string>
+    <string name="scan_side_back">裏面 — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">写真ページ</string>
+    <string name="scan_guide_document">書類を枠内に</string>
+    <string name="scan_guide_whiteboard">ボードを枠内に</string>
+    <string name="scan_retake">撮り直す</string>
+    <string name="scan_crop_title">角を調整</string>
+    <string name="scan_rotate">回転</string>
+    <string name="scan_crop_auto">自動</string>
+    <string name="scan_crop_full">全体</string>
+    <string name="scan_add_page">ページ追加</string>
+    <string name="scan_done">完了</string>
+    <string name="scan_next_back">次: 裏面</string>
+    <string name="scan_make_copy">コピー作成</string>
+</resources>

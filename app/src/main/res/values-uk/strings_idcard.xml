@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">Оригінал</string>
+    <string name="scan_filter_auto">Авто</string>
+    <string name="scan_filter_magic_color">Яскраві кольори</string>
+    <string name="scan_filter_whiteboard">Дошка</string>
+    <string name="scan_filter_black_white">Чорно-білий</string>
+    <string name="scan_filter_grayscale">Відтінки сірого</string>
+    <string name="id_title">Копія посвідчення</string>
+    <string name="id_title_passport">Копія паспорта</string>
+    <string name="id_preview_description">Попередній перегляд копії A4</string>
+    <string name="id_side_front">Лицьовий</string>
+    <string name="id_side_back">Зворот</string>
+    <string name="id_side_page">Сторінка з фото</string>
+    <string name="id_off_shape">Не схоже на картку, тому не розтягнуто. Перескануйте з точнішим обрізанням.</string>
+    <string name="id_rotate">Повернути</string>
+    <string name="id_retake">Перезняти</string>
+    <string name="id_add_back">Додати зворот</string>
+    <string name="id_swap">Поміняти боки місцями</string>
+    <string name="id_size">Розмір</string>
+    <string name="id_size_actual">Реальний розмір</string>
+    <string name="id_look_colour">Колір</string>
+    <string name="id_look_grey">Сірий</string>
+    <string name="id_look_photocopy">Ксерокопія</string>
+    <string name="id_watermark_label">Копія для (необов’язково)</string>
+    <string name="id_watermark_hint">напр. Банк – листопад 2026</string>
+    <string name="id_watermark_why">Друкується поверх картки, щоб копію не можна було використати для іншого.</string>
+    <string name="id_watermark_clear">Очистити</string>
+    <string name="id_save_pdf">Зберегти PDF</string>
+    <string name="id_save_image">Зберегти фото</string>
+    <string name="id_print">Друк</string>
+    <string name="id_share">Поділитися</string>
+    <string name="id_print_job">Копія посвідчення</string>
+    <string name="id_saved_pdf">Збережено в «Завантаження»</string>
+    <string name="id_saved_image">Збережено в галерею</string>
+    <string name="id_save_failed">Не вдалося створити копію. Спробуйте ще раз.</string>
+    <string name="id_extra_scans_ignored">Використано лише перші скани</string>
+    <string name="id_scan_unreadable">Не вдалося прочитати скан. Спробуйте ще раз.</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ID card copy + Whiteboard mode, and the scan filter names. -->
+<resources>
+    <string name="scan_filter_original">Original</string>
+    <string name="scan_filter_auto">Auto</string>
+    <string name="scan_filter_magic_color">Magic Color</string>
+    <string name="scan_filter_whiteboard">Whiteboard</string>
+    <string name="scan_filter_black_white">Black &amp; White</string>
+    <string name="scan_filter_grayscale">Grayscale</string>
+    <string name="id_title">ID copy</string>
+    <string name="id_title_passport">Passport copy</string>
+    <string name="id_preview_description">Preview of the A4 copy</string>
+    <string name="id_side_front">Front</string>
+    <string name="id_side_back">Back</string>
+    <string name="id_side_page">Photo page</string>
+    <string name="id_off_shape">Not card-shaped, so it isn\'t stretched. Retake for a tighter crop.</string>
+    <string name="id_rotate">Rotate</string>
+    <string name="id_retake">Retake</string>
+    <string name="id_add_back">Add back side</string>
+    <string name="id_swap">Swap front and back</string>
+    <string name="id_size">Size</string>
+    <string name="id_size_actual">Actual size</string>
+    <string name="id_look_colour">Colour</string>
+    <string name="id_look_grey">Grey</string>
+    <string name="id_look_photocopy">Photocopy</string>
+    <string name="id_watermark_label">Copy for (optional)</string>
+    <string name="id_watermark_hint">e.g. Bank account – Nov 2026</string>
+    <string name="id_watermark_why">Printed across the card so the copy can\'t be reused elsewhere.</string>
+    <string name="id_watermark_clear">Clear</string>
+    <string name="id_save_pdf">Save PDF</string>
+    <string name="id_save_image">Save image</string>
+    <string name="id_print">Print</string>
+    <string name="id_share">Share</string>
+    <string name="id_print_job">ID copy</string>
+    <string name="id_saved_pdf">Saved to Downloads</string>
+    <string name="id_saved_image">Saved to Gallery</string>
+    <string name="id_save_failed">Couldn\'t create the copy. Try again.</string>
+    <string name="id_extra_scans_ignored">Only the first scans were used</string>
+    <string name="id_scan_unreadable">Couldn\'t read that scan. Try again.</string>
+</resources>

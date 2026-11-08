@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">Fechar</string>
+    <string name="scan_auto_capture">Auto</string>
+    <string name="scan_flash">Flash</string>
+    <string name="scan_import">Importar da galeria</string>
+    <string name="scan_take_photo">Tirar foto</string>
+    <plurals name="scan_pages_review">
+        <item quantity="one">%d página, revisar</item>
+        <item quantity="many">%d páginas, revisar</item>
+        <item quantity="other">%d páginas, revisar</item>
+    </plurals>
+    <string name="scan_mode_document">Documento</string>
+    <string name="scan_mode_id">RG</string>
+    <string name="scan_mode_whiteboard">Quadro</string>
+    <string name="scan_kind_card">Cartão</string>
+    <string name="scan_kind_passport">Passaporte</string>
+    <string name="scan_side_front">Frente — %1$d de %2$d</string>
+    <string name="scan_side_back">Verso — %1$d de %2$d</string>
+    <string name="scan_side_photo_page">Pág. da foto</string>
+    <string name="scan_guide_document">Enquadre a página</string>
+    <string name="scan_guide_whiteboard">Enquadre o quadro</string>
+    <string name="scan_retake">Refazer</string>
+    <string name="scan_crop_title">Ajustar cantos</string>
+    <string name="scan_rotate">Girar</string>
+    <string name="scan_crop_auto">Auto</string>
+    <string name="scan_crop_full">Tudo</string>
+    <string name="scan_add_page">Adicionar</string>
+    <string name="scan_done">Pronto</string>
+    <string name="scan_next_back">Verso</string>
+    <string name="scan_make_copy">Copiar</string>
+</resources>

@@ -1,5 +1,7 @@
 package com.skeler.scanely.core.ocr.paddle
 
+import com.skeler.scanely.core.geometry.Geometry
+import com.skeler.scanely.core.geometry.RotatedRect
 import kotlin.math.ceil
 
 // A text line's region fills its minimum-area rectangle almost completely when the line is

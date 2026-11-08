@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Scan camera and crop (docs/scan-flow-spec.md sections 3 and 4). -->
+<resources>
+    <string name="scan_close">Выйти</string>
+    <string name="scan_auto_capture">Авто</string>
+    <string name="scan_flash">Свет</string>
+    <string name="scan_import">Из галереи</string>
+    <string name="scan_take_photo">Снять</string>
+    <plurals name="scan_pages_review">
+        <item quantity="one">%d стр., обзор</item>
+        <item quantity="few">%d стр., обзор</item>
+        <item quantity="many">%d стр., обзор</item>
+        <item quantity="other">%d стр., обзор</item>
+    </plurals>
+    <string name="scan_mode_document">Документ</string>
+    <string name="scan_mode_id">ID-карта</string>
+    <string name="scan_mode_whiteboard">Доска</string>
+    <string name="scan_kind_card">Карта</string>
+    <string name="scan_kind_passport">Паспорт</string>
+    <string name="scan_side_front">Лицо — %1$d/%2$d</string>
+    <string name="scan_side_back">Оборот — %1$d/%2$d</string>
+    <string name="scan_side_photo_page">Стр. с фото</string>
+    <string name="scan_guide_document">Наведите на лист</string>
+    <string name="scan_guide_whiteboard">Наведите на доску</string>
+    <string name="scan_retake">Снова</string>
+    <string name="scan_crop_title">Углы</string>
+    <string name="scan_rotate">Поворот</string>
+    <string name="scan_crop_auto">Авто</string>
+    <string name="scan_crop_full">Всё фото</string>
+    <string name="scan_add_page">Добавить</string>
+    <string name="scan_done">Готово</string>
+    <string name="scan_next_back">Оборот</string>
+    <string name="scan_make_copy">Копия</string>
+</resources>

@@ -41,6 +41,8 @@ benchmarkMacro = "1.5.0"
 uiautomator = "2.4.1"
 profileInstaller = "1.4.1"
 playServicesAds = "25.5.0"
+# Asks Play whether a newer version is published (Home shows an update icon).
+playAppUpdate = "2.1.0"
 userMessagingPlatform = "4.0.0"
 leakcanary = "2.14"
 credentials = "1.6.0"
@@ -123,6 +125,7 @@ play-services-ads = { group = "com.google.android.gms", name = "play-services-ad
 # Consent gathering (UMP). Arrives transitively with play-services-ads, but RewardedAdManager
 # imports it directly, so it is declared rather than inherited.
 user-messaging-platform = { group = "com.google.android.ump", name = "user-messaging-platform", version.ref = "userMessagingPlatform" }
+play-app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "playAppUpdate" }
 # Baseline Profile
 benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacro" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
