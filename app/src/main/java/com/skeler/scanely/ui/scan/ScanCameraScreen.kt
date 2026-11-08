@@ -303,20 +303,15 @@ private fun ColumnScope.Viewfinder(
     }
     var size by remember { mutableStateOf(IntSize.Zero) }
     val swipe = with(LocalDensity.current) { ScanTokens.ModeSwipeDistance.toPx() }
-    // Dark theme: the preview runs edge to edge, as in the spec. Light theme: it sits as an inset card with
-    // large corners and a soft shadow tinted with the app colour, so the black feed reads as a window
-    // set into the light screen rather than a hole cut through it.
-    val light = isLightScan()
-    val shape = if (light) MaterialTheme.shapes.extraLarge else MaterialTheme.shapes.medium
-    val inset = if (light) Modifier.padding(horizontal = ScanTokens.Space3) else Modifier
-    val card = if (light) {
-        Modifier
-            .shadow(
-                ScanTokens.ViewfinderElevationLight,
-                shape,
-                ambientColor = colors.primary,
-                spotColor = colors.primary
-            )
+    // Same size and shape in both themes; in a light theme a soft shadow tinted with the app colour lifts
+    // the black feed off the light screen.
+    val tint = if (isLightScan()) {
+        Modifier.shadow(
+            ScanTokens.ViewfinderElevationLight,
+            MaterialTheme.shapes.medium,
+            ambientColor = colors.primary,
+            spotColor = colors.primary
+        )
     } else {
         Modifier
     }
@@ -325,10 +320,9 @@ private fun ColumnScope.Viewfinder(
         modifier = Modifier
             .weight(1f, fill = false)
             .fillMaxWidth()
-            .then(inset) // before the ratio, so the inset card keeps the sensor's 3:4
             .aspectRatio(ScanTokens.VIEWFINDER_ASPECT)
-            .then(card)
-            .clip(shape)
+            .then(tint)
+            .clip(MaterialTheme.shapes.medium)
             .background(colors.surfaceContainerLowest)
             .onSizeChanged { size = it }
             .testTag(ScanTags.CAMERA_VIEWFINDER)

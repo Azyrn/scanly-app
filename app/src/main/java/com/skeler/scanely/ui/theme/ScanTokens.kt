@@ -35,6 +35,11 @@ object ScanTokens {
     /** Icon button M / button M (MediumIconButtonTokens, ButtonMediumTokens). */
     val MediumControlSize = 56.dp
 
+    /** Gallery import: a 52 dp glass circle (fill 10 %, 1 dp rim 18 %) with a 26 dp icon. */
+    val GlassButtonSize = 52.dp
+    val GlassRim = 1.dp
+    val GlassIconSize = 26.dp
+
     /** Shutter = FAB medium (FabMediumTokens). */
     val ShutterSize = 80.dp
     val ShutterRing = 4.dp
@@ -70,7 +75,7 @@ object ScanTokens {
     /** Elevation level 3 (ElevationTokens). */
     val LoupeElevation = 6.dp
 
-    /** Light theme only: the viewfinder card's soft, app-tinted shadow. */
+    /** Light theme only: the viewfinder's soft, app-tinted shadow. */
     val ViewfinderElevationLight = 10.dp
 
     /** Badge large (BadgeTokens). */

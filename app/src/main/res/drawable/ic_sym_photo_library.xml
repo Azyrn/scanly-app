@@ -1,0 +1,20 @@
+<!-- Gallery: two stacked photo cards (front one with sun and hills), traced with potrace from the user's
+     reference image (1200 x 1200 px, so the viewport is 1200). Potrace's coordinates are flipped and 10x, hence
+     the group transform. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1200"
+    android:viewportHeight="1200">
+  <group
+      android:translateY="1200"
+      android:scaleX="0.1"
+      android:scaleY="-0.1">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M4240 9810 c-439 -78 -835 -359 -1045 -742 l-37 -68 2144 0 c2304 0 2255 1 2495 -51 910 -196 1601 -978 1692 -1913 7 -72 11 -616 11 -1579 l0 -1469 48 27 c346 199 597 502 710 855 72 226 67 74 67 1965 l0 1700 -23 104 c-68 303 -197 538 -417 756 -208 208 -422 327 -725 403 l-105 27 -2355 2 c-2260 1 -2359 1 -2460 -17z"/>
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M2820 8323 c-115 -18 -250 -51 -327 -79 -461 -166 -814 -551 -942 -1024 -53 -196 -52 -165 -48 -1940 l3 -1645 22 -96 c72 -316 199 -548 416 -764 261 -260 553 -397 925 -434 130 -14 4440 -14 4586 -1 651 59 1176 505 1334 1135 42 167 42 185 39 1915 l-4 1665 -26 105 c-147 587 -551 990 -1138 1138 l-105 27 -2355 1 c-1295 1 -2366 0 -2380 -3z m1726 -1710 c344 -115 374 -598 47 -750 -393 -182 -759 296 -483 630 97 116 289 170 436 120z m2207 -753 c150 -22 271 -82 398 -197 41 -37 211 -189 377 -338 l302 -270 0 -651 c0 -622 -1 -655 -20 -716 -57 -186 -220 -323 -415 -348 -54 -7 -786 -10 -2285 -8 l-2205 3 -69 27 c-129 50 -223 132 -280 245 -55 110 -56 123 -56 693 l0 525 146 125 c261 224 358 270 580 270 228 0 324 -48 644 -321 649 -555 743 -634 750 -634 5 0 369 326 810 725 442 399 821 738 844 753 148 101 312 141 479 117z"/>
+  </group>
+</vector>

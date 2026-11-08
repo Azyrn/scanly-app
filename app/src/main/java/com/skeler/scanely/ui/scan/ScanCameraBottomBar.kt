@@ -17,8 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
@@ -74,20 +75,25 @@ fun BottomBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            val colors = MaterialTheme.colorScheme
-            FilledTonalIconButton(
+            // Subtle glass: a faint fill and hairline rim in the content colour (white on the dark camera,
+            // onSurface in a light theme, where white would vanish), so it doesn't compete with the shutter.
+            val ink = if (isLightScan()) MaterialTheme.colorScheme.onSurface else Color.White
+            IconButton(
                 onClick = { if (state.importLimit > 1) pickMany.launch(request) else pickOne.launch(request) },
                 enabled = state.importLimit > 0,
-                modifier = Modifier.size(ScanTokens.MediumControlSize).testTag(ScanTags.CAMERA_GALLERY),
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = colors.surfaceContainerHighest,
-                    contentColor = colors.onSurface
+                modifier = Modifier
+                    .size(ScanTokens.GlassButtonSize)
+                    .border(ScanTokens.GlassRim, ink.copy(alpha = GLASS_RIM_ALPHA), CircleShape)
+                    .testTag(ScanTags.CAMERA_GALLERY),
+                colors = IconButtonDefaults.iconButtonColors(
+                    containerColor = ink.copy(alpha = GLASS_FILL_ALPHA),
+                    contentColor = ink
                 )
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_action_gallery_stack),
+                    painterResource(R.drawable.ic_sym_photo_library),
                     contentDescription = stringResource(R.string.scan_import),
-                    modifier = Modifier.size(ScanTokens.IconSize)
+                    modifier = Modifier.size(ScanTokens.GlassIconSize)
                 )
             }
         }
@@ -179,3 +185,7 @@ private fun PageStack(pages: List<ScanPage>, onReview: () -> Unit) {
         }
     }
 }
+
+/** Gallery glass button: fill and rim strength over the content colour. */
+private const val GLASS_FILL_ALPHA = 0.10f
+private const val GLASS_RIM_ALPHA = 0.18f

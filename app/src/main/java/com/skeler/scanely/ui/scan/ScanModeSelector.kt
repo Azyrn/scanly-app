@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -28,14 +29,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
 import com.skeler.scanely.R
 import com.skeler.scanely.core.scan.ScanMode
 import com.skeler.scanely.ui.theme.ScanTokens
+import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -56,13 +62,29 @@ fun ScanModeSelector(selected: ScanMode, onSelect: (ScanMode) -> Unit, modifier:
     val spatial = MaterialTheme.motionScheme.defaultSpatialSpec<Float>()
     LaunchedEffect(selected) { position.animateTo(selected.ordinal.toFloat(), spatial) }
     val gap = ScanTokens.Space2
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val swipe = with(LocalDensity.current) { ScanTokens.ModeSwipeDistance.toPx() }
 
     Layout(
         modifier = modifier
             .fillMaxWidth()
             .height(ScanTokens.TouchTarget)
             .selectableGroup()
-            .testTag(ScanTags.CAMERA_MODES),
+            .testTag(ScanTags.CAMERA_MODES)
+            .pointerInput(selected, rtl) {
+                // Same rule as the viewfinder: a horizontal swipe of at least 48 dp steps one mode.
+                var travel = 0f
+                detectHorizontalDragGestures(
+                    onDragStart = { travel = 0f },
+                    onDragEnd = {
+                        if (abs(travel) >= swipe) {
+                            val forward = (travel < 0) != rtl
+                            val next = selected.ordinal + if (forward) 1 else -1
+                            ScanMode.entries.getOrNull(next)?.let(onSelect)
+                        }
+                    }
+                ) { _, dx -> travel += dx }
+            },
         content = { ScanMode.entries.forEach { ModeItem(it, it == selected) { onSelect(it) } } }
     ) { measurables, constraints ->
         val items = measurables.map { it.measure(constraints.copy(minWidth = 0)) }
