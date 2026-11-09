@@ -32,7 +32,7 @@ val secretsProps = Properties().apply {
 fun scanlyApiBaseUrl(): String =
     providers.gradleProperty("SCANLY_API_BASE_URL").orNull
         ?: secretsProps.getProperty("SCANLY_API_BASE_URL")
-        ?: "https://scanly-api.webforge-skeler.workers.dev/"
+        ?: "https://api.scanlyocr.com/"
 
 /**
  * Why a release APK must not carry [url], or null when it may.

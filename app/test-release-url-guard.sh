@@ -48,11 +48,11 @@ expect_refused "https://127.0.0.1/"
 expect_refused "https://localhost:8787/"
 expect_refused "http://10.0.2.2:8787/"
 expect_refused "https://[::1]/"
-expect_refused "http://scanly-api.webforge-skeler.workers.dev/"
+expect_refused "http://api.scanlyocr.com/"
 expect_refused "not a url"
 
 if [ "${FULL:-0}" = 1 ]; then
-  expect_built "https://scanly-api.webforge-skeler.workers.dev/"
+  expect_built "https://api.scanlyocr.com/"
 fi
 
 echo "$failures failure(s)"

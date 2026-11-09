@@ -20,6 +20,7 @@
     <!-- Scanly's own backend and site. Never cleartext, regardless of the base config. -->
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">scanlyocr.com</domain>
+        <!-- Debug builds pointed at a workers.dev Worker (the API itself is api.scanlyocr.com). -->
         <domain includeSubdomains="true">webforge-skeler.workers.dev</domain>
     </domain-config>
 
