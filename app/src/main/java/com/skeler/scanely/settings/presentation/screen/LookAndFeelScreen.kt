@@ -43,11 +43,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skeler.scanely.R
 import com.skeler.scanely.core.common.LocalDarkMode
 import com.skeler.scanely.core.common.LocalSettings
+import com.skeler.scanely.navigation.EaseOutExpo
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.presentation.viewmodel.SettingsViewModel
@@ -117,8 +119,13 @@ fun LookAndFeelScreen(
                     AnimatedContent(
                         targetState = selectedName,
                         transitionSpec = {
-                            (fadeIn(tween(280)) + slideInVertically(tween(280)) { it / 4 }) togetherWith
-                                (fadeOut(tween(160)) + slideOutVertically(tween(160)) { -it / 4 })
+                            // Eased out: the new name lands fast instead of easing in and out.
+                            val enter = tween<Float>(250, easing = EaseOutExpo)
+                            val enterSlide = tween<IntOffset>(250, easing = EaseOutExpo)
+                            val exit = tween<Float>(160, easing = EaseOutExpo)
+                            val exitSlide = tween<IntOffset>(160, easing = EaseOutExpo)
+                            (fadeIn(enter) + slideInVertically(enterSlide) { it / 4 }) togetherWith
+                                (fadeOut(exit) + slideOutVertically(exitSlide) { -it / 4 })
                         },
                         label = "PaletteName"
                     ) { name ->

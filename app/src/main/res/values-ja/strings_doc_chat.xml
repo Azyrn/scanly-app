@@ -58,15 +58,6 @@
     <string name="chat_preparing_picture">画像を準備中…</string>
     <string name="chat_picture_role">ページに配置</string>
     <string name="chat_scan_role">自分のスキャン</string>
-    <string name="chat_image_pending">再構築か配置か？</string>
-    <string name="chat_role_rebuild">この書類を再構築</string>
-    <string name="chat_role_place">この画像をページに配置</string>
-    <string name="chat_role_rebuild_prompt">書類をきれいな PDF に再構築。文字・名前・数字はすべて残す。</string>
-    <string name="chat_role_place_prompt">この画像を写真またはロゴとしてページに配置</string>
-    <string name="chat_role_question">再構築か、ページに配置か？</string>
-    <string name="chat_role_question_body">「再構築」は画像を新しい書類に変換します。「配置」は写真やロゴなどの画像としてそのまま残します。</string>
-    <string name="chat_role_answer_rebuild">再構築する</string>
-    <string name="chat_role_answer_place">配置する</string>
     <string name="chat_attach_error_dismiss">閉じる</string>
 
 
@@ -226,4 +217,11 @@
     <plurals name="chat_log_dropped">
         <item quantity="other">この端末では以前の %d 行は未保持</item>
     </plurals>
+    <string name="chat_effort_low">高速</string>
+    <string name="chat_effort_medium">標準</string>
+    <string name="chat_effort_high">じっくり</string>
+    <string name="chat_effort_low_hint">速い・簡単な文書向け</string>
+    <string name="chat_effort_medium_hint">ほとんどの文書に最適</string>
+    <string name="chat_effort_high_hint">長く考える・難しい文書向け · クレジット2倍</string>
+    <string name="chat_effort_a11y">思考: %1$s</string>
 </resources>

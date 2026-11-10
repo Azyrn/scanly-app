@@ -62,15 +62,6 @@
     <string name="chat_preparing_picture">Preparando foto…</string>
     <string name="chat_picture_role">Colocada na página</string>
     <string name="chat_scan_role">Dos meus scans</string>
-    <string name="chat_image_pending">Refazer ou colocar?</string>
-    <string name="chat_role_rebuild">Refazer este documento</string>
-    <string name="chat_role_place">Colocar imagem na página</string>
-    <string name="chat_role_rebuild_prompt">Refaça como PDF limpo. Mantenha cada palavra, nome e número.</string>
-    <string name="chat_role_place_prompt">Coloque a imagem na página como retrato ou logo.</string>
-    <string name="chat_role_question">Refazer ou colocar na página?</string>
-    <string name="chat_role_question_body">Refazer cria um documento novo. Colocar mantém a imagem, como retrato ou logo.</string>
-    <string name="chat_role_answer_rebuild">Refazer</string>
-    <string name="chat_role_answer_place">Colocar</string>
     <string name="chat_attach_error_dismiss">Fechar</string>
 
 
@@ -252,4 +243,11 @@
         <item quantity="many">%d linhas antigas não salvas no celular</item>
         <item quantity="other">%d linhas antigas não salvas no celular</item>
     </plurals>
+    <string name="chat_effort_low">Rápido</string>
+    <string name="chat_effort_medium">Padrão</string>
+    <string name="chat_effort_high">Profundo</string>
+    <string name="chat_effort_low_hint">Rápido, para documentos simples</string>
+    <string name="chat_effort_medium_hint">Para a maioria dos documentos</string>
+    <string name="chat_effort_high_hint">Pensa mais, para documentos difíceis · 2× créditos</string>
+    <string name="chat_effort_a11y">Raciocínio: %1$s</string>
 </resources>

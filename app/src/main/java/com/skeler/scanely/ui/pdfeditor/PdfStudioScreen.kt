@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -80,6 +81,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.asImageBitmap
@@ -88,6 +90,8 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationException
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.util.VelocityTracker
+import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalResources
@@ -99,6 +103,7 @@ import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -110,6 +115,7 @@ import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.navigation.OnScreenExit
 import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.components.rememberStorageAccess
+import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
 import kotlinx.coroutines.launch
 
@@ -466,7 +472,7 @@ private fun PageGrid(
     ) {
         itemsIndexed(order, key = { _, original -> original }) { position, original ->
             val page = byIndex[original] ?: return@itemsIndexed
-            val isDragging = reorder.draggingPosition == position
+            val isLifted = reorder.lifted == original
 
             PageTile(
                 page = page,
@@ -474,14 +480,28 @@ private fun PageGrid(
                 thumbnail = thumbnails[original],
                 onRequestThumbnail = onRequestThumbnail,
                 isSelected = original in selection,
-                isDragging = isDragging,
+                lift = { reorder.liftOf(original) },
                 modifier = Modifier
-                    .zIndex(if (isDragging) 1f else 0f)
-                    .graphicsLayer {
-                        if (isDragging) {
-                            translationX = reorder.dragOffset.x
-                            translationY = reorder.dragOffset.y
+                    // The lifted tile is the finger (or its spring home), so it must not also slide
+                    // with the grid; every other tile glides to its new slot without overshoot.
+                    .then(
+                        if (isLifted) {
+                            Modifier.zIndex(1f)
+                        } else {
+                            Modifier.animateItem(
+                                fadeInSpec = null,
+                                fadeOutSpec = null,
+                                placementSpec = GestureDefaults.settle(IntOffset.VisibilityThreshold)
+                            )
                         }
+                    )
+                    .graphicsLayer {
+                        val offset = reorder.offsetOf(original)
+                        translationX = offset.x
+                        translationY = offset.y
+                        val scale = 1f + (GestureDefaults.LIFT_SCALE - 1f) * reorder.liftOf(original)
+                        scaleX = scale
+                        scaleY = scale
                     }
                     // Before the gestures, so the press ripple takes the tile's shape instead of
                     // washing a grey rectangle over the whole cell.
@@ -522,6 +542,7 @@ private fun Modifier.tileGestures(
     val interactionSource = remember { MutableInteractionSource() }
     val scope = rememberCoroutineScope()
     val haptics = LocalHapticFeedback.current
+    val context = LocalContext.current
 
     return this
         .indication(interactionSource, ripple())
@@ -571,13 +592,21 @@ private fun Modifier.tileGestures(
                     reorder.onDragStart(currentPosition, idle, onToggle)
                     dragging = true
 
+                    val tracker = VelocityTracker()
+                    tracker.addPointerInputChange(down)
                     val dropped = drag(down.id) { change ->
+                        tracker.addPointerInputChange(change)
                         reorder.onDrag(change.positionChange(), gridState)
                         change.consume()
                     }
                     dragging = false
 
-                    if (dropped) reorder.onDragEnd() else reorder.onDragCancel()
+                    if (dropped) {
+                        val velocity = tracker.calculateVelocity()
+                        reorder.onDragEnd(Offset(velocity.x, velocity.y), GestureDefaults.reducedMotion(context))
+                    } else {
+                        reorder.onDragCancel()
+                    }
                     scope.launch {
                         interactionSource.emit(
                             if (dropped) {
@@ -604,7 +633,7 @@ private fun PageTile(
     thumbnail: PageThumbnail?,
     onRequestThumbnail: (Int, Int) -> Unit,
     isSelected: Boolean,
-    isDragging: Boolean,
+    lift: () -> Float,
     modifier: Modifier = Modifier
 ) {
     val border = when {
@@ -620,7 +649,7 @@ private fun PageTile(
                 .clip(TILE_SHAPE)
                 .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                 .border(2.dp, border, TILE_SHAPE)
-                .graphicsLayer { alpha = if (isDragging) 0.85f else 1f }
+                .graphicsLayer { alpha = 1f - (1f - GestureDefaults.LIFTED_ALPHA) * lift() }
         ) {
             BoxWithConstraints(Modifier.fillMaxSize()) {
                 val upright = page.rotation % 180 == 0

@@ -101,7 +101,9 @@ data class AgentTurnRequest(
     /** A past scan's text for the agent's workspace (worker/src/agent-inputs.ts), base64. */
     val attachments: List<AgentAttachmentDto> = emptyList(),
     /** Pictures and PDFs this message brings, by the ids [ChatSyncApi.uploadAgentAttachment] gave. */
-    val attachmentIds: List<String> = emptyList()
+    val attachmentIds: List<String> = emptyList(),
+    /** [AgentEffort.wire]: how hard the assistant thinks; the Worker prices the files by it. */
+    val effort: String = AgentEffort.MEDIUM.wire
 )
 
 @Serializable

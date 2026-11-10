@@ -42,7 +42,8 @@ data class TurnDraft(
     val scanText: String? = null,
     val scanLabel: String? = null,
     /** The file this message revises; null starts a new document. */
-    val reviseDesignId: String? = null
+    val reviseDesignId: String? = null,
+    val effort: AgentEffort = AgentEffort.MEDIUM
 )
 
 @Serializable
@@ -104,7 +105,8 @@ class DocChatRunner @Inject internal constructor(
                 hasDocument = draft.document != null,
                 hasPhoto = draft.photo != null,
                 requestKey = UUID.randomUUID().toString(),
-                keyCreatedAt = now
+                keyCreatedAt = now,
+                effort = draft.effort.wire
             )
         )
         launch(reply.id)

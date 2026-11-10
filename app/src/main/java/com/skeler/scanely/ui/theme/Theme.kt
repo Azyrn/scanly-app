@@ -96,6 +96,7 @@ fun ScanelyTheme(
         colorScheme = animatedColorScheme,
         typography = if (LocalConfiguration.current.locales[0].language == "ar") ArabicTypography else Typography,
         shapes = ScanelyShapes,
+        motionScheme = ScanlyMotionScheme,
     ) {
         Box(
             modifier = Modifier

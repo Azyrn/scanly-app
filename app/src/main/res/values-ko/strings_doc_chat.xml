@@ -49,15 +49,6 @@
     <string name="chat_preparing_picture">사진 준비 중…</string>
     <string name="chat_picture_role">페이지에 배치됨</string>
     <string name="chat_scan_role">내 스캔에서</string>
-    <string name="chat_image_pending">다시 만들기 · 배치</string>
-    <string name="chat_role_rebuild">이 문서 다시 만들기</string>
-    <string name="chat_role_place">이 이미지를 페이지에 넣기</string>
-    <string name="chat_role_rebuild_prompt">이 문서를 깔끔한 PDF로 다시 만들어 주세요. 모든 단어, 이름, 숫자를 그대로 유지해 주세요.</string>
-    <string name="chat_role_place_prompt">이 사진을 인물 사진이나 로고처럼 페이지에 넣어 주세요.</string>
-    <string name="chat_role_question">다시 만들까요, 페이지에 넣을까요?</string>
-    <string name="chat_role_question_body">다시 만들기는 사진을 새 문서로 바꿔요. 배치하기는 인물 사진이나 로고처럼 사진 그대로 두어요.</string>
-    <string name="chat_role_answer_rebuild">다시 만들기</string>
-    <string name="chat_role_answer_place">배치하기</string>
     <string name="chat_attach_error_dismiss">닫기</string>
     <string name="chat_attach_title">파일 추가</string>
     <string name="chat_attach_camera">카메라</string>
@@ -196,4 +187,11 @@
     <plurals name="chat_log_dropped">
         <item quantity="other">이 휴대폰에 보관되지 않은 이전 행 %d개</item>
     </plurals>
+    <string name="chat_effort_low">빠르게</string>
+    <string name="chat_effort_medium">표준</string>
+    <string name="chat_effort_high">깊이</string>
+    <string name="chat_effort_low_hint">빠름, 간단한 문서용</string>
+    <string name="chat_effort_medium_hint">대부분의 문서에 적합</string>
+    <string name="chat_effort_high_hint">더 오래 생각, 어려운 문서용 · 크레딧 2배</string>
+    <string name="chat_effort_a11y">생각: %1$s</string>
 </resources>

@@ -6,9 +6,11 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +25,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +44,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.skeler.scanely.R
+import com.skeler.scanely.ui.components.pressScale
 import com.skeler.scanely.ui.theme.ScanTokens
 
 private const val FULL_CIRCLE = 360f
@@ -53,7 +57,7 @@ private const val GALLERY_PICK_MAX = 20
 @Composable
 fun BottomBar(
     state: ScanSessionUiState,
-    ring: Float,
+    ring: () -> Float,
     canShoot: Boolean,
     onShutter: () -> Unit,
     onImport: (List<Uri>) -> Unit,
@@ -108,7 +112,7 @@ fun BottomBar(
 
 /** 80 dp: a 4 dp `onSurface` ring, an 8 dp gap and a 64 dp `primary` disc; [ring] fills it clockwise. */
 @Composable
-private fun Shutter(ring: Float, enabled: Boolean, onClick: () -> Unit) {
+private fun Shutter(ring: () -> Float, enabled: Boolean, onClick: () -> Unit) {
     val colors = MaterialTheme.colorScheme
     val density = LocalDensity.current
     val ringPx = with(density) { ScanTokens.ShutterRing.toPx() }
@@ -116,22 +120,32 @@ private fun Shutter(ring: Float, enabled: Boolean, onClick: () -> Unit) {
     val label = stringResource(R.string.scan_take_photo)
     // Light theme: a soft ring in the app tint instead of a heavy dark one; the fill arc stays primary.
     val ringColour = if (isLightScan()) colors.primaryContainer else colors.onSurface
+    val press = remember { MutableInteractionSource() }
     Canvas(
         modifier = Modifier
             .size(ScanTokens.ShutterSize)
+            // The most-pressed control on the screen gives way under the finger, not just a ripple.
+            .pressScale(press)
             .clip(CircleShape)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .clickable(
+                interactionSource = press,
+                indication = LocalIndication.current,
+                enabled = enabled,
+                role = Role.Button,
+                onClick = onClick
+            )
             .semantics { contentDescription = label }
             .testTag(ScanTags.CAMERA_SHUTTER)
     ) {
         val half = ringPx / 2f
         val arcSize = Size(size.width - ringPx, size.height - ringPx)
         drawCircle(ringColour, radius = size.minDimension / 2f - half, style = Stroke(ringPx))
-        if (ring > 0f) {
+        val filled = ring()
+        if (filled > 0f) {
             drawArc(
                 color = colors.primary,
                 startAngle = TWELVE_O_CLOCK,
-                sweepAngle = FULL_CIRCLE * ring.coerceIn(0f, 1f),
+                sweepAngle = FULL_CIRCLE * filled.coerceIn(0f, 1f),
                 useCenter = false,
                 topLeft = Offset(half, half),
                 size = arcSize,

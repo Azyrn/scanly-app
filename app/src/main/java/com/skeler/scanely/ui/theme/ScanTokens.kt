@@ -101,7 +101,4 @@ object ScanTokens {
 
     /** Loupe centre sits this far above the finger: half the loupe plus one touch target (spec 4, 3c). */
     val LoupeLift = LoupeSize / 2 + TouchTarget
-
-    /** Horizontal travel on the viewfinder that switches mode (spec 3.3). */
-    val ModeSwipeDistance = TouchTarget
 }

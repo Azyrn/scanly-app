@@ -20,10 +20,6 @@ data class AttachedDocument(
 @Immutable
 data class AttachedPhoto(val name: String, val isPreparing: Boolean = true, val uri: String? = null)
 
-/** An image picked from Photos or Files whose role the user has not chosen yet. */
-@Immutable
-data class PendingImage(val uri: String, val name: String = "")
-
 /** Why the last pick was refused, shown as a chip in the composer until dismissed or replaced. */
 @Immutable
 data class AttachError(
@@ -42,13 +38,9 @@ data class ComposerUi(
     val startNew: Boolean = false,
     /** The file a revision is based on, when the user picked one other than the newest. */
     val reviseDesignId: String? = null,
-    /** Rebuild it, or place it on the page: asked with chips, and again on send if still open. */
-    val pendingImage: PendingImage? = null,
-    /** Send was tapped with [pendingImage] still open: the composer asks before anything is sent. */
-    val askRole: Boolean = false,
     val attachError: AttachError? = null
 ) {
-    val hasAttachment: Boolean get() = document != null || photo != null || scan != null || pendingImage != null
+    val hasAttachment: Boolean get() = document != null || photo != null || scan != null
     val isPreparing: Boolean
         get() = document?.isReading == true || photo?.isPreparing == true
 }

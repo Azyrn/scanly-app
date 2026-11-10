@@ -60,15 +60,6 @@
     <string name="chat_preparing_picture">Bild vorbereiten…</string>
     <string name="chat_picture_role">Auf der Seite platziert</string>
     <string name="chat_scan_role">Aus Scans</string>
-    <string name="chat_image_pending">Neu bauen/setzen?</string>
-    <string name="chat_role_rebuild">Dokument neu erstellen</string>
-    <string name="chat_role_place">Bild auf die Seite setzen</string>
-    <string name="chat_role_rebuild_prompt">Als saubere PDF neu erstellen; jedes Wort, jeden Namen, jede Zahl erhalten.</string>
-    <string name="chat_role_place_prompt">Setze dieses Bild als Porträt oder Logo auf die Seite.</string>
-    <string name="chat_role_question">Neu erstellen oder platzieren?</string>
-    <string name="chat_role_question_body">Neu erstellen macht aus dem Bild ein Dokument. Platzieren behält es als Bild, etwa Porträt oder Logo.</string>
-    <string name="chat_role_answer_rebuild">Neu bauen</string>
-    <string name="chat_role_answer_place">Platzieren</string>
     <string name="chat_attach_error_dismiss">Schließen</string>
 
 
@@ -239,4 +230,11 @@
         <item quantity="one">%d ältere Zeile lokal verworfen</item>
         <item quantity="other">%d ältere Zeilen lokal verworfen</item>
     </plurals>
+    <string name="chat_effort_low">Schnell</string>
+    <string name="chat_effort_medium">Standard</string>
+    <string name="chat_effort_high">Tief</string>
+    <string name="chat_effort_low_hint">Schnell, für einfache Dokumente</string>
+    <string name="chat_effort_medium_hint">Für die meisten Dokumente</string>
+    <string name="chat_effort_high_hint">Denkt länger, für schwierige Dokumente · 2× Credits</string>
+    <string name="chat_effort_a11y">Denken: %1$s</string>
 </resources>

@@ -58,15 +58,6 @@
     <string name="chat_preparing_picture">正在准备图片…</string>
     <string name="chat_picture_role">放置在页面上</string>
     <string name="chat_scan_role">来自我的扫描件</string>
-    <string name="chat_image_pending">重建还是放置？</string>
-    <string name="chat_role_rebuild">重建此文档</string>
-    <string name="chat_role_place">将此图片放在页面上</string>
-    <string name="chat_role_rebuild_prompt">将此文档重建为整洁的 PDF。保留每一个文字、姓名和数字。</string>
-    <string name="chat_role_place_prompt">将此图片作为肖像或徽标放在页面上。</string>
-    <string name="chat_role_question">是重建它，还是把它放在页面上？</string>
-    <string name="chat_role_question_body">“重建”会将图片转换为新文档。“放置”则保留为图片，例如肖像或徽标。</string>
-    <string name="chat_role_answer_rebuild">重建</string>
-    <string name="chat_role_answer_place">放置</string>
     <string name="chat_attach_error_dismiss">关闭</string>
 
 
@@ -226,4 +217,11 @@
     <plurals name="chat_log_dropped">
         <item quantity="other">此手机上未保留 %d 行较早的记录</item>
     </plurals>
+    <string name="chat_effort_low">快速</string>
+    <string name="chat_effort_medium">标准</string>
+    <string name="chat_effort_high">深度</string>
+    <string name="chat_effort_low_hint">快速，适合简单文档</string>
+    <string name="chat_effort_medium_hint">适合大多数文档</string>
+    <string name="chat_effort_high_hint">思考更久，适合复杂文档 · 2 倍积分</string>
+    <string name="chat_effort_a11y">思考：%1$s</string>
 </resources>

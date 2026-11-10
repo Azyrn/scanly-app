@@ -63,6 +63,18 @@ class AgentTurnTest {
     }
 
     @Test
+    fun `the chosen effort goes with the turn as the Worker's word, and an unknown stored one is Standard`() {
+        val request = AgentTurnRequest("c", "hi", emptyList(), effort = AgentEffort.HIGH.wire)
+        val sent = ApiJson.encodeToString(AgentTurnRequest.serializer(), request)
+        assertTrue(sent, sent.contains("\"effort\":\"high\""))
+        assertEquals(listOf("low", "medium", "high"), AgentEffort.entries.map { it.wire })
+        assertEquals(AgentEffort.MEDIUM, AgentEffort.fromWire(null))
+        assertEquals(AgentEffort.MEDIUM, AgentEffort.fromWire("max"))
+        assertEquals(AgentEffort.LOW, AgentEffort.fromWire("low"))
+        assertEquals("medium", request().effort)
+    }
+
+    @Test
     fun `a PDF is told from a picture by its first bytes`() {
         assertTrue(java.util.Base64.getEncoder().encodeToString("%PDF-1.7 x".toByteArray()).isPdfBase64())
         assertFalse(java.util.Base64.getEncoder().encodeToString(byteArrayOf(-1, -40, -1, 0)).isPdfBase64())

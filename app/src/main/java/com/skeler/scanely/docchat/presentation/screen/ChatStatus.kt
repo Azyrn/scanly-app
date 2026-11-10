@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -217,7 +218,7 @@ private fun BackgroundNote(@StringRes text: Int) {
 @Composable
 private fun PulsingDot() {
     val transition = rememberInfiniteTransition(label = "pulse")
-    val alpha by transition.animateFloat(
+    val pulse = transition.animateFloat(
         initialValue = PULSE_MIN,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(PULSE_MS), RepeatMode.Reverse),
@@ -226,7 +227,7 @@ private fun PulsingDot() {
     Box(
         Modifier
             .size(10.dp)
-            .alpha(alpha)
+            .graphicsLayer { alpha = pulse.value }
             .background(MaterialTheme.colorScheme.primary, CircleShape)
     )
 }

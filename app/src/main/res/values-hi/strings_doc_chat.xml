@@ -51,15 +51,6 @@
     <string name="chat_preparing_picture">तस्वीर तैयार हो रही है…</string>
     <string name="chat_picture_role">पेज पर लगाई गई</string>
     <string name="chat_scan_role">मेरे स्कैन से</string>
-    <string name="chat_image_pending">दोबारा बनाएं या लगाएं?</string>
-    <string name="chat_role_rebuild">यह दस्तावेज़ दोबारा बनाएं</string>
-    <string name="chat_role_place">यह तस्वीर पेज पर लगाएं</string>
-    <string name="chat_role_rebuild_prompt">इस दस्तावेज़ को एक साफ़ PDF के रूप में दोबारा बनाएं। हर शब्द, नाम और नंबर वैसा ही रखें।</string>
-    <string name="chat_role_place_prompt">इस तस्वीर को पोर्ट्रेट या लोगो की तरह पेज पर लगाएं।</string>
-    <string name="chat_role_question">इसे दोबारा बनाएं या पेज पर लगाएं?</string>
-    <string name="chat_role_question_body">दोबारा बनाने से तस्वीर एक नया दस्तावेज़ बन जाती है। लगाने से वह पोर्ट्रेट या लोगो की तरह तस्वीर ही रहती है।</string>
-    <string name="chat_role_answer_rebuild">दोबारा बनाएं</string>
-    <string name="chat_role_answer_place">लगाएं</string>
     <string name="chat_attach_error_dismiss">बंद करें</string>
     <string name="chat_attach_title">फ़ाइल जोड़ें</string>
     <string name="chat_attach_camera">कैमरा</string>
@@ -209,4 +200,11 @@
         <item quantity="one">इस फ़ोन पर सेव न हुई %d पिछली पंक्ति</item>
         <item quantity="other">इस फ़ोन पर सेव न हुईं %d पिछली पंक्तियाँ</item>
     </plurals>
+    <string name="chat_effort_low">तेज़</string>
+    <string name="chat_effort_medium">सामान्य</string>
+    <string name="chat_effort_high">गहन</string>
+    <string name="chat_effort_low_hint">तेज़, आसान दस्तावेज़ों के लिए</string>
+    <string name="chat_effort_medium_hint">ज़्यादातर दस्तावेज़ों के लिए</string>
+    <string name="chat_effort_high_hint">ज़्यादा सोचता है, कठिन दस्तावेज़ों के लिए · 2× क्रेडिट</string>
+    <string name="chat_effort_a11y">सोच: %1$s</string>
 </resources>

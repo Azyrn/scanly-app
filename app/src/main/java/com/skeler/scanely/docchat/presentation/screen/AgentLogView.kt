@@ -96,11 +96,13 @@ internal fun AgentRowItem(
             .fillMaxWidth()
             .padding(start = INDENT * depth)
             .then(
-                // Only a row that opens is a tap target, and then at least ROW_MIN_HEIGHT tall.
+                // Only a row that opens is a tap target, and then at least ROW_MIN_HEIGHT tall. No pressed
+                // overlay: rows change under the finger while a turn streams, and a ripple left there stuck
+                // grey on the row (2026-11-09); the row opening or closing is the feedback.
                 if (expandable) {
                     Modifier.heightIn(
                         min = ROW_MIN_HEIGHT
-                    ).clickable(role = Role.Button) { open = !open }
+                    ).clickable(interactionSource = null, indication = null, role = Role.Button) { open = !open }
                 } else {
                     Modifier
                 }

@@ -3,7 +3,6 @@ package com.skeler.scanely.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -16,9 +15,12 @@ val EaseOutExpo = Easing { fraction ->
     if (fraction == 1f) 1f else 1f - 2f.pow(-10f * fraction)
 }
 
-// M3 shared-axis X: delayed fade-in avoids double-exposure blend.
-private const val AXIS_DURATION_MS = 350
-private const val FADE_IN_DURATION_MS = 250
+// M3 shared-axis X: delayed fade-in avoids double-exposure blend. The outgoing screen fades with
+// an ease-out, not M3's accelerate curve: an ease-in holds it at full opacity through the first
+// frames, exactly when the user is watching for the change.
+// 250 ms, under the 300 ms UI ceiling: screens change tens of times a session.
+private const val AXIS_DURATION_MS = 250
+private const val FADE_IN_DURATION_MS = 190
 private const val FADE_IN_DELAY_MS = 60
 private const val FADE_OUT_DURATION_MS = 140
 
@@ -43,7 +45,7 @@ fun gallerySlideExit(): ExitTransition = slideOutHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     targetOffsetX = { -axisDistance(it) }
 ) + fadeOut(
-    animationSpec = tween(FADE_OUT_DURATION_MS, easing = FastOutLinearInEasing)
+    animationSpec = tween(FADE_OUT_DURATION_MS, easing = EaseOutExpo)
 )
 
 fun galleryPopEnter(): EnterTransition = slideInHorizontally(
@@ -61,7 +63,7 @@ fun galleryPopExit(): ExitTransition = slideOutHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     targetOffsetX = { axisDistance(it) }
 ) + fadeOut(
-    animationSpec = tween(FADE_OUT_DURATION_MS, easing = FastOutLinearInEasing)
+    animationSpec = tween(FADE_OUT_DURATION_MS, easing = EaseOutExpo)
 )
 
 /*

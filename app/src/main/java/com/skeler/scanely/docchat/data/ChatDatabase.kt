@@ -1,5 +1,7 @@
 package com.skeler.scanely.docchat.data
 
+import androidx.room.AutoMigration
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Entity
@@ -102,7 +104,10 @@ data class RequestEntity(
     /** The answer to an ask, as JSON; null for a first attempt. */
     val answer: String? = null,
     /** How long reading the attached file's text took before sending; shown as its own step. */
-    val ocrMillis: Long = 0
+    val ocrMillis: Long = 0,
+    /** The effort the person chose for this message ([AgentEffort.wire]); a retry sends the same. */
+    @ColumnInfo(defaultValue = "medium")
+    val effort: String = AgentEffort.MEDIUM.wire
 )
 
 // One function per query, like a Retrofit interface: the count is the schema's surface, not a smell.
@@ -209,8 +214,9 @@ interface ChatDao {
 
 @Database(
     entities = [ChatEntity::class, MessageEntity::class, RequestEntity::class],
-    version = 1,
-    exportSchema = true
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
 abstract class ChatDatabase : RoomDatabase() {
     abstract fun chatDao(): ChatDao

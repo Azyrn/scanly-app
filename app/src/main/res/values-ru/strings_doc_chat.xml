@@ -64,15 +64,6 @@
     <string name="chat_preparing_picture">Готовим фото…</string>
     <string name="chat_picture_role">На странице</string>
     <string name="chat_scan_role">Из моих сканов</string>
-    <string name="chat_image_pending">Создать/вставить?</string>
-    <string name="chat_role_rebuild">Пересоздать</string>
-    <string name="chat_role_place">Вставить на страницу</string>
-    <string name="chat_role_rebuild_prompt">Пересоздайте как чистый PDF. Сохраните все слова, имена и числа.</string>
-    <string name="chat_role_place_prompt">Вставьте как портрет или логотип.</string>
-    <string name="chat_role_question">Пересоздать или разместить?</string>
-    <string name="chat_role_question_body">Пересоздать — новый документ. Разместить — картинка, например портрет или логотип.</string>
-    <string name="chat_role_answer_rebuild">Создать</string>
-    <string name="chat_role_answer_place">Вставить</string>
     <string name="chat_attach_error_dismiss">Скрыть</string>
 
 
@@ -265,4 +256,11 @@
         <item quantity="many">%d ранних строк не сохранены</item>
         <item quantity="other">%d ранних строк не сохранены</item>
     </plurals>
+    <string name="chat_effort_low">Быстро</string>
+    <string name="chat_effort_medium">Стандарт</string>
+    <string name="chat_effort_high">Глубоко</string>
+    <string name="chat_effort_low_hint">Быстро, для простых документов</string>
+    <string name="chat_effort_medium_hint">Для большинства документов</string>
+    <string name="chat_effort_high_hint">Думает дольше, для сложных документов · 2× кредитов</string>
+    <string name="chat_effort_a11y">Мышление: %1$s</string>
 </resources>

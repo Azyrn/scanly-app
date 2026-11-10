@@ -51,6 +51,12 @@ data class PageProjection(
         return Offset(unrotated.x + pageWidthPt / 2f, unrotated.y + pageHeightPt / 2f)
     }
 
+    /** How far the page pans each way before an edge comes in: half of what it overflows the container by. */
+    fun panLimit(): Offset = Offset(
+        ((displayWidthPt * scale - containerSize.width) / 2f).coerceAtLeast(0f),
+        ((displayHeightPt * scale - containerSize.height) / 2f).coerceAtLeast(0f)
+    )
+
     fun clampToPage(point: Offset): Offset = Offset(
         point.x.coerceIn(0f, pageWidthPt),
         point.y.coerceIn(0f, pageHeightPt)

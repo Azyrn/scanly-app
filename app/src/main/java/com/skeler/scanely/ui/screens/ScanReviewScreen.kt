@@ -71,6 +71,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
@@ -264,7 +265,7 @@ private fun PageStage(
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
-        val pageAlpha by animateFloatAsState(if (dimmed) 0.45f else 1f, label = "Page dim")
+        val pageAlpha = animateFloatAsState(if (dimmed) 0.45f else 1f, label = "Page dim")
 
         HorizontalPager(
             state = pagerState,
@@ -279,7 +280,7 @@ private fun PageStage(
                 contentAlignment = Alignment.Center
             ) {
                 Surface(
-                    modifier = Modifier.alpha(pageAlpha),
+                    modifier = Modifier.graphicsLayer { alpha = pageAlpha.value },
                     shape = MaterialTheme.shapes.medium,
                     color = Color.White,
                     shadowElevation = 8.dp

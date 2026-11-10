@@ -11,12 +11,14 @@ import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
 import androidx.compose.foundation.gestures.calculatePan
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.horizontalScroll
@@ -122,6 +124,7 @@ import com.skeler.scanely.core.pdfeditor.model.ShapeKind
 import com.skeler.scanely.core.scan.DocumentScannerManager
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.PaywallSheet
+import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.max
@@ -546,8 +549,10 @@ private fun PageSurface(
     onSelectionEnd: (Offset, Offset) -> Unit,
     onTap: (Offset) -> Unit
 ) {
-    var zoom by remember(page.originalIndex) { mutableFloatStateOf(1f) }
-    var pan by remember(page.originalIndex) { mutableStateOf(Offset.Zero) }
+    val scope = rememberCoroutineScope()
+    val decay = rememberSplineBasedDecay<Float>()
+    val viewport = remember(page.originalIndex) { PageViewport(scope, decay, MAX_ZOOM) }
+    val context = LocalContext.current
     val live = remember(page.originalIndex) { mutableStateListOf<Offset>() }
 
     val measurer = rememberTextMeasurer()
@@ -565,15 +570,16 @@ private fun PageSurface(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceContainerLowest)
     ) {
-        val projection = PageProjection(
+        // Zoom and pan stay out of this: they are read where the page is drawn and touched, so a
+        // pinch frame redraws without recomposing.
+        val base = PageProjection(
             containerSize = Size(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat()),
             pageWidthPt = page.widthPt,
             pageHeightPt = page.heightPt,
-            rotation = page.rotation,
-            zoom = zoom,
-            pan = pan
+            rotation = page.rotation
         )
-        val current by rememberUpdatedState(projection)
+        val currentBase by rememberUpdatedState(base)
+        fun current() = viewport.projection(currentBase)
 
         if (bitmap == null) {
             CircularProgressIndicator(Modifier.align(Alignment.Center))
@@ -590,7 +596,7 @@ private fun PageSurface(
                         drawing = tool?.isDragTool == true,
                         onStrokeStart = {
                             live.clear()
-                            val point = current.clamped(it)
+                            val point = current().clamped(it)
                             live += point
                             if (tool == EditorTool.ERASER) {
                                 onEraseStart()
@@ -598,7 +604,7 @@ private fun PageSurface(
                             }
                         },
                         onStrokeMove = {
-                            val point = current.clamped(it)
+                            val point = current().clamped(it)
                             live += point
                             if (tool == EditorTool.ERASER) onErase(point)
                             if (tool == EditorTool.RETYPE && live.size >= 2) {
@@ -624,15 +630,16 @@ private fun PageSurface(
                         },
                         // Clamped like a stroke: a tap in the grey beside the page would otherwise
                         // place text at negative coordinates, off the page and out of sight.
-                        onTap = { onTap(current.clamped(it)) },
-                        onTransform = { panChange, zoomChange ->
-                            zoom = (zoom * zoomChange).coerceIn(1f, MAX_ZOOM)
-                            pan = if (zoom <= 1.01f) Offset.Zero else pan + panChange
-                        }
+                        onTap = { onTap(current().clamped(it)) },
+                        onTransformStart = { viewport.start(currentBase) },
+                        onTransform = { centroid, panChange, zoomChange, time ->
+                            viewport.transform(currentBase, centroid, panChange, zoomChange, time)
+                        },
+                        onTransformEnd = { viewport.release(currentBase, GestureDefaults.reducedMotion(context)) }
                     )
                 }
         ) {
-            withPage(projection) {
+            withPage(viewport.projection(base)) {
                 drawImage(
                     image = image,
                     dstOffset = IntOffset.Zero,
@@ -740,10 +747,13 @@ private suspend fun PointerInputScope.pageGestures(
     onStrokeMove: (Offset) -> Unit,
     onStrokeEnd: () -> Unit,
     onTap: (Offset) -> Unit,
-    onTransform: (Offset, Float) -> Unit
+    onTransformStart: () -> Unit,
+    onTransform: (centroid: Offset, pan: Offset, zoom: Float, timeMillis: Long) -> Unit,
+    onTransformEnd: () -> Unit
 ) = awaitEachGesture {
     val down = awaitFirstDown(requireUnconsumed = false)
-    val gesture = PageGesture(drawing, down.position, onStrokeStart, onStrokeMove, onStrokeEnd, onTap, onTransform)
+    val transform = PageTransform(onTransformStart, onTransform, onTransformEnd)
+    val gesture = PageGesture(drawing, down.position, onStrokeStart, onStrokeMove, onStrokeEnd, onTap, transform)
     do {
         val fingersDown = gesture.onEvent(awaitPointerEvent())
     } while (fingersDown)
@@ -758,7 +768,7 @@ private class PageGesture(
     private val onStrokeMove: (Offset) -> Unit,
     private val onStrokeEnd: () -> Unit,
     private val onTap: (Offset) -> Unit,
-    private val onTransform: (Offset, Float) -> Unit
+    private val transform: PageTransform
 ) {
     private var stroking = false
     private var transforming = false
@@ -769,19 +779,21 @@ private class PageGesture(
         val pressed = event.changes.count { it.pressed }
         when {
             pressed == 0 -> return false
-            pressed >= 2 -> transform(event)
+            pressed >= 2 -> pinch(event)
             !transforming -> follow(event)
         }
         return true
     }
 
-    private fun transform(event: PointerEvent) {
+    private fun pinch(event: PointerEvent) {
         if (stroking) {
             onStrokeEnd()
             stroking = false
         }
+        if (!transforming) transform.onStart()
         transforming = true
-        onTransform(event.calculatePan(), event.calculateZoom())
+        val time = event.changes.firstOrNull()?.uptimeMillis ?: 0L
+        transform.onTransform(event.calculateCentroid(), event.calculatePan(), event.calculateZoom(), time)
         event.changes.forEach { it.consume() }
     }
 
@@ -802,10 +814,18 @@ private class PageGesture(
     fun finish() {
         when {
             stroking -> onStrokeEnd()
-            !transforming && travelled < TAP_SLOP_PX -> onTap(downPosition)
+            transforming -> transform.onEnd()
+            travelled < TAP_SLOP_PX -> onTap(downPosition)
         }
     }
 }
+
+/** The two-finger half of [pageGestures]: start, each event, and release of a pinch. */
+private class PageTransform(
+    val onStart: () -> Unit,
+    val onTransform: (centroid: Offset, pan: Offset, zoom: Float, timeMillis: Long) -> Unit,
+    val onEnd: () -> Unit
+)
 
 private fun PageProjection.clamped(offset: Offset): Offset = clampToPage(toPage(offset))
 

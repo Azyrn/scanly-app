@@ -3,7 +3,9 @@ package com.skeler.scanely.ui.pdfeditor
 import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -41,8 +43,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.PointerInputScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +56,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.skeler.scanely.R
+import com.skeler.scanely.ui.theme.GestureDefaults
 
 @Composable
 fun PasswordDialog(
@@ -182,10 +188,19 @@ fun CropPageDialog(
     var frame by remember { mutableStateOf(Rect(0.06f, 0.06f, 0.94f, 0.94f)) }
 
     LaunchedEffect(Unit) { bitmap = loadPage() }
+    val target = remember { CropTarget() }
+    val current by rememberUpdatedState(frame)
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(shape = RoundedCornerShape(24.dp), tonalElevation = 3.dp) {
-            Column(modifier = Modifier.padding(20.dp)) {
+            // The gesture sits on the whole dialog body, not the page: a corner at the page's edge
+            // still gets its full 48 dp target, half of it over the dialog's padding.
+            Column(
+                modifier = Modifier
+                    .onGloballyPositioned { target.host = it }
+                    .pointerInput(target) { cropGestures(target, { current }) { frame = it } }
+                    .padding(20.dp)
+            ) {
                 Text(
                     text = if (pageCount > 1) {
                         pluralStringResource(R.plurals.pe_crop_pages, pageCount, pageCount)
@@ -214,7 +229,7 @@ fun CropPageDialog(
                     if (page == null) {
                         CircularProgressIndicator(Modifier.size(28.dp), strokeWidth = 2.dp)
                     } else {
-                        CropSurface(page, frame) { frame = it }
+                        CropSurface(page, frame, target)
                     }
                 }
 
@@ -236,7 +251,7 @@ fun CropPageDialog(
 private fun CropSurface(
     page: Bitmap,
     frame: Rect,
-    onFrameChange: (Rect) -> Unit
+    target: CropTarget
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -259,32 +274,11 @@ private fun CropSurface(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            var grab by remember { mutableStateOf(CropGrab.NONE) }
-            val current by rememberUpdatedState(frame)
-
             Canvas(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(pageHeight)
-                    .pointerInput(Unit) {
-                        detectDragGestures(
-                            onDragStart = { start ->
-                                grab = grabFor(
-                                    start,
-                                    current,
-                                    size.width.toFloat(),
-                                    size.height.toFloat()
-                                )
-                            },
-                            onDragEnd = { grab = CropGrab.NONE },
-                            onDrag = { change, delta ->
-                                change.consume()
-                                val dx = delta.x / size.width
-                                val dy = delta.y / size.height
-                                onFrameChange(current.dragged(grab, dx, dy))
-                            }
-                        )
-                    }
+                    .onGloballyPositioned { target.page = it }
             ) {
                 drawCropFrame(frame)
             }
@@ -292,9 +286,41 @@ private fun CropSurface(
     }
 }
 
+/** Where the crop gesture's host (the dialog body) and the page canvas sit, to map touches between them. */
+private class CropTarget {
+    var host: LayoutCoordinates? = null
+    var page: LayoutCoordinates? = null
+}
+
+/**
+ * Drags a corner or the whole frame. The corner is chosen where the finger lands, and the frame then
+ * follows the finger's total travel from that point: no touch slop is lost, so the handle stays under
+ * the finger, and after running into the page edge it picks up again exactly where the finger is.
+ */
+private suspend fun PointerInputScope.cropGestures(target: CropTarget, frame: () -> Rect, onFrame: (Rect) -> Unit) {
+    val radius = GestureDefaults.MinTouchTarget.toPx() / 2f
+    awaitEachGesture {
+        val down = awaitFirstDown(requireUnconsumed = false)
+        val host = target.host?.takeIf { it.isAttached } ?: return@awaitEachGesture
+        val page = target.page?.takeIf { it.isAttached } ?: return@awaitEachGesture
+        val width = page.size.width.toFloat()
+        val height = page.size.height.toFloat()
+        val at = page.localPositionOf(host, down.position)
+        val start = frame()
+        val grab = grabFor(at, start, width, height, radius)
+        if (grab == CropGrab.NONE) return@awaitEachGesture
+        down.consume()
+        drag(down.id) { change ->
+            val moved = page.localPositionOf(host, change.position) - at
+            onFrame(start.dragged(grab, moved.x / width, moved.y / height))
+            change.consume()
+        }
+    }
+}
+
 private enum class CropGrab { NONE, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, MOVE }
 
-private fun grabFor(point: Offset, frame: Rect, width: Float, height: Float): CropGrab {
+private fun grabFor(point: Offset, frame: Rect, width: Float, height: Float, radius: Float): CropGrab {
     val corners = listOf(
         CropGrab.TOP_LEFT to Offset(frame.left * width, frame.top * height),
         CropGrab.TOP_RIGHT to Offset(frame.right * width, frame.top * height),
@@ -302,7 +328,7 @@ private fun grabFor(point: Offset, frame: Rect, width: Float, height: Float): Cr
         CropGrab.BOTTOM_RIGHT to Offset(frame.right * width, frame.bottom * height)
     )
     val nearest = corners.minByOrNull { (_, corner) -> (corner - point).getDistance() }
-    if (nearest != null && (nearest.second - point).getDistance() <= HANDLE_RADIUS_PX) {
+    if (nearest != null && (nearest.second - point).getDistance() <= radius) {
         return nearest.first
     }
     val inside = point.x in frame.left * width..frame.right * width &&
@@ -381,5 +407,4 @@ private fun DrawScope.drawCropFrame(frame: Rect) {
     }
 }
 
-private const val HANDLE_RADIUS_PX = 64f
 private const val MIN_CROP = 0.08f

@@ -18,17 +18,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-private fun skeletonPulse(): Float {
+private fun skeletonPulse(): State<Float> {
     val transition = rememberInfiniteTransition(label = "SkeletonPulse")
-    val alpha by transition.animateFloat(
+    return transition.animateFloat(
         initialValue = 1f,
         targetValue = 0.45f,
         animationSpec = infiniteRepeatable(
@@ -37,7 +38,6 @@ private fun skeletonPulse(): Float {
         ),
         label = "SkeletonAlpha"
     )
-    return alpha
 }
 
 @Composable
@@ -58,7 +58,9 @@ fun ScanResultSkeleton(
     modifier: Modifier = Modifier,
     showChips: Boolean = true
 ) {
-    Column(modifier = modifier.alpha(skeletonPulse())) {
+    // Read in the layer, so the pulse redraws the skeleton without recomposing it every frame.
+    val pulse = skeletonPulse()
+    Column(modifier = modifier.graphicsLayer { alpha = pulse.value }) {
         if (showChips) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SkeletonBlock(Modifier.width(96.dp), 32.dp, MaterialTheme.shapes.medium)

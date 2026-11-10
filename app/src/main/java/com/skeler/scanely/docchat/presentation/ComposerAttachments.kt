@@ -31,9 +31,6 @@ internal class ComposerAttachments(
     private var documentVersion = 0L
     private var photoVersion = 0L
 
-    /** The read in flight for a picture given the role to rebuild ([rebuild]) or to place. */
-    fun job(rebuild: Boolean): Job? = if (rebuild) documentJob else photoJob
-
     fun attachDocument(uri: Uri) {
         val version = ++documentVersion
         documentJob?.cancel()

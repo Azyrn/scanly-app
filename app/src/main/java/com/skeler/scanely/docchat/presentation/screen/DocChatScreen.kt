@@ -98,7 +98,7 @@ import kotlinx.coroutines.launch
 /** Key the history screen returns the chosen chat under. */
 const val OPEN_CHAT_RESULT = "openChat"
 
-/** The chat, with the app's theme but the chat's own quick, spring-free motion ([ChatMotionScheme]). */
+/** The chat, with the app's theme but the chat's own quick fades ([ChatMotionScheme]). */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun DocChatScreen(

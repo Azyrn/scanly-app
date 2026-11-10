@@ -60,15 +60,6 @@
     <string name="chat_preparing_picture">Preparing picture…</string>
     <string name="chat_picture_role">Placed on the page</string>
     <string name="chat_scan_role">From my scans</string>
-    <string name="chat_image_pending">Rebuild or place?</string>
-    <string name="chat_role_rebuild">Rebuild this document</string>
-    <string name="chat_role_place">Put this image on the page</string>
-    <string name="chat_role_rebuild_prompt">Rebuild this document as a clean PDF. Keep every word, name and number.</string>
-    <string name="chat_role_place_prompt">Put this picture on the page as a portrait or logo.</string>
-    <string name="chat_role_question">Rebuild it or place it on the page?</string>
-    <string name="chat_role_question_body">Rebuild turns the picture into a new document. Place keeps it as a picture, like a portrait or a logo.</string>
-    <string name="chat_role_answer_rebuild">Rebuild it</string>
-    <string name="chat_role_answer_place">Place it</string>
     <string name="chat_attach_error_dismiss">Dismiss</string>
 
 
@@ -239,4 +230,11 @@
         <item quantity="one">%d earlier row not kept on this phone</item>
         <item quantity="other">%d earlier rows not kept on this phone</item>
     </plurals>
+    <string name="chat_effort_low">Fast</string>
+    <string name="chat_effort_medium">Standard</string>
+    <string name="chat_effort_high">Deep</string>
+    <string name="chat_effort_low_hint">Quick, for simple documents</string>
+    <string name="chat_effort_medium_hint">Best for most documents</string>
+    <string name="chat_effort_high_hint">Thinks longer, for hard documents · 2× credits</string>
+    <string name="chat_effort_a11y">Thinking: %1$s</string>
 </resources>

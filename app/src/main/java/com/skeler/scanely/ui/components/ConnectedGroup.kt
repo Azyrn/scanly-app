@@ -1,8 +1,6 @@
 package com.skeler.scanely.ui.components
 
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.skeler.scanely.ui.theme.GestureDefaults
 
 private val GroupEndRadius = 20.dp
 private val GroupJoinRadius = 6.dp
@@ -50,18 +49,21 @@ fun ConnectedGroup(
     )
 }
 
-/** Corners swap between the group's outer and inner radii while pressed. */
+/**
+ * Corners swap between the group's outer and inner radii while pressed. Critically damped: a press
+ * applies no force, so the corners must not overshoot.
+ */
 @Composable
 private fun connectedShape(position: GroupPosition, pressed: Boolean): RoundedCornerShape {
-    val bounce = spring<Dp>(dampingRatio = Spring.DampingRatioLowBouncy)
+    val morph = GestureDefaults.press<Dp>()
     val endRadius by animateDpAsState(
         targetValue = if (pressed) GroupJoinRadius else GroupEndRadius,
-        animationSpec = bounce,
+        animationSpec = morph,
         label = "tileEndRadius"
     )
     val joinRadius by animateDpAsState(
         targetValue = if (pressed) GroupEndRadius else GroupJoinRadius,
-        animationSpec = bounce,
+        animationSpec = morph,
         label = "tileJoinRadius"
     )
 

@@ -3,6 +3,7 @@
 package com.skeler.scanely.ui.components
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -34,9 +35,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -214,27 +215,33 @@ fun PaletteChip(
                     else -> Box(modifier = dotModifier.background(dotColor))
                 }
 
-                val checkScale by animateFloatAsState(
+                // Fades in from slightly smaller (never from nothing), easing out; both read in the
+                // layer, so the chip doesn't recompose while it plays.
+                val check = animateFloatAsState(
                     targetValue = if (isSelected) 1f else 0f,
-                    animationSpec = tween(200),
+                    animationSpec = tween(CHECK_MILLIS, easing = LinearOutSlowInEasing),
                     label = "chipCheck"
                 )
-                if (checkScale > 0f) {
-                    Box(
-                        modifier = Modifier
-                            .size(18.dp)
-                            .scale(checkScale)
-                            .clip(CircleShape)
-                            .background(scheme.primary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Check,
-                            contentDescription = null,
-                            tint = scheme.onPrimary,
-                            modifier = Modifier.size(12.dp)
-                        )
-                    }
+                Box(
+                    modifier = Modifier
+                        .size(18.dp)
+                        .graphicsLayer {
+                            val shown = check.value
+                            alpha = shown
+                            val scale = CHECK_START_SCALE + (1f - CHECK_START_SCALE) * shown
+                            scaleX = scale
+                            scaleY = scale
+                        }
+                        .clip(CircleShape)
+                        .background(scheme.primary),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Check,
+                        contentDescription = null,
+                        tint = scheme.onPrimary,
+                        modifier = Modifier.size(12.dp)
+                    )
                 }
             }
 
@@ -246,3 +253,8 @@ fun PaletteChip(
         }
     }
 }
+
+private const val CHECK_MILLIS = 200
+
+/** The check grows from here as it fades in. */
+private const val CHECK_START_SCALE = 0.9f

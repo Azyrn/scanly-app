@@ -17,7 +17,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -65,7 +64,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -85,12 +84,12 @@ import com.skeler.scanely.core.scan.ScanMode
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.navigation.OnScreenExit
+import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.theme.ScanTokens
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.TimeUnit
-import kotlin.math.abs
 
 private const val TAG = "ScanCamera"
 private const val FOCUS_SECONDS = 3L
@@ -115,6 +114,7 @@ private fun CameraContent(vm: ScanSessionViewModel) {
     val context = LocalContext.current
     val navigator = LocalNavigator.current
     val state by vm.uiState.collectAsStateWithLifecycle()
+    val modeRow = rememberModeRowState(state.mode, vm::setMode)
     val permission = rememberPermissionState(Manifest.permission.CAMERA)
     LaunchedEffect(Unit) { if (!permission.status.isGranted) permission.launchPermissionRequest() }
 
@@ -194,7 +194,7 @@ private fun CameraContent(vm: ScanSessionViewModel) {
         Viewfinder(
             state = state,
             granted = permission.status.isGranted,
-            flashAlpha = flash.value,
+            flashAlpha = { flash.value },
             liveView = liveView,
             analyzer = analyzer,
             onBound = { c, cap ->
@@ -208,15 +208,15 @@ private fun CameraContent(vm: ScanSessionViewModel) {
                     .build()
                 camera?.cameraControl?.startFocusAndMetering(action)
             },
-            onMode = vm::setMode,
+            modeRow = modeRow,
             onKind = vm::setKind
         )
         Spacer(Modifier.height(ScanTokens.Space2))
-        ScanModeSelector(selected = state.mode, onSelect = vm::setMode)
+        ScanModeSelector(state = modeRow, selected = state.mode)
         Spacer(Modifier.height(ScanTokens.Space2))
         BottomBar(
             state = state,
-            ring = ring.value,
+            ring = { ring.value },
             canShoot = capture != null && !capturing,
             onShutter = shoot,
             onImport = openCrop,
@@ -287,12 +287,12 @@ private fun CameraTopBar(
 private fun ColumnScope.Viewfinder(
     state: ScanSessionUiState,
     granted: Boolean,
-    flashAlpha: Float,
+    flashAlpha: () -> Float,
     liveView: LiveView,
     analyzer: LiveAnalyzer,
     onBound: (Camera, ImageCapture) -> Unit,
     onFocus: (PreviewView, Float, Float) -> Unit,
-    onMode: (ScanMode) -> Unit,
+    modeRow: ModeRowState,
     onKind: (IdDocumentKind) -> Unit
 ) {
     val context = LocalContext.current
@@ -302,7 +302,7 @@ private fun ColumnScope.Viewfinder(
         PreviewView(context).apply { scaleType = PreviewView.ScaleType.FILL_CENTER }
     }
     var size by remember { mutableStateOf(IntSize.Zero) }
-    val swipe = with(LocalDensity.current) { ScanTokens.ModeSwipeDistance.toPx() }
+    val haptics = LocalHapticFeedback.current
     // Same size and shape in both themes; in a light theme a soft shadow tinted with the app colour lifts
     // the black feed off the light screen.
     val tint = if (isLightScan()) {
@@ -327,19 +327,8 @@ private fun ColumnScope.Viewfinder(
             .onSizeChanged { size = it }
             .testTag(ScanTags.CAMERA_VIEWFINDER)
             .pointerInput(granted) { detectTapGestures { onFocus(previewView, it.x, it.y) } }
-            .pointerInput(state.mode, rtl) {
-                var travel = 0f
-                detectHorizontalDragGestures(
-                    onDragStart = { travel = 0f },
-                    onDragEnd = {
-                        if (abs(travel) >= swipe) {
-                            val forward = (travel < 0) != rtl
-                            val next = state.mode.ordinal + if (forward) 1 else -1
-                            ScanMode.entries.getOrNull(next)?.let(onMode)
-                        }
-                    }
-                ) { _, dx -> travel += dx }
-            },
+            // A swipe here drags the mode row below, exactly as a swipe on the row does (spec 3.3).
+            .pointerInput(modeRow, rtl) { modeSwipe(modeRow, rtl, haptics) { GestureDefaults.reducedMotion(context) } },
         contentAlignment = Alignment.Center
     ) {
         if (granted) {
@@ -383,7 +372,7 @@ private fun ColumnScope.Viewfinder(
         Box(
             Modifier
                 .fillMaxSize()
-                .graphicsLayer { alpha = flashAlpha }
+                .graphicsLayer { alpha = flashAlpha() }
                 .background(colors.surface)
         )
     }

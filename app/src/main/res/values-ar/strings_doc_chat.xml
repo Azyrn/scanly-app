@@ -68,15 +68,6 @@
     <string name="chat_preparing_picture">جارٍ تحضير الصورة…</string>
     <string name="chat_picture_role">موضوعة على الصفحة</string>
     <string name="chat_scan_role">من مسوحاتي</string>
-    <string name="chat_image_pending">إعادة بناء أم وضع؟</string>
-    <string name="chat_role_rebuild">إعادة بناء هذا المستند</string>
-    <string name="chat_role_place">وضع هذه الصورة على الصفحة</string>
-    <string name="chat_role_rebuild_prompt">أعِد بناء هذا المستند كملف PDF نظيف. واحتفظ بكل كلمة واسم ورقم.</string>
-    <string name="chat_role_place_prompt">ضع هذه الصورة على الصفحة كصورة شخصية أو شعار.</string>
-    <string name="chat_role_question">هل تريد إعادة بنائها أم وضعها على الصفحة؟</string>
-    <string name="chat_role_question_body">تحوّل إعادة البناء الصورة إلى مستند جديد. أما الوضع فيُبقيها صورة، كصورة شخصية أو شعار.</string>
-    <string name="chat_role_answer_rebuild">أعِد بناءها</string>
-    <string name="chat_role_answer_place">ضعها</string>
     <string name="chat_attach_error_dismiss">تجاهل</string>
 
 
@@ -291,4 +282,11 @@
         <item quantity="many">%d سطرًا سابقًا غير محفوظ على هذا الهاتف</item>
         <item quantity="other">%d سطر سابق غير محفوظ على هذا الهاتف</item>
     </plurals>
+    <string name="chat_effort_low">سريع</string>
+    <string name="chat_effort_medium">عادي</string>
+    <string name="chat_effort_high">عميق</string>
+    <string name="chat_effort_low_hint">سريع، للمستندات البسيطة</string>
+    <string name="chat_effort_medium_hint">الأفضل لمعظم المستندات</string>
+    <string name="chat_effort_high_hint">يفكر أطول، للمستندات الصعبة · ضعف الأرصدة</string>
+    <string name="chat_effort_a11y">التفكير: %1$s</string>
 </resources>

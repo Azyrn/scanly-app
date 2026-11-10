@@ -150,7 +150,8 @@ class AgentTurns @Inject internal constructor(
                 history = agentHistory(request.chatId, request.turnId),
                 locale = Locale.getDefault().toLanguageTag(),
                 attachments = scanText(request, repository.message(request.turnId)?.body as? UserBody),
-                attachmentIds = uploadAttachments(request)
+                attachmentIds = uploadAttachments(request),
+                effort = request.effort
             )
         )
         reply.save(reply.working.copy(agentTurnId = accepted.turnId))

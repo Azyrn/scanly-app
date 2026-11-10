@@ -64,15 +64,6 @@
     <string name="chat_preparing_picture">Готуємо фото…</string>
     <string name="chat_picture_role">На сторінці</string>
     <string name="chat_scan_role">Зі сканів</string>
-    <string name="chat_image_pending">Перебудувати чи вставити?</string>
-    <string name="chat_role_rebuild">Перебудувати документ</string>
-    <string name="chat_role_place">Вставити на сторінці</string>
-    <string name="chat_role_rebuild_prompt">Перебудуй цей документ як чистий PDF. Збережи кожне слово, ім\'я та число.</string>
-    <string name="chat_role_place_prompt">Вставити як портрет чи логотип.</string>
-    <string name="chat_role_question">Перебудувати чи вставити?</string>
-    <string name="chat_role_question_body">«Перебудувати» створює новий документ. «Вставити» лишає картинкою, як портрет чи логотип.</string>
-    <string name="chat_role_answer_rebuild">Перебудувати</string>
-    <string name="chat_role_answer_place">Вставити</string>
     <string name="chat_attach_error_dismiss">Закрити</string>
 
 
@@ -265,4 +256,11 @@
         <item quantity="many">%d попередніх рядків не збережено тут</item>
         <item quantity="other">%d попередніх рядків не збережено тут</item>
     </plurals>
+    <string name="chat_effort_low">Швидко</string>
+    <string name="chat_effort_medium">Стандарт</string>
+    <string name="chat_effort_high">Глибоко</string>
+    <string name="chat_effort_low_hint">Швидко, для простих документів</string>
+    <string name="chat_effort_medium_hint">Для більшості документів</string>
+    <string name="chat_effort_high_hint">Думає довше, для складних документів · 2× кредитів</string>
+    <string name="chat_effort_a11y">Міркування: %1$s</string>
 </resources>

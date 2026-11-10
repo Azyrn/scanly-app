@@ -62,15 +62,6 @@
     <string name="chat_preparing_picture">Préparation image…</string>
     <string name="chat_picture_role">Placée sur la page</string>
     <string name="chat_scan_role">De mes scans</string>
-    <string name="chat_image_pending">Refaire ou placer ?</string>
-    <string name="chat_role_rebuild">Refaire ce document</string>
-    <string name="chat_role_place">Placer cette image sur la page</string>
-    <string name="chat_role_rebuild_prompt">Refais ce document en PDF propre. Conserve chaque mot, nom et chiffre.</string>
-    <string name="chat_role_place_prompt">Placer cette image comme portrait ou logo.</string>
-    <string name="chat_role_question">Le refaire ou le placer sur la page ?</string>
-    <string name="chat_role_question_body">Refaire transforme l\'image en document. Placer la garde en image, comme portrait ou logo.</string>
-    <string name="chat_role_answer_rebuild">Le refaire</string>
-    <string name="chat_role_answer_place">La placer</string>
     <string name="chat_attach_error_dismiss">Ignorer</string>
 
 
@@ -252,4 +243,11 @@
         <item quantity="many">%d lignes antérieures non gardées ici</item>
         <item quantity="other">%d lignes antérieures non gardées ici</item>
     </plurals>
+    <string name="chat_effort_low">Rapide</string>
+    <string name="chat_effort_medium">Standard</string>
+    <string name="chat_effort_high">Poussé</string>
+    <string name="chat_effort_low_hint">Rapide, pour les documents simples</string>
+    <string name="chat_effort_medium_hint">Pour la plupart des documents</string>
+    <string name="chat_effort_high_hint">Réfléchit plus, pour les documents difficiles · 2× crédits</string>
+    <string name="chat_effort_a11y">Réflexion : %1$s</string>
 </resources>

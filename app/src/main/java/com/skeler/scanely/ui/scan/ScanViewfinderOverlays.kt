@@ -52,8 +52,10 @@ fun LiveQuadOverlay(view: LiveView, size: IntSize) {
     val place = placeImage(view.frameAspect, size.width.toFloat(), size.height.toFloat(), fill = true)
     val quad = view.quad
     val targets = (quad ?: NormQuad.FULL).corners.map { place.toView(it).let { (x, y) -> Offset(x, y) } }
-    val corners = targets.mapIndexed { i, target -> animateOffsetAsState(target, spec, label = "corner$i").value }
-    val shown by animateFloatAsState(
+    // The animations are read while drawing, not here: the outline glides every frame the page moves,
+    // and reading them in composition recomposed the overlay on each of those frames.
+    val corners = targets.mapIndexed { i, target -> animateOffsetAsState(target, spec, label = "corner$i") }
+    val shown = animateFloatAsState(
         if (quad != null && view.frameAspect > 0f) 1f else 0f,
         MaterialTheme.motionScheme.defaultEffectsSpec(),
         label = "quadShown"
@@ -61,14 +63,16 @@ fun LiveQuadOverlay(view: LiveView, size: IntSize) {
     val primary = MaterialTheme.colorScheme.primary
     val stroke = with(LocalDensity.current) { ScanTokens.Stroke.toPx() }
     Canvas(Modifier.fillMaxSize().testTag(ScanTags.CAMERA_QUAD)) {
-        if (shown <= 0f) return@Canvas
+        val alpha = shown.value
+        if (alpha <= 0f) return@Canvas
+        val points = corners.map { it.value }
         val path = Path().apply {
-            moveTo(corners[0].x, corners[0].y)
-            corners.drop(1).forEach { lineTo(it.x, it.y) }
+            moveTo(points[0].x, points[0].y)
+            points.drop(1).forEach { lineTo(it.x, it.y) }
             close()
         }
-        drawPath(path, primary.copy(alpha = ScanTokens.QUAD_FILL_ALPHA * shown))
-        drawPath(path, primary.copy(alpha = shown), style = Stroke(stroke))
+        drawPath(path, primary.copy(alpha = ScanTokens.QUAD_FILL_ALPHA * alpha))
+        drawPath(path, primary.copy(alpha = alpha), style = Stroke(stroke))
     }
 }
 

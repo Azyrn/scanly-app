@@ -12,6 +12,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +23,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -84,6 +83,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -518,23 +520,27 @@ private fun RecordingPanel(
 /** A row of bars that rise with the input level, so the user can see the mic is hearing them. */
 @Composable
 private fun LevelMeter(level: Float) {
-    val animated by animateFloatAsState(targetValue = level, label = "level")
+    val animated = animateFloatAsState(targetValue = level, label = "level")
     val bars = 24
-    Row(
-        modifier = Modifier.height(40.dp),
-        horizontalArrangement = Arrangement.spacedBy(3.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    val barWidth = 4.dp
+    val gap = 3.dp
+    val colour = MaterialTheme.colorScheme.primary
+    // One canvas reading the level while drawing: the bars rise every frame of the smoothing, and as
+    // 24 boxes sized by fillMaxHeight each of those frames recomposed and re-measured the whole row.
+    Canvas(Modifier.width(barWidth * bars + gap * (bars - 1)).height(40.dp)) {
+        val width = barWidth.toPx()
+        val step = width + gap.toPx()
+        val radius = CornerRadius(2.dp.toPx())
         repeat(bars) { i ->
             // A gentle arch, scaled by the level, so the meter reads as a voice and not a bar chart.
             val shape = 0.35f + 0.65f * kotlin.math.sin(Math.PI * (i + 0.5) / bars).toFloat()
-            val fraction = (0.08f + animated * 1.6f * shape).coerceIn(0.08f, 1f)
-            Box(
-                Modifier
-                    .width(4.dp)
-                    .fillMaxHeight(fraction)
-                    .clip(RoundedCornerShape(2.dp))
-                    .background(MaterialTheme.colorScheme.primary)
+            val fraction = (0.08f + animated.value * 1.6f * shape).coerceIn(0.08f, 1f)
+            val height = size.height * fraction
+            drawRoundRect(
+                color = colour,
+                topLeft = Offset(i * step, (size.height - height) / 2f),
+                size = Size(width, height),
+                cornerRadius = radius
             )
         }
     }

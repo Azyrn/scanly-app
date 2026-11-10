@@ -10,8 +10,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,8 +33,10 @@ private const val URL_LINES = 4
 
 /**
  * A web turn's question: may the assistant open this site? The site's name large, the whole link
- * small below it, a warning when the link carries data, and a countdown: no answer is a no. Swiping
- * the sheet away is a no too. The server holds the page until the answer, and decides.
+ * small below it, a warning when the link carries data, and a countdown: no answer is a no. Only
+ * Allow and Deny answer it: a swipe, a tap outside, back, or leaving the app and coming back leave it
+ * open, so nothing is refused that the person did not refuse. The server holds the page until the
+ * answer or the countdown's end, and decides.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +54,16 @@ internal fun ApprovalSheet(
     LaunchedEffect(approval.id, left) {
         if (left <= 0) onExpired()
     }
-    ModalBottomSheet(onDismissRequest = { onAnswer(false) }) {
+    // Hidden only by an answer (the caller drops the sheet then), never by a gesture.
+    val sheet = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { value -> value != SheetValue.Hidden }
+    )
+    ModalBottomSheet(
+        onDismissRequest = {},
+        sheetState = sheet,
+        properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false)
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp)

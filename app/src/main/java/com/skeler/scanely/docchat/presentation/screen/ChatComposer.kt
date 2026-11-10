@@ -13,7 +13,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,11 +38,9 @@ import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Surface
@@ -130,7 +127,7 @@ internal fun ChatComposer(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column(Modifier.animateContentSize(ChatMotion.size())) {
+            Column {
                 Attachments(composer, viewModel)
                 ComposerField(
                     text = text,
@@ -142,13 +139,17 @@ internal fun ChatComposer(
                     onText = viewModel::updateText,
                     focusRequester = focusRequester
                 )
-                // Two controls only, each a 48dp target inside the container's 8dp padding: nothing
-                // in this row can push send out of view.
+                // Attach and send, each a 48dp target inside the container's 8dp padding, and the effort
+                // pill between them (one short word): nothing in this row can push send out of view.
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                 ) {
                     AttachButton(enabled = state.workingReplyId == null, onClick = { onAttaching(true) })
+                    if (state.nextGoesToAgent) {
+                        val effort by viewModel.effort.collectAsStateWithLifecycle()
+                        EffortPicker(effort, enabled = state.workingReplyId == null, onPick = viewModel::setEffort)
+                    }
                     Spacer(Modifier.weight(1f))
                     SendButton(
                         working = state.workingReplyId != null,
@@ -316,29 +317,13 @@ private fun SendButton(working: Boolean, canSend: () -> Boolean, onSend: () -> U
 }
 
 /**
- * Above the container: the role question for a picked picture, or one-tap wordings for what is
- * attached. Chips fill the field; they never send.
+ * Above the container: one-tap wordings for what is attached. Chips fill the field; they never send.
  */
 @Composable
 private fun ComposerSuggestions(composer: ComposerUi, viewModel: DocChatViewModel) {
-    val pending = composer.pendingImage
-    val rebuildPrompt = stringResource(R.string.chat_role_rebuild_prompt)
-    val placePrompt = stringResource(R.string.chat_role_place_prompt)
-    when {
-        pending != null && composer.askRole -> RoleQuestion(
-            onRebuild = { viewModel.setImageRole(rebuild = true, prompt = rebuildPrompt, andSend = true) },
-            onPlace = { viewModel.setImageRole(rebuild = false, prompt = placePrompt, andSend = true) }
-        )
-        pending != null -> SuggestionRow {
-            ComposerChip(R.string.chat_role_rebuild, R.drawable.ic_sym_description) {
-                viewModel.setImageRole(rebuild = true, prompt = rebuildPrompt)
-            }
-            ComposerChip(R.string.chat_role_place, R.drawable.ic_sym_image) {
-                viewModel.setImageRole(rebuild = false, prompt = placePrompt)
-            }
-        }
-        // Not templates: these keep an attached document what it is and change only how it looks.
-        composer.document != null || composer.scan != null -> SuggestionRow {
+    // Not templates: these keep an attached document what it is and change only how it looks.
+    if (composer.document != null || composer.scan != null) {
+        SuggestionRow {
             CONTENT_PRESETS.forEach { preset ->
                 val prompt = preset.prompt
                 ComposerChip(preset.label, null) { viewModel.useExample(prompt) }
@@ -379,29 +364,6 @@ private fun ComposerChip(@StringRes label: Int, @DrawableRes icon: Int?, onClick
     )
 }
 
-/** Send was tapped with the picture's role still open: asked here, before anything is sent or billed. */
-@Composable
-private fun RoleQuestion(onRebuild: () -> Unit, onPlace: () -> Unit) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.surfaceContainer,
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-    ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(R.string.chat_role_question), style = MaterialTheme.typography.titleSmall)
-            Text(
-                stringResource(R.string.chat_role_question_body),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = onRebuild) { Text(stringResource(R.string.chat_role_answer_rebuild)) }
-                OutlinedButton(onClick = onPlace) { Text(stringResource(R.string.chat_role_answer_place)) }
-            }
-        }
-    }
-}
-
 @Composable
 private fun Attachments(composer: ComposerUi, viewModel: DocChatViewModel) {
     if (!composer.hasAttachment && composer.attachError == null) return
@@ -432,14 +394,6 @@ private fun Attachments(composer: ComposerUi, viewModel: DocChatViewModel) {
                 subtitle = if (photo.isPreparing) null else stringResource(R.string.chat_picture_role),
                 onRemove = viewModel::removePhoto,
                 leading = { Thumbnail(photo.uri, R.drawable.ic_sym_image, photo.isPreparing) }
-            )
-        }
-        composer.pendingImage?.let { image ->
-            AttachmentThumb(
-                title = image.name,
-                subtitle = stringResource(R.string.chat_image_pending),
-                onRemove = viewModel::removePendingImage,
-                leading = { Thumbnail(image.uri, R.drawable.ic_sym_image, busy = false) }
             )
         }
         composer.attachError?.let { error -> AttachErrorChip(error, onDismiss = viewModel::dismissAttachError) }

@@ -2,7 +2,6 @@ package com.skeler.scanely.docchat.presentation
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +11,8 @@ import com.skeler.scanely.core.ai.FeatureSwitches
 import com.skeler.scanely.docchat.data.AgentApprovalDto
 import com.skeler.scanely.docchat.data.AgentApprovals
 import com.skeler.scanely.docchat.data.AgentClient
+import com.skeler.scanely.docchat.data.AgentEffort
+import com.skeler.scanely.docchat.data.AgentEffortPrefs
 import com.skeler.scanely.docchat.data.AskAnswer
 import com.skeler.scanely.docchat.data.ChatFileRestorer
 import com.skeler.scanely.docchat.data.ChatFiles
@@ -68,6 +69,7 @@ class DocChatViewModel @Inject internal constructor(
     private val files: ChatFiles,
     private val agent: AgentClient,
     private val approvals: AgentApprovals,
+    private val effortPrefs: AgentEffortPrefs,
     features: FeatureSwitches,
     private val savedState: SavedStateHandle
 ) : ViewModel() {
@@ -82,6 +84,10 @@ class DocChatViewModel @Inject internal constructor(
      */
     private val text = MutableStateFlow(savedState.get<String>(KEY_TEXT).orEmpty())
     val composerText: StateFlow<String> = text.asStateFlow()
+
+    /** How hard the assistant thinks on the next messages (Fast, Standard, Deep), remembered across sessions. */
+    val effort: StateFlow<AgentEffort> = effortPrefs.effort
+        .stateIn(viewModelScope, SharingStarted.Eagerly, AgentEffort.MEDIUM)
     private val scans = MutableStateFlow<List<DesignSource>>(emptyList())
     private val exporting = MutableStateFlow(false)
     private val events = Channel<DocChatEvent>(Channel.BUFFERED)
@@ -184,55 +190,20 @@ class DocChatViewModel @Inject internal constructor(
     }
 
     /**
-     * A picture from Photos or Files: a page to rebuild, or a portrait or logo to place. Nothing is
-     * read until the user says which, so a placed picture never costs an OCR pass. A [rebuildPrompt]
-     * means they already said (the "Rebuild from a photo" starter).
+     * A picture from Photos or Files, attached as it is: the message says what to do with it (rebuild
+     * it, put it on the page, anything else) and the assistant looks at it itself. A [rebuildPrompt]
+     * (the "Rebuild from a photo" starter) also fills an empty field.
      */
     fun attachImage(uri: Uri, rebuildPrompt: String? = null) {
-        if (rebuildPrompt != null) {
-            if (text.value.isBlank()) updateText(rebuildPrompt)
-            return attachDocument(uri)
-        }
-        composer.update { it.copy(pendingImage = PendingImage(uri.toString()), askRole = false, attachError = null) }
-        viewModelScope.launch {
-            val name = operations.displayName(uri)
-            composer.update { current ->
-                current.copy(
-                    pendingImage = current.pendingImage?.takeIf { it.uri == uri.toString() }?.copy(name = name)
-                        ?: current.pendingImage
-                )
-            }
-        }
+        if (rebuildPrompt != null && text.value.isBlank()) updateText(rebuildPrompt)
+        attachDocument(uri)
     }
-
-    /**
-     * The pending picture's role. [prompt] fills the field only when it is empty; after the send-time
-     * question ([andSend]) the message goes as soon as the picture is ready.
-     */
-    fun setImageRole(rebuild: Boolean, prompt: String?, andSend: Boolean = false) {
-        val pending = composer.value.pendingImage ?: return
-        val uri = pending.uri.toUri()
-        composer.update { it.copy(pendingImage = null, askRole = false) }
-        if (prompt != null && text.value.isBlank()) updateText(prompt)
-        if (rebuild) attachDocument(uri) else attachPhoto(uri)
-        if (andSend) {
-            val job = attachments.job(rebuild)
-            viewModelScope.launch {
-                job?.join()
-                send()
-            }
-        }
-    }
-
-    fun removePendingImage() = composer.update { it.copy(pendingImage = null, askRole = false) }
 
     fun dismissAttachError() = composer.update { it.copy(attachError = null) }
 
     fun attachDocument(uri: Uri) = attachments.attachDocument(uri)
 
     fun removeDocument() = attachments.removeDocument()
-
-    fun attachPhoto(uri: Uri) = attachments.attachPhoto(uri)
 
     fun removePhoto() = attachments.removePhoto()
 
@@ -246,10 +217,6 @@ class DocChatViewModel @Inject internal constructor(
         val words = text.value
         if (!current.canSend(words)) return
         val draft = composer.value
-        if (draft.pendingImage != null) {
-            composer.update { it.copy(askRole = true) }
-            return
-        }
         val id = current.chatId ?: UUID.randomUUID().toString().also {
             savedState[KEY_CHAT] = it
             chatId.value = it
@@ -265,7 +232,8 @@ class DocChatViewModel @Inject internal constructor(
             photoName = draft.photo?.name,
             scanText = draft.scan?.text,
             scanLabel = draft.scan?.label,
-            reviseDesignId = current.revision?.designId.takeUnless { newContent }
+            reviseDesignId = current.revision?.designId.takeUnless { newContent },
+            effort = effort.value
         )
         updateText("")
         composer.value = ComposerUi()
@@ -278,8 +246,15 @@ class DocChatViewModel @Inject internal constructor(
         val id = current.chatId ?: return
         if (current.workingReplyId != null || choice.isBlank()) return
         viewModelScope.launch {
-            runner.send(id, TurnDraft(text = choice, reviseDesignId = current.revision?.designId))
+            runner.send(
+                id,
+                TurnDraft(text = choice, reviseDesignId = current.revision?.designId, effort = effort.value)
+            )
         }
+    }
+
+    fun setEffort(choice: AgentEffort) {
+        viewModelScope.launch { effortPrefs.set(choice) }
     }
 
     fun stop() {

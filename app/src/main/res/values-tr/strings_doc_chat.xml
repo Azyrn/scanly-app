@@ -60,15 +60,6 @@
     <string name="chat_preparing_picture">Resim hazırlanıyor…</string>
     <string name="chat_picture_role">Sayfaya yerleştirildi</string>
     <string name="chat_scan_role">Taramalarımdan</string>
-    <string name="chat_image_pending">Yeniden mi, koy?</string>
-    <string name="chat_role_rebuild">Belgeyi yeniden oluştur</string>
-    <string name="chat_role_place">Bu resmi sayfaya koy</string>
-    <string name="chat_role_rebuild_prompt">Bu belgeyi temiz bir PDF olarak yeniden oluştur. Her kelimeyi, adı ve sayıyı koru.</string>
-    <string name="chat_role_place_prompt">Bu resmi sayfaya portre ya da logo olarak yerleştir.</string>
-    <string name="chat_role_question">Yeniden mi, yoksa sayfaya mı?</string>
-    <string name="chat_role_question_body">Yeniden oluştur: resmi yeni bir belgeye çevirir. Yerleştir: portre ya da logo gibi resim olarak tutar.</string>
-    <string name="chat_role_answer_rebuild">Yenile</string>
-    <string name="chat_role_answer_place">Yerleştir</string>
     <string name="chat_attach_error_dismiss">Kapat</string>
 
 
@@ -239,4 +230,11 @@
         <item quantity="one">Bu telefonda saklanmayan %d satır</item>
         <item quantity="other">Bu telefonda saklanmayan %d önceki satır</item>
     </plurals>
+    <string name="chat_effort_low">Hızlı</string>
+    <string name="chat_effort_medium">Standart</string>
+    <string name="chat_effort_high">Derin</string>
+    <string name="chat_effort_low_hint">Hızlı, basit belgeler için</string>
+    <string name="chat_effort_medium_hint">Çoğu belge için en iyisi</string>
+    <string name="chat_effort_high_hint">Daha uzun düşünür, zor belgeler için · 2× kredi</string>
+    <string name="chat_effort_a11y">Düşünme: %1$s</string>
 </resources>
