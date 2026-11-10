@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.SaveAlt
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
@@ -45,6 +44,7 @@ import com.skeler.scanely.R
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.ExportContent
 import com.skeler.scanely.ui.components.ExportMenu
+import com.skeler.scanely.ui.components.SaveIcon
 import com.skeler.scanely.ui.components.TEXT_EXPORT_FORMATS
 import com.skeler.scanely.ui.components.rememberTextExporter
 import com.skeler.scanely.ui.components.unavailableFormats
@@ -97,7 +97,7 @@ fun TextComposeScreen() {
                             )
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.SaveAlt,
+                                imageVector = SaveIcon,
                                 contentDescription = stringResource(R.string.cmp_export),
                                 modifier = Modifier.size(20.dp)
                             )

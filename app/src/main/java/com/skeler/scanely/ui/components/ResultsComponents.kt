@@ -20,12 +20,10 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Cloud
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Print
 import androidx.compose.material.icons.rounded.Remove
-import androidx.compose.material.icons.rounded.SaveAlt
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -206,7 +204,7 @@ fun RowScope.ExtractedTextActions(
                     )
                 ) {
                     Icon(
-                        Icons.Rounded.SaveAlt,
+                        SaveIcon,
                         contentDescription = stringResource(R.string.cmp_export),
                         modifier = Modifier.size(iconSize)
                     )
@@ -239,7 +237,7 @@ fun RowScope.ExtractedTextActions(
             )
         ) {
             Icon(
-                Icons.Rounded.ContentCopy,
+                CopyIcon,
                 contentDescription = stringResource(R.string.cmp_copy_text),
                 modifier = Modifier.size(iconSize)
             )

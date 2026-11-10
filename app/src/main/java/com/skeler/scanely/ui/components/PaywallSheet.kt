@@ -20,7 +20,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Visibility
@@ -334,7 +333,7 @@ private fun WhereToBuy() {
         }
     ) {
         Icon(
-            imageVector = if (copied) Icons.Rounded.Check else Icons.Rounded.ContentCopy,
+            imageVector = if (copied) Icons.Rounded.Check else CopyIcon,
             contentDescription = null,
             modifier = Modifier.size(16.dp)
         )

@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.TextSnippet
 import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Event
 import androidx.compose.material.icons.rounded.Link
@@ -14,6 +13,7 @@ import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.Wifi
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.skeler.scanely.R
+import com.skeler.scanely.ui.components.CopyIcon
 
 enum class WifiType {
     WPA,
@@ -38,7 +38,7 @@ sealed class ScanAction {
 
     data class CopyText(val text: String, @StringRes val displayLabel: Int = R.string.act_copy) : ScanAction() {
         override val label: Int = displayLabel
-        override val icon: ImageVector = Icons.Rounded.ContentCopy
+        override val icon: ImageVector = CopyIcon
         override val detail: String = text
     }
 

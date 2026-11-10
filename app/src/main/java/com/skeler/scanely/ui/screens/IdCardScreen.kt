@@ -35,7 +35,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AddPhotoAlternate
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.RotateRight
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material.icons.rounded.Verified
@@ -92,6 +91,7 @@ import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.scan.ScanMode
 import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
+import com.skeler.scanely.ui.components.SaveIcon
 import com.skeler.scanely.ui.components.rememberStorageAccess
 import com.skeler.scanely.ui.viewmodel.IdCardUiState
 import com.skeler.scanely.ui.viewmodel.IdCardViewModel
@@ -475,7 +475,7 @@ private fun ActionBar(
                         .height(BAR_HEIGHT - 12.dp),
                     shape = CircleShape
                 ) {
-                    Icon(Icons.Rounded.Download, contentDescription = null, modifier = Modifier.size(20.dp))
+                    Icon(SaveIcon, contentDescription = null, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
                     Text(
                         stringResource(R.string.id_save_pdf),

@@ -29,13 +29,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Forward10
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Replay10
-import androidx.compose.material.icons.rounded.SaveAlt
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
@@ -92,8 +90,10 @@ import com.skeler.scanely.core.transcribe.Transcript
 import com.skeler.scanely.core.transcribe.TranscriptFormats
 import com.skeler.scanely.core.transcribe.TranscriptSegment
 import com.skeler.scanely.navigation.LocalNavigator
+import com.skeler.scanely.ui.components.CopyIcon
 import com.skeler.scanely.ui.components.ExportContent
 import com.skeler.scanely.ui.components.ExportNameDialog
+import com.skeler.scanely.ui.components.SaveIcon
 import com.skeler.scanely.ui.components.TextExportFormat
 import com.skeler.scanely.ui.components.rememberStorageAccess
 import com.skeler.scanely.ui.components.rememberTextExporter
@@ -153,7 +153,7 @@ fun TranscriptScreen() {
                             ).show()
                         }) {
                             Icon(
-                                Icons.Rounded.ContentCopy,
+                                CopyIcon,
                                 contentDescription = stringResource(R.string.scr_transcript_copy)
                             )
                         }
@@ -165,7 +165,7 @@ fun TranscriptScreen() {
                         }
                         Box {
                             IconButton(onClick = { exportOpen = true }) {
-                                Icon(Icons.Rounded.SaveAlt, contentDescription = stringResource(R.string.cmp_save_as))
+                                Icon(SaveIcon, contentDescription = stringResource(R.string.cmp_save_as))
                             }
                             DropdownMenu(expanded = exportOpen, onDismissRequest = { exportOpen = false }) {
                                 TranscriptExport.entries.forEach { format ->

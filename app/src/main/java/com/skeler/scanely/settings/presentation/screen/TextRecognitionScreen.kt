@@ -2,7 +2,6 @@
 
 package com.skeler.scanely.settings.presentation.screen
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -119,96 +118,101 @@ fun TextRecognitionScreen(
             }
 
             item {
-                AnimatedVisibility(visible = engine == TextOcrEngine.PADDLE) {
-                    Column {
-                        SectionHeader(stringResource(R.string.set_section_script))
-                        ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
-                            ScriptPack.entries.forEachIndexed { index, pack ->
-                                ScriptRow(
-                                    pack = pack,
-                                    state = packStates[pack] ?: PackState.Missing,
-                                    selected = pack == script,
-                                    position = groupPositionOf(index, ScriptPack.entries.size),
-                                    onSelect = { viewModel.setScript(pack) },
-                                    onDownload = { viewModel.download(pack) },
-                                    onDelete = { viewModel.delete(pack) }
-                                )
+                // PaddleOCR's settings stay on screen with ML Kit and are disabled instead: hiding them
+                // collapsed most of the page under the finger that had just picked an engine.
+                val paddle = engine == TextOcrEngine.PADDLE
+                Column {
+                    SectionHeader(stringResource(R.string.set_section_script))
+                    ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        ScriptPack.entries.forEachIndexed { index, pack ->
+                            ScriptRow(
+                                pack = pack,
+                                state = packStates[pack] ?: PackState.Missing,
+                                selected = pack == script,
+                                position = groupPositionOf(index, ScriptPack.entries.size),
+                                enabled = paddle,
+                                onSelect = { viewModel.setScript(pack) },
+                                onDownload = { viewModel.download(pack) },
+                                onDelete = { viewModel.delete(pack) }
+                            )
+                        }
+                    }
+
+                    SectionHeader(stringResource(R.string.set_section_preprocessing))
+                    ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        SettingSwitchTile(
+                            title = stringResource(R.string.set_auto_rotate_title),
+                            subtitle = stringResource(R.string.set_auto_rotate_subtitle),
+                            icon = Icons.Rounded.ScreenRotation,
+                            checked = docOrientation,
+                            enabled = paddle,
+                            position = GroupPosition.Top,
+                            onCheckedChange = {
+                                viewModel.setToggle(SettingsKeys.PADDLE_DOC_ORIENTATION, it)
                             }
-                        }
+                        )
+                        SettingSwitchTile(
+                            title = stringResource(R.string.set_fix_flipped_title),
+                            subtitle = stringResource(R.string.set_fix_flipped_subtitle),
+                            icon = Icons.Rounded.Rotate90DegreesCcw,
+                            checked = lineOrientation,
+                            enabled = paddle,
+                            position = GroupPosition.Middle,
+                            onCheckedChange = {
+                                viewModel.setToggle(SettingsKeys.PADDLE_LINE_ORIENTATION, it)
+                            }
+                        )
+                        SettingSwitchTile(
+                            title = stringResource(R.string.set_flatten_curved_title),
+                            subtitle = when (val state = uvdoc) {
+                                is PackState.Downloading ->
+                                    stringResource(
+                                        R.string.set_downloading_percent,
+                                        (state.progress * 100).toInt()
+                                    )
+                                is PackState.Failed -> state.message
+                                is PackState.Missing -> stringResource(R.string.set_uvdoc_missing_subtitle)
+                                else -> stringResource(R.string.set_uvdoc_ready_subtitle)
+                            },
+                            icon = Icons.Rounded.Crop,
+                            enabled = paddle && uvdoc !is PackState.Downloading,
+                            checked = dewarp,
+                            position = GroupPosition.Bottom,
+                            onCheckedChange = { viewModel.setDewarp(it) }
+                        )
+                    }
 
-                        SectionHeader(stringResource(R.string.set_section_preprocessing))
-                        ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
-                            SettingSwitchTile(
-                                title = stringResource(R.string.set_auto_rotate_title),
-                                subtitle = stringResource(R.string.set_auto_rotate_subtitle),
-                                icon = Icons.Rounded.ScreenRotation,
-                                checked = docOrientation,
-                                position = GroupPosition.Top,
-                                onCheckedChange = {
-                                    viewModel.setToggle(SettingsKeys.PADDLE_DOC_ORIENTATION, it)
-                                }
-                            )
-                            SettingSwitchTile(
-                                title = stringResource(R.string.set_fix_flipped_title),
-                                subtitle = stringResource(R.string.set_fix_flipped_subtitle),
-                                icon = Icons.Rounded.Rotate90DegreesCcw,
-                                checked = lineOrientation,
-                                position = GroupPosition.Middle,
-                                onCheckedChange = {
-                                    viewModel.setToggle(SettingsKeys.PADDLE_LINE_ORIENTATION, it)
-                                }
-                            )
-                            SettingSwitchTile(
-                                title = stringResource(R.string.set_flatten_curved_title),
-                                subtitle = when (val state = uvdoc) {
-                                    is PackState.Downloading ->
-                                        stringResource(
-                                            R.string.set_downloading_percent,
-                                            (state.progress * 100).toInt()
-                                        )
-                                    is PackState.Failed -> state.message
-                                    is PackState.Missing -> stringResource(R.string.set_uvdoc_missing_subtitle)
-                                    else -> stringResource(R.string.set_uvdoc_ready_subtitle)
-                                },
-                                icon = Icons.Rounded.Crop,
-                                enabled = uvdoc !is PackState.Downloading,
-                                checked = dewarp,
-                                position = GroupPosition.Bottom,
-                                onCheckedChange = { viewModel.setDewarp(it) }
-                            )
-                        }
-
-                        SectionHeader(stringResource(R.string.set_section_document_structure))
-                        ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
-                            SettingSwitchTile(
-                                title = stringResource(R.string.set_detect_layout_title),
-                                subtitle = stringResource(R.string.set_detect_layout_subtitle),
-                                icon = Icons.AutoMirrored.Rounded.Article,
-                                checked = structure,
-                                position = GroupPosition.Top,
-                                onCheckedChange = {
-                                    viewModel.setToggle(SettingsKeys.PADDLE_STRUCTURE, it)
-                                }
-                            )
-                            SettingSwitchTile(
-                                title = stringResource(R.string.set_recognize_tables_title),
-                                subtitle = when (val state = tableModel) {
-                                    is PackState.Downloading ->
-                                        stringResource(
-                                            R.string.set_downloading_percent,
-                                            (state.progress * 100).toInt()
-                                        )
-                                    is PackState.Failed -> state.message
-                                    is PackState.Missing -> stringResource(R.string.set_tables_missing_subtitle)
-                                    else -> stringResource(R.string.set_tables_ready_subtitle)
-                                },
-                                icon = Icons.Rounded.TableChart,
-                                enabled = structure && tableModel !is PackState.Downloading,
-                                checked = tableModel is PackState.Installed,
-                                position = GroupPosition.Bottom,
-                                onCheckedChange = { viewModel.setTables(it) }
-                            )
-                        }
+                    SectionHeader(stringResource(R.string.set_section_document_structure))
+                    ConnectedGroup(modifier = Modifier.padding(horizontal = 16.dp)) {
+                        SettingSwitchTile(
+                            title = stringResource(R.string.set_detect_layout_title),
+                            subtitle = stringResource(R.string.set_detect_layout_subtitle),
+                            icon = Icons.AutoMirrored.Rounded.Article,
+                            checked = structure,
+                            enabled = paddle,
+                            position = GroupPosition.Top,
+                            onCheckedChange = {
+                                viewModel.setToggle(SettingsKeys.PADDLE_STRUCTURE, it)
+                            }
+                        )
+                        SettingSwitchTile(
+                            title = stringResource(R.string.set_recognize_tables_title),
+                            subtitle = when (val state = tableModel) {
+                                is PackState.Downloading ->
+                                    stringResource(
+                                        R.string.set_downloading_percent,
+                                        (state.progress * 100).toInt()
+                                    )
+                                is PackState.Failed -> state.message
+                                is PackState.Missing -> stringResource(R.string.set_tables_missing_subtitle)
+                                else -> stringResource(R.string.set_tables_ready_subtitle)
+                            },
+                            icon = Icons.Rounded.TableChart,
+                            enabled = paddle && structure && tableModel !is PackState.Downloading,
+                            checked = tableModel is PackState.Installed,
+                            position = GroupPosition.Bottom,
+                            onCheckedChange = { viewModel.setTables(it) }
+                        )
                     }
                 }
             }
@@ -252,6 +256,7 @@ private fun ScriptRow(
     state: PackState,
     selected: Boolean,
     position: GroupPosition,
+    enabled: Boolean,
     onSelect: () -> Unit,
     onDownload: () -> Unit,
     onDelete: () -> Unit
@@ -262,13 +267,14 @@ private fun ScriptRow(
     ConnectedTile(
         position = position,
         onClick = if (installed) onSelect else null,
+        enabled = enabled,
         color = choiceTileColor(active),
         contentPadding = ChoiceRowPadding
     ) {
         RadioButton(
             selected = active,
             onClick = onSelect,
-            enabled = installed
+            enabled = enabled && installed
         )
         Spacer(Modifier.width(4.dp))
 
@@ -299,6 +305,7 @@ private fun ScriptRow(
                 )
                 is PackState.Installed -> IconButton(
                     onClick = onDelete,
+                    enabled = enabled,
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
@@ -310,6 +317,7 @@ private fun ScriptRow(
                 }
                 is PackState.Missing, is PackState.Failed -> IconButton(
                     onClick = onDownload,
+                    enabled = enabled,
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(

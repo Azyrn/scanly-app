@@ -15,11 +15,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -28,7 +31,6 @@ import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Gavel
 import androidx.compose.material.icons.rounded.Hub
@@ -85,6 +87,7 @@ import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.presentation.LegalLinks
 import com.skeler.scanely.settings.presentation.viewmodel.SettingsViewModel
+import com.skeler.scanely.ui.components.CopyIcon
 import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.components.SettingsItem
 import com.skeler.scanely.ui.components.SettingsListSection
@@ -490,7 +493,7 @@ private fun AccountMenuButton(
                 },
                 trailingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.ContentCopy,
+                        imageVector = CopyIcon,
                         contentDescription = null,
                         modifier = Modifier.size(18.dp)
                     )
@@ -527,6 +530,12 @@ private fun LanguageDialog(
     val options = listOf("" to stringResource(R.string.settings_language_system)) + AppLanguage.supported
     AlertDialog(
         onDismissRequest = onDismiss,
+        // Twelve languages are taller than a phone. The dialog window can reach under the status and
+        // navigation bars, so without this the card ran from the status bar off the bottom of the
+        // screen. The margin keeps it inside the safe area like the shorter dialogs; the list scrolls.
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .padding(vertical = DIALOG_SCREEN_MARGIN),
         icon = { Icon(Icons.Rounded.Language, contentDescription = null) },
         title = { Text(stringResource(R.string.settings_language_title)) },
         text = {
@@ -608,3 +617,6 @@ private fun BarcodeEngineDialog(
         }
     )
 }
+
+/** Space a tall dialog keeps from the top and bottom of the safe area. */
+private val DIALOG_SCREEN_MARGIN = 24.dp

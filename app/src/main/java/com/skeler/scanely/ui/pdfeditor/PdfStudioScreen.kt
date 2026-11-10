@@ -52,7 +52,6 @@ import androidx.compose.material.icons.rounded.Crop
 import androidx.compose.material.icons.rounded.DeleteOutline
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Rotate90DegreesCw
-import androidx.compose.material.icons.rounded.SaveAlt
 import androidx.compose.material.icons.rounded.SelectAll
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.CircularProgressIndicator
@@ -114,6 +113,7 @@ import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.navigation.OnScreenExit
 import com.skeler.scanely.ui.components.PaywallSheet
+import com.skeler.scanely.ui.components.SaveIcon
 import com.skeler.scanely.ui.components.rememberStorageAccess
 import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
@@ -412,7 +412,7 @@ private fun StudioActionBar(
         ) {
             BarAction(Icons.Rounded.Edit, stringResource(R.string.pe_edit), onClick = onEdit)
             BarAction(Icons.Rounded.Tune, stringResource(R.string.pe_tools), onClick = onTools)
-            BarAction(Icons.Rounded.SaveAlt, stringResource(R.string.chat_save), enabled = canSave, onClick = onSave)
+            BarAction(SaveIcon, stringResource(R.string.chat_save), enabled = canSave, onClick = onSave)
         }
     }
 }
