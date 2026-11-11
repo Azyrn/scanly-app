@@ -26,15 +26,32 @@ class BackendAuthInterceptor @Inject constructor(
         val user = firebaseAuth.currentUser
             ?: throw TokenUnavailableException(context.getString(R.string.ai_err_sign_in))
 
-        return chain.proceedWithToken(context) { forceRefresh ->
+        val response = chain.proceedWithToken(context) { forceRefresh ->
             if (firebaseAuth.currentUser?.uid != user.uid) {
                 throw TokenUnavailableException(context.getString(R.string.net_account_changed))
             }
             awaitToken(context, context.getString(R.string.net_verify_session)) { user.getIdToken(forceRefresh) }
                 .token.orEmpty()
         }
+        // The server wants the address proved before free AI, and a fresh token still says it is
+        // not: send the link its message tells the user to open. Once per run of the app, so a
+        // user who keeps trying is not mailed each time.
+        if (response.code == HTTP_UNAUTHORIZED && !verificationSent &&
+            response.peekBody(ERROR_PEEK_BYTES).string().contains(EMAIL_UNVERIFIED)
+        ) {
+            verificationSent = true
+            user.sendEmailVerification()
+        }
+        return response
     }
+
+    @Volatile
+    private var verificationSent = false
 }
+
+/** The Worker's error code for a free account whose email is not proved yet. */
+private const val EMAIL_UNVERIFIED = "email_unverified"
+private const val ERROR_PEEK_BYTES = 2048L
 
 internal fun Interceptor.Chain.proceedWithToken(context: Context, token: (Boolean) -> String): Response {
     fun authorized(forceRefresh: Boolean): okhttp3.Request {

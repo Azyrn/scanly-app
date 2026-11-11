@@ -233,6 +233,7 @@
         <item quantity="other">احصل على الحقول المصنّفة إلى جانب النص. قراءة الصفحة كبيانات تكلّف %1$d رصيد من خطتك. يمكن أن يحتوي كل مستند على 8 صفحات كحد أقصى.</item>
     </plurals>
     <string name="cmp_preset_included_pro">احصل على الحقول المصنّفة إلى جانب النص. متاحة مع Pro وما فوقه.</string>
+    <string name="cmp_preset_trial_pages">حقول مصنّفة مع النص. الصفحات المجانية المتبقية هذا الشهر: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">سجّل الدخول للمسح الذكي</string>

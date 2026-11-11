@@ -203,6 +203,7 @@
         <item quantity="other">Поля разом із текстом. Сторінка як дані коштує %1$d кредиту з плану. До 8 сторінок на документ.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Поля разом із текстом. Входить до Pro і вище.</string>
+    <string name="cmp_preset_trial_pages">Поля разом із текстом. Безкоштовних сторінок цього місяця: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Вхід для AI-сканування</string>

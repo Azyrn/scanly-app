@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
@@ -97,9 +98,12 @@ internal fun ChatDrawer(
     onQuery: (String) -> Unit,
     currentChatId: String?,
     paywall: PaywallState,
-    callbacks: DrawerCallbacks
+    callbacks: DrawerCallbacks,
+    drawerState: DrawerState
 ) {
-    ModalDrawerSheet(drawerContainerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
+    // Given the drawer's state, the sheet handles Back (and predictive back) by closing the drawer;
+    // without it, Back left the whole chat while the drawer was open.
+    ModalDrawerSheet(drawerState = drawerState, drawerContainerColor = MaterialTheme.colorScheme.surfaceContainerLow) {
         Column(Modifier.padding(horizontal = 12.dp).padding(top = 12.dp)) {
             FilledTonalButton(
                 onClick = callbacks.onNewChat,

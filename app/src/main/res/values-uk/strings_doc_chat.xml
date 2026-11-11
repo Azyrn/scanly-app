@@ -51,6 +51,9 @@
         <item quantity="other">~%d кредитів</item>
     </plurals>
     <string name="chat_cost_agent">Чат безплатно · файли: кредити</string>
+    <string name="chat_cost_agent_free">Безкоштовних повідомлень: %1$d · файли за кредити</string>
+    <string name="chat_free_document_used">Безкоштовний документ використано. Повернеться %1$s.</string>
+    <string name="chat_free_see_pro">Про Pro</string>
     <string name="chat_remove">Видалити %1$s</string>
     <string name="chat_preparing_file">Готуємо…</string>
     <string name="chat_preset_clean_up">Очистити</string>

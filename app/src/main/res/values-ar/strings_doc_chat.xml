@@ -53,6 +53,9 @@
         <item quantity="other">~%d رصيد</item>
     </plurals>
     <string name="chat_cost_agent">المحادثة مجانية · الملفات بأرصدة</string>
+    <string name="chat_cost_agent_free">الرسائل المجانية المتبقية: %1$d · الملفات تستهلك رصيدًا</string>
+    <string name="chat_free_document_used">استُخدم مستند هذا الشهر المجاني. يعود في %1$s.</string>
+    <string name="chat_free_see_pro">عن Pro</string>
     <string name="chat_remove">إزالة %1$s</string>
     <string name="chat_preparing_file">جارٍ التحضير…</string>
     <string name="chat_preset_clean_up">تنظيفه</string>

@@ -173,6 +173,7 @@
         <item quantity="other">Beschriftete Felder zusätzlich zum Text. Eine Seite als Daten kostet %1$d Credits aus deinem Tarif. Bis zu 8 Seiten pro Dokument.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Beschriftete Felder zusätzlich zum Text. Ab Pro enthalten.</string>
+    <string name="cmp_preset_trial_pages">Felder zusätzlich zum Text. Kostenlose Seiten diesen Monat: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Anmelden für KI-Scans</string>

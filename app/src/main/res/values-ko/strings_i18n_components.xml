@@ -138,6 +138,7 @@
         <item quantity="other">텍스트와 함께 항목별 필드도 가져와요. 페이지를 데이터로 읽으면 요금제에서 크레딧 %1$d개가 사용돼요. 문서당 최대 8페이지까지 가능해요.</item>
     </plurals>
     <string name="cmp_preset_included_pro">텍스트와 함께 항목별 필드도 가져와요. Pro 이상에 포함돼요.</string>
+    <string name="cmp_preset_trial_pages">텍스트와 함께 항목별 필드도 가져와요. 이번 달 남은 무료 페이지: %1$d</string>
     <string name="cmp_sign_in_ai_title">로그인하면 AI 스캔 사용</string>
     <string name="cmp_sign_in_ai_body">AI 스캔은 공유 키로 실행되므로 계정이 필요해요. 텍스트 인식과 바코드 스캔은 무료이며 로그인 없이 오프라인에서 쓸 수 있어요.</string>
     <string name="cmp_sign_in_create_account">로그인 또는 계정 만들기</string>

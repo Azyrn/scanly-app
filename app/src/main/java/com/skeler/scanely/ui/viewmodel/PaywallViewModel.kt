@@ -58,6 +58,16 @@ data class PaywallState(
     val allowsExtraction: Boolean = false,
     val extractionPresets: List<ExtractionPresetDto> = emptyList(),
     val extractionPageCost: Int = 1,
+    /** Free pages of extraction left this month on a plan without it; 0 when there are none. */
+    val extractionTrialPages: Int = 0,
+    /**
+     * The assistant's monthly trial on a plan without it (the server counts and refuses): messages
+     * and documents left, or null on a plan with no such limit.
+     */
+    val assistantMessagesLeft: Int? = null,
+    val assistantFilesLeft: Int? = null,
+    /** When this month's allowances come back, epoch millis; 0 while unknown. */
+    val periodResetsAt: Long = 0,
     /**
      * Designing a PDF. [designMaxPageCost] is the hold the account must be able to cover, not the
      * price — it is what explains a `quota_exceeded` when [designPageCost] looks affordable.
@@ -134,6 +144,10 @@ class PaywallViewModel @Inject internal constructor(
             allowsExtraction = entitlement?.allowsExtraction == true,
             extractionPresets = entitlement?.extractionPresets.orEmpty(),
             extractionPageCost = entitlement?.extractionPageCost ?: 1,
+            extractionTrialPages = entitlement?.trials?.extractionPages?.remaining ?: 0,
+            assistantMessagesLeft = entitlement?.trials?.assistantMessages?.remaining,
+            assistantFilesLeft = entitlement?.trials?.assistantFiles?.remaining,
+            periodResetsAt = entitlement?.periodResetsAt ?: 0,
             allowsDesign = entitlement?.allowsDesign == true,
             designPageCost = entitlement?.designPageCost ?: 2,
             designMaxPageCost = entitlement?.designMaxPageCost ?: 16,

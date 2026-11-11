@@ -14,18 +14,11 @@ android {
     }
 
     targetProjectPath = ":app"
-    
-    testOptions.managedDevices.localDevices {
-        create("pixel6Api34") {
-            device = "Pixel 6"
-            apiLevel = 34
-            systemImageSource = "aosp"
-        }
-    }
+
 }
 
+// Generated and benchmarked on a connected phone (rooted or API 33+); no emulator to download.
 baselineProfile {
-    managedDevices += "pixel6Api34"
     useConnectedDevices = true
 }
 

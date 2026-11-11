@@ -130,6 +130,7 @@ fun HomeScreen() {
 
     val snackbarHostState = remember { SnackbarHostState() }
     var showAiBottomSheet by remember { mutableStateOf(false) }
+    var leavingAiSheet by remember { mutableStateOf(false) }
     val aiSheetState = rememberBottomSheetState(
         initialValue = SheetValue.Hidden,
         enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
@@ -259,15 +260,32 @@ fun HomeScreen() {
 
     fun onAiModeSelected(mode: AiMode) {
         pendingAiMode = mode
+        val screen = when (mode) {
+            // A chat of its own: designs and revisions are turns, not a scan result.
+            AiMode.DESIGN_DOCUMENT -> Destination.DocChat()
+            // Its own screen too: a recording, a player and a transcript, not a scan result.
+            AiMode.TRANSCRIBE_AUDIO -> Destination.Transcribe
+            else -> null
+        }
+        if (screen != null) {
+            // The sheet slides away first, then the screen slides in. Dropping the sheet at once cut it
+            // off mid-frame. Its window (a dialog) stays, hidden, until Home leaves composition after the
+            // slide: removing it waits on the window manager (9-18 ms, perfetto 2026-11-11), which in
+            // the slide's first frame was a dropped frame. Home's sheet flag is not saved, so a return
+            // to Home finds it closed.
+            if (leavingAiSheet) return
+            leavingAiSheet = true
+            scope.launch {
+                aiSheetState.hide()
+                navigator.go(screen)
+            }
+            return
+        }
         showAiBottomSheet = false
         when (mode) {
             AiMode.EXTRACT_TEXT -> aiMultiGalleryPicker()
             AiMode.EXTRACT_PDF_TEXT -> aiMultiDocumentPicker()
             AiMode.EXTRACT_DATA -> showExtractionSheet = true
-            // A chat of its own: designs and revisions are turns, not a scan result.
-            AiMode.DESIGN_DOCUMENT -> navigator.go(Destination.DocChat())
-            // Its own screen too: a recording, a player and a transcript, not a scan result.
-            AiMode.TRANSCRIBE_AUDIO -> navigator.go(Destination.Transcribe)
             else -> aiMultiGalleryPicker()
         }
     }
@@ -480,6 +498,7 @@ fun HomeScreen() {
             presets = paywallState.extractionPresets,
             pageCost = paywallState.extractionPageCost,
             included = paywallState.allowsExtraction,
+            trialPagesLeft = paywallState.extractionTrialPages,
             onDismiss = { showExtractionSheet = false },
             onPresetSelected = { preset ->
                 showExtractionSheet = false

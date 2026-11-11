@@ -45,6 +45,7 @@ import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -63,6 +64,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -104,6 +106,7 @@ internal fun ChatComposer(
     focusRequester: FocusRequester,
     onAttaching: (Boolean) -> Unit,
     onSend: () -> Unit,
+    onUpgrade: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var sheet by remember { mutableStateOf<ComposerSheet?>(null) }
@@ -120,6 +123,10 @@ internal fun ChatComposer(
             .padding(bottom = 8.dp)
     ) {
         ComposerSuggestions(composer, viewModel)
+        // The date is the server's (`periodResetsAt`, the window the trial is counted in), never a guess here.
+        if (state.nextGoesToAgent && paywall.assistantFilesLeft == 0 && paywall.periodResetsAt > 0) {
+            DocumentTrialNotice(paywall.periodResetsAt, onUpgrade)
+        }
         Surface(
             shape = RoundedCornerShape(24.dp),
             // Opaque: see-through, a message behind it read through the draft (2026-10-16).
@@ -515,6 +522,9 @@ private fun ThumbIcon(painter: Painter) {
 @Composable
 private fun CostCaption(paywall: PaywallState, agent: Boolean, emptyChat: Boolean) {
     val line = when {
+        // A free plan's messages are counted, so it always says how many are left.
+        agent && paywall.assistantMessagesLeft != null ->
+            stringResource(R.string.chat_cost_agent_free, paywall.assistantMessagesLeft)
         agent -> stringResource(R.string.chat_cost_agent).takeIf { emptyChat }
         !paywall.isQuotaKnown -> null
         else -> paywall.designPageCost.let { pluralStringResource(R.plurals.chat_cost_hint, it, it) }
@@ -528,6 +538,45 @@ private fun CostCaption(paywall: PaywallState, agent: Boolean, emptyChat: Boolea
         overflow = TextOverflow.Ellipsis,
         modifier = Modifier.fillMaxWidth().padding(top = 6.dp, start = 8.dp, end = 8.dp)
     )
+}
+
+/**
+ * Above the composer once a free plan's document for the month is used: when it comes back, and the
+ * way to Pro. The assistant also says it in its reply, but a reply cannot open the paywall.
+ */
+@Composable
+private fun DocumentTrialNotice(resetsAt: Long, onUpgrade: (String) -> Unit) {
+    val text = stringResource(R.string.chat_free_document_used, resetDate(resetsAt))
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+        ) {
+            Text(
+                text,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                modifier = Modifier.weight(1f)
+            )
+            TextButton(onClick = { onUpgrade(text) }) { Text(stringResource(R.string.chat_free_see_pro)) }
+        }
+    }
+}
+
+/** A reset date as people write it here ("1 December"), in the app's language. */
+@Composable
+private fun resetDate(epochMillis: Long): String {
+    val locale = LocalConfiguration.current.locales[0]
+    return remember(epochMillis, locale) {
+        if (epochMillis <= 0) return@remember ""
+        val pattern = android.text.format.DateFormat.getBestDateTimePattern(locale, "dMMMM")
+        java.text.SimpleDateFormat(pattern, locale).apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }
+            .format(java.util.Date(epochMillis))
+    }
 }
 
 private class AttachPickers(val camera: () -> Unit, val photos: () -> Unit, val files: () -> Unit)

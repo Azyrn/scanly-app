@@ -188,6 +188,7 @@
         <item quantity="other">Inclui campos rotulados além do texto. Ler uma página como dados custa %1$d créditos do plano. Até 8 páginas por documento.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Inclui campos rotulados além do texto. Incluso no Pro e acima.</string>
+    <string name="cmp_preset_trial_pages">Inclui campos rotulados além do texto. Páginas grátis este mês: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Entre para usar a IA</string>

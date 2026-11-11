@@ -38,6 +38,8 @@ fun ExtractionPresetSheet(
     pageCost: Int,
     /** False on a plan without extraction: say so here rather than after the file is picked. */
     included: Boolean,
+    /** Free pages left this month on a plan without extraction; the server counts them. */
+    trialPagesLeft: Int,
     onDismiss: () -> Unit,
     onPresetSelected: (ExtractionPresetDto) -> Unit
 ) {
@@ -50,10 +52,10 @@ fun ExtractionPresetSheet(
                 modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp)
             )
             Text(
-                text = if (included) {
-                    pluralStringResource(R.plurals.cmp_preset_cost, pageCost, pageCost)
-                } else {
-                    stringResource(R.string.cmp_preset_included_pro)
+                text = when {
+                    included -> pluralStringResource(R.plurals.cmp_preset_cost, pageCost, pageCost)
+                    trialPagesLeft > 0 -> stringResource(R.string.cmp_preset_trial_pages, trialPagesLeft)
+                    else -> stringResource(R.string.cmp_preset_included_pro)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,

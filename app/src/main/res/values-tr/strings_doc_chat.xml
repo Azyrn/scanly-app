@@ -49,6 +49,9 @@
         <item quantity="other">~%d kredi</item>
     </plurals>
     <string name="chat_cost_agent">Sohbet ücretsiz · dosya kredisi</string>
+    <string name="chat_cost_agent_free">Bu ay kalan ücretsiz mesaj: %1$d · dosyalar kredi kullanır</string>
+    <string name="chat_free_document_used">Bu ayın ücretsiz belgesi kullanıldı. %1$s tarihinde döner.</string>
+    <string name="chat_free_see_pro">Pro</string>
     <string name="chat_remove">%1$s kaldır</string>
     <string name="chat_preparing_file">Hazırlanıyor…</string>
     <string name="chat_preset_clean_up">Toparla</string>

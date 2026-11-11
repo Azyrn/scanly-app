@@ -79,9 +79,13 @@ class FirebaseAuthRepository @Inject constructor(
 
     override suspend fun signUpWithEmail(email: String, password: String): Result<AuthUser> =
         runAuthCatching {
-            firebaseAuth.createUserWithEmailAndPassword(email.trim(), password)
+            val user = firebaseAuth.createUserWithEmailAndPassword(email.trim(), password)
                 .await()
                 .requireUser()
+            // Free cloud AI needs a proved address, so the link goes out with the sign-up. Best
+            // effort: the account exists either way, and the server asks again when it matters.
+            runCatching { firebaseAuth.currentUser?.sendEmailVerification()?.await() }
+            user
         }
 
     override suspend fun signInWithGoogle(activityContext: Context): Result<AuthUser> =

@@ -173,6 +173,7 @@
         <item quantity="other">Metnin yanında etiketlenmiş alanları da alın. Bir sayfayı veri olarak okumak planınızdan %1$d kredi harcar. Her belge en fazla 8 sayfa içerebilir.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Metinle birlikte etiketli alanlar da alın. Pro ve üzerinde dahil.</string>
+    <string name="cmp_preset_trial_pages">Metinle birlikte etiketli alanlar da alın. Bu ay kalan ücretsiz sayfa: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">AI taraması: oturum açın</string>

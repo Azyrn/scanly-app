@@ -188,6 +188,7 @@
         <item quantity="other">Champs étiquetés en plus du texte. Une page en données coûte %1$d crédits de votre forfait. Jusqu\'à 8 pages par document.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Champs étiquetés en plus du texte. Inclus dès Pro.</string>
+    <string name="cmp_preset_trial_pages">Champs étiquetés en plus du texte. Pages gratuites ce mois-ci : %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Connexion pour scan IA</string>

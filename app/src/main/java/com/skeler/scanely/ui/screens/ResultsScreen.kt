@@ -476,7 +476,7 @@ fun ResultsScreen() {
                 onClick = {
                     aiViewModel.getRescanParams()?.let { params ->
                         scanViewModel.triggerAiWithRateLimit {
-                            aiViewModel.processImage(params.uri, params.mode, params.pageRange)
+                            aiViewModel.processImage(params.uri, params.mode, params.pageRange, params.extractPreset)
                         }
                     }
                 },

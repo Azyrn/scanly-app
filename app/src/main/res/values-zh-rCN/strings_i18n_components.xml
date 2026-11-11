@@ -158,6 +158,7 @@
         <item quantity="other">除文字外，还可获得带标签的字段。将页面作为数据读取会从你的套餐中扣除 %1$d 积分。每份文档最多可包含 8 页。</item>
     </plurals>
     <string name="cmp_preset_included_pro">除文字外，还可获得带标签的字段。Pro 及以上套餐均包含此功能。</string>
+    <string name="cmp_preset_trial_pages">除文字外，还可获得带标签的字段。本月剩余免费页数：%1$d</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">登录以使用 AI 扫描</string>

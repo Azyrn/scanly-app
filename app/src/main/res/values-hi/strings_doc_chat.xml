@@ -40,6 +40,9 @@
         <item quantity="other">लगभग %d क्रेडिट</item>
     </plurals>
     <string name="chat_cost_agent">चैट मुफ़्त है · फ़ाइलों में क्रेडिट लगते हैं</string>
+    <string name="chat_cost_agent_free">इस महीने मुफ़्त संदेश: %1$d · फ़ाइलें क्रेडिट लेती हैं</string>
+    <string name="chat_free_document_used">इस महीने का मुफ़्त दस्तावेज़ इस्तेमाल हो गया। %1$s को लौटेगा।</string>
+    <string name="chat_free_see_pro">Pro देखें</string>
     <string name="chat_remove">%1$s हटाएं</string>
     <string name="chat_preparing_file">तैयार हो रहा है…</string>
     <string name="chat_preset_clean_up">साफ़-सुथरा करें</string>

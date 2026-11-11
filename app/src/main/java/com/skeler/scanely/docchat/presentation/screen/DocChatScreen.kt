@@ -36,6 +36,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
@@ -56,6 +57,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -93,6 +95,7 @@ import com.skeler.scanely.docchat.presentation.DocChatsViewModel
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** Key the history screen returns the chosen chat under. */
@@ -230,31 +233,56 @@ private fun DocChatContent(
     // Opening the drawer is when the list should be fresh; the cache shows at once.
     LaunchedEffect(drawer.isOpen) { if (drawer.isOpen) chatsViewModel.refresh() }
 
+    // The composer (its text field above all) joins one frame after the rest of the screen. The
+    // screen fades in from transparent over its first 60 ms, so nobody sees the gap, and the first
+    // frame of the slide stops carrying the field's first layout.
+    var composerReady by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        withFrameNanos { }
+        composerReady = true
+    }
+
+    // The drawer's chat list is composed once the screen has slid in, not in its first frame, where
+    // it is closed and unseen and was part of a 43 ms frame (perfetto, 2026-11-11).
+    var drawerReady by remember { mutableStateOf(drawer.isOpen) }
+    LaunchedEffect(Unit) {
+        delay(DRAWER_COMPOSE_DELAY_MS)
+        drawerReady = true
+    }
+
     ModalNavigationDrawer(
         drawerState = drawer,
         drawerContent = {
-            ChatDrawer(
-                chats = chats,
-                query = query,
-                onQuery = chatsViewModel::search,
-                currentChatId = state.chatId,
-                paywall = paywall,
-                callbacks = remember(viewModel, chatsViewModel) {
-                    DrawerCallbacks(
-                        onNewChat = {
-                            viewModel.newChat()
-                            scope.launch { drawer.close() }
-                        },
-                        onOpen = {
-                            viewModel.openChat(it)
-                            scope.launch { drawer.close() }
-                        },
-                        onRename = { renamingChat = it },
-                        onDelete = { deletingChat = it },
-                        onPlan = openPlans
-                    )
-                }
-            )
+            if (!drawerReady && drawer.targetValue == DrawerValue.Closed) {
+                ModalDrawerSheet(
+                    drawerState = drawer,
+                    drawerContainerColor = MaterialTheme.colorScheme.surfaceContainerLow
+                ) { }
+            } else {
+                ChatDrawer(
+                    chats = chats,
+                    query = query,
+                    onQuery = chatsViewModel::search,
+                    currentChatId = state.chatId,
+                    paywall = paywall,
+                    drawerState = drawer,
+                    callbacks = remember(viewModel, chatsViewModel) {
+                        DrawerCallbacks(
+                            onNewChat = {
+                                viewModel.newChat()
+                                scope.launch { drawer.close() }
+                            },
+                            onOpen = {
+                                viewModel.openChat(it)
+                                scope.launch { drawer.close() }
+                            },
+                            onRename = { renamingChat = it },
+                            onDelete = { deletingChat = it },
+                            onPlan = openPlans
+                        )
+                    }
+                )
+            }
         }
     ) {
         Scaffold(
@@ -305,7 +333,7 @@ private fun DocChatContent(
                         )
                     }
                 }
-                if (fieldsFor == null) {
+                if (fieldsFor == null && composerReady) {
                     ChatComposer(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -323,6 +351,11 @@ private fun DocChatContent(
                                 notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
                             }
                             viewModel.send()
+                        },
+                        onUpgrade = { reason ->
+                            paywallReason = reason
+                            paywallFeatureLock = true
+                            showPaywall = true
                         }
                     )
                 }
@@ -654,3 +687,6 @@ private val JUMP_SIZE = 48.dp
 private val JUMP_GAP = 4.dp
 private val JUMP_STRIP = JUMP_SIZE + JUMP_GAP * 2
 private const val CHAT_DENSITY_SCALE = 0.9f
+
+/** Past the screen's slide-in (250 ms), so the drawer's first composition lands on an idle frame. */
+private const val DRAWER_COMPOSE_DELAY_MS = 400L

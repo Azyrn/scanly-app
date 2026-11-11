@@ -50,6 +50,9 @@
         <item quantity="other">~%d crédits</item>
     </plurals>
     <string name="chat_cost_agent">Chat gratuit · fichiers : crédits</string>
+    <string name="chat_cost_agent_free">Messages gratuits ce mois : %1$d · fichiers en crédits</string>
+    <string name="chat_free_document_used">Document gratuit du mois utilisé. Retour le %1$s.</string>
+    <string name="chat_free_see_pro">Voir Pro</string>
     <string name="chat_remove">Retirer %1$s</string>
     <string name="chat_preparing_file">Préparation…</string>
     <string name="chat_preset_clean_up">Nettoyer</string>

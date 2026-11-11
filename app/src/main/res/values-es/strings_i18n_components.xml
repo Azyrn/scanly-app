@@ -188,6 +188,7 @@
         <item quantity="other">Campos con etiqueta además del texto. Leer una página como datos cuesta %1$d créditos de tu plan. Hasta 8 páginas por documento.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Campos con etiqueta además del texto. Incluido en Pro y superiores.</string>
+    <string name="cmp_preset_trial_pages">Campos con etiqueta además del texto. Páginas gratis este mes: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Inicia sesión para usar IA</string>

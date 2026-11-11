@@ -203,6 +203,7 @@
         <item quantity="other">Получите поля вместе с текстом. Чтение страницы как данных — %1$d кредита из тарифа. До 8 страниц в документе.</item>
     </plurals>
     <string name="cmp_preset_included_pro">Получите размеченные поля вместе с текстом. Входит в Pro и выше.</string>
+    <string name="cmp_preset_trial_pages">Поля вместе с текстом. Бесплатных страниц в этом месяце: %1$d.</string>
 
     <!-- ui/components/SignInRequiredSheet.kt -->
     <string name="cmp_sign_in_ai_title">Войдите для ИИ-скана</string>

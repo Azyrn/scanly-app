@@ -39,6 +39,9 @@
         <item quantity="other">약 %d 크레딧</item>
     </plurals>
     <string name="chat_cost_agent">채팅 무료 · 파일은 크레딧 사용</string>
+    <string name="chat_cost_agent_free">이번 달 무료 메시지: %1$d개 · 파일은 크레딧 사용</string>
+    <string name="chat_free_document_used">이번 달 무료 문서를 썼어요. %1$s에 다시 생겨요.</string>
+    <string name="chat_free_see_pro">Pro 보기</string>
     <string name="chat_remove">%1$s 삭제</string>
     <string name="chat_preparing_file">준비 중…</string>
     <string name="chat_preset_clean_up">깔끔하게 정리</string>

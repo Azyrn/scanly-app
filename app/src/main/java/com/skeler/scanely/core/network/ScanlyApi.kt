@@ -260,6 +260,11 @@ data class MeResponse(
     val extractionPresets: List<ExtractionPresetDto> = emptyList(),
     /** Pages one extracted page costs, since annotation is billed above the plain rate. */
     val extractionPageCost: Int = 1,
+    /**
+     * Monthly tastes of the tools this plan does not include, with what is left of each; null on a
+     * paid plan. The server counts and refuses them; this is only what the app tells the user.
+     */
+    val trials: TrialsDto? = null,
     val plans: List<PlanDto> = emptyList()
 )
 
@@ -268,6 +273,17 @@ data class MeResponse(
  * id and looks its own schema up, so what the app holds here can never steer Scanly's model.
  * Served rather than compiled in, so a new preset works on both paths without an app release.
  */
+@Serializable
+data class TrialsDto(
+    val extractionPages: TrialDto = TrialDto(),
+    val translations: TrialDto = TrialDto(),
+    val assistantMessages: TrialDto = TrialDto(),
+    val assistantFiles: TrialDto = TrialDto()
+)
+
+@Serializable
+data class TrialDto(val limit: Int = 0, val remaining: Int = 0)
+
 @Serializable
 data class ExtractionPresetDto(
     val id: String,
