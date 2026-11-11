@@ -165,7 +165,17 @@ interface ScanlyApi {
      */
     @POST("v1/license/mine")
     suspend fun myLicenses(): LicenseRecoveryResponse
+
+    /**
+     * Mails this account a link to confirm its address. Sent by the Worker from scanlyocr.com and
+     * landing on scanlyocr.com/auth/action, never Firebase's own mail and page.
+     */
+    @POST("v1/me/verify-email")
+    suspend fun sendVerificationEmail(): VerifyEmailResponse
 }
+
+@Serializable
+data class VerifyEmailResponse(val sent: Boolean = false, val verified: Boolean = false)
 
 /**
  * These routes accept an unauthenticated caller — the key is the credential — but the Worker

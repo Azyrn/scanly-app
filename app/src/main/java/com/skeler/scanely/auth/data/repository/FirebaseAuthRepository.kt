@@ -82,9 +82,10 @@ class FirebaseAuthRepository @Inject constructor(
             val user = firebaseAuth.createUserWithEmailAndPassword(email.trim(), password)
                 .await()
                 .requireUser()
-            // Free cloud AI needs a proved address, so the link goes out with the sign-up. Best
-            // effort: the account exists either way, and the server asks again when it matters.
-            runCatching { firebaseAuth.currentUser?.sendEmailVerification()?.await() }
+            // Free cloud AI needs a proved address, so the link goes out with the sign-up, from the
+            // server (scanlyocr.com). Best effort: the account exists either way, and the server
+            // sends it again the first time free AI is refused for it.
+            runCatching { api.sendVerificationEmail() }
             user
         }
 
@@ -122,9 +123,11 @@ class FirebaseAuthRepository @Inject constructor(
 
     override suspend fun sendEmailVerification(): Result<Unit> =
         runAuthCatching {
-            val user = firebaseAuth.currentUser
-                ?: throw AuthException(context.getString(R.string.auth_err_sign_in_to_confirm))
-            user.sendEmailVerification().await()
+            if (firebaseAuth.currentUser == null) {
+                throw AuthException(context.getString(R.string.auth_err_sign_in_to_confirm))
+            }
+            api.sendVerificationEmail()
+            Unit
         }
 
     override suspend fun refreshSession(): Result<Unit> =
