@@ -100,10 +100,16 @@ private const val FPS_FILE = "scan_fps.txt"
  * return from the crop keeps the session; the other arguments come from [Destination.ScanCamera].
  */
 @Composable
-fun ScanCameraScreen(sessionKey: String, mode: ScanMode?, kind: IdDocumentKind?, replaceSide: Int?) {
+fun ScanCameraScreen(
+    sessionKey: String,
+    mode: ScanMode?,
+    kind: IdDocumentKind?,
+    replaceSide: Int?,
+    handoff: Handoff? = null
+) {
     val activity = LocalActivity.current as ComponentActivity
     val vm: ScanSessionViewModel = hiltViewModel(activity)
-    LaunchedEffect(sessionKey) { vm.begin(sessionKey, mode, kind, replaceSide) }
+    LaunchedEffect(sessionKey) { vm.begin(sessionKey, mode, kind, replaceSide, handoff) }
     OnScreenExit { vm.end() }
     CameraContent(vm)
 }
@@ -212,8 +218,11 @@ private fun CameraContent(vm: ScanSessionViewModel) {
             onKind = vm::setKind
         )
         Spacer(Modifier.height(ScanTokens.Space2))
-        ScanModeSelector(state = modeRow, selected = state.mode)
-        Spacer(Modifier.height(ScanTokens.Space2))
+        // A screen that asked for pages gets Document pages; the other modes don't apply there.
+        if (state.handoff == null) {
+            ScanModeSelector(state = modeRow, selected = state.mode)
+            Spacer(Modifier.height(ScanTokens.Space2))
+        }
         BottomBar(
             state = state,
             ring = { ring.value },

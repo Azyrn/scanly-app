@@ -93,8 +93,6 @@
     <string name="pe_time_signed">%1$s imzalı</string>
     <string name="pe_no_signatures_saved">Kayıtlı imza yok. Sayfa düzenleyicinin İmzala aracından bir tane alın.</string>
     <string name="pe_no_selectable_text">Burada seçilebilir metin yok; bu sayfa tarama olabilir.</string>
-    <string name="pe_scanner_unavailable">Belge tarayıcısı bu cihazda kullanılamıyor.</string>
-    <string name="pe_scanner_start_failed">Tarayıcı açılamadı. Bağlantınızı kontrol edin.</string>
     <string name="pe_undo">Geri al</string>
     <string name="pe_redo">Yinele</string>
     <string name="pe_add_text">Metin ekle</string>

@@ -97,8 +97,6 @@
     <string name="pe_time_signed">Підписано %1$s</string>
     <string name="pe_no_signatures_saved">Підписів ще немає. Створіть їх інструментом «Підпис».</string>
     <string name="pe_no_selectable_text">Тут немає тексту для вибору — можливо, це скан.</string>
-    <string name="pe_scanner_unavailable">Сканер документів недоступний на цьому пристрої.</string>
-    <string name="pe_scanner_start_failed">Сканер не відкрився. Перевірте мережу.</string>
     <string name="pe_undo">Скасувати</string>
     <string name="pe_redo">Повторити</string>
     <string name="pe_add_text">Текст</string>

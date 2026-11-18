@@ -2,15 +2,11 @@
 
 package com.skeler.scanely.ui.pdfeditor
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.rememberSplineBasedDecay
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -114,16 +110,17 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.model.InkStroke
 import com.skeler.scanely.core.pdfeditor.model.LineStyle
 import com.skeler.scanely.core.pdfeditor.model.OfficialFont
 import com.skeler.scanely.core.pdfeditor.model.PdfEdit
 import com.skeler.scanely.core.pdfeditor.model.ShapeKind
-import com.skeler.scanely.core.scan.DocumentScannerManager
+import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.PaywallSheet
+import com.skeler.scanely.ui.scan.Handoff
+import com.skeler.scanely.ui.scan.ScanHandBackViewModel
 import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
 import kotlinx.coroutines.Dispatchers
@@ -188,35 +185,17 @@ fun PageEditorScreen(startIndex: Int) {
         }
     }
 
-    val scanLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartIntentSenderForResult()
-    ) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        val page = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
-            ?.pages?.firstOrNull()?.imageUri ?: return@rememberLauncherForActivityResult
-        scope.launch {
+    // The signature comes back from Scanly's own scanner as one cropped page.
+    val handBack: ScanHandBackViewModel = hiltViewModel(activity)
+    LaunchedEffect(handBack) {
+        handBack.pending.collect {
+            val page = handBack.take(Handoff.SIGNATURE)?.firstOrNull() ?: return@collect
             decodeBitmap(context, page)?.let { vm.captureSignature(it, resources.getString(R.string.pe_signature)) }
         }
     }
 
     fun captureSignature() {
-        if (!DocumentScannerManager.isScannerAvailable(context)) {
-            scope.launch {
-                snackbarHostState.showSnackbar(resources.getString(R.string.pe_scanner_unavailable))
-            }
-            return
-        }
-        DocumentScannerManager.getStartScanIntent(activity)
-            .addOnSuccessListener { sender ->
-                scanLauncher.launch(IntentSenderRequest.Builder(sender).build())
-            }
-            // Fails when the scanner module can't be fetched (offline on first use) or won't
-            // start; without this the tap did nothing.
-            .addOnFailureListener {
-                scope.launch {
-                    snackbarHostState.showSnackbar(resources.getString(R.string.pe_scanner_start_failed))
-                }
-            }
+        navigator.go(Destination.ScanCamera(handoff = Handoff.SIGNATURE, maxPages = 1))
     }
 
     Scaffold(

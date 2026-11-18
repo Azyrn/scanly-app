@@ -32,6 +32,7 @@ import com.skeler.scanely.ui.pdfeditor.PageEditorScreen
 import com.skeler.scanely.ui.pdfeditor.PdfStudioScreen
 import com.skeler.scanely.ui.pdftools.PdfToolScreen
 import com.skeler.scanely.ui.pdftools.PdfToolsScreen
+import com.skeler.scanely.ui.scan.Handoff
 import com.skeler.scanely.ui.scan.ScanCameraScreen
 import com.skeler.scanely.ui.scan.ScanCropScreen
 import com.skeler.scanely.ui.screens.BarcodeScannerScreen
@@ -132,7 +133,8 @@ fun ScanelyNavHost(
                     sessionKey = entry.id,
                     mode = ScanMode.entries.firstOrNull { it.name == route.mode },
                     kind = IdDocumentKind.entries.firstOrNull { it.name == route.kind },
-                    replaceSide = route.replaceSide
+                    replaceSide = route.replaceSide,
+                    handoff = route.handoff?.let { Handoff(it, route.maxPages ?: 1) }
                 )
             }
         }

@@ -17,7 +17,7 @@ import com.skeler.scanely.ui.viewmodel.IdCardViewModel
 
 /**
  * Acts on the session's one-shot [event] from whichever scan screen is on top: a toast, the hand-over of a
- * finished session to review or the ID copy, or (crop only, [onBackToCamera]) the way back to the camera.
+ * finished session to review, the ID copy or the screen that asked for the pages, or (crop only, [onBackToCamera]) the way back to the camera.
  */
 @Composable
 fun ScanEventHandler(vm: ScanSessionViewModel, event: ScanEvent?, onBackToCamera: (() -> Unit)? = null) {
@@ -27,6 +27,7 @@ fun ScanEventHandler(vm: ScanSessionViewModel, event: ScanEvent?, onBackToCamera
     val navigator = LocalNavigator.current
     val review: DocumentScanViewModel = hiltViewModel(activity)
     val idCopy: IdCardViewModel = hiltViewModel(activity)
+    val handBack: ScanHandBackViewModel = hiltViewModel(activity)
     val backToCamera by rememberUpdatedState(onBackToCamera)
     LaunchedEffect(event) {
         when (event) {
@@ -49,6 +50,10 @@ fun ScanEventHandler(vm: ScanSessionViewModel, event: ScanEvent?, onBackToCamera
                     is ScanResult.IdCopy -> {
                         idCopy.start(result.kind, result.sides)
                         navigator.goInPlaceOf(Destination.IdCard, Destination.ScanCamera::class)
+                    }
+                    is ScanResult.HandBack -> {
+                        handBack.deliver(result.key, result.pages)
+                        navigator.backPast(Destination.ScanCamera::class)
                     }
                     is ScanResult.ReplaceSide -> {
                         idCopy.replaceSide(result.index, result.side)

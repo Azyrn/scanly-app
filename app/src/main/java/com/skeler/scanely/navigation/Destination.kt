@@ -11,12 +11,15 @@ sealed interface Destination {
 
     /**
      * The scan camera. [mode] is a `core.scan.ScanMode` name and [kind] an `IdDocumentKind` name (null: Document,
-     * ID card); [replaceSide] retakes that side of the ID copy already open.
+     * ID card); [replaceSide] retakes that side of the ID copy already open. [handoff] (a `ui.scan.Handoff` key)
+     * sends up to [maxPages] Document pages back to the screen that opened the camera instead of to review.
      */
     @Serializable data class ScanCamera(
         val mode: String? = null,
         val kind: String? = null,
-        val replaceSide: Int? = null
+        val replaceSide: Int? = null,
+        val handoff: String? = null,
+        val maxPages: Int? = null
     ) : Destination
 
     /** The crop after a photo; its photo lives in `ScanSessionViewModel`. */

@@ -90,8 +90,6 @@
     <string name="pe_time_signed">%1$s 서명</string>
     <string name="pe_no_signatures_saved">저장된 서명이 아직 없어요. 페이지 편집기의 서명 도구에서 하나를 캡처하세요.</string>
     <string name="pe_no_selectable_text">선택할 텍스트가 없어요. 스캔본일 수 있어요.</string>
-    <string name="pe_scanner_unavailable">이 기기에서는 문서 스캐너를 사용할 수 없어요.</string>
-    <string name="pe_scanner_start_failed">스캐너를 열 수 없어요. 연결을 확인하세요.</string>
     <string name="pe_undo">되돌리기</string>
     <string name="pe_redo">재실행</string>
     <string name="pe_add_text">텍스트 추가</string>

@@ -2,11 +2,10 @@
 
 package com.skeler.scanely.docchat.presentation.screen
 
-import android.app.Activity
 import android.net.Uri
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
@@ -77,19 +76,20 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.SubcomposeAsyncImage
-import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 import com.skeler.scanely.R
-import com.skeler.scanely.core.scan.DocumentScannerManager
 import com.skeler.scanely.docchat.presentation.AttachError
 import com.skeler.scanely.docchat.presentation.ComposerUi
 import com.skeler.scanely.docchat.presentation.DocChatUiState
 import com.skeler.scanely.docchat.presentation.DocChatViewModel
+import com.skeler.scanely.navigation.Destination
+import com.skeler.scanely.navigation.LocalNavigator
+import com.skeler.scanely.ui.scan.Handoff
+import com.skeler.scanely.ui.scan.ScanHandBackViewModel
 import com.skeler.scanely.ui.viewmodel.CONTENT_PRESETS
 import com.skeler.scanely.ui.viewmodel.PaywallState
-import java.io.File
 
 private enum class ComposerSheet { SCANS }
 
@@ -582,26 +582,22 @@ private fun resetDate(epochMillis: Long): String {
 private class AttachPickers(val camera: () -> Unit, val photos: () -> Unit, val files: () -> Unit)
 
 /**
- * Camera is ML Kit's document scanner, returning one cropped PDF of up to the designer's page
- * limit — a page to rebuild; without Play services it falls back to the system camera's single
- * photo. Photos is the system photo picker (no permission). A picked picture's role is asked in the
+ * Camera is Scanly's own scanner in Document mode, up to the designer's page limit: one page comes
+ * back as a picture, several as one PDF — a document to rebuild. Photos is the system photo picker
+ * (no permission). A picked picture's role is asked in the
  * composer; a PDF is always a document to rebuild.
  */
 @Composable
 private fun rememberAttachPickers(viewModel: DocChatViewModel): AttachPickers {
     val context = LocalContext.current
-    val activity = LocalActivity.current
-    val captureUri = remember {
-        val file = File(context.cacheDir, "scans/chat_capture.jpg").apply { parentFile?.mkdirs() }
-        FileProvider.getUriForFile(context, context.packageName + ".fileprovider", file)
-    }
-    val scanner = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            GmsDocumentScanningResult.fromActivityResultIntent(result.data)?.pdf?.uri?.let(viewModel::attachDocument)
+    val activity = LocalActivity.current as ComponentActivity
+    val navigator = LocalNavigator.current
+    // Scanly's own scanner hands its pages back here (one picture, or several joined into a PDF).
+    val handBack: ScanHandBackViewModel = hiltViewModel(activity)
+    LaunchedEffect(handBack) {
+        handBack.pending.collect {
+            handBack.take(Handoff.CHAT)?.let(viewModel::attachScannedPages)
         }
-    }
-    val takePicture = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { taken ->
-        if (taken) viewModel.attachDocument(captureUri)
     }
     val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
         uri?.let { viewModel.attachImage(it, null) }
@@ -612,15 +608,7 @@ private fun rememberAttachPickers(viewModel: DocChatViewModel): AttachPickers {
         if (isPdf) viewModel.attachDocument(uri) else viewModel.attachImage(uri, null)
     }
     return AttachPickers(
-        camera = {
-            if (activity != null && DocumentScannerManager.isScannerAvailable(context)) {
-                DocumentScannerManager.getPdfScanIntent(activity, MAX_SCAN_PAGES)
-                    .addOnSuccessListener { scanner.launch(IntentSenderRequest.Builder(it).build()) }
-                    .addOnFailureListener { takePicture.launch(captureUri) }
-            } else {
-                takePicture.launch(captureUri)
-            }
-        },
+        camera = { navigator.go(Destination.ScanCamera(handoff = Handoff.CHAT, maxPages = MAX_SCAN_PAGES)) },
         photos = { pickPhoto.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
         files = { openFile.launch(arrayOf(PDF_MIME, "image/*")) }
     )

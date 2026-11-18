@@ -91,8 +91,6 @@
     <string name="pe_time_signed">签名于 %1$s</string>
     <string name="pe_no_signatures_saved">尚未保存任何签名。请在页面编辑器的“签名”工具中捕获一个签名。</string>
     <string name="pe_no_selectable_text">此处没有可选择的文字——此页可能是扫描件。</string>
-    <string name="pe_scanner_unavailable">此设备上无法使用文档扫描器。</string>
-    <string name="pe_scanner_start_failed">无法打开扫描器，请检查网络连接。</string>
     <string name="pe_undo">撤销</string>
     <string name="pe_redo">重做</string>
     <string name="pe_add_text">添加文字</string>

@@ -67,6 +67,7 @@ sealed interface ScanResult {
     data class Review(val pages: List<Uri>, val filter: ScanFilter) : ScanResult
     data class IdCopy(val kind: IdDocumentKind, val sides: List<Uri>) : ScanResult
     data class ReplaceSide(val index: Int, val side: Uri) : ScanResult
+    data class HandBack(val key: String, val pages: List<Uri>) : ScanResult
 }
 
 sealed interface ScanEvent {
@@ -91,6 +92,9 @@ data class ScanSessionUiState(
 ) {
     val mode: ScanMode get() = (goal as? ScanGoal.Pages)?.mode ?: ScanMode.ID_CARD
 
+    /** Set when another screen asked for the pages; the camera then offers no other mode. */
+    val handoff: Handoff? get() = (goal as? ScanGoal.Pages)?.handoff
+
     /** The ID side being taken; null outside ID mode. */
     val side: IdSide?
         get() = when (goal) {
@@ -107,14 +111,15 @@ data class ScanSessionUiState(
     /** How many photos the gallery may hand over now. */
     val importLimit: Int
         get() = when (goal) {
-            is ScanGoal.Pages -> MAX_IMPORT
+            is ScanGoal.Pages -> goal.handoff?.let { it.maxPages - pages.size } ?: MAX_IMPORT
             is ScanGoal.IdCopy -> goal.kind.sides - sides.size
             is ScanGoal.ReplaceSide -> 1
         }
 
     /** Where the session goes with what it has, [last] being the page just confirmed. */
     fun resultWith(last: ScanPage): ScanResult = when (goal) {
-        is ScanGoal.Pages -> ScanResult.Review(pages.map { it.output }, goal.mode.defaultFilter)
+        is ScanGoal.Pages -> goal.handoff?.let { ScanResult.HandBack(it.key, pages.map { page -> page.output }) }
+            ?: ScanResult.Review(pages.map { it.output }, goal.mode.defaultFilter)
         is ScanGoal.IdCopy -> ScanResult.IdCopy(goal.kind, sides.map { it.output })
         is ScanGoal.ReplaceSide -> ScanResult.ReplaceSide(goal.side.index, last.output)
     }
@@ -141,7 +146,7 @@ class ScanSessionViewModel @Inject constructor(val files: ScanPageStore) : ViewM
      * Starts a session for the camera screen [key] (its back-stack entry). Calling it again with the same key —
      * after a rotation, or coming back from the crop — keeps the session.
      */
-    fun begin(key: String, mode: ScanMode?, kind: IdDocumentKind?, replaceSide: Int?) {
+    fun begin(key: String, mode: ScanMode?, kind: IdDocumentKind?, replaceSide: Int?, handoff: Handoff? = null) {
         if (key == sessionKey) return
         sessionKey = key
         cropJob?.cancel()
@@ -149,6 +154,7 @@ class ScanSessionViewModel @Inject constructor(val files: ScanPageStore) : ViewM
         val idKind = kind ?: IdDocumentKind.ID_CARD
         val replace = replaceSide?.let { IdSide.of(idKind, it) }
         val goal = when {
+            handoff != null -> ScanGoal.Pages(ScanMode.DOCUMENT, handoff)
             replace != null -> ScanGoal.ReplaceSide(replace)
             mode == ScanMode.ID_CARD -> ScanGoal.IdCopy(idKind)
             else -> ScanGoal.Pages(mode ?: ScanMode.DOCUMENT)
@@ -164,7 +170,7 @@ class ScanSessionViewModel @Inject constructor(val files: ScanPageStore) : ViewM
     }
 
     fun setMode(mode: ScanMode) = _uiState.update {
-        if (it.goal is ScanGoal.ReplaceSide || it.mode == mode) return@update it
+        if (it.goal is ScanGoal.ReplaceSide || it.handoff != null || it.mode == mode) return@update it
         it.copy(goal = if (mode == ScanMode.ID_CARD) ScanGoal.IdCopy(it.idKind) else ScanGoal.Pages(mode))
     }
 
@@ -265,7 +271,7 @@ class ScanSessionViewModel @Inject constructor(val files: ScanPageStore) : ViewM
             is ScanGoal.IdCopy -> state.copy(sides = state.sides + page)
             is ScanGoal.ReplaceSide -> state
         }
-        when (stepAfterCrop(state.goal, state.sides.size, state.imports.size, done)) {
+        when (stepAfterCrop(state.goal, state.sides.size, state.imports.size, done, state.pages.size)) {
             CropStep.Camera ->
                 _uiState.value = added.copy(working = false, crop = null, event = ScanEvent.BackToCamera)
             CropStep.NextImport -> {

@@ -2,12 +2,15 @@ package com.skeler.scanely.docchat.presentation
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ai.FeatureSwitches
+import com.skeler.scanely.core.ai.PhotoBundler
 import com.skeler.scanely.docchat.data.AgentApprovalDto
 import com.skeler.scanely.docchat.data.AgentApprovals
 import com.skeler.scanely.docchat.data.AgentClient
@@ -30,6 +33,7 @@ import com.skeler.scanely.navigation.Destination
 import com.skeler.scanely.ui.viewmodel.DesignOperations
 import com.skeler.scanely.ui.viewmodel.DesignSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -70,6 +74,7 @@ class DocChatViewModel @Inject internal constructor(
     private val agent: AgentClient,
     private val approvals: AgentApprovals,
     private val effortPrefs: AgentEffortPrefs,
+    private val photoBundler: PhotoBundler,
     features: FeatureSwitches,
     private val savedState: SavedStateHandle
 ) : ViewModel() {
@@ -202,6 +207,26 @@ class DocChatViewModel @Inject internal constructor(
     fun dismissAttachError() = composer.update { it.copy(attachError = null) }
 
     fun attachDocument(uri: Uri) = attachments.attachDocument(uri)
+
+    /** Pages from the scanner: one is attached as the picture it is, several are joined into one PDF first. */
+    fun attachScannedPages(pages: List<Uri>) {
+        if (pages.size <= 1) {
+            pages.firstOrNull()?.let(::attachDocument)
+            return
+        }
+        viewModelScope.launch {
+            val pdf = try {
+                photoBundler.bundle(pages, maxPages = pages.size, maxBytes = Long.MAX_VALUE).first()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.e(TAG, "Couldn't join the scanned pages", e)
+                composer.update { it.copy(attachError = AttachError(R.string.chat_file_unreadable)) }
+                return@launch
+            }
+            attachDocument(pdf)
+        }
+    }
 
     fun removeDocument() = attachments.removeDocument()
 
@@ -359,6 +384,7 @@ class DocChatViewModel @Inject internal constructor(
     }
 
     private companion object {
+        const val TAG = "DocChatViewModel"
         const val KEY_CHAT = "chatId"
         const val KEY_TEXT = "composerText"
         const val STOP_TIMEOUT_MS = 5_000L

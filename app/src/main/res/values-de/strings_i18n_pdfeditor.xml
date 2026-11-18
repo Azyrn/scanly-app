@@ -95,8 +95,6 @@
     <string name="pe_time_signed">Signiert %1$s</string>
     <string name="pe_no_signatures_saved">Noch keine Signaturen. Erfasse eine mit dem Signieren-Werkzeug.</string>
     <string name="pe_no_selectable_text">Hier kein Text zum Auswählen – vielleicht ein Scan.</string>
-    <string name="pe_scanner_unavailable">Dokumentscanner auf diesem Gerät nicht verfügbar.</string>
-    <string name="pe_scanner_start_failed">Scanner nicht geöffnet. Verbindung prüfen.</string>
     <string name="pe_undo">Zurück</string>
     <string name="pe_redo">Vor</string>
     <string name="pe_add_text">Text</string>

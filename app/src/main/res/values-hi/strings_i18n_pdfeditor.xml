@@ -92,8 +92,6 @@
     <string name="pe_time_signed">%1$s पर साइन</string>
     <string name="pe_no_signatures_saved">अभी कोई सिग्नेचर सेव नहीं है। पेज एडिटर के Sign टूल से एक कैप्चर करें।</string>
     <string name="pe_no_selectable_text">वहाँ चुनने लायक टेक्स्ट नहीं है — यह पेज स्कैन हो सकता है।</string>
-    <string name="pe_scanner_unavailable">इस डिवाइस पर दस्तावेज़ स्कैनर उपलब्ध नहीं है।</string>
-    <string name="pe_scanner_start_failed">स्कैनर नहीं खुला। कनेक्शन जाँचें।</string>
     <string name="pe_undo">अनडू</string>
     <string name="pe_redo">रीडू</string>
     <string name="pe_add_text">टेक्स्ट जोड़ें</string>

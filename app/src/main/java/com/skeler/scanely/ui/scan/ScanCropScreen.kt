@@ -206,6 +206,7 @@ private fun ActionRow(actions: CropActions, enabled: Boolean, onSecondary: () ->
         CropActions.ADD_PAGE_DONE -> R.string.scan_add_page to R.string.scan_done
         CropActions.RETAKE_NEXT_BACK -> R.string.scan_retake to R.string.scan_next_back
         CropActions.RETAKE_MAKE_COPY -> R.string.scan_retake to R.string.scan_make_copy
+        CropActions.RETAKE_DONE -> R.string.scan_retake to R.string.scan_done
     }
     Row(
         modifier = Modifier

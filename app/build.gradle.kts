@@ -193,8 +193,8 @@ android {
         applicationId = "com.skeler.scanely"
         minSdk = 24
         targetSdk = 37
-        versionCode = 25
-        versionName = "3.6.2"
+        versionCode = 26
+        versionName = "3.6.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -423,7 +423,6 @@ dependencies {
     implementation(libs.mlkit.barcode)
     implementation(libs.zxing.cpp)
     implementation(libs.mlkit.text.recognition)
-    implementation(libs.mlkit.document.scanner)
     implementation(libs.onnxruntime.android)
 
     implementation(libs.pdfium.android)

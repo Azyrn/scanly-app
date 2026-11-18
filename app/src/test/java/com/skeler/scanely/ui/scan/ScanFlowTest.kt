@@ -70,4 +70,16 @@ class ScanFlowTest {
             cropActions(ScanGoal.IdCopy(IdDocumentKind.PASSPORT), IdSide.of(IdDocumentKind.PASSPORT, 0))
         )
     }
+
+    @Test
+    fun `a handoff ends at its page cap and its single-page crop offers Retake and Done`() {
+        val signature = ScanGoal.Pages(ScanMode.DOCUMENT, Handoff(Handoff.SIGNATURE, maxPages = 1))
+        assertEquals(CropStep.Finish, stepAfterCrop(signature, 0, importsLeft = 0, done = false, pagesTaken = 0))
+        assertEquals(CropActions.RETAKE_DONE, cropActions(signature, null))
+
+        val chat = ScanGoal.Pages(ScanMode.DOCUMENT, Handoff(Handoff.CHAT, maxPages = 10))
+        assertEquals(CropStep.Camera, stepAfterCrop(chat, 0, importsLeft = 0, done = false, pagesTaken = 8))
+        assertEquals(CropStep.Finish, stepAfterCrop(chat, 0, importsLeft = 0, done = false, pagesTaken = 9))
+        assertEquals(CropActions.ADD_PAGE_DONE, cropActions(chat, null))
+    }
 }

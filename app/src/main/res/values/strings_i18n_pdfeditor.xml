@@ -94,8 +94,6 @@
     <string name="pe_time_signed">Signed %1$s</string>
     <string name="pe_no_signatures_saved">No signatures saved yet. Capture one from the page editor\'s Sign tool.</string>
     <string name="pe_no_selectable_text">No selectable text there — this page may be a scan.</string>
-    <string name="pe_scanner_unavailable">The document scanner isn\'t available on this device.</string>
-    <string name="pe_scanner_start_failed">Couldn\'t open the scanner. Check your connection.</string>
     <string name="pe_undo">Undo</string>
     <string name="pe_redo">Redo</string>
     <string name="pe_add_text">Add text</string>
