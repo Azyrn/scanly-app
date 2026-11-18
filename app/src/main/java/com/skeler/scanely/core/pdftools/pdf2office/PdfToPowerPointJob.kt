@@ -36,11 +36,10 @@ class PdfToPowerPointJob @Inject constructor(
 
     suspend fun convert(input: ToolJobInput): ToolResult =
         produceOfficeFile(workspace, input, ".pptx", MIME_PPTX, "pdf-to-powerpoint") { document, output, scratch ->
-            val geometries = source.geometries(document)
-            ExactPageSource.open(context, document.file, document.password)?.use { pages ->
+            ExactPageSource.open(context, document.file, document.password, scratch)?.use { pages ->
                 return@produceOfficeFile exact(pages, document, input, output, scratch)
             }
-            flowing(document, input, output, scratch, geometries)
+            flowing(document, input, output, scratch, source.geometries(document))
         }
 
     private suspend fun exact(

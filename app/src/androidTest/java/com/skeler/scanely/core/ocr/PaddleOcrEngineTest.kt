@@ -33,7 +33,7 @@ class PaddleOcrEngineTest {
     @Before
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
     }
 
     private fun page(): Bitmap {

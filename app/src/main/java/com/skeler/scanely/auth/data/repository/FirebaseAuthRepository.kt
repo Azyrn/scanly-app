@@ -6,6 +6,7 @@ import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.ClearCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
@@ -37,9 +38,11 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -85,7 +88,7 @@ class FirebaseAuthRepository @Inject constructor(
             // Free cloud AI needs a proved address, so the link goes out with the sign-up, from the
             // server (scanlyocr.com). Best effort: the account exists either way, and the server
             // sends it again the first time free AI is refused for it.
-            runCatching { api.sendVerificationEmail() }
+            withTimeoutOrNull(AUTH_WAIT_MS) { runCatching { api.sendVerificationEmail() } }
             user
         }
 
@@ -143,7 +146,9 @@ class FirebaseAuthRepository @Inject constructor(
     /** Play requires an in-app way to delete the account, not just an address to write to. */
     override suspend fun deleteAccount(activityContext: Context): Result<Unit> =
         runAuthCatching {
-            api.deleteAccount()
+            // The scan client waits minutes for an answer; a stalled deletion fails like any other
+            // unreachable server (see AUTH_WAIT_MS) instead of spinning that long.
+            withTimeoutOrNull(AUTH_WAIT_MS) { api.deleteAccount() } ?: throw SocketTimeoutException()
             signOut(activityContext)
         }
 
@@ -152,7 +157,9 @@ class FirebaseAuthRepository @Inject constructor(
         // Prevent the next sign-in from silently reusing the previous Google account.
         try {
             credentialManager.clearCredentialState(ClearCredentialStateRequest())
-        } catch (e: GetCredentialException) {
+        } catch (e: ClearCredentialException) {
+            // The Firebase session is already gone; only the provider's memory of the account
+            // remains, which the next sign-in's account picker covers.
             Log.w(TAG, "Failed to clear credential state", e)
         }
     }
@@ -242,6 +249,8 @@ private fun FirebaseUser.toAuthUser() = AuthUser(
 
 /**
  * Every Firebase call here is one round trip; thirty seconds is a stalled Play Services task, and
- * without a deadline the sign-in button spun with no way out.
+ * without a deadline the sign-in button spun with no way out. The Worker calls on this screen (the
+ * sign-up confirmation mail, account deletion) get the same budget: they go out on the scan client,
+ * whose five-minute read timeout is for big PDF scans.
  */
 private const val AUTH_WAIT_MS = 30_000L

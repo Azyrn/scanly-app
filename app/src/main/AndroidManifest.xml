@@ -86,6 +86,20 @@
             android:exported="false"
             android:foregroundServiceType="microphone" />
 
+        <!-- WorkManager initializes on demand (App is its Configuration.Provider) rather than in
+             androidx.startup's provider on the main thread before Application.onCreate. App
+             still initializes it at every process start, from a background thread. -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
         <!-- ONNX Runtime's telemetry provider loads the 32 MB native library on the main thread
              at every process start (~44 ms measured) and sets up Microsoft's 1DS telemetry
              client. Without it the library loads on the first OCR run and sends no telemetry. -->

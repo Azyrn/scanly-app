@@ -1122,7 +1122,7 @@ private fun ValidatePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 if (state.isValidating) {
                     CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 } else {
-                    stringResource(R.string.pe_check_signatures)
+                    Text(stringResource(R.string.pe_check_signatures))
                 }
             }
             return@Column

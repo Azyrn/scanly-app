@@ -8,6 +8,7 @@ import com.skeler.scanely.core.ai.custom.CustomProviderConfig
 import com.skeler.scanely.core.ai.custom.CustomProviderResolver
 import com.skeler.scanely.core.ai.custom.CustomScanResult
 import com.skeler.scanely.core.ai.custom.CustomScanner
+import com.skeler.scanely.core.ai.custom.EndpointChoice
 import com.skeler.scanely.core.network.NetworkObserver
 import com.skeler.scanely.core.text.MarkdownParser
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -46,10 +47,15 @@ class GenerativeAiService @Inject internal constructor(
     private suspend fun <T> route(
         feature: AiFeature,
         onCustomEndpoint: suspend (CustomProviderConfig) -> T,
-        onScanlyBackend: suspend () -> T
+        onScanlyBackend: suspend () -> T,
+        onRefused: suspend (AiResult.Error) -> T
     ): T {
-        val config = if (feature.routing.usesCustomEndpoint) customProviderResolver.resolve() else null
-        return if (config != null) onCustomEndpoint(config) else onScanlyBackend()
+        val choice = if (feature.routing.usesCustomEndpoint) customProviderResolver.choose() else EndpointChoice.Scanly
+        return when (choice) {
+            is EndpointChoice.Own -> onCustomEndpoint(choice.config)
+            EndpointChoice.Scanly -> onScanlyBackend()
+            EndpointChoice.NeedsPro -> onRefused(AiResult.Error(context.getString(R.string.ai_err_custom_needs_pro)))
+        }
     }
 
     /** Sends a file to either the user's configured provider or the Scanly backend. */
@@ -76,7 +82,11 @@ class GenerativeAiService @Inject internal constructor(
                     scanOnEndpoint(uri, config, pageRange, extractPreset) { send(it) }
                     true
                 },
-                onScanlyBackend = { false }
+                onScanlyBackend = { false },
+                onRefused = { error ->
+                    send(AiEvent.Finished(error))
+                    true
+                }
             )
             if (handled) return@channelFlow
 
@@ -297,7 +307,8 @@ class GenerativeAiService @Inject internal constructor(
                         MarkdownParser.unwrapAddedFence(text, it.markdown)
                     }
                 },
-                onScanlyBackend = { translateOnScanly(text, targetLanguage) }
+                onScanlyBackend = { translateOnScanly(text, targetLanguage) },
+                onRefused = { it }
             )
         }
 

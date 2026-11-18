@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -112,6 +113,10 @@ fun BindScanCamera(
             Log.e(TAG, "Camera binding failed", e)
         } catch (e: IllegalArgumentException) {
             Log.e(TAG, "Camera binding failed", e)
+        } catch (e: ExecutionException) {
+            // CameraX could not initialise (InitializationException as the cause), e.g. the camera
+            // service is down or reports a camera the device claims but doesn't list.
+            Log.e(TAG, "Camera initialisation failed", e)
         }
     }
 }

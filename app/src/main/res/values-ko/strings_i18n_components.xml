@@ -246,6 +246,7 @@
     <string name="pay_confirm_sent">받은편지함을 확인하고 링크를 연 다음, 구매 복원을 다시 누르세요.</string>
     <string name="pay_confirm_failed">확인 이메일을 보낼 수 없어요. 다시 시도하세요.</string>
     <string name="pay_key_removed">이 기기에서 키를 제거했어요.</string>
+    <string name="pay_reward_pending">보너스 크레딧이 곧 반영돼요.</string>
     <string name="pay_restored_tier">%1$s 키가 복구되었어요.</string>
     <string name="pay_restored">이 기기에서 키가 복구됐어요.</string>
     <string name="pay_restore_nothing">이 계정에는 구독이 없어요. 다른 이메일 주소로 결제했다면 그 주소로 로그인한 뒤 다시 시도하세요.</string>

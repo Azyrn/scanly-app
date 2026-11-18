@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.graphics.scale
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.ByteArrayOutputStream
+import okio.Buffer
+import okio.ByteString
+import okio.source
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +21,7 @@ internal class PayloadFactory @Inject constructor(
 
     sealed interface Payload {
         class File(
-            val bytes: ByteArray,
+            val bytes: ByteString,
             val mimeType: String,
             val fileName: String
         ) : Payload
@@ -44,7 +46,7 @@ internal class PayloadFactory @Inject constructor(
 
     private fun textPayload(uri: Uri): Payload {
         val bytes = loadFileBytes(uri) ?: throw PayloadException("Failed to read text file")
-        return Payload.LocalText(bytes.toString(Charsets.UTF_8))
+        return Payload.LocalText(bytes.utf8())
     }
 
     private fun imagePayload(uri: Uri, uploadLimit: Long): Payload {
@@ -76,14 +78,14 @@ internal class PayloadFactory @Inject constructor(
             "For Excel files, please convert to PDF first."
     )
 
-    private fun encodeJpeg(bitmap: Bitmap): ByteArray {
+    private fun encodeJpeg(bitmap: Bitmap): ByteString {
         val scaled = downscale(bitmap)
-        val output = ByteArrayOutputStream()
+        val output = Buffer()
         return try {
-            if (!scaled.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, output)) {
+            if (!scaled.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, output.outputStream())) {
                 throw PayloadException("Failed to encode image")
             }
-            output.toByteArray()
+            output.snapshot()
         } finally {
             if (scaled !== bitmap) scaled.recycle()
         }
@@ -98,20 +100,14 @@ internal class PayloadFactory @Inject constructor(
         return bitmap.scale(width, height)
     }
 
-    private fun loadFileBytes(uri: Uri, maxBytes: Long = MAX_UPLOAD_BYTES): ByteArray? = try {
-        context.contentResolver.openInputStream(uri)?.use { input ->
-            val output = ByteArrayOutputStream()
-            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-            var total = 0L
-            while (true) {
-                // Read at most one byte past the limit, including for providers with no size metadata.
-                val count = input.read(buffer, 0, minOf(buffer.size.toLong(), maxBytes - total + 1).toInt())
-                if (count < 0) break
-                total += count
-                if (total > maxBytes) throw PayloadException("This file exceeds the upload size limit.")
-                output.write(buffer, 0, count)
+    private fun loadFileBytes(uri: Uri, maxBytes: Long = MAX_UPLOAD_BYTES): ByteString? = try {
+        context.contentResolver.openInputStream(uri)?.source()?.use { input ->
+            val bytes = Buffer()
+            while (bytes.size <= maxBytes) {
+                // Snapshot shares these segments with the immutable, replayable upload body.
+                if (input.read(bytes, maxBytes - bytes.size + 1) < 0) return@use bytes.snapshot()
             }
-            output.toByteArray()
+            throw PayloadException("This file exceeds the upload size limit.")
         }
     } catch (e: PayloadException) {
         throw e

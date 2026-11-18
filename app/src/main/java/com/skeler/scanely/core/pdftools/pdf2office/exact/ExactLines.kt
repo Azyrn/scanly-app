@@ -36,6 +36,7 @@ internal class TokenBuilder(private val lineSize: Float, private val lineV: Floa
     private var u1 = 0f
     private var spaceBefore = false
     private var gapBefore = 0f
+    private var uncertain = false
 
     /** The style of the token being built, null when none is open. */
     val openStyle: TextStyle? get() = first?.style
@@ -49,23 +50,26 @@ internal class TokenBuilder(private val lineSize: Float, private val lineV: Floa
     }
 
     /** Bidi order: the token covers every glyph it holds. */
-    fun append(text: String, u0: Float, u1: Float) {
+    fun append(text: String, u0: Float, u1: Float, uncertain: Boolean = false) {
         this.text.append(text)
+        this.uncertain = this.uncertain || uncertain
         this.u0 = minOf(this.u0, u0)
         this.u1 = maxOf(this.u1, u1)
     }
 
     /** Visual order: the token runs from its first glyph's left edge to its last glyph's right edge. */
-    fun appendInOrder(text: String, u1: Float) {
+    fun appendInOrder(text: String, u1: Float, uncertain: Boolean = false) {
         this.text.append(text)
+        this.uncertain = this.uncertain || uncertain
         this.u1 = u1
     }
 
     fun flush() {
         val start = first ?: return
         val raise = if (start.style.sizePt < lineSize * SUPERSCRIPT_SIZE) start.v - lineV else 0f
-        tokens += Token(text.toString(), start.style, u0, u1, spaceBefore, raise, gapBefore)
+        tokens += Token(text.toString(), start.style, u0, u1, spaceBefore, raise, gapBefore, uncertain, start.mcid)
         text.clear()
+        uncertain = false
         first = null
     }
 
@@ -187,7 +191,7 @@ internal object ExactLines {
             val open = builder.openStyle
             if (open != null && (space || glyph.style != open)) builder.flush()
             if (builder.openStyle == null) builder.start(glyph, glyph.u0, glyph.u1, space)
-            builder.appendInOrder(glyph.text, glyph.u1)
+            builder.appendInOrder(glyph.text, glyph.u1, glyph.uncertain)
         }
         builder.flush()
         return Segment(builder.tokens, lineV, lineSize, false, angle)

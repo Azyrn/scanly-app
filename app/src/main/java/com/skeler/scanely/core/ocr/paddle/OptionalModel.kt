@@ -2,7 +2,6 @@ package com.skeler.scanely.core.ocr.paddle
 
 import android.content.Context
 import android.util.Log
-import com.skeler.scanely.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,7 +63,7 @@ class OptionalModel internal constructor(
         }.onFailure { e ->
             Log.e(TAG, "$logName download failed", e)
             file.delete()
-            _state.value = PackState.Failed(e.message ?: context.getString(R.string.ocr_err_download))
+            _state.value = PackState.Failed(downloadFailureMessage(context, e))
         }.map { }
     }
 

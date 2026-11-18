@@ -54,7 +54,7 @@ class PaddleOcrBenchTest {
     }
 
     private fun service(): PaddleOcrService {
-        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, OkHttpClient()))
+        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, dagger.Lazy { OkHttpClient() }))
         val settings = FixedSettings(
             mapOf(
                 SettingsKeys.PADDLE_SCRIPT to "arabic",

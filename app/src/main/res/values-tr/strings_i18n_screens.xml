@@ -52,6 +52,8 @@
     <string name="scr_scan_review_delete_page_title">%1$d. sayfayı sil?</string>
     <string name="scr_scan_review_delete_page_body">Bu sayfa dışa aktarılmaz. İstediğinizde yeniden tarayabilirsiniz.</string>
     <string name="scr_scan_review_keep">Sakla</string>
+    <string name="scr_scan_review_discard_title">Tarama silinsin mi?</string>
+    <string name="scr_scan_review_discard_body">Bu sayfalar kaydedilmedi ve kaybolacak.</string>
     <string name="scr_scan_review_rotate_page">Döndür</string>
     <string name="scr_scan_review_delete_page">Sayfayı sil</string>
     <string name="scr_scan_review_enhance">İyileştir</string>
@@ -62,6 +64,10 @@
     <plurals name="scr_scan_review_page_count">
         <item quantity="one">%1$d sayfa</item>
         <item quantity="other">%1$d sayfa</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d sayfa okunamadı ve dışarıda bırakıldı.</item>
+        <item quantity="other">%1$d sayfa okunamadı ve dışarıda bırakıldı.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s tek dosyada · kaydedince açılır</string>
@@ -210,6 +216,7 @@
     <string name="ai_nothing_to_translate">Çevrilecek bir şey yok.</string>
     <string name="ai_err_no_text_batch">Hiçbir dosyadan metin çıkmadı</string>
     <string name="ai_err_extraction_unavailable">Scanly bu çıkarma türünü yükleyemedi. Yeniden deneyin ya da %1$s için Ayarlar\'dan kendi uç noktanızı kapatın.</string>
+    <string name="ai_err_custom_needs_pro">Kendi uç noktanız Pro gerektirir ve planınız doğrulanamadı. Yeniden deneyin ya da Scanly kredisi için Ayarlar\'dan kapatın.</string>
     <string name="ai_err_read_file">Dosya okunamadı</string>
     <string name="ai_err_no_text">Bu dosyadan metin okunamadı.</string>
     <string name="ai_design_background">Belgeniz oluşturuluyor. Uygulamadan çıkabilirsiniz; size bildireceğiz.</string>
@@ -264,6 +271,7 @@
     <string name="ocr_err_render_pdf">PDF oluşturulamadı</string>
     <string name="ocr_err_pdf_processing">PDF işleme başarısız</string>
     <string name="ocr_err_download">İndirilemedi</string>
+    <string name="ocr_err_download_offline">Bağlantı yok. Tekrar deneyin.</string>
     <string name="ocr_setup_pending">Bu telefonda metin tanıma hâlâ kuruluyor. Bir dakika çevrimiçi kalın, sonra yeniden deneyin.</string>
     <string name="ocr_scan_failed">Scanly bu dosyayı okuyamadı. Tarama başarısız; sayfa boş demek değil. Yeniden deneyin ya da başka dosya seçin.</string>
     <string name="pay_upgrade_notice">Daha büyük plan için %1$s/upgrade adresine gidip buradaki hesapla oturum açın; mevcut planınız değişir. Fiyatlar sayfasından başka plan almak, bu abonelikle birlikte ikinci bir abonelik başlatır.</string>

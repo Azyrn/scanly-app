@@ -14,13 +14,19 @@ internal class DocxTableReader(private val session: ReadSession) {
         val rows = ArrayList<DocxRow>()
         var bordered = false
         val margins = IntArray(2) { NO_MARGIN }
+        var rtl = false
+        var position: TablePosition? = null
         try {
             session.tableStyle = session.styles.table(null)
             bordered = session.styles.tableBorders(null) == true
             parser.children { name ->
                 when {
                     !parser.isW() -> parser.skip()
-                    name == "tblPr" -> bordered = readTableProps(parser, margins)
+                    name == "tblPr" -> readTableProps(parser, margins).let { props ->
+                        bordered = props.bordered
+                        rtl = props.rtl
+                        position = props.position
+                    }
                     name == "tblGrid" -> readGrid(parser, columns)
                     else -> readRows(parser, name, rows, bordered)
                 }
@@ -32,25 +38,68 @@ internal class DocxTableReader(private val session: ReadSession) {
             columns,
             rows,
             margins[0].takeIf { it != NO_MARGIN },
-            margins[1].takeIf { it != NO_MARGIN }
+            margins[1].takeIf { it != NO_MARGIN },
+            rtl,
+            position
         )
     }
 
-    /** Sets the table style in force for the cells and answers whether the table draws lines. */
-    private fun readTableProps(parser: XmlPullParser, margins: IntArray): Boolean {
+    private class TableProps(val bordered: Boolean, val rtl: Boolean, val position: TablePosition?)
+
+    /** A table's direction and float, as its tblPr is read. */
+    private class TableShape {
+        var rtl = false
+        var position: TablePosition? = null
+    }
+
+    /** Sets the table style in force for the cells; answers whether it draws lines, its direction and float. */
+    private fun readTableProps(parser: XmlPullParser, margins: IntArray): TableProps {
         var styleId: String? = null
         var borders: Boolean? = null
+        val shape = TableShape()
         parser.children { name ->
             when (name) {
                 "tblStyle" -> styleId = parser.attr("val").also { parser.skip() }
                 "tblBorders" -> borders = parseBorders(parser)
                 "tblCellMar" -> readCellMargins(parser, margins)
-                else -> parser.skip()
+                else -> readShape(name, parser, shape)
             }
         }
         session.tableStyle = session.styles.table(styleId)
-        return borders ?: session.styles.tableBorders(styleId) ?: false
+        val lines = borders ?: session.styles.tableBorders(styleId) == true
+        return TableProps(lines, shape.rtl, shape.position)
     }
+
+    private fun readShape(name: String, parser: XmlPullParser, shape: TableShape) {
+        when (name) {
+            "bidiVisual" -> shape.rtl = parser.toggle()
+            "tblpPr" -> shape.position = readPosition(parser)
+        }
+        parser.skip()
+    }
+
+    /**
+     * w:tblpPr as Word reads it (MS-OI29500 §2.1.162 on ISO/IEC 29500-1 §17.4.57): vertAnchor defaults to the
+     * margin and horzAnchor to the text column; an element with no attributes is ignored; Word writes a 0
+     * offset as 1 twip and reads 1 back as 0. A table anchored to its paragraph (vertAnchor text) flows as
+     * usual; one anchored to the page or margin is placed at tblpX / tblpY.
+     */
+    private fun readPosition(parser: XmlPullParser): TablePosition? {
+        if (parser.attributeCount == 0) return null
+        val vertical = parser.attr("vertAnchor") ?: "margin"
+        if (vertical != "page" && vertical != "margin") return null
+        return TablePosition(
+            xTwips = wordOffset(parser, "tblpX"),
+            yTwips = wordOffset(parser, "tblpY"),
+            fromPage = vertical == "page",
+            xFromPage = parser.attr("horzAnchor") == "page",
+            belowTwips = parser.intAttr("bottomFromText") ?: 0
+        )
+    }
+
+    /** Word writes a 0 offset as 1 twip and reads 1 back as 0. */
+    private fun wordOffset(parser: XmlPullParser, name: String): Int =
+        (parser.intAttr(name) ?: 0).let { if (it == 1) 0 else it }
 
     /** Left and right cell margins, in twips; only dxa widths, the form Word writes. */
     private fun readCellMargins(parser: XmlPullParser, margins: IntArray) {
@@ -126,7 +175,8 @@ internal class DocxTableReader(private val session: ReadSession) {
             merge = props.merge,
             fill = props.fill,
             bordered = props.bordered ?: tableBordered,
-            blocks = blocks
+            blocks = blocks,
+            align = props.align
         )
     }
 
@@ -134,7 +184,8 @@ internal class DocxTableReader(private val session: ReadSession) {
         val span: Int = 1,
         val merge: VerticalMerge = VerticalMerge.NONE,
         val fill: Int? = null,
-        val bordered: Boolean? = null
+        val bordered: Boolean? = null,
+        val align: CellAlign = CellAlign.TOP
     )
 
     private fun readCellProps(parser: XmlPullParser): CellProps {
@@ -142,24 +193,29 @@ internal class DocxTableReader(private val session: ReadSession) {
         var merge = VerticalMerge.NONE
         var fill: Int? = null
         var bordered: Boolean? = null
+        var align = CellAlign.TOP
         parser.children { name ->
             when (name) {
                 "gridSpan" -> span = parser.intAttr("val") ?: 1
-                // A bare <w:vMerge/> continues the merge above; only "restart" begins one.
-                "vMerge" -> merge = if (parser.attr("val") == "restart") {
-                    VerticalMerge.RESTART
-                } else {
-                    VerticalMerge.CONTINUE
-                }
-                "shd" -> fill = parseColor(parser.attr("fill"))?.takeIf { it != AUTO_COLOR }
+                "vMerge" -> merge = mergeOf(parser)
+                "shd" -> fill = cellFill(parser)
                 "tcBorders" -> bordered = parseBorders(parser)
+                "vAlign" -> align = CELL_ALIGNS[parser.attr("val")] ?: CellAlign.TOP
             }
             if (name != "tcBorders") parser.skip()
         }
-        return CellProps(span, merge, fill, bordered)
+        return CellProps(span, merge, fill, bordered, align)
     }
 
+    /** A bare <w:vMerge/> continues the merge above; only "restart" begins one. */
+    private fun mergeOf(parser: XmlPullParser): VerticalMerge =
+        if (parser.attr("val") == "restart") VerticalMerge.RESTART else VerticalMerge.CONTINUE
+
+    private fun cellFill(parser: XmlPullParser): Int? = parseColor(parser.attr("fill"))?.takeIf { it != AUTO_COLOR }
+
     private companion object {
+        val CELL_ALIGNS = mapOf("center" to CellAlign.CENTER, "bottom" to CellAlign.BOTTOM)
+
         /** Word's own limit on columns, so a hostile gridSpan can't make one cell a million wide. */
         const val MAX_SPAN = 63
         const val NO_MARGIN = -1

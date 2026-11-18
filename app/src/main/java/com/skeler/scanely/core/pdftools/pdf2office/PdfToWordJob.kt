@@ -33,16 +33,16 @@ class PdfToWordJob @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val source: OfficePageSource,
     private val workspace: ToolWorkspace,
-    private val reader: PaddleLineReader
+    private val reader: PaddleLineReader,
+    private val cloud: CloudPageReader
 ) {
 
     suspend fun convert(input: ToolJobInput): ToolResult =
         produceOfficeFile(workspace, input, ".docx", MIME_DOCX, "pdf-to-word") { document, output, scratch ->
-            val geometries = source.geometries(document)
-            ExactPageSource.open(context, document.file, document.password)?.use { exact ->
+            ExactPageSource.open(context, document.file, document.password, scratch, structure = true)?.use { exact ->
                 return@produceOfficeFile exact(exact, document, input, output, scratch)
             }
-            flowing(document, input, output, scratch, geometries)
+            flowing(document, input, output, scratch, source.geometries(document))
         }
 
     private suspend fun exact(
@@ -55,13 +55,16 @@ class PdfToWordJob @Inject constructor(
         val tally = ExactTally()
         output.outputStream().use { out ->
             val writer = ExactDocxWriter(out, AssetTextMeasurer(context.assets))
+            val ocr = CloudOcrPages(cloud, document, scratch) { page ->
+                writer.addPage(page.widthPt, page.heightPt, page.layout, page.background, page.pictures)
+            }
             for (index in 0 until document.pageCount) {
                 coroutineContext.ensureActive()
                 input.onProgress(index.toFloat() / document.pageCount)
-                val page = exactPage(source, reader, document, pages, index, scratch, tally) ?: continue
-                writer.addPage(page.widthPt, page.heightPt, page.layout, page.background, page.pictures)
+                ocr.add(index, exactPage(source, reader, document, pages, index, scratch, tally) ?: continue)
             }
             coroutineContext.ensureActive()
+            ocr.finish()
             writer.finish()
         }
         return tally.notes()

@@ -1,7 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.docx
 
 import org.xmlpull.v1.XmlPullParser
-import kotlin.math.abs
 
 /*
  * Word formatting is inherited: document defaults, then a style's basedOn chain, then the
@@ -11,17 +10,27 @@ import kotlin.math.abs
  */
 
 internal enum class RunKey {
-    STYLE, BOLD, ITALIC, UNDERLINE, STRIKE, SIZE, COLOR, BACKGROUND, FONT, VERTICAL, CAPS, HIDDEN
+    STYLE, BOLD, ITALIC, UNDERLINE, STRIKE, SIZE, COLOR, BACKGROUND, FONT, VERTICAL, CAPS, HIDDEN, SCALE, SPACING, KERN,
+    CS_FONT, CS_SIZE, CS_BOLD, CS_ITALIC
 }
 
 internal enum class ParaKey {
-    STYLE, ALIGN, BEFORE, AFTER, LINE, LINE_RULE, LEFT, RIGHT, FIRST_LINE, CONTEXTUAL, NUM_ID, LEVEL, PAGE_BREAK_BEFORE
+    STYLE, ALIGN, BEFORE, AFTER, LINE, LINE_RULE, LEFT, RIGHT, FIRST_LINE, CONTEXTUAL, NUM_ID, LEVEL, PAGE_BREAK_BEFORE,
+    KEEP_NEXT, KEEP_LINES, WIDOW_CONTROL, TABS, AUTO_BEFORE, AUTO_AFTER, FRAME
 }
 
 /** One level of formatting: only the properties that level sets. */
 internal class Props<K : Enum<K>>(val values: Map<K, Any> = emptyMap()) {
     /** This level on top of [base]: whatever is set here wins. */
-    fun over(base: Props<K>): Props<K> = if (values.isEmpty()) base else Props(base.values + values)
+    fun over(base: Props<K>): Props<K> {
+        if (values.isEmpty()) return base
+        val merged = HashMap(base.values)
+        for ((key, value) in values) {
+            val below = merged[key]
+            merged[key] = if (value is TabStops && below is TabStops) value.over(below) else value
+        }
+        return Props(merged)
+    }
 
     inline operator fun <reified T> get(key: K): T? = values[key] as? T
 }
@@ -40,7 +49,24 @@ internal fun RunProps.toStyle(): RunStyle = RunStyle(
     font = get<String>(RunKey.FONT),
     verticalAlign = get<VerticalAlign>(RunKey.VERTICAL) ?: VerticalAlign.BASELINE,
     caps = get<Boolean>(RunKey.CAPS) == true,
-    hidden = get<Boolean>(RunKey.HIDDEN) == true
+    hidden = get<Boolean>(RunKey.HIDDEN) == true,
+    scale = get<Int>(RunKey.SCALE)?.coerceIn(MIN_SCALE, MAX_SCALE) ?: FULL_SCALE,
+    spacing = get<Int>(RunKey.SPACING)?.coerceIn(-MAX_SPACING, MAX_SPACING) ?: 0,
+    kerning = kerning(),
+    complex = complexScript()
+)
+
+/** w:kern is the smallest size, in half-points, that is kerned; 0 turns kerning off. */
+private fun RunProps.kerning(): Boolean =
+    (get<Int>(RunKey.KERN) ?: 0).let { it > 0 && it <= (get<Int>(RunKey.SIZE) ?: RunStyle().halfPoints) }
+
+/** Complex-script size falls back to the plain size, then Word's default. */
+private fun RunProps.complexScript(): ComplexScript = ComplexScript(
+    font = get<String>(RunKey.CS_FONT),
+    halfPoints = get<Int>(RunKey.CS_SIZE)?.takeIf { it > 0 } ?: get<Int>(RunKey.SIZE)?.takeIf { it > 0 }
+        ?: RunStyle().halfPoints,
+    bold = get<Boolean>(RunKey.CS_BOLD) == true,
+    italic = get<Boolean>(RunKey.CS_ITALIC) == true
 )
 
 internal fun ParaProps.toStyle(mark: RunStyle): ParagraphStyle = ParagraphStyle(
@@ -54,15 +80,34 @@ internal fun ParaProps.toStyle(mark: RunStyle): ParagraphStyle = ParagraphStyle(
     indentRight = get<Int>(ParaKey.RIGHT) ?: 0,
     firstLine = get<Int>(ParaKey.FIRST_LINE) ?: 0,
     contextualSpacing = get<Boolean>(ParaKey.CONTEXTUAL) == true,
-    mark = mark
+    autoBefore = get<Boolean>(ParaKey.AUTO_BEFORE) == true,
+    autoAfter = get<Boolean>(ParaKey.AUTO_AFTER) == true,
+    keepNext = get<Boolean>(ParaKey.KEEP_NEXT) == true,
+    keepLines = get<Boolean>(ParaKey.KEEP_LINES) == true,
+    widowControl = get<Boolean>(ParaKey.WIDOW_CONTROL) != false,
+    tabs = get<TabStops>(ParaKey.TABS)?.stops?.filter { it.kind != TabKind.CLEAR }.orEmpty(),
+    mark = mark,
+    frame = get<FramePosition>(ParaKey.FRAME)
 )
 
 /** The theme's heading and body typefaces, which rFonts may name instead of a family. */
-internal data class ThemeFonts(val major: String? = null, val minor: String? = null) {
+internal data class ThemeFonts(
+    val major: String? = null,
+    val minor: String? = null,
+    /** The complex-script (Arabic) heading and body typefaces: rFonts cstheme majorBidi / minorBidi. */
+    val majorBidi: String? = null,
+    val minorBidi: String? = null
+) {
     fun fontFor(parser: XmlPullParser): String? {
         val themed = parser.attr("asciiTheme") ?: parser.attr("hAnsiTheme")
         val fromTheme = themed?.let { if (it.startsWith("major")) major else minor }
         return fromTheme ?: parser.attr("ascii") ?: parser.attr("hAnsi")
+    }
+
+    /** The font of complex-script text (w:cs, or the theme's bidi font through w:cstheme). */
+    fun complexFontFor(parser: XmlPullParser): String? {
+        val themed = parser.attr("cstheme")?.let { if (it.startsWith("major")) majorBidi else minorBidi }
+        return themed ?: parser.attr("cs")
     }
 }
 
@@ -92,6 +137,7 @@ internal fun parseParagraphProps(
             !parser.isW() -> parser.skip()
             name == "rPr" -> mark = parseRunProps(parser, theme)
             name == "numPr" -> parseNumPr(parser, values)
+            name == "tabs" -> values[ParaKey.TABS] = parseTabs(parser)
             name == "sectPr" && section != null -> setup = section.read(parser)
             else -> {
                 PARA_PARSERS[name]?.invoke(parser, values)
@@ -108,58 +154,6 @@ private fun parseNumPr(parser: XmlPullParser, values: MutableMap<ParaKey, Any>) 
         if (name == "ilvl") parser.intAttr("val")?.let { values[ParaKey.LEVEL] = it }
         parser.skip()
     }
-}
-
-/**
- * w:sectPr. Collects header/footer references (only their presence matters: they are left out,
- * and the result says so when one has content) and notes multi-column layouts.
- */
-internal class SectionReader(private val notes: DocxNotes, val headerRefs: MutableSet<String>) {
-    fun read(parser: XmlPullParser): PageSetup {
-        var setup = PageSetup()
-        parser.children { name ->
-            if (parser.isW()) setup = apply(name, parser, setup)
-            parser.skip()
-        }
-        return setup
-    }
-
-    private fun apply(name: String, parser: XmlPullParser, setup: PageSetup): PageSetup = when (name) {
-        "pgSz" -> pageSize(parser, setup)
-        "pgMar" -> margins(parser, setup)
-        "type" -> setup.copy(continuous = parser.attr("val") == "continuous")
-        "cols" -> setup.also { noteColumns(parser) }
-        "headerReference", "footerReference" -> setup.also { collectHeaderRef(parser) }
-        else -> setup
-    }
-
-    private fun noteColumns(parser: XmlPullParser) {
-        if ((parser.intAttr("num") ?: 1) > 1) notes.columns = true
-    }
-
-    private fun collectHeaderRef(parser: XmlPullParser) {
-        parser.relAttr("id")?.let { headerRefs += it }
-    }
-
-    private fun pageSize(parser: XmlPullParser, setup: PageSetup): PageSetup {
-        val width = parser.intAttr("w") ?: setup.widthTwips
-        val height = parser.intAttr("h") ?: setup.heightTwips
-        val landscape = parser.attr("orient") == "landscape"
-        // Word writes landscape as swapped sizes plus the flag; some generators set only the flag.
-        return if (landscape && width < height) {
-            setup.copy(widthTwips = height, heightTwips = width)
-        } else {
-            setup.copy(widthTwips = width, heightTwips = height)
-        }
-    }
-
-    /** A negative top/bottom margin means "text may run into the header"; only its size matters here. */
-    private fun margins(parser: XmlPullParser, setup: PageSetup): PageSetup = setup.copy(
-        marginTop = parser.intAttr("top")?.let(::abs) ?: setup.marginTop,
-        marginBottom = parser.intAttr("bottom")?.let(::abs) ?: setup.marginBottom,
-        marginLeft = parser.intAttr("left") ?: parser.intAttr("start") ?: setup.marginLeft,
-        marginRight = parser.intAttr("right") ?: parser.intAttr("end") ?: setup.marginRight
-    )
 }
 
 private typealias RunParser = (XmlPullParser, MutableMap<RunKey, Any>, ThemeFonts) -> Unit
@@ -187,7 +181,16 @@ private val RUN_PARSERS: Map<String, RunParser> = mapOf(
     "shd" to runParser { parser, values, _ ->
         parseColor(parser.attr("fill"))?.takeIf { it != AUTO_COLOR }?.let { values[RunKey.BACKGROUND] = it }
     },
-    "rFonts" to runParser { parser, values, theme -> theme.fontFor(parser)?.let { values[RunKey.FONT] = it } },
+    "w" to runParser { parser, values, _ -> parser.intAttr("val")?.let { values[RunKey.SCALE] = it } },
+    "spacing" to runParser { parser, values, _ -> parser.intAttr("val")?.let { values[RunKey.SPACING] = it } },
+    "kern" to runParser { parser, values, _ -> parser.intAttr("val")?.let { values[RunKey.KERN] = it } },
+    "rFonts" to runParser { parser, values, theme ->
+        theme.fontFor(parser)?.let { values[RunKey.FONT] = it }
+        theme.complexFontFor(parser)?.let { values[RunKey.CS_FONT] = it }
+    },
+    "szCs" to runParser { parser, values, _ -> parser.intAttr("val")?.let { values[RunKey.CS_SIZE] = it } },
+    "bCs" to toggle(RunKey.CS_BOLD),
+    "iCs" to toggle(RunKey.CS_ITALIC),
     "vertAlign" to runParser { parser, values, _ ->
         values[RunKey.VERTICAL] = when (parser.attr("val")) {
             "superscript" -> VerticalAlign.SUPER
@@ -205,9 +208,13 @@ private val PARA_PARSERS: Map<String, ParaParser> = mapOf(
     "pStyle" to paraParser { parser, values -> parser.attr("val")?.let { values[ParaKey.STYLE] = it } },
     "jc" to paraParser { parser, values -> values[ParaKey.ALIGN] = alignment(parser.attr("val")) },
     "contextualSpacing" to paraParser { parser, values -> values[ParaKey.CONTEXTUAL] = parser.toggle() },
+    "keepNext" to paraParser { parser, values -> values[ParaKey.KEEP_NEXT] = parser.toggle() },
+    "keepLines" to paraParser { parser, values -> values[ParaKey.KEEP_LINES] = parser.toggle() },
+    "widowControl" to paraParser { parser, values -> values[ParaKey.WIDOW_CONTROL] = parser.toggle() },
     "pageBreakBefore" to paraParser { parser, values -> values[ParaKey.PAGE_BREAK_BEFORE] = parser.toggle() },
     "spacing" to ::parseSpacing,
-    "ind" to ::parseIndent
+    "ind" to ::parseIndent,
+    "framePr" to ::parseFrame
 )
 
 private fun alignment(value: String?): ParagraphAlign = when (value) {
@@ -216,32 +223,6 @@ private fun alignment(value: String?): ParagraphAlign = when (value) {
     "right", "end" -> ParagraphAlign.END
     else -> ParagraphAlign.JUSTIFY
 }
-
-/** Auto spacing is Word's HTML-import rule: a fixed 14 pt whatever the number says. */
-private fun parseSpacing(parser: XmlPullParser, values: MutableMap<ParaKey, Any>) {
-    val autoBefore = isOn(parser.attr("beforeAutospacing"))
-    val autoAfter = isOn(parser.attr("afterAutospacing"))
-    values.putNotNull(ParaKey.BEFORE, if (autoBefore) AUTO_SPACING else parser.intAttr("before"))
-    values.putNotNull(ParaKey.AFTER, if (autoAfter) AUTO_SPACING else parser.intAttr("after"))
-    values.putNotNull(ParaKey.LINE, parser.intAttr("line"))
-    values.putNotNull(ParaKey.LINE_RULE, LINE_RULES[parser.attr("lineRule")])
-}
-
-/** A hanging indent is stored as a negative first-line indent, and wins when both are given. */
-private fun parseIndent(parser: XmlPullParser, values: MutableMap<ParaKey, Any>) {
-    values.putNotNull(ParaKey.LEFT, parser.intAttr("left") ?: parser.intAttr("start"))
-    values.putNotNull(ParaKey.RIGHT, parser.intAttr("right") ?: parser.intAttr("end"))
-    values.putNotNull(ParaKey.FIRST_LINE, parser.intAttr("firstLine"))
-    values.putNotNull(ParaKey.FIRST_LINE, parser.intAttr("hanging")?.unaryMinus())
-}
-
-private fun isOn(value: String?): Boolean = value == "1" || value == "true"
-
-private fun <K> MutableMap<K, Any>.putNotNull(key: K, value: Any?) {
-    if (value != null) put(key, value)
-}
-
-private val LINE_RULES = mapOf("auto" to LineRule.AUTO, "exact" to LineRule.EXACT, "atLeast" to LineRule.AT_LEAST)
 
 private val HIGHLIGHTS = mapOf(
     "yellow" to 0xFFFF00,
@@ -263,4 +244,8 @@ private val HIGHLIGHTS = mapOf(
 )
 
 private const val SINGLE_LINE = 240
-private const val AUTO_SPACING = 280
+private const val MIN_SCALE = 1
+private const val MAX_SCALE = 600
+
+/** ECMA-376 limits character spacing to 1584 pt either way. */
+private const val MAX_SPACING = 31_680

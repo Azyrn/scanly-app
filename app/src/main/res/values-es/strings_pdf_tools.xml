@@ -106,4 +106,25 @@
     <string name="pdf_tool_rotate_left">90° izq.</string>
     <string name="pdf_tool_rotate_body">Gira todas las páginas. Para rotar una, usa Organizar PDF.</string>
     <string name="pdf_tool_rotate_action">Girar</string>
+    <string name="pdf_tools_beta_badge">Beta</string>
+    <string name="pdf_tool_error_broken_output">El archivo convertido salió dañado y se descartó. No se guardó nada.</string>
+    <string name="pdf_tool_error_timed_out">Tardó demasiado y se detuvo. No se guardó nada. Prueba uno más pequeño.</string>
+    <string name="pdf_tool_credits_refunded">Se devolvieron los créditos de esta conversión.</string>
+    <string name="pdf_tool_online_read_failed">La lectura en línea falló y no se usaron créditos. Esas páginas conservan el texto del PDF.</string>
+    <string name="pdf_tools_beta_note">Mejora con cada actualización.</string>
+    <string name="online_read_title">¿Leer páginas en línea?</string>
+    <string name="online_read_use">Usar créditos</string>
+    <string name="online_read_without">Convertir sin ello</string>
+    <string name="online_read_watch_ad">Ver anuncio</string>
+    <string name="online_read_upgrade">Mejorar</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d página de este archivo necesita lectura en línea para un texto exacto. Coste: %1$d crédito.</item>
+        <item quantity="many">%1$d páginas de este archivo necesitan lectura en línea para un texto exacto. Coste: %1$d créditos.</item>
+        <item quantity="other">%1$d páginas de este archivo necesitan lectura en línea para un texto exacto. Coste: %1$d créditos.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">Te queda %1$d crédito.</item>
+        <item quantity="many">Te quedan %1$d créditos.</item>
+        <item quantity="other">Te quedan %1$d créditos.</item>
+    </plurals>
 </resources>

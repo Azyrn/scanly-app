@@ -49,6 +49,8 @@
     <string name="scr_scan_review_delete_page_title">%1$d ページを削除？</string>
     <string name="scr_scan_review_delete_page_body">このページは書き出しに含まれません。いつでも再スキャンできます。</string>
     <string name="scr_scan_review_keep">残す</string>
+    <string name="scr_scan_review_discard_title">スキャンを破棄？</string>
+    <string name="scr_scan_review_discard_body">これらのページは未保存のため失われます。</string>
     <string name="scr_scan_review_rotate_page">ページを回転</string>
     <string name="scr_scan_review_delete_page">ページを削除</string>
     <string name="scr_scan_review_enhance">補正</string>
@@ -58,6 +60,9 @@
     <string name="scr_scan_review_back_to_scanner">スキャナーに戻る</string>
     <plurals name="scr_scan_review_page_count">
         <item quantity="other">%1$d ページ</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="other">%1$d ページを読み取れず、除外しました。</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s を1ファイルに · 保存後に開く</string>
@@ -197,6 +202,7 @@
     <string name="ai_nothing_to_translate">翻訳する内容がありません</string>
     <string name="ai_err_no_text_batch">テキストを抽出できませんでした</string>
     <string name="ai_err_extraction_unavailable">この抽出を読み込めません。再試行するか、設定で独自エンドポイントをオフにして %1$s を使用してください。</string>
+    <string name="ai_err_custom_needs_pro">独自エンドポイントには Pro が必要ですが、プランを確認できません。再試行するか、設定でオフにして Scanly のクレジットを使用。</string>
     <string name="ai_err_read_file">読み取れません</string>
     <string name="ai_err_no_text">テキストを読み取れませんでした。</string>
     <string name="ai_design_background">書類を作成中です。アプリを離れてもOK。完了時に通知します。</string>
@@ -249,6 +255,7 @@
     <string name="ocr_err_render_pdf">PDFの描画に失敗</string>
     <string name="ocr_err_pdf_processing">PDFの処理に失敗</string>
     <string name="ocr_err_download">ダウンロード失敗</string>
+    <string name="ocr_err_download_offline">接続できません。再試行を。</string>
     <string name="ocr_setup_pending">テキスト認識を準備中です。1分ほどオンラインのままにして、再度お試しください。</string>
     <string name="ocr_scan_failed">このファイルを読み取れませんでした。スキャンに失敗しただけで、白紙ではありません。別のファイルを選んでください。</string>
     <string name="pay_upgrade_notice">上位プランには %1$s/upgrade で、同じアカウントでサインインしてください。現在のプランが変わります。料金ページで別のプランを購入すると、2つ目のサブスクリプションが開始され、こちらと並行して請求されます。</string>

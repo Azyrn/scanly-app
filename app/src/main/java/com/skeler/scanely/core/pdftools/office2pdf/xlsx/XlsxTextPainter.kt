@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.xlsx
 
+import android.content.res.AssetManager
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
@@ -10,6 +11,7 @@ import android.text.TextPaint
 import android.text.TextUtils
 import androidx.core.graphics.withClip
 import androidx.core.graphics.withTranslation
+import com.skeler.scanely.core.pdftools.pdf2office.exact.OfficeFamily
 
 /**
  * The text half of [XlsxPagePainter]: one reused paint for the sheet title and every cell's text,
@@ -17,7 +19,7 @@ import androidx.core.graphics.withTranslation
  *
  * Text is drawn as text, not pixels, so the PDF stays searchable and selectable.
  */
-internal class XlsxTextPainter {
+internal class XlsxTextPainter(private val assets: AssetManager? = null) {
     /**
      * Unhinted, unrounded glyph positions: with hinting on, Skia snaps each glyph to whole units
      * (worse under the page's scale) and the PDF's text came back from a reader as broken runs —
@@ -25,6 +27,7 @@ internal class XlsxTextPainter {
      */
     private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG or Paint.LINEAR_TEXT_FLAG)
     private val typefaces = HashMap<Int, Typeface>()
+    private val twins = HashMap<String, Typeface?>()
 
     /** Height in points that [cell]'s wrapped text needs at [widthPt]. */
     fun measureWrapped(cell: XlsxCell, widthPt: Float): Float {
@@ -110,14 +113,39 @@ internal class XlsxTextPainter {
         }
         textPaint.reset()
         textPaint.isAntiAlias = true
-        textPaint.typeface = typefaces.getOrPut(style) { Typeface.create(Typeface.SANS_SERIF, style) }
+        textPaint.typeface = twin(font) ?: typefaces.getOrPut(style) { Typeface.create(Typeface.SANS_SERIF, style) }
         textPaint.textSize = font.sizePt
         textPaint.color = font.color
         textPaint.isUnderlineText = font.underline
         textPaint.isStrikeThruText = font.strike
     }
 
+    /**
+     * The bundled metric twin of an Arial, Times New Roman or Courier New cell (Liberation Sans, Serif,
+     * Mono), so text fits its column as it does in Excel: Roboto's digits and slashes are wider, and
+     * "01/02/2000" in Arial 8 wrapped in a column Excel sized for it. Calibri and Cambria keep the
+     * system faces for the reason [com.skeler.scanely.core.pdftools.office2pdf.docx.DocxFonts] gives.
+     */
+    private fun twin(font: FontStyle): Typeface? {
+        val family = TWIN_FAMILIES[font.name?.trim()?.lowercase()] ?: return null
+        val manager = assets ?: return null
+        val asset = family.asset(font.bold, font.italic)
+        return twins.getOrPut(asset) { runCatching { Typeface.createFromAsset(manager, asset) }.getOrNull() }
+    }
+
     private companion object {
+        val TWIN_FAMILIES = mapOf(
+            "arial" to OfficeFamily.ARIAL,
+            "helvetica" to OfficeFamily.ARIAL,
+            "liberation sans" to OfficeFamily.ARIAL,
+            "arimo" to OfficeFamily.ARIAL,
+            "times new roman" to OfficeFamily.TIMES,
+            "times" to OfficeFamily.TIMES,
+            "liberation serif" to OfficeFamily.TIMES,
+            "courier new" to OfficeFamily.COURIER,
+            "courier" to OfficeFamily.COURIER,
+            "liberation mono" to OfficeFamily.COURIER
+        )
         const val HEADER_SIZE_PT = 8f
         const val HEADER_COLOR = 0xFF757575.toInt()
         const val MIN_GLYPH_PT = 1f

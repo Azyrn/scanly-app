@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.engine.PdfPageReader
 import com.skeler.scanely.core.pdfeditor.engine.QpdfEngine
+import com.skeler.scanely.core.pdftools.pdf2office.CloudPageReader
 import com.skeler.scanely.core.pdftools.pdf2office.ModelTables
 import com.skeler.scanely.core.pdftools.pdf2office.OfficePageSource
 import com.skeler.scanely.core.pdftools.pdf2office.PdfToExcelJob
@@ -42,11 +43,12 @@ class PdfToOfficeTest {
     private val dir = File(context.cacheDir, "pdf-to-office-test").apply { mkdirs() }
 
     private val reader = PdfPageReader(context)
+    private val noCloud = CloudPageReader { _, _, _ -> emptyMap() }
     private val workspace = ToolWorkspace(context)
     private val engine = PdfToolEngine(QpdfEngine(), reader, workspace)
-    private val ocr = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private val ocr = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
     private val source = OfficePageSource(reader, ModelTables(reader, ocr))
-    private val word = PdfToWordJob(context, source, workspace, PaddleLineReader(ocr))
+    private val word = PdfToWordJob(context, source, workspace, PaddleLineReader(ocr), noCloud)
     private val powerPoint = PdfToPowerPointJob(context, source, workspace, PaddleLineReader(ocr))
     private val excel = PdfToExcelJob(context, source, workspace)
 
@@ -176,7 +178,7 @@ class PdfToOfficeTest {
         val run = full.newRun()
 
         val failure = failureOf {
-            PdfToWordJob(context, source, full, lineReader(context)).convert(ToolJobInput(listOf(document), emptyList(), run) {})
+            PdfToWordJob(context, source, full, lineReader(context), noCloud).convert(ToolJobInput(listOf(document), emptyList(), run) {})
         }
 
         assertEquals(ToolFailure.LowStorage, failure)
@@ -329,4 +331,4 @@ class PdfToOfficeTest {
 }
 
 private fun lineReader(context: android.content.Context) =
-    PaddleLineReader(PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient())))
+    PaddleLineReader(PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() })))

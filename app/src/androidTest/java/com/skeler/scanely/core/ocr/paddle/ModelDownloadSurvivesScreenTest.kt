@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 class ModelDownloadSurvivesScreenTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val store = PaddleModelStore(context, OkHttpClient())
+    private val store = PaddleModelStore(context, dagger.Lazy { OkHttpClient() })
 
     @After
     fun tearDown() = store.table.delete()

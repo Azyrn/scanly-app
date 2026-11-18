@@ -203,7 +203,8 @@ fun ToolErrorContent(
 
 /** Only these failures can go differently on a second attempt with the same file. */
 val ToolFailure.isRetryable: Boolean
-    get() = this == ToolFailure.LowStorage || this == ToolFailure.NoGain || this is ToolFailure.Failed
+    get() = this == ToolFailure.LowStorage || this == ToolFailure.NoGain || this is ToolFailure.Failed ||
+        this == ToolFailure.TimedOut
 
 @get:StringRes
 private val ToolFailure.messageRes: Int
@@ -216,6 +217,8 @@ private val ToolFailure.messageRes: Int
         ToolFailure.NoGain -> R.string.pdf_tool_error_no_gain
         ToolFailure.NothingFound -> R.string.pdf_tool_error_nothing_found
         is ToolFailure.Failed -> R.string.pdf_tool_error_failed
+        is ToolFailure.BrokenOutput -> R.string.pdf_tool_error_broken_output
+        ToolFailure.TimedOut -> R.string.pdf_tool_error_timed_out
     }
 
 private val CARD_SHAPE = RoundedCornerShape(16.dp)

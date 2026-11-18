@@ -334,6 +334,7 @@
     <string name="pay_confirm_sent">Abre el enlace del correo y toca Restaurar compra de nuevo.</string>
     <string name="pay_confirm_failed">No se pudo enviar el correo. Reintenta.</string>
     <string name="pay_key_removed">Clave eliminada del dispositivo.</string>
+    <string name="pay_reward_pending">Tus créditos extra están en camino.</string>
     <string name="pay_restored_tier">Tu clave %1$s ha vuelto.</string>
     <string name="pay_restored">Clave restaurada aquí.</string>
     <string name="pay_restore_nothing">No hay suscripción en esta cuenta. Si pagaste con otro correo, inicia sesión con ese y reintenta.</string>

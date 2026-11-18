@@ -55,6 +55,8 @@
     <string name="scr_scan_review_delete_page_title">Effacer page %1$d ?</string>
     <string name="scr_scan_review_delete_page_body">Cette page sera exclue de l\'export. Vous pouvez la rescanner.</string>
     <string name="scr_scan_review_keep">Garder</string>
+    <string name="scr_scan_review_discard_title">Effacer ce scan ?</string>
+    <string name="scr_scan_review_discard_body">Ces pages ne sont pas enregistrées et seront perdues.</string>
     <string name="scr_scan_review_rotate_page">Pivoter</string>
     <string name="scr_scan_review_delete_page">Supprimer</string>
     <string name="scr_scan_review_enhance">Améliorer</string>
@@ -66,6 +68,11 @@
         <item quantity="one">%1$d page</item>
         <item quantity="many">%1$d pages</item>
         <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d page illisible a été omise.</item>
+        <item quantity="many">%1$d pages illisibles ont été omises.</item>
+        <item quantity="other">%1$d pages illisibles ont été omises.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s en un fichier · s\'ouvre ensuite</string>
@@ -223,6 +230,7 @@
     <string name="ai_nothing_to_translate">Rien à traduire.</string>
     <string name="ai_err_no_text_batch">Aucun texte extrait des fichiers</string>
     <string name="ai_err_extraction_unavailable">Extraction indisponible. Réessayez, ou désactivez votre point de terminaison pour %1$s.</string>
+    <string name="ai_err_custom_needs_pro">Votre point de terminaison exige Pro, forfait non confirmé. Réessayez, ou désactivez-le dans Réglages pour utiliser les crédits Scanly.</string>
     <string name="ai_err_read_file">Échec de lecture</string>
     <string name="ai_err_no_text">Aucun texte lisible dans ce fichier.</string>
     <string name="ai_design_background">Création du document. Quittez l\'app : nous vous préviendrons.</string>
@@ -279,6 +287,7 @@
     <string name="ocr_err_render_pdf">Échec du rendu PDF</string>
     <string name="ocr_err_pdf_processing">Échec traitement PDF</string>
     <string name="ocr_err_download">Échec</string>
+    <string name="ocr_err_download_offline">Pas de connexion. Réessayez.</string>
     <string name="ocr_setup_pending">Reconnaissance de texte en cours d\'installation. Restez connecté une minute, puis réessayez.</string>
     <string name="ocr_scan_failed">Scanly n\'a pas pu lire ce fichier. L\'analyse a échoué : la page n\'est pas forcément vide. Réessayez ou changez de fichier.</string>
     <string name="pay_upgrade_notice">Pour passer à un forfait supérieur, allez sur %1$s/upgrade avec le même compte : votre forfait change. Un autre forfait sur la page tarifaire ouvre un second abonnement, facturé en parallèle.</string>

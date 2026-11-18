@@ -17,7 +17,7 @@ class PaddleRecClassCountTest {
     @Test
     fun classCountMatchesCharset() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val store = PaddleModelStore(context, OkHttpClient())
+        val store = PaddleModelStore(context, dagger.Lazy { OkHttpClient() })
         val env = OrtEnvironment.getEnvironment()
         val report = StringBuilder()
 

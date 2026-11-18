@@ -315,6 +315,7 @@
     <string name="pay_confirm_sent">Check your inbox, open the link, then tap Restore purchase again.</string>
     <string name="pay_confirm_failed">Couldn\'t send the confirmation email. Try again.</string>
     <string name="pay_key_removed">Key removed from this device.</string>
+    <string name="pay_reward_pending">Your bonus credits are on the way. Check back soon.</string>
     <string name="pay_restored_tier">Your %1$s key is back.</string>
     <string name="pay_restored">Your key is back on this device.</string>
     <string name="pay_restore_nothing">No subscription on this account. If you paid with a different email address, sign in with that one and try again.</string>

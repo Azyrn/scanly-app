@@ -47,10 +47,18 @@ class PdfiumLayer private constructor(
                 argb = data[o + 15].toRawBits(),
                 flags = data[o + 16].toInt(),
                 renderMode = data[o + 17].toInt(),
-                inkLeft = data[o + 18], inkBottom = data[o + 19], inkRight = data[o + 20], inkTop = data[o + 21]
+                inkLeft = data[o + 18], inkBottom = data[o + 19], inkRight = data[o + 20], inkTop = data[o + 21],
+                fontProgram = data[o + 22].toInt(),
+                mcid = data[o + MCID].toInt()
             )
         }
-        PdfiumPage(data[0], data[1], chars)
+        val ruleData = nativePageRules(handle, index) ?: FloatArray(0)
+        val rules = List(ruleData.size / RULE_FIELDS) { i ->
+            val o = i * RULE_FIELDS
+            PdfiumRule(ruleData[o], ruleData[o + 1], ruleData[o + 2], ruleData[o + RULE_TOP])
+        }
+        val programs = (result.getOrNull(2) as Array<*>?)?.map { it as ByteArray }.orEmpty()
+        PdfiumPage(data[0], data[1], chars, rules, programs)
     }
 
     /** The page's top-level images, in drawing order; empty when the page can't be loaded. */
@@ -106,10 +114,16 @@ class PdfiumLayer private constructor(
         }
     }
 
+    @Suppress("TooManyFunctions")
     companion object {
         private const val HEADER = 4
-        private const val FIELDS = 22
+        private const val FIELDS = 24
+        private const val MCID = 23
         private const val IMAGE_FIELDS = 6
+
+        // nativePageRules record: left, bottom, right, top.
+        private const val RULE_FIELDS = 4
+        private const val RULE_TOP = 3
 
         // nativePageImages record: object index, left, bottom, right, top, 1 when the bytes are a plain JPEG.
         private const val IMAGE_RIGHT = 3
@@ -158,6 +172,8 @@ class PdfiumLayer private constructor(
             bitmap: Bitmap,
             removeImages: IntArray
         ): Boolean
+
+        @JvmStatic private external fun nativePageRules(handle: Long, index: Int): FloatArray?
 
         @JvmStatic private external fun nativePageImages(handle: Long, index: Int): FloatArray?
 

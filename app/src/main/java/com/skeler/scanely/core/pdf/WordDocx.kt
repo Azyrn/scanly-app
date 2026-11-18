@@ -1,6 +1,5 @@
 package com.skeler.scanely.core.pdf
 
-import android.graphics.Bitmap
 import com.skeler.scanely.core.text.MarkdownParser
 import com.skeler.scanely.core.text.MdSpan
 import java.util.zip.ZipEntry
@@ -43,7 +42,8 @@ internal fun wordRelationships(pageCount: Int): String = buildString {
     append("</Relationships>")
 }
 
-internal fun wordDocument(bitmaps: List<Bitmap>): String = buildString {
+/** One image per page; [sizes] are each image's width and height in pixels. */
+internal fun wordDocument(sizes: List<Pair<Int, Int>>): String = buildString {
     append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
     append(
         "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"" +
@@ -52,8 +52,8 @@ internal fun wordDocument(bitmaps: List<Bitmap>): String = buildString {
             " xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"" +
             " xmlns:pic=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"><w:body>"
     )
-    bitmaps.forEachIndexed { index, bitmap ->
-        val (cx, cy) = wordImageExtent(bitmap)
+    sizes.forEachIndexed { index, (width, height) ->
+        val (cx, cy) = wordImageExtent(width, height)
         val id = index + 1
         append(
             "<w:p><w:r><w:drawing><wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\">" +
@@ -65,7 +65,7 @@ internal fun wordDocument(bitmaps: List<Bitmap>): String = buildString {
                 "<a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData>" +
                 "</a:graphic></wp:inline></w:drawing></w:r></w:p>"
         )
-        if (index != bitmaps.lastIndex) append("<w:p><w:r><w:br w:type=\"page\"/></w:r></w:p>")
+        if (index != sizes.lastIndex) append("<w:p><w:r><w:br w:type=\"page\"/></w:r></w:p>")
     }
     append(
         "<w:sectPr><w:pgSz w:w=\"11906\" w:h=\"16838\"/>" +
@@ -169,12 +169,12 @@ internal fun escapeXml(value: String): String = buildString(value.length) {
     }
 }
 
-private fun wordImageExtent(bitmap: Bitmap): Pair<Long, Long> {
+private fun wordImageExtent(width: Int, height: Int): Pair<Long, Long> {
     val pageWidth = 5_943_600L // A4 width minus 0.5in margins, in EMUs.
     val pageHeight = 8_229_600L // A4 height minus 0.5in margins, in EMUs.
-    return if (bitmap.width.toLong() * pageHeight > bitmap.height.toLong() * pageWidth) {
-        pageWidth to (pageWidth * bitmap.height / bitmap.width)
+    return if (width.toLong() * pageHeight > height.toLong() * pageWidth) {
+        pageWidth to (pageWidth * height / width)
     } else {
-        (pageHeight * bitmap.width / bitmap.height) to pageHeight
+        (pageHeight * width / height) to pageHeight
     }
 }

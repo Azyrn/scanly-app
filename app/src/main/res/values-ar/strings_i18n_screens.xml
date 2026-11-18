@@ -64,6 +64,8 @@
     <string name="scr_scan_review_delete_page_title">حذف الصفحة %1$d؟</string>
     <string name="scr_scan_review_delete_page_body">لن تُدرج هذه الصفحة في التصدير. يمكنك إعادة مسحها في أي وقت.</string>
     <string name="scr_scan_review_keep">إبقاء</string>
+    <string name="scr_scan_review_discard_title">حذف هذا المسح؟</string>
+    <string name="scr_scan_review_discard_body">لم تُحفظ هذه الصفحات بعد وستضيع.</string>
     <string name="scr_scan_review_rotate_page">تدوير الصفحة</string>
     <string name="scr_scan_review_delete_page">حذف الصفحة</string>
     <string name="scr_scan_review_enhance">تحسين</string>
@@ -78,6 +80,14 @@
         <item quantity="few">%1$d صفحات</item>
         <item quantity="many">%1$d صفحة</item>
         <item quantity="other">%1$d صفحة</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="zero">تعذّرت قراءة %1$d صفحة فاستُبعدت.</item>
+        <item quantity="one">تعذّرت قراءة %1$d صفحة فاستُبعدت.</item>
+        <item quantity="two">تعذّرت قراءة %1$d صفحتين فاستُبعدتا.</item>
+        <item quantity="few">تعذّرت قراءة %1$d صفحات فاستُبعدت.</item>
+        <item quantity="many">تعذّرت قراءة %1$d صفحة فاستُبعدت.</item>
+        <item quantity="other">تعذّرت قراءة %1$d صفحة فاستُبعدت.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s في ملف واحد · يُفتح بعد الحفظ</string>
@@ -262,6 +272,7 @@
     <string name="ai_nothing_to_translate">لا يوجد ما يُترجم بعد.</string>
     <string name="ai_err_no_text_batch">لم يُستخرج أي نص من أي ملف</string>
     <string name="ai_err_extraction_unavailable">تعذّر على Scanly تحميل نوع الاستخراج هذا. حاول مرة أخرى، أو أوقف نقطة الاتصال الخاصة بك من الإعدادات لاستخدام %1$s.</string>
+    <string name="ai_err_custom_needs_pro">تحتاج نقطة الاتصال الخاصة بك إلى Pro، وتعذّر تأكيد خطتك. حاول مرة أخرى، أو أوقفها من الإعدادات لاستخدام أرصدة Scanly.</string>
     <string name="ai_err_read_file">فشلت قراءة الملف</string>
     <string name="ai_err_no_text">تعذّرت قراءة أي نص من هذا الملف.</string>
     <string name="ai_design_background">جارٍ إنشاء مستندك. يمكنك مغادرة التطبيق، وسنرسل لك إشعارًا.</string>
@@ -324,6 +335,7 @@
     <string name="ocr_err_render_pdf">تعذّر عرض PDF</string>
     <string name="ocr_err_pdf_processing">فشلت معالجة PDF</string>
     <string name="ocr_err_download">فشل التنزيل</string>
+    <string name="ocr_err_download_offline">تعذّر الاتصال. أعد المحاولة.</string>
     <string name="ocr_setup_pending">ما زال إعداد التعرف على النص قيد التثبيت على هذا الهاتف. ابقَ متصلًا دقيقة، ثم حاول مرة أخرى.</string>
     <string name="ocr_scan_failed">تعذّرت قراءة هذا الملف في Scanly. فشل المسح، وهذا لا يعني أن الصفحة فارغة. حاول مرة أخرى أو اختر ملفًا آخر.</string>
     <string name="pay_upgrade_notice">للانتقال إلى خطة أكبر، توجّه إلى %1$s/upgrade وسجّل الدخول بالحساب نفسه الذي تستخدمه هنا: سيؤدي ذلك إلى تغيير خطتك الحالية. شراء خطة أخرى من صفحة الأسعار يبدأ اشتراكًا ثانيًا يُحصَّل بالتوازي مع هذا الاشتراك.</string>

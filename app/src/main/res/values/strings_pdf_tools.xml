@@ -105,4 +105,23 @@
     <string name="pdf_tool_rotate_left">90° left</string>
     <string name="pdf_tool_rotate_body">Rotates every page. To turn single pages, use Organize PDF.</string>
     <string name="pdf_tool_rotate_action">Rotate</string>
+    <string name="pdf_tools_beta_badge">Beta</string>
+    <string name="pdf_tool_error_broken_output">The converted file came out damaged, so it wasn\'t kept. Nothing was saved.</string>
+    <string name="pdf_tool_error_timed_out">This took too long and was stopped. Nothing was saved. Try a smaller file.</string>
+    <string name="pdf_tool_credits_refunded">The credits this conversion used were refunded.</string>
+    <string name="pdf_tool_online_read_failed">Online reading failed, so no credits were used. Those pages keep the PDF\'s own text.</string>
+    <string name="pdf_tools_beta_note">Results keep improving with updates.</string>
+    <string name="online_read_title">Read pages online?</string>
+    <string name="online_read_use">Use credits</string>
+    <string name="online_read_without">Convert without</string>
+    <string name="online_read_watch_ad">Watch ad</string>
+    <string name="online_read_upgrade">Upgrade</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d page in this file needs online reading for accurate text. Cost: %1$d credit.</item>
+        <item quantity="other">%1$d pages in this file need online reading for accurate text. Cost: %1$d credits.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">You have %1$d credit left.</item>
+        <item quantity="other">You have %1$d credits left.</item>
+    </plurals>
 </resources>

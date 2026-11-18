@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import com.skeler.scanely.core.pdfeditor.engine.CompressionLevel
 import com.skeler.scanely.core.pdfeditor.engine.PdfPageReader
 import com.skeler.scanely.core.pdfeditor.engine.QpdfEngine
+import com.skeler.scanely.core.pdfeditor.engine.PdfiumLayer
 import com.skeler.scanely.core.pdftools.ImportedFile
 import com.skeler.scanely.core.pdftools.PdfToolEngine
 import com.skeler.scanely.core.pdftools.ProbeResult
@@ -21,6 +22,7 @@ import com.skeler.scanely.core.pdftools.ToolWorkspace
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxToPdfJob
 import com.skeler.scanely.core.pdftools.office2pdf.pptx.PptxToPdfJob
 import com.skeler.scanely.core.pdftools.office2pdf.xlsx.XlsxToPdfJob
+import com.skeler.scanely.core.pdftools.pdf2office.CloudPageReader
 import com.skeler.scanely.core.pdftools.pdf2office.ModelTables
 import com.skeler.scanely.core.pdftools.pdf2office.OfficePage
 import com.skeler.scanely.core.pdftools.pdf2office.OfficePageSource
@@ -29,6 +31,7 @@ import com.skeler.scanely.core.pdftools.pdf2office.PdfToPowerPointJob
 import com.skeler.scanely.core.pdftools.pdf2office.PdfToWordJob
 import com.skeler.scanely.core.pdftools.pdf2office.confirmTables
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactPageSource
+import com.skeler.scanely.core.pdftools.pdf2office.exact.OcrBlock
 import com.skeler.scanely.core.pdftools.repair.RepairJob
 import com.skeler.scanely.core.pdftools.stamp.StampRunner
 import com.skeler.scanely.core.pdftools.stamp.WatermarkJob
@@ -44,6 +47,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
 private const val PROTECT_PASSWORD = "Fidelity-Pass-1"
+private const val OCR_FIXTURE_FIELDS = 5
 
 /**
  * Driver for scripts/fidelity/run.py, not a regression test: it only runs when the script has
@@ -62,7 +66,7 @@ class FidelityHarness {
     private val qpdf = QpdfEngine()
     private val engine = PdfToolEngine(qpdf, reader, workspace)
     // One engine for every job, as the app's singleton: a new one per job held every job's sessions.
-    private val ocr = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private val ocr = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
     private val source = OfficePageSource(reader, ModelTables(reader, ocr))
 
     @Test
@@ -93,6 +97,8 @@ class FidelityHarness {
         val outcome = try {
             if (tool == "tables") {
                 tablesReport(open(imported), File(run, "tables.tsv"))
+            } else if (tool == "dump") {
+                pageDump(file, run)
             } else {
                 describe(execute(tool, imported, run) { progressCalls.incrementAndGet() })
             }
@@ -107,15 +113,50 @@ class FidelityHarness {
         return "$tool\t${file.name}\t$ms\t${peak.get() / KB_PER_MB}\t${progressCalls.get()}\t$outcome"
     }
 
+    /**
+     * The phone's pdfium reading of every page, in hostdump.py's format (characters, rules, Arabic
+     * font programs; no pictures), so hostconv can convert exactly what the phone reads and a diff
+     * against the host's dump shows where the two pdfium builds differ.
+     */
+    private fun pageDump(file: File, run: File): String {
+        val layer = PdfiumLayer.open(context, file) ?: return "FAIL\tunreadable\t"
+        layer.use {
+            var pages = 0
+            while (true) {
+                val page = layer.readPage(pages) ?: break
+                val fonts = page.fontPrograms.mapIndexed { i, data ->
+                    "font$pages-$i.ttf".also { File(run, it).writeBytes(data) }
+                }
+                File(run, "p$pages.txt").bufferedWriter().use { out ->
+                    out.write("${page.widthPt} ${page.heightPt} ${page.chars.size} 0 0\n")
+                    page.chars.forEach { c ->
+                        val fields = listOf(
+                            c.code, c.originX, c.originY, c.left, c.bottom, c.right, c.top, c.size, c.matrixA,
+                            c.matrixB, c.matrixC, c.matrixD, c.font, c.fontFlags, c.weight, c.argb.toLong() and 0xFFFFFFFFL,
+                            c.flags, c.renderMode, c.inkLeft, c.inkBottom, c.inkRight, c.inkTop, c.fontProgram
+                        )
+                        out.write(fields.joinToString("\t") + "\n")
+                    }
+                    page.rules.forEach { out.write("rule\t${it.left}\t${it.bottom}\t${it.right}\t${it.top}\n") }
+                    fonts.forEach { out.write("font\t$it\n") }
+                }
+                pages++
+            }
+            File(run, "pages").writeText("$pages")
+            return "OK\tdump\t$pages pages"
+        }
+    }
+
     private suspend fun execute(tool: String, imported: ImportedFile, run: File, onProgress: (Float?) -> Unit): ToolResult {
         fun input(document: ToolDocument) = ToolJobInput(listOf(document), listOf(imported), run, onProgress)
         return when (tool) {
-            "word" -> PdfToWordJob(context, source, workspace, PaddleLineReader(ocr)).convert(input(open(imported)))
+            "word" -> PdfToWordJob(context, source, workspace, PaddleLineReader(ocr), cloudFixture(imported, run))
+                .convert(input(open(imported)))
             "ppt" -> PdfToPowerPointJob(context, source, workspace, PaddleLineReader(ocr)).convert(input(open(imported)))
             "excel" -> PdfToExcelJob(context, source, workspace).convert(input(open(imported)))
             "docx2pdf" -> DocxToPdfJob(context, workspace).convert(imported, run, onProgress)
             "pptx2pdf" -> PptxToPdfJob(workspace, qpdf).convert(imported, run, onProgress)
-            "xlsx2pdf" -> XlsxToPdfJob(workspace).convert(imported, run, onProgress)
+            "xlsx2pdf" -> XlsxToPdfJob(context, workspace).convert(imported, run, onProgress)
             "compress-lossless" -> engine.compress(open(imported), CompressionLevel.LOSSLESS, run)
             "compress-balanced" -> engine.compress(open(imported), CompressionLevel.BALANCED, run)
             "compress-smallest" -> engine.compress(open(imported), CompressionLevel.SMALLEST, run)
@@ -125,6 +166,22 @@ class FidelityHarness {
             "watermark" -> WatermarkJob(context, StampRunner(reader, workspace))
                 .watermark(input(open(imported)), WatermarkOptions(WatermarkMark.Text("CONFIDENTIEL سري")))
             else -> error("unknown tool $tool")
+        }
+    }
+
+    /**
+     * The cloud OCR the host read for [imported] (`ocrblocks/<name>/<page>.tsv`, pushed by run.py
+     * from the host loop's cached Mistral responses), so a run scores the fallback without a signed-in
+     * app or a billed call. The pages asked for are written to `cloud-pages.txt` in [run].
+     */
+    private fun cloudFixture(imported: ImportedFile, run: File) = CloudPageReader { _, pages, _ ->
+        File(run, "cloud-pages.txt").writeText(pages.joinToString(" "))
+        val dir = File(base, "ocrblocks/${imported.displayName.substringBeforeLast('.')}")
+        pages.associateWith { page ->
+            File(dir, "$page.tsv").takeIf { it.isFile }?.readLines().orEmpty().mapNotNull { line ->
+                val f = line.split('\t', limit = OCR_FIXTURE_FIELDS)
+                if (f.size < OCR_FIXTURE_FIELDS) null else OcrBlock(f[0].toFloat(), f[1].toFloat(), f[2].toFloat(), f[3].toFloat(), f[4])
+            }
         }
     }
 
@@ -159,7 +216,7 @@ class FidelityHarness {
         val scratch = File(out.parentFile, "scratch").apply { mkdirs() }
         var tables = 0
         out.bufferedWriter().use { w ->
-            ExactPageSource.open(context, document.file, document.password).use { exact ->
+            ExactPageSource.open(context, document.file, document.password, scratch).use { exact ->
                 for (index in 0 until document.pageCount) {
                     val regions = source.tableRegions(document, index)
                     w.write("$index\tmodel\t${regions?.joinToString(" ") { "%.0f,%.0f,%.0f,%.0f".format(it.left, it.top, it.right, it.bottom) }}\n")

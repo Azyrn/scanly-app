@@ -315,6 +315,7 @@
     <string name="pay_confirm_sent">Gelen kutunuzdaki bağlantıyı açın, sonra Satın alımı geri yükleyin.</string>
     <string name="pay_confirm_failed">Onay e-postası gönderilemedi. Yeniden deneyin.</string>
     <string name="pay_key_removed">Anahtar bu cihazdan kaldırıldı.</string>
+    <string name="pay_reward_pending">Ödül kredileriniz yolda. Birazdan bakın.</string>
     <string name="pay_restored_tier">%1$s anahtarı geri geldi.</string>
     <string name="pay_restored">Anahtarınız bu cihazda geri geldi.</string>
     <string name="pay_restore_nothing">Bu hesapta abonelik yok. Farklı bir e-posta adresiyle ödeme yaptıysanız o adresle oturum açıp yeniden deneyin.</string>

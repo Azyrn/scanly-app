@@ -207,8 +207,12 @@ class RecordingService : Service() {
         } catch (e: Exception) {
             // Refused (e.g. started from the background): the recording still runs while visible.
             Log.w("RecordingService", "Could not enter the foreground", e)
+            gate.onForeground()
             stopSelf()
+            return START_NOT_STICKY
         }
+        // The recording was stopped before this start reached the foreground; stop now that it has.
+        if (gate.onForeground()) stopSelf()
         return START_NOT_STICKY
     }
 
@@ -249,12 +253,54 @@ class RecordingService : Service() {
         private const val CHANNEL_ID = "recording"
         private const val NOTIFICATION_ID = 4107
 
+        private val gate = ForegroundStartGate()
+
         fun start(context: Context) {
-            ContextCompat.startForegroundService(context, Intent(context, RecordingService::class.java))
+            // Counted only once the request went through, and under the gate's lock so an
+            // onStartCommand on another thread cannot run between the two.
+            synchronized(gate) {
+                ContextCompat.startForegroundService(context, Intent(context, RecordingService::class.java))
+                gate.onStartRequested()
+            }
         }
 
         fun stop(context: Context) {
-            context.stopService(Intent(context, RecordingService::class.java))
+            if (gate.onStopRequested()) context.stopService(Intent(context, RecordingService::class.java))
         }
+    }
+}
+
+/**
+ * Each startForegroundService obliges the service to call startForeground within seconds, or
+ * Android kills the app (ForegroundServiceDidNotStartInTimeException). Stopping the service before
+ * its onStartCommand ran — a recording stopped right after it started — destroyed it without ever
+ * entering the foreground. So a stop that arrives while a start is still pending is deferred, and
+ * the service stops itself once every pending start has reached startForeground.
+ */
+internal class ForegroundStartGate {
+    private var pendingStarts = 0
+    private var stopDeferred = false
+
+    @Synchronized
+    fun onStartRequested() {
+        pendingStarts++
+        stopDeferred = false
+    }
+
+    /** True when the service may be stopped now; otherwise it stops itself in [onForeground]. */
+    @Synchronized
+    fun onStopRequested(): Boolean {
+        if (pendingStarts == 0) return true
+        stopDeferred = true
+        return false
+    }
+
+    /** After each onStartCommand's startForeground. True when a deferred stop is now due. */
+    @Synchronized
+    fun onForeground(): Boolean {
+        if (pendingStarts > 0) pendingStarts--
+        if (pendingStarts > 0 || !stopDeferred) return false
+        stopDeferred = false
+        return true
     }
 }

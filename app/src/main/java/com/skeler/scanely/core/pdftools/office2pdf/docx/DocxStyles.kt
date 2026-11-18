@@ -132,23 +132,33 @@ internal fun parseBorders(parser: XmlPullParser): Boolean {
     return visible
 }
 
-/** The theme's latin major (headings) and minor (body) typefaces. */
+/** The theme's latin and bidi (complex-script) major (headings) and minor (body) typefaces. */
 internal fun parseTheme(parser: XmlPullParser): ThemeFonts {
-    var major: String? = null
-    var minor: String? = null
+    val major = ThemeFaces()
+    val minor = ThemeFaces()
     var inMajor = false
     parser.descendants { name ->
         when (name) {
             "majorFont" -> inMajor = true
             "minorFont" -> inMajor = false
-            "latin" -> {
-                val face = parser.attr("typeface")?.takeIf { it.isNotBlank() }
-                if (inMajor && major == null) major = face
-                if (!inMajor && minor == null) minor = face
-            }
+            else -> (if (inMajor) major else minor).read(name, parser)
         }
     }
-    return ThemeFonts(major, minor)
+    return ThemeFonts(major.latin, minor.latin, major.bidi, minor.bidi)
+}
+
+/** One font collection of a theme (major or minor): the first latin and bidi faces it names. */
+private class ThemeFaces {
+    var latin: String? = null
+    var bidi: String? = null
+
+    /** The bidi font is a:cs when it names one, else the script's own entry (<a:font script="Arab">). */
+    fun read(name: String, parser: XmlPullParser) {
+        val face = parser.attr("typeface")?.takeIf { it.isNotBlank() } ?: return
+        if (name == "latin" && latin == null) latin = face
+        val isBidi = name == "cs" || name == "font" && parser.attr("script") == "Arab"
+        if (isBidi && bidi == null) bidi = face
+    }
 }
 
 private val INVISIBLE_BORDERS = setOf(null, "nil", "none")

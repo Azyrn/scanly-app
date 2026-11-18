@@ -334,6 +334,7 @@
     <string name="pay_confirm_sent">Ouvrez le lien reçu par e-mail, puis Restaurer l\'achat.</string>
     <string name="pay_confirm_failed">Envoi de l\'e-mail impossible. Réessayez.</string>
     <string name="pay_key_removed">Clé retirée de cet appareil.</string>
+    <string name="pay_reward_pending">Vos crédits bonus arrivent. Revenez bientôt.</string>
     <string name="pay_restored_tier">Clé %1$s restaurée.</string>
     <string name="pay_restored">Clé restaurée sur cet appareil.</string>
     <string name="pay_restore_nothing">Aucun abonnement sur ce compte. Si vous avez payé avec une autre adresse, connectez-vous avec elle.</string>

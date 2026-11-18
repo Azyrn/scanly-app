@@ -20,6 +20,7 @@ import com.skeler.scanely.core.barcode.BarcodeEngine
 import com.skeler.scanely.core.barcode.ZxingBarcodeDecoder
 import com.skeler.scanely.core.barcode.mlKitActions
 import com.skeler.scanely.core.common.UriNames
+import com.skeler.scanely.core.image.orientBitmap
 import com.skeler.scanely.core.ocr.OcrBatchBuilder
 import com.skeler.scanely.core.ocr.OcrResult
 import com.skeler.scanely.core.ocr.TextBlockData
@@ -27,6 +28,7 @@ import com.skeler.scanely.core.ocr.TextOcrEngine
 import com.skeler.scanely.core.ocr.TextOcrService
 import com.skeler.scanely.settings.data.SettingsKeys
 import com.skeler.scanely.settings.domain.repository.SettingsRepository
+import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -42,12 +44,21 @@ private const val TAG = "UnifiedScanService"
 class UnifiedScanService @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val settingsRepository: SettingsRepository,
-    private val textOcrService: TextOcrService
+    // Lazy: built on Home's first frame, this would otherwise construct the whole offline-OCR graph
+    // there (ML Kit and Paddle services, PaddleModelStore and its OkHttpClient). A scan needs it.
+    private val textOcrService: Lazy<TextOcrService>
 ) {
-    private val textRecognizer: TextRecognizer =
+    // Lazy: this singleton is built during Home's first composition on the main thread, and the
+    // clients are only needed once a scan runs (on Dispatchers.IO).
+    private val textRecognizerDelegate = lazy {
         TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    }
+    private val textRecognizer: TextRecognizer by textRecognizerDelegate
 
-    private val barcodeScanner: BarcodeScanner = BarcodeScanning.getClient(
+    private val barcodeScannerDelegate = lazy { createBarcodeScanner() }
+    private val barcodeScanner: BarcodeScanner by barcodeScannerDelegate
+
+    private fun createBarcodeScanner(): BarcodeScanner = BarcodeScanning.getClient(
         BarcodeScannerOptions.Builder()
             .setBarcodeFormats(
                 Barcode.FORMAT_QR_CODE,
@@ -137,8 +148,9 @@ class UnifiedScanService @Inject constructor(
 
     private suspend fun scanBitmap(bitmap: Bitmap): UnifiedScanResult =
         combineScan(detectBarcodes(bitmap)) {
-            when (textOcrService.engine()) {
-                TextOcrEngine.PADDLE -> textOcrService.recognize(bitmap)
+            val ocr = textOcrService.get()
+            when (ocr.engine()) {
+                TextOcrEngine.PADDLE -> ocr.recognize(bitmap)
                 TextOcrEngine.ML_KIT -> recognizeText(InputImage.fromBitmap(bitmap, 0))
             }
         }
@@ -227,7 +239,7 @@ class UnifiedScanService @Inject constructor(
         private const val MAX_BITMAP_DIMENSION = 2048
     }
 
-    private fun loadBitmapFromUri(uri: Uri): Bitmap? {
+    internal fun loadBitmapFromUri(uri: Uri): Bitmap? {
         return try {
             context.contentResolver.openInputStream(uri)?.use { inputStream ->
                 val options = BitmapFactory.Options().apply {
@@ -245,6 +257,7 @@ class UnifiedScanService @Inject constructor(
                 // Re-open stream (first pass consumed it).
                 context.contentResolver.openInputStream(uri)?.use { newStream ->
                     BitmapFactory.decodeStream(newStream, null, options)
+                        ?.let { context.contentResolver.orientBitmap(uri, it) }
                 }
             }
         } catch (e: Exception) {
@@ -274,9 +287,10 @@ class UnifiedScanService @Inject constructor(
         return inSampleSize
     }
 
+    /** Closes only the clients a scan actually created. */
     fun close() {
-        textRecognizer.close()
-        barcodeScanner.close()
+        if (textRecognizerDelegate.isInitialized()) textRecognizer.close()
+        if (barcodeScannerDelegate.isInitialized()) barcodeScanner.close()
     }
 }
 

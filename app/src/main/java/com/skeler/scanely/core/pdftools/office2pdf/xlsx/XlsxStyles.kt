@@ -1,7 +1,10 @@
 package com.skeler.scanely.core.pdftools.office2pdf.xlsx
 
-/** The workbook's cell formats, indexed by a cell's `s` attribute. */
-internal class XlsxStyles(private val xfs: List<CellStyle>) {
+/**
+ * The workbook's cell formats, indexed by a cell's `s` attribute. [defaultFont] is the workbook's
+ * first font, the Normal style's: column widths are counted in its digits.
+ */
+internal class XlsxStyles(private val xfs: List<CellStyle>, val defaultFont: FontStyle = FontStyle()) {
     fun style(index: Int): CellStyle = xfs.getOrNull(index) ?: xfs.firstOrNull() ?: DEFAULT
 
     private companion object {
@@ -38,7 +41,7 @@ internal class XlsxStylesReader(private val colors: XlsxColors) {
                 XmlCursor.END_DOCUMENT -> break
             }
         }
-        return XlsxStyles(xfs.map(::resolve))
+        return XlsxStyles(xfs.map(::resolve), fonts.firstOrNull() ?: FontStyle())
     }
 
     private fun onStart(cursor: XmlCursor) {
@@ -75,6 +78,7 @@ internal class XlsxStylesReader(private val colors: XlsxColors) {
                 "strike" -> font.copy(strike = cursor.flag())
                 "sz" -> font.copy(sizePt = sizeOf(cursor, font.sizePt))
                 "color" -> font.copy(color = colorOf(cursor))
+                "name" -> font.copy(name = cursor.attr("val"))
                 else -> font
             }
         }

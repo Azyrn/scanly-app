@@ -10,11 +10,13 @@ import com.skeler.scanely.core.network.DesignJobAccepted
 import com.skeler.scanely.core.network.DesignJobEvent
 import com.skeler.scanely.core.network.DesignJobPending
 import com.skeler.scanely.core.network.DesignRequest
+import com.skeler.scanely.core.network.OcrPageDto
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.TolerantJson
 import com.skeler.scanely.core.network.TranscriptDto
 import com.skeler.scanely.core.network.TranslateRequest
 import com.skeler.scanely.core.network.backendError
+import com.skeler.scanely.core.pdftools.MIME_PDF
 import com.skeler.scanely.core.transcribe.TranscribeOptions
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -26,9 +28,11 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.JsonObject
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.BufferedSink
@@ -203,6 +207,20 @@ internal class BackendClient @Inject constructor(
             },
             pagesBilled = response.usage.pages
         )
+    }
+
+    /**
+     * Each page of [pdf] read by cloud OCR as paragraphs with their boxes, in the PDF's page order.
+     * For a client that lays the text over its own layout; the server keeps none of the pages.
+     */
+    suspend fun ocrBlocks(pdf: File, idempotencyKey: String): List<OcrPageDto> {
+        val part = MultipartBody.Part.createFormData("file", pdf.name, pdf.asRequestBody(MIME_PDF.toMediaType()))
+        val response = try {
+            api.ocr(part, idempotencyKey, null, null, MultipartBody.Part.createFormData("blocks", "1"))
+        } catch (e: HttpException) {
+            throw e.toAiException(context)
+        }
+        return response.pages.sortedBy { it.index }
     }
 
     /**
@@ -473,10 +491,42 @@ private class ProgressFileBody(
 }
 
 internal const val HTTP_ACCEPTED = 202
+private const val HTTP_SERVER_ERROR = 500
+
+/**
+ * A poll of a running job answered 5xx without the job's own verdict: a gateway's error page, or the
+ * Worker failing to read the job's status. It says nothing about the job, which still runs (or has
+ * finished) on the server, so the poll is asked again until the deadline. The job's own failure always
+ * says what it billed (`notCharged`: worker/src/design-job.ts `fail`, routes/agent.ts
+ * `handleAgentTurnStatus`), and that one is final. Reads the error body without consuming it.
+ */
+internal fun Response<*>.isPollHiccup(): Boolean {
+    if (code() < HTTP_SERVER_ERROR) return false
+    val text = errorBody()?.source()?.peek()?.readUtf8().orEmpty()
+    val error = runCatching { TolerantJson.decodeFromString(BackendErrorEnvelope.serializer(), text).error }.getOrNull()
+    return error?.notCharged == null
+}
+
+/**
+ * True while a design job's poll says it is not over: a 202 (its body handed to [onPending]) or a
+ * [isPollHiccup]. Either way the body is consumed.
+ */
+private suspend fun Response<ResponseBody>.isStillRunning(onPending: (suspend (String) -> Unit)?): Boolean = when {
+    isSuccessful && code() == HTTP_ACCEPTED -> {
+        body()?.use { body -> onPending?.invoke(body.string()) }
+        true
+    }
+    isPollHiccup() -> {
+        errorBody()?.close()
+        true
+    }
+    else -> false
+}
 
 /**
  * Follows a background design until it answers with the PDF. Its failure is final: the job ran
- * once, and retrying the request would only replay the same failed job.
+ * once, and retrying the request would only replay the same failed job. A poll that failed without
+ * the job's verdict ([isPollHiccup]) is not its failure and is asked again.
  */
 internal suspend fun awaitDesignJob(
     context: Context,
@@ -488,8 +538,7 @@ internal suspend fun awaitDesignJob(
 ): Response<ResponseBody> {
     val response = withTimeoutOrNull((deadlineSeconds + 60) * 1000L) {
         var response = call()
-        while (response.isSuccessful && response.code() == HTTP_ACCEPTED) {
-            response.body()?.use { body -> onPending?.invoke(body.string()) }
+        while (response.isStillRunning(onPending)) {
             delay(pollDelayMs)
             response = call()
         }

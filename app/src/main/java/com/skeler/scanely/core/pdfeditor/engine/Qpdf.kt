@@ -16,6 +16,7 @@ sealed interface QpdfResult {
  * Raw JNI surface over libqpdf. Callers should use [QpdfEngine] instead; this is internal so an
  * argv typo can't leak past the typed layer.
  */
+@Suppress("TooManyFunctions")
 internal object Qpdf {
 
     private const val OK = 0
@@ -34,6 +35,37 @@ internal object Qpdf {
         password: String,
         stripXmp: Boolean
     ): Int
+
+    /** A copy of [inPath] at [outPath] without the ToUnicode maps of glyph-id fonts; maps removed, or < 0. */
+    @JvmStatic external fun nativeWithoutToUnicode(inPath: String, outPath: String, password: String): Int
+
+    /**
+     * A tagged PDF's structure tree: type names, each node's type and parent, and (page, mcid, node)
+     * triples; null when the PDF has none. See [structure].
+     */
+    @JvmStatic external fun nativeStructure(path: String, password: String): Array<Any>?
+
+    /** What a tagged PDF says its content is ([PdfStructure]); null for an untagged or unreadable one. */
+    fun structure(path: String, password: String): PdfStructure? {
+        val raw = runCatching { nativeStructure(path, password) }.getOrNull() ?: return null
+        val names = (raw[0] as Array<*>).map { it as String }
+        val typeOf = raw[1] as IntArray
+        val marks = raw[STRUCTURE_MARKS] as IntArray
+        val pages = HashMap<Int, HashMap<Int, Int>>()
+        for (i in marks.indices step MARK_FIELDS) {
+            val mcid = marks[i + 1]
+            if (mcid in 0 until MAX_MCID) pages.getOrPut(marks[i]) { HashMap() }[mcid] = marks[i + 2]
+        }
+        val pageNodes = arrayOfNulls<IntArray>((pages.keys.maxOrNull() ?: -1) + 1)
+        pages.forEach { (page, ids) -> pageNodes[page] = IntArray(ids.keys.max() + 1) { ids[it] ?: -1 } }
+        return PdfStructure(Array(typeOf.size) { names[typeOf[it]] }, raw[2] as IntArray, pageNodes)
+    }
+
+    private const val STRUCTURE_MARKS = 3
+    private const val MARK_FIELDS = 3
+
+    /** A page's marked-content ids are small and dense; a wild one in a damaged file must not size an array. */
+    private const val MAX_MCID = 1_000_000
 
     @JvmStatic external fun nativeSetCropBoxes(
         inPath: String,

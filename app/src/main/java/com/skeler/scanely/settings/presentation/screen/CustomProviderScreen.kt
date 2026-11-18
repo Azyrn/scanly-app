@@ -136,7 +136,7 @@ fun CustomProviderScreen(
 
             item { Actions(state = state, viewModel = viewModel) }
 
-            if (state.isPro && (state.isVerified || state.credentials.isComplete)) {
+            if (state.showsEnableSwitch) {
                 item { EnableRow(state = state, viewModel = viewModel) }
             }
         }

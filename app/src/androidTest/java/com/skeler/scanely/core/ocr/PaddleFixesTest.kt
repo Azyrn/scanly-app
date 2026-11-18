@@ -35,7 +35,7 @@ class PaddleFixesTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private fun newEngine() = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private fun newEngine() = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
 
     private fun textPage(w: Int = 1240, h: Int = 1754, lineCount: Int = 20): Bitmap {
         val bmp = createBitmap(w, h)
@@ -203,7 +203,7 @@ class PaddleFixesTest {
     // repo's LFS sha, then usable as a recognizer charset. Requires network.
     @Test
     fun downloadsGreekPackWithShaVerification() {
-        val store = PaddleModelStore(context, OkHttpClient())
+        val store = PaddleModelStore(context, dagger.Lazy { OkHttpClient() })
         store.delete(ScriptPack.GREEK)
         try {
             val result = runBlocking { store.download(ScriptPack.GREEK) }
@@ -240,7 +240,7 @@ class PaddleFixesTest {
                     .build()
             )
             try {
-                PaddleModelStore(context, client)
+                PaddleModelStore(context, dagger.Lazy { client })
             } finally {
                 StrictMode.setThreadPolicy(old)
             }

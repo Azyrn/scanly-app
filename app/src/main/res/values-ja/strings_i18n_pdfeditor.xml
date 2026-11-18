@@ -92,6 +92,7 @@
     <string name="pe_no_signatures_saved">保存済みの署名はありません。ページ編集の「署名」で作成。</string>
     <string name="pe_no_selectable_text">選択できるテキストなし。スキャンのページかも。</string>
     <string name="pe_scanner_unavailable">この端末では書類スキャナーを利用できません。</string>
+    <string name="pe_scanner_start_failed">スキャナーを開けません。接続を確認してください。</string>
     <string name="pe_undo">戻す</string>
     <string name="pe_redo">再実行</string>
     <string name="pe_add_text">文字追加</string>

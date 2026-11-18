@@ -87,4 +87,23 @@
     <string name="pdf_tool_rotate_left">बाएँ 90°</string>
     <string name="pdf_tool_rotate_body">हर पेज घुमाता है। सिर्फ़ कुछ पेज घुमाने के लिए PDF व्यवस्थित करें इस्तेमाल करें।</string>
     <string name="pdf_tool_rotate_action">घुमाएं</string>
+    <string name="pdf_tools_beta_badge">बीटा</string>
+    <string name="pdf_tool_error_broken_output">बदली गई फ़ाइल खराब निकली, इसलिए रखी नहीं गई। कुछ सेव नहीं हुआ।</string>
+    <string name="pdf_tool_error_timed_out">इसमें बहुत समय लगा, इसलिए रोक दिया गया। कुछ सेव नहीं हुआ। छोटी फ़ाइल आज़माएँ।</string>
+    <string name="pdf_tool_credits_refunded">इस रूपांतरण के क्रेडिट वापस कर दिए गए।</string>
+    <string name="pdf_tool_online_read_failed">ऑनलाइन पढ़ना विफल रहा, कोई क्रेडिट नहीं लगा। उन पेजों में PDF का अपना टेक्स्ट रहेगा।</string>
+    <string name="pdf_tools_beta_note">अपडेट के साथ नतीजे बेहतर होते रहेंगे।</string>
+    <string name="online_read_title">पेज ऑनलाइन पढ़ें?</string>
+    <string name="online_read_use">क्रेडिट इस्तेमाल करें</string>
+    <string name="online_read_without">इसके बिना बदलें</string>
+    <string name="online_read_watch_ad">विज्ञापन देखें</string>
+    <string name="online_read_upgrade">अपग्रेड</string>
+    <plurals name="online_read_body">
+        <item quantity="one">सटीक टेक्स्ट के लिए इस फ़ाइल का %1$d पेज ऑनलाइन पढ़ना होगा। लागत: %1$d क्रेडिट।</item>
+        <item quantity="other">सटीक टेक्स्ट के लिए इस फ़ाइल के %1$d पेज ऑनलाइन पढ़ने होंगे। लागत: %1$d क्रेडिट।</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">आपके पास %1$d क्रेडिट बचा है।</item>
+        <item quantity="other">आपके पास %1$d क्रेडिट बचे हैं।</item>
+    </plurals>
 </resources>

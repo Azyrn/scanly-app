@@ -114,6 +114,17 @@ class CustomProviderUiStateTest {
     }
 
     @Test
+    fun `a lapsed Pro user can still switch off an endpoint that is on`() {
+        // N6 refuses AI requests while the endpoint is on and Pro is unconfirmed, and tells the user
+        // to turn it off in Settings: the switch must be there for them to do it.
+        val lapsed = CustomProviderUiState(isPro = false, credentials = COMPLETE, verifiedFor = COMPLETE, isEnabled = true)
+        assertTrue(lapsed.showsEnableSwitch)
+        assertFalse("nothing to switch on without Pro", lapsed.copy(isEnabled = false).showsEnableSwitch)
+        assertTrue(CustomProviderUiState(isPro = true, credentials = COMPLETE).showsEnableSwitch)
+        assertFalse(CustomProviderUiState(isPro = true).showsEnableSwitch)
+    }
+
+    @Test
     fun `verification does not survive being carried onto different credentials`() {
         val state = CustomProviderUiState(
             isPro = true,

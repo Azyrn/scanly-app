@@ -104,4 +104,21 @@
     <string name="pdf_tool_rotate_left">左に90°</string>
     <string name="pdf_tool_rotate_body">すべてのページを回転。1ページずつは「PDFを整理」で。</string>
     <string name="pdf_tool_rotate_action">回転</string>
+    <string name="pdf_tools_beta_badge">ベータ</string>
+    <string name="pdf_tool_error_broken_output">変換後のファイルが壊れていたため破棄しました。何も保存されていません。</string>
+    <string name="pdf_tool_error_timed_out">時間がかかりすぎたため停止しました。何も保存されていません。</string>
+    <string name="pdf_tool_credits_refunded">この変換で使ったクレジットは返却されました。</string>
+    <string name="pdf_tool_online_read_failed">オンライン読み取りに失敗。クレジットは未使用で、該当ページはPDFの文字のままです。</string>
+    <string name="pdf_tools_beta_note">結果はアップデートごとに向上します。</string>
+    <string name="online_read_title">ページをオンラインで読みますか？</string>
+    <string name="online_read_use">クレジットを使う</string>
+    <string name="online_read_without">使わずに変換</string>
+    <string name="online_read_watch_ad">広告を見る</string>
+    <string name="online_read_upgrade">アップグレード</string>
+    <plurals name="online_read_body">
+        <item quantity="other">正確なテキストのため、このファイルの %1$d ページをオンラインで読み取る必要があります。費用：%1$d クレジット。</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="other">残り %1$d クレジットです。</item>
+    </plurals>
 </resources>

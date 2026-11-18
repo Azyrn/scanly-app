@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.xlsx
 
+import android.content.res.AssetManager
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
@@ -12,11 +13,18 @@ import androidx.core.graphics.withTranslation
  *
  * Text is drawn by [XlsxTextPainter], as text, not pixels, so the PDF stays searchable and selectable.
  */
-internal class XlsxPagePainter {
-    private val text = XlsxTextPainter()
+internal class XlsxPagePainter(
+    /** The workbook's maximum digit width in pixels, the unit its column widths are stored in. */
+    private val digitPx: Int = XlsxLayout.DEFAULT_DIGIT_PX,
+    assets: AssetManager? = null
+) {
+    private val text = XlsxTextPainter(assets)
     private val fillPaint = Paint().apply { style = Paint.Style.FILL }
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val cellRect = RectF()
+
+    /** [sheet] sized and paginated with this workbook's column unit and wrapped-text heights. */
+    fun layout(sheet: XlsxSheet): SheetLayout? = XlsxLayout.layout(sheet, digitPx, ::measureWrapped)
 
     /** Height in points that [cell]'s wrapped text needs at [widthPt]. */
     fun measureWrapped(cell: XlsxCell, widthPt: Float): Float = text.measureWrapped(cell, widthPt)

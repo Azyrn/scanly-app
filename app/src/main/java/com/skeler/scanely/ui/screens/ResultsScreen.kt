@@ -80,9 +80,11 @@ import com.skeler.scanely.ui.components.STRUCTURED_EXPORT_FORMATS
 import com.skeler.scanely.ui.components.ScanResultSkeleton
 import com.skeler.scanely.ui.components.SignInRequiredSheet
 import com.skeler.scanely.ui.components.TEXT_EXPORT_FORMATS
+import com.skeler.scanely.ui.components.TextExportFormat
 import com.skeler.scanely.ui.components.TranslatingContent
 import com.skeler.scanely.ui.components.TranslationLanguages
 import com.skeler.scanely.ui.components.UnclearPassagesNotice
+import com.skeler.scanely.ui.components.rememberBackgroundValue
 import com.skeler.scanely.ui.components.rememberExtractedTextState
 import com.skeler.scanely.ui.components.rememberMarkdownPrinter
 import com.skeler.scanely.ui.components.rememberTextExporter
@@ -134,17 +136,22 @@ fun ResultsScreen() {
         ?.takeIf { historyText == null && aiResultText == null && currentLanguage == null }
     val structuredMarkdown = paddleResult?.markdown?.takeIf { it.isNotBlank() }
     // Only provenance-known AI text is treated as Markdown; sniffing plain OCR text corrupts it.
-    val textIsMarkdown = remember(displayText, isAiResult) {
-        isAiResult && displayText?.let { MarkdownParser.looksLikeMarkdown(it) } == true
+    val parsed = rememberBackgroundValue<ParsedResult?>(Triple(displayText, isAiResult, structuredMarkdown), null) {
+        displayText?.let { text ->
+            val markdown = isAiResult && MarkdownParser.looksLikeMarkdown(text)
+            val plain = if (markdown) MarkdownParser.toPlainText(text) else text
+            ParsedResult(plain, structuredMarkdown ?: text.takeIf { markdown })
+        }
     }
-    val markdownSource = structuredMarkdown ?: displayText?.takeIf { textIsMarkdown }
+    val markdownSource = parsed?.markdown
     val hasMarkdown = markdownSource != null
     val markdownMode = resultView == ResultView.MARKDOWN && hasMarkdown
     val jsonMode = resultView == ResultView.JSON && hasMarkdown
-    val shownText = remember(displayText, textIsMarkdown) {
-        if (textIsMarkdown) displayText?.let(MarkdownParser::toPlainText) else displayText
+    val jsonText = if (jsonMode) {
+        rememberBackgroundValue<String?>(markdownSource, null) { markdownSource?.let(DocumentJson::fromMarkdown) }
+    } else {
+        null
     }
-    val jsonText = remember(markdownSource) { markdownSource?.let(DocumentJson::fromMarkdown) }
     val printText = rememberMarkdownPrinter()
 
     val exportText = rememberTextExporter()
@@ -304,7 +311,10 @@ fun ResultsScreen() {
                     aiError != null -> {
                         AiErrorContent(message = aiError.message, canRetry = retryableError)
                     }
-                    displayText != null -> {
+                    displayText != null && (parsed == null || (jsonMode && jsonText == null)) -> {
+                        androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                    }
+                    displayText != null && parsed != null -> {
                         val runInfo = aiState.runInfo
                         val freshAiSuccess = isAiResult && historyText == null && aiState.result is AiResult.Success
                         val credential: (@Composable () -> Unit)? =
@@ -401,7 +411,7 @@ fun ResultsScreen() {
                         val visibleText = when {
                             jsonMode -> jsonText
                             markdownMode -> markdownSource
-                            else -> shownText
+                            else -> parsed.plain
                         } ?: displayText
                         // The JSON view exports the document, not the JSON string: Save as JSON
                         // then matches the screen and the other formats keep their layout.
@@ -421,7 +431,9 @@ fun ResultsScreen() {
                                 )
                             }
                         }
-                        val disabledFormats = remember(preview) { unavailableFormats(preview) }
+                        val disabledFormats = rememberBackgroundValue(preview, setOf(TextExportFormat.CSV)) {
+                            unavailableFormats(preview)
+                        }
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -517,6 +529,8 @@ fun ResultsScreen() {
 }
 
 /** Three readings of the same result: prose, rendered Markdown, or typed JSON elements. */
+private data class ParsedResult(val plain: String, val markdown: String?)
+
 private enum class ResultView { PLAIN, MARKDOWN, JSON }
 
 private fun copyToClipboard(context: Context, text: String) {

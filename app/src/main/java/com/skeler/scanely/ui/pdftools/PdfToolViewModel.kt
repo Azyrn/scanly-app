@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skeler.scanely.R
+import com.skeler.scanely.core.ai.OnlineReadingPrompt
 import com.skeler.scanely.core.common.UriNames
 import com.skeler.scanely.core.pdf.ScanExporter
 import com.skeler.scanely.core.pdftools.ImportedFile
@@ -27,8 +28,10 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,6 +39,8 @@ import java.io.File
 import javax.inject.Inject
 
 private const val TAG = "PdfToolViewModel"
+
+private const val STOP_TIMEOUT_MS = 5_000L
 
 /** Survives process death, so a picker result that outlives the process isn't asked for twice. */
 private const val KEY_AWAITING_PICK = "awaiting_pick"
@@ -81,8 +86,32 @@ class PdfToolViewModel @Inject constructor(
     private val workspace: ToolWorkspace,
     private val engine: PdfToolEngine,
     private val specs: Map<PdfTool, @JvmSuppressWildcards ToolSpec>,
-    private val savedState: SavedStateHandle
+    private val savedState: SavedStateHandle,
+    private val guard: ToolRunGuard,
+    private val onlineReading: OnlineReadingPrompt
 ) : ViewModel() {
+
+    /** Pages PDF to Word wants to read online, while it waits for Use credits / Convert without. */
+    val onlineReadingPages: StateFlow<Int?> = onlineReading.pages
+
+    /** The balance the question shows, kept current after an ad or a purchase. */
+    val creditsLeft: StateFlow<Int?> =
+        onlineReading.creditsLeft.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), null)
+
+    fun useCredits() = onlineReading.useCredits()
+
+    fun convertWithout() = onlineReading.convertWithout()
+
+    fun refreshCredits() = onlineReading.refreshBalance()
+
+    init {
+        guard.onRefunded = { _uiState.update { it.copy(message = R.string.pdf_tool_credits_refunded) } }
+        viewModelScope.launch {
+            onlineReading.failures.collect {
+                _uiState.update { it.copy(message = R.string.pdf_tool_online_read_failed) }
+            }
+        }
+    }
 
     private val _uiState = MutableStateFlow(
         PdfToolUiState(launchPicker = savedState.get<Boolean>(KEY_AWAITING_PICK) != true)
@@ -200,7 +229,7 @@ class PdfToolViewModel @Inject constructor(
                     }
                 }
             }
-            val result = spec.run(input, options)
+            val result = guard.run(spec.tool, state.documents, state.files) { spec.run(input, options) }
             setStage(gen, ToolStage.Done(result))
         }
     }

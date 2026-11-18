@@ -1,21 +1,27 @@
 package com.skeler.scanely.core.pdftools.office2pdf.xlsx
 
+import com.skeler.scanely.core.pdftools.pdf2office.exact.OfficeFamily
+import com.skeler.scanely.core.pdftools.pdf2office.exact.TextMeasurer
 import kotlin.math.floor
+import kotlin.math.round
 
-/** A4, in points, with Excel's default "Normal" margins (0.7" sides, 0.75" top and bottom). */
-internal class PageFrame(val orientation: PageOrientation) {
-    val width: Float = if (orientation == PageOrientation.PORTRAIT) A4_SHORT else A4_LONG
-    val height: Float = if (orientation == PageOrientation.PORTRAIT) A4_LONG else A4_SHORT
-    val marginX: Float = SIDE_MARGIN
-    val marginY: Float = TOP_MARGIN
-    val printableWidth: Float get() = width - 2 * marginX
-    val printableHeight: Float get() = height - 2 * marginY
+/** The printed page in points: the sheet's paper size and margins ([marginX]/[marginY] are left and top). */
+internal class PageFrame(
+    val orientation: PageOrientation,
+    paperSize: Int = PaperSizes.LETTER,
+    margins: PageMargins = PageMargins.EXCEL_NORMAL
+) {
+    private val paper = PaperSizes.portrait(paperSize)
+    val width: Float = if (orientation == PageOrientation.PORTRAIT) paper.first else paper.second
+    val height: Float = if (orientation == PageOrientation.PORTRAIT) paper.second else paper.first
+    val marginX: Float = margins.left
+    val marginY: Float = margins.top
+    val printableWidth: Float = (width - margins.left - margins.right).coerceAtLeast(MIN_PRINTABLE_PT)
+    val printableHeight: Float = (height - margins.top - margins.bottom).coerceAtLeast(MIN_PRINTABLE_PT)
 
     private companion object {
-        const val A4_SHORT = 595f
-        const val A4_LONG = 842f
-        const val SIDE_MARGIN = 50.4f
-        const val TOP_MARGIN = 54f
+        /** Margins that eat the page still leave an inch to print into. */
+        const val MIN_PRINTABLE_PT = 72f
     }
 }
 
@@ -34,7 +40,8 @@ internal class SheetLayout(
     val colLefts: FloatArray,
     val frame: PageFrame,
     val scale: Float,
-    val slices: List<PageSlice>
+    val slices: Sequence<PageSlice>,
+    val pageCount: Long
 ) {
     private val rowCells = HashMap<Int, IntRange>()
     private val mergeAnchors = HashMap<Long, CellRange>()
@@ -102,10 +109,14 @@ internal object XlsxLayout {
      * is how rows the author didn't size grow to show their text, as Excel's autofit does on open.
      * Null for a sheet with nothing to print.
      */
-    fun layout(sheet: XlsxSheet, measureWrapped: (XlsxCell, Float) -> Float): SheetLayout? {
+    fun layout(
+        sheet: XlsxSheet,
+        digitPx: Int = DEFAULT_DIGIT_PX,
+        measureWrapped: (XlsxCell, Float) -> Float
+    ): SheetLayout? {
         val range = usedRange(sheet) ?: return null
         val colLefts = edges(range.lastCol - range.firstCol + 1) {
-            columnWidthPt(sheet.columns, range.firstCol + it)
+            columnWidthPt(sheet.columns, range.firstCol + it, digitPx)
         }
         val heights = FloatArray(range.lastRow - range.firstRow + 1) { rowHeightPt(sheet.rows, range.firstRow + it) }
         autofitRows(sheet, range, colLefts, heights, measureWrapped)
@@ -114,37 +125,48 @@ internal object XlsxLayout {
         val totalHeight = rowTops.last()
         val setup = sheet.setup
         val orientation = setup.orientation
-            ?: if (totalWidth > PageFrame(PageOrientation.PORTRAIT).printableWidth) {
+            ?: if (totalWidth > PageFrame(PageOrientation.PORTRAIT, setup.paperSize, setup.margins).printableWidth) {
                 PageOrientation.LANDSCAPE
             } else {
                 PageOrientation.PORTRAIT
             }
-        val frame = PageFrame(orientation)
+        val frame = PageFrame(orientation, setup.paperSize, setup.margins)
         val scale = pageScale(setup, frame, totalWidth, totalHeight)
         val colBands = bands(colLefts, frame.printableWidth / scale)
         val rowBands = bands(rowTops, frame.printableHeight / scale)
-        val slices = colBands.flatMap { cols ->
-            rowBands.map { rows -> PageSlice(rows.first, rows.second, cols.first, cols.second) }
+        val slices = colBands.asSequence().flatMap { cols ->
+            rowBands.asSequence().map { rows -> PageSlice(rows.first, rows.second, cols.first, cols.second) }
         }
-        return SheetLayout(sheet, range.firstRow, range.firstCol, rowTops, colLefts, frame, scale, slices)
+        return SheetLayout(
+            sheet, range.firstRow, range.firstCol, rowTops, colLefts, frame, scale, slices,
+            colBands.size.toLong() * rowBands.size
+        )
     }
 
     /** The print scale: the sheet's own percentage, or whatever fits it to the page's width or height. */
     private fun pageScale(setup: SheetPageSetup, frame: PageFrame, totalWidth: Float, totalHeight: Float): Float {
-        var scale = if (setup.fitToWidth || setup.fitToHeight) 1f else setup.scalePercent / PERCENT
-        if (setup.fitToWidth && totalWidth > 0) scale = minOf(scale, frame.printableWidth / totalWidth)
-        if (setup.fitToHeight && totalHeight > 0) scale = minOf(scale, frame.printableHeight / totalHeight)
+        var scale = if (setup.fitToWidth > 0 || setup.fitToHeight > 0) 1f else setup.scalePercent / PERCENT
+        if (setup.fitToWidth > 0 && totalWidth > 0) {
+            scale = minOf(scale, frame.printableWidth * setup.fitToWidth / totalWidth)
+        }
+        if (setup.fitToHeight > 0 && totalHeight > 0) {
+            scale = minOf(scale, frame.printableHeight * setup.fitToHeight / totalHeight)
+        }
         return scale.coerceAtLeast(MIN_SCALE)
     }
 
-    /** Excel stores widths in digit widths of the default font, padding included; 7 px per digit at 96 dpi. */
-    fun columnWidthPt(columns: ColumnSpec, col: Int): Float {
+    /**
+     * Excel stores widths in [digitPx]-wide digits of the Normal style's font, padding included
+     * (ECMA-376 §18.3.1.13: pixels = Truncate(((256 × width + Truncate(128 / MDW)) / 256) × MDW)).
+     * MDW is 7 px for Calibri 11 and Arial 10 but 6 px for Arial 8, whose columns are a seventh narrower.
+     */
+    fun columnWidthPt(columns: ColumnSpec, col: Int, digitPx: Int = DEFAULT_DIGIT_PX): Float {
         if (col in columns.hidden) return 0f
         val chars = columns.widths[col] ?: columns.defaultWidthChars
         val pixels = if (chars != null) {
-            floor(chars * DIGIT_PX + ROUNDING_PX)
+            floor(chars * digitPx + (ROUNDING_UNITS / digitPx) / WIDTH_UNITS * digitPx)
         } else {
-            columns.baseWidthChars * DIGIT_PX + DEFAULT_PADDING_PX
+            (columns.baseWidthChars * digitPx + DEFAULT_PADDING_PX).toFloat()
         }
         return pixels * PT_PER_PX
     }
@@ -223,12 +245,29 @@ internal object XlsxLayout {
     const val CELL_PADDING_PT = 2f
     private const val LINE_HEIGHT = 1.3f
     private const val MAX_ROW_PT = 409f
-    private const val DIGIT_PX = 7f
-    private const val ROUNDING_PX = 18f / 256f * DIGIT_PX
+    const val DEFAULT_DIGIT_PX = 7
+    private const val WIDTH_UNITS = 256f
+    private const val ROUNDING_UNITS = 128
+    const val PX_PER_PT = 96f / 72f
+    const val DIGITS = "0123456789"
     private const val DEFAULT_PADDING_PX = 8
     private const val PT_PER_PX = 0.75f
     private const val PERCENT = 100f
     private const val MIN_SCALE = 0.1f
     private const val EPSILON = 0.01f
     private const val ROW_SHIFT = 15
+}
+
+/**
+ * The maximum digit width (MDW) of [font] in whole pixels at 96 dpi, the unit of column widths,
+ * measured with the font's metric twin. Rounded to the nearest pixel: 7.43 px for Calibri 11 and
+ * 7.41 for Arial 10 give the 7 px the specification names.
+ */
+internal fun maxDigitPx(font: FontStyle, measurer: TextMeasurer): Int {
+    val family = OfficeFamily.of(font.name ?: OfficeFamily.CALIBRI.officeName, 0)
+    val sizePx = font.sizePt * XlsxLayout.PX_PER_PT
+    val widest = XlsxLayout.DIGITS.maxOf { digit ->
+        measurer.width(digit.toString(), family, false, font.bold, font.italic, sizePx)
+    }
+    return round(widest).toInt().coerceAtLeast(1)
 }

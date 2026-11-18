@@ -48,7 +48,7 @@ class PaddleArabicSamplesTest {
     }
 
     private fun service(): PaddleOcrService {
-        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, OkHttpClient()))
+        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, dagger.Lazy { OkHttpClient() }))
         val settings = FixedSettings(
             mapOf(
                 SettingsKeys.PADDLE_SCRIPT to "arabic",
@@ -121,7 +121,7 @@ class PaddleArabicSamplesTest {
 
     @Test
     fun sweepWordGapFactor() {
-        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, OkHttpClient()))
+        val engine = PaddleOcrEngine(appCtx, PaddleModelStore(appCtx, dagger.Lazy { OkHttpClient() }))
         val bmp = asset("img1_paragraph.png")
         val quads = engine.detect(bmp, 960).sortedBy { it.minY }
         val crops = quads.map { com.skeler.scanely.core.ocr.paddle.ImageOps.cropQuad(bmp, it) }

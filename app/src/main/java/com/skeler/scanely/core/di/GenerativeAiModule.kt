@@ -6,6 +6,7 @@ import com.skeler.scanely.core.network.ApiJson
 import com.skeler.scanely.core.network.BackendAuthInterceptor
 import com.skeler.scanely.core.network.ScanlyApi
 import com.skeler.scanely.core.network.ScanlyPublicApi
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,10 +35,10 @@ object GenerativeAiModule {
     @Provides
     @Singleton
     fun provideScanlyApi(
-        @BaseHttpClient base: OkHttpClient,
+        @BaseHttpClient base: Lazy<OkHttpClient>,
         authInterceptor: BackendAuthInterceptor
-    ): ScanlyApi = retrofit(
-        base.derive()
+    ): ScanlyApi = retrofit(BuildConfig.SCANLY_API_BASE_URL) {
+        base.get().derive()
             .addInterceptor(authInterceptor)
             // Only the application knows which billed operations have replay keys.
             .retryOnConnectionFailure(false)
@@ -45,17 +46,16 @@ object GenerativeAiModule {
             // Large PDF scans can keep the Worker connection open for several minutes.
             .readTimeout(SCAN_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(SCAN_WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .build(),
-        BuildConfig.SCANLY_API_BASE_URL
-    ).create(ScanlyApi::class.java)
+            .build()
+    }.create(ScanlyApi::class.java)
 
     @Provides
     @Singleton
     @BackendControl
     fun provideBackendControlApi(
-        @BaseHttpClient base: OkHttpClient,
+        @BaseHttpClient base: Lazy<OkHttpClient>,
         authInterceptor: BackendAuthInterceptor
-    ): ScanlyApi = backendControlApi(base, authInterceptor, BuildConfig.SCANLY_API_BASE_URL)
+    ): ScanlyApi = backendControlApi(base::get, authInterceptor, BuildConfig.SCANLY_API_BASE_URL)
 
     /**
      * 20 seconds for the whole call — connect, TLS, request and answer. It is the connection
@@ -66,8 +66,14 @@ object GenerativeAiModule {
         base: OkHttpClient,
         authInterceptor: Interceptor,
         baseUrl: String
-    ): ScanlyApi = retrofit(
-        base.derive()
+    ): ScanlyApi = backendControlApi({ base }, authInterceptor, baseUrl)
+
+    private fun backendControlApi(
+        base: () -> OkHttpClient,
+        authInterceptor: Interceptor,
+        baseUrl: String
+    ): ScanlyApi = retrofit(baseUrl) {
+        base().derive()
             .addInterceptor(authInterceptor)
             // As the scan client: activation writes a row, so a silent replay is not free.
             .retryOnConnectionFailure(false)
@@ -75,25 +81,25 @@ object GenerativeAiModule {
             .readTimeout(CONTROL_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(CONTROL_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .callTimeout(CONTROL_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .build(),
-        baseUrl
-    ).create(ScanlyApi::class.java)
+            .build()
+    }.create(ScanlyApi::class.java)
 
     /** Unauthenticated client for small public API calls. */
     @Provides
     @Singleton
-    fun provideScanlyPublicApi(@BaseHttpClient base: OkHttpClient): ScanlyPublicApi = retrofit(
-        base.derive()
-            .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .readTimeout(PUBLIC_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .build(),
-        BuildConfig.SCANLY_API_BASE_URL
-    ).create(ScanlyPublicApi::class.java)
+    fun provideScanlyPublicApi(@BaseHttpClient base: Lazy<OkHttpClient>): ScanlyPublicApi =
+        retrofit(BuildConfig.SCANLY_API_BASE_URL) {
+            base.get().derive()
+                .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .readTimeout(PUBLIC_READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .build()
+        }.create(ScanlyPublicApi::class.java)
 
-    private fun retrofit(client: OkHttpClient, baseUrl: String): Retrofit =
+    /** [client] is built on the first request: see [lazyCallFactory]. */
+    private fun retrofit(baseUrl: String, client: () -> OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(client)
+            .callFactory(lazyCallFactory(client))
             .addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
             .build()
 

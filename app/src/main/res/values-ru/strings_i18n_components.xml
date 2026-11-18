@@ -354,6 +354,7 @@
     <string name="pay_confirm_sent">Откройте ссылку в письме, затем снова «Восстановить покупку».</string>
     <string name="pay_confirm_failed">Не удалось отправить письмо. Повторите.</string>
     <string name="pay_key_removed">Ключ удалён с этого устройства.</string>
+    <string name="pay_reward_pending">Бонусные кредиты скоро появятся.</string>
     <string name="pay_restored_tier">Ключ %1$s вернулся.</string>
     <string name="pay_restored">Ключ снова на устройстве.</string>
     <string name="pay_restore_nothing">На этом аккаунте нет подписки. Если вы платили с другого адреса эл. почты, войдите с ним и попробуйте снова.</string>

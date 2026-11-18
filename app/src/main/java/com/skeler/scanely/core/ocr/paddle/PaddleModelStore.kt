@@ -2,7 +2,8 @@ package com.skeler.scanely.core.ocr.paddle
 
 import android.content.Context
 import android.util.Log
-import com.skeler.scanely.R
+import com.skeler.scanely.core.di.BaseHttpClient
+import dagger.Lazy
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,9 @@ sealed interface PackState {
 @Singleton
 class PaddleModelStore @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val httpClient: OkHttpClient
+    // The shared base client, not LookupModule's unqualified one: that one sends Open Food Facts'
+    // User-Agent and gives up after 15 s.
+    @BaseHttpClient baseHttpClient: Lazy<OkHttpClient>
 ) {
 
     // context.filesDir stats/creates the dir on every call; lazy keeps the
@@ -41,7 +44,7 @@ class PaddleModelStore @Inject constructor(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    private val downloader = HfModelDownloader(httpClient)
+    private val downloader = HfModelDownloader { baseHttpClient.get() }
 
     /** 30 MB dewarper, opt-in — downloaded rather than bundled. */
     val uvdoc = OptionalModel(context, scope, downloader, "UVDoc_onnx", "UVDoc") {
@@ -112,7 +115,7 @@ class PaddleModelStore @Inject constructor(
         }.onFailure { e ->
             Log.e(TAG, "Pack download failed: ${pack.id}", e)
             dir.deleteRecursively()
-            setState(pack, PackState.Failed(e.message ?: context.getString(R.string.ocr_err_download)))
+            setState(pack, PackState.Failed(downloadFailureMessage(context, e)))
         }.map { }
     }
 

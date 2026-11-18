@@ -30,7 +30,11 @@ internal class Glyph(
     val looseU0: Float,
     val looseU1: Float,
     /** Where the glyph was placed along the baseline (the text origin), not where its ink is. */
-    val origin: Float = 0f
+    val origin: Float = 0f,
+    /** The font could not name this glyph and the PDF's mapping may be wrong ([PdfiumChar.uncertain]). */
+    val uncertain: Boolean = false,
+    /** The marked-content id the glyph was drawn under ([PdfiumChar.mcid]), or -1. */
+    val mcid: Int = -1
 ) : Item
 
 /** First stage of [ExactLayout]: pdfium's characters as glyphs and spaces along their baselines. */
@@ -39,14 +43,17 @@ internal object ExactGlyphs {
     fun glyphs(chars: List<PdfiumChar>): List<Item> {
         val items = ArrayList<Item>(chars.size)
         val recent = ArrayDeque<Glyph>()
-        for (c in chars) {
+        for ((i, c) in chars.withIndex()) {
             val code = codeOf(c)
             val item = when {
                 c.isHidden() -> null
                 isLineBreak(code) -> LineBreak
                 isSpace(c, code) -> spaceOf(c)
                 isSkipped(c, code) -> null
-                else -> unlessTwin(GlyphGeometry.glyph(c, code), recent)
+                else -> {
+                    val right = GlyphExtent.right(c, chars.getOrNull(i + 1))
+                    unlessTwin(GlyphGeometry.glyph(c, code, GlyphExtent.left(c), right), recent)
+                }
             }
             if (item != null) items += item
         }
@@ -95,10 +102,46 @@ internal object ExactGlyphs {
     private const val REPLACEMENT_CHARACTER = 0xFFFD
 }
 
+/**
+ * A character's advance box along an upright baseline: from its origin to where its advance ends.
+ * pdfium's loose box was that; since 2024 it is that box united with the ink box
+ * (cpdf_textpage.cpp, GetLooseBounds), so a glyph that overhangs its advance (an Arial "r" by
+ * 0.27 pt at 19 pt, an italic "f" on both sides) made words measure wider than they were set.
+ * The left edge is the origin again. The right edge is the loose box's wherever that reaches past
+ * the ink (it is then the advance); where the ink reaches it, the advance ends at the next
+ * character's origin when one follows on the baseline, else the box is kept.
+ */
+internal object GlyphExtent {
+    private const val SAME_PT = 0.005f
+
+    fun left(c: PdfiumChar): Float = if (upright(c) && c.left < c.originX) c.originX else c.left
+
+    fun right(c: PdfiumChar, next: PdfiumChar?): Float {
+        val overhangs = upright(c) && c.right <= c.inkRight + SAME_PT
+        val follows = next != null && !next.generated && next.originY == c.originY &&
+            next.originX > c.originX && next.originX < c.right && !repaint(c, next)
+        return if (overhangs && follows) next!!.originX else c.right
+    }
+
+    /**
+     * [next] is [c] painted again a little to the side (fake bold, fill + stroke passes), not the
+     * next letter: ending [c] at its origin would shrink it below the overlap that makes the two
+     * one letter ([ExactGlyphs.unlessTwin]).
+     */
+    private fun repaint(c: PdfiumChar, next: PdfiumChar): Boolean =
+        next.code == c.code && next.originX - c.originX < (c.right - c.originX) * REPAINT_SHARE
+
+    /** A repaint is shifted by less than this share of the character's advance. */
+    private const val REPAINT_SHARE = 0.3f
+
+    private fun upright(c: PdfiumChar): Boolean = c.matrixB == 0f && c.matrixC == 0f && c.matrixA > 0f
+}
+
 /** Where a pdfium character sits along its baseline, and how it looks. */
 internal object GlyphGeometry {
 
-    fun glyph(c: PdfiumChar, code: Int): Glyph {
+    /** [left], [right]: the character's advance box ([GlyphExtent]) when known better than its loose box. */
+    fun glyph(c: PdfiumChar, code: Int, left: Float = c.left, right: Float = c.right): Glyph {
         val size = c.effectiveSize.takeIf { it > MIN_SIZE_PT } ?: (c.top - c.bottom).coerceAtLeast(1f)
         val angle = angleOf(c)
         val radians = Math.toRadians(angle.toDouble())
@@ -111,9 +154,9 @@ internal object GlyphGeometry {
         val corners = if (ink) {
             corners(c.inkLeft, c.inkBottom, c.inkRight, c.inkTop, dx, dy)
         } else {
-            corners(c.left, c.bottom, c.right, c.top, dx, dy)
+            corners(left, c.bottom, right, c.top, dx, dy)
         }
-        val loose = corners(c.left, c.bottom, c.right, c.top, dx, dy)
+        val loose = corners(left, c.bottom, right, c.top, dx, dy)
         val origin = c.originX * dx + c.originY * dy
         var u0 = corners.min()
         var u1 = corners.max()
@@ -124,7 +167,8 @@ internal object GlyphGeometry {
         val v = -c.originX * dy + c.originY * dx
         return Glyph(
             String(Character.toChars(code)), code, style(c, code, size), angle, u0, u1, v,
-            ExactScripts.isRtl(code), ExactScripts.isStrongLtr(code), loose.min(), loose.max(), origin
+            ExactScripts.isRtl(code), ExactScripts.isStrongLtr(code), loose.min(), loose.max(), origin,
+            c.uncertain, c.mcid
         )
     }
 
@@ -138,14 +182,37 @@ internal object GlyphGeometry {
 
     private fun style(c: PdfiumChar, code: Int, size: Float): TextStyle {
         val arabic = ExactScripts.isArabic(code)
+        val face = face(c)
         return TextStyle(
-            family = OfficeFamily.of(c.font, c.fontFlags),
+            family = face.family,
             arabic = arabic,
-            bold = OfficeFamily.isBold(c.font, c.fontFlags, c.weight),
-            italic = !arabic && OfficeFamily.isItalic(c.font, c.fontFlags),
+            bold = face.bold,
+            italic = !arabic && face.italic,
             sizePt = (size * SIZE_STEP).roundToInt() / SIZE_STEP,
             argb = c.argb
         )
+    }
+
+    /** What a PDF font maps to; the same for every glyph of that font, so worked out once per font. */
+    private class Face(val family: OfficeFamily, val bold: Boolean, val italic: Boolean)
+
+    private data class FaceKey(val font: String, val flags: Int, val weight: Int)
+
+    /**
+     * The name tests in [OfficeFamily] lowercase the font name and scan dozens of hints; done per glyph
+     * they were a quarter of a 142-page Word conversion on the phone (simpleperf, 2026-11-11).
+     */
+    private val faces = java.util.concurrent.ConcurrentHashMap<FaceKey, Face>()
+
+    private fun face(c: PdfiumChar): Face {
+        val key = FaceKey(c.font, c.fontFlags, c.weight)
+        faces[key]?.let { return it }
+        if (faces.size >= MAX_FACES) faces.clear()
+        return Face(
+            OfficeFamily.of(c.font, c.fontFlags),
+            OfficeFamily.isBold(c.font, c.fontFlags, c.weight),
+            OfficeFamily.isItalic(c.font, c.fontFlags)
+        ).also { faces[key] = it }
     }
 
     private fun angleOf(c: PdfiumChar): Int = c.angle.roundToInt().let {
@@ -173,6 +240,7 @@ internal object GlyphGeometry {
     }
 
     private const val ROTATION_TOLERANCE_DEG = 1
+    private const val MAX_FACES = 4_096
     private const val SIZE_STEP = 2f
     private const val HALF = 0.5f
     private const val MIN_SIZE_PT = 0.1f

@@ -37,6 +37,9 @@ internal class XlsxReader private constructor(
 
     private lateinit var sharedStrings: List<String>
     private lateinit var styles: XlsxStyles
+
+    /** The Normal style's font, which column widths are measured in. */
+    val defaultFont: FontStyle get() = styles.defaultFont
     private lateinit var formatter: NumberFormatter
 
     init {

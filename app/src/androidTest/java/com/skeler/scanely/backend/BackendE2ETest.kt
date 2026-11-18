@@ -16,6 +16,9 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okio.ByteString
+import okio.buffer
+import okio.source
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -89,9 +92,9 @@ class BackendE2ETest {
             client = BackendClient(InstrumentationRegistry.getInstrumentation().targetContext, api)
         }
 
-        private fun asset(name: String): ByteArray =
+        private fun asset(name: String): ByteString =
             InstrumentationRegistry.getInstrumentation().context.assets
-                .open(name).use { it.readBytes() }
+                .open(name).source().buffer().use { it.readByteString() }
 
         private suspend fun <T> Task<T>.await(): T = suspendCancellableCoroutine { cont ->
             addOnSuccessListener { cont.resume(it) }

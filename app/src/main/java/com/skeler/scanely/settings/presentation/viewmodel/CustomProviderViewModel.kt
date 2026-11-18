@@ -52,6 +52,13 @@ data class CustomProviderUiState(
     val canTest: Boolean get() = isPro && credentials.isComplete && !isTesting
 
     val canEdit: Boolean get() = isPro && !isTesting
+
+    /**
+     * The "use for AI" switch. Shown to a user whose endpoint is on even without Pro: with Pro
+     * unconfirmed every AI request is refused until the endpoint is off (ai_err_custom_needs_pro),
+     * and this switch is where that message sends them. Switching on still needs Pro ([setEnabled]).
+     */
+    val showsEnableSwitch: Boolean get() = isEnabled || (isPro && (isVerified || credentials.isComplete))
 }
 
 @HiltViewModel

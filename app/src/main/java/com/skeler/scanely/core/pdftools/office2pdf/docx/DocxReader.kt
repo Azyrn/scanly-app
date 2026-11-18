@@ -50,9 +50,11 @@ internal class ReadSession(
     /** The current table's style, which sits between document defaults and paragraph styles. */
     var tableStyle: Pair<ParaProps, RunProps>? = null
 
+    /** Inside a table (its cells are being read). */
+    val inTable: Boolean get() = tableStyle != null
+
     val fields = FieldState()
-    private val headerRefs = LinkedHashSet<String>()
-    private val sectionReader = SectionReader(notes, headerRefs)
+    private val sectionReader = SectionReader(notes)
     private val inlines = DocxInlineReader(this)
     private val tables = DocxTableReader(this)
 
@@ -63,11 +65,76 @@ internal class ReadSession(
         theme = auxiliary("/theme") { parseTheme(it) } ?: theme
         styles = auxiliary("/styles") { parseStyles(it, theme) } ?: styles
         numbering = auxiliary("/numbering") { parseNumbering(it, theme) } ?: numbering
-        val sections = parsePart(zip, documentPath, DOCUMENT_CAP, newParser, ::parseDocument) ?: throw damaged()
-        notes.headersFooters = headerRefs.any { id ->
-            rels[id]?.takeUnless { it.external }?.let { partHasContent(zip, it.target, newParser) } == true
+        val sections = inheritHeaders(
+            parsePart(zip, documentPath, DOCUMENT_CAP, newParser, ::parseDocument) ?: throw damaged()
+        )
+        val settings = auxiliary("/settings") { parseSettings(it) } ?: DocxSettings()
+        val footnotes = auxiliary("/footnotes") { parseFootnotes(it) } ?: Footnotes()
+        return DocxDocument(
+            sections,
+            notes,
+            headerParts(sections),
+            settings.evenAndOddHeaders,
+            settings.shrinkSpaces,
+            footnotes.notes,
+            footnotes.separator
+        )
+    }
+
+    /** Footnotes are numbered in the order the body refers to them (w:footnoteReference without custom mark). */
+    var footnoteCount = 0
+
+    private class Footnotes(
+        val notes: Map<String, List<DocxBlock>> = emptyMap(),
+        val separator: List<DocxBlock> = emptyList()
+    )
+
+    /** footnotes.xml: each w:footnote's blocks by id; the separator one apart. */
+    private fun parseFootnotes(parser: XmlPullParser): Footnotes {
+        val notes = HashMap<String, List<DocxBlock>>()
+        var separator = emptyList<DocxBlock>()
+        parser.children { name ->
+            if (name != "footnote" || !parser.isW()) {
+                parser.skip()
+                return@children
+            }
+            val type = parser.attr("type")
+            val id = parser.attr("id")
+            val blocks = ArrayList<DocxBlock>()
+            readBlocks(parser, blocks, null)
+            when {
+                type == "separator" -> separator = blocks
+                type == null || type == "normal" -> if (id != null) notes[id] = blocks
+            }
         }
-        return DocxDocument(sections, notes)
+        return Footnotes(notes, separator)
+    }
+
+    /** Every header and footer part a section uses, read like the body; PAGE fields stay live in them. */
+    private fun headerParts(sections: List<DocxSection>): Map<String, List<DocxBlock>> {
+        val ids = sections.flatMap { it.page.headers.values + it.page.footers.values }.toSet()
+        val parts = HashMap<String, List<DocxBlock>>()
+        fields.livePages = true
+        try {
+            for (id in ids) {
+                val target = rels[id]?.takeUnless { it.external }?.target ?: continue
+                val blocks = try {
+                    parsePart(zip, target, PART_CAP, newParser) { parser ->
+                        ArrayList<DocxBlock>().also { readBlocks(parser, it, null) }
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (ignored: Exception) {
+                    // One unreadable header is a header left out, not a failed document.
+                    notes.headersFooters = true
+                    null
+                }
+                if (blocks != null) parts[id] = blocks
+            }
+        } finally {
+            fields.livePages = false
+        }
+        return parts
     }
 
     private fun <T> auxiliary(typeSuffix: String, read: (XmlPullParser) -> T): T? {
@@ -192,23 +259,55 @@ internal class ReadSession(
  * Field codes: between "begin" and "separate" is the instruction (`PAGE`, `TOC \o`), which is
  * never shown; between "separate" and "end" is the result Word cached at last save, which is
  * what the reader would see. Fields nest, and may span paragraphs (a table of contents does).
+ *
+ * With [livePages] on (header and footer parts), a PAGE field's result is the page it is drawn on,
+ * not the cached digits: [pageResult] is true while inside such a result.
  */
 internal class FieldState {
-    private val stack = ArrayList<Boolean>()
+    private class Field(
+        var inResult: Boolean = false,
+        val instruction: StringBuilder = StringBuilder(),
+        var shown: Boolean = false
+    )
+
+    private val stack = ArrayList<Field>()
+
+    var livePages = false
 
     /** True while inside an instruction, where run text must be dropped. */
-    val inInstruction: Boolean get() = stack.any { !it }
+    val inInstruction: Boolean get() = stack.any { !it.inResult }
+
+    /** Inside the result of a PAGE field that is drawn live ([livePages]). */
+    val pageResult: Boolean
+        get() = livePages && stack.lastOrNull()?.let { it.inResult && isPage(it.instruction) } == true
 
     fun mark(type: String?) {
         when (type) {
-            "begin" -> if (stack.size < MAX_NESTING) stack += false
-            "separate" -> if (stack.isNotEmpty()) stack[stack.lastIndex] = true
+            "begin" -> if (stack.size < MAX_NESTING) stack += Field()
+            "separate" -> stack.lastOrNull()?.inResult = true
             "end" -> stack.removeLastOrNull()
         }
     }
 
-    private companion object {
-        const val MAX_NESTING = 32
+    /** True the first time a live PAGE result asks: the field shows its number once, whatever its cached runs. */
+    fun claimPage(): Boolean {
+        val field = stack.lastOrNull() ?: return false
+        return !field.shown.also { field.shown = true }
+    }
+
+    /** Text of a w:instrText inside the current field's instruction. */
+    fun instruction(text: String) {
+        val field = stack.lastOrNull()?.takeIf { !it.inResult } ?: return
+        if (field.instruction.length < MAX_INSTRUCTION) field.instruction.append(text)
+    }
+
+    companion object {
+        private const val MAX_NESTING = 32
+        private const val MAX_INSTRUCTION = 256
+
+        /** `PAGE`, `PAGE \* Arabic \* MERGEFORMAT`; not PAGEREF or NUMPAGES. */
+        fun isPage(instruction: CharSequence): Boolean =
+            instruction.trim().split(' ', '\t').firstOrNull()?.equals("PAGE", ignoreCase = true) == true
     }
 }
 
@@ -238,6 +337,8 @@ internal class ParagraphAssembler(
 
     private val resolved by lazy { resolve() }
     private var segment = ArrayList<DocxInline>()
+    private val pendingText = StringBuilder()
+    private var pendingStyle: RunStyle? = null
     private var segments = 0
 
     val context = InlineContext(
@@ -247,15 +348,34 @@ internal class ParagraphAssembler(
         pageBreak = ::pageBreak
     )
 
-    fun finish() = flush()
+    /**
+     * A paragraph that ends with its page break keeps its mark on the page before the break, as Word
+     * (2013 and later) shows it: nothing of it goes to the next page. Measured on un_en_c5_79_9, where
+     * each annex page starts after a paragraph holding only a page break: Word's heading is at the
+     * top margin; an empty line there put ours 18 pt lower and spilled two pages.
+     */
+    fun finish() {
+        flushText()
+        if (segments > 0 && segment.isEmpty()) return
+        flush()
+    }
 
     private fun emit(inline: DocxInline) {
-        val last = segment.lastOrNull()
-        if (inline is DocxText && last is DocxText && last.style == inline.style) {
-            segment[segment.lastIndex] = DocxText(last.text + inline.text, last.style)
+        if (inline is DocxText) {
+            if (pendingStyle != inline.style) flushText()
+            pendingStyle = inline.style
+            pendingText.append(inline.text)
         } else {
+            flushText()
             segment += inline
         }
+    }
+
+    private fun flushText() {
+        val style = pendingStyle ?: return
+        segment += DocxText(pendingText.toString(), style)
+        pendingText.setLength(0)
+        pendingStyle = null
     }
 
     /** Inside a table cell Word ignores page breaks, so they become line breaks there. */
@@ -269,6 +389,7 @@ internal class ParagraphAssembler(
     }
 
     private fun flush() {
+        flushText()
         val style = resolved.style
         if (breaksBefore()) out += DocxPageBreak
         val segmentStyle = if (segments == 0) style else style.copy(spaceBefore = 0)

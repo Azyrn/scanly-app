@@ -20,7 +20,11 @@ internal fun docxReflows(block: Block, behind: Boolean): Boolean =
 private fun mixed(block: Block, line: Segment) =
     (line.bidi && !block.rtl) || line.rtl != block.rtl || line.tokens.isEmpty()
 
-private fun brokenLink(line: Segment, next: Segment): Boolean {
+/**
+ * A long link broken where it ran out of room, between [line] and [next]: the PDF put no space there
+ * and Word would break it at its own place (a slash, a hyphen), so such lines keep their breaks.
+ */
+internal fun brokenLink(line: Segment, next: Segment): Boolean {
     val first = next.tokens.first().text
     return unbreakable(line.tokens.last().text) || unbreakable(first) || first.first() in NO_WORD_START
 }

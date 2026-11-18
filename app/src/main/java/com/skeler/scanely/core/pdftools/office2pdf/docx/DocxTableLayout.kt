@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import androidx.core.graphics.withClip
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -13,6 +14,12 @@ internal interface CellItem {
     val height: Float
 
     fun draw(canvas: Canvas, left: Float, top: Float)
+
+    /** The least of it that may stand alone at the foot of a page (a paragraph: its first line). */
+    val leastHeight: Float get() = height
+
+    /** It cut in two so the first part is at most [room] tall, or null when it can't be (a table, one line). */
+    fun split(room: Float): Pair<CellItem, CellItem>? = null
 }
 
 internal class CellPlan(
@@ -38,8 +45,17 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
     }
     private val fillPaint = Paint().apply { style = Paint.Style.FILL }
 
-    /** Column edges from the table's grid, filled in where the grid is missing and scaled to fit. */
+    /**
+     * Column edges from the table's grid, filled in where the grid is missing and scaled to fit. A
+     * right-to-left table's edges run from the right: its first column ends at the right margin.
+     */
     fun columns(table: DocxTable, width: Float): FloatArray {
+        val edges = leftToRight(table, width)
+        if (!table.rtl) return edges
+        return FloatArray(edges.size) { width - edges[it] }
+    }
+
+    private fun leftToRight(table: DocxTable, width: Float): FloatArray {
         val used = table.rows.maxOfOrNull { row -> row.cells.sumOf { it.span } } ?: 0
         val count = max(table.columns.size, used).coerceIn(1, MAX_COLUMNS)
         val widths = FloatArray(count) { (table.columns.getOrNull(it) ?: 0) / TWIPS_PER_POINT }
@@ -63,13 +79,14 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
             column += cell.span
             if (start >= last) return@mapNotNull null
             val end = min(start + cell.span, last)
-            val inner = (edges[end] - edges[start] - padding.first - padding.second).coerceAtLeast(MIN_INNER)
+            val inner = (abs(edges[end] - edges[start]) - padding.first - padding.second).coerceAtLeast(MIN_INNER)
             val items = if (cell.merge == VerticalMerge.CONTINUE) {
                 emptyList()
             } else {
                 measure(cell.blocks, inner, maxImageHeight)
             }
-            CellPlan(cell, start, edges[start], edges[end], items)
+            // Right to left, edges fall as columns go on: a cell runs from its last edge to its first.
+            CellPlan(cell, start, min(edges[start], edges[end]), max(edges[start], edges[end]), items)
         }
         val content = cells.maxOfOrNull { cell -> cell.items.fold(0f) { sum, item -> sum + item.height } } ?: 0f
         val declared = row.heightTwips / TWIPS_PER_POINT
@@ -103,7 +120,7 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
                 fillPaint.color = fill or OPAQUE
                 canvas.drawRect(rect, fillPaint)
             }
-            drawItems(canvas, rect, padding(table).first, cellPlan.items)
+            drawItems(canvas, rect, padding(table).first, cellPlan.items, cell.align)
             if (cell.bordered) drawBorders(canvas, rect, !continued, !continuesBelow(table, index, cellPlan.column))
         }
     }
@@ -114,10 +131,17 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
         table.cellMarginRight?.let { it / TWIPS_PER_POINT } ?: CELL_PADDING
     )
 
-    private fun drawItems(canvas: Canvas, rect: RectF, left: Float, items: List<CellItem>) {
+    /** A cell's items, from its top, or lower in a taller row as its vertical alignment asks. */
+    private fun drawItems(canvas: Canvas, rect: RectF, left: Float, items: List<CellItem>, align: CellAlign) {
         if (items.isEmpty()) return
+        val room = rect.height() - 2 * CELL_PADDING_V - items.sumOf { it.height.toDouble() }.toFloat()
+        val drop = when (align) {
+            CellAlign.TOP -> 0f
+            CellAlign.CENTER -> room / 2f
+            CellAlign.BOTTOM -> room
+        }.coerceAtLeast(0f)
         canvas.withClip(rect) {
-            var y = rect.top + CELL_PADDING_V
+            var y = rect.top + CELL_PADDING_V + drop
             for (item in items) {
                 item.draw(canvas, rect.left + left, y)
                 y += item.height
@@ -190,12 +214,44 @@ internal class TableLayout(private val paragraphs: ParagraphFactory) {
 
         override val height: Float get() = before + text + after
 
+        override val leastHeight: Float
+            get() = plans.singleOrNull()?.takeIf { it.lineCount > 1 }?.let { before + it.lineHeight(0) } ?: height
+
         override fun draw(canvas: Canvas, left: Float, top: Float) {
             var y = top + before
             for (plan in plans) {
                 plan.draw(canvas, left, y)
                 y += plan.textHeight
             }
+        }
+
+        /** Lines up to [room] (its space before included) and the rest, which keeps its space after. */
+        override fun split(room: Float): Pair<CellItem, CellItem>? {
+            val plan = plans.singleOrNull() ?: return null
+            var end = 0
+            while (end < plan.lineCount && before + plan.height(0, end + 1) <= room) end++
+            if (end == 0 || end >= plan.lineCount) return null
+            return Lines(plan, 0, end, before, 0f) to Lines(plan, end, plan.lineCount, 0f, after)
+        }
+    }
+
+    /** Lines [start] until [end] of a paragraph: one part of a paragraph cut over two pages. */
+    private class Lines(
+        private val plan: ParagraphPlan,
+        private val start: Int,
+        private val end: Int,
+        private val before: Float,
+        private val after: Float
+    ) : CellItem {
+        override val height: Float get() = before + plan.height(start, end) + after
+
+        override fun draw(canvas: Canvas, left: Float, top: Float) = plan.draw(canvas, left, top + before, start, end)
+
+        override fun split(room: Float): Pair<CellItem, CellItem>? {
+            var cut = start
+            while (cut < end && before + plan.height(start, cut + 1) <= room) cut++
+            if (cut == start || cut >= end) return null
+            return Lines(plan, start, cut, before, 0f) to Lines(plan, cut, end, 0f, after)
         }
     }
 

@@ -131,7 +131,27 @@ internal class DocxFonts(private val assets: AssetManager) {
             italic -> Typeface.ITALIC
             else -> Typeface.NORMAL
         }
-        return Typeface.create(bundledFor(font) ?: family(font), style)
+        // The twin's own bold and italic files: a style asked of the regular file is synthesised, with the
+        // regular file's advances, so bold text came out as narrow as regular (Word's bold title ~10 % wider).
+        bundledFor(font, STYLE_FILES.getValue(style))?.let { return it }
+        return Typeface.create(bundledFor(font, REGULAR) ?: family(font), style)
+    }
+
+    private val widthTables = HashMap<String, ArabicAdvances?>()
+
+    /**
+     * The advance widths of [font] when it has no twin but its widths are known ([ArabicAdvances]): its text
+     * is drawn in another font and scaled to them. Null for any other font, or when the table can't be read.
+     */
+    fun advances(font: String?): ArabicAdvances? {
+        val asset = WIDTH_TABLES[font?.trim()?.lowercase() ?: return null] ?: return null
+        return widthTables.getOrPut(asset) {
+            try {
+                assets.open(asset).bufferedReader().useLines { ArabicAdvances.parse(it) }
+            } catch (ignored: java.io.IOException) {
+                null
+            }
+        }
     }
 
     fun isReplaced(font: String?): Boolean {
@@ -139,9 +159,10 @@ internal class DocxFonts(private val assets: AssetManager) {
         return name !in NATIVE && metricTwin(name) == null
     }
 
-    /** The bundled twin of [font], loaded once; null when there is none or it can't be read. */
-    private fun bundledFor(font: String?): Typeface? {
-        val asset = metricTwin(font?.trim()?.lowercase() ?: return null) ?: return null
+    /** The bundled twin of [font] in its [face] file ("Bold"), loaded once; null when none or unreadable. */
+    private fun bundledFor(font: String?, face: String): Typeface? {
+        val family = metricTwin(font?.trim()?.lowercase() ?: return null) ?: return null
+        val asset = "fonts/$family-$face.ttf"
         return bundled.getOrPut(asset) {
             try {
                 Typeface.createFromAsset(assets, asset)
@@ -181,20 +202,37 @@ internal class DocxFonts(private val assets: AssetManager) {
         )
 
         /**
-         * Exact family names whose metrics a bundled font reproduces. Carlito (Calibri) and
-         * Caladea (Cambria) are bundled too but left out: their spaces are so narrow that pdfium
-         * reads "Page marker" back as "Pagemarker", which breaks search and copy in the PDF.
+         * Exact family names whose metrics a bundled font reproduces. Carlito (Calibri) and Caladea
+         * (Cambria) were once left out: with advances rounded to whole points their narrow space came
+         * out so thin that pdfium read "Page marker" back as "Pagemarker". Advances are fractional now
+         * (linear text), so the space has its real width.
          */
         val TWINS = mapOf(
-            "times new roman" to "fonts/LiberationSerif-Regular.ttf",
-            "times" to "fonts/LiberationSerif-Regular.ttf",
-            "liberation serif" to "fonts/LiberationSerif-Regular.ttf",
-            "tinos" to "fonts/LiberationSerif-Regular.ttf",
-            "courier new" to "fonts/LiberationMono-Regular.ttf",
-            "liberation mono" to "fonts/LiberationMono-Regular.ttf",
-            "cousine" to "fonts/LiberationMono-Regular.ttf"
+            "times new roman" to "LiberationSerif",
+            "times" to "LiberationSerif",
+            "liberation serif" to "LiberationSerif",
+            "tinos" to "LiberationSerif",
+            "courier new" to "LiberationMono",
+            "liberation mono" to "LiberationMono",
+            "cousine" to "LiberationMono",
+            "calibri" to "Carlito",
+            "carlito" to "Carlito",
+            "cambria" to "Caladea",
+            "caladea" to "Caladea"
+        )
+        const val REGULAR = "Regular"
+
+        /** The file of each style in assets/fonts (every twin ships all four). */
+        val STYLE_FILES = mapOf(
+            Typeface.NORMAL to REGULAR,
+            Typeface.BOLD to "Bold",
+            Typeface.ITALIC to "Italic",
+            Typeface.BOLD_ITALIC to "BoldItalic"
         )
 
         fun metricTwin(name: String): String? = TWINS[name]
+
+        /** Fonts drawn in a stand-in but at their own widths, from a table in assets ([ArabicAdvances]). */
+        val WIDTH_TABLES = mapOf("simplified arabic" to "fonts/simplified-arabic-widths.tsv")
     }
 }

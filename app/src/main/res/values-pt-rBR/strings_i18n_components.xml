@@ -334,6 +334,7 @@
     <string name="pay_confirm_sent">Abra o link do e-mail e toque em Restaurar compra.</string>
     <string name="pay_confirm_failed">Falha ao enviar confirmação. Tente de novo.</string>
     <string name="pay_key_removed">Chave removida deste celular.</string>
+    <string name="pay_reward_pending">Seus créditos extras estão a caminho.</string>
     <string name="pay_restored_tier">Sua chave %1$s voltou.</string>
     <string name="pay_restored">Sua chave voltou neste celular.</string>
     <string name="pay_restore_nothing">Não há assinatura nesta conta. Se você pagou com outro e-mail, entre com esse e-mail e tente novamente.</string>

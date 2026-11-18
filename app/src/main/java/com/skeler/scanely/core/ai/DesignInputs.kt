@@ -3,12 +3,11 @@ package com.skeler.scanely.core.ai
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Base64
 import androidx.core.graphics.scale
-import androidx.exifinterface.media.ExifInterface
+import com.skeler.scanely.core.image.orientBitmap
 import com.skeler.scanely.core.pdfeditor.engine.PdfPageReader
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
@@ -138,23 +137,8 @@ class DesignInputs @Inject constructor(
         val options = BitmapFactory.Options().apply { inSampleSize = sample }
         val decoded = context.contentResolver.openInputStream(uri)
             ?.use { BitmapFactory.decodeStream(it, null, options) }
-        return decoded?.let { orient(uri, scaleToMaxEdge(it, maxEdge)) }
+        return decoded?.let { context.contentResolver.orientBitmap(uri, scaleToMaxEdge(it, maxEdge)) }
     }
-
-    /** Camera JPEGs usually store orientation as metadata; re-encoding must bake it into pixels. */
-    private fun orient(uri: Uri, bitmap: Bitmap): Bitmap {
-        val matrix = orientationMatrix(orientationOf(uri)) ?: return bitmap
-        val upright = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-        if (upright !== bitmap) bitmap.recycle()
-        return upright
-    }
-
-    /** Missing or invalid EXIF metadata leaves the decoded pixels unchanged. */
-    private fun orientationOf(uri: Uri): Int? = runCatching {
-        context.contentResolver.openInputStream(uri)?.use {
-            ExifInterface(it).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        }
-    }.getOrNull()
 
     /** Null when the image cannot be measured. */
     private fun sampleSizeFor(uri: Uri, maxEdge: Int): Int? {
@@ -233,30 +217,6 @@ class DesignInputs @Inject constructor(
         const val QUALITY_STEP = 10
     }
 }
-
-private fun orientationMatrix(orientation: Int?): Matrix? {
-    val matrix = Matrix()
-    when (orientation) {
-        ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> matrix.setScale(-1f, 1f)
-        ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(HALF_TURN_DEGREES)
-        ExifInterface.ORIENTATION_FLIP_VERTICAL -> matrix.setScale(1f, -1f)
-        ExifInterface.ORIENTATION_TRANSPOSE -> {
-            matrix.setRotate(QUARTER_TURN_DEGREES)
-            matrix.postScale(-1f, 1f)
-        }
-        ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(QUARTER_TURN_DEGREES)
-        ExifInterface.ORIENTATION_TRANSVERSE -> {
-            matrix.setRotate(-QUARTER_TURN_DEGREES)
-            matrix.postScale(-1f, 1f)
-        }
-        ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(-QUARTER_TURN_DEGREES)
-        else -> return null
-    }
-    return matrix
-}
-
-private const val QUARTER_TURN_DEGREES = 90f
-private const val HALF_TURN_DEGREES = 180f
 
 private fun compress(bitmap: Bitmap, quality: Int): ByteArray =
     ByteArrayOutputStream().use { out ->

@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.pdf2office.exact
 
+import com.skeler.scanely.core.pdfeditor.engine.PdfiumRule
 import com.skeler.scanely.core.pdftools.pdf2office.LayoutBox
 import com.skeler.scanely.core.pdftools.pdf2office.LayoutCell
 import com.skeler.scanely.core.pdftools.pdf2office.LayoutLine
@@ -7,30 +8,57 @@ import com.skeler.scanely.core.pdftools.pdf2office.LayoutTables
 import kotlin.math.abs
 import kotlin.math.max
 
-/** The segments that landed in one column of one row: usually one, none for an empty cell. */
-class ExactTableCell(val segments: List<Segment>) {
+/** The segments on one baseline of a cell; [dropPt] is that baseline's distance below the row's first. */
+class ExactCellLine(val segments: List<Segment>, val dropPt: Float = 0f)
+
+/** A cell merged with the one above it continues that cell; the first of such a run restarts it. */
+enum class CellMerge { NONE, RESTART, CONTINUE }
+
+/**
+ * One cell: usually one line, none for an empty cell, several where its text wraps. [span] is how
+ * many columns it covers. [segments] is all its text, line by line.
+ */
+class ExactTableCell(
+    val segments: List<Segment>,
+    lines: List<ExactCellLine>? = null,
+    val span: Int = 1,
+    val merge: CellMerge = CellMerge.NONE
+) {
+    val lines: List<ExactCellLine> = lines ?: if (segments.isEmpty()) emptyList() else listOf(ExactCellLine(segments))
     val text: String get() = segments.joinToString(" ") { segment -> segmentText(segment) }
 }
 
 /**
- * One table row, a cell per column. [box] is the row's line in top-left page points: its top is
- * where an exact-height line of [box]'s height puts the row's baseline at [ExactLayout.BASELINE_RATIO].
+ * One table row, its cells left to right as on the page; their spans add up to the column count.
+ * [box] runs from the top of the row's first line to the bottom of its last, each [linePt] tall
+ * with its baseline at [ExactLayout.BASELINE_RATIO]; for a row of one line that is the line itself.
  */
-class ExactTableRow(val cells: List<ExactTableCell>, val box: LayoutBox, val fontSize: Float)
+class ExactTableRow(val cells: List<ExactTableCell>, val box: LayoutBox, val fontSize: Float, linePt: Float? = null) {
+    val linePt: Float = linePt ?: box.height
+    val firstBaselinePt: Float get() = box.top + linePt * ExactLayout.BASELINE_RATIO
+    val lastBaselinePt: Float get() = box.bottom - linePt * (1f - ExactLayout.BASELINE_RATIO)
+}
 
-/** [columnWidthsPt] run from each column's left edge to the next one's, from [box]'s left edge. */
+/**
+ * [columnWidthsPt] run from each column's left edge to the next one's, from [box]'s left edge.
+ * [rtl]: a right-to-left table, whose first column is the rightmost on the page.
+ */
 class ExactTable(
     val rows: List<ExactTableRow>,
     val columnWidthsPt: List<Float>,
     val box: LayoutBox,
-    val fontSize: Float
-)
+    val fontSize: Float,
+    val rtl: Boolean = false
+) {
+    val columns: Int get() = rows.maxOf { row -> row.cells.sumOf { it.span } }
+}
 
 /**
  * Finds tables in an exact layout with the same detector as the flowing converters
  * ([LayoutTables]): upright segments on one baseline become a row, each segment a cell. Table text
  * leaves the blocks, so the writers draw it once, as a native table.
  */
+@Suppress("TooManyFunctions")
 object ExactTables {
 
     private const val SAME_ROW = 0.5f
@@ -51,8 +79,49 @@ object ExactTables {
     private class Row(val segments: List<Segment>, val line: LayoutLine)
 
     /** [modelTables]: the layout model's table regions, in points from the page's top left; see [LayoutTables.findTables]. */
-    fun detect(layout: ExactPageLayout, modelTables: List<LayoutBox>? = null): ExactPageLayout {
-        val segments = layout.blocks.flatMap { it.lines }.filter { it.angleDeg == 0 && it.tokens.isNotEmpty() }
+    fun detect(
+        layout: ExactPageLayout,
+        modelTables: List<LayoutBox>? = null,
+        rules: List<PdfiumRule> = emptyList()
+    ): ExactPageLayout {
+        val upright = layout.blocks.flatMap { it.lines }.filter { it.angleDeg == 0 && it.tokens.isNotEmpty() }
+        val ruled = ruled(upright, rules, layout.heightPt)
+        val taken = ruled.flatMapTo(HashSet()) { it.segments }
+        val segments = upright.filter { it !in taken }
+        val afterRuled = if (ruled.isEmpty()) {
+            layout
+        } else {
+            ExactPageLayout(
+                layout.widthPt,
+                layout.heightPt,
+                layout.blocks.flatMap { remaining(it, taken) },
+                layout.behindPicture,
+                layout.tables + ruled.map { it.table },
+                tags = layout.tags
+            )
+        }
+        return aligned(afterRuled, segments, modelTables)
+    }
+
+    /** The tables the page's ruling lines draw; a segment goes to the first grid that holds it. */
+    private fun ruled(
+        segments: List<Segment>,
+        rules: List<PdfiumRule>,
+        pageHeightPt: Float
+    ): List<ExactRuledTables.Found> {
+        if (rules.isEmpty() || segments.isEmpty()) return emptyList()
+        val taken = HashSet<Segment>()
+        return ExactRules.grids(rules, pageHeightPt, segments).mapNotNull { grid ->
+            ExactRuledTables.table(grid, segments.filter { it !in taken }, pageHeightPt)?.also { taken += it.segments }
+        }
+    }
+
+    /** Tables found by the alignment of their text alone, among [segments] (those no ruled table took). */
+    private fun aligned(
+        layout: ExactPageLayout,
+        segments: List<Segment>,
+        modelTables: List<LayoutBox>?
+    ): ExactPageLayout {
         if (segments.size < MIN_SEGMENTS) return layout
         val rows = rows(segments, layout.heightPt)
         val found = LayoutTables.findTables(rows.map { it.line }, modelTables)
@@ -75,7 +144,8 @@ object ExactTables {
             blocks,
             layout.behindPicture,
             layout.tables + tables,
-            found.unconfirmed
+            found.unconfirmed,
+            layout.tags
         )
     }
 
@@ -154,13 +224,19 @@ object ExactTables {
         // The widths are optional on a TableBlock; without them the box is divided equally.
         val widths = block.columnWidthsPt.takeIf { it.size == columns } ?: List(columns) { block.box.width / columns }
         val lefts = widths.runningFold(block.box.left) { left, width -> left + width }.dropLast(1)
-        val rows = group.map { row ->
-            val slots = List(lefts.size) { ArrayList<Segment>() }
+        val xs = lefts + block.box.right
+        val lines = group.map { row ->
+            val slots = HashMap<Int, MutableList<Segment>>()
             row.segments.forEach { segment ->
-                slots[lefts.indexOfLast { it <= segment.u0 + COLUMN_EDGE_PT }.coerceAtLeast(0)] += segment
+                slots.getOrPut(
+                    lefts.indexOfLast { it <= segment.u0 + COLUMN_EDGE_PT }.coerceAtLeast(0)
+                ) { ArrayList() } += segment
             }
-            ExactTableRow(slots.map(::ExactTableCell), row.line.box, row.line.fontSize)
+            GridLine(baseline(row), row.line.box.height, row.line.fontSize, slots)
         }
+        // Lines that are a cell's wrapped text join their row; every other line is a row, as before.
+        val cells = lefts.indices.map { it..it }
+        val rows = ExactTableGrid.rows(lines, enclosed = false).map { ExactTableGrid.row(it, cells, xs, block.box) }
         return ExactTable(rows, widths, block.box, block.fontSize)
     }
 

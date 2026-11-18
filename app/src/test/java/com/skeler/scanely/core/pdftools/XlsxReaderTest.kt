@@ -135,10 +135,110 @@ class XlsxReaderTest {
         open(workbook()).use { reader ->
             val layout = XlsxLayout.layout(reader.readSheet(reader.sheets[1])) { _, _ -> 0f }!!
 
-            // 40 default columns of 48 pt: 1,920 pt, 15 columns to a landscape page.
+            // 40 default columns of 48 pt: 1,920 pt. No paperSize means Letter (the schema default):
+            // 792 − 2 × 50.4 = 691 pt across a landscape page, 14 columns.
             assertEquals(PageOrientation.LANDSCAPE, layout.frame.orientation)
             assertEquals(48f, layout.colLefts[1], 0.01f)
-            assertEquals(listOf(0 to 15, 15 to 30, 30 to 40), layout.slices.map { it.colFrom to it.colTo })
+            assertEquals(listOf(0 to 14, 14 to 28, 28 to 40), layout.slices.map { it.colFrom to it.colTo }.toList())
+        }
+    }
+
+    @Test
+    fun sparseSheetPaginatesLazilyWithoutOverflow() {
+        val xml = """<worksheet $NS><sheetFormatPr defaultColWidth="255" defaultRowHeight="409"/>
+            <sheetData><row r="1"><c r="A1"><v>1</v></c></row>
+            <row r="262144"><c r="XFD262144"><v>2</v></c></row></sheetData></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val layout = XlsxLayout.layout(reader.readSheet(reader.sheets[0])) { _, _ -> 0f }!!
+            val firstPages = layout.slices.take(2_000).toList()
+
+            assertEquals(4_294_967_296L, layout.pageCount)
+            assertEquals(2_000, firstPages.size)
+            assertEquals((0 until 2_000).toList(), firstPages.map { it.rowFrom })
+            assertTrue(firstPages.all { it.colFrom == 0 && it.colTo == 1 && it.rowTo == it.rowFrom + 1 })
+        }
+    }
+
+    @Test
+    fun pageSlicesContinueDownBeforeMovingAcross() {
+        val xml = """<worksheet $NS><sheetData><row r="1"><c r="A1"><v>1</v></c></row>
+            <row r="80"><c r="AN80"><v>2</v></c></row></sheetData></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val layout = XlsxLayout.layout(reader.readSheet(reader.sheets[0])) { _, _ -> 0f }!!
+
+            assertEquals(9L, layout.pageCount)
+            assertEquals(
+                listOf(0 to 0, 33 to 0, 66 to 0, 0 to 14, 33 to 14, 66 to 14, 0 to 28, 33 to 28, 66 to 28),
+                layout.slices.map { it.rowFrom to it.colFrom }.toList()
+            )
+        }
+    }
+
+    @Test
+    fun fitToMultiplePagesUsesBothPageCounts() {
+        val xml = """<worksheet $NS><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>
+            <sheetData><row r="1"><c r="A1"><v>1</v></c></row>
+            <row r="200"><c r="AX200"><v>2</v></c></row></sheetData>
+            <pageSetup orientation="portrait" fitToWidth="2" fitToHeight="3" scale="25"/></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val sheet = reader.readSheet(reader.sheets[0])
+            val layout = XlsxLayout.layout(sheet) { _, _ -> 0f }!!
+
+            assertEquals(2, sheet.setup.fitToWidth)
+            assertEquals(3, sheet.setup.fitToHeight)
+            assertEquals(layout.frame.printableWidth * 2 / (50 * 48f), layout.scale, 0.0001f)
+            assertEquals(2, layout.slices.map { it.colFrom }.distinct().count())
+            assertEquals(2, layout.slices.map { it.rowFrom }.distinct().count())
+        }
+    }
+
+    @Test
+    fun fitToPageDefaultsToOnePageInEachDimension() {
+        val xml = """<worksheet $NS><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>
+            <sheetData><row r="1"><c r="A1"><v>1</v></c></row>
+            <row r="100"><c r="AX100"><v>2</v></c></row></sheetData>
+            <pageSetup orientation="portrait" scale="25"/></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val sheet = reader.readSheet(reader.sheets[0])
+            val layout = XlsxLayout.layout(sheet) { _, _ -> 0f }!!
+
+            assertEquals(1, sheet.setup.fitToWidth)
+            assertEquals(1, sheet.setup.fitToHeight)
+            assertEquals(layout.frame.printableWidth / (50 * 48f), layout.scale, 0.0001f)
+            assertEquals(1L, layout.pageCount)
+        }
+    }
+
+    @Test
+    fun automaticFitDimensionLeavesTheOtherDimensionInControl() {
+        val xml = """<worksheet $NS><sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>
+            <sheetData><row r="1"><c r="A1"><v>1</v></c></row>
+            <row r="100"><c r="AX100"><v>2</v></c></row></sheetData>
+            <pageSetup orientation="portrait" fitToWidth="0" fitToHeight="2" scale="25"/></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val sheet = reader.readSheet(reader.sheets[0])
+            val layout = XlsxLayout.layout(sheet) { _, _ -> 0f }!!
+
+            assertEquals(0, sheet.setup.fitToWidth)
+            assertEquals(2, sheet.setup.fitToHeight)
+            assertEquals(layout.frame.printableHeight * 2 / (100 * 15f), layout.scale, 0.0001f)
+            assertEquals(2, layout.slices.map { it.rowFrom }.distinct().count())
+            assertTrue(layout.slices.map { it.colFrom }.distinct().count() > 2)
+        }
+    }
+
+    @Test
+    fun disabledFitToPageKeepsPercentageScaling() {
+        val xml = """<worksheet $NS><sheetPr><pageSetUpPr fitToPage="0"/></sheetPr>
+            <sheetData><row r="1"><c r="A1"><v>1</v></c></row></sheetData>
+            <pageSetup fitToWidth="2" fitToHeight="3" scale="75"/></worksheet>"""
+        open(workbook(sheet1 = xml)).use { reader ->
+            val sheet = reader.readSheet(reader.sheets[0])
+            val layout = XlsxLayout.layout(sheet) { _, _ -> 0f }!!
+
+            assertEquals(0, sheet.setup.fitToWidth)
+            assertEquals(0, sheet.setup.fitToHeight)
+            assertEquals(0.75f, layout.scale, 0.0001f)
         }
     }
 

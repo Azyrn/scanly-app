@@ -42,7 +42,7 @@ internal class XlsxSheetReader(
                 XmlCursor.END_DOCUMENT -> break
             }
         }
-        if (!fitToPage) setup = setup.copy(fitToWidth = false, fitToHeight = false)
+        if (!fitToPage) setup = setup.copy(fitToWidth = 0, fitToHeight = 0)
         cells.sortWith(compareBy<XlsxCell> { it.row }.thenBy { it.col })
         return XlsxSheet(
             name = name,
@@ -67,6 +67,7 @@ internal class XlsxSheetReader(
             "sheetView" -> showGridLines = cursor.attr("showGridLines") !in GRID_LINES_OFF
             "pageSetUpPr" -> fitToPage = cursor.flag("fitToPage")
             "pageSetup" -> readPageSetup(cursor)
+            "pageMargins" -> readMargins(cursor)
             "col" -> readColumn(cursor)
             "mergeCell" -> cursor.attr("ref")?.let(::parseRange)?.let { merges += it }
         }
@@ -99,11 +100,28 @@ internal class XlsxSheetReader(
             else -> null
         }
         // fitToWidth/Height default to 1 and only mean something with fitToPage; 0 is "automatic".
-        setup = SheetPageSetup(
+        // A copy: pageMargins comes before pageSetup in the part (CT_Worksheet order).
+        setup = setup.copy(
             orientation = orientation,
-            fitToWidth = (cursor.attr("fitToWidth")?.toIntOrNull() ?: 1) == 1,
-            fitToHeight = (cursor.attr("fitToHeight")?.toIntOrNull() ?: 1) == 1,
+            paperSize = cursor.attr("paperSize")?.toIntOrNull() ?: PaperSizes.LETTER,
+            fitToWidth = (cursor.attr("fitToWidth")?.toIntOrNull() ?: 1).coerceAtLeast(0),
+            fitToHeight = (cursor.attr("fitToHeight")?.toIntOrNull() ?: 1).coerceAtLeast(0),
             scalePercent = cursor.attr("scale")?.toIntOrNull()?.coerceIn(MIN_SCALE, MAX_SCALE) ?: FULL_SCALE
+        )
+    }
+
+    /** pageMargins in inches; a missing side keeps Excel's Normal margin. */
+    private fun readMargins(cursor: XmlCursor) {
+        fun side(name: String, default: Float) =
+            cursor.attr(name)?.toFloatOrNull()?.takeIf { it >= 0f }?.times(POINTS_PER_INCH) ?: default
+        val normal = PageMargins.EXCEL_NORMAL
+        setup = setup.copy(
+            margins = PageMargins(
+                side("left", normal.left),
+                side("right", normal.right),
+                side("top", normal.top),
+                side("bottom", normal.bottom)
+            )
         )
     }
 
@@ -211,9 +229,11 @@ internal class XlsxSheetReader(
         private const val MIN_SCALE = 10
         private const val MAX_SCALE = 400
         private const val FULL_SCALE = 100
+        private const val POINTS_PER_INCH = 72f
         private const val CANCEL_EVERY_ROWS = 512
         private const val LETTERS = 26
-        private val LAYOUT_TAGS = setOf("sheetFormatPr", "sheetView", "pageSetUpPr", "pageSetup", "col", "mergeCell")
+        private val LAYOUT_TAGS =
+            setOf("sheetFormatPr", "sheetView", "pageSetUpPr", "pageSetup", "pageMargins", "col", "mergeCell")
         private val GRID_LINES_OFF = setOf("0", "false")
 
         private fun text(value: String): Pair<String, CellKind> =

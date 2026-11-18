@@ -6,8 +6,12 @@ import android.graphics.Color
 import android.util.Log
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.get
+import com.skeler.scanely.core.pdfeditor.engine.PdfStructure
+import com.skeler.scanely.core.pdfeditor.engine.PdfiumGlyphId
 import com.skeler.scanely.core.pdfeditor.engine.PdfiumImage
 import com.skeler.scanely.core.pdfeditor.engine.PdfiumLayer
+import com.skeler.scanely.core.pdfeditor.engine.PdfiumPage
+import com.skeler.scanely.core.pdfeditor.engine.Qpdf
 import com.skeler.scanely.core.pdftools.pdf2office.LayoutBox
 import java.io.File
 import kotlin.math.max
@@ -23,11 +27,63 @@ private const val TAG = "ExactPageSource"
  *
  * Holds one pdfium document for the whole conversion. Not thread-safe; close it when done.
  */
-class ExactPageSource private constructor(private val layer: PdfiumLayer) : AutoCloseable {
+class ExactPageSource private constructor(
+    private val layer: PdfiumLayer,
+    private val context: Context,
+    private val file: File,
+    private val password: String,
+    private val scratch: File,
+    private val readStructure: Boolean
+) : AutoCloseable {
+
+    /** The document again without its glyph-id fonts' ToUnicode maps: see [readPage]. */
+    private var glyphCopy: File? = null
+    private var glyphLayer: PdfiumLayer? = null
+    private var glyphCopyTried = false
+
+    /**
+     * Page [index] as pdfium reads it, with each character's glyph id when the page has Arabic font
+     * programs ([PdfiumPage.glyphIds], read for [GlyphText]). Word's exports map many Arabic glyphs to
+     * the wrong letters and some to a space, and pdfium drops one of two such "spaces" in a row; read
+     * from a copy without the maps, pdfium gives every glyph's id and drops nothing.
+     */
+    private fun readPage(index: Int): PdfiumPage? {
+        val page = layer.readPage(index) ?: return null
+        val tags = structure?.page(index)
+        if (page.fontPrograms.isEmpty() && tags == null) return page
+        val ids = if (page.fontPrograms.isEmpty()) {
+            emptyList()
+        } else {
+            glyphLayer()?.readPage(index)?.chars.orEmpty()
+                .filter { !it.generated }
+                .map { PdfiumGlyphId(it.code, it.originX, it.originY) }
+        }
+        return PdfiumPage(page.widthPt, page.heightPt, page.chars, page.rules, page.fontPrograms, ids, tags)
+    }
+
+    /**
+     * A tagged PDF's own structure, read once when [readStructure] is on: which text is a paragraph,
+     * a heading, a list item, a note. Only the Word writer asks for it; the others place text.
+     */
+    private val structure: PdfStructure? by lazy {
+        if (readStructure) Qpdf.structure(file.path, password) else null
+    }
+
+    /** The copy without ToUnicode maps, made the first time a page needs it; null when it can't be. */
+    private fun glyphLayer(): PdfiumLayer? {
+        if (glyphCopyTried) return glyphLayer
+        glyphCopyTried = true
+        val copy = File.createTempFile("glyph-ids", ".pdf", scratch)
+        glyphCopy = copy
+        val removed = runCatching { Qpdf.nativeWithoutToUnicode(file.path, copy.path, password) }.getOrDefault(-1)
+        // The copy is written without encryption, so it opens with no password.
+        glyphLayer = if (removed > 0) PdfiumLayer.open(context, copy) else null
+        return glyphLayer
+    }
 
     /** Null when pdfium can't load the page at all. */
     fun read(index: Int, scratch: File): ExactPage? {
-        val page = layer.readPage(index) ?: return null
+        val page = readPage(index) ?: return null
         val layout = ExactLayout.read(page)
         val pictures = ArrayList<PagePicture>()
         val extracted = ArrayList<PdfiumImage>()
@@ -41,9 +97,12 @@ class ExactPageSource private constructor(private val layer: PdfiumLayer) : Auto
         return ExactPage(page.widthPt, page.heightPt, layout, background, pictures)
     }
 
+    /** Page [index]'s text alone, for writers that need no pictures (Excel); null when unreadable. */
+    fun layout(index: Int): ExactPageLayout? = readPage(index)?.let { ExactLayout.read(it) }
+
     /** Page [index]'s text again with the layout model's table regions ([ExactLayout.read]); null when unreadable. */
     fun layout(index: Int, modelTables: List<LayoutBox>): ExactPageLayout? =
-        layer.readPage(index)?.let { ExactLayout.read(it, modelTables) }
+        readPage(index)?.let { ExactLayout.read(it, modelTables) }
 
     /**
      * Writes one image to a file of its own, so Word shows it as a picture the user can select and
@@ -180,7 +239,11 @@ class ExactPageSource private constructor(private val layer: PdfiumLayer) : Auto
         return true
     }
 
-    override fun close() = layer.close()
+    override fun close() {
+        layer.close()
+        glyphLayer?.close()
+        glyphCopy?.delete()
+    }
 
     companion object {
         private const val BACKGROUND_DPI = 150f
@@ -199,8 +262,18 @@ class ExactPageSource private constructor(private val layer: PdfiumLayer) : Auto
         private const val JPEG_MAGIC_0 = 0xFF.toByte()
         private const val JPEG_MAGIC_1 = 0xD8.toByte()
 
-        /** Null when the pdfium calls this needs aren't available or the file won't open. */
-        fun open(context: Context, file: File, password: String): ExactPageSource? =
-            PdfiumLayer.open(context, file, password)?.let(::ExactPageSource)
+        /**
+         * Null when the pdfium calls this needs aren't available or the file won't open.
+         * [structure]: also read a tagged PDF's structure tree, for a writer that flows text.
+         */
+        fun open(
+            context: Context,
+            file: File,
+            password: String,
+            scratch: File,
+            structure: Boolean = false
+        ): ExactPageSource? = PdfiumLayer.open(context, file, password)?.let {
+            ExactPageSource(it, context, file, password, scratch, structure)
+        }
     }
 }

@@ -105,4 +105,23 @@
     <string name="pdf_tool_rotate_left">90° links</string>
     <string name="pdf_tool_rotate_body">Dreht alle Seiten. Einzelne Seiten: PDF ordnen.</string>
     <string name="pdf_tool_rotate_action">Drehen</string>
+    <string name="pdf_tools_beta_badge">Beta</string>
+    <string name="pdf_tool_error_broken_output">Die konvertierte Datei war beschädigt und wurde verworfen. Nichts gespeichert.</string>
+    <string name="pdf_tool_error_timed_out">Das dauerte zu lange und wurde gestoppt. Nichts gespeichert. Kleinere Datei?</string>
+    <string name="pdf_tool_credits_refunded">Die Credits dieser Konvertierung wurden erstattet.</string>
+    <string name="pdf_tool_online_read_failed">Online-Lesen fehlgeschlagen, keine Credits verbraucht. Die Seiten behalten den PDF-Text.</string>
+    <string name="pdf_tools_beta_note">Ergebnisse werden mit Updates besser.</string>
+    <string name="online_read_title">Seiten online lesen?</string>
+    <string name="online_read_use">Credits nutzen</string>
+    <string name="online_read_without">Ohne umwandeln</string>
+    <string name="online_read_watch_ad">Werbung ansehen</string>
+    <string name="online_read_upgrade">Upgrade</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d Seite dieser Datei muss für genauen Text online gelesen werden. Kosten: %1$d Credit.</item>
+        <item quantity="other">%1$d Seiten dieser Datei müssen für genauen Text online gelesen werden. Kosten: %1$d Credits.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">Du hast noch %1$d Credit.</item>
+        <item quantity="other">Du hast noch %1$d Credits.</item>
+    </plurals>
 </resources>

@@ -8,8 +8,8 @@ import javax.inject.Singleton
 /**
  * Every editor capability, and whether it sits behind Pro.
  *
- * Free covers the everyday markup a scanning app is expected to do; Pro covers the tools that
- * replace a desktop utility.
+ * Every PDF tool is free, Office conversions included: they run on the device and cost nothing.
+ * Only the optional online reading of difficult pages costs credits (core/ai/BackendPageReader).
  */
 enum class PdfFeature(val requiresPro: Boolean, val title: String) {
     ANNOTATE(false, "Annotate"),
@@ -20,18 +20,17 @@ enum class PdfFeature(val requiresPro: Boolean, val title: String) {
     ROTATE_PAGES(false, "Rotate pages"),
     MERGE(false, "Merge"),
     REMOVE_METADATA(false, "Remove metadata"),
+    COMPRESS(false, "Compress"),
+    EDIT_TEXT(false, "Edit text"),
+    ENCRYPT(false, "Encrypt"),
+    DECRYPT(false, "Decrypt"),
+    SIGNATURE(false, "Signature"),
+    VALIDATE_SIGNATURES(false, "Validate signatures"),
+    REPAIR(false, "Repair"),
+    WATERMARK(false, "Watermark"),
 
-    /** PDF to and from Word, PowerPoint and Excel: on-device, so free like the everyday tools. */
-    OFFICE_CONVERSION(false, "Office conversion"),
-
-    COMPRESS(true, "Compress"),
-    EDIT_TEXT(true, "Edit text"),
-    ENCRYPT(true, "Encrypt"),
-    DECRYPT(true, "Decrypt"),
-    SIGNATURE(true, "Signature"),
-    VALIDATE_SIGNATURES(true, "Validate signatures"),
-    REPAIR(true, "Repair"),
-    WATERMARK(true, "Watermark")
+    /** PDF to and from Word, PowerPoint and Excel: on-device, so free like every other tool (marked Beta). */
+    OFFICE_CONVERSION(false, "Office conversion")
 }
 
 /**

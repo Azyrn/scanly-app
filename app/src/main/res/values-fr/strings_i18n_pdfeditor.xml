@@ -96,6 +96,7 @@
     <string name="pe_no_signatures_saved">Aucune signature enregistrée. Capturez-en une avec l\'outil Signer.</string>
     <string name="pe_no_selectable_text">Aucun texte sélectionnable ici : page scannée ?</string>
     <string name="pe_scanner_unavailable">Scanner indisponible sur cet appareil.</string>
+    <string name="pe_scanner_start_failed">Scanner non ouvert. Vérifiez la connexion.</string>
     <string name="pe_undo">Défaire</string>
     <string name="pe_redo">Refaire</string>
     <string name="pe_add_text">Texte</string>

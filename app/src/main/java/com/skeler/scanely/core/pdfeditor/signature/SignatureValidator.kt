@@ -13,14 +13,16 @@ import org.bouncycastle.asn1.cms.Time
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers
 import org.bouncycastle.cert.X509CertificateHolder
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter
-import org.bouncycastle.cms.CMSProcessableByteArray
 import org.bouncycastle.cms.CMSSignedData
 import org.bouncycastle.cms.SignerInformation
 import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.tsp.TimeStampToken
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
 import java.security.cert.CertificateFactory
 import java.security.cert.TrustAnchor
 import java.security.cert.X509Certificate
@@ -159,20 +161,47 @@ class SignatureValidator @Inject constructor(
         }.getOrElse { emptySet() }
     }
 
+    /**
+     * Every signature in [file], one entry per signed field.
+     *
+     * The editor's save asks this whether a save is about to void signatures, so an entry the file
+     * has is never dropped: whatever stops a signature being checked — an unreadable file, a
+     * malformed /ByteRange or /Contents, running out of memory — it comes back
+     * [Integrity.UNVERIFIABLE] rather than missing. Empty only when the file has no signed fields,
+     * or when qpdf could not open it at all (and then the save cannot rewrite it either).
+     */
     suspend fun validate(file: File, password: String = ""): List<SignatureInfo> =
         withContext(Dispatchers.Default) {
             val json = Qpdf.nativeExtractSignatures(file.absolutePath, password)
                 ?: return@withContext emptyList()
-
-            val entries = runCatching { JSONArray(json) }.getOrNull() ?: return@withContext emptyList()
-            val fileBytes = runCatching { file.readBytes() }.getOrNull() ?: return@withContext emptyList()
-
-            (0 until entries.length()).mapNotNull { index ->
-                runCatching { verify(entries.getJSONObject(index), fileBytes) }
-                    .onFailure { Log.w(TAG, "Signature $index could not be read", it) }
-                    .getOrNull()
-            }
+            verifyAll(json, file)
         }
+
+    /**
+     * Checks the signatures qpdf located ([json]) against [file]'s bytes. The signed spans are
+     * streamed through [openSpans]; the file is never read whole, because a PDF the size of a phone
+     * scan bundle does not fit in the heap twice.
+     */
+    internal fun verifyAll(
+        json: String,
+        file: File,
+        openSpans: (List<ByteSpan>) -> InputStream = { ByteRangeInputStream(file, it) }
+    ): List<SignatureInfo> {
+        // The native side writes "[]" for an unsigned file, so text that does not parse still
+        // means it found a signature to describe.
+        val entries = runCatching { JSONArray(json) }.getOrElse {
+            Log.w(TAG, "Signature list could not be parsed", it)
+            return listOf(unverifiable(JSONObject()))
+        }
+        val fileLength = file.length()
+
+        return (0 until entries.length()).map { index ->
+            val entry = entries.optJSONObject(index) ?: JSONObject()
+            runCatching { verify(entry, fileLength, openSpans) }
+                .onFailure { Log.w(TAG, "Signature $index could not be read", it) }
+                .getOrElse { unverifiable(entry) }
+        }
+    }
 
     /** What one CMS blob yielded, before the signature dictionary's own fields are folded in. */
     private data class CmsOutcome(
@@ -183,20 +212,29 @@ class SignatureValidator @Inject constructor(
         val timeSource: TimeSource
     )
 
-    private fun verify(entry: org.json.JSONObject, fileBytes: ByteArray): SignatureInfo {
-        val ranges = entry.getJSONArray("byteRange")
-        val signed = signedBytes(fileBytes, ranges)
-        val cms = decodeHex(entry.getString("contents"))
+    private fun verify(
+        entry: JSONObject,
+        fileLength: Long,
+        openSpans: (List<ByteSpan>) -> InputStream
+    ): SignatureInfo {
+        val spans = spansOf(entry.optJSONArray("byteRange"), fileLength)
+        val cms = decodeHex(entry.optString("contents"))
 
-        val outcome = signed?.let { inspect(it, cms) } ?: UNREADABLE
+        val outcome = if (spans != null && cms != null) inspect(cms) { openSpans(spans) } else UNREADABLE
+        return describe(entry, outcome, coversWholeDocument = spans != null && spans.last().end >= fileLength)
+    }
+
+    /** A signature that is there but could not be checked at all. */
+    private fun unverifiable(entry: JSONObject): SignatureInfo =
+        describe(entry, UNREADABLE, coversWholeDocument = false)
+
+    private fun describe(entry: JSONObject, outcome: CmsOutcome, coversWholeDocument: Boolean): SignatureInfo {
         val signedAt = outcome.signedAt ?: parsePdfDate(entry.optString("date"))
         val timeSource = when {
             outcome.timeSource != TimeSource.NONE -> outcome.timeSource
             signedAt != null -> TimeSource.DOCUMENT_DATE
             else -> TimeSource.NONE
         }
-
-        val lastCovered = ranges.getLong(2) + ranges.getLong(3)
 
         return SignatureInfo(
             fieldName = entry.optString("field"),
@@ -208,13 +246,13 @@ class SignatureValidator @Inject constructor(
             subFilter = entry.optString("subFilter"),
             integrity = outcome.integrity,
             trust = outcome.trust,
-            coversWholeDocument = lastCovered >= fileBytes.size,
+            coversWholeDocument = coversWholeDocument,
             certificates = outcome.certificates
         )
     }
 
-    private fun inspect(signed: ByteArray, cms: ByteArray): CmsOutcome = runCatching {
-        val signedData = CMSSignedData(CMSProcessableByteArray(signed), CmsEnvelope.parse(cms))
+    private fun inspect(cms: ByteArray, openSigned: () -> InputStream): CmsOutcome = runCatching {
+        val signedData = CMSSignedData(StreamedContent(openSigned), CmsEnvelope.parse(cms))
         val pool = signedData.certificates.getMatches(null)
             .filterIsInstance<X509CertificateHolder>()
             .mapNotNull { runCatching { converter.getCertificate(it) }.getOrNull() }
@@ -231,9 +269,14 @@ class SignatureValidator @Inject constructor(
         verifiedOutcome(signer, signerCert, pool)
     }.getOrElse {
         Log.w(TAG, "CMS verification failed", it)
-        // A signature that parses but fails its digest check throws here too; the range read
-        // succeeded, so the content not matching is the likeliest cause.
-        CmsOutcome(Integrity.TAMPERED, TrustStatus.UNKNOWN, emptyList(), null, TimeSource.NONE)
+        if (it.isReadFailure()) {
+            // The signed bytes never reached the digest, so nothing is known about them.
+            UNREADABLE
+        } else {
+            // A signature that parses but fails its digest check throws here too; the bytes were
+            // read, so the content not matching is the likeliest cause.
+            CmsOutcome(Integrity.TAMPERED, TrustStatus.UNKNOWN, emptyList(), null, TimeSource.NONE)
+        }
     }
 
     private fun verifiedOutcome(
@@ -326,23 +369,6 @@ class SignatureValidator @Inject constructor(
         return ordered + remaining
     }
 
-    /** The two spans either side of the /Contents placeholder, concatenated. */
-    private fun signedBytes(fileBytes: ByteArray, ranges: JSONArray): ByteArray? {
-        if (ranges.length() < BYTE_RANGE_ENTRIES) return null
-        val start1 = ranges.getLong(0).toInt()
-        val length1 = ranges.getLong(1).toInt()
-        val start2 = ranges.getLong(2).toInt()
-        val length2 = ranges.getLong(3).toInt()
-
-        if (minOf(start1, length1, start2, length2) < 0) return null
-        if (start1 + length1 > fileBytes.size || start2 + length2 > fileBytes.size) return null
-
-        return ByteArray(length1 + length2).also { out ->
-            fileBytes.copyInto(out, 0, start1, start1 + length1)
-            fileBytes.copyInto(out, length1, start2, start2 + length2)
-        }
-    }
-
     private fun X509Certificate.summarise() = CertificateSummary(
         subject = subjectX500Principal.name,
         issuer = issuerX500Principal.name,
@@ -350,13 +376,6 @@ class SignatureValidator @Inject constructor(
         notBefore = notBefore,
         notAfter = notAfter
     )
-
-    private fun decodeHex(hex: String): ByteArray {
-        val clean = hex.filter { !it.isWhitespace() }
-        return ByteArray(clean.length / 2) { i ->
-            ((clean[i * 2].digitToInt(HEX_RADIX) shl NIBBLE_BITS) or clean[i * 2 + 1].digitToInt(HEX_RADIX)).toByte()
-        }
-    }
 
     /**
      * PDF dates look like `D:YYYYMMDDHHmmSS+HH'mm'`. Parsed by hand rather than with java.time,
@@ -409,10 +428,43 @@ class SignatureValidator @Inject constructor(
     }
 }
 
-/** /ByteRange is [start1 length1 start2 length2]. */
-private const val BYTE_RANGE_ENTRIES = 4
+/** /ByteRange is a flat list of (offset, length) pairs. */
+private const val BYTE_RANGE_PAIR = 2
 private const val HEX_RADIX = 16
 private const val NIBBLE_BITS = 4
 
 /** YYYYMMDD, the shortest date a PDF writes. */
 private const val PDF_DATE_MIN_DIGITS = 8
+
+/**
+ * The (offset, length) pairs of /ByteRange — ISO 32000-1 §12.8.1 allows any number of them,
+ * normally two either side of the /Contents placeholder. Null when the array is malformed or
+ * reaches past the end of the file.
+ */
+private fun spansOf(ranges: JSONArray?, fileLength: Long): List<ByteSpan>? {
+    if (ranges == null || ranges.length() < BYTE_RANGE_PAIR || ranges.length() % BYTE_RANGE_PAIR != 0) {
+        return null
+    }
+    val spans = (0 until ranges.length() step BYTE_RANGE_PAIR).map {
+        ByteSpan(ranges.getLong(it), ranges.getLong(it + 1))
+    }
+    val valid = spans.all { it.start >= 0 && it.length >= 0 && it.end <= fileLength }
+    return spans.takeIf { valid }
+}
+
+/** Null for empty, odd-length or non-hex text: there is no CMS blob to check. */
+private fun decodeHex(hex: String): ByteArray? {
+    val clean = hex.filter { !it.isWhitespace() }
+    if (clean.isEmpty() || clean.length % 2 != 0) return null
+    if (clean.any { it.digitToIntOrNull(HEX_RADIX) == null }) return null
+    return ByteArray(clean.length / 2) { i ->
+        ((clean[i * 2].digitToInt(HEX_RADIX) shl NIBBLE_BITS) or clean[i * 2 + 1].digitToInt(HEX_RADIX)).toByte()
+    }
+}
+
+/**
+ * Bouncy Castle wraps an IOException from the content stream in a CMSException; running out of
+ * memory or stack arrives unwrapped. Neither says anything about the document.
+ */
+private fun Throwable.isReadFailure(): Boolean =
+    generateSequence(this) { it.cause }.any { it is IOException || it is VirtualMachineError }

@@ -15,7 +15,6 @@ internal const val PART_CAP = 16L * 1024 * 1024
 
 private const val ROOT_RELATIONSHIPS = "_rels/.rels"
 private const val DEFAULT_DOCUMENT = "word/document.xml"
-private const val HEADER_CAP = 8L * 1024 * 1024
 
 /**
  * The platform parser with DTD processing off. A .docx never has a DOCTYPE; refusing one means a
@@ -85,22 +84,4 @@ internal fun resolvePartPath(baseDir: String, target: String): String {
         }
     }
     return segments.joinToString("/")
-}
-
-/**
- * Whether a header or footer part would print anything. Word often keeps empty ones around,
- * and saying "headers were left out" about an empty header would be noise. A part that can't
- * be read counts as empty: it can't be shown either way, and it mustn't fail the conversion.
- */
-internal fun partHasContent(zip: ZipFile, path: String, newParser: () -> XmlPullParser): Boolean = try {
-    parsePart(zip, path, HEADER_CAP, newParser) { parser ->
-        var found = false
-        parser.descendants { name ->
-            if (!found && (name == "drawing" || name == "pict")) found = true
-            if (!found && name == "t" && parser.readText().isNotBlank()) found = true
-        }
-        found
-    } == true
-} catch (ignored: Exception) {
-    false
 }

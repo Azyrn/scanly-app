@@ -9,6 +9,7 @@ import com.skeler.scanely.core.ocr.OcrResult
 import com.skeler.scanely.core.ocr.TextOcrService
 import com.skeler.scanely.core.text.MarkdownParser
 import com.skeler.scanely.history.data.HistoryManager
+import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
@@ -33,7 +34,9 @@ data class OcrUiState(
 
 @HiltViewModel
 class OcrViewModel @Inject constructor(
-    private val ocrService: TextOcrService,
+    // Lazy: Home builds this view model in its first composition, on the main thread, and the
+    // OCR graph behind TextOcrService (ML Kit, Paddle, an OkHttpClient) is only needed for a scan.
+    private val ocrService: Lazy<TextOcrService>,
     private val historyManager: HistoryManager
 ) : ViewModel() {
 
@@ -55,7 +58,7 @@ class OcrViewModel @Inject constructor(
             _uiState.value = OcrUiState(isProcessing = true, sourceUri = sourceUri)
 
             // Page progress across all the PDFs; a single page needs no counter.
-            val result = ocrService.recognizeFromPdfs(pdfUris) { progress ->
+            val result = ocrService.get().recognizeFromPdfs(pdfUris) { progress ->
                 if (progress.total > 1) _uiState.update { it.copy(progress = progress) }
             }
             _uiState.value = OcrUiState(

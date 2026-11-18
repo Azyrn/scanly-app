@@ -106,4 +106,25 @@
     <string name="pdf_tool_rotate_left">90° ←</string>
     <string name="pdf_tool_rotate_body">Gira todas as páginas. Para uma, use Organizar PDF.</string>
     <string name="pdf_tool_rotate_action">Girar</string>
+    <string name="pdf_tools_beta_badge">Beta</string>
+    <string name="pdf_tool_error_broken_output">O arquivo convertido saiu danificado e foi descartado. Nada foi salvo.</string>
+    <string name="pdf_tool_error_timed_out">Demorou demais e foi interrompido. Nada foi salvo. Tente um arquivo menor.</string>
+    <string name="pdf_tool_credits_refunded">Os créditos desta conversão foram devolvidos.</string>
+    <string name="pdf_tool_online_read_failed">A leitura online falhou e nenhum crédito foi usado. Essas páginas mantêm o texto do PDF.</string>
+    <string name="pdf_tools_beta_note">Melhora a cada atualização.</string>
+    <string name="online_read_title">Ler páginas online?</string>
+    <string name="online_read_use">Usar créditos</string>
+    <string name="online_read_without">Converter sem</string>
+    <string name="online_read_watch_ad">Ver anúncio</string>
+    <string name="online_read_upgrade">Fazer upgrade</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d página deste arquivo precisa de leitura online para um texto exato. Custo: %1$d crédito.</item>
+        <item quantity="many">%1$d páginas deste arquivo precisam de leitura online para um texto exato. Custo: %1$d créditos.</item>
+        <item quantity="other">%1$d páginas deste arquivo precisam de leitura online para um texto exato. Custo: %1$d créditos.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">Você tem %1$d crédito.</item>
+        <item quantity="many">Você tem %1$d créditos.</item>
+        <item quantity="other">Você tem %1$d créditos.</item>
+    </plurals>
 </resources>

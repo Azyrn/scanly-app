@@ -173,7 +173,8 @@ internal object ExactBidiSegments {
                 builder.append(
                     if (code != item.code && single) String(Character.toChars(code)) else item.text,
                     item.u0,
-                    item.u1
+                    item.u1,
+                    glyph.uncertain
                 )
             }
         }

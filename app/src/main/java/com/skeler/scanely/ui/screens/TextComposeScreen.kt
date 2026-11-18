@@ -40,6 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skeler.scanely.R
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.ExportContent
@@ -54,7 +56,11 @@ fun TextComposeScreen() {
     val navigator = LocalNavigator.current
     val exportText = rememberTextExporter()
 
-    var text by remember { mutableStateOf("") }
+    // In a ViewModel rather than rememberSaveable: rotation or a theme switch recreates the
+    // activity and must not wipe the text, but a pasted document can outgrow the ~1 MB Binder
+    // limit on the saved-instance-state Bundle.
+    val draft: TextComposeViewModel = viewModel()
+    var text by draft::text
     var exportMenuOpen by remember { mutableStateOf(false) }
 
     // What you typed is what you get: this screen has no Markdown view.
@@ -165,4 +171,9 @@ fun TextComposeScreen() {
             )
         }
     }
+}
+
+/** What is typed on [TextComposeScreen], kept across configuration changes for its back-stack entry. */
+class TextComposeViewModel : ViewModel() {
+    var text by mutableStateOf("")
 }

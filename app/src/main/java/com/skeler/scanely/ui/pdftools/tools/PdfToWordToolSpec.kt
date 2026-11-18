@@ -10,6 +10,7 @@ import com.skeler.scanely.core.pdftools.ToolInput
 import com.skeler.scanely.core.pdftools.ToolJobInput
 import com.skeler.scanely.core.pdftools.ToolResult
 import com.skeler.scanely.core.pdftools.pdf2office.PdfToWordJob
+import com.skeler.scanely.ui.pdftools.BetaNote
 import com.skeler.scanely.ui.pdftools.OptionsBody
 import com.skeler.scanely.ui.pdftools.PrimaryActionButton
 import com.skeler.scanely.ui.pdftools.ToolOptionsState
@@ -54,6 +55,7 @@ internal fun OfficeConvertOptions(
     onConvert: () -> Unit
 ) {
     OptionsBody(stringResource(body))
+    BetaNote()
     PrimaryActionButton(
         text = stringResource(action),
         enabled = state.documents.isNotEmpty(),

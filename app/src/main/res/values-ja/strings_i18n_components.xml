@@ -294,6 +294,7 @@
     <string name="pay_confirm_sent">受信トレイのリンクを開き、「購入を復元」を再度タップ。</string>
     <string name="pay_confirm_failed">確認メールを送れませんでした。再試行。</string>
     <string name="pay_key_removed">この端末のキーを削除しました。</string>
+    <string name="pay_reward_pending">特典クレジットはまもなく反映されます。</string>
     <string name="pay_restored_tier">%1$s のキーを復元。</string>
     <string name="pay_restored">この端末でキーが戻りました。</string>
     <string name="pay_restore_nothing">このアカウントに購読はありません。別のメールで支払った場合は、そのアドレスでサインインを。</string>

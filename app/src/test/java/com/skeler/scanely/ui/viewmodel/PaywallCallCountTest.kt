@@ -1,6 +1,7 @@
 package com.skeler.scanely.ui.viewmodel
 
 import android.app.Activity
+import com.skeler.scanely.R
 import com.skeler.scanely.auth.domain.model.AuthUser
 import com.skeler.scanely.auth.domain.repository.AuthRepository
 import com.skeler.scanely.core.ads.RewardedAdManager
@@ -17,8 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.job
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -46,6 +52,7 @@ class PaywallCallCountTest {
     private val rewardsRemaining = AtomicInteger(5)
     private val activity = mock(Activity::class.java)
     private val ads = mock(RewardedAdManager::class.java)
+    private lateinit var entitlements: EntitlementRepository
 
     @Before fun setUp() {
         Dispatchers.setMain(main)
@@ -79,7 +86,7 @@ class PaywallCallCountTest {
         `when`(resolver.isSwitchedOn).thenReturn(flowOf(false))
 
         val api = worker.api()
-        val entitlements = EntitlementRepository(EnglishStrings.context(), api, auth)
+        entitlements = EntitlementRepository(EnglishStrings.context(), api, auth)
         val license = LicenseRepository(EnglishStrings.context(), api, store, deviceId, auth, entitlements)
         val viewModel = PaywallViewModel(EnglishStrings.context(), license, entitlements, ads, resolver, auth)
 
@@ -124,9 +131,30 @@ class PaywallCallCountTest {
 
         viewModel.watchAd(activity)
         finishAd(rewardLands = false)
-        worker.awaitQuiet(quietMs = 3_000)
+        // The poll's longest wait is 10 s; quiet for longer than that means it has stopped.
+        worker.awaitQuiet(quietMs = 12_000, maxMs = 60_000)
         println("ad poll (no reward) request log: ${worker.log}")
 
-        assertEquals("request log: ${worker.log}", 3, worker.count("/v1/me"))
+        assertEquals("request log: ${worker.log}", 7, worker.count("/v1/me"))
+        // The count on screen stays the server's; the user is told the reward is still coming.
+        assertEquals(5, entitlements.entitlement.value?.rewardsRemainingToday)
+        val message = runBlocking { withTimeout(5_000) { viewModel.state.first { it.message != null }.message } }
+        assertEquals(EnglishStrings.get(R.string.pay_reward_pending), message)
+        // Reading state subscribed to it; its WhileSubscribed stop timer must not outlive setMain.
+        runBlocking { viewModel.viewModelScope.coroutineContext.job.cancelAndJoin() }
+    }
+
+    @Test fun `a reward the server confirms ten seconds after the ad closes still shows up`() {
+        val viewModel = paywall()
+
+        viewModel.watchAd(activity)
+        finishAd(rewardLands = false)
+        // AdMob's signed callback reaches the Worker late, which it is allowed to do.
+        Thread.sleep(10_000)
+        rewardsRemaining.decrementAndGet()
+        worker.awaitQuiet(quietMs = 12_000, maxMs = 60_000)
+        println("ad poll (late reward) request log: ${worker.log}")
+
+        assertEquals(4, entitlements.entitlement.value?.rewardsRemainingToday)
     }
 }

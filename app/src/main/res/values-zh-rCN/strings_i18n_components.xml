@@ -294,6 +294,7 @@
     <string name="pay_confirm_sent">请查收邮件，打开其中的链接，然后再次点击“恢复购买”。</string>
     <string name="pay_confirm_failed">无法发送确认邮件，请重试。</string>
     <string name="pay_key_removed">已从此设备移除密钥。</string>
+    <string name="pay_reward_pending">奖励积分即将到账，请稍后查看。</string>
     <string name="pay_restored_tier">你的 %1$s 密钥已恢复。</string>
     <string name="pay_restored">你的密钥已在此设备上恢复。</string>
     <string name="pay_restore_nothing">此账户没有订阅。如果你使用其他邮箱付款，请使用该邮箱登录后重试。</string>

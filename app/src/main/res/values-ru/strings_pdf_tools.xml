@@ -107,4 +107,27 @@
     <string name="pdf_tool_rotate_left">Влево</string>
     <string name="pdf_tool_rotate_body">Все страницы. Для отдельных — «Порядок PDF».</string>
     <string name="pdf_tool_rotate_action">Поворот</string>
+    <string name="pdf_tools_beta_badge">Бета</string>
+    <string name="pdf_tool_error_broken_output">Файл после конвертации оказался повреждён и удалён. Ничего не сохранено.</string>
+    <string name="pdf_tool_error_timed_out">Слишком долго — остановлено. Ничего не сохранено.</string>
+    <string name="pdf_tool_credits_refunded">Кредиты за эту конвертацию возвращены.</string>
+    <string name="pdf_tool_online_read_failed">Онлайн-чтение не удалось, кредиты не списаны. Эти страницы сохранят текст PDF.</string>
+    <string name="pdf_tools_beta_note">С обновлениями результаты лучше.</string>
+    <string name="online_read_title">Прочитать страницы онлайн?</string>
+    <string name="online_read_use">Списать кредиты</string>
+    <string name="online_read_without">Без этого</string>
+    <string name="online_read_watch_ad">Смотреть рекламу</string>
+    <string name="online_read_upgrade">Улучшить план</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d страницу этого файла нужно прочитать онлайн для точного текста. Стоимость: %1$d кредит.</item>
+        <item quantity="few">%1$d страницы этого файла нужно прочитать онлайн для точного текста. Стоимость: %1$d кредита.</item>
+        <item quantity="many">%1$d страниц этого файла нужно прочитать онлайн для точного текста. Стоимость: %1$d кредитов.</item>
+        <item quantity="other">%1$d страницы этого файла нужно прочитать онлайн для точного текста. Стоимость: %1$d кредита.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">У вас остался %1$d кредит.</item>
+        <item quantity="few">У вас осталось %1$d кредита.</item>
+        <item quantity="many">У вас осталось %1$d кредитов.</item>
+        <item quantity="other">У вас осталось %1$d кредита.</item>
+    </plurals>
 </resources>

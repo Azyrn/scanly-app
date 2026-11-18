@@ -1,7 +1,5 @@
 package com.skeler.scanely.navigation
 
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hasRoute
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
@@ -71,8 +69,8 @@ sealed interface Destination {
 /**
  * Destinations whose content exists only in memory, in ViewModels that hold no saved state.
  * Navigation restores the back stack after process death, but their ViewModels come back empty,
- * so restoring one shows a screen with nothing on it. [ScanelyNavHost] trims to
- * [Destination.Home] instead.
+ * so restoring one shows a screen with nothing on it. [ScanelyNavHost] trims them off with
+ * [trimInMemoryScreens] instead.
  *
  * A destination belongs here if arriving at it cold would show no content. Screens that load
  * themselves — Settings, History, Auth, the camera screens' own permission flow — do not.
@@ -92,5 +90,22 @@ private val IN_MEMORY_ONLY: Set<KClass<out Destination>> = setOf(
     Destination.PdfTool::class
 )
 
-internal fun NavDestination.holdsOnlyInMemoryState(): Boolean =
-    IN_MEMORY_ONLY.any { hasRoute(it) }
+/**
+ * Pops a back stack restored after process death until no [IN_MEMORY_ONLY] screen is left on it —
+ * every entry, not only the top one, since Back would otherwise land on an empty screen. Each
+ * [popInclusive] removes the topmost entry of that route and everything above it, so the loop
+ * ends just below the lowest in-memory entry and keeps the screens beneath it.
+ *
+ * Takes the two operations rather than a NavController: NavController's list of entries is
+ * library-restricted, and this way the rule is testable without one.
+ */
+internal fun trimInMemoryScreens(
+    isOnStack: (KClass<out Destination>) -> Boolean,
+    popInclusive: (KClass<out Destination>) -> Boolean
+) {
+    while (true) {
+        val route = IN_MEMORY_ONLY.firstOrNull(isOnStack) ?: return
+        // A pop that removes nothing would spin here forever.
+        if (!popInclusive(route)) return
+    }
+}

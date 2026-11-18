@@ -10,7 +10,6 @@ private val INLINE_CONTAINERS = setOf(
     "customXml",
     "bdo",
     "dir",
-    "fldSimple",
     "moveTo"
 )
 
@@ -25,6 +24,9 @@ private val FIXED_TEXT = mapOf(
 
 private val VML_ELEMENTS = setOf("pict", "object")
 
+/** Anchor frames that are the page or its margins, not the text around the picture. */
+private val PAGE_FRAMES = setOf("page", "margin", "leftMargin", "rightMargin", "topMargin", "bottomMargin")
+
 /**
  * Run-level content: text, breaks, pictures, and everything that can't be drawn, counted into
  * [DocxNotes] instead. Deleted revisions and field instructions are dropped; inserted revisions
@@ -38,6 +40,7 @@ internal class DocxInlineReader(private val session: ReadSession) {
             !parser.isW() -> readForeign(parser, name, context)
             name == "r" -> readRun(parser, context)
             name in INLINE_CONTAINERS -> parser.children { read(parser, it, context) }
+            name == "fldSimple" -> markers.simpleField(parser) { parser.children { read(parser, it, context) } }
             name == "sdt" -> session.readSdt(parser) { parser.children { read(parser, it, context) } }
             else -> parser.skip()
         }
@@ -88,18 +91,11 @@ internal class DocxInlineReader(private val session: ReadSession) {
             name == "sym" -> readSymbol(parser, context)
             name == "drawing" -> readDrawing(parser, context)
             name in VML_ELEMENTS -> readVml(parser, context, isObject = name == "object")
-            else -> readMarker(parser, name)
+            else -> markers.read(parser, name, context)
         }
     }
 
-    /** Elements that only change state: field delimiters and note references. */
-    private fun readMarker(parser: XmlPullParser, name: String) {
-        when (name) {
-            "fldChar" -> session.fields.mark(parser.attr("fldCharType"))
-            "footnoteReference", "endnoteReference" -> session.notes.footnotes = true
-        }
-        parser.skip()
-    }
+    private val markers = DocxMarkers(session)
 
     /** A column break has no columns to move to here, so it ends the line like a text wrap. */
     private fun readBreak(parser: XmlPullParser, context: InlineContext) {
@@ -124,6 +120,10 @@ internal class DocxInlineReader(private val session: ReadSession) {
         if (value.isEmpty() || session.fields.inInstruction) return
         val style = context.runStyle?.invoke() ?: context.runBase().toStyle()
         if (style.hidden) return
+        if (session.fields.pageResult) {
+            if (session.fields.claimPage()) context.emit(DocxPageField(style, value))
+            return
+        }
         context.emit(DocxText(if (style.caps) value.uppercase() else value, style))
     }
 
@@ -138,19 +138,35 @@ internal class DocxInlineReader(private val session: ReadSession) {
     }
 
     /**
-     * One DrawingML object. Only pictures can be drawn; a floating (anchored) picture is drawn
+     * One DrawingML object. Only pictures can be drawn. A floating (anchored) picture that text does not wrap
+     * around (wrapNone, or behind the text) keeps its place and takes no room in the text; any other is drawn
      * in line at its anchor paragraph, since nothing here can wrap text around it.
      */
     private fun readGraphic(parser: XmlPullParser, context: InlineContext) {
+        val anchored = parser.name == "anchor"
+        val behind = parser.attr("behindDoc")?.let { it == "1" || it == "true" } == true
         val graphic = scanGraphic(parser)
         val entry = graphic.embed?.let(::imageEntry)
         when {
             "chart" in graphic.uri -> context.notes.charts++
             "diagram" in graphic.uri -> context.notes.diagrams++
             "picture" !in graphic.uri -> context.notes.shapes++
-            entry != null -> context.emit(DocxImage(entry, graphic.widthEmu, graphic.heightEmu))
+            entry != null -> context.emit(
+                DocxImage(entry, graphic.widthEmu, graphic.heightEmu, floatingAnchor(graphic, anchored, behind))
+            )
             else -> context.notes.unreadableImages++
         }
+    }
+
+    /**
+     * The place of a floating picture text does not wrap around (wrapNone, or behind the text); null for one
+     * drawn in line. In a table cell a floating picture stays in the cell's text unless it is placed on the
+     * page itself (page or margin anchors both ways): cell-relative places have no frame here.
+     */
+    private fun floatingAnchor(graphic: GraphicInfo, anchored: Boolean, behind: Boolean): ImageAnchor? {
+        val anchor = graphic.anchor
+        val onPage = anchor.xFrom in PAGE_FRAMES && anchor.yFrom in PAGE_FRAMES
+        return anchor.takeIf { anchored && (behind || graphic.wrapNone) && (!session.inTable || onPage) }
     }
 
     /**
@@ -211,24 +227,77 @@ internal class DocxInlineReader(private val session: ReadSession) {
         ?.takeIf { session.zip.getEntry(it) != null }
 }
 
-private class GraphicInfo(val uri: String, val embed: String?, val widthEmu: Long, val heightEmu: Long)
+private class GraphicInfo(
+    val uri: String,
+    val embed: String?,
+    val widthEmu: Long,
+    val heightEmu: Long,
+    val anchor: ImageAnchor,
+    val wrapNone: Boolean
+)
 
 private fun scanGraphic(parser: XmlPullParser): GraphicInfo {
-    var width = 0L
-    var height = 0L
-    var uri = ""
-    var embed: String? = null
-    parser.descendants { name ->
-        when {
-            name == "extent" && width == 0L -> {
-                width = parser.attr("cx")?.toLongOrNull() ?: 0L
-                height = parser.attr("cy")?.toLongOrNull() ?: 0L
-            }
-            name == "graphicData" && uri.isEmpty() -> uri = parser.attr("uri").orEmpty()
-            name == "blip" && embed == null -> embed = parser.relAttr("embed")
+    val scan = GraphicScan()
+    parser.descendants { name -> scan.read(name, parser) }
+    return scan.info()
+}
+
+/** What a scan of one DrawingML object has met so far. */
+private class GraphicScan {
+    private var width = 0L
+    private var height = 0L
+    private var uri = ""
+    private var embed: String? = null
+    private var wrapNone = false
+    private val place = Placement()
+
+    fun read(name: String, parser: XmlPullParser) {
+        when (name) {
+            "extent" -> if (width == 0L) extent(parser)
+            "graphicData" -> if (uri.isEmpty()) uri = parser.attr("uri").orEmpty()
+            "blip" -> if (embed == null) embed = parser.relAttr("embed")
+            "wrapNone" -> wrapNone = true
+            else -> place.read(name, parser)
         }
     }
-    return GraphicInfo(uri, embed, width, height)
+
+    private fun extent(parser: XmlPullParser) {
+        width = parser.attr("cx")?.toLongOrNull() ?: 0L
+        height = parser.attr("cy")?.toLongOrNull() ?: 0L
+    }
+
+    fun info() = GraphicInfo(uri, embed, width, height, place.anchor(), wrapNone)
+}
+
+/** wp:positionH / wp:positionV as they are read. */
+private class Placement {
+    private var horizontal = true
+    private var xFrom = "column"
+    private var yFrom = "paragraph"
+    private var x = 0L
+    private var y = 0L
+    private var xAlign: String? = null
+    private var yAlign: String? = null
+
+    /** wp:positionH / wp:positionV and their wp:posOffset / wp:align, as the scan meets them. */
+    fun read(name: String, parser: XmlPullParser) {
+        when (name) {
+            "positionH", "positionV" -> start(name == "positionH", parser.attr("relativeFrom"))
+            "posOffset" -> offset(parser.readText().trim().toLongOrNull() ?: 0L)
+            "align" -> align(parser.readText().trim())
+        }
+    }
+
+    private fun start(horizontal: Boolean, from: String?) {
+        this.horizontal = horizontal
+        if (horizontal) xFrom = from ?: xFrom else yFrom = from ?: yFrom
+    }
+
+    private fun offset(value: Long) = if (horizontal) x = value else y = value
+
+    private fun align(value: String) = if (horizontal) xAlign = value else yAlign = value
+
+    fun anchor() = ImageAnchor(x, xFrom, xAlign, y, yFrom, yAlign)
 }
 
 private class VmlInfo(val relId: String?, val widthPt: Float, val heightPt: Float, val rule: Boolean)

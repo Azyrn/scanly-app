@@ -7,6 +7,7 @@ import com.skeler.scanely.core.ai.FatalAiException
 import com.skeler.scanely.core.ai.TransientAiException
 import com.skeler.scanely.core.ai.aiDebug
 import com.skeler.scanely.core.ai.backendFailure
+import com.skeler.scanely.core.ai.isPollHiccup
 import com.skeler.scanely.core.ai.toAiException
 import com.skeler.scanely.core.network.TolerantJson
 import com.skeler.scanely.core.network.backendError
@@ -40,8 +41,8 @@ class AgentClient @Inject constructor(
 ) {
 
     /** Starts a turn; its id. Refusals (no credits, daily limit, switched off) are final. */
-    suspend fun start(request: AgentTurnRequest): AgentTurnAccepted = try {
-        api.startAgentTurn(request)
+    suspend fun start(request: AgentTurnRequest, requestKey: String): AgentTurnAccepted = try {
+        api.startAgentTurn(request, requestKey)
     } catch (e: HttpException) {
         throw e.toAiException(context)
     }
@@ -230,10 +231,13 @@ class AgentClient @Inject constructor(
             var finished: AgentStatusDto? = null
             while (finished == null) {
                 val response = api.agentTurn(turnId)
-                if (!response.isSuccessful) throw failureOf(response)
-                val status = response.body()?.use { body ->
-                    TolerantJson.decodeFromString(AgentStatusDto.serializer(), body.string())
-                } ?: throw TransientAiException(context.getString(R.string.ai_err_assistant_empty))
+                val status = response.polledStatus(::failureOf) {
+                    TransientAiException(context.getString(R.string.ai_err_assistant_empty))
+                }
+                if (status == null) {
+                    delay(pollMs)
+                    continue
+                }
                 status.steps.forEach { onStep(it.step, it.at) }
                 reportLog(status, onRows, onTasks)
                 if (response.code() == HTTP_ACCEPTED) delay(pollMs) else finished = status
@@ -264,6 +268,23 @@ class AgentClient @Inject constructor(
         const val DEADLINE_SLACK_S = 60
         const val MS = 1000L
     }
+}
+
+/**
+ * One poll's status. Null when the answer is not the turn's verdict ([isPollHiccup]): the turn still
+ * runs on the server and is asked again until the deadline. Any other failure is the turn's own.
+ */
+private fun retrofit2.Response<ResponseBody>.polledStatus(
+    failure: (retrofit2.Response<ResponseBody>) -> Exception,
+    empty: () -> Exception
+): AgentStatusDto? {
+    if (isPollHiccup()) {
+        errorBody()?.close()
+        return null
+    }
+    if (!isSuccessful) throw failure(this)
+    return body()?.use { body -> TolerantJson.decodeFromString(AgentStatusDto.serializer(), body.string()) }
+        ?: throw empty()
 }
 
 /** What fetching a row's whole output gave. */

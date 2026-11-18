@@ -104,4 +104,21 @@
     <string name="pdf_tool_rotate_left">左旋 90°</string>
     <string name="pdf_tool_rotate_body">旋转所有页面。如需旋转单独的页面，请使用“整理 PDF”。</string>
     <string name="pdf_tool_rotate_action">旋转</string>
+    <string name="pdf_tools_beta_badge">测试版</string>
+    <string name="pdf_tool_error_broken_output">转换后的文件已损坏，未保留。未保存任何内容。</string>
+    <string name="pdf_tool_error_timed_out">耗时过长，已停止。未保存任何内容。请尝试较小的文件。</string>
+    <string name="pdf_tool_credits_refunded">此次转换使用的点数已退还。</string>
+    <string name="pdf_tool_online_read_failed">在线识别失败，未扣除点数。这些页面保留 PDF 原有文字。</string>
+    <string name="pdf_tools_beta_note">结果会随更新不断改进。</string>
+    <string name="online_read_title">在线读取页面？</string>
+    <string name="online_read_use">使用点数</string>
+    <string name="online_read_without">不使用直接转换</string>
+    <string name="online_read_watch_ad">观看广告</string>
+    <string name="online_read_upgrade">升级</string>
+    <plurals name="online_read_body">
+        <item quantity="other">此文件有 %1$d 页需要在线读取才能得到准确文本。费用：%1$d 点。</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="other">你还剩 %1$d 点。</item>
+    </plurals>
 </resources>

@@ -394,6 +394,7 @@
     <string name="pay_confirm_sent">تحقّق من صندوق الوارد، وافتح الرابط، ثم اضغط «استعادة الشراء» مرة أخرى.</string>
     <string name="pay_confirm_failed">تعذّر إرسال بريد التأكيد. حاول مرة أخرى.</string>
     <string name="pay_key_removed">تمت إزالة المفتاح من هذا الجهاز.</string>
+    <string name="pay_reward_pending">أرصدة المكافأة في الطريق. تحقّق بعد قليل.</string>
     <string name="pay_restored_tier">عاد مفتاح %1$s الخاص بك.</string>
     <string name="pay_restored">عاد مفتاحك إلى هذا الجهاز.</string>
     <string name="pay_restore_nothing">لا يوجد اشتراك على هذا الحساب. إن دفعت بعنوان بريد إلكتروني مختلف، فسجّل الدخول به وحاول مرة أخرى.</string>

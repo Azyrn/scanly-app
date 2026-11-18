@@ -58,6 +58,8 @@
     <string name="scr_scan_review_delete_page_title">Видалити сторінку %1$d?</string>
     <string name="scr_scan_review_delete_page_body">Цієї сторінки не буде в експорті. Ви можете відсканувати її знову будь-коли.</string>
     <string name="scr_scan_review_keep">Лишити</string>
+    <string name="scr_scan_review_discard_title">Видалити скан?</string>
+    <string name="scr_scan_review_discard_body">Ці сторінки не збережено, їх буде втрачено.</string>
     <string name="scr_scan_review_rotate_page">Повернути</string>
     <string name="scr_scan_review_delete_page">Видалити</string>
     <string name="scr_scan_review_enhance">Покращити</string>
@@ -70,6 +72,12 @@
         <item quantity="few">%1$d сторінки</item>
         <item quantity="many">%1$d сторінок</item>
         <item quantity="other">%1$d сторінки</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d сторінку не прочитано, її пропущено.</item>
+        <item quantity="few">%1$d сторінки не прочитано, їх пропущено.</item>
+        <item quantity="many">%1$d сторінок не прочитано, їх пропущено.</item>
+        <item quantity="other">%1$d сторінки не прочитано, їх пропущено.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s в одному файлі · відкриється</string>
@@ -236,6 +244,7 @@
     <string name="ai_nothing_to_translate">Нічого перекладати.</string>
     <string name="ai_err_no_text_batch">Текст не витягнуто з файлів</string>
     <string name="ai_err_extraction_unavailable">Не вдалося завантажити тип витягування. Повторіть або вимкніть власну точку в налаштуваннях для %1$s.</string>
+    <string name="ai_err_custom_needs_pro">Для власної точки потрібен Pro, а план не підтвердився. Повторіть або вимкніть її в налаштуваннях, щоб витрачати кредити Scanly.</string>
     <string name="ai_err_read_file">Помилка читання</string>
     <string name="ai_err_no_text">Не вдалося прочитати текст із файлу.</string>
     <string name="ai_design_background">Створюємо документ. Можна вийти — надішлемо сповіщення.</string>
@@ -294,6 +303,7 @@
     <string name="ocr_err_render_pdf">Збій PDF</string>
     <string name="ocr_err_pdf_processing">Збій обробки PDF</string>
     <string name="ocr_err_download">Не завантажено</string>
+    <string name="ocr_err_download_offline">Немає зв\'язку. Спробуйте ще.</string>
     <string name="ocr_setup_pending">Розпізнавання тексту ще налаштовується. Побудьте онлайн хвилину й спробуйте знову.</string>
     <string name="ocr_scan_failed">Не вдалося прочитати файл. Це збій скану, а не порожня сторінка. Спробуйте знову або виберіть інший файл.</string>
     <string name="pay_upgrade_notice">Щоб перейти на вищий план, відкрийте %1$s/upgrade і увійдіть у той самий обліковий запис: план зміниться. Інша покупка на сторінці цін створить другу підписку, що оплачується разом із цією.</string>

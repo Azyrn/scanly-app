@@ -62,6 +62,20 @@ class DesignResponseContractTest {
         assertEquals(3, polls)
     }
 
+    @Test fun `a 5xx that is not the job's own answer is polled through, not taken as the job failing`() = runBlocking {
+        val pdf = Headers.headersOf("Content-Type", "application/pdf", "X-Design-Id", "job-5", "X-Usage-Pages", "1")
+        var polls = 0
+        val response = awaitDesignJob(EnglishStrings.context(), 300, pollDelayMs = 0) {
+            when (++polls) {
+                1 -> Response.error(503, "<html>Service Unavailable</html>".toResponseBody())
+                2 -> Response.error(500, """{"error":{"code":"internal","message":"Something went wrong."}}""".toResponseBody())
+                else -> Response.success("%PDF-job".toByteArray().toResponseBody(), pdf)
+            }
+        }
+        assertEquals("job-5", response.headers()["X-Design-Id"])
+        assertEquals(3, polls)
+    }
+
     @Test fun `a failed background job is final and carries the server's not-charged word`() = runBlocking {
         val failed = """{"error":{"code":"provider_error","message":"The designer took too long. Try again.","notCharged":true}}"""
         val error = try {
@@ -70,9 +84,12 @@ class DesignResponseContractTest {
         } catch (e: FatalAiException) { e.result }
         assertEquals("provider_error", error!!.code)
         assertTrue(error.notCharged)
-        // A failure the server did not vouch for says nothing about billing.
+        // A failure the server did not vouch for says nothing about billing. (A 5xx without the job's
+        // verdict is no longer a failure at all: it is polled again, see the test above.)
         val silent = try {
-            awaitDesignJob(EnglishStrings.context(), 300, pollDelayMs = 0) { Response.error(500, "{}".toResponseBody()) }
+            awaitDesignJob(EnglishStrings.context(), 300, pollDelayMs = 0) {
+                Response.error(400, """{"error":{"code":"bad_request","message":"That design is no longer available."}}""".toResponseBody())
+            }
             null
         } catch (e: FatalAiException) { e.result }
         assertFalse(silent!!.notCharged)

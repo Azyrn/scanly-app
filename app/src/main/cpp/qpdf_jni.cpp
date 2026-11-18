@@ -11,7 +11,9 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <map>
 #include <memory>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <unordered_set>
@@ -21,6 +23,7 @@
 #include <qpdf/Buffer.hh>
 #include <qpdf/QPDF.hh>
 #include <qpdf/QPDFJob.hh>
+#include <qpdf/QPDFLogger.hh>
 #include <qpdf/QPDFObjectHandle.hh>
 #include <qpdf/QPDFPageDocumentHelper.hh>
 #include <qpdf/QPDFPageObjectHelper.hh>
@@ -89,7 +92,10 @@ Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeRun(
 
     try {
         QPDFJob job;
-        job.setOutputStreams(&out, &err);
+        // A logger of the job's own, so concurrent jobs never share the default one's streams.
+        auto logger = QPDFLogger::create();
+        logger->setOutputStreams(&out, &err);
+        job.setLogger(logger);
         job.initializeFromArgv(args.data());
         job.run();
         // qpdf_exit_warning means the output was written and only the *input* had recoverable
@@ -161,6 +167,221 @@ Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeStripMetadata(
         g_last_error = e.what();
         return looksLikePasswordFailure(g_last_error) ? kErrPassword : kErrFailed;
     }
+}
+
+namespace {
+
+// A composite font whose codes are glyph ids (Identity-H/V): without its ToUnicode map, pdfium
+// reports each character's code, so the code is the glyph the page draws.
+bool isIdentityType0(QPDFObjectHandle font)
+{
+    if (!font.isDictionary() || !font.getKey("/Subtype").isNameAndEquals("/Type0")) {
+        return false;
+    }
+    QPDFObjectHandle encoding = font.getKey("/Encoding");
+    return encoding.isNameAndEquals("/Identity-H") || encoding.isNameAndEquals("/Identity-V");
+}
+
+} // namespace
+
+/**
+ * Writes a copy of the document whose Identity-encoded composite fonts have no /ToUnicode, so a
+ * text read of the copy gives glyph ids where the original's (often wrong) map gave letters.
+ * Returns how many maps were removed, or a negative error. Read-only use: the copy is a scratch
+ * file the caller deletes, never shown or saved for the user.
+ */
+extern "C" JNIEXPORT jint JNICALL
+Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeWithoutToUnicode(
+    JNIEnv* env, jclass, jstring inPath, jstring outPath, jstring password)
+{
+    g_last_error.clear();
+
+    const std::string in = jstringToUtf8(env, inPath);
+    const std::string out = jstringToUtf8(env, outPath);
+    const std::string pw = jstringToUtf8(env, password);
+
+    try {
+        QPDF pdf;
+        pdf.processFile(in.c_str(), pw.empty() ? nullptr : pw.c_str());
+        jint removed = 0;
+        auto strip = [&removed](QPDFObjectHandle font) {
+            if (isIdentityType0(font) && font.hasKey("/ToUnicode")) {
+                font.removeKey("/ToUnicode");
+                ++removed;
+            }
+        };
+        for (auto& object : pdf.getAllObjects()) {
+            strip(object);
+        }
+        // Fonts written directly into a page's resources are not indirect objects.
+        QPDFPageDocumentHelper pages(pdf);
+        for (auto& page : pages.getAllPages()) {
+            QPDFObjectHandle fonts = page.getObjectHandle().getKey("/Resources").getKey("/Font");
+            if (fonts.isDictionary()) {
+                for (auto& entry : fonts.ditems()) {
+                    strip(entry.second);
+                }
+            }
+        }
+        QPDFWriter writer(pdf, out.c_str());
+        writer.write();
+        return removed;
+    } catch (const std::exception& e) {
+        g_last_error = e.what();
+        return looksLikePasswordFailure(g_last_error) ? kErrPassword : kErrFailed;
+    }
+}
+
+namespace {
+
+/** A tagged PDF's structure tree, flattened as PdfStructure holds it. */
+struct StructureTree {
+    std::vector<std::string> types;
+    std::vector<int> typeOf;
+    std::vector<int> parents;
+    /** (page, mcid, node) triples. */
+    std::vector<int> marks;
+};
+
+constexpr size_t kMaxStructNodes = 2000000;
+
+int pageOf(QPDFObjectHandle element, const std::map<QPDFObjGen, int>& pages, int inherited)
+{
+    QPDFObjectHandle page = element.getKey("/Pg");
+    if (!page.isIndirect()) {
+        return inherited;
+    }
+    auto found = pages.find(page.getObjGen());
+    return found == pages.end() ? inherited : found->second;
+}
+
+/**
+ * Walks /StructTreeRoot the way scripts/fidelity/hostdump.py's read_structure does (keep the two in
+ * step): a node's kids are structure elements, marked-content ids of the node's own page (/Pg), or
+ * marked-content references naming a page of their own; object references are skipped.
+ */
+void readStructure(QPDF& pdf, StructureTree& tree)
+{
+    QPDFObjectHandle root = pdf.getRoot().getKey("/StructTreeRoot");
+    if (!root.isDictionary()) {
+        return;
+    }
+    std::map<QPDFObjGen, int> pages;
+    int index = 0;
+    for (auto& page : QPDFPageDocumentHelper(pdf).getAllPages()) {
+        pages[page.getObjectHandle().getObjGen()] = index++;
+    }
+    struct Item {
+        QPDFObjectHandle object;
+        int parent;
+        int page;
+    };
+    std::map<std::string, int> typeIds;
+    std::set<QPDFObjGen> seen;
+    std::vector<Item> stack;
+    auto pushKids = [&stack](QPDFObjectHandle kids, int parent, int page) {
+        if (kids.isArray()) {
+            // Reversed, so the first kid is taken first and nodes come out in document order.
+            for (int i = kids.getArrayNItems() - 1; i >= 0; --i) {
+                stack.push_back({kids.getArrayItem(i), parent, page});
+            }
+        } else if (!kids.isNull()) {
+            stack.push_back({kids, parent, page});
+        }
+    };
+    pushKids(root.getKey("/K"), -1, -1);
+    while (!stack.empty() && tree.typeOf.size() < kMaxStructNodes) {
+        Item item = stack.back();
+        stack.pop_back();
+        QPDFObjectHandle object = item.object;
+        if (object.isInteger()) {
+            if (item.parent >= 0 && item.page >= 0) {
+                tree.marks.insert(tree.marks.end(), {item.page, static_cast<int>(object.getIntValue()), item.parent});
+            }
+            continue;
+        }
+        if (!object.isDictionary()) {
+            continue;
+        }
+        if (object.isIndirect() && !seen.insert(object.getObjGen()).second) {
+            continue;
+        }
+        QPDFObjectHandle type = object.getKey("/Type");
+        if (type.isName() && type.getName() == "/MCR") {
+            QPDFObjectHandle mcid = object.getKey("/MCID");
+            int page = pageOf(object, pages, item.page);
+            if (mcid.isInteger() && item.parent >= 0 && page >= 0) {
+                tree.marks.insert(tree.marks.end(), {page, static_cast<int>(mcid.getIntValue()), item.parent});
+            }
+            continue;
+        }
+        QPDFObjectHandle name = object.getKey("/S");
+        if (!name.isName()) {
+            continue; // an object reference (OBJR), or not a structure element
+        }
+        const std::string typeName = name.getName().substr(1);
+        auto known = typeIds.find(typeName);
+        if (known == typeIds.end()) {
+            known = typeIds.emplace(typeName, static_cast<int>(tree.types.size())).first;
+            tree.types.push_back(typeName);
+        }
+        int node = static_cast<int>(tree.typeOf.size());
+        tree.typeOf.push_back(known->second);
+        tree.parents.push_back(item.parent);
+        pushKids(object.getKey("/K"), node, pageOf(object, pages, item.page));
+    }
+}
+
+jintArray toIntArray(JNIEnv* env, const std::vector<int>& values)
+{
+    jintArray array = env->NewIntArray(static_cast<jsize>(values.size()));
+    if (array != nullptr && !values.empty()) {
+        env->SetIntArrayRegion(array, 0, static_cast<jsize>(values.size()), values.data());
+    }
+    return array;
+}
+
+} // namespace
+
+/**
+ * The structure tree of a tagged PDF: { String[] type names, int[] type of each node, int[] parent of
+ * each node, int[] (page, mcid, node) triples }; null when the PDF has none or cannot be read. Read-only.
+ */
+extern "C" JNIEXPORT jobjectArray JNICALL
+Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeStructure(JNIEnv* env, jclass, jstring inPath, jstring password)
+{
+    g_last_error.clear();
+    const std::string in = jstringToUtf8(env, inPath);
+    const std::string pw = jstringToUtf8(env, password);
+    StructureTree tree;
+    try {
+        QPDF pdf;
+        pdf.processFile(in.c_str(), pw.empty() ? nullptr : pw.c_str());
+        readStructure(pdf, tree);
+    } catch (const std::exception& e) {
+        g_last_error = e.what();
+        return nullptr;
+    }
+    if (tree.typeOf.empty()) {
+        return nullptr;
+    }
+    jclass objectClass = env->FindClass("java/lang/Object");
+    jclass stringClass = env->FindClass("java/lang/String");
+    jobjectArray names = env->NewObjectArray(static_cast<jsize>(tree.types.size()), stringClass, nullptr);
+    jobjectArray result = env->NewObjectArray(4, objectClass, nullptr);
+    if (names == nullptr || result == nullptr) {
+        return nullptr;
+    }
+    for (size_t i = 0; i < tree.types.size(); ++i) {
+        jstring value = env->NewStringUTF(tree.types[i].c_str());
+        env->SetObjectArrayElement(names, static_cast<jsize>(i), value);
+        env->DeleteLocalRef(value);
+    }
+    env->SetObjectArrayElement(result, 0, names);
+    env->SetObjectArrayElement(result, 1, toIntArray(env, tree.typeOf));
+    env->SetObjectArrayElement(result, 2, toIntArray(env, tree.parents));
+    env->SetObjectArrayElement(result, 3, toIntArray(env, tree.marks));
+    return result;
 }
 
 /**
@@ -368,7 +589,10 @@ Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeExtractSignatures(
         bool first = true;
 
         // Signature fields may be nested under /Kids, so walk the tree rather than the top level.
+        // A crafted or broken form can make /Kids point back at an ancestor (or list one field
+        // many times); without the seen set that loop never ends and this call cannot be cancelled.
         std::vector<QPDFObjectHandle> queue;
+        std::set<QPDFObjGen> seen;
         for (int i = 0; i < fields.getArrayNItems(); ++i) {
             queue.push_back(fields.getArrayItem(i));
         }
@@ -377,6 +601,9 @@ Java_com_skeler_scanely_core_pdfeditor_engine_Qpdf_nativeExtractSignatures(
             QPDFObjectHandle field = queue.back();
             queue.pop_back();
             if (!field.isDictionary()) {
+                continue;
+            }
+            if (field.isIndirect() && !seen.insert(field.getObjGen()).second) {
                 continue;
             }
 

@@ -105,4 +105,23 @@
     <string name="pdf_tool_rotate_left">90° sola</string>
     <string name="pdf_tool_rotate_body">Tüm sayfaları döndürür. Tek sayfa için Sayfa düzenle\'ye bakın.</string>
     <string name="pdf_tool_rotate_action">Döndür</string>
+    <string name="pdf_tools_beta_badge">Beta</string>
+    <string name="pdf_tool_error_broken_output">Dönüştürülen dosya bozuk çıktı, saklanmadı. Hiçbir şey kaydedilmedi.</string>
+    <string name="pdf_tool_error_timed_out">Çok uzun sürdü ve durduruldu. Hiçbir şey kaydedilmedi. Küçük dosya deneyin.</string>
+    <string name="pdf_tool_credits_refunded">Bu dönüştürmenin kullandığı krediler iade edildi.</string>
+    <string name="pdf_tool_online_read_failed">Çevrimiçi okuma başarısız, kredi kullanılmadı. Bu sayfalar PDF\'nin metnini korur.</string>
+    <string name="pdf_tools_beta_note">Sonuçlar güncellemelerle iyileşiyor.</string>
+    <string name="online_read_title">Sayfalar çevrimiçi okunsun mu?</string>
+    <string name="online_read_use">Kredi kullan</string>
+    <string name="online_read_without">Kredisiz dönüştür</string>
+    <string name="online_read_watch_ad">Reklam izle</string>
+    <string name="online_read_upgrade">Yükselt</string>
+    <plurals name="online_read_body">
+        <item quantity="one">Doğru metin için bu dosyanın %1$d sayfasının çevrimiçi okunması gerekiyor. Maliyet: %1$d kredi.</item>
+        <item quantity="other">Doğru metin için bu dosyanın %1$d sayfasının çevrimiçi okunması gerekiyor. Maliyet: %1$d kredi.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">%1$d krediniz kaldı.</item>
+        <item quantity="other">%1$d krediniz kaldı.</item>
+    </plurals>
 </resources>

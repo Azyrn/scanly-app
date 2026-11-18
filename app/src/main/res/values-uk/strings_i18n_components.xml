@@ -354,6 +354,7 @@
     <string name="pay_confirm_sent">Відкрийте лист із посиланням, потім знову «Відновити покупку».</string>
     <string name="pay_confirm_failed">Не вдалося надіслати лист. Спробуйте знову.</string>
     <string name="pay_key_removed">Ключ видалено з пристрою.</string>
+    <string name="pay_reward_pending">Бонусні кредити скоро з\'являться.</string>
     <string name="pay_restored_tier">Ключ %1$s повернено.</string>
     <string name="pay_restored">Ключ повернено на пристрій.</string>
     <string name="pay_restore_nothing">Підписки на цьому акаунті немає. Якщо платили з іншим email, увійдіть з ним і спробуйте знову.</string>

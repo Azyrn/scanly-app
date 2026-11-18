@@ -109,4 +109,31 @@
     <string name="pdf_tool_rotate_left">90° يسارًا</string>
     <string name="pdf_tool_rotate_body">يدوّر كل الصفحات. لتدوير صفحات منفردة، استخدم تنظيم PDF.</string>
     <string name="pdf_tool_rotate_action">تدوير</string>
+    <string name="pdf_tools_beta_badge">تجريبي</string>
+    <string name="pdf_tool_error_broken_output">خرج الملف المحوَّل تالفًا فلم يُحتفظ به. لم يُحفظ شيء.</string>
+    <string name="pdf_tool_error_timed_out">استغرق هذا وقتًا طويلًا فتوقّف. لم يُحفظ شيء. جرّب ملفًا أصغر.</string>
+    <string name="pdf_tool_credits_refunded">استُرِدّت الأرصدة التي استخدمها هذا التحويل.</string>
+    <string name="pdf_tool_online_read_failed">تعذّرت القراءة عبر الإنترنت، فلم تُستخدم أي أرصدة. تحتفظ تلك الصفحات بنص ملف PDF.</string>
+    <string name="pdf_tools_beta_note">تتحسن النتائج مع كل تحديث.</string>
+    <string name="online_read_title">قراءة الصفحات عبر الإنترنت؟</string>
+    <string name="online_read_use">استخدام الرصيد</string>
+    <string name="online_read_without">تحويل بدونها</string>
+    <string name="online_read_watch_ad">مشاهدة إعلان</string>
+    <string name="online_read_upgrade">ترقية</string>
+    <plurals name="online_read_body">
+        <item quantity="zero">لا صفحات تحتاج إلى قراءة عبر الإنترنت. التكلفة: %1$d رصيد.</item>
+        <item quantity="one">صفحة واحدة (%1$d) في هذا الملف تحتاج إلى قراءة عبر الإنترنت لنص دقيق. التكلفة: %1$d رصيد.</item>
+        <item quantity="two">صفحتان (%1$d) في هذا الملف تحتاجان إلى قراءة عبر الإنترنت لنص دقيق. التكلفة: %1$d رصيد.</item>
+        <item quantity="few">%1$d صفحات في هذا الملف تحتاج إلى قراءة عبر الإنترنت لنص دقيق. التكلفة: %1$d أرصدة.</item>
+        <item quantity="many">%1$d صفحة في هذا الملف تحتاج إلى قراءة عبر الإنترنت لنص دقيق. التكلفة: %1$d رصيدًا.</item>
+        <item quantity="other">%1$d صفحة في هذا الملف تحتاج إلى قراءة عبر الإنترنت لنص دقيق. التكلفة: %1$d رصيد.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="zero">رصيدك %1$d.</item>
+        <item quantity="one">لديك رصيد واحد (%1$d).</item>
+        <item quantity="two">لديك رصيدان (%1$d).</item>
+        <item quantity="few">لديك %1$d أرصدة.</item>
+        <item quantity="many">لديك %1$d رصيدًا.</item>
+        <item quantity="other">لديك %1$d رصيد.</item>
+    </plurals>
 </resources>

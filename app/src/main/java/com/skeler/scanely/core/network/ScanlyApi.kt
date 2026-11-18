@@ -41,6 +41,8 @@ interface ScanlyApi {
      * replays the original result instead of billing twice. [pages] narrows a PDF to `1-5,8`; it is
      * the only parameter that moves the price and it can only lower it, since the server resolves
      * the range against the real document. [extract] is a preset *name*, never a schema or prompt.
+     * [blocks] (`1`) also asks for each page's paragraph boxes ([OcrPageDto.blocks]); the server
+     * then keeps none of the pages, only the usual metadata.
      */
     @Multipart
     @POST("v1/ocr")
@@ -48,7 +50,8 @@ interface ScanlyApi {
         @Part file: MultipartBody.Part,
         @Header("X-Idempotency-Key") idempotencyKey: String,
         @Part pages: MultipartBody.Part?,
-        @Part extract: MultipartBody.Part?
+        @Part extract: MultipartBody.Part?,
+        @Part blocks: MultipartBody.Part? = null
     ): OcrResponse
 
     /**
@@ -165,6 +168,14 @@ interface ScanlyApi {
      */
     @POST("v1/license/mine")
     suspend fun myLicenses(): LicenseRecoveryResponse
+
+    /**
+     * Gives back the credits of a conversion's cloud OCR read (`blocks=1`, named by its
+     * idempotency key) when the conversion then failed on the phone. The server checks the read
+     * is this account's, recent and not yet refunded, and caps refunds per month.
+     */
+    @POST("v1/ocr/refund")
+    suspend fun refundConversion(@Body request: ConversionRefundRequest): ConversionRefundResponse
 
     /**
      * Mails this account a link to confirm its address. Sent by the Worker from scanlyocr.com and
@@ -347,7 +358,17 @@ data class OcrPageDto(
     /** URLs the page links to. */
     val links: List<String> = emptyList(),
     /** Passages the OCR model itself flagged as low confidence. */
-    val unclear: List<String> = emptyList()
+    val unclear: List<String> = emptyList(),
+    /** Paragraphs with their boxes, only when the request asked for them (`blocks=1`). */
+    val blocks: List<OcrBlockDto> = emptyList()
+)
+
+/** One paragraph read from a page image: [box] is `[left, top, right, bottom]` as fractions of the page. */
+@Serializable
+data class OcrBlockDto(
+    val type: String = "",
+    val box: List<Float> = emptyList(),
+    val text: String = ""
 )
 
 @Serializable
@@ -510,3 +531,9 @@ data class BackendError(
 
 @Serializable
 data class BackendField(val id: String, val label: String)
+
+@Serializable
+data class ConversionRefundRequest(val key: String)
+
+@Serializable
+data class ConversionRefundResponse(val refundedPages: Int = 0, val reason: String? = null)

@@ -28,8 +28,13 @@ internal class OrtSessionPool(
     // The CPU arena keeps the largest buffers any crop or page shape ever needed and never gives
     // them back (scan_ar_wiki peaked at 1.25 GB); shrinking it after each run keeps its speed
     // within a run without the growth. Lives as long as the engine, like the environment.
-    val runOptions: OrtSession.RunOptions = OrtSession.RunOptions().apply {
-        addRunConfigEntry("memory.enable_memory_arena_shrinkage", "cpu:0")
+    // Lazy: RunOptions' class initializer loads libonnxruntime (30+ MB), and this pool is built
+    // with PaddleOcrEngine wherever the OCR graph is injected, which can be on the main thread
+    // (Home's first composition, before P6). First use is an inference, on a background dispatcher.
+    val runOptions: OrtSession.RunOptions by lazy {
+        OrtSession.RunOptions().apply {
+            addRunConfigEntry("memory.enable_memory_arena_shrinkage", "cpu:0")
+        }
     }
 
     // Closed as soon as the session is built: ORT copies the options into the session, and a

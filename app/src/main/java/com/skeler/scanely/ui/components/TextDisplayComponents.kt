@@ -31,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,7 +58,7 @@ fun ReadableTextContent(
         backgroundColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
     )
 
-    val paragraphs = remember(text) {
+    val paragraphs = rememberBackgroundValue(text, emptyList<String>()) {
         text.trim()
             .split(Regex("\\n\\s*\\n"))
             .map { it.trim() }

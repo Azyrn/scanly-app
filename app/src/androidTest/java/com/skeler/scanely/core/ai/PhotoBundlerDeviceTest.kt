@@ -55,7 +55,7 @@ class PhotoBundlerDeviceTest {
         // The upload path takes it as a PDF within the plan's size cap.
         val payload = payloads.create(out.single(), 30L * 1024 * 1024) as PayloadFactory.Payload.File
         assertEquals("application/pdf", payload.mimeType)
-        context.getExternalFilesDir(null)!!.resolve("bundle-12.pdf").writeBytes(payload.bytes)
+        context.getExternalFilesDir(null)!!.resolve("bundle-12.pdf").outputStream().use(payload.bytes::write)
     }
 
     @Test fun freePlanLimitSplitsIntoRunsOfThree() = runBlocking {

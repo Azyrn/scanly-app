@@ -32,7 +32,7 @@ class PaddleStructureTest {
 
     @Before
     fun setUp() {
-        store = PaddleModelStore(context, OkHttpClient())
+        store = PaddleModelStore(context, dagger.Lazy { OkHttpClient() })
         engine = PaddleOcrEngine(context, store)
     }
 

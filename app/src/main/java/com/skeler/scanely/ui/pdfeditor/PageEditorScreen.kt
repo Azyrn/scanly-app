@@ -126,7 +126,9 @@ import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.theme.GestureDefaults
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -192,7 +194,9 @@ fun PageEditorScreen(startIndex: Int) {
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         val page = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
             ?.pages?.firstOrNull()?.imageUri ?: return@rememberLauncherForActivityResult
-        decodeBitmap(context, page)?.let { vm.captureSignature(it, resources.getString(R.string.pe_signature)) }
+        scope.launch {
+            decodeBitmap(context, page)?.let { vm.captureSignature(it, resources.getString(R.string.pe_signature)) }
+        }
     }
 
     fun captureSignature() {
@@ -205,6 +209,13 @@ fun PageEditorScreen(startIndex: Int) {
         DocumentScannerManager.getStartScanIntent(activity)
             .addOnSuccessListener { sender ->
                 scanLauncher.launch(IntentSenderRequest.Builder(sender).build())
+            }
+            // Fails when the scanner module can't be fetched (offline on first use) or won't
+            // start; without this the tap did nothing.
+            .addOnFailureListener {
+                scope.launch {
+                    snackbarHostState.showSnackbar(resources.getString(R.string.pe_scanner_start_failed))
+                }
             }
     }
 
@@ -1236,9 +1247,11 @@ private fun SignatureRow(
     }
 }
 
-private fun decodeBitmap(context: android.content.Context, uri: Uri): Bitmap? = runCatching {
-    context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) }
-}.getOrNull()
+internal suspend fun decodeBitmap(context: android.content.Context, uri: Uri): Bitmap? = withContext(Dispatchers.IO) {
+    runCatching {
+        context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) }
+    }.getOrNull()
+}
 
 private const val MAX_ZOOM = 6f
 private const val TAP_SLOP_PX = 14f

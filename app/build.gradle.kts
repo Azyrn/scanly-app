@@ -1,6 +1,8 @@
 import java.io.File
 import java.net.URI
 import java.util.Properties
+import java.security.MessageDigest
+import javax.inject.Inject
 
 // Google test AdMob IDs — never serve real ads.
 val admobTestAppId = "ca-app-pub-3940256099942544~3347511713"
@@ -18,6 +20,62 @@ plugins {
     // com.android.build.api.variant.Variant. firebaseResValues() below emits the same
     // resources the plugin would, which is all FirebaseInitProvider actually reads.
 }
+
+/**
+ * The current pdfium release (bblanchon/pdfium-binaries, chromium builds), pinned by tag and by the
+ * SHA-256 of each archive that GitHub publishes for it. pdfiumandroid's own libpdfium.so is an
+ * older build; the PDF tools read text through the same library, so a newer pdfium is newer text
+ * extraction for every conversion. Fetched at build time instead of committed (7 MB per ABI).
+ */
+abstract class FetchPdfium @Inject constructor(
+    private val files: FileSystemOperations,
+    private val archives: ArchiveOperations
+) : DefaultTask() {
+    @get:Input abstract val tag: Property<String>
+
+    /** ABI to "archive-name sha256". */
+    @get:Input abstract val builds: MapProperty<String, String>
+
+    @get:OutputDirectory abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun fetch() {
+        val out = outputDir.get().asFile
+        val cache = File(temporaryDir, "archives").apply { mkdirs() }
+        builds.get().forEach { (abi, build) ->
+            val (name, sha256) = build.split(' ')
+            val archive = File(cache, name)
+            if (!archive.exists() || sha256Of(archive) != sha256) {
+                val encodedTag = tag.get().replace("/", "%2F")
+                URI("https://github.com/bblanchon/pdfium-binaries/releases/download/$encodedTag/$name")
+                    .toURL().openStream().use { input -> archive.outputStream().use { input.copyTo(it) } }
+            }
+            val actual = sha256Of(archive)
+            if (actual != sha256) throw GradleException("$name: sha256 $actual, expected $sha256")
+            files.copy {
+                from(archives.tarTree(archives.gzip(archive))) { include("lib/libpdfium.so") }
+                eachFile { path = "$abi/libpdfium.so" }
+                includeEmptyDirs = false
+                into(out)
+            }
+        }
+    }
+
+    private fun sha256Of(file: File): String = MessageDigest.getInstance("SHA-256")
+        .digest(file.readBytes()).joinToString("") { "%02x".format(it) }
+}
+
+val fetchPdfium = tasks.register<FetchPdfium>("fetchPdfium") {
+    tag = "chromium/8152"
+    builds = mapOf(
+        "arm64-v8a" to "pdfium-android-arm64.tgz 97085db0665639f2c7d5453d3b982b16c6bbb450f4c5170a3cf7ec0df7575ab9",
+        "armeabi-v7a" to "pdfium-android-arm.tgz 026644bb11653491e89ea2f9af490b5d765127bdb1c94aadc27bb3652ed34898",
+        "x86_64" to "pdfium-android-x64.tgz 25436b6e5a761b92faae592edcf6c355a802860e842bd34c73cf9f519c9c3e43"
+    )
+    outputDir = layout.buildDirectory.dir("pdfium/jniLibs")
+}
+val pdfiumLibs = fetchPdfium.flatMap { it.outputDir }
+tasks.matching { it.name == "preBuild" }.configureEach { dependsOn(fetchPdfium) }
 
 // local.properties (gitignored): keys, signing, real AdMob ids.
 val secretsProps = Properties().apply {
@@ -172,6 +230,8 @@ android {
     }
 
     sourceSets.getByName("test").resources.directories.add(rootProject.file("contracts").path)
+    // pdfium itself, newer than the copy pdfiumandroid bundles (see fetchPdfium below).
+    sourceSets.getByName("main").jniLibs.directories.add(pdfiumLibs.get().asFile.path)
 
     testOptions {
         // Mockito instruments bootstrap classes; CDS is unavailable in this test JVM.
@@ -299,6 +359,11 @@ android {
             // CMS signing and verification use RSA/ECDSA through the classic provider; no
             // post-quantum algorithm is ever instantiated. Only resources go: pqc classes are dex.
             excludes += "org/bouncycastle/pqc/**"
+        }
+        jniLibs {
+            // fetchPdfium's libpdfium.so replaces the older one inside pdfiumandroid-core: the
+            // app's own native libraries are merged first, so the first pick is ours.
+            pickFirsts += "**/libpdfium.so"
         }
     }
 }

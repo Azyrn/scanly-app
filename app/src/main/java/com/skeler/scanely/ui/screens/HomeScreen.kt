@@ -41,6 +41,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -113,7 +116,13 @@ private fun pickerLimit(planLimit: Int): Int? {
     return planLimit.coerceAtLeast(2).takeIf { it < systemMax }
 }
 
-private data class PendingPdfScan(val uri: Uri, val mode: AiMode, val pageCount: Int)
+internal data class PendingPdfScan(val uri: Uri, val mode: AiMode, val pageCount: Int)
+
+/** Saves a [PendingPdfScan] as its three parts: a Uri (Parcelable), an enum and an Int, all Bundle-safe. */
+internal val PendingPdfScanSaver: Saver<PendingPdfScan?, Any> = listSaver(
+    save = { pending -> pending?.let { listOf(it.uri, it.mode, it.pageCount) }.orEmpty() },
+    restore = { saved -> PendingPdfScan(saved[0] as Uri, saved[1] as AiMode, saved[2] as Int) }
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -135,9 +144,14 @@ fun HomeScreen() {
         initialValue = SheetValue.Hidden,
         enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
     )
-    var pendingAiMode by remember { mutableStateOf<AiMode?>(null) }
-    var pendingPageRange by remember { mutableStateOf<PendingPdfScan?>(null) }
-    var pendingExtractPreset by remember { mutableStateOf<String?>(null) }
+    // Saveable, not remembered: the system picker runs in another app, and if this activity is
+    // recreated behind it (rotation, theme change, process death) the picked files come back to a
+    // fresh composition that must still know what they were picked for.
+    var pendingAiMode by rememberSaveable { mutableStateOf<AiMode?>(null) }
+    var pendingPageRange by rememberSaveable(stateSaver = PendingPdfScanSaver) {
+        mutableStateOf<PendingPdfScan?>(null)
+    }
+    var pendingExtractPreset by rememberSaveable { mutableStateOf<String?>(null) }
     var showExtractionSheet by remember { mutableStateOf(false) }
     val extractionSheetState = rememberBottomSheetState(
         initialValue = SheetValue.Hidden,

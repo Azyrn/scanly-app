@@ -102,6 +102,7 @@
     <string name="pe_no_signatures_saved">لا توجد تواقيع محفوظة بعد. التقط توقيعًا من أداة التوقيع في محرر الصفحات.</string>
     <string name="pe_no_selectable_text">لا يوجد نص قابل للتحديد هنا، فقد تكون الصفحة ممسوحة ضوئيًا.</string>
     <string name="pe_scanner_unavailable">ماسح المستندات غير متاح على هذا الجهاز.</string>
+    <string name="pe_scanner_start_failed">تعذّر فتح الماسح. تحقّق من الاتصال.</string>
     <string name="pe_undo">تراجع</string>
     <string name="pe_redo">إعادة</string>
     <string name="pe_add_text">إضافة نص</string>

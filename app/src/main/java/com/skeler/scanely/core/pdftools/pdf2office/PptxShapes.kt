@@ -1,6 +1,7 @@
 package com.skeler.scanely.core.pdftools.pdf2office
 
 import com.skeler.scanely.core.pdftools.pdf2office.exact.Block
+import com.skeler.scanely.core.pdftools.pdf2office.exact.CellMerge
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactLayout
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactPageLayout
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactRuns
@@ -9,6 +10,7 @@ import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactTableCell
 import com.skeler.scanely.core.pdftools.pdf2office.exact.ExactTableRow
 import com.skeler.scanely.core.pdftools.pdf2office.exact.OfficeFamily
 import com.skeler.scanely.core.pdftools.pdf2office.exact.OutRun
+import com.skeler.scanely.core.pdftools.pdf2office.exact.Segment
 import com.skeler.scanely.core.pdftools.pdf2office.exact.TextMeasurer
 import com.skeler.scanely.core.pdftools.pdf2office.exact.boxGeometry
 import com.skeler.scanely.core.pdftools.pdf2office.exact.forEachInReadingOrder
@@ -186,6 +188,7 @@ private fun textShapeXml(
 }
 
 /** Exact-layout text on a slide: text boxes, native tables and the runs inside both. */
+@Suppress("TooManyFunctions")
 internal object PptxExactShapes {
 
     /**
@@ -237,11 +240,19 @@ internal object PptxExactShapes {
      * about 1 pt each on irs_p17 page 124; 7.43 pt held on page 114), and every grown row pushes the
      * rest down. Such a table stays positioned text on a slide; Word sets it, so the .docx keeps it.
      */
-    fun fitsSlideRows(table: ExactTable): Boolean = table.rows.zipWithNext().all { (row, next) ->
-        baseline(next) - baseline(row) >= maxOf(row.fontSize, next.fontSize) * MIN_ROW_PITCH_EM
+    fun fitsSlideRows(table: ExactTable): Boolean = singleLineCells(
+        table
+    ) && table.rows.zipWithNext().all { (row, next) ->
+        next.firstBaselinePt - row.lastBaselinePt >= maxOf(row.fontSize, next.fontSize) * MIN_ROW_PITCH_EM
     }
 
-    private fun baseline(row: ExactTableRow): Float = row.box.top + row.box.height * ExactLayout.BASELINE_RATIO
+    /**
+     * Impress does not hold the space above a cell's second line (invoice_netpresse_fr: page SSIM 0.944 with
+     * wrapped cells as table cells, 0.949 as positioned text), so a table with wrapped cells stays text on a slide.
+     */
+    private fun singleLineCells(
+        table: ExactTable
+    ): Boolean = table.rows.none { row -> row.cells.any { it.lines.size > 1 } }
 
     /**
      * A table at its PDF place as a native PowerPoint table: no borders or fill (the page picture
@@ -257,54 +268,117 @@ internal object PptxExactShapes {
         val cells = table.rows.mapIndexed { r, row ->
             // A hair under the row: Impress grows a row whose line fills it exactly, and it adds up.
             val pitch = ((g.lineHeightsPt[r] - LINE_ROOM_PT) * frame.scale * HUNDREDTHS).roundToInt().coerceAtLeast(1)
-            row.cells.mapIndexed { c, cell -> cell(cell, g.lefts[c], pitch, emptySize, frame, measurer) }
+            var column = 0
+            row.cells.flatMap { cell ->
+                val left = g.lefts[column.coerceAtMost(g.lefts.lastIndex)]
+                val right = g.lefts.getOrElse(column + cell.span) { table.box.right }
+                val start = column
+                column += cell.span
+                val place = CellPlace(left, right, pitch, emptySize, g.spaceBefore(r, cell))
+                val content = cell(cell, place, frame, measurer)
+                val merge = when (cell.merge) {
+                    CellMerge.RESTART -> " rowSpan=\"${rowSpan(table, r, start)}\""
+                    CellMerge.CONTINUE -> " vMerge=\"1\""
+                    CellMerge.NONE -> ""
+                }
+                val span = if (cell.span > 1) " gridSpan=\"${cell.span}\"" else ""
+                // DrawingML keeps a cell for every grid column: those a merged cell covers are marked.
+                val covered = List(cell.span - 1) { PptxTables.Cell(emptyCell(pitch), "$merge hMerge=\"1\"") }
+                listOf(PptxTables.Cell(content, span + merge)) + covered
+            }
         }
         // The same baseline correction as textBox, from the first row's line.
         val lift = lift(g.lineHeightsPt.first(), table.fontSize)
         return PptxTables.frame(
             id,
-            frame.x(table.box.left),
+            frame.x(table.box.left - if (table.rtl) g.slackPt else 0f),
             frame.y(g.top - lift),
             g.widthsPt.map(frame::length),
             g.heightsPt.map(frame::length),
             cells,
-            border = false
+            border = false,
+            rtl = table.rtl
         )
     }
 
-    private fun cell(
-        cell: ExactTableCell,
-        leftPt: Float,
-        pitch: Int,
-        emptySize: Int,
+    /** How many rows the merged cell starting in row [r] at grid column [column] covers. */
+    private fun rowSpan(table: ExactTable, r: Int, column: Int): Int {
+        var rows = 1
+        while (r + rows < table.rows.size && mergeAt(table.rows[r + rows], column) == CellMerge.CONTINUE) rows++
+        return rows
+    }
+
+    private fun mergeAt(row: ExactTableRow, column: Int): CellMerge? {
+        var start = 0
+        for (cell in row.cells) {
+            if (start == column) return cell.merge
+            start += cell.span
+        }
+        return null
+    }
+
+    /** A cell's edges on the page in points, its line pitch and empty-mark size, and the space above each line. */
+    private class CellPlace(
+        val leftPt: Float,
+        val rightPt: Float,
+        val pitch: Int,
+        val emptySize: Int,
+        val before: List<Float>
+    )
+
+    // Impress sizes an empty paragraph by its end mark's font, not its fixed line (an 8 pt
+    // mark grew fed_h8's 9 pt rows to 9.6): an empty cell gets the smallest mark.
+    private fun emptyCell(pitch: Int): String =
+        cellParagraphStart(
+            false,
+            0,
+            emptyList(),
+            false,
+            pitch,
+            0
+        ) + "<a:endParaRPr lang=\"en-US\" sz=\"$MIN_FONT_HUNDREDTHS\"/></a:p>"
+
+    /** A paragraph per line of the cell, each as far below the one above as on the page. */
+    private fun cell(cell: ExactTableCell, place: CellPlace, frame: SlideFrame, measurer: TextMeasurer): String {
+        if (cell.lines.isEmpty()) return emptyCell(place.pitch)
+        val content = StringBuilder()
+        cell.lines.forEachIndexed { i, line ->
+            val before = (place.before[i] * frame.scale * HUNDREDTHS).roundToInt()
+            content.append(line(line.segments, place, before, frame, measurer))
+        }
+        return content.toString()
+    }
+
+    private fun line(
+        segments: List<Segment>,
+        place: CellPlace,
+        before: Int,
         frame: SlideFrame,
         measurer: TextMeasurer
     ): String {
-        val first = cell.segments.firstOrNull()
-        val rtl = first?.rtl == true
-        val indent = frame.length(if (first == null || rtl) 0f else first.u0 - leftPt)
+        val first = segments.first()
+        val rtl = first.rtl
+        val indent = frame.length(if (rtl) place.rightPt - segments.maxOf { it.u1 } else first.u0 - place.leftPt)
         // Segments sharing a cell each start at a tab stop where they started in the PDF
         // (a:tabLst follows a:spcAft, ECMA-376 §21.1.2.2.7). LibreOffice Impress measures stops
         // from the paragraph's marL, so such a cell has none: its first segment is reached by a
         // stop too, and every stop is measured from the cell edge whichever way a reader counts.
-        val stops = if (rtl) emptyList() else cell.segments.drop(1).map { frame.length(it.u0 - leftPt) }
+        val stops = if (rtl) emptyList() else segments.drop(1).map { frame.length(it.u0 - place.leftPt) }
         // Only a stop past the cell edge: a tab to the stop it already stands on jumps to the next.
         val lead = stops.isNotEmpty() && indent > 0
-        val content = StringBuilder(cellParagraphStart(rtl, indent, stops, lead, pitch))
-        val tab = "<a:r><a:rPr lang=\"en-US\" sz=\"$emptySize\" dirty=\"0\"/><a:t>\t</a:t></a:r>"
-        val space = "<a:r><a:rPr lang=\"en-US\" sz=\"$emptySize\" dirty=\"0\"/><a:t> </a:t></a:r>"
+        val content = StringBuilder(cellParagraphStart(rtl, indent.coerceAtLeast(0), stops, lead, place.pitch, before))
+        val tab = "<a:r><a:rPr lang=\"en-US\" sz=\"${place.emptySize}\" dirty=\"0\"/><a:t>\t</a:t></a:r>"
+        val space = "<a:r><a:rPr lang=\"en-US\" sz=\"${place.emptySize}\" dirty=\"0\"/><a:t> </a:t></a:r>"
         if (lead) content.append(tab)
-        content.append(segments(cell, if (rtl) space else tab, frame.scale, measurer))
-        // Impress sizes an empty paragraph by its end mark's font, not its fixed line (an 8 pt
-        // mark grew fed_h8's 9 pt rows to 9.6): an empty cell gets the smallest mark.
-        if (first == null) content.append("<a:endParaRPr lang=\"en-US\" sz=\"$MIN_FONT_HUNDREDTHS\"/>")
+        val ordered = if (rtl) segments.sortedByDescending { it.u1 } else segments
+        content.append(segments(ordered, if (rtl) space else tab, frame.scale, measurer))
         return content.append("</a:p>").toString()
     }
 
     /** The cell's segments in order, [separator] between them (a tab, or a space in right-to-left text). */
-    private fun segments(cell: ExactTableCell, separator: String, scale: Float, measurer: TextMeasurer): String {
+    private fun segments(segments: List<Segment>, separator: String, scale: Float, measurer: TextMeasurer): String {
         val xml = StringBuilder()
-        cell.segments.forEachIndexed { s, segment ->
+        segments.forEachIndexed { s, segment ->
             if (s > 0) xml.append(separator)
             val start = if (segment.rtl) segment.u1 else segment.u0
             ExactRuns.runs(segment, start, measurer).forEach { xml.append(PptxRuns.run(it, scale, measurer)) }
@@ -312,9 +386,18 @@ internal object PptxExactShapes {
         return xml.toString()
     }
 
-    private fun cellParagraphStart(rtl: Boolean, indent: Long, stops: List<Long>, lead: Boolean, pitch: Int): String {
+    private fun cellParagraphStart(
+        rtl: Boolean,
+        indent: Long,
+        stops: List<Long>,
+        lead: Boolean,
+        pitch: Int,
+        before: Int
+    ): String {
         val align = if (rtl) " algn=\"r\" rtl=\"1\"" else ""
-        val margin = if (indent > 0 && stops.isEmpty()) " marL=\"$indent\"" else ""
+        // A right-to-left line is indented from the cell's right edge.
+        val side = if (rtl) "marR" else "marL"
+        val margin = if (indent > 0 && stops.isEmpty()) " $side=\"$indent\"" else ""
         val allStops = if (lead) listOf(indent) + stops else stops
         val tabs = if (allStops.isEmpty()) {
             ""
@@ -326,7 +409,7 @@ internal object PptxExactShapes {
             ) { "<a:tab pos=\"$it\" algn=\"l\"/>" }
         }
         return "<a:p><a:pPr$margin$align><a:lnSpc><a:spcPts val=\"$pitch\"/></a:lnSpc>" +
-            "<a:spcBef><a:spcPts val=\"0\"/></a:spcBef><a:spcAft><a:spcPts val=\"0\"/></a:spcAft>$tabs</a:pPr>"
+            "<a:spcBef><a:spcPts val=\"$before\"/></a:spcBef><a:spcAft><a:spcPts val=\"0\"/></a:spcAft>$tabs</a:pPr>"
     }
 }
 
@@ -393,11 +476,15 @@ internal object PptxTables {
         val cells = block.rows.map { row ->
             List(columns) { c ->
                 val text = row.getOrElse(c) { "" }
-                if (text.isEmpty()) {
-                    "<a:p><a:endParaRPr lang=\"en-US\" sz=\"$size\"/></a:p>"
-                } else {
-                    "<a:p><a:r><a:rPr lang=\"en-US\" sz=\"$size\" dirty=\"0\"/><a:t>${xmlText(text)}</a:t></a:r></a:p>"
-                }
+                Cell(
+                    if (text.isEmpty()) {
+                        "<a:p><a:endParaRPr lang=\"en-US\" sz=\"$size\"/></a:p>"
+                    } else {
+                        "<a:p><a:r><a:rPr lang=\"en-US\" sz=\"$size\" dirty=\"0\"/><a:t>${xmlText(
+                            text
+                        )}</a:t></a:r></a:p>"
+                    }
+                )
             }
         }
         return frame(
@@ -419,15 +506,19 @@ internal object PptxTables {
         } ?: List(rows) { block.box.height / rows }
     }
 
-    /** [cells] holds each cell's paragraphs, row by row; [widths] and [heights] are slide EMUs. */
+    /** A cell's paragraphs and its a:tc attributes (gridSpan, rowSpan, hMerge, vMerge), each with a leading space. */
+    class Cell(val paragraphs: String, val attributes: String = "")
+
+    /** [cells] holds each row's cells, one per grid column; [widths] and [heights] are slide EMUs. */
     fun frame(
         id: Int,
         x: Long,
         y: Long,
         widths: List<Long>,
         heights: List<Long>,
-        cells: List<List<String>>,
-        border: Boolean
+        cells: List<List<Cell>>,
+        border: Boolean,
+        rtl: Boolean = false
     ): String {
         val columnWidths = onLibreOfficeGrid(widths)
         val rowHeights = onLibreOfficeGrid(heights)
@@ -441,13 +532,16 @@ internal object PptxTables {
             .append("<p:nvPr/></p:nvGraphicFramePr>")
             .append("<p:xfrm><a:off x=\"$x\" y=\"$y\"/>")
             .append("<a:ext cx=\"${columnWidths.sum()}\" cy=\"${rowHeights.sum()}\"/></p:xfrm>")
-            .append("<a:graphic><a:graphicData uri=\"$NS_TABLE\"><a:tbl><a:tblPr/><a:tblGrid>")
-        columnWidths.forEach { xml.append("<a:gridCol w=\"$it\"/>") }
+            .append("<a:graphic><a:graphicData uri=\"$NS_TABLE\"><a:tbl>")
+            .append(if (rtl) "<a:tblPr rtl=\"1\"/>" else "<a:tblPr/>").append("<a:tblGrid>")
+        // A right-to-left table lists its columns and cells from the right edge of the slide.
+        (if (rtl) columnWidths.reversed() else columnWidths).forEach { xml.append("<a:gridCol w=\"$it\"/>") }
         xml.append("</a:tblGrid>")
         cells.forEachIndexed { r, row ->
             xml.append("<a:tr h=\"${rowHeights[r]}\">")
-            row.forEach { paragraphs ->
-                xml.append("<a:tc><a:txBody><a:bodyPr/><a:lstStyle/>$paragraphs</a:txBody>$cellProperties</a:tc>")
+            (if (rtl) row.reversed() else row).forEach { cell ->
+                xml.append("<a:tc${cell.attributes}><a:txBody><a:bodyPr/><a:lstStyle/>${cell.paragraphs}</a:txBody>")
+                    .append(cellProperties).append("</a:tc>")
             }
             xml.append("</a:tr>")
         }

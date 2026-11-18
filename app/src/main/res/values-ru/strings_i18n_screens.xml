@@ -58,6 +58,8 @@
     <string name="scr_scan_review_delete_page_title">Удалить стр. %1$d?</string>
     <string name="scr_scan_review_delete_page_body">Страница не попадёт в экспорт. Её можно пересканировать.</string>
     <string name="scr_scan_review_keep">Нет</string>
+    <string name="scr_scan_review_discard_title">Удалить скан?</string>
+    <string name="scr_scan_review_discard_body">Эти страницы не сохранены и будут потеряны.</string>
     <string name="scr_scan_review_rotate_page">Повернуть</string>
     <string name="scr_scan_review_delete_page">Удалить</string>
     <string name="scr_scan_review_enhance">Улучшить</string>
@@ -70,6 +72,12 @@
         <item quantity="few">%1$d стр.</item>
         <item quantity="many">%1$d стр.</item>
         <item quantity="other">%1$d стр.</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d страница не прочитана и пропущена.</item>
+        <item quantity="few">%1$d страницы не прочитаны и пропущены.</item>
+        <item quantity="many">%1$d страниц не прочитаны и пропущены.</item>
+        <item quantity="other">%1$d страницы не прочитаны и пропущены.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s в один файл · откроется после</string>
@@ -236,6 +244,7 @@
     <string name="ai_nothing_to_translate">Пока нечего переводить.</string>
     <string name="ai_err_no_text_batch">Текст не извлечён из файлов</string>
     <string name="ai_err_extraction_unavailable">Не удалось загрузить тип извлечения. Повторите или выключите свой эндпоинт, чтобы использовать %1$s.</string>
+    <string name="ai_err_custom_needs_pro">Своему эндпоинту нужен Pro, план не подтвердился. Повторите или выключите эндпоинт, чтобы тратить кредиты Scanly.</string>
     <string name="ai_err_read_file">Файл не прочитан</string>
     <string name="ai_err_no_text">Текст в файле не найден.</string>
     <string name="ai_design_background">Создаём документ. Можно выйти — уведомим.</string>
@@ -294,6 +303,7 @@
     <string name="ocr_err_render_pdf">Ошибка PDF</string>
     <string name="ocr_err_pdf_processing">Сбой обработки PDF</string>
     <string name="ocr_err_download">Ошибка загрузки</string>
+    <string name="ocr_err_download_offline">Нет сети. Повторите снова.</string>
     <string name="ocr_setup_pending">Распознавание ещё настраивается. Побудьте онлайн минуту и повторите.</string>
     <string name="ocr_scan_failed">Scanly не смог прочитать файл. Это сбой, а не пустая страница. Повторите или выберите другой файл.</string>
     <string name="pay_upgrade_notice">Чтобы перейти на тариф выше, откройте %1$s/upgrade и войдите тем же аккаунтом: тариф изменится. Покупка тарифа на странице цен создаст вторую подписку.</string>

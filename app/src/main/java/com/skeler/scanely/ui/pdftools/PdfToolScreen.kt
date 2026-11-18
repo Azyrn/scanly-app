@@ -5,11 +5,14 @@ package com.skeler.scanely.ui.pdftools
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,6 +57,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -65,7 +69,9 @@ import com.skeler.scanely.core.pdftools.ToolOutput
 import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.ui.components.OpenContent
 import com.skeler.scanely.ui.components.OpenMultipleContents
+import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.components.rememberStorageAccess
+import com.skeler.scanely.ui.viewmodel.PaywallViewModel
 import kotlinx.coroutines.launch
 
 private const val TAG = "PdfToolScreen"
@@ -115,8 +121,10 @@ fun PdfToolScreen(tool: PdfTool) {
 
     LaunchedEffect(state.message) {
         val message = state.message ?: return@LaunchedEffect
-        vm.consumeMessage()
+        // Shown before it is consumed, as on the other screens: consuming first changed this
+        // effect's key, which restarted it and cancelled the snackbar before it was ever drawn.
         snackbarHostState.showSnackbar(resources.getString(message))
+        vm.consumeMessage()
     }
 
     val stage = state.stage
@@ -133,11 +141,16 @@ fun PdfToolScreen(tool: PdfTool) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = stringResource(tool.labelRes),
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = stringResource(tool.labelRes),
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1f, fill = false)
+                        )
+                        if (tool.isBeta) BetaBadge(Modifier.padding(start = 8.dp))
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = navigator::back) {
@@ -210,6 +223,7 @@ fun PdfToolScreen(tool: PdfTool) {
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
+                    if (tool.isBeta) BetaNote(Modifier.padding(top = 16.dp))
                 }
                 is ToolStage.Error -> ScrollingContent {
                     ToolErrorContent(
@@ -223,6 +237,8 @@ fun PdfToolScreen(tool: PdfTool) {
             }
         }
     }
+
+    OnlineReadingQuestion(vm)
 
     if (stage is ToolStage.Password) {
         ToolPasswordDialog(
@@ -345,6 +361,79 @@ private fun ProgressContent(progress: Float?, label: String, onCancel: () -> Uni
     }
 }
 
+/**
+ * "N pages in this file need online reading for accurate text. Cost: N credits." Use credits is the
+ * consent; Convert without keeps the PDF's own text. Too few credits: watch an ad or open the plans
+ * first — the question stays and shows the new balance when they close.
+ */
+@Composable
+private fun OnlineReadingQuestion(vm: PdfToolViewModel) {
+    val pages by vm.onlineReadingPages.collectAsStateWithLifecycle()
+    val credits by vm.creditsLeft.collectAsStateWithLifecycle()
+    val count = pages ?: return
+    val activity = LocalActivity.current as ComponentActivity
+    val paywallViewModel: PaywallViewModel = hiltViewModel(activity)
+    val paywallState by paywallViewModel.state.collectAsStateWithLifecycle()
+    var showPlans by remember { mutableStateOf(false) }
+
+    if (showPlans) {
+        PaywallSheet(
+            state = paywallState,
+            onDismiss = {
+                showPlans = false
+                paywallViewModel.consumeMessage()
+                vm.refreshCredits()
+            },
+            onRedeem = { key -> paywallViewModel.redeem(key) },
+            onRestore = { paywallViewModel.restorePurchase() },
+            onConfirmEmail = { paywallViewModel.confirmEmail() },
+            onRetry = { paywallViewModel.refresh() },
+            canWatchAd = paywallState.canWatchAd,
+            onWatchAd = { paywallViewModel.watchAd(activity) }
+        )
+        return
+    }
+
+    val enough = hasEnoughCredits(credits, count)
+    AlertDialog(
+        onDismissRequest = vm::convertWithout,
+        title = { Text(stringResource(R.string.online_read_title)) },
+        text = {
+            Column {
+                Text(
+                    text = pluralStringResource(R.plurals.online_read_body, count, count),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                if (!enough) {
+                    Spacer(Modifier.height(DIALOG_GAP))
+                    Text(
+                        text = pluralStringResource(R.plurals.online_read_balance, credits ?: 0, credits ?: 0),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            if (enough) {
+                Button(onClick = vm::useCredits) { Text(stringResource(R.string.online_read_use)) }
+            } else {
+                Column(horizontalAlignment = Alignment.End) {
+                    if (paywallState.canWatchAd) {
+                        TextButton(onClick = { paywallViewModel.watchAd(activity) }) {
+                            Text(stringResource(R.string.online_read_watch_ad))
+                        }
+                    }
+                    Button(onClick = { showPlans = true }) { Text(stringResource(R.string.online_read_upgrade)) }
+                }
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = vm::convertWithout) { Text(stringResource(R.string.online_read_without)) }
+        }
+    )
+}
+
 @Composable
 private fun ToolPasswordDialog(
     fileName: String,
@@ -397,7 +486,11 @@ private fun ScrollingContent(content: @Composable () -> Unit) {
             .padding(CONTENT_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(Modifier.widthIn(max = CONTENT_MAX_WIDTH).fillMaxWidth()) { content() }
+        // A Column, not a Box: Done adds the Beta note under its content, which a Box drew on top of it.
+        Column(
+            modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH).fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) { content() }
     }
 }
 
@@ -413,5 +506,11 @@ private val CONTENT_PADDING = 20.dp
 private val CONTENT_MAX_WIDTH = 560.dp
 private val PROGRESS_GAP = 20.dp
 private val DIALOG_GAP = 12.dp
+
+/**
+ * Whether the question offers Use credits. An unknown balance is not zero: the server decides at
+ * the read and refuses it without charging when credits are short.
+ */
+internal fun hasEnoughCredits(credits: Int?, count: Int): Boolean = credits == null || credits >= count
 private val INPUT_GAP = 8.dp
 private val BUTTON_ICON_GAP = 8.dp

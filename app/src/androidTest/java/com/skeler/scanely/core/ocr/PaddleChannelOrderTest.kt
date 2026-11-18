@@ -61,7 +61,7 @@ class PaddleChannelOrderTest {
 
     @Test
     fun comparesRgbAndBgrOnColoredText() {
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val page = coloredPage()
 
         fun run(bgr: Boolean): Triple<Int, Float, String> {

@@ -52,6 +52,8 @@
     <string name="scr_scan_review_delete_page_title">Delete page %1$d?</string>
     <string name="scr_scan_review_delete_page_body">This page won\'t be included in your export. You can rescan it at any time.</string>
     <string name="scr_scan_review_keep">Keep</string>
+    <string name="scr_scan_review_discard_title">Discard this scan?</string>
+    <string name="scr_scan_review_discard_body">These pages haven\'t been saved yet and will be lost.</string>
     <string name="scr_scan_review_rotate_page">Rotate page</string>
     <string name="scr_scan_review_delete_page">Delete page</string>
     <string name="scr_scan_review_enhance">Enhance</string>
@@ -62,6 +64,10 @@
     <plurals name="scr_scan_review_page_count">
         <item quantity="one">%1$d page</item>
         <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d page couldn\'t be read and was left out.</item>
+        <item quantity="other">%1$d pages couldn\'t be read and were left out.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s in one file · opens after saving</string>
@@ -211,6 +217,7 @@
     <string name="ai_nothing_to_translate">Nothing to translate yet.</string>
     <string name="ai_err_no_text_batch">No text extracted from any file</string>
     <string name="ai_err_extraction_unavailable">Scanly couldn\'t load that extraction type. Try again, or turn your own endpoint off in Settings to use %1$s.</string>
+    <string name="ai_err_custom_needs_pro">Your own endpoint needs Pro, and your plan couldn\'t be confirmed. Try again, or turn the endpoint off in Settings to use Scanly credits.</string>
     <string name="ai_err_read_file">Failed to read file</string>
     <string name="ai_err_no_text">No text could be read from this file.</string>
     <string name="ai_design_background">Building your document. You can leave the app; we\'ll notify you.</string>
@@ -265,6 +272,7 @@
     <string name="ocr_err_render_pdf">Failed to render PDF</string>
     <string name="ocr_err_pdf_processing">PDF processing failed</string>
     <string name="ocr_err_download">Download failed</string>
+    <string name="ocr_err_download_offline">Couldn\'t connect. Try again.</string>
     <string name="ocr_setup_pending">Text recognition is still being set up on this phone. Stay online for a minute, then try again.</string>
     <string name="ocr_scan_failed">Scanly couldn\'t read this file. The scan failed, so this doesn\'t mean the page is blank. Try again, or pick a different file.</string>
     <string name="pay_upgrade_notice">To move to a bigger plan, go to %1$s/upgrade and sign in with the same account you use here: it changes the plan you have. Buying another plan on the pricing page starts a second subscription, billed alongside this one.</string>

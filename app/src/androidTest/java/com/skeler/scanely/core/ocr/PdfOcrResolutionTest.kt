@@ -73,7 +73,7 @@ class PdfOcrResolutionTest {
     @Test
     fun adaptiveRenderMakesSmallPrintReadable() {
         val helper = PdfRendererHelper(context)
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val uri = writePdf()
 
         val page = runBlocking { helper.renderPage(uri, 0) }
@@ -161,7 +161,7 @@ class PdfOcrResolutionTest {
         doc.close()
 
         val helper = PdfRendererHelper(context)
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
 
         fun ocr(bmp: Bitmap): Pair<Int, String> {
             val quads = engine.detect(bmp, 960).sortedBy { it.minY }

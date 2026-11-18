@@ -19,7 +19,9 @@ internal data class FontStyle(
     val underline: Boolean = false,
     val strike: Boolean = false,
     val sizePt: Float = DEFAULT_FONT_SIZE_PT,
-    val color: Int = BLACK
+    val color: Int = BLACK,
+    /** The font's family name as the workbook names it ("Calibri", "Arial"); null when unnamed. */
+    val name: String? = null
 )
 
 /** One edge of a cell's border, in points. */
@@ -85,10 +87,38 @@ internal class RowSpec(
 /** What the sheet's own Page Setup asked for; null orientation means "let the converter pick". */
 internal data class SheetPageSetup(
     val orientation: PageOrientation? = null,
-    val fitToWidth: Boolean = false,
-    val fitToHeight: Boolean = false,
-    val scalePercent: Int = 100
+    val fitToWidth: Int = 0,
+    val fitToHeight: Int = 0,
+    val scalePercent: Int = 100,
+    /** ECMA-376 paperSize code; 1 (Letter) is the schema default, used when the sheet names none. */
+    val paperSize: Int = PaperSizes.LETTER,
+    val margins: PageMargins = PageMargins.EXCEL_NORMAL
 )
+
+/** Page margins in points (the sheet stores inches). */
+internal data class PageMargins(val left: Float, val right: Float, val top: Float, val bottom: Float) {
+    companion object {
+        /** Excel's "Normal" margins: 0.7" left and right, 0.75" top and bottom. */
+        val EXCEL_NORMAL = PageMargins(50.4f, 50.4f, 54f, 54f)
+    }
+}
+
+/** Portrait page sizes in points for the ECMA-376 paperSize codes office files use (§18.3.1.63). */
+internal object PaperSizes {
+    const val LETTER = 1
+    private val SIZES = mapOf(
+        LETTER to (612f to 792f),
+        3 to (792f to 1224f), // Tabloid
+        5 to (612f to 1008f), // Legal
+        7 to (522f to 756f), // Executive
+        8 to (842f to 1191f), // A3
+        9 to (595f to 842f), // A4
+        11 to (420f to 595f) // A5
+    )
+
+    /** (width, height) of [code]; a code without an entry here prints on the default, Letter. */
+    fun portrait(code: Int): Pair<Float, Float> = SIZES[code] ?: SIZES.getValue(LETTER)
+}
 
 internal class XlsxSheet(
     val name: String,

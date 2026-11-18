@@ -53,7 +53,7 @@ import kotlinx.coroutines.flow.filterNotNull
 /**
  * @param restoredAfterProcessDeath the activity is being rebuilt in a fresh process, so the back
  *   stack has been restored but nothing the ViewModels held has been. See
- *   [holdsOnlyInMemoryState].
+ *   [trimInMemoryScreens].
  */
 @Composable
 fun ScanelyNavHost(
@@ -66,19 +66,13 @@ fun ScanelyNavHost(
 ) {
     val context = LocalContext.current
 
-    val lookupOrchestrator = remember {
-        EntryPointAccessors.fromApplication(
-            context.applicationContext,
-            LookupOrchestratorEntryPoint::class.java
-        ).lookupOrchestrator()
-    }
-
     LaunchedEffect(Unit) {
         if (!restoredAfterProcessDeath) return@LaunchedEffect
-        val restored = navController.currentDestination ?: return@LaunchedEffect
-        if (restored.holdsOnlyInMemoryState()) {
-            navController.popBackStack(Destination.Home, inclusive = false)
-        }
+        trimInMemoryScreens(
+            // getBackStackEntry throws for a route that is not on the stack.
+            isOnStack = { route -> runCatching { navController.getBackStackEntry(route) }.isSuccess },
+            popInclusive = { route -> navController.popBackStack(route, inclusive = true) }
+        )
     }
 
     LaunchedEffect(debugRoute) { debugRoute?.let { navController.navigate(it) } }
@@ -158,6 +152,15 @@ fun ScanelyNavHost(
         }
 
         composable<Destination.BarcodeScanner> {
+            // Fetched here, not when the nav host is first composed: its engines and their
+            // OkHttpClient are needed only by this screen, and the host composes before Home's
+            // first frame.
+            val lookupOrchestrator = remember {
+                EntryPointAccessors.fromApplication(
+                    context.applicationContext,
+                    LookupOrchestratorEntryPoint::class.java
+                ).lookupOrchestrator()
+            }
             Screen(navController, it) {
                 BarcodeScannerScreen(lookupOrchestrator = lookupOrchestrator)
             }

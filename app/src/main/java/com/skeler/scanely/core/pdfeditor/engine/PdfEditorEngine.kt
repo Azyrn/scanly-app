@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdfeditor.model.EditPlan
 import com.skeler.scanely.core.pdfeditor.model.PdfEdit
+import com.skeler.scanely.core.pdftools.ToolWorkspace
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,6 +33,7 @@ class PdfEditorEngine @Inject constructor(
     private val qpdf: QpdfEngine,
     private val overlayComposer: OverlayComposer,
     private val pageReader: PdfPageReader,
+    private val scratch: dagger.Lazy<ToolWorkspace>,
     @param:ApplicationContext private val context: Context
 ) {
 
@@ -44,8 +46,8 @@ class PdfEditorEngine @Inject constructor(
     ): PdfEditResult = withContext(Dispatchers.IO) {
         if (plan.isEmpty) return@withContext PdfEditResult.NothingToDo
 
-        val workspace = File(context.cacheDir, "pdf-edit-${System.nanoTime()}")
-            .apply { mkdirs() }
+        val toolWorkspace = scratch.get()
+        val workspace = toolWorkspace.newRun()
 
         try {
             val originalPageCount = pageReader.pageCount(source, password)
@@ -60,7 +62,7 @@ class PdfEditorEngine @Inject constructor(
         } catch (e: Exception) {
             PdfEditResult.Failed(e.message ?: context.getString(R.string.pe_err_edit_failed))
         } finally {
-            workspace.deleteRecursively()
+            toolWorkspace.release(workspace)
         }
     }
 
@@ -104,12 +106,11 @@ class PdfEditorEngine @Inject constructor(
         // Markings are authored against the page as the editor showed it: full size, upright.
         // Stamping them before the page is rotated or cropped is what keeps them where the
         // user put them — afterwards, the same coordinates would land off the page.
-        val edited = applyMarkings(plan, run.remap, run.current, run.password, run.workspace, stampBitmaps, run::next)
-            ?.let { applyCrops(plan, run.remap, it, run.password, run::next) }
-            ?.let { applyAppends(plan, it, run::next) }
-            ?.let { applyRotations(plan, run.remap, it, run.password, run::next) }
+        run.current = applyMarkings(plan, run.remap, run.current, run.password, run.workspace, stampBitmaps, run::next)
             ?: return failure()
-        run.current = edited
+        run.current = applyCrops(plan, run.remap, run.current, run.password, run::next) ?: return failure()
+        run.current = applyAppends(plan, run.current, run::next) ?: return failure()
+        if (!applyRotations(plan, run)) return failure()
         return null
     }
 
@@ -120,7 +121,7 @@ class PdfEditorEngine @Inject constructor(
         // A rewrite can come out larger than what it replaced — a file qpdf has already
         // packed optimally, or one whose images resist re-encoding. Compressing must never
         // be the thing that grew the document, so the larger result is simply discarded.
-        if (target.length() in 1 until run.current.length()) run.current = target
+        if (target.length() in 1 until run.current.length()) run.current = target else target.delete()
         return null
     }
 
@@ -143,31 +144,24 @@ class PdfEditorEngine @Inject constructor(
         }
     }
 
-    private suspend fun applyRotations(
-        plan: EditPlan,
-        remap: Map<Int, Int>,
-        input: File,
-        password: String,
-        next: () -> File
-    ): File? {
+    private suspend fun applyRotations(plan: EditPlan, run: EditRun): Boolean {
         // Rotations of the same page compose, so sum them rather than applying one call each.
         val byPage = plan.structural
             .filterIsInstance<PdfEdit.RotatePage>()
-            .mapNotNull { edit -> remap[edit.pageIndex]?.let { it to edit.degrees } }
+            .mapNotNull { edit -> run.remap[edit.pageIndex]?.let { it to edit.degrees } }
             .groupBy({ it.first }, { it.second })
             .mapValues { (_, degrees) -> degrees.sum() % 360 }
             .filterValues { it != 0 }
 
-        var current = input
         byPage.entries.groupBy({ it.value }, { it.key }).forEach { (degrees, pages) ->
-            val target = next()
+            val target = run.next()
             val spec = pages.sorted().joinToString(",") { (it + 1).toString() }
-            if (qpdf.rotatePages(current, target, degrees, spec, password) !is QpdfResult.Ok) {
-                return null
+            if (qpdf.rotatePages(run.current, target, degrees, spec, run.password) !is QpdfResult.Ok) {
+                return false
             }
-            current = target
+            run.current = target
         }
-        return current
+        return true
     }
 
     private suspend fun applyCrops(
@@ -235,7 +229,7 @@ class PdfEditorEngine @Inject constructor(
         val target = next()
         return target.takeIf {
             qpdf.overlay(input, stamp, it, password = password) is QpdfResult.Ok
-        }
+        }.also { stamp.delete() }
     }
 
     private fun failure() = PdfEditResult.Failed(
@@ -244,7 +238,13 @@ class PdfEditorEngine @Inject constructor(
 }
 
 /** The working copy as the edit steps rewrite it, one numbered file per step. */
-private class EditRun(val workspace: File, var current: File, var password: String) {
+internal class EditRun(val workspace: File, source: File, var password: String) {
+    var current: File = source
+        set(value) {
+            if (field != value && field.parentFile == workspace) field.delete()
+            field = value
+        }
+
     private var step = 0
 
     /** Original page index to its index after page selection; identity until then. */
@@ -261,7 +261,7 @@ private class EditRun(val workspace: File, var current: File, var password: Stri
     }
 }
 
-private fun QpdfResult.failure(): PdfEditResult? = when (this) {
+internal fun QpdfResult.failure(): PdfEditResult? = when (this) {
     is QpdfResult.Ok -> null
     is QpdfResult.WrongPassword -> PdfEditResult.WrongPassword
     is QpdfResult.BadUsage -> PdfEditResult.Failed(message)

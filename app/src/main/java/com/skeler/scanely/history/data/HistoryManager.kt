@@ -62,52 +62,46 @@ internal fun historyToJson(items: List<HistoryItem>): String {
 class HistoryManager @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) {
-    private val historyFile = File(context.filesDir, "scan_history.json")
-    private val imagesDir = File(context.filesDir, "history_images").also { it.mkdirs() }
+    // Lazy: this singleton is built during Home's first composition on the main thread, and
+    // getFilesDir and mkdirs are disk calls; the first history read or write pays for them instead.
+    private val historyFile by lazy { File(context.filesDir, "scan_history.json") }
+
+    /**
+     * Where older versions copied each entry's whole source (whole PDFs included), which nothing
+     * ever read. No longer written; kept so deleting or clearing history reclaims those copies.
+     */
+    private val imagesDir by lazy { File(context.filesDir, "history_images") }
+
+    /**
+     * Every read-modify-write of [historyFile] holds this. Saves, edits and deletes arrive from
+     * several view models on different threads; unguarded, two at once lost one change or wrote
+     * a corrupt file, which [getHistory] then sets aside and the user sees an empty history.
+     */
+    private val lock = Any()
 
     fun saveItem(text: String, imageUri: String): HistoryItem {
-        val persistentUri = copyImageToInternalStorage(imageUri)
-
-        val item = HistoryItem(text = text, imageUri = persistentUri)
-        val currentList = getHistory().toMutableList()
-        currentList.add(0, item)
-        if (currentList.size > MAX_HISTORY_ITEMS) {
-            val removed = currentList.drop(MAX_HISTORY_ITEMS)
-            removed.forEach { old -> deleteImage(old.imageUri) }
+        val item = HistoryItem(text = text, imageUri = imageUri)
+        synchronized(lock) {
+            val currentList = getHistory().toMutableList()
+            currentList.add(0, item)
+            if (currentList.size > MAX_HISTORY_ITEMS) {
+                val removed = currentList.drop(MAX_HISTORY_ITEMS)
+                removed.forEach { old -> deleteImage(old.imageUri) }
+            }
+            val trimmedList = currentList.take(MAX_HISTORY_ITEMS)
+            saveHistory(trimmedList)
         }
-        val trimmedList = currentList.take(MAX_HISTORY_ITEMS)
-        saveHistory(trimmedList)
         return item
     }
 
     fun updateItemText(id: String, text: String) {
         if (id.isBlank()) return
-        val currentList = getHistory().toMutableList()
-        val index = currentList.indexOfFirst { it.id == id }
-        if (index == -1) return
-        currentList[index] = currentList[index].copy(text = text)
-        saveHistory(currentList)
-    }
-
-    private fun copyImageToInternalStorage(sourceUri: String): String {
-        // Composed documents do not have a source image.
-        if (sourceUri.isBlank()) return ""
-
-        return try {
-            val uri = sourceUri.toUri()
-            val fileName = "${UUID.randomUUID()}.jpg"
-            val destFile = File(imagesDir, fileName)
-
-            context.contentResolver.openInputStream(uri)?.use { input ->
-                destFile.outputStream().use { output ->
-                    input.copyTo(output)
-                }
-            }
-
-            destFile.toUri().toString()
-        } catch (e: Exception) {
-            Log.w(TAG, "Image copy failed, using original URI", e)
-            sourceUri
+        synchronized(lock) {
+            val currentList = getHistory().toMutableList()
+            val index = currentList.indexOfFirst { it.id == id }
+            if (index == -1) return
+            currentList[index] = currentList[index].copy(text = text)
+            saveHistory(currentList)
         }
     }
 
@@ -124,7 +118,9 @@ class HistoryManager @Inject constructor(
         }
     }
 
-    fun getHistory(): List<HistoryItem> {
+    fun getHistory(): List<HistoryItem> = synchronized(lock) { readHistory() }
+
+    private fun readHistory(): List<HistoryItem> {
         if (!historyFile.exists()) return emptyList()
         val jsonString = try {
             historyFile.readText()
@@ -142,7 +138,7 @@ class HistoryManager @Inject constructor(
         return items
     }
 
-    fun clearHistory() {
+    fun clearHistory() = synchronized(lock) {
         imagesDir.listFiles()?.forEach { it.delete() }
 
         if (historyFile.exists()) {
@@ -150,7 +146,7 @@ class HistoryManager @Inject constructor(
         }
     }
 
-    fun deleteItem(id: String) {
+    fun deleteItem(id: String) = synchronized(lock) {
         val currentList = getHistory().toMutableList()
         val item = currentList.find { it.id == id }
         if (item != null) {
@@ -161,12 +157,16 @@ class HistoryManager @Inject constructor(
     }
 
     private fun saveHistory(items: List<HistoryItem>) {
-        // Atomic replacement preserves the existing history if writing is interrupted.
-        val tmpFile = File(context.filesDir, "scan_history.json.tmp")
-        tmpFile.writeText(historyToJson(items))
-        if (!tmpFile.renameTo(historyFile)) {
-            Log.e(TAG, "Could not move new history into place")
-            tmpFile.delete()
+        // Atomic replacement preserves the existing history if writing is interrupted. A unique
+        // name, so no other writer can ever be filling the same temporary file.
+        val tmpFile = File.createTempFile("scan_history", ".json.tmp", context.filesDir)
+        var moved = false
+        try {
+            tmpFile.writeText(historyToJson(items))
+            moved = tmpFile.renameTo(historyFile)
+            if (!moved) Log.e(TAG, "Could not move new history into place")
+        } finally {
+            if (!moved) tmpFile.delete()
         }
     }
 }

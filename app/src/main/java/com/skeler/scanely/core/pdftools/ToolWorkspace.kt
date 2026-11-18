@@ -49,6 +49,11 @@ class ToolWorkspace internal constructor(
     init {
         // Runs never survive the process that started them, so anything here is a leftover.
         runCatching { root.deleteRecursively() }
+        // Older releases kept these process-owned intermediates directly under cacheDir.
+        context.cacheDir.listFiles()?.forEach { file ->
+            if (file.isDirectory && file.name.matches(LEGACY_EDIT)) file.deleteRecursively()
+            if (file.isFile && file.name.matches(LEGACY_GLYPH)) file.delete()
+        }
     }
 
     fun newRun(): File = File(root, "run-${System.nanoTime()}").apply { mkdirs() }
@@ -134,13 +139,44 @@ class ToolWorkspace internal constructor(
     }.getOrNull()?.takeIf { it >= 0 }
 
     companion object {
+        private val LEGACY_EDIT = Regex("pdf-edit--?[0-9]+")
+        private val LEGACY_GLYPH = Regex("glyph-ids-?[0-9]+[.]pdf")
+
         private const val DEFAULT_NAME = "document.pdf"
 
-        /** Keeps a display name usable as a file name: no separators, nothing a filesystem rejects. */
+        /**
+         * Keeps a display name usable as a file name: no separators, nothing a filesystem rejects,
+         * and short enough in UTF-8 bytes — what NAME_MAX counts — to leave room for the import
+         * prefix and any suffix and extension a tool adds.
+         */
         fun safeFileName(name: String): String =
-            name.replace(Regex("[\\\\/:*?\"<>|\\u0000-\\u001f]"), "_").take(MAX_NAME_LENGTH).ifBlank { DEFAULT_NAME }
+            name.replace(Regex("[\\\\/:*?\"<>|\\u0000-\\u001f]"), "_")
+                .takeUtf8Bytes(MAX_NAME_BYTES)
+                .ifBlank { DEFAULT_NAME }
 
-        private const val MAX_NAME_LENGTH = 120
+        /**
+         * The longest prefix of this string that is at most [maxBytes] in UTF-8, cut between code
+         * points so a surrogate pair (an emoji) is never split.
+         */
+        private fun String.takeUtf8Bytes(maxBytes: Int): String {
+            var bytes = 0
+            var end = 0
+            while (end < length) {
+                val codePoint = codePointAt(end)
+                bytes += String(Character.toChars(codePoint)).toByteArray(Charsets.UTF_8).size
+                if (bytes > maxBytes) break
+                end += Character.charCount(codePoint)
+            }
+            return substring(0, end)
+        }
+
+        /**
+         * Linux allows 255 bytes per file name (NAME_MAX). The import adds "in-<nanoTime>-"
+         * (up to 23 bytes) and tools add suffixes such as "_pages_deleted.pdf" or " (12).webp",
+         * so the sanitised name keeps well clear of it. An Arabic letter is 2 bytes, CJK 3, an
+         * emoji 4: a cap in characters is not a cap on this.
+         */
+        private const val MAX_NAME_BYTES = 180
     }
 }
 

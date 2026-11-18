@@ -33,6 +33,19 @@ private const val TAG = "RewardedAdManager"
 // AdMob rewarded ads expire after one hour.
 private const val AD_REFRESH_MS = 55 * 60 * 1000L
 
+/**
+ * How long to wait before reloading after the [failures]th failed load in a row: doubling from
+ * 30 s up to 8 minutes, then every 8 minutes for as long as loads keep failing. A load that failed
+ * offline or for lack of fill is worth asking again, but not in a tight loop, which AdMob
+ * penalises; stopping altogether left the app adless until a restart, since the ad button is
+ * hidden while no ad is loaded. A successful load, or a load the user's own tap starts, resets it.
+ */
+internal fun adLoadRetryDelayMs(failures: Int): Long =
+    AD_LOAD_FIRST_RETRY_MS shl (failures.coerceIn(1, AD_LOAD_DOUBLINGS + 1) - 1)
+
+private const val AD_LOAD_FIRST_RETRY_MS = 30_000L
+private const val AD_LOAD_DOUBLINGS = 4
+
 // Rewards must be granted only through OnUserEarnedRewardListener.
 @Singleton
 class RewardedAdManager @Inject constructor(
@@ -51,6 +64,8 @@ class RewardedAdManager @Inject constructor(
     private var isStarted = false
     private var hasRequestedConsent = false
     private var refreshJob: Job? = null
+    private var retryJob: Job? = null
+    private var loadFailures = 0
 
     /** Initializes the SDK only after the consent flow completes. */
     fun initialize(activity: Activity) {
@@ -105,6 +120,7 @@ class RewardedAdManager @Inject constructor(
     fun preload() {
         if (!isStarted || isLoading || rewardedAd != null) return
         isLoading = true
+        retryJob?.cancel()
         RewardedAd.load(
             context,
             BuildConfig.ADMOB_REWARDED_AD_UNIT_ID,
@@ -112,6 +128,7 @@ class RewardedAdManager @Inject constructor(
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedAd) {
                     isLoading = false
+                    loadFailures = 0
                     rewardedAd = ad
                     _isAdAvailable.value = true
                     scheduleRefresh()
@@ -122,9 +139,20 @@ class RewardedAdManager @Inject constructor(
                     rewardedAd = null
                     _isAdAvailable.value = false
                     Log.w(TAG, "Rewarded ad failed to load: code=${error.code}")
+                    scheduleRetry()
                 }
             }
         )
+    }
+
+    /** Without this a failed load (offline at start, no fill) left the paywall adless for good. */
+    private fun scheduleRetry() {
+        val wait = adLoadRetryDelayMs(++loadFailures)
+        retryJob?.cancel()
+        retryJob = scope.launch {
+            delay(wait)
+            preload()
+        }
     }
 
     private fun scheduleRefresh() {
@@ -140,6 +168,8 @@ class RewardedAdManager @Inject constructor(
     /** Shows an ad for [uid]; the server grants pages through AdMob's signed callback. */
     fun show(activity: Activity, uid: String, onReward: () -> Unit) {
         val ad = rewardedAd ?: run {
+            // A tap is a fresh reason to try: it gets its own run of retries.
+            loadFailures = 0
             preload()
             return
         }

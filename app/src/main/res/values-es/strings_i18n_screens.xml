@@ -55,6 +55,8 @@
     <string name="scr_scan_review_delete_page_title">¿Borrar pág. %1$d?</string>
     <string name="scr_scan_review_delete_page_body">No se incluirá al exportar. Puedes volver a escanearla cuando quieras.</string>
     <string name="scr_scan_review_keep">Dejar</string>
+    <string name="scr_scan_review_discard_title">¿Borrar el escaneo?</string>
+    <string name="scr_scan_review_discard_body">Estas páginas no se guardaron y se perderán.</string>
     <string name="scr_scan_review_rotate_page">Girar página</string>
     <string name="scr_scan_review_delete_page">Borrar</string>
     <string name="scr_scan_review_enhance">Mejorar</string>
@@ -66,6 +68,11 @@
         <item quantity="one">%1$d página</item>
         <item quantity="many">%1$d páginas</item>
         <item quantity="other">%1$d páginas</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d página ilegible se omitió.</item>
+        <item quantity="many">%1$d páginas ilegibles se omitieron.</item>
+        <item quantity="other">%1$d páginas ilegibles se omitieron.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s en un archivo · se abre al guardar</string>
@@ -223,6 +230,7 @@
     <string name="ai_nothing_to_translate">Nada que traducir aún.</string>
     <string name="ai_err_no_text_batch">Sin texto en ningún archivo</string>
     <string name="ai_err_extraction_unavailable">Scanly no pudo cargar ese tipo de extracción. Reintenta, o desactiva tu endpoint en Ajustes para usar %1$s.</string>
+    <string name="ai_err_custom_needs_pro">Tu endpoint necesita Pro y no se pudo confirmar tu plan. Reintenta, o desactívalo en Ajustes para usar créditos de Scanly.</string>
     <string name="ai_err_read_file">No se pudo leer</string>
     <string name="ai_err_no_text">No se pudo leer texto de este archivo.</string>
     <string name="ai_design_background">Creando tu documento. Puedes salir de la aplicación; te avisaremos.</string>
@@ -279,6 +287,7 @@
     <string name="ocr_err_render_pdf">Error al generar PDF</string>
     <string name="ocr_err_pdf_processing">Error al procesar PDF</string>
     <string name="ocr_err_download">La descarga falló</string>
+    <string name="ocr_err_download_offline">Sin conexión. Reinténtalo.</string>
     <string name="ocr_setup_pending">El reconocimiento de texto aún se configura en el teléfono. Conéctate un minuto y reintenta.</string>
     <string name="ocr_scan_failed">Scanly no pudo leer el archivo. El escaneo falló: no significa que la página esté en blanco. Reintenta u elige otro.</string>
     <string name="pay_upgrade_notice">Para cambiar a un plan superior, ve a %1$s/upgrade e inicia sesión con esta misma cuenta: se cambia el plan actual. Comprar otro en la página de precios crea una segunda suscripción, cobrada aparte.</string>

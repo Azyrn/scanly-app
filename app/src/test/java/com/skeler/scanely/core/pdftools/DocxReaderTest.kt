@@ -3,10 +3,15 @@ package com.skeler.scanely.core.pdftools
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxDocument
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxImage
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxPageBreak
+import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxNoteMark
+import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxNoteRef
+import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxPageField
+import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxSeparator
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxParagraph
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxReader
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxTable
 import com.skeler.scanely.core.pdftools.office2pdf.docx.DocxText
+import com.skeler.scanely.core.pdftools.office2pdf.docx.HeaderKind
 import com.skeler.scanely.core.pdftools.office2pdf.docx.VerticalMerge
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -66,6 +71,34 @@ class DocxReaderTest {
         assertEquals("Calibri", runs[1].style.font)
         assertEquals("Consolas", runs[2].style.font)
         assertEquals(0xFF0000, runs[2].style.color)
+    }
+
+    @Test
+    fun `many same style runs coalesce without crossing pictures styles or page breaks`() {
+        val picture = drawing(inline = true, uri = PICTURE_URI, inner = "<a:blip r:embed=\"rIdImg\"/>")
+        val text = "many words "
+        val repeated = buildString { repeat(10_000) { append("<w:r><w:t xml:space=\"preserve\">$text</w:t></w:r>") } }
+        val document = read(
+            body = """<w:p>$repeated<w:r><w:rPr><w:b/></w:rPr><w:t>bold</w:t></w:r>
+                <w:r><w:t>before picture</w:t>$picture<w:t>after picture</w:t>
+                <w:br w:type="page"/><w:t>next page</w:t></w:r></w:p><w:p/>""",
+            extraRels = """<Relationship Id="rIdImg" Type="$REL_IMAGE" Target="media/image1.png"/>""",
+            extraParts = mapOf("word/media/image1.png" to byteArrayOf(1, 2, 3))
+        )
+        val blocks = document.sections.single().blocks
+        val first = blocks[0] as DocxParagraph
+
+        assertEquals(5, first.inlines.size)
+        assertEquals(text.repeat(10_000), (first.inlines[0] as DocxText).text)
+        assertEquals("bold", (first.inlines[1] as DocxText).text)
+        assertTrue((first.inlines[1] as DocxText).style.bold)
+        assertFalse((first.inlines[2] as DocxText).style.bold)
+        assertEquals("before picture", (first.inlines[2] as DocxText).text)
+        assertTrue(first.inlines[3] is DocxImage)
+        assertEquals("after picture", (first.inlines[4] as DocxText).text)
+        assertEquals(DocxPageBreak, blocks[1])
+        assertEquals("next page", (blocks[2] as DocxParagraph).texts().single().text)
+        assertTrue((blocks[3] as DocxParagraph).inlines.isEmpty())
     }
 
     @Test
@@ -134,6 +167,23 @@ class DocxReaderTest {
     }
 
     @Test
+    fun `a paragraph ending with its page break leaves no empty line on the next page`() {
+        val document = read(
+            body = """
+                <w:p><w:r><w:t>Last</w:t></w:r></w:p>
+                <w:p><w:r><w:br w:type="page"/></w:r></w:p>
+                <w:p><w:r><w:t>Heading</w:t></w:r></w:p>
+            """
+        )
+
+        val blocks = document.sections.single().blocks
+        assertEquals(4, blocks.size)
+        assertTrue("the break's own line stays before it", (blocks[1] as DocxParagraph).inlines.isEmpty())
+        assertEquals(DocxPageBreak, blocks[2])
+        assertEquals("Heading", (blocks[3] as DocxParagraph).texts().single().text)
+    }
+
+    @Test
     fun `pictures are kept, charts and shapes are counted, fallbacks win`() {
         val picture = drawing(inline = true, uri = PICTURE_URI, inner = "<a:blip r:embed=\"rIdImg\"/>")
         val chart = drawing(inline = true, uri = CHART_URI, inner = "<c:chart r:id=\"rIdChart\"/>")
@@ -188,7 +238,31 @@ class DocxReaderTest {
         )
 
         assertEquals("7todayaddedcontrol", paragraphs(document).single().texts().joinToString("") { it.text })
-        assertTrue(document.notes.footnotes)
+        // Footnotes are laid out now: the reference is the first note's number, and nothing is reported missing.
+        assertEquals(DocxNoteRef("1", "1", (paragraphs(document).single().inlines.last() as DocxNoteRef).style),
+            paragraphs(document).single().inlines.last())
+        assertFalse(document.notes.footnotes)
+    }
+
+    @Test
+    fun `footnotes are read by id, numbered in reference order, with their separator`() {
+        val footnotes = """<w:footnotes $NAMESPACES>
+            <w:footnote w:type="separator" w:id="-1"><w:p><w:r><w:separator/></w:r></w:p></w:footnote>
+            <w:footnote w:id="2"><w:p><w:r><w:footnoteRef/></w:r><w:r><w:t xml:space="preserve"> Second.</w:t></w:r></w:p></w:footnote>
+            <w:footnote w:id="5"><w:p><w:r><w:footnoteRef/></w:r><w:r><w:t xml:space="preserve"> First.</w:t></w:r></w:p></w:footnote>
+        </w:footnotes>"""
+        val document = read(
+            body = """<w:p><w:r><w:t>a</w:t></w:r><w:r><w:footnoteReference w:id="5"/></w:r>
+                <w:r><w:t>b</w:t></w:r><w:r><w:footnoteReference w:id="2"/></w:r></w:p>""",
+            extraRels = """<Relationship Id="rIdN" Type="$OFFICE_RELS/footnotes" Target="footnotes.xml"/>""",
+            extraParts = mapOf("word/footnotes.xml" to footnotes.toByteArray())
+        )
+        val refs = paragraphs(document).single().inlines.filterIsInstance<DocxNoteRef>()
+        assertEquals(listOf("5" to "1", "2" to "2"), refs.map { it.id to it.mark })
+        assertEquals(setOf("2", "5"), document.footnotes.keys)
+        val note = (document.footnotes.getValue("5").single() as DocxParagraph).inlines
+        assertTrue(note.first() is DocxNoteMark)
+        assertTrue((document.footnoteSeparator.single() as DocxParagraph).inlines.single() is DocxSeparator)
     }
 
     @Test
@@ -230,6 +304,65 @@ class DocxReaderTest {
         val depth = 2_000
         val body = "<w:sdt><w:sdtContent>".repeat(depth) + "</w:sdtContent></w:sdt>".repeat(depth)
         assertDamaged { read(body = body) }
+    }
+
+    @Test
+    fun `headers and footers are read per section, inherited, and their PAGE field stays live`() {
+        val header = """<w:hdr $NAMESPACES><w:p><w:r><w:t>A/79/1</w:t></w:r></w:p></w:hdr>"""
+        val footer = """<w:ftr $NAMESPACES><w:p>
+            <w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> PAGE  \\* Arabic </w:instrText></w:r>
+            <w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>7</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>
+            <w:r><w:t>/</w:t></w:r><w:fldSimple w:instr="NUMPAGES"><w:r><w:t>9</w:t></w:r></w:fldSimple>
+        </w:p></w:ftr>"""
+        val document = read(
+            body = """
+                <w:p><w:pPr><w:sectPr>
+                  <w:headerReference w:type="default" r:id="rIdH"/><w:footerReference w:type="first" r:id="rIdF"/>
+                  <w:pgMar w:top="1440" w:bottom="-1440" w:left="1200" w:right="1200" w:header="432" w:footer="504"/>
+                  <w:titlePg/><w:pgNumType w:start="3"/>
+                </w:sectPr></w:pPr><w:r><w:t>one</w:t></w:r></w:p>
+                <w:p><w:r><w:t>two</w:t></w:r></w:p>
+                <w:sectPr><w:footerReference w:type="default" r:id="rIdF"/></w:sectPr>
+            """,
+            extraRels = """<Relationship Id="rIdH" Type="$OFFICE_RELS/header" Target="header1.xml"/>""" +
+                """<Relationship Id="rIdF" Type="$OFFICE_RELS/footer" Target="footer1.xml"/>""" +
+                """<Relationship Id="rIdS" Type="$OFFICE_RELS/settings" Target="settings.xml"/>""",
+            extraParts = mapOf(
+                "word/header1.xml" to header.toByteArray(),
+                "word/footer1.xml" to footer.toByteArray(),
+                "word/settings.xml" to "<w:settings $NAMESPACES><w:evenAndOddHeaders/></w:settings>".toByteArray()
+            )
+        )
+
+        val (first, second) = document.sections.map { it.page }
+        assertEquals(mapOf(HeaderKind.DEFAULT to "rIdH"), first.headers)
+        assertEquals(mapOf(HeaderKind.FIRST to "rIdF"), first.footers)
+        assertEquals(432, first.headerTwips)
+        assertEquals(504, first.footerTwips)
+        assertTrue(first.titlePage && first.fixedBottom && !first.fixedTop)
+        assertEquals(3, first.pageStart)
+        // The second section names only a default footer: it keeps the first section's header and first footer.
+        assertEquals(mapOf(HeaderKind.DEFAULT to "rIdH"), second.headers)
+        assertEquals(mapOf(HeaderKind.FIRST to "rIdF", HeaderKind.DEFAULT to "rIdF"), second.footers)
+        assertFalse(second.titlePage)
+        assertTrue(document.evenAndOddHeaders)
+
+        val footerLine = (document.parts.getValue("rIdF").single() as DocxParagraph).inlines
+        assertEquals(DocxPageField::class, footerLine.first()::class)
+        assertEquals("7", (footerLine.first() as DocxPageField).cached)
+        // NUMPAGES keeps its cached result: only PAGE is live.
+        assertEquals("/9", footerLine.drop(1).filterIsInstance<DocxText>().joinToString("") { it.text })
+        assertEquals("A/79/1", (document.parts.getValue("rIdH").single() as DocxParagraph).texts().single().text)
+    }
+
+    @Test
+    fun `a PAGE field in the body keeps its cached result`() {
+        val document = read(
+            body = """<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText>PAGE</w:instrText></w:r>
+                <w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>4</w:t></w:r>
+                <w:r><w:fldChar w:fldCharType="end"/></w:r></w:p>"""
+        )
+        assertEquals("4", paragraphs(document).single().texts().single().text)
     }
 
     // --- fixtures ---

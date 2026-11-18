@@ -66,6 +66,7 @@ import com.skeler.scanely.core.actions.ScanAction
 import com.skeler.scanely.core.barcode.BarcodeAnalyzer
 import kotlinx.coroutines.delay
 import java.util.Locale
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -102,10 +103,22 @@ fun BarcodeCameraPreview(
     }
 
     LaunchedEffect(Unit) {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+        val cameraProviderFuture = try {
+            ProcessCameraProvider.getInstance(context)
+        } catch (e: IllegalStateException) {
+            Log.e(TAG, "Camera initialisation failed", e)
+            return@LaunchedEffect
+        }
         cameraProviderFuture.addListener({
             if (disposed[0]) return@addListener
-            val cameraProvider = cameraProviderFuture.get()
+            // The future fails with an InitializationException cause when CameraX can't start;
+            // thrown here, on the main executor, it would take the app down.
+            val cameraProvider = try {
+                cameraProviderFuture.get()
+            } catch (e: ExecutionException) {
+                Log.e(TAG, "Camera initialisation failed", e)
+                return@addListener
+            }
             boundProvider[0] = cameraProvider
             preview.surfaceProvider = previewView.surfaceProvider
 

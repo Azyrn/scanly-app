@@ -35,6 +35,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AI_PROVIDER_NAME
 import com.skeler.scanely.core.common.LocalReadingTextScale
@@ -77,8 +79,10 @@ fun ResultsSectionHeader(icon: ImageVector, title: String) {
 }
 
 @Composable
-fun rememberExtractedTextState(text: String): ExtractedTextState =
-    remember(text) { ExtractedTextState(text) }
+fun rememberExtractedTextState(text: String): ExtractedTextState {
+    val holder: ExtractedTextHolder = viewModel()
+    return remember(holder, text) { holder.stateFor(text) }
+}
 
 @Composable
 fun RowScope.ExtractedTextActions(
@@ -380,9 +384,11 @@ fun ExtractedTextSection(
     images: Map<String, String> = emptyMap()
 ) {
     val shown = if (state.editing) state.draft else text
-    val counts = remember(shown) {
-        val words = shown.trim().split(Regex("\\s+")).count { it.isNotBlank() }
-        words to shown.length
+    // Counted off the main thread, and the last count stays up until the new one is ready:
+    // resetting it on every change made "0 words" flicker under the text while it was edited.
+    var counts by remember { mutableStateOf<Pair<Int, Int>?>(null) }
+    LaunchedEffect(shown) {
+        counts = computeForDisplay { shown.trim().split(Regex("\\s+")).count { it.isNotBlank() } to shown.length }
     }
 
     Column(modifier = modifier.fillMaxWidth()) {
@@ -399,16 +405,18 @@ fun ExtractedTextSection(
             else -> ReadableTextContent(text = text)
         }
 
-        Text(
-            text = stringResource(
-                R.string.cmp_word_char_counts,
-                pluralStringResource(R.plurals.cmp_word_count, counts.first, counts.first),
-                pluralStringResource(R.plurals.cmp_char_count, counts.second, counts.second)
-            ),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 4.dp)
-        )
+        counts?.let { (words, chars) ->
+            Text(
+                text = stringResource(
+                    R.string.cmp_word_char_counts,
+                    pluralStringResource(R.plurals.cmp_word_count, words, words),
+                    pluralStringResource(R.plurals.cmp_char_count, chars, chars)
+                ),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
     }
 }
 

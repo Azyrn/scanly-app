@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.pdf2office.exact
 
+import com.skeler.scanely.core.pdfeditor.engine.PdfPageTags
 import com.skeler.scanely.core.pdfeditor.engine.PdfiumPage
 import com.skeler.scanely.core.pdftools.pdf2office.LayoutBox
 
@@ -25,7 +26,11 @@ class Token(
     val spaceBefore: Boolean,
     val raisePt: Float,
     /** On a bidirectional line: the width on the page of the space before this token in reading order. */
-    val gapBeforePt: Float = 0f
+    val gapBeforePt: Float = 0f,
+    /** Holds a glyph whose letter is not known for sure ([Glyph.uncertain]): a word OCR may correct. */
+    val uncertain: Boolean = false,
+    /** The marked-content id of the token's first glyph ([PdfiumChar.mcid]), or -1: its place in a tagged PDF's structure. */
+    val mcid: Int = -1
 )
 
 /**
@@ -65,12 +70,14 @@ class ExactPageLayout(
     /** Text laid out as tables ([ExactTables]); none of it is also in [blocks]. */
     val tables: List<ExactTable> = emptyList(),
     /** A possible table was left as text until the layout model looks at the page ([LayoutTables.Found.unconfirmed]). */
-    val unconfirmedTables: Boolean = false
+    val unconfirmedTables: Boolean = false,
+    /** A tagged PDF's structure for this page ([Token.mcid] leads into it); null: structure is inferred. */
+    val tags: PdfPageTags? = null
 ) {
     val isEmpty: Boolean get() = blocks.isEmpty() && tables.isEmpty()
 
     fun copy(unconfirmedTables: Boolean): ExactPageLayout =
-        ExactPageLayout(widthPt, heightPt, blocks, behindPicture, tables, unconfirmedTables)
+        ExactPageLayout(widthPt, heightPt, blocks, behindPicture, tables, unconfirmedTables, tags)
 }
 
 /**
@@ -94,17 +101,17 @@ object ExactLayout {
      * The one entry point for the app and the host fast loop, so the two can't drift apart.
      */
     fun read(page: PdfiumPage, modelTables: List<LayoutBox>? = null): ExactPageLayout =
-        ExactTables.detect(analyze(page), modelTables)
+        ExactTables.detect(analyze(page), modelTables, page.rules)
 
     fun analyze(page: PdfiumPage): ExactPageLayout {
         // Text drawn outside the page (a print stamp above the crop box) is never seen in the PDF; placed
         // in an Office page it would land on it, or be pulled to its edge.
-        val onPage = page.chars.filter {
+        val onPage = GlyphText.recover(page).filter {
             it.originX in -OFF_PAGE_PT..page.widthPt + OFF_PAGE_PT &&
                 it.originY in -OFF_PAGE_PT..page.heightPt + OFF_PAGE_PT
         }
         val segments = ExactLines.lines(ExactGlyphs.glyphs(onPage)).flatMap(ExactLines::segments)
-        return ExactPageLayout(page.widthPt, page.heightPt, ExactBlocks.blocks(segments))
+        return ExactPageLayout(page.widthPt, page.heightPt, ExactBlocks.blocks(segments), tags = page.tags)
     }
 
     /** [lines] (that already join line by line) as one block with its pitch and first-line indent. */

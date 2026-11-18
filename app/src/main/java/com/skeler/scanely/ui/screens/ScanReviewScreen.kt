@@ -3,6 +3,7 @@
 package com.skeler.scanely.ui.screens
 
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
@@ -58,7 +59,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -87,10 +90,16 @@ import com.skeler.scanely.R
 import com.skeler.scanely.core.image.ScanFilter
 import com.skeler.scanely.core.pdf.DocumentIntents
 import com.skeler.scanely.navigation.LocalNavigator
+import com.skeler.scanely.navigation.OnScreenExit
 import com.skeler.scanely.ui.components.rememberStorageAccess
 import com.skeler.scanely.ui.theme.ScanTokens
 import com.skeler.scanely.ui.viewmodel.DocumentScanViewModel
 import com.skeler.scanely.ui.viewmodel.FilterPreview
+import com.skeler.scanely.ui.viewmodel.ReviewPage
+import com.skeler.scanely.ui.viewmodel.ScanExportFormat
+
+/** Width over height of an A4 sheet: the blank card a page shows until its picture is ready. */
+private const val A4_ASPECT = 210f / 297f
 
 @Composable
 fun ScanReviewScreen() {
@@ -103,15 +112,32 @@ fun ScanReviewScreen() {
     val snackbarHostState = remember { SnackbarHostState() }
     val withStorageAccess = rememberStorageAccess()
 
+    // The view model is the activity's, so the pages would outlive this screen; they go when it leaves for
+    // good, and are recycled only after this composition (which may still draw them) is gone.
+    DisposableEffect(vm) {
+        vm.screenInComposition(true)
+        onDispose { vm.screenInComposition(false) }
+    }
+    OnScreenExit { vm.release() }
+    // Pictures that left the state are recycled only after a composition without them.
+    SideEffect { vm.drawn(state.version) }
+
     var showExportSheet by remember { mutableStateOf(false) }
     var pendingDelete by remember { mutableStateOf<Int?>(null) }
+    var confirmLeave by remember { mutableStateOf(false) }
 
     val pages = state.pages
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val currentPage = pagerState.currentPage.coerceIn(0, (pages.size - 1).coerceAtLeast(0))
 
+    // The camera session is gone once review opens: nothing else holds these pages, so leaving before any export
+    // throws the scan away. System Back (and its predictive gesture) and the toolbar arrow both ask first.
+    val askBeforeLeaving = pages.isNotEmpty() && !state.exported
+    BackHandler(enabled = askBeforeLeaving) { confirmLeave = true }
+    val leave = { if (askBeforeLeaving) confirmLeave = true else navigator.back() }
+
     LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.collect { vm.buildPreviews(it) }
+        snapshotFlow { pagerState.currentPage }.collect { vm.showPage(it) }
     }
 
     LaunchedEffect(state.message) {
@@ -152,7 +178,7 @@ fun ScanReviewScreen() {
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navigator.back() }) {
+                    IconButton(onClick = leave) {
                         Icon(
                             Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = stringResource(R.string.pdf_tools_back)
@@ -181,6 +207,8 @@ fun ScanReviewScreen() {
                 PageStage(
                     pagerState = pagerState,
                     pages = pages,
+                    shown = state.shown,
+                    unreadable = state.unreadable,
                     dimmed = state.isLoading,
                     onRotate = { vm.rotatePage(currentPage) },
                     onDelete = { pendingDelete = currentPage },
@@ -219,17 +247,38 @@ fun ScanReviewScreen() {
             pageCount = pages.size,
             onPdf = {
                 showExportSheet = false
-                withStorageAccess(vm::exportPdf)
+                withStorageAccess { vm.export(ScanExportFormat.PDF) }
             },
             onWord = {
                 showExportSheet = false
-                withStorageAccess(vm::exportWord)
+                withStorageAccess { vm.export(ScanExportFormat.WORD) }
             },
             onImages = {
                 showExportSheet = false
                 withStorageAccess(vm::saveImages)
             },
             onDismiss = { showExportSheet = false }
+        )
+    }
+
+    if (confirmLeave) {
+        AlertDialog(
+            onDismissRequest = { confirmLeave = false },
+            title = { Text(stringResource(R.string.scr_scan_review_discard_title)) },
+            text = { Text(stringResource(R.string.scr_scan_review_discard_body)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        confirmLeave = false
+                        navigator.back()
+                    }
+                ) {
+                    Text(stringResource(R.string.scr_transcribe_discard), color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmLeave = false }) { Text(stringResource(R.string.scr_scan_review_keep)) }
+            }
         )
     }
 
@@ -258,7 +307,9 @@ fun ScanReviewScreen() {
 @Composable
 private fun PageStage(
     pagerState: androidx.compose.foundation.pager.PagerState,
-    pages: List<android.graphics.Bitmap>,
+    pages: List<ReviewPage>,
+    shown: Map<Long, android.graphics.Bitmap>,
+    unreadable: Set<Long>,
     dimmed: Boolean,
     onRotate: () -> Unit,
     onDelete: () -> Unit,
@@ -285,12 +336,28 @@ private fun PageStage(
                     color = Color.White,
                     shadowElevation = 8.dp
                 ) {
-                    Image(
-                        bitmap = pages[index].asImageBitmap(),
-                        contentDescription = stringResource(R.string.pdf2office_excel_sheet_page, index + 1),
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    val page = pages[index]
+                    val bitmap = shown[page.id]?.takeUnless { it.isRecycled }
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = stringResource(R.string.pdf2office_excel_sheet_page, index + 1),
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    } else {
+                        // Pages away from the current one are not in memory: a blank sheet until it is made.
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(A4_ASPECT),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (page.id !in unreadable) {
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                    }
                 }
             }
         }

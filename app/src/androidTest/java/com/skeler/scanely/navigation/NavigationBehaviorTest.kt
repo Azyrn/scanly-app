@@ -170,18 +170,33 @@ class NavigationBehaviorTest {
     }
 
     @Test
-    fun onlyInMemoryDestinationsAreMarkedForTrimming() {
+    fun trimmingAfterProcessDeathRemovesEveryInMemoryScreen() {
         setGraph()
 
-        rule.runOnUiThread { navController.navigate(Destination.Results) }
+        // Home -> Results (in memory only) -> Settings (loads itself): Back from Settings must not
+        // land on an empty Results, so the trim goes back below Results.
+        rule.runOnUiThread {
+            navController.navigate(Destination.Results)
+            navController.navigate(Destination.Settings)
+        }
         rule.waitForIdle()
-        assertTrue(navController.currentDestination!!.holdsOnlyInMemoryState())
+        rule.runOnUiThread { trimNavController() }
+        rule.waitForIdle()
+        assertTrue(navController.currentDestination!!.hasRoute(Destination.Home::class))
 
-        rule.runOnUiThread { navController.popBackStack() }
+        // A self-loading screen with nothing in memory under it stays.
         rule.runOnUiThread { navController.navigate(Destination.Settings) }
         rule.waitForIdle()
-        assertTrue(!navController.currentDestination!!.holdsOnlyInMemoryState())
+        rule.runOnUiThread { trimNavController() }
+        rule.waitForIdle()
+        assertTrue(navController.currentDestination!!.hasRoute(Destination.Settings::class))
     }
+
+    /** What ScanelyNavHost runs when restoredAfterProcessDeath. */
+    private fun trimNavController() = trimInMemoryScreens(
+        isOnStack = { route -> runCatching { navController.getBackStackEntry(route) }.isSuccess },
+        popInclusive = { route -> navController.popBackStack(route, inclusive = true) }
+    )
 }
 
 @Composable

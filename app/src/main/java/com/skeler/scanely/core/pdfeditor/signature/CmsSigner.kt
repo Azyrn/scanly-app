@@ -104,21 +104,23 @@ object CmsSigner {
             )
         }
 
-    /**
-     * Lets BouncyCastle digest the document straight off the PDF without it being held in memory
-     * first. [CMSProcessableByteArray] would mean a second full copy of every file signed.
-     */
-    private class StreamedContent(private val open: () -> InputStream) : CMSTypedData {
-        override fun getContentType(): ASN1ObjectIdentifier = CMSObjectIdentifiers.data
-
-        override fun getContent(): Any = open
-
-        override fun write(out: OutputStream) {
-            open().use { it.copyTo(out) }
-        }
-    }
-
     private const val SIGNATURE_HEADROOM_BYTES = 8192
     private const val FALLBACK_CERT_BYTES = 2048
     private const val MAX_RESERVED_BYTES = 64 * 1024
+}
+
+/**
+ * Lets BouncyCastle digest the document straight off the PDF without it being held in memory
+ * first. [org.bouncycastle.cms.CMSProcessableByteArray] would mean a second full copy of every file
+ * signed — and, for [SignatureValidator], a whole-file read that a large PDF does not survive.
+ * [open] is called afresh for each pass, so the content can be digested more than once.
+ */
+internal class StreamedContent(private val open: () -> InputStream) : CMSTypedData {
+    override fun getContentType(): ASN1ObjectIdentifier = CMSObjectIdentifiers.data
+
+    override fun getContent(): Any = open
+
+    override fun write(out: OutputStream) {
+        open().use { it.copyTo(out) }
+    }
 }

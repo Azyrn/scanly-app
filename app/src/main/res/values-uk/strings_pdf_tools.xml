@@ -107,4 +107,27 @@
     <string name="pdf_tool_rotate_left">90° вліво</string>
     <string name="pdf_tool_rotate_body">Повертає всі сторінки. Окремі — в «Порядок PDF».</string>
     <string name="pdf_tool_rotate_action">Повернути</string>
+    <string name="pdf_tools_beta_badge">Бета</string>
+    <string name="pdf_tool_error_broken_output">Файл після конвертації пошкоджено й видалено. Нічого не збережено.</string>
+    <string name="pdf_tool_error_timed_out">Це тривало надто довго й було зупинено. Нічого не збережено.</string>
+    <string name="pdf_tool_credits_refunded">Кредити за цю конвертацію повернуто.</string>
+    <string name="pdf_tool_online_read_failed">Онлайн-читання не вдалося, кредити не списано. Ці сторінки збережуть текст PDF.</string>
+    <string name="pdf_tools_beta_note">З оновленнями результати кращі.</string>
+    <string name="online_read_title">Прочитати сторінки онлайн?</string>
+    <string name="online_read_use">Списати кредити</string>
+    <string name="online_read_without">Без цього</string>
+    <string name="online_read_watch_ad">Дивитися рекламу</string>
+    <string name="online_read_upgrade">Покращити план</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d сторінку цього файлу треба прочитати онлайн для точного тексту. Вартість: %1$d кредит.</item>
+        <item quantity="few">%1$d сторінки цього файлу треба прочитати онлайн для точного тексту. Вартість: %1$d кредити.</item>
+        <item quantity="many">%1$d сторінок цього файлу треба прочитати онлайн для точного тексту. Вартість: %1$d кредитів.</item>
+        <item quantity="other">%1$d сторінки цього файлу треба прочитати онлайн для точного тексту. Вартість: %1$d кредиту.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">У вас лишився %1$d кредит.</item>
+        <item quantity="few">У вас лишилося %1$d кредити.</item>
+        <item quantity="many">У вас лишилося %1$d кредитів.</item>
+        <item quantity="other">У вас лишилося %1$d кредиту.</item>
+    </plurals>
 </resources>

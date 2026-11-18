@@ -52,6 +52,8 @@
     <string name="scr_scan_review_delete_page_title">Seite %1$d löschen?</string>
     <string name="scr_scan_review_delete_page_body">Diese Seite fehlt im Export. Du kannst sie jederzeit neu scannen.</string>
     <string name="scr_scan_review_keep">Halten</string>
+    <string name="scr_scan_review_discard_title">Scan löschen?</string>
+    <string name="scr_scan_review_discard_body">Die Seiten sind nicht gespeichert und gehen verloren.</string>
     <string name="scr_scan_review_rotate_page">Seite drehen</string>
     <string name="scr_scan_review_delete_page">Seite löschen</string>
     <string name="scr_scan_review_enhance">Aufwerten</string>
@@ -62,6 +64,10 @@
     <plurals name="scr_scan_review_page_count">
         <item quantity="one">%1$d Seite</item>
         <item quantity="other">%1$d Seiten</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="one">%1$d Seite war unlesbar und fehlt.</item>
+        <item quantity="other">%1$d Seiten waren unlesbar und fehlen.</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s in einer Datei · öffnet sich danach</string>
@@ -210,6 +216,7 @@
     <string name="ai_nothing_to_translate">Noch nichts zu übersetzen.</string>
     <string name="ai_err_no_text_batch">Kein Text aus Dateien extrahiert</string>
     <string name="ai_err_extraction_unavailable">Extraktion nicht geladen. Erneut versuchen oder eigenen Endpunkt ausschalten, um %1$s zu nutzen.</string>
+    <string name="ai_err_custom_needs_pro">Eigener Endpunkt braucht Pro, Plan nicht bestätigt. Erneut versuchen oder Endpunkt ausschalten, um Scanly-Credits zu nutzen.</string>
     <string name="ai_err_read_file">Datei nicht lesbar</string>
     <string name="ai_err_no_text">Kein Text aus dieser Datei lesbar.</string>
     <string name="ai_design_background">Dokument entsteht. App kannst du verlassen, wir melden uns.</string>
@@ -264,6 +271,7 @@
     <string name="ocr_err_render_pdf">PDF nicht gerendert</string>
     <string name="ocr_err_pdf_processing">PDF nicht verarbeitet</string>
     <string name="ocr_err_download">Download-Fehler</string>
+    <string name="ocr_err_download_offline">Offline. Erneut versuchen.</string>
     <string name="ocr_setup_pending">Texterkennung wird noch eingerichtet. Eine Minute online bleiben, dann erneut versuchen.</string>
     <string name="ocr_scan_failed">Scanly konnte diese Datei nicht lesen. Das heißt nicht, dass die Seite leer ist. Erneut versuchen oder andere Datei wählen.</string>
     <string name="pay_upgrade_notice">Für einen größeren Tarif öffne %1$s/upgrade und melde dich mit demselben Konto an – so ändert sich dein Tarif. Ein weiterer Kauf auf der Preisseite startet ein zweites Abo.</string>

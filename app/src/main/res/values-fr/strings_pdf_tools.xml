@@ -106,4 +106,25 @@
     <string name="pdf_tool_rotate_left">90° gauche</string>
     <string name="pdf_tool_rotate_body">Pivote toutes les pages. Pages isolées : Organiser le PDF.</string>
     <string name="pdf_tool_rotate_action">Pivoter</string>
+    <string name="pdf_tools_beta_badge">Bêta</string>
+    <string name="pdf_tool_error_broken_output">Le fichier converti était endommagé et n\'a pas été gardé. Rien n\'a été enregistré.</string>
+    <string name="pdf_tool_error_timed_out">Trop long, arrêté. Rien n\'a été enregistré. Essayez un fichier plus petit.</string>
+    <string name="pdf_tool_credits_refunded">Les crédits de cette conversion ont été remboursés.</string>
+    <string name="pdf_tool_online_read_failed">La lecture en ligne a échoué : aucun crédit utilisé. Ces pages gardent le texte du PDF.</string>
+    <string name="pdf_tools_beta_note">S\'améliore à chaque mise à jour.</string>
+    <string name="online_read_title">Lire les pages en ligne ?</string>
+    <string name="online_read_use">Utiliser des crédits</string>
+    <string name="online_read_without">Convertir sans</string>
+    <string name="online_read_watch_ad">Voir une pub</string>
+    <string name="online_read_upgrade">Passer à Pro</string>
+    <plurals name="online_read_body">
+        <item quantity="one">%1$d page de ce fichier doit être lue en ligne pour un texte exact. Coût : %1$d crédit.</item>
+        <item quantity="many">%1$d pages de ce fichier doivent être lues en ligne pour un texte exact. Coût : %1$d crédits.</item>
+        <item quantity="other">%1$d pages de ce fichier doivent être lues en ligne pour un texte exact. Coût : %1$d crédits.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="one">Il vous reste %1$d crédit.</item>
+        <item quantity="many">Il vous reste %1$d crédits.</item>
+        <item quantity="other">Il vous reste %1$d crédits.</item>
+    </plurals>
 </resources>

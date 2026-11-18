@@ -24,7 +24,27 @@ interface ScanlyPublicApi {
     /** Which AI features the server has switched off. Public so Home can hide them before sign-in. */
     @GET("v1/features")
     suspend fun features(): FeaturesResponse
+
+    /**
+     * A crash or conversion-failure report (core/reports/FailureReporter). Public: a crash can come
+     * before sign-in. Carries fixed fields only — never document content or file names.
+     */
+    @POST("v1/reports")
+    suspend fun report(@Body report: AppReportDto): retrofit2.Response<Unit>
 }
+
+@Serializable
+data class AppReportDto(
+    val kind: String,
+    val direction: String? = null,
+    val error: String,
+    val where: String? = null,
+    val durationMs: Long? = null,
+    val pages: Int? = null,
+    val appVersion: String,
+    val versionCode: Int,
+    val sdk: Int
+)
 
 /** Keyed by the lowercase `AiFeature` name; a feature the server does not mention stays on. */
 @Serializable

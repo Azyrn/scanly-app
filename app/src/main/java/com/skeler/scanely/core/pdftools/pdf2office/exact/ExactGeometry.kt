@@ -142,43 +142,58 @@ internal fun onTwipGrid(lengthsPt: List<Float>): List<Int> {
     }
 }
 
-/**
- * Where a table goes, in page points: [top] of its first row, [lefts] of its columns, [widthsPt]
- * with room past the last column so a rounding difference never wraps it, and [heightsPt] from
- * each row's top to the next one's (the last row its own line). Shared by the Word and
- * PowerPoint writers.
- */
+/** Where a table's rows and columns go, in points. */
 internal class TableGeometry(
     val top: Float,
     val lefts: List<Float>,
     val widthsPt: List<Float>,
     val heightsPt: List<Float>,
-    /** Each row's exact line; the row's baseline sits at [ExactLayout.BASELINE_RATIO] of it. */
-    val lineHeightsPt: List<Float>
-)
+    /** Each row's exact line; the row's first baseline sits at [ExactLayout.BASELINE_RATIO] of it. */
+    val lineHeightsPt: List<Float>,
+    /** Room added to the last column so a rounding difference never wraps its text. */
+    val slackPt: Float
+) {
+    /**
+     * The space above each line of [cell] in row [row], every line set [lineHeightsPt] tall: what
+     * puts each baseline where the page has it. Zero for a row of one line.
+     */
+    fun spaceBefore(row: Int, cell: ExactTableCell): List<Float> {
+        val line = lineHeightsPt[row]
+        return cell.lines.mapIndexed { i, cellLine ->
+            val above = if (i == 0) 0f else cell.lines[i - 1].dropPt + line
+            (cellLine.dropPt - above).coerceAtLeast(0f)
+        }
+    }
+}
 
 /**
  * Rows are placed by their baselines. A row's line is its natural line, or the baseline pitch to
- * the row above or below when that is tighter (a 7 pt tax table at 7.5 pt). Each row starts where
- * its line puts its baseline and runs to the next row's start; since no line is taller than either
- * pitch beside it, no row has to grow and no baseline moves. Lines are cut short only where rows
- * are tight, never across the whole table.
+ * the row above or below, or between two lines of one of its cells, when that is tighter (a 7 pt
+ * tax table at 7.5 pt). Each row starts where its line puts its first baseline and runs to the
+ * next row's start; since no line is taller than any pitch beside it, no row has to grow and no
+ * baseline moves. Lines are cut short only where rows are tight, never across the whole table.
  */
 internal fun tableGeometry(table: ExactTable): TableGeometry {
-    val columns = table.rows.maxOf { it.cells.size }
+    val columns = table.columns
     val widths = table.columnWidthsPt.takeIf { it.size == columns }
         ?: List(columns) { table.box.width / columns }
     val slack = widths.toMutableList().apply { this[lastIndex] += table.fontSize * SLACK_EM }
     val lefts = widths.runningFold(table.box.left) { left, width -> left + width }.dropLast(1)
-    val baselines = table.rows.map { it.box.top + it.box.height * ExactLayout.BASELINE_RATIO }
-    val pitches = baselines.zipWithNext { a, b -> b - a }
-    val lines = table.rows.mapIndexed { i, row ->
-        min(row.box.height, min(pitches.getOrElse(i - 1) { row.box.height }, pitches.getOrElse(i) { row.box.height }))
-            .coerceAtLeast(MIN_ROW_PT)
+    val rows = table.rows
+    val lines = rows.mapIndexed { i, row ->
+        val above = rows.getOrNull(i - 1)?.let { row.firstBaselinePt - it.lastBaselinePt } ?: row.linePt
+        val below = rows.getOrNull(i + 1)?.let { it.firstBaselinePt - row.lastBaselinePt } ?: row.linePt
+        min(min(row.linePt, innerPitch(row)), min(above, below)).coerceAtLeast(MIN_ROW_PT)
     }
-    val tops = baselines.mapIndexed { i, b -> b - lines[i] * ExactLayout.BASELINE_RATIO }
-    val heights = tops.zipWithNext { a, b -> (b - a).coerceAtLeast(MIN_ROW_PT) } + lines.last()
-    return TableGeometry(tops.first(), lefts, slack, heights, lines)
+    val tops = rows.mapIndexed { i, row -> row.firstBaselinePt - lines[i] * ExactLayout.BASELINE_RATIO }
+    val lastHeight = rows.last().lastBaselinePt - tops.last() + lines.last() * (1f - ExactLayout.BASELINE_RATIO)
+    val heights = tops.zipWithNext { a, b -> (b - a).coerceAtLeast(MIN_ROW_PT) } + lastHeight.coerceAtLeast(MIN_ROW_PT)
+    return TableGeometry(tops.first(), lefts, slack, heights, lines, table.fontSize * SLACK_EM)
+}
+
+/** The tightest distance between two lines of one cell of [row]. */
+private fun innerPitch(row: ExactTableRow): Float = row.cells.minOf { cell ->
+    cell.lines.zipWithNext { a, b -> b.dropPt - a.dropPt }.filter { it > 0f }.minOrNull() ?: Float.MAX_VALUE
 }
 
 private const val MIN_ROW_PT = 1f

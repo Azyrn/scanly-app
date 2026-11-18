@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 class PaddleLineOrientationTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
 
     private val arabic = listOf(
         "الجن الكافر : الاذان",

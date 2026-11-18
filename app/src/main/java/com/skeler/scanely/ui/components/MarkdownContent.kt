@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -60,7 +61,7 @@ fun MarkdownContent(
     modifier: Modifier = Modifier,
     images: Map<String, String> = emptyMap()
 ) {
-    val blocks = remember(text) { MarkdownParser.parse(text) }
+    val blocks = rememberBackgroundValue(text, emptyList<MdBlock>()) { MarkdownParser.parse(text) }
     val selectionColors = TextSelectionColors(
         handleColor = MaterialTheme.colorScheme.primary,
         backgroundColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
@@ -215,7 +216,7 @@ private fun MarkdownBlock(
 
 @Composable
 private fun MarkdownImage(block: MdBlock.Image, base64: String?) {
-    val bitmap = remember(base64) {
+    val bitmap = rememberBackgroundValue<ImageBitmap?>(base64, null) {
         base64?.let { data ->
             runCatching {
                 // Mistral may return a full data URL; keep only its payload.
@@ -276,7 +277,7 @@ private fun MarkdownImage(block: MdBlock.Image, base64: String?) {
 @Composable
 private fun MarkdownTable(table: MdBlock.Table) {
     val outline = MaterialTheme.colorScheme.outlineVariant
-    val widths = remember(table) {
+    val widths = rememberBackgroundValue(table, emptyList<androidx.compose.ui.unit.Dp>()) {
         table.header.indices.map { column ->
             val longest = (listOf(table.header) + table.rows)
                 .maxOf { row -> row.getOrElse(column) { "" }.length }
@@ -366,7 +367,7 @@ private fun bodyStyle() = MaterialTheme.typography.bodyLarge.copy(
 private fun inline(text: String): AnnotatedString {
     val codeBackground = MaterialTheme.colorScheme.surfaceContainerHigh
     val linkColor = MaterialTheme.colorScheme.primary
-    return remember(text, codeBackground, linkColor) {
+    return rememberBackgroundValue(Triple(text, codeBackground, linkColor), AnnotatedString("")) {
         buildAnnotatedString {
             MarkdownParser.parseInline(text).forEach { span ->
                 val decorations = listOfNotNull(

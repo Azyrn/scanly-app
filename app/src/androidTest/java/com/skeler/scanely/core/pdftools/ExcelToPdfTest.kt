@@ -31,7 +31,7 @@ class ExcelToPdfTest {
     // Outside the workspace root on purpose: ToolWorkspace clears its root when constructed.
     private val dir = File(context.cacheDir, "excel-to-pdf-test").apply { mkdirs() }
     private val workspace = ToolWorkspace(context)
-    private val job = XlsxToPdfJob(workspace)
+    private val job = XlsxToPdfJob(context, workspace)
     private val reader = PdfPageReader(context)
     private lateinit var savedLocale: Locale
 
@@ -148,7 +148,7 @@ class ExcelToPdfTest {
         val full = ToolWorkspace(context) { 0L }
         val run = full.newRun()
 
-        assertEquals(ToolFailure.LowStorage, failureOf { XlsxToPdfJob(full).convert(imported(workbook()), run) {} })
+        assertEquals(ToolFailure.LowStorage, failureOf { XlsxToPdfJob(context, full).convert(imported(workbook()), run) {} })
         assertRunEmpty(run)
     }
 

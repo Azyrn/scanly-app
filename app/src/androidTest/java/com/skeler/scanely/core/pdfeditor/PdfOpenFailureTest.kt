@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdfeditor
 
+import com.skeler.scanely.core.pdftools.ToolWorkspace
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -37,7 +38,7 @@ class PdfOpenFailureTest {
             context,
             reader,
             qpdf,
-            PdfEditorEngine(qpdf, OverlayComposer(context), reader, context),
+            PdfEditorEngine(qpdf, OverlayComposer(context), reader, dagger.Lazy { ToolWorkspace(context) }, context),
             PdfSigner(context)
         )
     }

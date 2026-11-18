@@ -96,6 +96,7 @@
     <string name="pe_no_signatures_saved">Nenhuma assinatura salva. Capture uma na ferramenta Assinar.</string>
     <string name="pe_no_selectable_text">Sem texto selecionável aqui: pode ser um scan.</string>
     <string name="pe_scanner_unavailable">Scanner de documentos indisponível aqui.</string>
+    <string name="pe_scanner_start_failed">O scanner não abriu. Verifique a conexão.</string>
     <string name="pe_undo">Desfazer</string>
     <string name="pe_redo">Refazer</string>
     <string name="pe_add_text">Inserir</string>

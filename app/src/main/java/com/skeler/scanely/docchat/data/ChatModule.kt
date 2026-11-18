@@ -6,8 +6,10 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.skeler.scanely.BuildConfig
 import com.skeler.scanely.core.di.BaseHttpClient
 import com.skeler.scanely.core.di.derive
+import com.skeler.scanely.core.di.lazyCallFactory
 import com.skeler.scanely.core.network.ApiJson
 import com.skeler.scanely.core.network.BackendAuthInterceptor
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,16 +40,18 @@ object ChatModule {
     @Provides
     @Singleton
     fun provideChatSyncApi(
-        @BaseHttpClient base: OkHttpClient,
+        @BaseHttpClient base: Lazy<OkHttpClient>,
         authInterceptor: BackendAuthInterceptor
     ): ChatSyncApi = Retrofit.Builder()
         .baseUrl(BuildConfig.SCANLY_API_BASE_URL)
-        .client(
-            base.derive()
-                .addInterceptor(authInterceptor)
-                .connectTimeout(CONNECT_SECONDS, TimeUnit.SECONDS)
-                .callTimeout(CALL_SECONDS, TimeUnit.SECONDS)
-                .build()
+        .callFactory(
+            lazyCallFactory {
+                base.get().derive()
+                    .addInterceptor(authInterceptor)
+                    .connectTimeout(CONNECT_SECONDS, TimeUnit.SECONDS)
+                    .callTimeout(CALL_SECONDS, TimeUnit.SECONDS)
+                    .build()
+            }
         )
         .addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
         .build()
@@ -63,17 +67,19 @@ object ChatModule {
     @Singleton
     @AgentEventsApi
     fun provideAgentEventsApi(
-        @BaseHttpClient base: OkHttpClient,
+        @BaseHttpClient base: Lazy<OkHttpClient>,
         authInterceptor: BackendAuthInterceptor
     ): ChatSyncApi = Retrofit.Builder()
         .baseUrl(BuildConfig.SCANLY_API_BASE_URL)
-        .client(
-            base.derive()
-                .addInterceptor(authInterceptor)
-                .connectTimeout(CONNECT_SECONDS, TimeUnit.SECONDS)
-                .readTimeout(EVENTS_READ_SECONDS, TimeUnit.SECONDS)
-                .callTimeout(0, TimeUnit.SECONDS)
-                .build()
+        .callFactory(
+            lazyCallFactory {
+                base.get().derive()
+                    .addInterceptor(authInterceptor)
+                    .connectTimeout(CONNECT_SECONDS, TimeUnit.SECONDS)
+                    .readTimeout(EVENTS_READ_SECONDS, TimeUnit.SECONDS)
+                    .callTimeout(0, TimeUnit.SECONDS)
+                    .build()
+            }
         )
         .addConverterFactory(ApiJson.asConverterFactory("application/json".toMediaType()))
         .build()

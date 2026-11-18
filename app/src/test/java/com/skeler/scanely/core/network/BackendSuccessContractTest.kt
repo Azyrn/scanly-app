@@ -53,6 +53,7 @@ class BackendSuccessContractTest {
     }
     @Test fun `all Retrofit route methods match the worker router`() {
         val expected = mapOf("me" to "GET v1/me", "deleteAccount" to "DELETE v1/me",
+            "sendVerificationEmail" to "POST v1/me/verify-email",
             "ocr" to "POST v1/ocr", "transcribe" to "POST v1/transcribe",
             "translate" to "POST v1/translate",
             "design" to "POST v1/design", "designJob" to "GET v1/design/jobs/{id}",
@@ -60,7 +61,7 @@ class BackendSuccessContractTest {
             "designOcr" to "POST v1/design/ocr", "designPrompt" to "POST v1/design/prompt",
             "designCompile" to "POST v1/design/compile", "activateLicense" to "POST v1/license/activate",
             "licenseStatus" to "POST v1/license/status", "deactivateLicense" to "POST v1/license/deactivate",
-            "myLicenses" to "POST v1/license/mine")
+            "myLicenses" to "POST v1/license/mine", "refundConversion" to "POST v1/ocr/refund")
         for (method in ScanlyApi::class.java.declaredMethods) {
             val route = method.getAnnotation(GET::class.java)?.let { "GET ${it.value}" }
                 ?: method.getAnnotation(POST::class.java)?.let { "POST ${it.value}" }
@@ -79,7 +80,8 @@ class BackendSuccessContractTest {
                 )
         }
         assertEquals(
-            mapOf("sendPasswordReset" to "POST v1/auth/password-reset", "features" to "GET v1/features"),
+            mapOf("sendPasswordReset" to "POST v1/auth/password-reset", "features" to "GET v1/features",
+                "report" to "POST v1/reports"),
             public
         )
     }

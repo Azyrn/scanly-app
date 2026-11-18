@@ -314,6 +314,7 @@
     <string name="pay_confirm_sent">Link im Postfach öffnen, dann erneut „Kauf wiederherstellen“ tippen.</string>
     <string name="pay_confirm_failed">Bestätigungsmail nicht gesendet. Erneut versuchen.</string>
     <string name="pay_key_removed">Schlüssel vom Gerät entfernt.</string>
+    <string name="pay_reward_pending">Deine Bonus-Credits kommen gleich. Schau bald nach.</string>
     <string name="pay_restored_tier">%1$s-Schlüssel zurück.</string>
     <string name="pay_restored">Dein Schlüssel ist wieder da.</string>
     <string name="pay_restore_nothing">Kein Abo für dieses Konto. Mit anderer E-Mail bezahlt? Dann damit anmelden und erneut versuchen.</string>

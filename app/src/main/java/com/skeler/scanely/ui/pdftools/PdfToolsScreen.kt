@@ -272,6 +272,7 @@ private fun ToolTile(
     modifier: Modifier = Modifier
 ) {
     val label = stringResource(tool.labelRes)
+    val beta = stringResource(R.string.pdf_tools_beta_badge)
 
     Box(
         modifier
@@ -279,7 +280,7 @@ private fun ToolTile(
             .clickable(onClick = onClick)
             .semantics {
                 role = Role.Button
-                contentDescription = label
+                contentDescription = if (tool.isBeta) "$label, $beta" else label
             }
     ) {
         Column(
@@ -310,6 +311,14 @@ private fun ToolTile(
                     .padding(BADGE_INSET)
             )
         }
+        if (tool.isBeta) {
+            BetaBadge(
+                Modifier
+                    .align(Alignment.TopStart)
+                    .padding(BADGE_INSET)
+                    .clearAndSetSemantics { }
+            )
+        }
     }
 }
 
@@ -335,6 +344,31 @@ private fun ToolIcon(tool: PdfTool, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+/** Quieter than the Pro badge: it informs, it doesn't sell. Shared with the tool screen's title. */
+@Composable
+internal fun BetaBadge(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(R.string.pdf_tools_beta_badge),
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onTertiaryContainer,
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+            .padding(horizontal = BADGE_PADDING_H, vertical = BADGE_PADDING_V)
+    )
+}
+
+/** The line under a Beta conversion's options and result. */
+@Composable
+internal fun BetaNote(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(R.string.pdf_tools_beta_note),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textAlign = TextAlign.Center,
+        modifier = modifier
+    )
 }
 
 @Composable

@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -46,7 +47,10 @@ interface ChatSyncApi {
      */
     @POST("v1/agent/turns")
     @Headers("X-Scanly-Caps: design-agent-v1")
-    suspend fun startAgentTurn(@Body request: AgentTurnRequest): AgentTurnAccepted
+    suspend fun startAgentTurn(
+        @Body request: AgentTurnRequest,
+        @Header("X-Idempotency-Key") requestKey: String
+    ): AgentTurnAccepted
 
     /** Stores one picture or PDF for a chat, as raw bytes; a turn then names it by the id returned. */
     @POST("v1/agent/attachments")

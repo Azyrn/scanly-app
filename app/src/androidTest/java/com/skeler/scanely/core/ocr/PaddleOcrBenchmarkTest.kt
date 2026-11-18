@@ -51,7 +51,7 @@ class PaddleOcrBenchmarkTest {
     @Test
     fun measureSkewedCameraPage() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val bitmap = page(skewDegrees = 1.5f, width = 3024, height = 4032)
 
         val quads = engine.detect(bitmap, 960)
@@ -79,7 +79,7 @@ class PaddleOcrBenchmarkTest {
     @Test
     fun measureFullPage() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val bitmap = page()
 
         val warmup = engine.detect(bitmap, 960)

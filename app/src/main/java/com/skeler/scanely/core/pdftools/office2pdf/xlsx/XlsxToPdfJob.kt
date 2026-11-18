@@ -1,5 +1,6 @@
 package com.skeler.scanely.core.pdftools.office2pdf.xlsx
 
+import android.content.Context
 import android.graphics.pdf.PdfDocument
 import android.util.Log
 import com.skeler.scanely.R
@@ -12,6 +13,8 @@ import com.skeler.scanely.core.pdftools.ToolOutput
 import com.skeler.scanely.core.pdftools.ToolResult
 import com.skeler.scanely.core.pdftools.ToolWorkspace
 import com.skeler.scanely.core.pdftools.isOutOfSpace
+import com.skeler.scanely.core.pdftools.pdf2office.exact.AssetTextMeasurer
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
@@ -33,7 +36,10 @@ private const val TAG = "XlsxToPdfJob"
  * never guessed at.
  */
 @Singleton
-class XlsxToPdfJob @Inject constructor(private val workspace: ToolWorkspace) {
+class XlsxToPdfJob @Inject constructor(
+    @param:ApplicationContext private val appContext: Context,
+    private val workspace: ToolWorkspace
+) {
 
     suspend fun convert(source: ImportedFile, run: File, onProgress: (Float?) -> Unit): ToolResult =
         withContext(Dispatchers.Default) {
@@ -74,7 +80,9 @@ class XlsxToPdfJob @Inject constructor(private val workspace: ToolWorkspace) {
             if (reader.sheets.isEmpty()) throw XlsxFormatException("no visible worksheet")
             val pdf = PdfDocument()
             try {
-                val painter = XlsxPagePainter()
+                val assets = appContext.assets
+                val digitPx = maxDigitPx(reader.defaultFont, AssetTextMeasurer(assets))
+                val painter = XlsxPagePainter(digitPx, assets)
                 val sheets = reader.sheets
                 var pages = 0
                 for ((index, ref) in sheets.withIndex()) {
@@ -107,17 +115,18 @@ class XlsxToPdfJob @Inject constructor(private val workspace: ToolWorkspace) {
         context: CoroutineContext,
         onProgress: (Float) -> Unit
     ): Int {
-        val layout = XlsxLayout.layout(sheet, painter::measureWrapped)
+        val layout = painter.layout(sheet)
         if (layout == null) {
-            val frame = PageFrame(sheet.setup.orientation ?: PageOrientation.PORTRAIT)
+            val setup = sheet.setup
+            val frame = PageFrame(setup.orientation ?: PageOrientation.PORTRAIT, setup.paperSize, setup.margins)
             val page = pdf.startPage(pageInfo(frame, pagesSoFar))
             painter.drawHeader(page.canvas, frame, sheet.name)
             pdf.finishPage(page)
             return 1
         }
         val room = MAX_PAGES - pagesSoFar
-        if (layout.slices.size > room) notes.pageCap = MAX_PAGES
-        val slices = layout.slices.take(room)
+        if (layout.pageCount > room) notes.pageCap = MAX_PAGES
+        val slices = layout.slices.take(room).toList()
         slices.forEachIndexed { index, slice ->
             context.ensureActive()
             val page = pdf.startPage(pageInfo(layout.frame, pagesSoFar + index))

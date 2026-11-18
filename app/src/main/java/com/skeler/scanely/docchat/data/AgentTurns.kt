@@ -152,7 +152,8 @@ class AgentTurns @Inject internal constructor(
                 attachments = scanText(request, repository.message(request.turnId)?.body as? UserBody),
                 attachmentIds = uploadAttachments(request),
                 effort = request.effort
-            )
+            ),
+            request.requestKey
         )
         reply.save(reply.working.copy(agentTurnId = accepted.turnId))
         // Delivers into this reply if the app is closed before the turn ends.

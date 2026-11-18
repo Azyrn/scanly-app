@@ -49,4 +49,7 @@ enum class PdfTool(
     RESIZE_IMAGE(ToolSection.IMAGE, null);
 
     val requiresPro: Boolean get() = feature?.requiresPro == true
+
+    /** The Office conversions: shown with a Beta mark, since layout fidelity still improves with each update. */
+    val isBeta: Boolean get() = feature == PdfFeature.OFFICE_CONVERSION
 }

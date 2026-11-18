@@ -98,6 +98,7 @@
     <string name="pe_no_signatures_saved">Подписей пока нет. Создайте в инструменте «Подпись».</string>
     <string name="pe_no_selectable_text">Текста нет — возможно, это скан.</string>
     <string name="pe_scanner_unavailable">Сканер документов недоступен на этом устройстве.</string>
+    <string name="pe_scanner_start_failed">Сканер не открылся. Проверьте сеть.</string>
     <string name="pe_undo">Откат</string>
     <string name="pe_redo">Снова</string>
     <string name="pe_add_text">Текст</string>

@@ -20,8 +20,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.UUID
+import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -176,7 +177,7 @@ class TranscriptionRunner @Inject constructor(
                 result.error.code == "unsupported_format" && !prepared.transcoded
     }
 
-    /** Prepares and uploads once, under a fresh idempotency key. Null if preparing failed. */
+    /** Prepares and uploads once, under the recording's own idempotency key ([requestKey]). Null if preparing failed. */
     private suspend fun attempt(
         source: Source,
         options: TranscribeOptions,
@@ -190,7 +191,7 @@ class TranscriptionRunner @Inject constructor(
             fail(AiResult.Error(e.message ?: context.getString(R.string.tx_prepare_failed)))
             return null
         }
-        return Attempt(prepared, upload(prepared, options, UUID.randomUUID().toString()))
+        return Attempt(prepared, upload(prepared, options, requestKey(prepared.file, options)))
     }
 
     private suspend fun prepare(
@@ -243,7 +244,30 @@ class TranscriptionRunner @Inject constructor(
         _state.value = State.Failed(error)
     }
 
+    /**
+     * The idempotency key for sending [audio] with [options]: the same recording with the same options
+     * is the same key, in any run of the app. The Worker finishes and bills a transcription even after
+     * the phone has gone (a dropped connection, a killed app) and replays its stored answer to the same
+     * key without billing again (routes/transcribe.ts, idempotency.ts), so Try again gets the paid-for
+     * transcript instead of paying twice. A random key held in memory lost that on every retry.
+     */
+    private suspend fun requestKey(audio: File, options: TranscribeOptions): String = withContext(Dispatchers.IO) {
+        val digest = MessageDigest.getInstance(KEY_DIGEST)
+        digest.update(options.toString().toByteArray())
+        audio.inputStream().use { input ->
+            val buffer = ByteArray(DIGEST_BUFFER_BYTES)
+            while (true) {
+                val read = input.read(buffer)
+                if (read < 0) break
+                digest.update(buffer, 0, read)
+            }
+        }
+        "tx-" + digest.digest().joinToString("") { "%02x".format(it) }
+    }
+
     private companion object {
+        const val KEY_DIGEST = "SHA-256"
+        const val DIGEST_BUFFER_BYTES = 64 * 1024
         const val DEFAULT_MAX_UPLOAD = 5L * 1024 * 1024
         const val DEFAULT_MAX_MINUTES = 10
         const val MS_PER_MINUTE = 60_000L

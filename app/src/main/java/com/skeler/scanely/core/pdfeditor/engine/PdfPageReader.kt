@@ -15,6 +15,7 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 private const val TAG = "PdfPageReader"
 
@@ -54,9 +55,9 @@ private const val MAX_SNAPSHOT_CHARS = 20_000
 /**
  * The read half of the editor: page geometry, rasterisation and the text layer.
  *
- * Separate from the app's existing `PdfRendererHelper`, which stays on the platform PdfRenderer
- * for the OCR path. The editor needs pdfium specifically, because only it exposes per-character
- * boxes and font sizes — the things text-anchored highlighting and cover-and-retype are built on.
+ * Separate from the OCR path's `PdfRendererHelper`, which renders content URIs at OCR resolution
+ * with the same bundled pdfium. The editor needs pdfium's text layer too: per-character boxes and
+ * font sizes — the things text-anchored highlighting and cover-and-retype are built on.
  */
 @Singleton
 class PdfPageReader @Inject constructor(
@@ -90,10 +91,11 @@ class PdfPageReader @Inject constructor(
         if (pageIndex !in 0 until document.getPageCount()) return@withDocument null
 
         document.openPage(pageIndex)?.use { page ->
-            val widthPt = page.getPageWidthPoint().toFloat().coerceAtLeast(1f)
-            val heightPt = page.getPageHeightPoint().toFloat().coerceAtLeast(1f)
-            val width = targetWidthPx.coerceAtLeast(1)
-            val height = (width * heightPt / widthPt).roundToInt().coerceAtLeast(1)
+            val (width, height) = renderSize(
+                targetWidthPx,
+                page.getPageWidthPoint().toFloat(),
+                page.getPageHeightPoint().toFloat()
+            )
 
             createBitmap(width, height).apply {
                 // Pages are transparent where nothing is drawn; without this, dark theme shows
@@ -178,6 +180,33 @@ class PdfPageReader @Inject constructor(
             val count = layer.charCount
             if (count <= 0) null else layer.textIn(0..count - 1)
         }
+
+    internal companion object {
+        /**
+         * Width and height of the bitmap for a page: [targetWidthPx] wide, unless the page is so
+         * tall (a long receipt, a web capture) that the bitmap would pass [MAX_RENDER_PIXELS] —
+         * then both sides shrink together, keeping the page's shape. Callers scale by the bitmap's
+         * own size, not the width they asked for.
+         */
+        fun renderSize(targetWidthPx: Int, pageWidthPt: Float, pageHeightPt: Float): Pair<Int, Int> {
+            val widthPt = pageWidthPt.coerceAtLeast(1f)
+            val heightPt = pageHeightPt.coerceAtLeast(1f)
+            var width = targetWidthPx.coerceAtLeast(1).toDouble()
+            var height = width * heightPt / widthPt
+            if (width * height > MAX_RENDER_PIXELS) {
+                val scale = sqrt(MAX_RENDER_PIXELS / (width * height))
+                width *= scale
+                height *= scale
+            }
+            return width.roundToInt().coerceAtLeast(1) to height.roundToInt().coerceAtLeast(1)
+        }
+
+        /**
+         * 64 MB at 4 bytes a pixel: under the 100 MB Android refuses to draw ("Canvas: trying to
+         * draw too large bitmap") and the size PDF to JPG already caps a page at.
+         */
+        private const val MAX_RENDER_PIXELS = 16_000_000.0
+    }
 
     private suspend fun <T> withDocument(
         file: File,

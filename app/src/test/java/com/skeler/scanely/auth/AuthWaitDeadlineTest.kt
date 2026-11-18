@@ -29,7 +29,7 @@ class AuthWaitDeadlineTest {
         mockStatic(Log::class.java).use {
             val user = mock(FirebaseUser::class.java)
             `when`(user.uid).thenReturn("reader")
-            `when`(user.sendEmailVerification()).thenReturn(TaskCompletionSource<Void>().task)
+            `when`(user.reload()).thenReturn(TaskCompletionSource<Void>().task)
             val auth = mock(FirebaseAuth::class.java)
             `when`(auth.currentUser).thenReturn(user)
             val repository = FirebaseAuthRepository(
@@ -41,7 +41,7 @@ class AuthWaitDeadlineTest {
                 mock(NetworkObserver::class.java)
             )
 
-            val result = repository.sendEmailVerification()
+            val result = repository.refreshSession()
 
             assertTrue(result.isFailure)
             val message = result.exceptionOrNull()!!.message.orEmpty()

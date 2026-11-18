@@ -1,19 +1,42 @@
 package com.skeler.scanely.core.ocr.paddle
 
+import android.content.Context
+import com.skeler.scanely.R
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
 import java.io.InputStream
+import java.io.InterruptedIOException
 import java.io.OutputStream
+import java.net.SocketException
+import java.net.UnknownHostException
 import java.security.MessageDigest
+import javax.net.ssl.SSLException
 
 internal const val HF = "https://huggingface.co/PaddlePaddle"
 
 private const val MIN_MODEL_BYTES = 1_000_000
 private const val COPY_BUFFER_BYTES = 64 * 1024
 
-/** Fetches PaddlePaddle model files from Hugging Face. */
-internal class HfModelDownloader(private val httpClient: OkHttpClient) {
+/**
+ * What the user reads when a model download fails: a sentence, never the exception's own text
+ * ("Unable to resolve host …", "HTTP 503", "SHA-256 mismatch"), which is logged instead.
+ */
+internal fun downloadFailureMessage(context: Context, e: Throwable): String = context.getString(
+    when (e) {
+        is UnknownHostException, is SocketException, is InterruptedIOException, is SSLException ->
+            R.string.ocr_err_download_offline
+        else -> R.string.ocr_err_download
+    }
+)
+
+/**
+ * Fetches PaddlePaddle model files from Hugging Face. The client is built on first use: the store
+ * that owns this is injected on the main thread.
+ */
+internal class HfModelDownloader(client: () -> OkHttpClient) {
+
+    private val httpClient by lazy(client)
 
     fun fetch(url: String): ByteArray {
         val request = Request.Builder().url(url).build()

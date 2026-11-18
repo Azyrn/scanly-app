@@ -49,7 +49,7 @@ class PaddleMarksTableTest {
 
     @Before
     fun setUp() {
-        val store = PaddleModelStore(context, OkHttpClient())
+        val store = PaddleModelStore(context, dagger.Lazy { OkHttpClient() })
         // The table model is a download, and ModelDownloadSurvivesScreenTest deletes it on the way
         // out; without this the pipe table only appears when that test happens to run afterwards.
         runBlocking { store.table.download() }

@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 class PaddleScriptFallbackTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+    private val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
 
     private val arabic = listOf("تم حفظ الملف بنجاح", "مرحبا بك في تطبيق سكانلي")
     private val latin = listOf("Invoice number 4471", "Total due 92.50")

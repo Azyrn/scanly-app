@@ -210,21 +210,25 @@ class PaywallViewModel @Inject internal constructor(
      * AdMob's signed callback to the Worker races the ad closing and usually loses, so a single
      * refresh at the end reliably reads the old number and the reward looks like it never arrived.
      * Hence the poll — which stops as soon as the server's count of today's rewards drops, since
-     * that is the reward having landed and every read after it would return the same answer.
+     * that is the reward having landed and every read after it would return the same answer. The
+     * callback can take far longer than a few seconds, so the poll backs off over about half a
+     * minute; if the server still has not confirmed it by then, the user is told the reward is on
+     * its way rather than left looking at the old number. Nothing is granted here: the count shown
+     * is always the server's.
      */
     fun watchAd(activity: Activity) {
         val uid = authRepository.currentUser.value?.uid ?: return
         val rewardsBefore = entitlementRepository.entitlement.value?.rewardsRemainingToday
         rewardedAdManager.show(activity, uid) {
             viewModelScope.launch {
-                var landed = false
-                repeat(REWARD_POLL_ATTEMPTS) {
-                    if (landed) return@repeat
-                    delay(REWARD_POLL_INTERVAL_MS)
+                val landed = awaitReward(rewardsBefore, REWARD_POLL_DELAYS_MS) {
                     entitlementRepository.refresh()
                     entitlementRepository.status.first { !it.isRefreshing }
-                    val rewardsNow = entitlementRepository.entitlement.value?.rewardsRemainingToday
-                    landed = rewardsBefore != null && rewardsNow != null && rewardsNow < rewardsBefore
+                    entitlementRepository.entitlement.value?.rewardsRemainingToday
+                }
+                // Another account's count says nothing about this reward.
+                if (!landed && authRepository.currentUser.value?.uid == uid) {
+                    _message.value = context.getString(R.string.pay_reward_pending)
                 }
             }
         }
@@ -251,9 +255,23 @@ class PaywallViewModel @Inject internal constructor(
     }
 
     private companion object {
-        const val REWARD_POLL_ATTEMPTS = 3
-        const val REWARD_POLL_INTERVAL_MS = 1_500L
+        /** About 31 s in all: early reads catch the usual fast callback, later ones a slow one. */
+        val REWARD_POLL_DELAYS_MS = listOf(1_500L, 1_500L, 2_000L, 3_000L, 5_000L, 8_000L, 10_000L)
     }
+}
+
+/**
+ * Re-reads today's reward count after each of [delaysMs] until it drops below [before], which is
+ * the server having granted the reward. False when it never did within the schedule, or when there
+ * was no count to compare against.
+ */
+internal suspend fun awaitReward(before: Int?, delaysMs: List<Long>, read: suspend () -> Int?): Boolean {
+    for (wait in delaysMs) {
+        delay(wait)
+        val now = read()
+        if (before != null && now != null && now < before) return true
+    }
+    return false
 }
 
 /** Where a key is bought. Rendered as plain text — never as a link. See `docs/PADDLE.md` §10. */

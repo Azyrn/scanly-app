@@ -49,6 +49,8 @@
     <string name="scr_scan_review_delete_page_title">删除第 %1$d 页？</string>
     <string name="scr_scan_review_delete_page_body">此页不会包含在导出内容中。你可以随时重新扫描。</string>
     <string name="scr_scan_review_keep">保留</string>
+    <string name="scr_scan_review_discard_title">放弃此次扫描？</string>
+    <string name="scr_scan_review_discard_body">这些页面尚未保存，离开后将丢失。</string>
     <string name="scr_scan_review_rotate_page">旋转页面</string>
     <string name="scr_scan_review_delete_page">删除页面</string>
     <string name="scr_scan_review_enhance">增强</string>
@@ -58,6 +60,9 @@
     <string name="scr_scan_review_back_to_scanner">返回扫描器</string>
     <plurals name="scr_scan_review_page_count">
         <item quantity="other">%1$d 页</item>
+    </plurals>
+    <plurals name="scr_scan_review_pages_unreadable">
+        <item quantity="other">有 %1$d 页无法读取，已略过。</item>
     </plurals>
     <!-- Scan review: export sheet -->
     <string name="scr_export_pdf_subtitle">%1$s 合并为一个文件 · 保存后打开</string>
@@ -197,6 +202,7 @@
     <string name="ai_nothing_to_translate">暂无可翻译的内容。</string>
     <string name="ai_err_no_text_batch">未能从任何文件中提取文字</string>
     <string name="ai_err_extraction_unavailable">Scanly 无法加载该提取类型。请重试，或在“设置”中关闭你自己的接口以使用 %1$s。</string>
+    <string name="ai_err_custom_needs_pro">你自己的接口需要 Pro，但无法确认你的套餐。请重试，或在“设置”中关闭该接口以使用 Scanly 点数。</string>
     <string name="ai_err_read_file">读取文件失败</string>
     <string name="ai_err_no_text">无法读取此文件中的文字。</string>
     <string name="ai_design_background">正在生成你的文档。你可以离开应用，我们会通知你。</string>
@@ -249,6 +255,7 @@
     <string name="ocr_err_render_pdf">渲染 PDF 失败</string>
     <string name="ocr_err_pdf_processing">PDF 处理失败</string>
     <string name="ocr_err_download">下载失败</string>
+    <string name="ocr_err_download_offline">无法连接，请重试。</string>
     <string name="ocr_setup_pending">此手机上仍在设置文字识别功能。请保持联网一分钟后再试。</string>
     <string name="ocr_scan_failed">Scanly 无法读取此文件。扫描失败，并不代表页面是空白的。请重试，或选择其他文件。</string>
     <string name="pay_upgrade_notice">如需升级到更高套餐，请前往 %1$s/upgrade，并使用你在此处使用的同一账户登录：这将更改你现有的套餐。在定价页面购买其他套餐会开启第二个订阅，并与此订阅一同计费。</string>

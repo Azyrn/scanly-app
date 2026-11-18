@@ -48,7 +48,7 @@ class PaddleArabicRtlTest {
 
     @Test
     fun arabicComesOutInLogicalOrder() {
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val page = arabicPage()
         val quads = engine.detect(page, 960).sortedBy { it.minY }
         val crops = quads.map { ImageOps.cropQuad(page, it) }

@@ -74,7 +74,7 @@ class PaddleMixedScriptTest {
     }
 
     private fun scan(): String = runBlocking {
-        val engine = PaddleOcrEngine(context, PaddleModelStore(context, OkHttpClient()))
+        val engine = PaddleOcrEngine(context, PaddleModelStore(context, dagger.Lazy { OkHttpClient() }))
         val service = PaddleOcrService(context, engine, ArabicPack(), PdfRendererHelper(context))
         val bmp = page()
         try {

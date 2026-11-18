@@ -86,4 +86,21 @@
     <string name="pdf_tool_rotate_left">90° 왼쪽</string>
     <string name="pdf_tool_rotate_body">모든 페이지를 회전해요. 페이지별로 돌리려면 PDF 정리를 사용하세요.</string>
     <string name="pdf_tool_rotate_action">회전</string>
+    <string name="pdf_tools_beta_badge">베타</string>
+    <string name="pdf_tool_error_broken_output">변환된 파일이 손상되어 버렸어요. 저장된 것은 없어요.</string>
+    <string name="pdf_tool_error_timed_out">너무 오래 걸려 중단했어요. 저장된 것은 없어요. 더 작은 파일로 해 보세요.</string>
+    <string name="pdf_tool_credits_refunded">이 변환에 쓴 크레딧을 돌려드렸어요.</string>
+    <string name="pdf_tool_online_read_failed">온라인 읽기에 실패해 크레딧은 쓰지 않았어요. 해당 페이지는 PDF 원래 텍스트를 유지해요.</string>
+    <string name="pdf_tools_beta_note">업데이트마다 결과가 좋아져요.</string>
+    <string name="online_read_title">페이지를 온라인으로 읽을까요?</string>
+    <string name="online_read_use">크레딧 사용</string>
+    <string name="online_read_without">없이 변환</string>
+    <string name="online_read_watch_ad">광고 보기</string>
+    <string name="online_read_upgrade">업그레이드</string>
+    <plurals name="online_read_body">
+        <item quantity="other">정확한 텍스트를 위해 이 파일의 %1$d페이지를 온라인으로 읽어야 해요. 비용: %1$d크레딧.</item>
+    </plurals>
+    <plurals name="online_read_balance">
+        <item quantity="other">남은 크레딧: %1$d.</item>
+    </plurals>
 </resources>

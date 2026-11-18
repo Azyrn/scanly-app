@@ -14,6 +14,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
 import retrofit2.Retrofit
+import retrofit2.http.Header
 
 /** The agent's routing rule, its steps, and following a turn against a local Worker. */
 class AgentTurnTest {
@@ -40,6 +41,11 @@ class AgentTurnTest {
         priorDesignId = priorDesignId, templateId = templateId, ocrReceipt = null, hasDocument = hasDocument,
         hasPhoto = hasPhoto, requestKey = "k", keyCreatedAt = 0
     )
+
+    @Test fun `starting a turn sends the operation key`() {
+        val method = ChatSyncApi::class.java.declaredMethods.single { it.name == "startAgentTurn" }
+        assertTrue(method.parameterAnnotations.flatten().filterIsInstance<Header>().any { it.value == "X-Idempotency-Key" })
+    }
 
     @Test
     fun `every turn goes to the agent - words, pictures to rebuild, PDFs, scans and changes - except an old template request`() {
@@ -165,6 +171,21 @@ class AgentTurnTest {
         }
 
     @Test
+    fun `a 5xx that is not the turn's own answer is polled through, not taken as the turn failing`() = runBlocking {
+        // A gateway error page, then the Worker's own crash (no notCharged: it says nothing of the turn).
+        worker.route("/v1/agent/turns/t4") { call ->
+            when (call) {
+                1 -> 503 to "<html>Service Unavailable</html>"
+                2 -> 500 to """{"error":{"code":"internal","message":"Something went wrong. Try again."}}"""
+                else -> 200 to """{"state":"done","text":"Done.","files":[]}"""
+            }
+        }
+        val status = client.await("t4", 60, pollMs = 0)
+        assertEquals("done", status.state)
+        assertEquals(3, worker.count("/v1/agent/turns/t4"))
+    }
+
+    @Test
     fun `a failed turn surfaces the server's error and its not-charged`() = runBlocking {
         worker.route("/v1/agent/turns/t2/events") { 500 to "{}" }
         worker.route("/v1/agent/turns/t2") {
@@ -185,7 +206,7 @@ class AgentTurnTest {
             429 to """{"error":{"code":"rate_limited","message":"You reached today's limit of 30 assistant messages."}}"""
         }
         try {
-            client.start(AgentTurnRequest("c", "hi", emptyList()))
+            client.start(AgentTurnRequest("c", "hi", emptyList()), request().requestKey)
             fail("expected a refusal")
         } catch (e: Exception) {
             assertTrue(e.message.orEmpty().contains("today's limit"))

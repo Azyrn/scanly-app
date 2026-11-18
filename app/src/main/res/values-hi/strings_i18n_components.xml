@@ -266,6 +266,7 @@
     <string name="pay_confirm_sent">अपना इनबॉक्स देखें, लिंक खोलें, फिर से खरीदारी रिस्टोर करें दबाएं।</string>
     <string name="pay_confirm_failed">कन्फ़र्मेशन ईमेल नहीं भेजा जा सका। फिर से कोशिश करें।</string>
     <string name="pay_key_removed">इस डिवाइस से की हटा दी गई।</string>
+    <string name="pay_reward_pending">बोनस क्रेडिट आ रहे हैं। थोड़ी देर में देखें।</string>
     <string name="pay_restored_tier">आपकी %1$s वापस आ गई।</string>
     <string name="pay_restored">इस डिवाइस पर आपकी की वापस आ गई है।</string>
     <string name="pay_restore_nothing">इस अकाउंट पर कोई सब्सक्रिप्शन नहीं है। अगर आपने किसी और ईमेल से भुगतान किया है, तो उसी से साइन इन करके फिर से कोशिश करें।</string>
