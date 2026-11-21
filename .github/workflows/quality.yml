@@ -130,7 +130,19 @@ jobs:
       
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      
+
+      # Compiling qpdf and libjpeg-turbo was ~6 of this job's ~11 minutes. CMakeLists.txt reuses
+      # them from ~/.cache/scanly-native; the NDK is AGP's default, so the AGP version is in the key.
+      - name: Read AGP version
+        id: agp
+        run: echo "version=$(sed -n 's/^agp = "\(.*\)"/\1/p' gradle/libs.versions.toml)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache native libraries (qpdf, libjpeg-turbo)
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/scanly-native
+          key: scanly-native-agp${{ steps.agp.outputs.version }}-${{ hashFiles('app/src/main/cpp/CMakeLists.txt', 'app/src/main/cpp/publish_deps.cmake') }}
+
       - name: Build Debug APK
         run: ./gradlew assembleDebug --no-daemon
       
