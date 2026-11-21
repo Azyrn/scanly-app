@@ -187,7 +187,11 @@ fun firebaseResValues(applicationId: String): Map<String, String> {
 
 android {
     namespace = "com.skeler.scanely"
-    compileSdk = 37
+    // 37.2: Compose BOM 2026.11.01 (Compose 1.13) needs 37.1 or later. Only the API surface the code
+    // compiles against; targetSdk, the runtime behaviour the app opts into, is unchanged.
+    compileSdk {
+        version = release(37) { minorApiLevel = 2 }
+    }
 
     defaultConfig {
         applicationId = "com.skeler.scanely"

@@ -57,10 +57,12 @@ object MathText {
         }
     }
 
-    private val WRAPPER = Regex("\\\\(text|textbf|textit|mathrm|mathbf|mathit|operatorname)\\{([^{}]*)}")
-    private val FRAC = Regex("\\\\[dt]?frac\\{([^{}]*)}\\{([^{}]*)}")
-    private val SQRT = Regex("\\\\sqrt\\{([^{}]*)}")
-    private val SCRIPT = Regex("([\\^_])(?:\\{([^{}]*)}|([A-Za-z0-9+\\-]))")
+    // Every brace is escaped, inside classes too: Android's ICU regex rejects a bare `}`
+    // that the JVM accepts, so an unescaped one only fails on the phone.
+    private val WRAPPER = Regex("\\\\(text|textbf|textit|mathrm|mathbf|mathit|operatorname)\\{([^\\{\\}]*)\\}")
+    private val FRAC = Regex("\\\\[dt]?frac\\{([^\\{\\}]*)\\}\\{([^\\{\\}]*)\\}")
+    private val SQRT = Regex("\\\\sqrt\\{([^\\{\\}]*)\\}")
+    private val SCRIPT = Regex("([\\^_])(?:\\{([^\\{\\}]*)\\}|([A-Za-z0-9+\\-]))")
     private val SPACING = Regex("\\\\[,;:! ]|~")
     private val COMMAND = Regex("\\\\([A-Za-z]+)")
 
