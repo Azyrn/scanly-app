@@ -93,7 +93,7 @@ internal class FlowParagraphXml(
         line.segments.forEachIndexed { s, segment ->
             if (s > 0) repeat(tabsBefore(line.segments[s - 1], segment, setting)) { xml.append("<w:r><w:tab/></w:r>") }
             val ends = s == line.segments.lastIndex && join != null
-            val runs = writer.lineRuns(segment, if (s == 0) startPt else segment.u0, if (ends) join!! else Join.BREAK)
+            val runs = writer.lineRuns(segment, if (s == 0) startPt else segment.u0, if (ends) join else Join.BREAK)
             runs.forEach { xml.append(runXml(it)) }
         }
     }

@@ -104,7 +104,7 @@ internal class DocxLists {
             before.label.value + 1 == label.value
         val sameBullets = before != null && before.abstractId == abstractId && label.format == ListLabel.BULLET
         val numId = if (continues || sameBullets) {
-            before!!.numId
+            before.numId
         } else {
             instances += abstractId to label.value
             instances.size

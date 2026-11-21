@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -60,7 +61,7 @@ fun TextComposeScreen() {
     // activity and must not wipe the text, but a pasted document can outgrow the ~1 MB Binder
     // limit on the saved-instance-state Bundle.
     val draft: TextComposeViewModel = viewModel()
-    var text by draft::text
+    val text = draft.text.text.toString()
     var exportMenuOpen by remember { mutableStateOf(false) }
 
     // What you typed is what you get: this screen has no Markdown view.
@@ -151,8 +152,7 @@ fun TextComposeScreen() {
                     )
                 }
                 BasicTextField(
-                    value = text,
-                    onValueChange = { text = it },
+                    state = draft.text,
                     textStyle = readingStyle,
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth()
@@ -175,5 +175,5 @@ fun TextComposeScreen() {
 
 /** What is typed on [TextComposeScreen], kept across configuration changes for its back-stack entry. */
 class TextComposeViewModel : ViewModel() {
-    var text by mutableStateOf("")
+    val text = TextFieldState()
 }

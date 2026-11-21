@@ -130,7 +130,6 @@ class FirebaseAuthRepository @Inject constructor(
                 throw AuthException(context.getString(R.string.auth_err_sign_in_to_confirm))
             }
             api.sendVerificationEmail()
-            Unit
         }
 
     override suspend fun refreshSession(): Result<Unit> =

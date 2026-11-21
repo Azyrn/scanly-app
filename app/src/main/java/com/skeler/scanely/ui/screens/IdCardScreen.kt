@@ -35,7 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.AddPhotoAlternate
 import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.RotateRight
+import androidx.compose.material.icons.rounded.Rotate90DegreesCw
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Button
@@ -328,7 +328,7 @@ private fun SideRow(label: String, offShape: Boolean, onRetake: () -> Unit, onRo
                     )
                 }
             }
-            SmallAction(Icons.Rounded.RotateRight, stringResource(R.string.id_rotate), onRotate)
+            SmallAction(Icons.Rounded.Rotate90DegreesCw, stringResource(R.string.id_rotate), onRotate)
             TextButton(onClick = onRetake) { Text(stringResource(R.string.id_retake)) }
         }
     }

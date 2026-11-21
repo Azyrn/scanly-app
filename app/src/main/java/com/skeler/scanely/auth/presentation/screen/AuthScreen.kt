@@ -18,8 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -34,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
@@ -58,8 +59,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -67,6 +66,7 @@ import com.skeler.scanely.R
 import com.skeler.scanely.auth.presentation.viewmodel.AuthMode
 import com.skeler.scanely.auth.presentation.viewmodel.AuthViewModel
 import com.skeler.scanely.navigation.LocalNavigator
+import com.skeler.scanely.ui.components.rememberSyncedTextFieldState
 
 @Composable
 fun AuthScreen(
@@ -175,16 +175,14 @@ fun AuthScreen(
 
             Spacer(Modifier.height(12.dp))
 
-            OutlinedTextField(
-                value = state.password,
-                onValueChange = authViewModel::onPasswordChange,
+            OutlinedSecureTextField(
+                state = rememberSyncedTextFieldState(state.password, authViewModel::onPasswordChange),
                 label = { Text(stringResource(R.string.pdf_tool_password_label)) },
-                singleLine = true,
                 enabled = !state.isLoading,
-                visualTransformation = if (passwordVisible) {
-                    VisualTransformation.None
+                textObfuscationMode = if (passwordVisible) {
+                    TextObfuscationMode.Visible
                 } else {
-                    PasswordVisualTransformation()
+                    TextObfuscationMode.RevealLastTyped
                 },
                 supportingText = if (isSignUp) {
                     { Text(stringResource(R.string.set_auth_password_hint)) }
@@ -211,12 +209,10 @@ fun AuthScreen(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        focusManager.clearFocus()
-                        authViewModel.submit()
-                    }
-                ),
+                onKeyboardAction = {
+                    focusManager.clearFocus()
+                    authViewModel.submit()
+                },
                 modifier = Modifier.fillMaxWidth()
             )
 

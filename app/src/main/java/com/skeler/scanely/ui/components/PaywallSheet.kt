@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextObfuscationMode
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
@@ -34,7 +36,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -55,8 +57,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -348,22 +348,21 @@ private fun RedeemField(
     error: String?,
     onRedeem: (String) -> Unit
 ) {
-    var key by remember { mutableStateOf("") }
+    val keyField = rememberTextFieldState()
+    val key = keyField.text.toString()
     var keyVisible by remember { mutableStateOf(false) }
 
-    OutlinedTextField(
-        value = key,
-        onValueChange = { key = it },
+    OutlinedSecureTextField(
+        state = keyField,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(stringResource(R.string.cmp_license_key)) },
         placeholder = { Text("SCANLY-XXXXX-XXXXX-XXXXX-XXXXX") },
-        singleLine = true,
         isError = error != null,
         enabled = !isBusy,
-        visualTransformation = if (keyVisible) {
-            VisualTransformation.None
+        textObfuscationMode = if (keyVisible) {
+            TextObfuscationMode.Visible
         } else {
-            PasswordVisualTransformation()
+            TextObfuscationMode.RevealLastTyped
         },
         trailingIcon = {
             IconButton(onClick = { keyVisible = !keyVisible }) {

@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -48,6 +49,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Slider
@@ -74,7 +76,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -173,7 +174,7 @@ fun DocToolsSheet(
                     )
                     state.savedUri?.let { uri ->
                         TextButton(onClick = { DocumentIntents.openPdf(activity, uri) }) {
-                            stringResource(R.string.chat_file_open)
+                            Text(stringResource(R.string.chat_file_open))
                         }
                     }
                 }
@@ -281,7 +282,7 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
         ) {
             Icon(Icons.Rounded.Add, contentDescription = null, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(8.dp))
-            stringResource(R.string.pe_add_a_pdf)
+            Text(stringResource(R.string.pe_add_a_pdf))
         }
 
         Spacer(Modifier.height(12.dp))
@@ -326,7 +327,7 @@ private fun MergePane(vm: DocToolsViewModel, state: DocToolsUiState) {
             )
             Spacer(Modifier.height(12.dp))
             Button(onClick = vm::stageMerge, modifier = Modifier.fillMaxWidth()) {
-                stringResource(R.string.pe_add_to_document)
+                Text(stringResource(R.string.pe_add_to_document))
             }
         }
     }
@@ -378,7 +379,7 @@ private fun PresetCompression(vm: DocToolsViewModel, state: DocToolsUiState) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
             Spacer(Modifier.width(12.dp))
-            stringResource(R.string.pe_compress_trying_levels)
+            Text(stringResource(R.string.pe_compress_trying_levels))
         }
         return
     }
@@ -479,14 +480,14 @@ private fun CustomCompressionPane(vm: DocToolsViewModel, state: DocToolsUiState)
             custom.isMeasuring -> Row(verticalAlignment = Alignment.CenterVertically) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(12.dp))
-                stringResource(R.string.pe_compressing_at, custom.jpegQuality)
+                Text(stringResource(R.string.pe_compressing_at, custom.jpegQuality))
             }
 
             custom.result == null -> Button(
                 onClick = vm::measureCustom,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                stringResource(R.string.pe_try_these_settings)
+                Text(stringResource(R.string.pe_try_these_settings))
             }
 
             else -> {
@@ -563,7 +564,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 megabytes = entered.filter { it.isDigit() || it == '.' }.take(6)
                 vm.clearTargetSearch()
             },
-            suffix = { stringResource(R.string.pe_unit_mb) },
+            suffix = { Text(stringResource(R.string.pe_unit_mb)) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Decimal,
@@ -582,7 +583,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
             search?.isRunning == true -> Row(verticalAlignment = Alignment.CenterVertically) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(12.dp))
-                stringResource(R.string.pe_searching_pass, search.probes + 1)
+                Text(stringResource(R.string.pe_searching_pass, search.probes + 1))
             }
 
             search?.best != null -> {
@@ -616,7 +617,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                     enabled = best.helps,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    stringResource(R.string.pe_use_this)
+                    Text(stringResource(R.string.pe_use_this))
                 }
             }
 
@@ -625,7 +626,7 @@ private fun TargetSizePane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 enabled = targetBytes != null,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                stringResource(R.string.pe_find_the_settings)
+                Text(stringResource(R.string.pe_find_the_settings))
             }
         }
 
@@ -681,8 +682,10 @@ private val MIN_EDGE_RANGE = 16f..800f
 
 @Composable
 private fun EncryptPane(vm: DocToolsViewModel) {
-    var password by remember { mutableStateOf("") }
-    var confirm by remember { mutableStateOf("") }
+    val passwordField = rememberTextFieldState()
+    val confirmField = rememberTextFieldState()
+    val password = passwordField.text.toString()
+    val confirm = confirmField.text.toString()
     var allowPrinting by remember { mutableStateOf(true) }
     var allowCopying by remember { mutableStateOf(false) }
     var allowModifying by remember { mutableStateOf(false) }
@@ -690,24 +693,18 @@ private fun EncryptPane(vm: DocToolsViewModel) {
     val mismatch = confirm.isNotEmpty() && confirm != password
 
     Column {
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { stringResource(R.string.pdf_tool_password_label) },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        OutlinedSecureTextField(
+            state = passwordField,
+            label = { Text(stringResource(R.string.pdf_tool_password_label)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(10.dp))
-        OutlinedTextField(
-            value = confirm,
-            onValueChange = { confirm = it },
-            label = { stringResource(R.string.pdf_tool_protect_confirm) },
-            singleLine = true,
+        OutlinedSecureTextField(
+            state = confirmField,
+            label = { Text(stringResource(R.string.pdf_tool_protect_confirm)) },
             isError = mismatch,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
             supportingText = if (mismatch) {
                 { Text(stringResource(R.string.pdf_tool_protect_mismatch)) }
             } else {
@@ -749,7 +746,7 @@ private fun EncryptPane(vm: DocToolsViewModel) {
             enabled = password.isNotEmpty() && password == confirm,
             modifier = Modifier.fillMaxWidth()
         ) {
-            stringResource(R.string.pe_stage_encryption)
+            Text(stringResource(R.string.pe_stage_encryption))
         }
     }
 }
@@ -784,7 +781,7 @@ private fun DecryptPane(vm: DocToolsViewModel, state: DocToolsUiState) {
         )
         Spacer(Modifier.height(12.dp))
         Button(onClick = vm::stageDecryption, modifier = Modifier.fillMaxWidth()) {
-            stringResource(R.string.pe_remove_password)
+            Text(stringResource(R.string.pe_remove_password))
         }
     }
 }
@@ -830,7 +827,7 @@ private fun MetadataPane(vm: DocToolsViewModel, state: DocToolsUiState) {
             onClick = { vm.stageMetadataStrip(stripXmp) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            stringResource(R.string.pe_remove_metadata)
+            Text(stringResource(R.string.pe_remove_metadata))
         }
     }
 }
@@ -869,7 +866,7 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
                 ) {
                     Icon(Icons.Rounded.Add, contentDescription = null, Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    stringResource(R.string.pe_choose_certificate)
+                    Text(stringResource(R.string.pe_choose_certificate))
                 }
             }
         }
@@ -894,7 +891,8 @@ private fun SignPane(vm: DocToolsViewModel, state: DocToolsUiState) {
 
 @Composable
 private fun CertificatePassword(vm: DocToolsViewModel, signing: SigningState) {
-    var password by remember { mutableStateOf("") }
+    val passwordField = rememberTextFieldState()
+    val password = passwordField.text.toString()
 
     Column {
         Text(
@@ -903,12 +901,9 @@ private fun CertificatePassword(vm: DocToolsViewModel, signing: SigningState) {
             fontWeight = FontWeight.Medium
         )
         Spacer(Modifier.height(12.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { stringResource(R.string.pe_certificate_password) },
-            singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
+        OutlinedSecureTextField(
+            state = passwordField,
+            label = { Text(stringResource(R.string.pe_certificate_password)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
@@ -923,13 +918,13 @@ private fun CertificatePassword(vm: DocToolsViewModel, signing: SigningState) {
         )
         Spacer(Modifier.height(16.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedButton(onClick = vm::clearCertificate) { stringResource(R.string.chat_cancel) }
+            OutlinedButton(onClick = vm::clearCertificate) { Text(stringResource(R.string.chat_cancel)) }
             Button(
                 onClick = { vm.unlockCertificate(password) },
                 enabled = password.isNotEmpty(),
                 modifier = Modifier.weight(1f)
             ) {
-                stringResource(R.string.pe_unlock)
+                Text(stringResource(R.string.pe_unlock))
             }
         }
     }
@@ -975,7 +970,7 @@ private fun UnlockedCertificate(
         OutlinedTextField(
             value = signing.reason,
             onValueChange = vm::setSigningReason,
-            label = { stringResource(R.string.pe_reason_optional) },
+            label = { Text(stringResource(R.string.pe_reason_optional)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -983,7 +978,7 @@ private fun UnlockedCertificate(
         OutlinedTextField(
             value = signing.location,
             onValueChange = vm::setSigningLocation,
-            label = { stringResource(R.string.pe_location_optional) },
+            label = { Text(stringResource(R.string.pe_location_optional)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -1013,7 +1008,7 @@ private fun UnlockedCertificate(
                 FilterChip(
                     selected = signing.appearanceId == null,
                     onClick = { vm.setSigningAppearance(null) },
-                    label = { stringResource(R.string.pdf_tool_img2pdf_margin_none) }
+                    label = { Text(stringResource(R.string.pdf_tool_img2pdf_margin_none)) }
                 )
                 state.storedSignatures.forEach { stored ->
                     FilterChip(
@@ -1068,7 +1063,7 @@ private fun UnlockedCertificate(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(Modifier.height(8.dp))
-        TextButton(onClick = vm::clearCertificate) { stringResource(R.string.pe_use_different_certificate) }
+        TextButton(onClick = vm::clearCertificate) { Text(stringResource(R.string.pe_use_different_certificate)) }
     }
 }
 
@@ -1307,7 +1302,7 @@ private fun LibraryPane(vm: DocToolsViewModel) {
                     modifier = Modifier.weight(1f)
                 )
                 TextButton(onClick = { vm.deleteStoredSignature(signature.id) }) {
-                    stringResource(R.string.chat_delete_confirm)
+                    Text(stringResource(R.string.chat_delete_confirm))
                 }
             }
         }

@@ -14,7 +14,7 @@ import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,8 +55,9 @@ internal fun ApprovalSheet(
         if (left <= 0) onExpired()
     }
     // Hidden only by an answer (the caller drops the sheet then), never by a gesture.
-    val sheet = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
+    val sheet = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded),
         confirmValueChange = { value -> value != SheetValue.Hidden }
     )
     ModalBottomSheet(

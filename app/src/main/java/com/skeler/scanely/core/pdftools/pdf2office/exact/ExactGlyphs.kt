@@ -120,7 +120,7 @@ internal object GlyphExtent {
         val overhangs = upright(c) && c.right <= c.inkRight + SAME_PT
         val follows = next != null && !next.generated && next.originY == c.originY &&
             next.originX > c.originX && next.originX < c.right && !repaint(c, next)
-        return if (overhangs && follows) next!!.originX else c.right
+        return if (overhangs && follows) next.originX else c.right
     }
 
     /**

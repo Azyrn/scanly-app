@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -19,7 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,13 +38,12 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.skeler.scanely.R
 import com.skeler.scanely.core.pdftools.ImportedFile
 import com.skeler.scanely.core.pdftools.ToolDocument
+import com.skeler.scanely.ui.components.rememberSyncedTextFieldState
 
 /*
  * The building blocks every tool's options screen is made of, so forty tools still look like one
@@ -185,14 +185,12 @@ fun PasswordField(
     imeAction: ImeAction = ImeAction.Done
 ) {
     var visible by remember { mutableStateOf(false) }
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
+    OutlinedSecureTextField(
+        state = rememberSyncedTextFieldState(value, onValueChange),
         label = { Text(label) },
-        singleLine = true,
         isError = isError,
         supportingText = supportingText?.let { { Text(it) } },
-        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+        textObfuscationMode = if (visible) TextObfuscationMode.Visible else TextObfuscationMode.RevealLastTyped,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = imeAction),
         trailingIcon = {
             IconButton(onClick = { visible = !visible }) {

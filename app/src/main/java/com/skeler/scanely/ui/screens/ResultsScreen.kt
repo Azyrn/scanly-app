@@ -148,7 +148,7 @@ fun ResultsScreen() {
     val markdownMode = resultView == ResultView.MARKDOWN && hasMarkdown
     val jsonMode = resultView == ResultView.JSON && hasMarkdown
     val jsonText = if (jsonMode) {
-        rememberBackgroundValue<String?>(markdownSource, null) { markdownSource?.let(DocumentJson::fromMarkdown) }
+        rememberBackgroundValue<String?>(markdownSource, null) { DocumentJson.fromMarkdown(markdownSource) }
     } else {
         null
     }
@@ -215,7 +215,7 @@ fun ResultsScreen() {
         PaywallSheet(
             state = paywallState,
             reason = upgradeReason,
-            isFeatureLock = upgradeError?.isFeatureLock == true,
+            isFeatureLock = upgradeError.isFeatureLock,
             onDismiss = {
                 paywallDismissed = true
                 paywallViewModel.consumeMessage()

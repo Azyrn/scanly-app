@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -38,6 +39,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -61,8 +63,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -75,6 +75,7 @@ import com.skeler.scanely.navigation.LocalNavigator
 import com.skeler.scanely.settings.presentation.viewmodel.CustomProviderUiState
 import com.skeler.scanely.settings.presentation.viewmodel.CustomProviderViewModel
 import com.skeler.scanely.ui.components.SettingsSectionHeader
+import com.skeler.scanely.ui.components.rememberSyncedTextFieldState
 
 @Composable
 fun CustomProviderScreen(
@@ -275,16 +276,14 @@ private fun EndpointFields(state: CustomProviderUiState, viewModel: CustomProvid
             modifier = Modifier.fillMaxWidth()
         )
 
-        OutlinedTextField(
-            value = state.credentials.apiKey,
-            onValueChange = viewModel::setApiKey,
+        OutlinedSecureTextField(
+            state = rememberSyncedTextFieldState(state.credentials.apiKey, viewModel::setApiKey),
             label = { Text(stringResource(R.string.set_api_key_label)) },
-            singleLine = true,
             enabled = state.canEdit,
-            visualTransformation = if (keyVisible) {
-                VisualTransformation.None
+            textObfuscationMode = if (keyVisible) {
+                TextObfuscationMode.Visible
             } else {
-                PasswordVisualTransformation()
+                TextObfuscationMode.RevealLastTyped
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,

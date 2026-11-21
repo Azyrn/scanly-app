@@ -144,8 +144,7 @@ fun EditableReadableText(
     )
 
     BasicTextField(
-        value = value,
-        onValueChange = onValueChange,
+        state = rememberSyncedTextFieldState(value, onValueChange),
         textStyle = readingStyle,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         modifier = modifier

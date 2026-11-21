@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DropdownMenu
@@ -52,6 +53,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.skeler.scanely.R
 import com.skeler.scanely.docchat.data.ChatEntity
+import com.skeler.scanely.ui.components.rememberSyncedTextFieldState
 import com.skeler.scanely.ui.viewmodel.PaywallState
 import com.skeler.scanely.ui.viewmodel.planRow
 import java.util.TimeZone
@@ -172,13 +174,12 @@ private fun DrawerSearch(query: String, onQuery: (String) -> Unit, modifier: Mod
                 modifier = Modifier.size(24.dp)
             )
             BasicTextField(
-                value = query,
-                onValueChange = onQuery,
-                singleLine = true,
+                state = rememberSyncedTextFieldState(query, onQuery),
+                lineLimits = TextFieldLineLimits.SingleLine,
                 textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.onSurface),
                 cursorBrush = SolidColor(colors.primary),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                decorationBox = { field ->
+                decorator = { field ->
                     Box {
                         if (query.isEmpty()) {
                             Text(
