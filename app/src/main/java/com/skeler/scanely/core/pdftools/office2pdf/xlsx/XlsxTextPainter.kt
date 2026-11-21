@@ -124,7 +124,9 @@ internal class XlsxTextPainter(private val assets: AssetManager? = null) {
      * The bundled metric twin of an Arial, Times New Roman or Courier New cell (Liberation Sans, Serif,
      * Mono), so text fits its column as it does in Excel: Roboto's digits and slashes are wider, and
      * "01/02/2000" in Arial 8 wrapped in a column Excel sized for it. Calibri and Cambria keep the
-     * system faces for the reason [com.skeler.scanely.core.pdftools.office2pdf.docx.DocxFonts] gives.
+     * system faces: [applyFont]'s reset() drops LINEAR_TEXT_FLAG, and at whole-point advances Carlito's
+     * and Caladea's spaces are too narrow for pdfium to read back
+     * ([com.skeler.scanely.core.pdftools.office2pdf.docx.DocxFonts] needs linear text for them).
      */
     private fun twin(font: FontStyle): Typeface? {
         val family = TWIN_FAMILIES[font.name?.trim()?.lowercase()] ?: return null

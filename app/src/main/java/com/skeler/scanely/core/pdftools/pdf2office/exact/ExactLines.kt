@@ -185,7 +185,8 @@ internal object ExactLines {
     ): Boolean = markedSpace || gap > size * IMPLIED_SPACE
 
     private fun segment(group: List<Pair<Glyph, Boolean>>, lineV: Float, lineSize: Float, angle: Int): Segment {
-        // Tokens in visual order: a new token at every space and every style or baseline change.
+        // Tokens in visual order: a new token at every space and every style change. A superscript splits
+        // off by its smaller size, not its baseline; [TokenBuilder.flush] gives it its raise.
         val builder = TokenBuilder(lineSize, lineV)
         for ((glyph, space) in group) {
             val open = builder.openStyle

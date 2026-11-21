@@ -42,12 +42,12 @@ private const val EMU_PER_HUNDREDTH_MM = 360L
 /**
  * LibreOffice's Cell::getMinimumHeight is the text height + 1 (1/100 mm, 0.028 pt), and row
  * edges snapped to whole units can come out one unit short: a line must sit two units under its
- * row (0.057 pt), and spcPts rounds to 0.01 pt. 0.03 stopped the drift on irs_p17 page 114;
- * 0.05 still let fed_h8 rows grow.
+ * row (0.057 pt), and spcPts rounds to 0.01 pt. 0.03 stopped the drift on irs_p17 page 114, but
+ * 0.05 still let fed_h8 rows grow; 0.08 holds both.
  */
 private const val LINE_ROOM_PT = 0.08f
 
-/** Measured: 1.06 em held, 1.0 em grew (see fitsSlideRows). */
+/** Just under the pitch that held: 1.06 em held, 1.0 em grew (see fitsSlideRows). */
 private const val MIN_ROW_PITCH_EM = 1.05f
 
 /** Border order in a:tcPr (ECMA-376 §21.1.3.17). */
