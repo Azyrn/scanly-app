@@ -107,7 +107,9 @@ data class AgentTurnRequest(
     /** Pictures and PDFs this message brings, by the ids [ChatSyncApi.uploadAgentAttachment] gave. */
     val attachmentIds: List<String> = emptyList(),
     /** [AgentEffort.wire]: how hard the assistant thinks; the Worker prices the files by it. */
-    val effort: String = AgentEffort.MEDIUM.wire
+    val effort: String = AgentEffort.MEDIUM.wire,
+    /** The user's own model (their custom endpoint, with its key): the turn runs on it and bills no credits. */
+    val ownModel: com.skeler.scanely.core.ai.custom.OwnModelDto? = null
 )
 
 @Serializable
@@ -173,6 +175,8 @@ data class AgentStatusDto(
 data class AgentEventDto(
     val type: String,
     val step: String? = null,
+    /** A `queue` event's place in line (1: next); the turn has started once a step follows. */
+    val position: Int = 0,
     val at: Long = 0,
     val file: AgentFileDto? = null,
     val text: String = "",

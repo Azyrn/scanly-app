@@ -259,4 +259,6 @@
     <string name="ocr_setup_pending">此手机上仍在设置文字识别功能。请保持联网一分钟后再试。</string>
     <string name="ocr_scan_failed">Scanly 无法读取此文件。扫描失败，并不代表页面是空白的。请重试，或选择其他文件。</string>
     <string name="pay_upgrade_notice">如需升级到更高套餐，请前往 %1$s/upgrade，并使用你在此处使用的同一账户登录：这将更改你现有的套餐。在定价页面购买其他套餐会开启第二个订阅，并与此订阅一同计费。</string>
+    <string name="chat_own_model_local">你的接口在本机网络上或使用 http。生成文档在 Scanly 服务器上运行，需要互联网上的 https 地址。未发送任何内容。</string>
+    <string name="chat_own_model_needs_agent">用你自己的模型生成文档需要文档助手，但它目前已关闭。请在设置中关闭你的接口以使用 Scanly AI。</string>
 </resources>

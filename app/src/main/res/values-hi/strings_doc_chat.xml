@@ -68,6 +68,7 @@
     <string name="chat_stopped_waiting">इंतज़ार बंद किया गया। सर्वर शायद फिर भी काम पूरा करे और क्रेडिट लगें। वही नतीजा बिना दोबारा पैसे दिए पाने के लिए फिर से कोशिश करें।</string>
     <string name="chat_interrupted">यह अनुरोध रुक गया। अपना मैसेज फिर से भेजें।</string>
     <string name="chat_reconnecting">आपके डिज़ाइन से दोबारा जुड़ रहे हैं…</string>
+    <string name="chat_agent_queued">कतार में (#%1$d)…</string>
     <string name="chat_design_failed">डिज़ाइन पूरा नहीं हो सका। आपका मैसेज रखा गया है; फिर से कोशिश करें।</string>
     <string name="chat_photo_unusable">वह तस्वीर इस्तेमाल नहीं हो सकी। कोई और आज़माएं।</string>
     <plurals name="chat_file_too_many_pages">

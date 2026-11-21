@@ -85,6 +85,7 @@
     <string name="chat_stopped_waiting">Nicht mehr gewartet. Der Server kann weiter abrechnen. Neu versuchen holt dasselbe Ergebnis ohne Doppelzahlung.</string>
     <string name="chat_interrupted">Anfrage unterbrochen. Sende deine Nachricht erneut.</string>
     <string name="chat_reconnecting">Verbinde neu mit Entwurf…</string>
+    <string name="chat_agent_queued">Warteschlange (#%1$d)…</string>
     <string name="chat_design_failed">Entwurf fehlgeschlagen. Nachricht bleibt; erneut versuchen.</string>
 
     <!-- Attaching -->

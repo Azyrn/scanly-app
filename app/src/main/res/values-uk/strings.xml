@@ -3,7 +3,7 @@
     <string name="ai_build_documents_title">Документи з ШІ</string>
     <string name="ai_build_documents_subtitle">Опишіть або додайте файл: рахунки, CV, звіти, слайди</string>
     <string name="design_paywall_fallback">Документи з ШІ входять до Pro.</string>
-    <string name="custom_provider_build_documents_note">Документи з ШІ працюють у два етапи: ваша модель пише документ, а Scanly його верстає. Сильніша модель дає кращий дизайн. За верстання Scanly списує один кредит замість звичайної плати.</string>
+    <string name="custom_provider_build_documents_note">Документи з ШІ теж ідуть на вашій моделі, на сервері Scanly: ключ іде туди з кожним повідомленням, лише для нього, і не зберігається. Потрібна https-адреса, кредити не витрачаються.</string>
     <string name="plan_feature_build_documents">Документи з ШІ: макети, таблиці, оформлення</string>
     <string name="custom_provider_on_your_endpoint_note">Сканування, витяг даних і переклад ідуть із пристрою прямо до провайдера. Кредити Scanly не витрачаються, оплата йде через провайдера.</string>
 </resources>

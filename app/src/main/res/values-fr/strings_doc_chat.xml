@@ -87,6 +87,7 @@
     <string name="chat_stopped_waiting">Attente arrêtée. Le serveur peut terminer et utiliser des crédits. Relancez : même résultat, sans payer deux fois.</string>
     <string name="chat_interrupted">Demande interrompue. Renvoyez votre message.</string>
     <string name="chat_reconnecting">Reconnexion à votre création…</string>
+    <string name="chat_agent_queued">En file d’attente (#%1$d)…</string>
     <string name="chat_design_failed">Création impossible. Message conservé ; réessayez.</string>
 
     <!-- Attaching -->

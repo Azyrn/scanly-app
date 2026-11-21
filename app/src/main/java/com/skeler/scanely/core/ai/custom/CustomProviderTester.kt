@@ -6,8 +6,6 @@ import com.skeler.scanely.core.network.NetworkObserver
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -53,27 +51,53 @@ class CustomProviderTester @Inject internal constructor(
             customAuthHeader = customAuthHeader
         )
 
-        val response = try {
-            api.post(url, config.headers(), ProviderRequest.probe(protocol, trimmedModel))
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            return@withContext ConnectionTestResult.Failure(
-                ConnectionDiagnosis.fromException(e, host)
-            )
+        when (val answer = probeOnce(url, config, host)) {
+            is Probed.Unreachable -> ConnectionTestResult.Failure(answer.failure)
+            is Probed.Answer -> answer.failure(trimmedModel, protocol)?.let { ConnectionTestResult.Failure(it) }
+                ?: ConnectionTestResult.Success
         }
-
-        diagnose(response, trimmedModel, protocol)?.let { ConnectionTestResult.Failure(it) }
-            ?: ConnectionTestResult.Success
     }
 
-    private fun diagnose(
-        response: Response<ResponseBody>,
-        model: String,
-        protocol: ProviderProtocol
-    ): ConnectionFailure? = if (response.isSuccessful) {
-        ConnectionDiagnosis.fromSuccessBody(response.body()?.string(), model, protocol)
-    } else {
-        ConnectionDiagnosis.fromHttpStatus(response.code(), response.errorBody()?.string(), model)
+    /** One probe; OpenAI's reasoning models refuse `max_tokens` and name the field they take, so they are asked again. */
+    private suspend fun probeOnce(url: String, config: CustomProviderConfig, host: String): Probed {
+        val first = probe(url, config, config.protocol, completionTokens = false, host)
+        val again = first is Probed.Answer && config.protocol == ProviderProtocol.OPENAI && first.wantsCompletionTokens
+        return if (again) probe(url, config, config.protocol, completionTokens = true, host) else first
+    }
+
+    private suspend fun probe(
+        url: String,
+        config: CustomProviderConfig,
+        protocol: ProviderProtocol,
+        completionTokens: Boolean,
+        host: String
+    ): Probed = try {
+        val response = api.post(url, config.headers(), ProviderRequest.probe(protocol, config.model, completionTokens))
+        val body = if (response.isSuccessful) response.body()?.string() else response.errorBody()?.string()
+        Probed.Answer(response.code(), body)
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Probed.Unreachable(ConnectionDiagnosis.fromException(e, host))
+    }
+
+    private sealed interface Probed {
+        data class Unreachable(val failure: ConnectionFailure) : Probed
+
+        data class Answer(val status: Int, val body: String?) : Probed {
+            val wantsCompletionTokens: Boolean
+                get() = status == HTTP_BAD_REQUEST && body?.contains("max_completion_tokens") == true
+
+            fun failure(model: String, protocol: ProviderProtocol): ConnectionFailure? = if (status in HTTP_OK_RANGE) {
+                ConnectionDiagnosis.fromSuccessBody(body, model, protocol)
+            } else {
+                ConnectionDiagnosis.fromHttpStatus(status, body, model)
+            }
+        }
+    }
+
+    private companion object {
+        const val HTTP_BAD_REQUEST = 400
+        val HTTP_OK_RANGE = 200..299
     }
 }

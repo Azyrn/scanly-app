@@ -276,4 +276,6 @@
     <string name="ocr_setup_pending">Text recognition is still being set up on this phone. Stay online for a minute, then try again.</string>
     <string name="ocr_scan_failed">Scanly couldn\'t read this file. The scan failed, so this doesn\'t mean the page is blank. Try again, or pick a different file.</string>
     <string name="pay_upgrade_notice">To move to a bigger plan, go to %1$s/upgrade and sign in with the same account you use here: it changes the plan you have. Buying another plan on the pricing page starts a second subscription, billed alongside this one.</string>
+    <string name="chat_own_model_local">Your endpoint is on this phone\'s network or uses http. Build Documents runs on Scanly\'s server, so it needs an https address on the internet. Nothing was sent.</string>
+    <string name="chat_own_model_needs_agent">Build Documents on your own model needs the document assistant, which is off right now. Turn your endpoint off in Settings to use Scanly AI.</string>
 </resources>

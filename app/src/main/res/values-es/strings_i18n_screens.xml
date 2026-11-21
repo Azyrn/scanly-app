@@ -291,4 +291,6 @@
     <string name="ocr_setup_pending">El reconocimiento de texto aún se configura en el teléfono. Conéctate un minuto y reintenta.</string>
     <string name="ocr_scan_failed">Scanly no pudo leer el archivo. El escaneo falló: no significa que la página esté en blanco. Reintenta u elige otro.</string>
     <string name="pay_upgrade_notice">Para cambiar a un plan superior, ve a %1$s/upgrade e inicia sesión con esta misma cuenta: se cambia el plan actual. Comprar otro en la página de precios crea una segunda suscripción, cobrada aparte.</string>
+    <string name="chat_own_model_local">Tu endpoint está en la red de este teléfono o usa http. Los documentos se crean en el servidor de Scanly y necesitan una dirección https en internet. No se envió nada.</string>
+    <string name="chat_own_model_needs_agent">Crear documentos con tu modelo necesita el asistente, que ahora está apagado. Desactiva tu endpoint en Ajustes para usar Scanly AI.</string>
 </resources>

@@ -206,10 +206,11 @@ class GenerativeAiService @Inject internal constructor(
     }
 
     /**
-     * Designs a PDF. [sourceText] is a scan to lay out, or null to have the model write the content
-     * too; [designId] revises an earlier design instead of starting over.
+     * Designs a PDF on Scanly's designer. [sourceText] is a scan to lay out, or null to have the model
+     * write the content too; [designId] revises an earlier design instead of starting over.
      *
-     * Always on Scanly's backend, even with a custom endpoint switched on; see [AiFeature.DESIGN].
+     * With a custom endpoint switched on, the document assistant answers instead (`AgentTurns`), on
+     * the user's own model; this refuses rather than design on Scanly's model and bill credits.
      */
     @AiEntryPoint(AiFeature.DESIGN)
     fun designDocumentEvents(
@@ -237,6 +238,17 @@ class GenerativeAiService @Inject internal constructor(
                         )
                     )
                 )
+                return@channelFlow
+            }
+
+            val refused = route(
+                AiFeature.DESIGN,
+                onCustomEndpoint = { AiResult.Error(context.getString(R.string.chat_own_model_needs_agent)) },
+                onScanlyBackend = { null },
+                onRefused = { it }
+            )
+            if (refused != null) {
+                send(DesignEvent.Finished(DesignResult.Failure(refused)))
                 return@channelFlow
             }
 

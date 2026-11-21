@@ -83,6 +83,7 @@
     <string name="chat_stopped_waiting">已停止等待。服务器可能仍会完成处理并消耗积分。重试即可获取相同结果，不会重复扣费。</string>
     <string name="chat_interrupted">此请求已中断。请重新发送你的消息。</string>
     <string name="chat_reconnecting">正在重新连接到你的设计…</string>
+    <string name="chat_agent_queued">排队中（第 %1$d 位）…</string>
     <string name="chat_design_failed">无法完成设计。你的消息已保留，请重试。</string>
 
     <!-- Attaching -->

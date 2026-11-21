@@ -85,6 +85,8 @@
     <string name="chat_stopped_waiting">Stopped waiting. The server may still finish and use credits. Retry to collect the same result without paying twice.</string>
     <string name="chat_interrupted">This request was interrupted. Send your message again.</string>
     <string name="chat_reconnecting">Reconnecting to your design…</string>
+    <!-- The agent turn waits for a free agent; %1$d is its place in line (1: next). -->
+    <string name="chat_agent_queued">Waiting in line (#%1$d)…</string>
     <string name="chat_design_failed">Couldn\'t finish the design. Your message is kept; try again.</string>
 
     <!-- Attaching -->

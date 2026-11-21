@@ -87,6 +87,7 @@
     <string name="chat_stopped_waiting">Dejaste de esperar. El servidor puede terminar y usar créditos. Reintenta para obtener lo mismo sin pagar doble.</string>
     <string name="chat_interrupted">Esta solicitud se interrumpió. Envía tu mensaje de nuevo.</string>
     <string name="chat_reconnecting">Reconectando con tu diseño…</string>
+    <string name="chat_agent_queued">En la cola (#%1$d)…</string>
     <string name="chat_design_failed">Diseño no terminado. Tu mensaje se conserva; reintenta.</string>
 
     <!-- Attaching -->

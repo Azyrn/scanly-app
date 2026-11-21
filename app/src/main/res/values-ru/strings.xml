@@ -3,7 +3,7 @@
     <string name="ai_build_documents_title">Документы с ИИ</string>
     <string name="ai_build_documents_subtitle">Опишите или прикрепите: счета, CV, отчёты, слайды</string>
     <string name="design_paywall_fallback">Создание документов с ИИ входит в Pro.</string>
-    <string name="custom_provider_build_documents_note">Документ создаётся в два этапа: ваша модель пишет текст, Scanly верстает. Более сильная модель даёт лучший дизайн, а верстка стоит один кредит вместо обычной цены.</string>
+    <string name="custom_provider_build_documents_note">Документы с ИИ тоже идут на вашей модели, на сервере Scanly: ключ уходит туда с каждым сообщением, только для него, и не хранится. Нужен https-адрес, кредиты не тратятся.</string>
     <string name="plan_feature_build_documents">Документы с ИИ: макеты, таблицы, оформление</string>
     <string name="custom_provider_on_your_endpoint_note">Сканирование, извлечение данных и перевод идут с этого устройства прямо к вашему провайдеру. Кредиты Scanly не тратятся, оплачивает провайдер.</string>
 </resources>

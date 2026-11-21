@@ -85,6 +85,7 @@
     <string name="chat_stopped_waiting">Beklemeyi bıraktınız. Sunucu yine bitirip kredi harcayabilir. Yeniden denerseniz sonuç ikinci kez ödenmeden gelir.</string>
     <string name="chat_interrupted">Bu istek kesildi. Mesajınızı yeniden gönderin.</string>
     <string name="chat_reconnecting">Tasarıma yeniden bağlanılıyor…</string>
+    <string name="chat_agent_queued">Sırada (#%1$d)…</string>
     <string name="chat_design_failed">Tasarım tamamlanamadı. Mesajınız saklandı; yeniden deneyin.</string>
 
     <!-- Attaching -->

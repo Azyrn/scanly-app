@@ -83,6 +83,30 @@ class ProviderProtocolTest {
     }
 
     @Test
+    fun `the openai probe can name its limit max_completion_tokens, which reasoning models need`() {
+        assertTrue(ProviderRequest.probe(ProviderProtocol.OPENAI, MODEL).containsKey("max_tokens"))
+        val reasoning = ProviderRequest.probe(ProviderProtocol.OPENAI, MODEL, completionTokens = true)
+        assertTrue(reasoning.containsKey("max_completion_tokens"))
+        assertTrue(!reasoning.containsKey("max_tokens"))
+    }
+
+    @Test
+    fun `a reply that stopped at the output limit is cut off, in each protocol's words`() {
+        assertTrue(ProviderResponse.wasCutOff(ProviderProtocol.OPENAI,
+            obj("""{"choices":[{"message":{"content":"half"},"finish_reason":"length"}]}""")))
+        assertTrue(!ProviderResponse.wasCutOff(ProviderProtocol.OPENAI,
+            obj("""{"choices":[{"message":{"content":"all"},"finish_reason":"stop"}]}""")))
+        assertTrue(ProviderResponse.wasCutOff(ProviderProtocol.ANTHROPIC,
+            obj("""{"content":[{"type":"text","text":"half"}],"stop_reason":"max_tokens"}""")))
+        assertTrue(!ProviderResponse.wasCutOff(ProviderProtocol.ANTHROPIC,
+            obj("""{"content":[{"type":"text","text":"all"}],"stop_reason":"end_turn"}""")))
+        assertTrue(ProviderResponse.wasCutOff(ProviderProtocol.GEMINI,
+            obj("""{"candidates":[{"content":{"parts":[{"text":"half"}]},"finishReason":"MAX_TOKENS"}]}""")))
+        assertTrue(!ProviderResponse.wasCutOff(ProviderProtocol.GEMINI,
+            obj("""{"candidates":[{"content":{"parts":[{"text":"all"}]},"finishReason":"STOP"}]}""")))
+    }
+
+    @Test
     fun `the anthropic probe carries the mandatory max_tokens`() {
         val body = ProviderRequest.probe(ProviderProtocol.ANTHROPIC, MODEL)
         assertTrue("max_tokens is required by the Anthropic API", body.containsKey("max_tokens"))

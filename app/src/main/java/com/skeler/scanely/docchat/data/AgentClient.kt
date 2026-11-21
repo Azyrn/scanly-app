@@ -67,13 +67,15 @@ class AgentClient @Inject constructor(
         onTasks: suspend (List<AgentTask>) -> Unit = {},
         onApproval: suspend (AgentApprovalDto) -> Unit = {},
         onApprovalClosed: suspend (String) -> Unit = {},
+        onQueue: suspend (position: Int) -> Unit = {},
         onFile: suspend (AgentFileDto) -> Unit
     ): AgentStatusDto {
         try {
             val stream = events.agentTurnEvents(turnId)
             if (stream.isSuccessful) {
                 stream.body()?.let { body ->
-                    readEvents(body, EventHandlers(onStep, onFile, onRows, onTasks, onApproval, onApprovalClosed))
+                    val handlers = EventHandlers(onStep, onFile, onRows, onTasks, onApproval, onApprovalClosed, onQueue)
+                    readEvents(body, handlers)
                 }
             } else {
                 stream.errorBody()?.close()
@@ -153,7 +155,8 @@ class AgentClient @Inject constructor(
         val onRows: suspend (List<AgentRow>, Boolean) -> Unit,
         val onTasks: suspend (List<AgentTask>) -> Unit,
         val onApproval: suspend (AgentApprovalDto) -> Unit,
-        val onApprovalClosed: suspend (String) -> Unit
+        val onApprovalClosed: suspend (String) -> Unit,
+        val onQueue: suspend (Int) -> Unit
     ) {
         /** The server opens a stream with everything it kept; later batches are the rows that changed. */
         var rowsSeen = false
@@ -165,6 +168,7 @@ class AgentClient @Inject constructor(
                 "rows" -> rows(event.rows)
                 "tasks" -> onTasks(event.items)
                 "approval", "approval_closed" -> approval(event)
+                "queue" -> if (event.position > 0) onQueue(event.position)
                 "done", "failed" -> return false
                 // A kind of event this version does not know: the stream goes on.
                 else -> Unit

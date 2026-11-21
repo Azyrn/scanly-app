@@ -259,4 +259,6 @@
     <string name="ocr_setup_pending">テキスト認識を準備中です。1分ほどオンラインのままにして、再度お試しください。</string>
     <string name="ocr_scan_failed">このファイルを読み取れませんでした。スキャンに失敗しただけで、白紙ではありません。別のファイルを選んでください。</string>
     <string name="pay_upgrade_notice">上位プランには %1$s/upgrade で、同じアカウントでサインインしてください。現在のプランが変わります。料金ページで別のプランを購入すると、2つ目のサブスクリプションが開始され、こちらと並行して請求されます。</string>
+    <string name="chat_own_model_local">エンドポイントがこの端末のネットワーク上か http です。書類作成は Scanly のサーバーで動くため、インターネット上の https アドレスが必要です。送信していません。</string>
+    <string name="chat_own_model_needs_agent">ご自分のモデルでの書類作成には書類アシスタントが必要ですが、現在オフです。Scanly AI を使うには設定でエンドポイントをオフにしてください。</string>
 </resources>

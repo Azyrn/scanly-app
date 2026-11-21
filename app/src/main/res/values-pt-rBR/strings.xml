@@ -3,7 +3,7 @@
     <string name="ai_build_documents_title">Criar documentos com IA</string>
     <string name="ai_build_documents_subtitle">Descreva ou anexe: faturas, currículos, relatórios, slides</string>
     <string name="design_paywall_fallback">Criar documentos com IA faz parte do Pro.</string>
-    <string name="custom_provider_build_documents_note">Criar documentos com IA é dividido: seu modelo escreve, e o Scanly faz a diagramação. Um modelo mais forte dá um design melhor. A diagramação custa 1 crédito, não o valor habitual.</string>
+    <string name="custom_provider_build_documents_note">Documentos com IA também usam seu modelo, no servidor do Scanly: sua chave vai com cada mensagem, só para ela, e nunca é salva. Precisa de endereço https na internet e não usa créditos.</string>
     <string name="plan_feature_build_documents">Criar documentos com IA: layouts, tabelas e estilos</string>
     <string name="custom_provider_on_your_endpoint_note">Escanear, extrair dados e traduzir vão direto deste dispositivo para o seu provedor. Eles não usam seus créditos do Scanly e são cobrados pelo seu provedor.</string>
 </resources>

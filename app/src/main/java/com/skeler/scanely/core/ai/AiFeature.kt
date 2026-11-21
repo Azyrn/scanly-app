@@ -19,10 +19,11 @@ enum class AiFeature(val label: String, val routing: CustomRouting) {
     TRANSLATE("Translate", CustomRouting.ON_YOUR_ENDPOINT),
 
     /**
-     * Always Scanly's designer, with a custom endpoint or without. The custom endpoint is for
-     * scanning; documents are built by Scanly's own model and compiler.
+     * With a custom endpoint, the document assistant answers on the user's own model: the turn runs
+     * on Scanly's agent server, whose proxy calls their endpoint with their key and holds no key of
+     * Scanly's, so it bills no credits. Never Scanly's model or designer instead (`AgentTurns`).
      */
-    DESIGN("Build Documents with AI", CustomRouting.SCANLY_ONLY),
+    DESIGN("Build Documents with AI", CustomRouting.YOUR_MODEL_ON_SCANLYS_AGENT),
 
     /**
      * Speech to text. A custom endpoint is an OpenAI-compatible *chat* API, which takes no audio,
@@ -35,6 +36,12 @@ enum class AiFeature(val label: String, val routing: CustomRouting) {
 enum class CustomRouting {
     /** The request goes straight from the device to the user's provider. No Scanly quota. */
     ON_YOUR_ENDPOINT,
+
+    /**
+     * The user's model, called by Scanly's agent server with their key (it must be reachable from the
+     * internet). No Scanly quota, but Scanly's server runs it, so its feature switch still applies.
+     */
+    YOUR_MODEL_ON_SCANLYS_AGENT,
 
     /** Always Scanly's backend, whatever the user configured. */
     SCANLY_ONLY;

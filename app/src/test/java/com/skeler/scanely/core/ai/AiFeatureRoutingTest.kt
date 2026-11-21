@@ -72,23 +72,24 @@ class AiFeatureRoutingTest {
      * it reserved and settled quota pages on `/v1/translate` while the screen said it would not.
      */
     @Test
-    fun onlyScanAndTranslateRunOnTheUsersOwnEndpoint() {
+    fun scanTranslateAndBuildDocumentsRunOnTheUsersOwnModel() {
         val onEndpoint = AiFeature.entries
             .filter { it.routing.usesCustomEndpoint }
             .map { it.label }
 
         assertEquals(
-            "Settings tells the user their endpoint handles scans, extraction and translation, and " +
-                "that Build Documents with AI and Audio to Text stay on Scanly AI. Change that " +
-                "sentence before changing this list.",
-            listOf(AiFeature.SCAN.label, AiFeature.TRANSLATE.label),
+            "Settings tells the user their endpoint handles scans, extraction, translation and Build " +
+                "Documents with AI, and that Audio to Text stays on Scanly AI. Change that sentence " +
+                "before changing this list.",
+            listOf(AiFeature.SCAN.label, AiFeature.TRANSLATE.label, AiFeature.DESIGN.label),
             onEndpoint
         )
     }
 
     @Test
-    fun designNeverUsesTheCustomEndpoint() {
-        assertEquals(CustomRouting.SCANLY_ONLY, AiFeature.DESIGN.routing)
+    fun buildDocumentsRunsOnTheUsersModelThroughScanlysAgent() {
+        assertEquals(CustomRouting.YOUR_MODEL_ON_SCANLYS_AGENT, AiFeature.DESIGN.routing)
+        assertEquals(CustomRouting.SCANLY_ONLY, AiFeature.TRANSCRIBE.routing)
     }
 
     @Test

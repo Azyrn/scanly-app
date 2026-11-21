@@ -92,6 +92,12 @@ sealed interface ConnectionFailure {
         }
     }
 
+    data object CutOff : ConnectionFailure {
+        override val message =
+            "Your model stopped before it finished (it reached its output limit), so the result would be " +
+                "incomplete. Pick fewer pages, or use a model with a larger output limit."
+    }
+
     data object MalformedJson : ConnectionFailure {
         override val message =
             "The endpoint replied, but not with JSON. This usually means the URL points at a " +

@@ -275,4 +275,6 @@
     <string name="ocr_setup_pending">Texterkennung wird noch eingerichtet. Eine Minute online bleiben, dann erneut versuchen.</string>
     <string name="ocr_scan_failed">Scanly konnte diese Datei nicht lesen. Das heißt nicht, dass die Seite leer ist. Erneut versuchen oder andere Datei wählen.</string>
     <string name="pay_upgrade_notice">Für einen größeren Tarif öffne %1$s/upgrade und melde dich mit demselben Konto an – so ändert sich dein Tarif. Ein weiterer Kauf auf der Preisseite startet ein zweites Abo.</string>
+    <string name="chat_own_model_local">Dein Endpunkt liegt im Netz dieses Geräts oder nutzt http. Dokumente laufen auf Scanlys Server und brauchen eine https-Adresse im Internet. Nichts gesendet.</string>
+    <string name="chat_own_model_needs_agent">Dokumente mit deinem Modell brauchen den Dokument-Assistenten, der gerade aus ist. Schalte den Endpunkt aus, um Scanly AI zu nutzen.</string>
 </resources>

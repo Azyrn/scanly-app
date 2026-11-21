@@ -23,8 +23,17 @@ internal object ProviderRequest {
     private const val PROBE_MAX_TOKENS = 1
     private const val SCAN_MAX_TOKENS = 8192
 
-    /** The smallest request that still exercises the key, the path, and the model. */
-    fun probe(protocol: ProviderProtocol, model: String): JsonObject = when (protocol) {
+    /**
+     * The smallest request that still exercises the key, the path, and the model.
+     *
+     * [completionTokens] names the output limit `max_completion_tokens`: OpenAI's reasoning models
+     * refuse `max_tokens`, which most other OpenAI-compatible servers still expect.
+     */
+    fun probe(
+        protocol: ProviderProtocol,
+        model: String,
+        completionTokens: Boolean = false
+    ): JsonObject = when (protocol) {
         ProviderProtocol.OPENAI -> buildJsonObject {
             put("model", model)
             putJsonArray("messages") {
@@ -35,7 +44,7 @@ internal object ProviderRequest {
                     }
                 )
             }
-            put("max_tokens", PROBE_MAX_TOKENS)
+            put(if (completionTokens) "max_completion_tokens" else "max_tokens", PROBE_MAX_TOKENS)
             put("stream", false)
         }
         ProviderProtocol.ANTHROPIC -> buildJsonObject {
@@ -204,6 +213,17 @@ internal object ProviderResponse {
                 ?.mapNotNull { (it["text"] as? JsonPrimitive)?.content }
                 ?.joinToString("")
         }
+    }
+
+    /** True when the model stopped at its output limit rather than finishing: what it wrote is incomplete. */
+    fun wasCutOff(protocol: ProviderProtocol, root: JsonObject): Boolean = when (protocol) {
+        ProviderProtocol.OPENAI ->
+            (((root["choices"] as? JsonArray)?.firstOrNull() as? JsonObject)?.get("finish_reason") as? JsonPrimitive)
+                ?.content == "length"
+        ProviderProtocol.ANTHROPIC -> (root["stop_reason"] as? JsonPrimitive)?.content == "max_tokens"
+        ProviderProtocol.GEMINI ->
+            (((root["candidates"] as? JsonArray)?.firstOrNull() as? JsonObject)?.get("finishReason") as? JsonPrimitive)
+                ?.content == "MAX_TOKENS"
     }
 
     /** True when the body is recognisably this protocol's success envelope. */

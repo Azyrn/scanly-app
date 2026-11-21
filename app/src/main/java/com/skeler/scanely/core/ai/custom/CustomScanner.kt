@@ -141,22 +141,25 @@ internal class CustomScanner @Inject constructor(
             return CustomScanResult.Failure(failure)
         }
 
+        return reply(body, config)
+    }
+
+    /** What a successful answer carries: the text, or why it is not usable. */
+    private fun reply(body: String?, config: CustomProviderConfig): CustomScanResult {
         ConnectionDiagnosis.fromSuccessBody(body, config.model, config.protocol)?.let {
             return CustomScanResult.Failure(it)
         }
-
-        val markdown = extractContent(body, config.protocol).orEmpty().trim()
+        val root = body?.let { runCatching { json.parseToJsonElement(it) as? JsonObject }.getOrNull() }
+        // A reply cut off at the model's output limit reads as a whole one: a long PDF lost its last pages unnoticed.
+        if (root != null && ProviderResponse.wasCutOff(config.protocol, root)) {
+            return CustomScanResult.Failure(ConnectionFailure.CutOff)
+        }
+        val markdown = root?.let { ProviderResponse.extractText(config.protocol, it) }.orEmpty().trim()
         return if (markdown.isEmpty()) {
             CustomScanResult.Failure(ConnectionFailure.UnexpectedSchema)
         } else {
             CustomScanResult.Success(markdown)
         }
-    }
-
-    private fun extractContent(body: String?, protocol: ProviderProtocol): String? {
-        if (body.isNullOrBlank()) return null
-        val root = json.parseToJsonElement(body) as? JsonObject ?: return null
-        return ProviderResponse.extractText(protocol, root)
     }
 
     private sealed interface PageResult {
@@ -177,9 +180,20 @@ internal class CustomScanner @Inject constructor(
         }
     }
 
+    /**
+     * Decoded at a power-of-two subsample, as `PayloadFactory` does. Decoded whole, a 50-200 MP camera
+     * photo needs 200-800 MB, and the OutOfMemoryError that follows is no Exception: it crashed the app.
+     */
     private fun renderImage(uri: Uri): PageResult {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
+        val longest = maxOf(bounds.outWidth, bounds.outHeight)
+        if (longest <= 0) return PageResult.Unsupported("Couldn't read that image.")
+        var sample = 1
+        while (longest / sample > MAX_IMAGE_DIMENSION * 2) sample *= 2
+        val options = BitmapFactory.Options().apply { inSampleSize = sample }
         val bitmap = context.contentResolver.openInputStream(uri)?.use {
-            BitmapFactory.decodeStream(it)
+            BitmapFactory.decodeStream(it, null, options)
         } ?: return PageResult.Unsupported("Couldn't read that image.")
         return PageResult.Rendered(listOf(encode(bitmap).also { bitmap.recycle() }))
     }

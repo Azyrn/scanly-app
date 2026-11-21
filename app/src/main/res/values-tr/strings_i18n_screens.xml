@@ -275,4 +275,6 @@
     <string name="ocr_setup_pending">Bu telefonda metin tanıma hâlâ kuruluyor. Bir dakika çevrimiçi kalın, sonra yeniden deneyin.</string>
     <string name="ocr_scan_failed">Scanly bu dosyayı okuyamadı. Tarama başarısız; sayfa boş demek değil. Yeniden deneyin ya da başka dosya seçin.</string>
     <string name="pay_upgrade_notice">Daha büyük plan için %1$s/upgrade adresine gidip buradaki hesapla oturum açın; mevcut planınız değişir. Fiyatlar sayfasından başka plan almak, bu abonelikle birlikte ikinci bir abonelik başlatır.</string>
+    <string name="chat_own_model_local">Uç noktanız bu telefonun ağında ya da http kullanıyor. Belgeler Scanly sunucusunda hazırlanır, internette bir https adresi gerekir. Hiçbir şey gönderilmedi.</string>
+    <string name="chat_own_model_needs_agent">Kendi modelinizle belge için belge asistanı gerekir; şu an kapalı. Scanly AI için Ayarlar\'da uç noktanızı kapatın.</string>
 </resources>

@@ -66,6 +66,7 @@
     <string name="chat_stopped_waiting">기다리기를 멈췄어요. 서버는 계속 처리해 크레딧이 쓰일 수 있어요. 다시 시도하면 중복 결제 없이 같은 결과를 받아요.</string>
     <string name="chat_interrupted">이 요청이 중단됐어요. 메시지를 다시 보내 주세요.</string>
     <string name="chat_reconnecting">디자인에 다시 연결하는 중…</string>
+    <string name="chat_agent_queued">대기 중 (%1$d번째)…</string>
     <string name="chat_design_failed">디자인을 완료하지 못했어요. 메시지는 남아 있으니 다시 시도해 주세요.</string>
     <string name="chat_photo_unusable">이 이미지는 쓸 수 없어요. 다른 이미지를 고르세요.</string>
     <plurals name="chat_file_too_many_pages">

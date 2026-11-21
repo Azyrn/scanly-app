@@ -291,4 +291,6 @@
     <string name="ocr_setup_pending">Reconnaissance de texte en cours d\'installation. Restez connecté une minute, puis réessayez.</string>
     <string name="ocr_scan_failed">Scanly n\'a pas pu lire ce fichier. L\'analyse a échoué : la page n\'est pas forcément vide. Réessayez ou changez de fichier.</string>
     <string name="pay_upgrade_notice">Pour passer à un forfait supérieur, allez sur %1$s/upgrade avec le même compte : votre forfait change. Un autre forfait sur la page tarifaire ouvre un second abonnement, facturé en parallèle.</string>
+    <string name="chat_own_model_local">Votre endpoint est sur le réseau du téléphone ou en http. Les documents se font sur le serveur Scanly : il faut une adresse https sur internet. Rien envoyé.</string>
+    <string name="chat_own_model_needs_agent">Les documents avec votre modèle passent par l\'assistant, désactivé pour l\'instant. Coupez l\'endpoint dans Réglages pour Scanly AI.</string>
 </resources>

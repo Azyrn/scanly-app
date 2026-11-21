@@ -3,7 +3,7 @@
     <string name="ai_build_documents_title">Dokumente mit KI erstellen</string>
     <string name="ai_build_documents_subtitle">Beschreiben oder Datei: Rechnungen, CVs, Berichte, Folien</string>
     <string name="design_paywall_fallback">Dokumente mit KI erstellen ist Teil von Pro.</string>
-    <string name="custom_provider_build_documents_note">Dokumente mit KI zu erstellen ist aufgeteilt: Dein Modell schreibt, Scanly setzt den Satz. Ein stärkeres Modell bringt besseres Design, der Satz kostet einen Credit statt der üblichen Kosten.</string>
+    <string name="custom_provider_build_documents_note">Dokumente mit KI laufen auch mit deinem Modell, auf Scanlys Server: Dein Schlüssel geht mit jeder Nachricht dorthin, nur dafür, nie gespeichert. Braucht eine https-Adresse im Internet, keine Credits.</string>
     <string name="plan_feature_build_documents">Dokumente mit KI erstellen – Layouts, Tabellen, Stil</string>
     <string name="custom_provider_on_your_endpoint_note">Scannen, Datenauslesen und Übersetzen gehen direkt von diesem Gerät an deinen Anbieter. Sie verbrauchen keine Scanly-Credits, und dein Anbieter rechnet sie ab.</string>
 </resources>

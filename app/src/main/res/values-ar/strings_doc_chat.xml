@@ -93,6 +93,7 @@
     <string name="chat_stopped_waiting">توقّف الانتظار. قد يُكمل الخادم عمله ويستهلك أرصدة. أعِد المحاولة لتحصل على النتيجة نفسها دون دفع مرتين.</string>
     <string name="chat_interrupted">انقطع هذا الطلب. أرسل رسالتك مرة أخرى.</string>
     <string name="chat_reconnecting">جارٍ إعادة الاتصال بتصميمك…</string>
+    <string name="chat_agent_queued">في قائمة الانتظار (#%1$d)…</string>
     <string name="chat_design_failed">تعذّر إكمال التصميم. رسالتك محفوظة؛ حاول مرة أخرى.</string>
 
     <!-- Attaching -->

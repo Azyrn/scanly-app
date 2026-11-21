@@ -116,6 +116,24 @@ class AgentTurnTest {
     }
 
     @Test
+    fun `a turn waiting for a free agent is told its place until its first step`() = runBlocking {
+        worker.route("/v1/agent/turns/t2/events") {
+            200 to listOf(
+                """{"type":"step","step":"coding","at":1}""",
+                """{"type":"queue","position":2,"at":2}""",
+                """{"type":"queue","position":0,"at":3}""",
+                """{"type":"queue","position":1,"at":4}""",
+                """{"type":"step","step":"thinking","at":5}""",
+                """{"type":"done","text":"Done.","files":[],"pagesBilled":0}"""
+            ).joinToString("") { "data: $it\n\n" }
+        }
+        worker.route("/v1/agent/turns/t2") { 200 to """{"state":"done","text":"Done.","files":[]}""" }
+        val seen = mutableListOf<String>()
+        client.follow("t2", 60, { id, _ -> seen += id }, onQueue = { seen += "queue $it" }) {}
+        assertEquals(listOf("coding", "queue 2", "queue 1", "thinking"), seen)
+    }
+
+    @Test
     fun `a web turn's question and its close come on the stream, and an event this version does not know ends nothing`() =
         runBlocking {
             val id = "a".repeat(32)

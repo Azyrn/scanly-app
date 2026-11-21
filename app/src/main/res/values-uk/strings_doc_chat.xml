@@ -89,6 +89,7 @@
     <string name="chat_stopped_waiting">Очікування зупинено. Сервер може завершити і списати кредити. Повторіть, щоб не платити вдруге.</string>
     <string name="chat_interrupted">Цей запит перервано. Надішліть повідомлення ще раз.</string>
     <string name="chat_reconnecting">Відновлюємо зв\'язок…</string>
+    <string name="chat_agent_queued">У черзі (#%1$d)…</string>
     <string name="chat_design_failed">Дизайн не вдався. Повідомлення збережено, повторіть.</string>
 
     <!-- Attaching -->

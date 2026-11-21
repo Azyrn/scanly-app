@@ -3,7 +3,7 @@
     <string name="ai_build_documents_title">Créer avec l\'IA</string>
     <string name="ai_build_documents_subtitle">Décrivez ou joignez un fichier : factures, CV, présentations</string>
     <string name="design_paywall_fallback">Documents IA inclus dans Pro.</string>
-    <string name="custom_provider_build_documents_note">La création se fait en deux étapes : votre modèle rédige, Scanly met en forme. Un modèle plus puissant donne un meilleur rendu, et la mise en forme ne coûte qu\'un crédit au lieu du coût habituel.</string>
+    <string name="custom_provider_build_documents_note">Les documents avec l\'IA utilisent aussi votre modèle, sur le serveur Scanly : votre clé y part à chaque message, sert à lui seul, jamais stockée. Adresse https requise, aucun crédit.</string>
     <string name="plan_feature_build_documents">Documents IA : mises en page, tableaux, styles</string>
     <string name="custom_provider_on_your_endpoint_note">Numérisation, extraction et traduction vont directement à votre fournisseur. Pas de crédits Scanly : facturation par lui.</string>
 </resources>

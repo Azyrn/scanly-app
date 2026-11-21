@@ -6,6 +6,10 @@ import com.skeler.scanely.R
 import com.skeler.scanely.core.ai.AiResult
 import com.skeler.scanely.core.ai.FatalAiException
 import com.skeler.scanely.core.ai.FeatureSwitches
+import com.skeler.scanely.core.ai.custom.AgentEndpoint
+import com.skeler.scanely.core.ai.custom.CustomProviderResolver
+import com.skeler.scanely.core.ai.custom.EndpointChoice
+import com.skeler.scanely.core.ai.custom.OwnModelDto
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.sync.Mutex
@@ -25,7 +29,8 @@ class AgentTurns @Inject internal constructor(
     private val files: ChatFiles,
     private val agent: AgentClient,
     private val approvals: AgentApprovals,
-    private val features: FeatureSwitches
+    private val features: FeatureSwitches,
+    private val customProvider: CustomProviderResolver
 ) {
     private val lock = Mutex()
     private val liveLogChars = context.resources.getInteger(R.integer.agent_log_live_chars)
@@ -35,12 +40,31 @@ class AgentTurns @Inject internal constructor(
      * Runs [request] as an agent turn if it is one: a turn already with the agent (resumed), or a
      * new one while the server offers the agent, whatever is attached. False leaves it to the
      * designer: the agent is off, or the app is talking to an older server.
+     *
+     * With the user's own endpoint switched on, every new turn is the agent's, on their model, and
+     * true is returned whatever happens: the designer would answer on Scanly's model and bill credits,
+     * so where the agent cannot take the turn it fails with the reason instead.
      */
     suspend fun run(replyId: String, request: RequestEntity, stored: WorkingBody?, startedAt: Long): Boolean {
         val agentFile = request.priorDesignId?.let { agentFileName(request.chatId, it) }
-        val agentTurn = stored?.agentTurnId != null || (features.agentEnabled.value && request.agentEligible())
-        if (agentTurn) runAgentTurn(replyId, request, stored, startedAt, agentFile)
-        return agentTurn
+        if (stored?.agentTurnId != null) {
+            runAgentTurn(replyId, request, stored, startedAt, agentFile, ownModel = null)
+            return true
+        }
+        val next = newTurn(customProvider.choose(), features.agentEnabled.value, request.agentEligible())
+        return when (next) {
+            is NewTurn.Agent -> {
+                runAgentTurn(replyId, request, null, startedAt, agentFile, next.ownModel)
+                true
+            }
+            is NewTurn.Refused -> {
+                // Nothing was sent, so nothing was charged; the reply says why.
+                val why = context.getString(next.message)
+                repository.update(replyId, ErrorBody(why, notCharged = true, retryable = true))
+                true
+            }
+            NewTurn.Designer -> false
+        }
     }
 
     /**
@@ -53,7 +77,8 @@ class AgentTurns @Inject internal constructor(
         request: RequestEntity,
         stored: WorkingBody?,
         startedAt: Long,
-        agentFile: String?
+        agentFile: String?,
+        ownModel: OwnModelDto?
     ) {
         val reply = AgentReply(
             replyId,
@@ -63,7 +88,7 @@ class AgentTurns @Inject internal constructor(
         repository.update(replyId, reply.working)
         try {
             val (turnId, deadline) = reply.working.agentTurnId?.let { it to DEFAULT_AGENT_DEADLINE_S }
-                ?: startAgent(reply, request, agentFile)
+                ?: startAgent(reply, request, agentFile, ownModel)
             val status = reply.follow(request.chatId, turnId, deadline)
             if (complete(replyId, request.chatId, status)) AgentTurnWorker.stopWatching(context, turnId)
         } catch (e: CancellationException) {
@@ -141,7 +166,12 @@ class AgentTurns @Inject internal constructor(
     private suspend fun delivered(chatId: String, file: AgentFileDto) = lock.withLock { deliverAgentFile(chatId, file) }
 
     /** Starts the turn on the server and keeps its id on the reply, so a resumed chat follows it. */
-    private suspend fun startAgent(reply: AgentReply, request: RequestEntity, agentFile: String?): Pair<String, Int> {
+    private suspend fun startAgent(
+        reply: AgentReply,
+        request: RequestEntity,
+        agentFile: String?,
+        ownModel: OwnModelDto?
+    ): Pair<String, Int> {
         val about = agentFile?.let { context.getString(R.string.chat_agent_about_file, it) }
         val accepted = agent.start(
             AgentTurnRequest(
@@ -151,7 +181,8 @@ class AgentTurns @Inject internal constructor(
                 locale = Locale.getDefault().toLanguageTag(),
                 attachments = scanText(request, repository.message(request.turnId)?.body as? UserBody),
                 attachmentIds = uploadAttachments(request),
-                effort = request.effort
+                effort = request.effort,
+                ownModel = ownModel
             ),
             request.requestKey
         )
@@ -206,7 +237,8 @@ class AgentTurns @Inject internal constructor(
                     ::onRows,
                     ::onTasks,
                     onApproval = { approvals.ask(chatId, turnId, it) },
-                    onApprovalClosed = approvals::closed
+                    onApprovalClosed = approvals::closed,
+                    onQueue = ::onQueue
                 ) { delivered(chatId, it) }
             } finally {
                 approvals.turnEnded(turnId)
@@ -227,6 +259,11 @@ class AgentTurns @Inject internal constructor(
             val now = System.currentTimeMillis()
             val skew = offset ?: (now - at).also { offset = it }
             save(working.copy(steps = working.steps + StepRecord(step, (at + skew).coerceAtMost(now)), note = null))
+        }
+
+        /** The turn waits for a free agent: its place in line, shown until the next step (which clears the note). */
+        suspend fun onQueue(position: Int) {
+            save(working.copy(note = context.getString(R.string.chat_agent_queued, position)))
         }
 
         /** What the agent did: [rows] in place of those with the same ids, or of all of them when they are all of it. */
@@ -312,6 +349,36 @@ class AgentTurns @Inject internal constructor(
         const val AGENT_HISTORY_ITEMS = 20
         const val DEFAULT_AGENT_DEADLINE_S = 600
     }
+}
+
+/** Who answers a new chat turn ([AgentTurns.run]). */
+internal sealed interface NewTurn {
+    /** The document agent; on the user's own model when [ownModel] is set. */
+    data class Agent(val ownModel: OwnModelDto?) : NewTurn
+
+    /** Not run at all: [message] says why (never handed to Scanly's model instead). */
+    data class Refused(@param:androidx.annotation.StringRes val message: Int) : NewTurn
+
+    /** Scanly's designer: no own endpoint, and the agent is off or the request is one of its templates. */
+    data object Designer : NewTurn
+}
+
+/**
+ * With the user's own endpoint on, a new turn is the agent's on their model or it is refused: the
+ * designer would answer on Scanly's model and bill credits, which the endpoint promises it will not.
+ */
+internal fun newTurn(
+    choice: EndpointChoice,
+    agentEnabled: Boolean,
+    agentEligible: Boolean
+): NewTurn = when (choice) {
+    is EndpointChoice.Own -> when (val endpoint = AgentEndpoint.from(choice.config)) {
+        AgentEndpoint.Result.NotReachableFromServer -> NewTurn.Refused(R.string.chat_own_model_local)
+        is AgentEndpoint.Result.Usable ->
+            if (agentEnabled) NewTurn.Agent(endpoint.model) else NewTurn.Refused(R.string.chat_own_model_needs_agent)
+    }
+    EndpointChoice.NeedsPro -> NewTurn.Refused(R.string.ai_err_custom_needs_pro)
+    EndpointChoice.Scanly -> if (agentEnabled && agentEligible) NewTurn.Agent(ownModel = null) else NewTurn.Designer
 }
 
 /**

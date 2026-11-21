@@ -80,10 +80,11 @@ private fun featuresNamed(names: Set<String>): Set<AiFeature> =
 
 /**
  * Whether this feature's entry point shows. A switch covers Scanly's own provider; with a custom
- * endpoint every feature but a [CustomRouting.SCANLY_ONLY] one runs without it.
+ * endpoint a feature that runs wholly on the user's endpoint ([CustomRouting.ON_YOUR_ENDPOINT]) runs
+ * without it. One that runs on Scanly's agent server keeps its switch, because that server is Scanly's.
  */
 fun AiFeature.isOffered(disabled: Set<AiFeature>, customProvider: Boolean): Boolean =
-    this !in disabled || (customProvider && routing.usesCustomEndpoint)
+    this !in disabled || (customProvider && routing == CustomRouting.ON_YOUR_ENDPOINT)
 
 val AiMode.feature: AiFeature
     get() = when (this) {

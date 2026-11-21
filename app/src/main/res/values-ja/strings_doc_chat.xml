@@ -83,6 +83,7 @@
     <string name="chat_stopped_waiting">待機を停止。サーバーでは処理が続き、クレジットを使う場合があります。再試行で二重払いなく同じ結果を取得。</string>
     <string name="chat_interrupted">リクエストが中断されました。再送信してください。</string>
     <string name="chat_reconnecting">デザインに再接続しています…</string>
+    <string name="chat_agent_queued">順番待ち（%1$d番目）…</string>
     <string name="chat_design_failed">デザインを完成できませんでした。メッセージは保存済み。</string>
 
     <!-- Attaching -->
