@@ -238,7 +238,7 @@ class DocxReaderTest {
         )
 
         assertEquals("7todayaddedcontrol", paragraphs(document).single().texts().joinToString("") { it.text })
-        // Footnotes are laid out now: the reference is the first note's number, and nothing is reported missing.
+        // Footnotes are laid out: the reference is the first note's number, and nothing is reported missing.
         assertEquals(DocxNoteRef("1", "1", (paragraphs(document).single().inlines.last() as DocxNoteRef).style),
             paragraphs(document).single().inlines.last())
         assertFalse(document.notes.footnotes)
@@ -364,8 +364,6 @@ class DocxReaderTest {
         )
         assertEquals("4", paragraphs(document).single().texts().single().text)
     }
-
-    // --- fixtures ---
 
     private fun read(
         body: String,

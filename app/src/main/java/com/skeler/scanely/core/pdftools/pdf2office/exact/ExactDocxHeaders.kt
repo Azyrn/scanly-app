@@ -18,7 +18,7 @@ import kotlin.math.abs
 internal class RunHeaders {
     private val slots = arrayOfNulls<List<Block>>(SLOTS)
 
-    /** The header [page] uses: the first page's, else by the parity of its number in the document. */
+    /** The header a page uses: the first page's, else by the parity of its number in the document. */
     private fun slot(first: Boolean, number: Int): Int = if (first) {
         FIRST
     } else if (number % 2 == 0) {

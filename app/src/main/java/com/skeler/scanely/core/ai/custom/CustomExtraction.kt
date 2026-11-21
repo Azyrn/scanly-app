@@ -39,10 +39,6 @@ internal object CustomExtraction {
         }
     }
 
-    /**
-     * The outermost braces, rather than the fence markers: it recovers the fenced reply, the one
-     * prefaced with a sentence, and the one that obeyed the instruction, all the same way.
-     */
     private fun objectIn(raw: String): JsonObject? {
         val start = raw.indexOf('{')
         val end = raw.lastIndexOf('}')
@@ -96,8 +92,8 @@ internal object CustomExtraction {
     }
 
     /**
-     * A reply that is not the schema is a failure, not a transcription the user did not ask for.
-     * Silently handing back plain text is precisely how extraction went unnoticed for so long.
+     * A reply that is not the schema is a failure, not a transcription the user did not ask for:
+     * handed back as plain text, a broken extraction goes unnoticed.
      */
     fun asResult(result: CustomScanResult, label: String): CustomScanResult {
         if (result !is CustomScanResult.Success) return result

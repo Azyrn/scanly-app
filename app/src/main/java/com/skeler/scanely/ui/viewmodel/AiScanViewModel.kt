@@ -74,7 +74,7 @@ data class RescanParams(
     val extractPreset: String?
 )
 
-// Kept whole on purpose: the AI scan screen's state holder: one function per scan, translate and result intent.
+// Kept whole on purpose: the AI scan screen's state holder, one function per scan, translate and result intent.
 @Suppress("TooManyFunctions")
 @HiltViewModel
 class AiScanViewModel @Inject constructor(
@@ -412,8 +412,8 @@ class AiScanViewModel @Inject constructor(
  * One result for a multi-file scan, in file order.
  *
  * When no file was read, the result is an error — the upgrade-path one if any file was refused
- * for the plan, so the paywall opens with the server's reason. It used to be a "success" whose
- * text was a list of error messages, saved to history, with the upgrade sheet never shown.
+ * for the plan, so the paywall opens with the server's reason. Never a "success" whose text is a
+ * list of error messages: that would be saved to history and the upgrade sheet would never show.
  */
 internal fun combineBatchResults(context: Context, results: List<AiResult>): AiResult {
     if (results.none { it is AiResult.Success }) {
@@ -440,8 +440,8 @@ internal fun combineBatchResults(context: Context, results: List<AiResult>): AiR
             }
             is AiResult.Error -> " (Error)" to "Error: ${result.message}"
         }
-        // Headed by position, not by how much has accumulated: a file that read as blank
-        // used to swallow the next file's heading and mislabel everything after it.
+        // Headed by position, not by how much has accumulated, so a file that reads as blank
+        // can't swallow the next file's heading and mislabel everything after it.
         val heading = if (index == 0) "" else "--- File ${index + 1}$label ---\n\n"
         sections += heading + body
     }
@@ -462,6 +462,6 @@ internal fun combineBatchResults(context: Context, results: List<AiResult>): AiR
 
 /**
  * The text the results screen shows as the scan's output. Never an error: shown as "Extracted
- * Text" it offered Copy, Export and Edit, and an edit saved it as a successful document.
+ * Text" it would offer Copy, Export and Edit, and an edit would save it as a successful document.
  */
 internal fun aiDisplayText(result: AiResult?): String? = (result as? AiResult.Success)?.text

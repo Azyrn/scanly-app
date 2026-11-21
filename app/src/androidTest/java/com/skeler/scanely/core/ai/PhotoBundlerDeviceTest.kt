@@ -80,7 +80,6 @@ class PhotoBundlerDeviceTest {
             bundler.bundle(photos(2) + Uri.fromFile(bad), maxPages = 300, maxBytes = 30L * 1024 * 1024)
             fail("expected BundleException")
         } catch (expected: PhotoBundler.BundleException) {
-            // the message names photo 3
             assertTrue(expected.message!!.contains("photo 3"))
         }
     }

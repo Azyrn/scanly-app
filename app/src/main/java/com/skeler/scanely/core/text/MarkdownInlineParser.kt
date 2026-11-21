@@ -115,9 +115,9 @@ internal class MarkdownInlineParser(private val source: String) {
  * Whether the `*` at [index] is an emphasis marker rather than a literal asterisk.
  *
  * A lone `*` is emphasis only next to a word, so `5 * 3` stays arithmetic. The end-of-line case is
- * the one worth stating: a marker there can only ever *close*, and treating it as literal left
- * `*(5 min)*` at the end of a heading showing a stray asterisk with the italic never turned back
- * off. Opening at the end is still impossible, and the caller's own "does a closer exist ahead"
+ * the one worth stating: a marker there can only ever *close*, and treating it as literal would
+ * leave `*(5 min)*` at the end of a heading showing a stray asterisk with the italic never turned
+ * back off. Opening at the end is still impossible, and the caller's own "does a closer exist ahead"
  * check is what keeps a trailing `hello*` literal.
  */
 private fun isEmphasis(source: String, index: Int): Boolean {

@@ -27,7 +27,7 @@ internal data class DocxDocument(
     val footnoteSeparator: List<DocxBlock> = emptyList()
 )
 
-/** A run of blocks sharing one page setup. [continuous] sections don't start a new page. */
+/** A run of blocks sharing one page setup. [PageSetup.continuous] sections don't start a new page. */
 internal data class DocxSection(val blocks: List<DocxBlock>, val page: PageSetup)
 
 internal data class PageSetup(

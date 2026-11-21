@@ -278,8 +278,10 @@ int renderMode(Api& a, TextPage text, int i) {
 }
 
 /**
- * The font of the smallest text object that holds the point, or null: for a pdfium without
- * FPDFText_GetTextObject, which gives a character's own object. pdfium has no call from a character to its font. */
+ * The font of the smallest text object that holds the point, or null. pdfium has no call from a
+ * character to its font; this stands in on a pdfium without FPDFText_GetTextObject, which gives a
+ * character's own object.
+ */
 Font fontAt(const std::vector<TextRun>& runs, float x, float y) {
     constexpr float kSlack = 0.5f;
     Font best = nullptr;
@@ -736,8 +738,8 @@ Java_com_skeler_scanely_core_pdfeditor_engine_PdfiumLayer_nativePageRules(
  * Renders page [index] into [bitmap] (ARGB_8888, any size; the page is scaled to fill it) on
  * white, after removing its top-level text objects and the image objects whose top-level indices
  * are in [removeImages] (those were extracted as pictures of their own). The removal changes the
- * in-memory page of this document handle only; nothing is written back.
- * The removal changes the in-memory document: read the page's text before calling this.
+ * in-memory page of this document handle only, so read the page's text before calling this;
+ * nothing is written back.
  */
 extern "C" JNIEXPORT jboolean JNICALL
 Java_com_skeler_scanely_core_pdfeditor_engine_PdfiumLayer_nativeRenderBackground(

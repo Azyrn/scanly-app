@@ -709,7 +709,7 @@ internal class RuleSpan(private val width: Float) : android.text.style.Replaceme
     }
 }
 
-/** A space at [scaleX] of its font's own width, whatever its run's look ([ParagraphFactory.spaceWidths]). */
+/** A space at [scaleX] of its font's own width, whatever its run's look ([JoinedRuns.spaceWidths]). */
 internal class SpaceScale(private val scaleX: Float) : MetricAffectingSpan() {
     override fun updateMeasureState(paint: TextPaint) {
         paint.textScaleX = scaleX

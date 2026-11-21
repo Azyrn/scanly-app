@@ -48,8 +48,8 @@ class PdfRendererHelper @Inject constructor(
         val bitmap = createBitmap(width, height)
         // PDFs may be transparent.
         bitmap.eraseColor(Color.WHITE)
-        // No annotations: the platform renderer this replaced drew page content only, and OCR
-        // output should not change with the renderer.
+        // No annotations: the platform PdfRenderer draws page content only, and OCR output
+        // should not depend on which renderer drew the page.
         page.renderPageBitmap(bitmap, 0, 0, width, height, renderAnnot = false, textMask = false)
         return bitmap
     }

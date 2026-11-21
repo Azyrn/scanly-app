@@ -159,8 +159,6 @@ class WordToPdfTest {
         assertRunEmpty(run)
     }
 
-    // --- helpers ---
-
     private fun input(file: File, run: File) = ToolJobInput(
         documents = emptyList(),
         files = listOf(ImportedFile(file, file.name, file.length())),

@@ -299,7 +299,7 @@ class UnifiedScanService @Inject constructor(
  * can be tested without ML Kit or a Bitmap.
  *
  * Text is read even when a code was found. An invoice with a payment QR, a ticket or a flyer is a
- * document that also carries a code; stopping at the code used to return it alone and drop the
+ * document that also carries a code; stopping at the code would return it alone and drop the
  * text the user photographed it for.
  */
 internal suspend fun combineScan(

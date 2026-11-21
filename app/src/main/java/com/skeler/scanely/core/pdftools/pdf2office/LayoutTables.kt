@@ -99,9 +99,9 @@ internal object LayoutTables {
             abs((column.left + column.right) / 2f - box.centerX) <= tolerance
 
     /**
-     * The numeric cell test the gates need: digits with only separators,
-     * signs, brackets and currency marks around them. "1,234.50", "(1,200)", "-3.5%", "$99" and
-     * "12/31/2024" are numbers; "12 kg", "Q1" and "N/A" are not.
+     * The numeric cell test the gates need: digits with only separators, signs, brackets and
+     * currency marks around them. "1,234.50", "(1,200)", "-3.5%", "$99" and "12/31/2024" are
+     * numbers; "12 kg", "Q1" and "N/A" are not.
      */
     fun isNumeric(text: String): Boolean =
         text.any(Char::isDigit) && text.all { char ->

@@ -145,8 +145,8 @@ class TranscriptionRunner @Inject constructor(
 
     /**
      * Saves a transcript that has been paid for. A failure here — a full disk, say — holds it for
-     * [retrySave] rather than throwing out of the runner's scope, which crashed the app and left the
-     * screen on "transcribing" with the credits spent and nothing to show.
+     * [retrySave] rather than throwing out of the runner's scope, which would crash the app and leave
+     * the screen on "transcribing" with the credits spent and nothing to show.
      */
     internal suspend fun keep(source: Source, transcript: TranscriptDto, audio: File) {
         val saved = try {
@@ -249,7 +249,7 @@ class TranscriptionRunner @Inject constructor(
      * is the same key, in any run of the app. The Worker finishes and bills a transcription even after
      * the phone has gone (a dropped connection, a killed app) and replays its stored answer to the same
      * key without billing again (routes/transcribe.ts, idempotency.ts), so Try again gets the paid-for
-     * transcript instead of paying twice. A random key held in memory lost that on every retry.
+     * transcript instead of paying twice. A random key held in memory would lose that on every retry.
      */
     private suspend fun requestKey(audio: File, options: TranscribeOptions): String = withContext(Dispatchers.IO) {
         val digest = MessageDigest.getInstance(KEY_DIGEST)

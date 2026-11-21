@@ -86,7 +86,6 @@ internal class ExactSlide(
     val shapes = StringBuilder()
     val media = ArrayList<String>()
 
-    /** The id the next shape gets. */
     var nextId = FIRST_SHAPE_ID
         private set
 

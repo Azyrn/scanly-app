@@ -46,8 +46,6 @@ class PdfToolEngineTest {
         dir.deleteRecursively()
     }
 
-    // --- probe ---
-
     @Test
     fun plainPdfOpensWithItsPageCount() = runBlocking {
         val document = open(fixture("plain.pdf", pages = 3))
@@ -79,8 +77,6 @@ class PdfToolEngineTest {
         assertEquals(SECRET, document.password)
     }
 
-    // --- protect ---
-
     @Test
     fun protectedOutputAsksForThePasswordAndOpensWithIt() = runBlocking {
         val document = open(fixture("plain.pdf", pages = 2))
@@ -94,8 +90,6 @@ class PdfToolEngineTest {
         val reopened = engine.probe(imported(output.file), "hunter2") as ProbeResult.Opened
         assertEquals(2, reopened.document.pageCount)
     }
-
-    // --- unlock ---
 
     @Test
     fun unlockedOutputIsPlain() = runBlocking {
@@ -116,8 +110,6 @@ class PdfToolEngineTest {
         assertRunEmpty(run)
     }
 
-    // --- rotate ---
-
     @Test
     fun rotateAllTurnsEveryPage() = runBlocking {
         val document = open(fixture("plain.pdf", pages = 3))
@@ -131,8 +123,6 @@ class PdfToolEngineTest {
         }
         assertEquals("plain_rotated.pdf", output.fileName)
     }
-
-    // --- compress ---
 
     @Test
     fun uncompressedContentShrinks() = runBlocking {
@@ -161,8 +151,6 @@ class PdfToolEngineTest {
         assertEquals(ToolFailure.NoGain, failureOf { engine.compress(again, CompressionLevel.LOSSLESS, run) })
         assertRunEmpty(run)
     }
-
-    // --- storage and cancellation ---
 
     @Test
     fun noFreeSpaceIsLowStorageAndLeavesNothing() = runBlocking {
@@ -198,8 +186,6 @@ class PdfToolEngineTest {
         assertTrue("compress finished before it could be cancelled", job.isCancelled)
         assertRunEmpty(run)
     }
-
-    // --- helpers ---
 
     private suspend fun open(file: File, password: String = ""): ToolDocument {
         val result = engine.probe(imported(file), password)

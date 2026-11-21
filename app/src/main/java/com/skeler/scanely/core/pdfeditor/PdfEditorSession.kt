@@ -105,7 +105,7 @@ data class CompressionResult(
  * Always a private working copy — the user's file is never opened for writing, so abandoning a
  * session costs nothing and cannot corrupt the original.
  */
-// Kept whole on purpose: the editor's single shared session (see above): one function per document operation.
+// Kept whole on purpose: the single shared session (see above) has one function per document operation.
 @Suppress("TooManyFunctions")
 @Singleton
 class PdfEditorSession @Inject constructor(

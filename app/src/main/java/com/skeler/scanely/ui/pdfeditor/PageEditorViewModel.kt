@@ -104,7 +104,7 @@ data class PageEditorUiState(
     val message: String? = null
 )
 
-// Kept whole on purpose: the page editor's state holder: one function per canvas intent the screen sends.
+// Kept whole on purpose: the page editor's state holder, one function per canvas intent the screen sends.
 @Suppress("TooManyFunctions", "LargeClass")
 @HiltViewModel
 class PageEditorViewModel @Inject constructor(
@@ -198,7 +198,7 @@ class PageEditorViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val (width, height) = geometryOf(originalIndex)
-                // Leave room for the current page and both adjacent pager pages.
+                // Three pages fit the cache at 4 bytes a pixel: this one and both pager neighbours.
                 val maxWidth = kotlin.math.sqrt(pageCache.maxBytes / 12.0 * width / height)
                     .toInt().coerceAtLeast(1)
                 val bitmap = session.renderPage(originalIndex, min(PAGE_WIDTH_PX, maxWidth))

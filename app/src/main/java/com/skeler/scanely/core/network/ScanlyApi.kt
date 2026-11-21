@@ -19,10 +19,9 @@ import retrofit2.http.Streaming
 /**
  * Scanly's own backend. The app never talks to Mistral; the Worker holds the key.
  *
- * Note what is *absent*: no model parameter anywhere, no page count, and no prompt outside
- * [compose] and [design]. Those two carry a user-written prompt, but only ever as a *user* message
- * under a system prompt the Worker owns, so this still cannot be repurposed into a general-purpose
- * LLM endpoint spending our credit on arbitrary requests.
+ * Nothing here takes a model parameter or a page count. A user-written prompt only ever goes up as
+ * a *user* message under a system prompt the Worker owns, so this cannot be repurposed into a
+ * general-purpose LLM endpoint spending our credit on arbitrary requests.
  */
 interface ScanlyApi {
 
@@ -115,6 +114,10 @@ interface ScanlyApi {
     @GET("v1/design/jobs/{id}/events")
     suspend fun designJobEvents(@Path("id") id: String): Response<ResponseBody>
 
+    /** A background design: 202 while it builds, the PDF (same headers as [design]) when done. */
+    @GET("v1/design/jobs/{id}")
+    suspend fun designJob(@Path("id") id: String): Response<ResponseBody>
+
     /**
      * The system and user prompts a *custom* endpoint needs to write the Typst for a design.
      *
@@ -122,11 +125,6 @@ interface ScanlyApi {
      * families installed in the compile container — one contract with `typst/Dockerfile` that a
      * copy in this repo would drift from on its own release schedule.
      */
-
-    /** A background design: 202 while it builds, the PDF (same headers as [design]) when done. */
-    @GET("v1/design/jobs/{id}")
-    suspend fun designJob(@Path("id") id: String): Response<ResponseBody>
-
     @POST("v1/design/prompt")
     suspend fun designPrompt(@Body request: DesignPromptRequest): DesignPromptResponse
 
@@ -289,11 +287,6 @@ data class MeResponse(
     val plans: List<PlanDto> = emptyList()
 )
 
-/**
- * [prompt] and [schema] are only ever used to drive a *custom* endpoint: `/v1/ocr` takes the preset
- * id and looks its own schema up, so what the app holds here can never steer Scanly's model.
- * Served rather than compiled in, so a new preset works on both paths without an app release.
- */
 @Serializable
 data class TrialsDto(
     val extractionPages: TrialDto = TrialDto(),
@@ -305,6 +298,11 @@ data class TrialsDto(
 @Serializable
 data class TrialDto(val limit: Int = 0, val remaining: Int = 0)
 
+/**
+ * [prompt] and [schema] are only ever used to drive a *custom* endpoint: `/v1/ocr` takes the preset
+ * id and looks its own schema up, so what the app holds here can never steer Scanly's model.
+ * Served rather than compiled in, so a new preset works on both paths without an app release.
+ */
 @Serializable
 data class ExtractionPresetDto(
     val id: String,

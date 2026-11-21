@@ -234,7 +234,7 @@ object ExactTables {
             }
             GridLine(baseline(row), row.line.box.height, row.line.fontSize, slots)
         }
-        // Lines that are a cell's wrapped text join their row; every other line is a row, as before.
+        // Lines that are a cell's wrapped text join their row; every other line is a row of its own.
         val cells = lefts.indices.map { it..it }
         val rows = ExactTableGrid.rows(lines, enclosed = false).map { ExactTableGrid.row(it, cells, xs, block.box) }
         return ExactTable(rows, widths, block.box, block.fontSize)

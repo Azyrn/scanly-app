@@ -111,8 +111,6 @@ class GifEncoderTest {
         assertEquals(0x3B, bytes.last().toInt() and 0xFF)
     }
 
-    // --- helpers ---
-
     private fun encode(width: Int, height: Int, pixels: IntArray): ByteArray {
         val out = ByteArrayOutputStream()
         GifEncoder.encode(width, height, out) { y, row -> pixels.copyInto(row, 0, y * width, (y + 1) * width) }

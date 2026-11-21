@@ -84,7 +84,7 @@ val secretsProps = Properties().apply {
 }
 
 // The Scanly backend (Cloudflare Worker). This is a public URL, not a secret — the secret it
-// guards is the Mistral key, which now lives only on the Worker. Overridable from
+// guards is the Mistral key, which lives only on the Worker. Overridable from
 // local.properties (or -PSCANLY_API_BASE_URL, which wins) so a debug build can point at
 // `wrangler dev`. A release build refuses that override — see backendUrlProblem().
 fun scanlyApiBaseUrl(): String =
@@ -130,8 +130,8 @@ val releaseAbis: List<String> = (project.findProperty("releaseAbi") as String?)
     ?.filter { it.isNotEmpty() }
     ?: fullReleaseAbis
 
-// google-services.json is gitignored, so CI has no Firebase config at all. Returning nothing left
-// R.string.default_web_client_id undefined and every CI job failed at compileDebugKotlin. These
+// google-services.json is gitignored, so CI has no Firebase config at all. Without these,
+// R.string.default_web_client_id is undefined and every CI job fails at compileDebugKotlin. They
 // let the project build without it; `assembleRelease`/`bundleRelease` refuse them below, so a
 // placeholder configuration can never reach a shipped artifact.
 val firebasePlaceholders = mapOf(

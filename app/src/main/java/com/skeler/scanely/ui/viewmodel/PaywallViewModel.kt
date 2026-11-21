@@ -118,7 +118,7 @@ class PaywallViewModel @Inject internal constructor(
         PaywallState(
             plans = entitlement?.plans
                 // Paid tiers only. `/v1/me` lists the free tier too, which is what a reader of this
-                // sheet already has, so offering it is not an offer. Everything paid is now sold:
+                // sheet already has, so offering it is not an offer. Every paid tier is sold:
                 // Paddle carries a price per tier and the webhook mints a licence at whichever
                 // tier the price names.
                 ?.filter { it.priceUsd > 0 }
@@ -167,8 +167,8 @@ class PaywallViewModel @Inject internal constructor(
     fun redeem(key: String) {
         viewModelScope.launch {
             if (licenseRepository.activate(key)) {
-                // Naming a tier we could not read would be a guess, and there is now more than one
-                // it could be.
+                // Naming a tier we could not read would be a guess, and there is more than one it
+                // could be.
                 val tier = licenseRepository.state.value.entitlement?.tier
                 _message.value = if (tier == null) {
                     context.getString(R.string.pay_key_active)
@@ -248,7 +248,7 @@ class PaywallViewModel @Inject internal constructor(
     /**
      * Both the tier and the licence can change on another device; re-read on resume. The licence
      * check re-reads the tier itself — after the check, which is when it can have changed — so
-     * asking the entitlement repository here as well read `/v1/me` twice.
+     * asking the entitlement repository here as well would read `/v1/me` twice.
      */
     fun refresh() {
         licenseRepository.refresh(thenEntitlement = true)
@@ -319,9 +319,9 @@ internal fun restoreMessage(context: Context, outcome: RestoreOutcome): String? 
 data class PlanRow(val title: String, val subtitle: String)
 
 /**
- * Before `/v1/me` has answered, [PaywallState.currentTier] is a placeholder "free". Settings used
- * to print it as "Free plan", so a subscriber whose plan failed to load was told they were on Free.
- * An active key on this device still names its tier; otherwise the row says what is happening.
+ * Before `/v1/me` has answered, [PaywallState.currentTier] is a placeholder "free"; printed as
+ * "Free plan" it would tell a subscriber whose plan failed to load that they are on Free. An active
+ * key on this device still names its tier; otherwise the row says what is happening.
  */
 internal fun planRow(context: Context, state: PaywallState): PlanRow {
     if (state.isQuotaKnown) {

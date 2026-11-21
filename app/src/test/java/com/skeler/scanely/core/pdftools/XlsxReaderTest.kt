@@ -56,8 +56,6 @@ class XlsxReaderTest {
         Locale.setDefault(savedLocale)
     }
 
-    // --- workbook ---
-
     @Test
     fun hiddenSheetsAreSkippedAndCounted() {
         open(workbook()).use { reader ->
@@ -269,8 +267,6 @@ class XlsxReaderTest {
         }
     }
 
-    // --- failures ---
-
     @Test
     fun randomBytesAreNotAZip() {
         val file = File(dir, "random.xlsx").apply { writeBytes(ByteArray(4096) { (it * 31).toByte() }) }
@@ -334,8 +330,6 @@ class XlsxReaderTest {
         }
     }
 
-    // --- number formats ---
-
     @Test
     fun generalFormat() {
         val f = NumberFormatter(date1904 = false, locale = Locale.US)
@@ -387,8 +381,6 @@ class XlsxReaderTest {
         assertEquals("xl/media/a.png", XlsxReader.resolve("xl/worksheets", "../media/a.png"))
         assertEquals("xl/styles.xml", XlsxReader.resolve("xl", "/xl/styles.xml"))
     }
-
-    // --- helpers ---
 
     private fun open(file: File): XlsxReader = XlsxReader.open(file, cursorFactory = ::StaxCursor)
 

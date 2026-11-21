@@ -197,7 +197,7 @@ fun ResultsScreen() {
     val onBack: () -> Unit = { navigator.back() }
 
     // Discarded when the screen is actually gone, rather than on a timer sized to outlast the pop
-    // animation: a cancelled back gesture no longer wipes the result the user is still reading.
+    // animation, so a cancelled back gesture doesn't wipe the result the user is still reading.
     OnScreenExit {
         scanViewModel.clearState()
         aiViewModel.clearResult()

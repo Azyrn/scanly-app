@@ -161,7 +161,7 @@ private const val APPEARANCE_MARGIN_FRACTION = 0.07f
 private const val A4_WIDTH_PT = 595f
 private const val A4_HEIGHT_PT = 842f
 
-// Kept whole on purpose: the document-tools sheet's state holder: one function per tool action the sheet sends.
+// Kept whole on purpose: the tools sheet's state holder, one function per tool action the sheet sends.
 @Suppress("TooManyFunctions", "LargeClass")
 @HiltViewModel
 class DocToolsViewModel @Inject constructor(

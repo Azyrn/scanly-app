@@ -498,8 +498,8 @@ object CtcDecoder {
     }
 
     /**
-     * A softmax row sums to 1; raw logit rows don't (a graph property, so one row
-     * decides for the whole tensor — unlike the old per-value [0,1] range guess).
+     * A softmax row sums to 1; raw logit rows don't. That is a property of the graph, so one
+     * row decides for the whole tensor.
      */
     @VisibleForTesting
     fun isSoftmaxed(row: FloatArray, classes: Int): Boolean {

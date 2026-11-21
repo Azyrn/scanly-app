@@ -69,9 +69,8 @@ fun galleryPopExit(): ExitTransition = slideOutHorizontally(
 /*
  * Navigation 2.10 pops through a separate pair of transitions when the pop came from a back
  * gesture rather than from a tap, and defaults them to the platform's scale-the-screen-into-a-card
- * animation. Leaving that default in place is what replaced the motion above with one nobody
- * wrote, and it is also why the same screen animated one way from its toolbar button and another
- * way from a swipe.
+ * animation. Left in place, that default replaces the motion above with one nobody wrote, and the
+ * same screen animates one way from its toolbar button and another way from a swipe.
  *
  * The gesture is given the same pop pair, so there is exactly one pop animation in the app. The
  * swipe edge is deliberately ignored: the shared axis has a direction of travel that belongs to

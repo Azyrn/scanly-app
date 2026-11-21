@@ -46,10 +46,10 @@ class App : Application(), SingletonImageLoader.Factory, Configuration.Provider 
         get() = Configuration.Builder().build()
 
     /**
-     * WorkManager used to initialize in androidx.startup's provider, on the main thread, before
-     * Application.onCreate. It is now on demand, but still started at every process start, as
-     * before: initialization is also what reschedules pending work after a force stop. Any other
-     * caller of getInstance waits for this one instead of initializing twice.
+     * Replaces androidx.startup's WorkManagerInitializer, which ran on the main thread before
+     * Application.onCreate. Still started at every process start, just off the main thread:
+     * initialization is also what reschedules pending work after a force stop. Any other caller of
+     * getInstance waits for this one instead of initializing twice.
      */
     private fun initializeWorkManager() {
         thread(name = WORK_MANAGER_INIT_THREAD, isDaemon = true) { WorkManager.getInstance(this) }

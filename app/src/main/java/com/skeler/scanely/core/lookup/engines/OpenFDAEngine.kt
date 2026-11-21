@@ -101,7 +101,7 @@ class OpenFDAEngine @Inject constructor(
  * openFDA keeps a label's barcodes as 13-digit GTINs (`0342126631011`) and its package NDCs with dashes
  * (`42126-6310-1`). A US medicine box carries a 12-digit UPC-A, which scanners report without the
  * leading 0, and whose middle ten digits are the NDC with the dashes taken out. Searching the digits
- * as scanned found neither, so most US medicines came back "not found".
+ * as scanned finds neither, so most US medicines would come back "not found".
  */
 internal object OpenFdaSearch {
 

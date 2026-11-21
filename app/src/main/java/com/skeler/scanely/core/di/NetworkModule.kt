@@ -34,7 +34,6 @@ object NetworkModule {
  *
  * `newBuilder()` alone would share the Dispatcher too, and OkHttp's Dispatcher admits five
  * concurrent calls per host: a few five-minute scans would then queue a plan check behind them.
- * Each client had its own Dispatcher before they shared a base, and still does.
  */
 fun OkHttpClient.derive(): OkHttpClient.Builder = newBuilder().dispatcher(Dispatcher())
 

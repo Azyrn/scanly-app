@@ -10,7 +10,7 @@ import kotlin.coroutines.resumeWithException
 
 /**
  * Listeners run on the thread that completes the task rather than the main looper. The interceptor
- * blocks an OkHttp thread on this, so a main-thread callback made every token wait on the UI
+ * blocks an OkHttp thread on this, so a main-thread callback would make every token wait on the UI
  * thread being free.
  */
 private val onCompletingThread = Executor { it.run() }

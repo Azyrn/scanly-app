@@ -55,8 +55,6 @@ class PdfImagesTest {
         dir.deleteRecursively()
     }
 
-    // --- pages to JPG ---
-
     @Test
     fun everyPageBecomesAJpegAtTheChosenResolution() = runBlocking {
         val document = open(pdf("three.pdf", pages = 3))
@@ -92,8 +90,6 @@ class PdfImagesTest {
         assertEquals(ToolFailure.LowStorage, failure)
         assertRunEmpty(run)
     }
-
-    // --- extract images ---
 
     @Test
     fun jpegsComeOutByteIdenticalAndSharedImagesOnce() = runBlocking {
@@ -149,8 +145,6 @@ class PdfImagesTest {
         assertEquals(ToolFailure.LowStorage, failureOf { PdfToJpgJob(reader, full).extractImages(document, run) {} })
         assertRunEmpty(run)
     }
-
-    // --- image to PDF ---
 
     @Test
     fun imagesBecomePagesInOrderWithJpegBytesKept() = runBlocking {
@@ -254,8 +248,6 @@ class PdfImagesTest {
         assertEquals(ToolFailure.LowStorage, failure)
         assertRunEmpty(run)
     }
-
-    // --- helpers ---
 
     private suspend fun open(file: File): ToolDocument {
         val result = engine.probe(imported(file))

@@ -116,8 +116,8 @@ internal class PictureSpan(
 }
 
 /**
- * Word font names to typefaces. Times New Roman and Courier New map to the metric-compatible
- * Liberation fonts bundled in assets, so lines break where Word broke them; anything else
+ * Word font names to typefaces. Times New Roman, Courier New, Calibri and Cambria map to the
+ * metric-compatible twins bundled in assets, so lines break where Word broke them; anything else
  * falls back to the three families every Android device has, close enough for line breaks to land
  * near Word's. The result says fonts were replaced unless the family was one of those.
  */
@@ -131,8 +131,8 @@ internal class DocxFonts(private val assets: AssetManager) {
             italic -> Typeface.ITALIC
             else -> Typeface.NORMAL
         }
-        // The twin's own bold and italic files: a style asked of the regular file is synthesised, with the
-        // regular file's advances, so bold text came out as narrow as regular (Word's bold title ~10 % wider).
+        // The twin's own bold and italic files: a style asked of the regular file is synthesised with the
+        // regular file's advances, so bold text would be as narrow as regular (Word's bold title is ~10 % wider).
         bundledFor(font, STYLE_FILES.getValue(style))?.let { return it }
         return Typeface.create(bundledFor(font, REGULAR) ?: family(font), style)
     }
@@ -203,9 +203,8 @@ internal class DocxFonts(private val assets: AssetManager) {
 
         /**
          * Exact family names whose metrics a bundled font reproduces. Carlito (Calibri) and Caladea
-         * (Cambria) were once left out: with advances rounded to whole points their narrow space came
-         * out so thin that pdfium read "Page marker" back as "Pagemarker". Advances are fractional now
-         * (linear text), so the space has its real width.
+         * (Cambria) rely on fractional advances (linear text): rounded to whole points, their narrow
+         * space is so thin that pdfium reads "Page marker" back as "Pagemarker".
          */
         val TWINS = mapOf(
             "times new roman" to "LiberationSerif",

@@ -190,10 +190,9 @@ object TextExporter {
             .put("pages", pages)
             .toString(2)
     }
-
-    /** Pages split at the OCR page markers, one entry per non-blank line. */
 }
 
+/** Pages split at the OCR page markers, one entry per non-blank line. */
 private fun textPages(text: String, pages: JSONArray) {
     splitPages(text).forEach { (number, lines) ->
         pages.put(

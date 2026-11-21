@@ -152,8 +152,6 @@ class ExactLayoutTest {
         assertFalse(style.arabic)
     }
 
-    // --- width correction ---
-
     @Test
     fun eachWordLandsAtItsPdfPositionWhateverTheMeasuredWidth() {
         // Every letter measures 5 pt, but the PDF set "Hello" 30 pt wide and put "world" at 110.
@@ -365,8 +363,6 @@ class ExactLayoutTest {
         assertTrue(detected.tables.isEmpty())
         assertEquals(layout.blocks, detected.blocks)
     }
-
-    // --- fixtures ---
 
     /** One line of 10 pt text set from [x] to [x] + [width], one token per word, as a justified line is. */
     private fun justified(text: String, x: Float, width: Float, baseline: Float, size: Float = 10f): Segment {

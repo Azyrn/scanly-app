@@ -57,8 +57,6 @@ class StampTest {
         dir.deleteRecursively()
     }
 
-    // --- page numbers ---
-
     @Test
     fun everyPageGetsItsNumberAndTheTotal() = runBlocking {
         val document = open(fixture("report.pdf", List(3) { A4 }))
@@ -145,8 +143,6 @@ class StampTest {
         assertEquals("2", reader.plainText(output.file, 1, SECRET).orEmpty().trim())
     }
 
-    // --- watermark ---
-
     @Test
     fun textWatermarkIsOnEveryPageOfEverySize() = runBlocking {
         val document = open(fixture("deck.pdf", listOf(A4, A4, PageSpec(842, 595), A4)))
@@ -209,8 +205,6 @@ class StampTest {
         page.recycle()
     }
 
-    // --- failures ---
-
     @Test
     fun unreadableImageFailsAndLeavesNothing() = runBlocking {
         val notAnImage = File(dir, "notes.png").apply { writeText("not an image") }
@@ -260,8 +254,6 @@ class StampTest {
         assertEquals("1,1-2,1", StampRunner.pageRangeSpec(listOf(1, 1, 2, 1)))
         assertEquals("7", StampRunner.pageRangeSpec(listOf(7)))
     }
-
-    // --- helpers ---
 
     private fun input(
         document: ToolDocument,

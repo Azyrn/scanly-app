@@ -252,7 +252,7 @@ class LicenseRepository @Inject constructor(
     ): String = when (this) {
         is HttpException -> backendError?.message ?: context.getString(R.string.lic_check_failed)
         // The session was rejected; its message says to sign in again. Must precede IOException,
-        // which it extends — "Couldn't reach Scanly" sent people to check a connection that worked.
+        // which it extends, or the user is sent to check a connection that works.
         is TokenUnavailableException -> message ?: context.getString(R.string.net_no_connection)
         // Covers a token that expired between the sign-in check and the call.
         is IOException -> if (authRepository.isSignedIn) {

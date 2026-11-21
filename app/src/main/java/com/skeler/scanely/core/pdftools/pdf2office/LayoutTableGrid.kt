@@ -13,7 +13,6 @@ internal class Grid(val columns: List<Column>, val slots: List<List<List<LayoutC
 
 internal fun List<LayoutCell>.text(): String = joinToString(" ") { it.text }
 
-/** [rows] as a grid of columns. */
 internal fun grid(rows: List<LayoutLine>): Grid {
     // Columns from every cell, merged where they overlap, so a wide header and the narrow
     // values under it land in one column.

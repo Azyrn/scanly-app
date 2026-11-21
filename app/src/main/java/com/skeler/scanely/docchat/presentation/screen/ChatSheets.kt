@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.skeler.scanely.R
 import com.skeler.scanely.ui.viewmodel.DesignSource
 
-/** Where a file comes from — nothing about what it is for; the composer asks that. One row of four. */
+/** Where a file comes from — nothing about what it is for; the message says that. One row of four. */
 @Composable
 internal fun AttachSheet(
     onDismiss: () -> Unit,

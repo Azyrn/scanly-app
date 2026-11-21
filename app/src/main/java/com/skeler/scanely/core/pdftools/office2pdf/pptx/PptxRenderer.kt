@@ -61,8 +61,6 @@ internal class PptxRenderer(private val images: ImageSource, private val issues:
         }
     }
 
-    // --- shapes ---
-
     private fun drawShape(canvas: Canvas, shape: ShapeElement) {
         val f = shape.frame
         if (shape.fill != null || shape.stroke != null) {
@@ -131,8 +129,6 @@ internal class PptxRenderer(private val images: ImageSource, private val issues:
         }
         canvas.drawPath(path, strokePaint)
     }
-
-    // --- tables ---
 
     private fun drawTable(canvas: Canvas, table: TableElement) {
         val f = table.frame
@@ -203,8 +199,6 @@ internal class PptxRenderer(private val images: ImageSource, private val issues:
         strokePaint.pathEffect = null
         canvas.drawLine(x0, y0, x1, y1, strokePaint)
     }
-
-    // --- frames ---
 
     private inline fun withFrame(canvas: Canvas, f: Frame, applyFlips: Boolean, block: () -> Unit) {
         val save = canvas.save()

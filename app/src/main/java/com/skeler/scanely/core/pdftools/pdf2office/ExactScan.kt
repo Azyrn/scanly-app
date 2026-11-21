@@ -79,7 +79,7 @@ internal suspend fun confirmTables(
 /**
  * The text of a page that has none of its own (a scan), read from its picture with the bundled
  * PaddleOCR models, as an invisible layer over the picture. Null when it can't be read or finds
- * nothing: the page then stays a picture, as before.
+ * nothing: the page then stays a plain picture.
  */
 internal suspend fun recogniseScan(
     reader: PaddleLineReader,

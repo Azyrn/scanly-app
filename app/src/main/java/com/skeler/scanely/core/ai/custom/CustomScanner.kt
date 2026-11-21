@@ -55,8 +55,8 @@ internal class CustomScanner @Inject constructor(
 
     /**
      * [pageRange] is the same `1-5,8` spec the backend route takes. It is applied here because the
-     * server never sees this scan — before it was honoured, choosing pages 40-45 of a long PDF
-     * quietly returned pages 1-20.
+     * server never sees this scan; ignored, pages 40-45 of a long PDF would quietly come back as
+     * pages 1-20.
      */
     suspend fun scan(
         uri: Uri,
@@ -150,7 +150,7 @@ internal class CustomScanner @Inject constructor(
             return CustomScanResult.Failure(it)
         }
         val root = body?.let { runCatching { json.parseToJsonElement(it) as? JsonObject }.getOrNull() }
-        // A reply cut off at the model's output limit reads as a whole one: a long PDF lost its last pages unnoticed.
+        // A reply cut off at the model's output limit reads as a whole one, so a long PDF loses its last pages unseen.
         if (root != null && ProviderResponse.wasCutOff(config.protocol, root)) {
             return CustomScanResult.Failure(ConnectionFailure.CutOff)
         }
@@ -182,7 +182,7 @@ internal class CustomScanner @Inject constructor(
 
     /**
      * Decoded at a power-of-two subsample, as `PayloadFactory` does. Decoded whole, a 50-200 MP camera
-     * photo needs 200-800 MB, and the OutOfMemoryError that follows is no Exception: it crashed the app.
+     * photo needs 200-800 MB, and the OutOfMemoryError that follows is no Exception: it crashes the app.
      */
     private fun renderImage(uri: Uri): PageResult {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -224,7 +224,7 @@ internal class CustomScanner @Inject constructor(
             )
 
             // Refused rather than truncated. One request carries every page, so a longer document
-            // silently became its first twenty — a wrong answer that looks like a right one.
+            // would silently become its first twenty — a wrong answer that looks like a right one.
             is PageSelection.Result.Pages -> if (selection.indices.size > MAX_PAGES) {
                 Selected.Refused(
                     "Your own endpoint takes up to $MAX_PAGES pages at a time, and this is " +

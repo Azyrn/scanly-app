@@ -13,8 +13,6 @@ private fun obj(json: String) = Json.parseToJsonElement(json) as JsonObject
 
 class ProviderProtocolTest {
 
-    // ---- auth headers -------------------------------------------------------
-
     @Test
     fun `bearer is the only style that decorates the value`() {
         assertEquals(
@@ -72,8 +70,6 @@ class ProviderProtocolTest {
         )
         assertNull(config.headers()["anthropic-version"])
     }
-
-    // ---- request bodies -----------------------------------------------------
 
     @Test
     fun `the openai probe names the model in the body`() {
@@ -155,8 +151,6 @@ class ProviderProtocolTest {
                 .toString().contains("systemInstruction")
         )
     }
-
-    // ---- responses ----------------------------------------------------------
 
     @Test
     fun `text is extracted from each protocol's success envelope`() {

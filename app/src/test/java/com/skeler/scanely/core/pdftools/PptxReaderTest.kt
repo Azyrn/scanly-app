@@ -189,8 +189,6 @@ class PptxReaderTest {
         assertEquals("IV.", autoNumber("romanUcPeriod", 4))
     }
 
-    // --- helpers ---
-
     private fun withDeck(block: (PptxReader) -> Unit) {
         val file = zip("deck.pptx", deckEntries())
         PptxReader(file, ::domParse).use(block)

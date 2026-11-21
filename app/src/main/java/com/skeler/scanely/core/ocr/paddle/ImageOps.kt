@@ -17,7 +17,7 @@ private val IMAGENET_MEAN = floatArrayOf(0.485f, 0.456f, 0.406f)
 private val IMAGENET_STD = floatArrayOf(0.229f, 0.224f, 0.225f)
 
 // Channel values are 0..255 ints, so each normalization is a 256-entry lookup.
-// Entries hold the exact float the inline expression produced — bit-identical tensors.
+// Each entry is the exact float the per-pixel expression gives, so tensors stay bit-identical.
 private fun normLut(mean: Float, std: Float) = FloatArray(256) { ((it / 255f) - mean) / std }
 
 private val IMAGENET_LUT = Array(3) { normLut(IMAGENET_MEAN[it], IMAGENET_STD[it]) }

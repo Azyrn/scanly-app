@@ -58,7 +58,7 @@ data class PdfStudioUiState(
     val isSelecting: Boolean get() = selection.isNotEmpty()
 }
 
-// Kept whole on purpose: the studio screen's state holder: one function per page-grid intent.
+// Kept whole on purpose: the studio screen's state holder, one function per page-grid intent.
 @Suppress("TooManyFunctions")
 @HiltViewModel
 class PdfStudioViewModel @Inject constructor(

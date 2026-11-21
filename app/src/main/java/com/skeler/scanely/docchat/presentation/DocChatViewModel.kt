@@ -166,8 +166,6 @@ class DocChatViewModel @Inject internal constructor(
     /** Revise a chosen version rather than the newest. */
     fun reviseFrom(designId: String) = composer.update { it.copy(reviseDesignId = designId, startNew = false) }
 
-    /** An expired file's request, back in the composer as a new document. */
-
     /** A row of the agent's log in full ([AgentClient.output]). */
     suspend fun rowOutput(turnId: String, row: String): RowOutput = agent.output(turnId, row)
 
@@ -186,6 +184,7 @@ class DocChatViewModel @Inject internal constructor(
     /** Its time ran out on this screen: the server has denied it (or is about to). */
     fun approvalExpired(approvalId: String) = approvals.closed(approvalId)
 
+    /** An expired file's request, back in the composer as a new document. */
     fun rebuild(fileMessageId: String) {
         val messages = state.value.messages
         val at = messages.indexOfFirst { it.id == fileMessageId }

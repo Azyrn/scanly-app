@@ -403,5 +403,3 @@ private fun Meta(text: String) {
 private val UPGRADE_CODES = setOf("quota_exceeded", "format_not_in_plan", "budget_exhausted")
 private val THUMB_WIDTH = 76.dp
 private const val A4_PORTRAIT = 210f / 297f
-
-/** The server refuses longer answers; the field stops there instead. */

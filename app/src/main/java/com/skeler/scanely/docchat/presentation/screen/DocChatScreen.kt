@@ -600,8 +600,8 @@ private fun MessageList(
                         ),
                         actions = actions,
                         // No placement animation: when the keyboard opens the list shrinks, and animating
-                        // every message to its new place first drew them below the list (a blank frame,
-                        // then a slide). They now stay attached to the composer; new ones just fade in.
+                        // every message to its new place first draws them below the list (a blank frame,
+                        // then a slide). Without it they stay attached to the composer; new ones just fade in.
                         modifier = Modifier.animateItem(
                             fadeInSpec = ChatMotion.spec(),
                             placementSpec = null,

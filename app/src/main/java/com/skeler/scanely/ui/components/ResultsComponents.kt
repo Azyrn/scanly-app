@@ -385,7 +385,7 @@ fun ExtractedTextSection(
 ) {
     val shown = if (state.editing) state.draft else text
     // Counted off the main thread, and the last count stays up until the new one is ready:
-    // resetting it on every change made "0 words" flicker under the text while it was edited.
+    // resetting it on every change would make "0 words" flicker under the text while it is edited.
     var counts by remember { mutableStateOf<Pair<Int, Int>?>(null) }
     LaunchedEffect(shown) {
         counts = computeForDisplay { shown.trim().split(Regex("\\s+")).count { it.isNotBlank() } to shown.length }

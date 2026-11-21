@@ -41,7 +41,7 @@ import com.skeler.scanely.core.text.MdBlock
 /**
  * An answer written in Markdown, drawn as such: the app's own parser (the one PDF and HTML export
  * use) splits it into blocks and spans, and each becomes plain Compose text. Text with no Markdown
- * in it comes out as one paragraph, the same as before.
+ * in it comes out as one plain paragraph.
  */
 @Composable
 internal fun MarkdownText(text: String, modifier: Modifier = Modifier) {

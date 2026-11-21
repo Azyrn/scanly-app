@@ -19,8 +19,7 @@ class ExtractedTextState internal constructor(initial: String) {
  *
  * A ViewModel rather than rememberSaveable: OCR of a long document is easily more text than the
  * ~1 MB Binder limit on the saved-instance-state Bundle, which would crash the app on the way to
- * the background. The state is rebuilt only when the result text itself changes — a new scan —
- * matching what the plain `remember(text)` it replaces did.
+ * the background. The state is rebuilt only when the result text itself changes, i.e. a new scan.
  */
 class ExtractedTextHolder : ViewModel() {
     private var source: String? = null

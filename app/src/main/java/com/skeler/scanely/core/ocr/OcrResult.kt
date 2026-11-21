@@ -35,8 +35,8 @@ data class TextBlockData(
  * What to tell the user when an offline scan produced no text, or null when it genuinely found
  * nothing on the page.
  *
- * A failure used to fall through to "No text extracted", which tells the user their document is
- * blank when the fault was the app's. The engine's own message is not shown: it is an exception
+ * Falling through to "No text extracted" would tell the user their document is blank when the
+ * fault was the app's. The engine's own message is not shown: it is an exception
  * string, not a sentence written for a person.
  */
 fun scanFailureMessage(context: Context, result: OcrResult?): String? {

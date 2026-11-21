@@ -21,8 +21,8 @@ import javax.inject.Singleton
 
 /**
  * [ScanlyApi] for `/v1/me` and the licence calls. They answer small JSON in well under a second,
- * so they must not share the scan client's five-minute read timeout: a stalled Worker left the
- * paywall spinning for that long.
+ * so they must not share the scan client's five-minute read timeout: a stalled Worker would leave
+ * the paywall spinning for that long.
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

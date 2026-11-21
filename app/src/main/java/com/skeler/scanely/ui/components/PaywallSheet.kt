@@ -527,9 +527,9 @@ private fun PlanFeature(text: String) {
 }
 
 /**
- * The sheet's headline, which has to match why it opened. A Pro-only tool used to share "You've
- * hit your plan's limit" with running out of credits, so a free user tapping "Sign" was told they
- * had exhausted something they had never used.
+ * The sheet's headline, which has to match why it opened. A Pro-only tool can't share "You've
+ * hit your plan's limit" with running out of credits, or a free user tapping "Sign" is told they
+ * have exhausted something they have never used.
  */
 internal fun paywallHeadline(
     context: Context,

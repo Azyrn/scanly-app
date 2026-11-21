@@ -277,8 +277,8 @@ fun TranslatingContent(modifier: Modifier = Modifier) {
 }
 
 /**
- * Nothing to show. [failure] is set when the scan failed rather than found nothing — the two used
- * to share "No text extracted", which blamed the user's document for the app's fault.
+ * Nothing to show. [failure] is set when the scan failed rather than found nothing, so the app's
+ * fault isn't reported as "No text extracted" and blamed on the user's document.
  */
 @Composable
 fun EmptyResultContent(modifier: Modifier = Modifier, failure: String? = null) {

@@ -7,9 +7,8 @@ package com.skeler.scanely.core.pdftools.pdf2office
  * one line each — "left line, right line" — and every paragraph alternates between two articles.
  * A region is cut down a vertical gutter only when both sides read as prose: a table's columns
  * also leave gutters, and splitting them would lose the table. Columns of Arabic or Hebrew are
- * read right to left. Where no gutter qualifies, the
- * region is cut across its widest horizontal gap (which lifts a full-width headline off the
- * columns below it) and the halves are tried again.
+ * read right to left. Where no gutter qualifies, the region is cut across its widest horizontal
+ * gap (which lifts a full-width headline off the columns below it) and the halves are tried again.
  */
 internal object LayoutRegions {
 

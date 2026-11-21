@@ -205,8 +205,6 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
         writer.close()
     }
 
-    // --- page parts -------------------------------------------------------------------------
-
     private fun boxes(layout: ExactPageLayout, heightPt: Float, behind: Boolean, skip: ExactTable?): String {
         val xml = StringBuilder()
         // A tagged page's headings are the ones its structure names, and they are in the running text.
@@ -379,7 +377,7 @@ class ExactDocxWriter(out: OutputStream, private val measurer: TextMeasurer) {
     }
 }
 
-// --- XML parts that need no writer state ----------------------------------------------------
+// XML parts that need no writer state.
 
 /** Rows and cells of a native Word table placed as the PDF had them. */
 internal class DocxTableXml(private val measurer: TextMeasurer) {
@@ -465,7 +463,7 @@ internal fun sectionProperties(
     bottomPt: Float = 0f,
     leftPt: Float = 0f,
     rightPt: Float = 0f,
-    /** w:headerReference elements ([ExactDocxWriter.headers]); [titlePage]: the first page has a header of its own. */
+    /** w:headerReference elements ([DocxExtraParts.headers]); [titlePage]: the first page has a header of its own. */
     headers: String = "",
     titlePage: Boolean = false
 ): String {

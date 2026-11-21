@@ -47,10 +47,9 @@ import javax.inject.Singleton
 /**
  * A backend failure that may succeed on retry.
  *
- * [retryAfterSeconds] is the server's own hint. Honouring it matters more than it looks: Gemini
- * answers a capacity failure with 30 seconds, and the local backoff alone waits about one, so
- * ignoring the hint burned all three attempts inside four seconds and reported a failure the
- * server had said would clear.
+ * [retryAfterSeconds] is the server's own hint. Gemini answers a capacity failure with 30 seconds
+ * while the local backoff alone waits about one, so without the hint all three attempts are spent
+ * inside four seconds on a failure the server said would clear.
  */
 internal class TransientAiException(
     message: String,

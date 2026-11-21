@@ -33,8 +33,6 @@ sealed interface Destination {
     /** Build Documents with AI. Loads itself from the chat cache; null opens a new chat. */
     @Serializable data class DocChat(val chatId: String? = null) : Destination
 
-    /** The document chat's history; picking a chat hands its id back to [DocChat]. */
-
     @Serializable data object Results : Destination
 
     @Serializable data object UnifiedResults : Destination

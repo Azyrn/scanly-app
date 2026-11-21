@@ -59,9 +59,10 @@ object ChatModule {
 
     /**
      * The same routes for the agent's live events (GET /v1/agent/turns/{id}/events), a stream that
-     * stays open for the whole turn: no call timeout (60 s cut every stream short), and a read timeout
-     * of three of the Worker's 15 s pings (worker/src/agent-turn.ts SSE_PING_MS), so a model thinking
-     * quietly never ends it. OkHttp's default 10 s read timeout had: the app then polled every 3 s.
+     * stays open for the whole turn: no call timeout (the 60 s one would cut every stream short), and
+     * a read timeout of three of the Worker's 15 s pings (worker/src/agent-turn.ts SSE_PING_MS), so a
+     * model thinking quietly never ends it. OkHttp's default 10 s read timeout does, and the app then
+     * falls back to polling every 3 s.
      */
     @Provides
     @Singleton

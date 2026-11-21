@@ -138,8 +138,6 @@ class PowerPointToPdfTest {
         assertTrue(run.listFiles().isNullOrEmpty())
     }
 
-    // --- helpers ---
-
     private fun job() = PptxToPdfJob(workspace, QpdfEngine())
 
     private fun imported(file: File, name: String = file.name) = ImportedFile(file, name, file.length())

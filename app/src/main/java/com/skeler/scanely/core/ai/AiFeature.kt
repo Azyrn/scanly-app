@@ -3,16 +3,13 @@ package com.skeler.scanely.core.ai
 /**
  * Every AI feature, and where each one runs when the user has configured their own endpoint.
  *
- * This exists because the answer used to be decided separately inside each method of
- * [GenerativeAiService], and three of the four got it wrong. Extraction and page ranges were
- * dropped on the floor by a custom scan, translation silently went to the backend and billed quota
- * that Settings promises it would not, and design never consulted the setting at all. None of those
- * was visible at the call site: each method simply omitted an `if`, and an omission looks like
- * nothing.
+ * Declared as data rather than decided inside each method of [GenerativeAiService], where a missing
+ * `if` is invisible: decided per method, three of four features got it wrong. A custom scan dropped
+ * extraction and page ranges, translation went to the backend and billed quota Settings promises it
+ * would not, and design never consulted the setting at all.
  *
- * So routing is declared here as data, taken by [GenerativeAiService.route], and pinned by
- * `AiFeatureRoutingTest`, which fails when an entry point exists that no entry in this enum
- * covers. Adding a feature now forces the question to be answered rather than skipped.
+ * Taken by [GenerativeAiService.route] and pinned by `AiFeatureRoutingTest`, which fails when an
+ * entry point exists that no entry in this enum covers, so a new feature has to answer the question.
  */
 enum class AiFeature(val label: String, val routing: CustomRouting) {
     SCAN("AI Scan", CustomRouting.ON_YOUR_ENDPOINT),

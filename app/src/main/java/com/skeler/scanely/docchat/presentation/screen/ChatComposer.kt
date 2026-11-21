@@ -129,7 +129,7 @@ internal fun ChatComposer(
         }
         Surface(
             shape = RoundedCornerShape(24.dp),
-            // Opaque: see-through, a message behind it read through the draft (2026-10-16).
+            // Opaque: a see-through container let the message behind it read through the draft (2026-10-16).
             color = MaterialTheme.colorScheme.surfaceContainerHigh,
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
             modifier = Modifier.fillMaxWidth()
@@ -517,7 +517,7 @@ private fun ThumbIcon(painter: Painter) {
 
 /**
  * One line under the composer: what chatting costs, in a new chat only (the agent bills only for a
- * file it builds); the designer's quoted price on the legacy path, as before.
+ * file it builds); the designer's quoted price on the legacy path.
  */
 @Composable
 private fun CostCaption(paywall: PaywallState, agent: Boolean, emptyChat: Boolean) {
@@ -583,9 +583,8 @@ private class AttachPickers(val camera: () -> Unit, val photos: () -> Unit, val 
 
 /**
  * Camera is Scanly's own scanner in Document mode, up to the designer's page limit: one page comes
- * back as a picture, several as one PDF — a document to rebuild. Photos is the system photo picker
- * (no permission). A picked picture's role is asked in the
- * composer; a PDF is always a document to rebuild.
+ * back as a picture, several as one PDF. Photos is the system photo picker (no permission). Whatever
+ * is picked is attached as it is; the message says what to do with it.
  */
 @Composable
 private fun rememberAttachPickers(viewModel: DocChatViewModel): AttachPickers {

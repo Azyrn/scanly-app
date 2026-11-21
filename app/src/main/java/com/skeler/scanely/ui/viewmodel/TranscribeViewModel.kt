@@ -35,7 +35,7 @@ import kotlin.math.ceil
 data class PendingAudio(
     val source: TranscriptionRunner.Source,
     val durationMs: Long,
-    /** Filled in once the file has been probed; null while probing. */
+    /** False while the file is being probed; [durationMs] is 0 until then. */
     val probed: Boolean = true
 )
 

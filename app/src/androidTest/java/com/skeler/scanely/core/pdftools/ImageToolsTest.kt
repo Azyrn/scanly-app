@@ -55,8 +55,6 @@ class ImageToolsTest {
         dir.deleteRecursively()
     }
 
-    // --- Convert to JPG ---
-
     @Test
     fun transparentPngBecomesJpegOnWhite() = runBlocking {
         val png = halfTransparentPng("logo.png")
@@ -126,8 +124,6 @@ class ImageToolsTest {
         assertEquals(listOf("scan.jpg", "scan (2).jpg"), result.outputs.map { it.fileName })
     }
 
-    // --- Unreadable inputs ---
-
     @Test
     fun unreadableFilesAreSkippedWhenOthersWork() = runBlocking {
         val good = photo("good.jpg", Bitmap.CompressFormat.JPEG)
@@ -160,8 +156,6 @@ class ImageToolsTest {
         assertEquals(ToolFailure.LowStorage, failure)
         assertTrue(run.listFiles().isNullOrEmpty())
     }
-
-    // --- Compress ---
 
     @Test
     fun jpegCompressesSmallerAndKeepsFormat() = runBlocking {
@@ -206,8 +200,6 @@ class ImageToolsTest {
         assertTrue(output.sizeBytes < png.length())
     }
 
-    // --- Convert from JPG ---
-
     @Test
     fun jpegConvertsToEachTarget() = runBlocking {
         val jpeg = photo("cat.jpg", Bitmap.CompressFormat.JPEG, width = 120, height = 90)
@@ -237,8 +229,6 @@ class ImageToolsTest {
         assertEquals(0, Color.alpha(bitmap.getPixel(5, 20)))
         assertNear(Color.RED, bitmap.getPixel(35, 20))
     }
-
-    // --- Resize ---
 
     @Test
     fun resizeByPercentAndBySize() = runBlocking {
@@ -274,8 +264,6 @@ class ImageToolsTest {
         assertEquals(20, bitmap.width)
         assertEquals(0, Color.alpha(bitmap.getPixel(2, 10)))
     }
-
-    // --- helpers ---
 
     private fun jobInput(vararg files: File, onProgress: (Float?) -> Unit = {}) = ToolJobInput(
         documents = emptyList(),

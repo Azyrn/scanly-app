@@ -152,8 +152,6 @@ class ExcelToPdfTest {
         assertRunEmpty(run)
     }
 
-    // --- helpers ---
-
     private fun imported(file: File) = ImportedFile(file, file.name, file.length())
 
     private suspend fun failureOf(block: suspend () -> Unit): ToolFailure? = try {

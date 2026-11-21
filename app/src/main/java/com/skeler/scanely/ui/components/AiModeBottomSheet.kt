@@ -91,7 +91,7 @@ fun AiModeBottomSheet(
             }
 
             // One entry for every AI-written document: describing one is the Custom tile, so
-            // the old Create Document card would only duplicate it.
+            // a separate Create Document card would only duplicate it.
             if (AiMode.DESIGN_DOCUMENT.feature in offeredFeatures) {
                 AiModeItem(
                     icon = Icons.Rounded.AutoAwesome,

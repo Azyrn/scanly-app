@@ -43,8 +43,6 @@ class RepairExtractTest {
         dir.deleteRecursively()
     }
 
-    // --- repair ---
-
     @Test
     fun missingXrefIsRebuiltWithEveryPage() = runBlocking {
         val broken = fixture("broken.pdf", texts = listOf("one", "two", "three"), damage = Damage.NO_XREF)
@@ -116,8 +114,6 @@ class RepairExtractTest {
         assertRunEmpty(run)
     }
 
-    // --- extract text ---
-
     @Test
     fun textComesOutInPageOrderWithMarkers() = runBlocking {
         val document = open(fixture("text.pdf", texts = listOf("alpha", "bravo", "charlie")))
@@ -186,8 +182,6 @@ class RepairExtractTest {
         assertEquals(ToolFailure.LowStorage, failure)
         assertRunEmpty(run)
     }
-
-    // --- helpers ---
 
     private fun rawInput(file: File, run: File) =
         ToolJobInput(emptyList(), listOf(ImportedFile(file, file.name, file.length())), run) {}

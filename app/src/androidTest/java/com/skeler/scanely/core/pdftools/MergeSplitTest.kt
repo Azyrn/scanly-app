@@ -52,8 +52,6 @@ class MergeSplitTest {
         dir.deleteRecursively()
     }
 
-    // --- merge ---
-
     @Test
     fun mergeKeepsTheArrangedOrderAndReadsEachPassword() = runBlocking {
         val plain = document(fixture("plain.pdf", pages = 3, widthBase = 300))
@@ -108,8 +106,6 @@ class MergeSplitTest {
         assertEquals(ToolFailure.LowStorage, failureOf { MergeJob(full).merge(documents, run) {} })
         assertRunEmpty(run)
     }
-
-    // --- split: ranges, extract, delete ---
 
     @Test
     fun byRangesMakesOneFilePerRange() = runBlocking {
@@ -185,8 +181,6 @@ class MergeSplitTest {
         assertEquals(listOf(204), widths(outputs[1].file, SECRET))
     }
 
-    // --- split: every N ---
-
     @Test
     fun everyNPagesLeavesTheRemainderInTheLastPart() = runBlocking {
         val source = document(fixture("long.pdf", pages = 25))
@@ -224,8 +218,6 @@ class MergeSplitTest {
         assertNotNull(failureOf { split.split(document(junk, pages = 4), SplitMode.EveryN(2), run) {} })
         assertRunEmpty(run)
     }
-
-    // --- split: by size ---
 
     @Test
     fun bySizeKeepsEveryPartUnderTheLimitAndEveryPageInOrder() = runBlocking {
@@ -275,8 +267,6 @@ class MergeSplitTest {
         )
         assertRunEmpty(run)
     }
-
-    // --- helpers ---
 
     private fun document(file: File, pages: Int? = null, password: String = ""): ToolDocument = ToolDocument(
         file = file,

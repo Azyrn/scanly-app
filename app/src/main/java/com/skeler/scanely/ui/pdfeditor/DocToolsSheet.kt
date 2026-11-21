@@ -1242,7 +1242,7 @@ private val SignatureVerdict.tint: Color
         SignatureVerdict.INVALID -> MaterialTheme.colorScheme.error
     }
 
-// Fixed status color preserves the familiar PDF-reader verification cue.
+// Fixed rather than themed: green and amber are the signature-status cue PDF readers already use.
 private val VerdictGreen = Color(0xFF2E7D32)
 private val VerdictAmber = Color(0xFFB26A00)
 

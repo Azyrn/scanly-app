@@ -182,10 +182,10 @@ class ConversionCharges internal constructor(
         Outcome.Later
     }
 
-    /** Kept once: a key asked for again keeps its first ask's time, so its window does not restart. */
     private fun httpOutcome(code: Int): Outcome =
         if (code >= HTTP_SERVER_ERROR || code in RETRYABLE_HTTP) Outcome.Later else Outcome.Final
 
+    /** Kept once: a key asked for again keeps its first ask's time, so its window does not restart. */
     private suspend fun keep(refund: PendingRefund) = pendingLock.withLock {
         val pending = readPending()
         if (pending.none { it.key == refund.key }) writePending(pending + refund)
@@ -221,7 +221,7 @@ class ConversionCharges internal constructor(
             tmp.writeText(pending.joinToString("\n") { "${it.key}\t${it.firstAt}" })
             if (!tmp.renameTo(pendingFile)) Log.w(TAG, "Pending refunds not saved")
         } catch (e: IOException) {
-            // A full disk: the refund is lost as before this list existed, never the conversion with it.
+            // A full disk: only the kept refund is lost, never the conversion with it.
             Log.w(TAG, "Pending refunds not saved: ${e.javaClass.simpleName}")
         }
     }

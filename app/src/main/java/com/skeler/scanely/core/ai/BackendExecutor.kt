@@ -35,19 +35,6 @@ internal const val BACKOFF_JITTER_MS = 600L
 internal const val MAX_BACKOFF_MS = 30_000L
 
 /**
- * How long to wait before retrying [attempt], honouring the server's own hint.
- *
- * The hint wins when it is longer, because it knows something the client cannot guess: a Gemini
- * capacity failure clears in tens of seconds, while the local backoff waits about one. Ignoring it
- * spent all three attempts inside four seconds and reported a failure the server had just said
- * would clear.
- *
- * Clamped, because a long hint — our own per-minute limiter answers 60 — would otherwise strand the
- * user watching a spinner. Retrying a little early there costs one attempt; waiting the full minute
- * costs the user.
- */
-
-/**
  * Whether a failure the server hinted at is worth sitting through.
  *
  * No hint, or a short one, means retry. A hint beyond [MAX_BACKOFF_MS] means the server is
@@ -57,6 +44,17 @@ internal const val MAX_BACKOFF_MS = 30_000L
 internal fun worthRetrying(serverRetryAfterSeconds: Int?): Boolean =
     serverRetryAfterSeconds == null || serverRetryAfterSeconds * 1000L <= MAX_BACKOFF_MS
 
+/**
+ * How long to wait before retrying [attempt], honouring the server's own hint.
+ *
+ * The hint wins when it is longer, because it knows something the client cannot guess: a Gemini
+ * capacity failure clears in tens of seconds, while the local backoff waits about one, so without
+ * it all three attempts are spent inside four seconds on a failure the server said would clear.
+ *
+ * Clamped, because a long hint — our own per-minute limiter answers 60 — would otherwise strand the
+ * user watching a spinner. Retrying a little early there costs one attempt; waiting the full minute
+ * costs the user.
+ */
 internal fun backoffDelay(attempt: Int, serverRetryAfterSeconds: Int?): Long {
     val local = BACKOFF_BASE_MS * (1L shl (attempt - 1)) + Random.nextLong(BACKOFF_JITTER_MS)
     val server = serverRetryAfterSeconds?.times(1000L)?.coerceAtMost(MAX_BACKOFF_MS) ?: 0L
@@ -137,7 +135,7 @@ internal class BackendExecutor @Inject constructor(
     private fun finalStep(attempt: Int, e: Exception): AttemptStep<Nothing> = when (e) {
         is TokenUnavailableException -> {
             // A session the server rejected. Retrying cannot fix it, and the message is written
-            // for the user — it used to be dropped here for "your connection looks unstable".
+            // for the user, so it goes through rather than a generic "connection looks unstable".
             aiDebug { "attempt ${attempt + 1} session: ${e.message}" }
             AttemptStep.Done(
                 AiOutcome.Fatal(AiResult.Error(e.message ?: unexpectedMessage(), code = "unauthenticated"))

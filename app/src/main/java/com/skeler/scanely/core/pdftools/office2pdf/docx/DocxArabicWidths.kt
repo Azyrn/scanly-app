@@ -173,7 +173,7 @@ private fun next(points: IntArray, i: Int): Int {
 
 /**
  * Joined-script (Arabic) runs drawn in a stand-in font at the width of the document's own font, when its
- * widths are known ([DocxFonts.advances]); [paint] makes a run's paint.
+ * widths are known ([DocxFonts.advances]); [newPaint] makes a run's paint.
  */
 internal class JoinedRuns(private val fonts: DocxFonts, private val newPaint: (RunStyle) -> TextPaint) {
     /**

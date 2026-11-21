@@ -93,9 +93,9 @@ private object CallerHeaders : Interceptor {
 /**
  * OkHttp follows a redirect to another host and drops only `Authorization` on the way
  * (RetryAndFollowUpInterceptor.buildRedirectRequest), so a key in `x-api-key`, `x-goog-api-key`,
- * Azure's `api-key` or the user's own header went to whatever host the endpoint redirected to. Every
- * hop to another origin (scheme, host or port) now goes without the headers the app set; a redirect
- * within the endpoint's own origin keeps them.
+ * Azure's `api-key` or the user's own header would go to whatever host the endpoint redirects to.
+ * Every hop to another origin (scheme, host or port) goes without the headers the app set; a
+ * redirect within the endpoint's own origin keeps them.
  */
 private object SameOriginCredentials : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -37,7 +37,7 @@ private const val AD_REFRESH_MS = 55 * 60 * 1000L
  * How long to wait before reloading after the [failures]th failed load in a row: doubling from
  * 30 s up to 8 minutes, then every 8 minutes for as long as loads keep failing. A load that failed
  * offline or for lack of fill is worth asking again, but not in a tight loop, which AdMob
- * penalises; stopping altogether left the app adless until a restart, since the ad button is
+ * penalises; stopping altogether would leave the app adless until a restart, since the ad button is
  * hidden while no ad is loaded. A successful load, or a load the user's own tap starts, resets it.
  */
 internal fun adLoadRetryDelayMs(failures: Int): Long =
@@ -145,7 +145,7 @@ class RewardedAdManager @Inject constructor(
         )
     }
 
-    /** Without this a failed load (offline at start, no fill) left the paywall adless for good. */
+    /** Without this a failed load (offline at start, no fill) would leave the paywall adless for good. */
     private fun scheduleRetry() {
         val wait = adLoadRetryDelayMs(++loadFailures)
         retryJob?.cancel()

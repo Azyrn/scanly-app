@@ -74,7 +74,7 @@ internal object StructureTables {
     /**
      * A pipe table recovered from the cell boxes alone, for when SLANet is not installed.
      * It cannot see merged cells the way SLANet does, but a plain grid is far closer to the
-     * page than the flat run of lines this used to degrade to.
+     * page than a flat run of lines.
      */
     fun fromGeometry(lines: List<PositionedLine>): String? {
         if (lines.size < MIN_TABLE_CELLS) return null

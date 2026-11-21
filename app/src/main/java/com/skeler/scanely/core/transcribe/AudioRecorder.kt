@@ -273,7 +273,7 @@ class RecordingService : Service() {
 /**
  * Each startForegroundService obliges the service to call startForeground within seconds, or
  * Android kills the app (ForegroundServiceDidNotStartInTimeException). Stopping the service before
- * its onStartCommand ran — a recording stopped right after it started — destroyed it without ever
+ * its onStartCommand runs — a recording stopped right after it started — destroys it without ever
  * entering the foreground. So a stop that arrives while a start is still pending is deferred, and
  * the service stops itself once every pending start has reached startForeground.
  */

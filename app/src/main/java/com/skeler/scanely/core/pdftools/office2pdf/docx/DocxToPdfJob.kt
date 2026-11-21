@@ -30,8 +30,8 @@ private const val TAG = "DocxToPdfJob"
 
 /**
  * Word to PDF, entirely on the phone: our own .docx reader and a page layout drawn with the
- * platform's PdfDocument. Text, styles, lists, tables, pictures and page breaks come through;
- * what can't be drawn faithfully (charts, text boxes, equations, headers) is left out and the
+ * platform's PdfDocument. Text, styles, lists, tables, pictures, headers, footnotes and page breaks
+ * come through; what can't be drawn faithfully (charts, text boxes, equations) is left out and the
  * result says so, rather than being guessed at or failing the whole document.
  */
 @Singleton

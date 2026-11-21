@@ -407,8 +407,8 @@ fun HomeScreen() {
             val cardPadding = if (compact) 14.dp else 20.dp
             val topPadding = if (compact) 8.dp else 14.dp
 
-            // Scrolls when the cards do not fit (a small screen with large text hid AI Scan and
-            // the extracts link); when they fit, the free height splits as the old spacers did.
+            // Scrolls when the cards do not fit (a small screen with large text would hide AI Scan
+            // and the extracts link); when they fit, [homeArrangement] splits the free height.
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -606,7 +606,7 @@ private fun rememberActionAccents(): ActionAccents {
 
 /**
  * [gap] between items; leftover height goes a fifth under the first item (the question) and the
- * rest after the last, as the 0.4/1.6 weighted spacers placed it. With no leftover it is plain spacing.
+ * rest after the last. With no leftover it is plain spacing.
  */
 private fun homeArrangement(gap: Dp) = object : Arrangement.Vertical {
     override val spacing = gap

@@ -40,9 +40,8 @@ class GenerativeAiService @Inject internal constructor(
     /**
      * The one place that decides between the user's endpoint and Scanly's backend.
      *
-     * Every entry point below goes through this, and none of them re-decides. Each used to make the
-     * call itself, and the failures were all of the same shape — an `if` that was simply never
-     * written, which reads as nothing at all at the call site. See [AiFeature].
+     * Every entry point below goes through this, and none of them re-decides: a routing `if` left
+     * out of a call site is invisible there. See [AiFeature].
      */
     private suspend fun <T> route(
         feature: AiFeature,

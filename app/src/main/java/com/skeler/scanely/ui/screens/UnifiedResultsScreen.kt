@@ -113,11 +113,11 @@ fun UnifiedResultsScreen() {
 
     val onBack: () -> Unit = { navigator.back() }
 
-    // Clearing on the way out rather than in the back button's onClick: the gesture and the button
-    // are the same exit, and only one of them used to run this.
+    // Cleared on the way out rather than in the back button's onClick: the gesture and the button
+    // are the same exit, and onClick would only cover the button.
     OnScreenExit { unifiedViewModel.clearResult() }
 
-    // Smart actions derived from the extracted text; drop Copy/ShowRaw; distinct, max 6.
+    // Smart actions derived from the extracted text.
     val quickActions = remember(uiState.textActions) {
         uiState.textActions
             .filter { it !is ScanAction.CopyText && it !is ScanAction.ShowRaw }

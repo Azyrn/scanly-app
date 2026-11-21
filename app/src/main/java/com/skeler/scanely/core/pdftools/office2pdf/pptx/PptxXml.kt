@@ -44,7 +44,7 @@ internal class XNode(val name: String, val attrs: Map<String, String>) {
         fun attrKey(namespace: String?, localName: String): String =
             if (namespace != null && namespace.endsWith("relationships")) REL_PREFIX + localName else localName
 
-        /** For parsers without namespace processing: "p:sp" → "sp", but "r:embed" keeps its prefix. */
+        /** For parsers without namespace processing: "p:sp" → "sp". [attrKey] adds `r:` back by namespace. */
         fun localName(qualified: String): String = qualified.substringAfter(':')
     }
 }

@@ -189,7 +189,7 @@ fun ScanelyNavHost(
  *
  * Two screens are on screen together for the whole of a predictive-back gesture, which is as long
  * as the user holds a finger down. A screen that paints no background of its own — relying on the
- * single Surface behind the host, as several here used to — lets the screen underneath read
+ * single Surface behind the host — lets the screen underneath read
  * straight through it for that entire time, and a screen that does not consume pointer input
  * hands taps to whatever is behind it mid-transition. Enforcing both here rather than screen by
  * screen means a new screen cannot get it wrong.

@@ -189,8 +189,6 @@ internal class ExactDocxFlow(private val writer: ExactDocxWriter, measurer: Text
         return carried.setting
     }
 
-    // --- the run ------------------------------------------------------------------------------
-
     private fun start(page: HeldPage, next: HeldPage?): FlowRun {
         val same = next?.takeIf { it.paras != null && it.widthPt == page.widthPt && it.heightPt == page.heightPt }
         val pages = listOfNotNull(page, same)

@@ -57,8 +57,6 @@ class PdfToOfficeTest {
         dir.deleteRecursively()
     }
 
-    // --- Word ---
-
     @Test
     fun textPdfKeepsThePageAndItsTextInPlace() = runBlocking {
         val document = open(pdf("report.pdf", listOf(textPage())))
@@ -115,8 +113,6 @@ class PdfToOfficeTest {
         assertTrue(xml.contains("<wp:extent cx=\"${451 * 12_700}\" cy=\"${698 * 12_700}\"/>"))
     }
 
-    // --- PowerPoint ---
-
     @Test
     fun everyPageIsASlideWithEditableText() = runBlocking {
         val pages = List(PAGES) { if (it == 3) IMAGE_PAGE else textPage() }
@@ -137,8 +133,6 @@ class PdfToOfficeTest {
         assertTrue(parts.getValue("ppt/slides/slide4.xml").contains("<p:pic>"))
         assertFalse("exact layout is not a simplified conversion", ToolNote(R.string.pdf2office_simplified_powerpoint) in result.notes)
     }
-
-    // --- Excel ---
 
     @Test
     fun gridBecomesNumericCellsOnAPageSheet() = runBlocking {
@@ -168,8 +162,6 @@ class PdfToOfficeTest {
         assertTrue(ToolNote(R.string.pdf2office_excel_no_tables) in result.notes)
         assertTrue(ToolNote(R.plurals.pdf2office_excel_scanned_skipped, 1, plural = true) in result.notes)
     }
-
-    // --- failures ---
 
     @Test
     fun noFreeSpaceIsLowStorageAndLeavesNothing() = runBlocking {
@@ -220,8 +212,6 @@ class PdfToOfficeTest {
         assertTrue(job.isCancelled)
         assertRunEmpty(run)
     }
-
-    // --- helpers ---
 
     private fun input(document: ToolDocument, onProgress: (Float?) -> Unit = {}) =
         ToolJobInput(listOf(document), emptyList(), workspace.newRun(), onProgress)

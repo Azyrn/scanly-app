@@ -17,7 +17,7 @@ fun HistoryItem.toDesignSource(now: Long = System.currentTimeMillis()): DesignSo
  *
  * A scan carries no title, so the first meaningful line stands in for one. The date leads because
  * it is what actually separates two scans of the same kind of document, and it is the part the
- * user remembers. Without this the chip showed 28 raw characters of OCR output, which named nothing.
+ * user remembers. Without it the chip would show 28 raw characters of OCR output, which name nothing.
  */
 internal fun designSourceLabel(text: String, timestamp: Long, now: Long): String {
     val day = dayLabel(timestamp, now)

@@ -2,9 +2,9 @@ package com.skeler.scanely.core.network
 
 import kotlinx.serialization.json.Json
 
-// The app's Json configurations, one instance per distinct configuration. Call sites share an
-// instance only when their settings were already identical, so none of them changed what it
-// accepts or writes. SettingsModule's injected Json and LookupJson are the other two.
+// The app's Json configurations, one instance per distinct configuration; call sites share one
+// only when they need identical settings. SettingsModule's injected Json and LookupJson are the
+// other two.
 
 /** Reading answers that may gain fields later: the Worker's, and OpenAI-compatible providers'. */
 val TolerantJson: Json = Json { ignoreUnknownKeys = true }

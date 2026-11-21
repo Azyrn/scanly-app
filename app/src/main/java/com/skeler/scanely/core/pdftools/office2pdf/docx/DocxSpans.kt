@@ -45,7 +45,7 @@ internal fun appendSeparator(text: SpannableStringBuilder) {
  *
  * So: [natural] with each space between words narrowed by [SPACE_SHRINK] (a horizontal scale on the space
  * glyph alone, which Android honours when it breaks, justifies and draws a line; a paint's word spacing
- * is ignored when breaking and dropped when drawing a justified line). Joined scripts keep their spaces.
+ * is ignored when breaking and dropped when drawing a justified line).
  */
 internal fun narrowSpaces(natural: SpannableStringBuilder): SpannableStringBuilder {
     val text = SpannableStringBuilder(natural)

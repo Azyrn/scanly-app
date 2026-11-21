@@ -11,7 +11,7 @@ class ExactBidiTest {
 
     @Test
     fun anArabicSentenceWithANumberReadsInLogicalOrder() {
-        // "سنة 2017 م" drawn left to right: م 2017 سنة reversed letters... drawn as the visual string.
+        // "سنة 2017" drawn left to right, as a producer draws it, then read back.
         val logical = "سنة 2017"
         assertEquals(logical, roundTrip(logical, rtl = true).first)
     }

@@ -121,8 +121,8 @@ fun PdfToolScreen(tool: PdfTool) {
 
     LaunchedEffect(state.message) {
         val message = state.message ?: return@LaunchedEffect
-        // Shown before it is consumed, as on the other screens: consuming first changed this
-        // effect's key, which restarted it and cancelled the snackbar before it was ever drawn.
+        // Shown before it is consumed, as on the other screens: consuming first changes this
+        // effect's key, which restarts it and cancels the snackbar before it is ever drawn.
         snackbarHostState.showSnackbar(resources.getString(message))
         vm.consumeMessage()
     }
@@ -486,7 +486,7 @@ private fun ScrollingContent(content: @Composable () -> Unit) {
             .padding(CONTENT_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // A Column, not a Box: Done adds the Beta note under its content, which a Box drew on top of it.
+        // A Column, not a Box: Done adds the Beta note under its content, which a Box would draw on top of.
         Column(
             modifier = Modifier.widthIn(max = CONTENT_MAX_WIDTH).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally

@@ -8,11 +8,9 @@ private const val QUARTERS = 4
 /**
  * How a page's picture is made from its file, as quarter turns before and after the filter.
  *
- * Review used to keep each page twice in memory (the unfiltered original and the filtered page) and apply each
- * edit to them: a rotation turned both, a filter change re-filtered the turned originals. The AUTO and
- * Whiteboard filters work on a block grid anchored at the top-left corner, so filter-then-turn and
- * turn-then-filter differ by a few pixels; replaying the edits in this order keeps every page exactly what
- * those two bitmaps held.
+ * The AUTO and Whiteboard filters work on a block grid anchored at the top-left corner, so filter-then-turn
+ * and turn-then-filter differ by a few pixels. Splitting the turns around the filter replays the edits in the
+ * order they were made: a rotation turns the filtered picture, a filter change re-filters the turned original.
  */
 data class PageTurns(val beforeFilter: Int = 0, val afterFilter: Int = 0) {
 
