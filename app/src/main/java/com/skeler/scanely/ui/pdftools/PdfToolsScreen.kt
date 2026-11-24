@@ -2,8 +2,10 @@
 
 package com.skeler.scanely.ui.pdftools
 
+import android.content.res.Resources
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -69,6 +72,7 @@ import com.skeler.scanely.ui.components.PaywallSheet
 import com.skeler.scanely.ui.pdfeditor.EditorTool
 import com.skeler.scanely.ui.pdfeditor.rememberPdfEditorStarter
 import com.skeler.scanely.ui.viewmodel.PaywallViewModel
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * The grid behind the home screen's Edit PDF card: one tile per tool, grouped by section.
@@ -334,16 +338,31 @@ private val ToolSection.titleRes: Int
 @Composable
 private fun ToolIcon(tool: PdfTool, modifier: Modifier = Modifier) {
     val ink = MaterialTheme.colorScheme.onSurface
+    val resources = LocalResources.current
     Box(modifier) {
         tool.layers.forEach { layer ->
             Icon(
-                imageVector = ImageVector.vectorResource(layer.res),
+                imageVector = ToolIconVectors.get(resources, layer.res),
                 contentDescription = null,
                 tint = layer.format?.accent() ?: ink,
                 modifier = Modifier.matchParentSize()
             )
         }
     }
+}
+
+/**
+ * The grid's 28 icon drawables, parsed once per process. ImageVector.vectorResource keeps its result
+ * only while the screen stays composed, and painterResource's cache holds vectors weakly and is
+ * cleared when the app is backgrounded, so either way most visits to this screen parsed them again
+ * inside its first frame (~15 ms). The drawables reference no theme attributes, so one copy serves
+ * every theme.
+ */
+private object ToolIconVectors {
+    private val cache = ConcurrentHashMap<Int, ImageVector>()
+
+    fun get(resources: Resources, @DrawableRes id: Int): ImageVector =
+        cache.getOrPut(id) { ImageVector.vectorResource(theme = null, res = resources, resId = id) }
 }
 
 /** Quieter than the Pro badge: it informs, it doesn't sell. Shared with the tool screen's title. */

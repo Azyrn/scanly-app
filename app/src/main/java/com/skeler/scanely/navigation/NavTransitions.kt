@@ -3,7 +3,6 @@ package com.skeler.scanely.navigation
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -15,14 +14,14 @@ val EaseOutExpo = Easing { fraction ->
     if (fraction == 1f) 1f else 1f - 2f.pow(-10f * fraction)
 }
 
-// M3 shared-axis X: delayed fade-in avoids double-exposure blend. The outgoing screen fades with
-// an ease-out, not M3's accelerate curve: an ease-in holds it at full opacity through the first
-// frames, exactly when the user is watching for the change.
+// Shared axis X where only the screen on top fades: the incoming one on a push, the outgoing one on
+// a pop (NavHost draws the pushed screen above the one it covers). The screen underneath stays
+// opaque. If both fade, there is a stretch where neither covers the window and the root background
+// dominates the frame (a white flash in the light theme), held for as long as a predictive-back
+// finger is down. The fade uses an ease-out so the change shows in the first frames.
 // 250 ms, under the 300 ms UI ceiling: screens change tens of times a session.
 private const val AXIS_DURATION_MS = 250
-private const val FADE_IN_DURATION_MS = 190
-private const val FADE_IN_DELAY_MS = 60
-private const val FADE_OUT_DURATION_MS = 140
+private const val FADE_DURATION_MS = 140
 
 // Partial width so motion suggests edge without full viewport travel.
 private const val AXIS_DISTANCE_FRACTION = 0.30f
@@ -30,41 +29,27 @@ private const val AXIS_DISTANCE_FRACTION = 0.30f
 private fun axisDistance(fullWidth: Int): Int =
     (fullWidth * AXIS_DISTANCE_FRACTION).toInt()
 
+private val topFade = tween<Float>(FADE_DURATION_MS, easing = EaseOutExpo)
+
 fun gallerySlideEnter(): EnterTransition = slideInHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     initialOffsetX = { axisDistance(it) }
-) + fadeIn(
-    animationSpec = tween(
-        FADE_IN_DURATION_MS,
-        delayMillis = FADE_IN_DELAY_MS,
-        easing = LinearOutSlowInEasing
-    )
-)
+) + fadeIn(animationSpec = topFade)
 
 fun gallerySlideExit(): ExitTransition = slideOutHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     targetOffsetX = { -axisDistance(it) }
-) + fadeOut(
-    animationSpec = tween(FADE_OUT_DURATION_MS, easing = EaseOutExpo)
 )
 
 fun galleryPopEnter(): EnterTransition = slideInHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     initialOffsetX = { -axisDistance(it) }
-) + fadeIn(
-    animationSpec = tween(
-        FADE_IN_DURATION_MS,
-        delayMillis = FADE_IN_DELAY_MS,
-        easing = LinearOutSlowInEasing
-    )
 )
 
 fun galleryPopExit(): ExitTransition = slideOutHorizontally(
     animationSpec = tween(AXIS_DURATION_MS, easing = EaseOutExpo),
     targetOffsetX = { axisDistance(it) }
-) + fadeOut(
-    animationSpec = tween(FADE_OUT_DURATION_MS, easing = EaseOutExpo)
-)
+) + fadeOut(animationSpec = topFade)
 
 /*
  * Navigation 2.10 pops through a separate pair of transitions when the pop came from a back

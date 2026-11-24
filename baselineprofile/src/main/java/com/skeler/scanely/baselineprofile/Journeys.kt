@@ -2,12 +2,14 @@ package com.skeler.scanely.baselineprofile
 
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.BySelector
 import androidx.test.uiautomator.Until
 import org.json.JSONObject
 
 /**
- * The journeys the profile and the benchmark share, so both cover the same code: cold start to
- * Home, and Home → AI options sheet → Build Documents → the chat sliding in → drawer → typing.
+ * The journeys the profile and the benchmarks share, so both cover the same code: cold start to
+ * Home; Home → AI options sheet → Build Documents → the chat sliding in → drawer → typing; and
+ * moving between Home, Settings, History and PDF tools.
  *
  * Text matches the English UI, so the phone must run in English. Nothing is ever sent: typing
  * stops before Send, so no assistant turn runs and nothing is billed.
@@ -68,3 +70,43 @@ internal fun MacrobenchmarkScope.buildDocumentsJourney() {
     device.pressBack()
     device.waitForIdle()
 }
+
+/**
+ * The screens people move between most: Home → Settings → Look & Feel and Text Recognition →
+ * Home → History → Home → PDF tools → Home. Each screen is composed from nothing when it opens and
+ * again when Back returns to it, so code missing from the profile runs interpreted on that first
+ * frame: measured at 45–65 ms instead of ~25 ms compiled, a visible stall at the start of the slide.
+ */
+internal fun MacrobenchmarkScope.navigationJourney() {
+    waitForHome()
+    openAndReturn(By.desc("Settings"), shows = "Settings", returnsTo = "AI Scan") {
+        openAndReturn(By.text("Look & Feel"), shows = "Dark theme", returnsTo = "Settings")
+        openAndReturn(By.text("Text Recognition"), shows = "Script", returnsTo = "Settings")
+    }
+    openAndReturn(By.text("View Previous Extracts"), shows = "History", returnsTo = "AI Scan")
+    openAndReturn(By.text("Edit PDF"), shows = "Organize and optimize", returnsTo = "AI Scan")
+}
+
+/** [shows] and [returnsTo] are texts found only on the screen opened and the one Back lands on. */
+private fun MacrobenchmarkScope.openAndReturn(
+    target: BySelector,
+    shows: String,
+    returnsTo: String,
+    inside: MacrobenchmarkScope.() -> Unit = {}
+) {
+    device.wait(Until.findObject(target), WAIT_MS).click()
+    check(device.wait(Until.hasObject(By.text(shows)), WAIT_MS)) { "$shows did not appear; on screen: ${onScreen()}" }
+    device.waitForIdle()
+    inside()
+    device.pressBack()
+    // The screen underneath is composed from the first frame of the pop, but the closing one stays
+    // on top, swallowing taps, until its slide ends: wait for it to leave, not for the other to show.
+    check(device.wait(Until.gone(By.text(shows)), WAIT_MS)) { "Back did not close $shows; on screen: ${onScreen()}" }
+    check(device.wait(Until.hasObject(By.text(returnsTo)), WAIT_MS)) { "Back did not return to $returnsTo; on screen: ${onScreen()}" }
+    device.waitForIdle()
+}
+
+private fun MacrobenchmarkScope.onScreen(): List<String> =
+    device.findObjects(By.textStartsWith("")).mapNotNull { it.text }.take(MAX_LISTED_TEXTS)
+
+private const val MAX_LISTED_TEXTS = 15

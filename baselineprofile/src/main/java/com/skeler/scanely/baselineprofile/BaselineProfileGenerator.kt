@@ -34,4 +34,12 @@ class BaselineProfileGenerator {
         signInIfNeeded()
         buildDocumentsJourney()
     }
+
+    /** Moving between Home, Settings, its sub-screens, History and PDF tools: hot code, not startup. */
+    @Test
+    fun navigation() = rule.collect(packageName = PACKAGE, stableIterations = 3, maxIterations = 8) {
+        pressHome()
+        startActivityAndWait()
+        navigationJourney()
+    }
 }
