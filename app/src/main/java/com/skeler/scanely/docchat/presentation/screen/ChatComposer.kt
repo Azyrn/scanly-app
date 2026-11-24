@@ -129,8 +129,8 @@ internal fun ChatComposer(
         }
         Surface(
             shape = RoundedCornerShape(24.dp),
-            // Opaque: a see-through container let the message behind it read through the draft (2026-10-16).
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            // Translucent: the chat scrolls on behind it. Enough of the container stays to keep the draft legible.
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = COMPOSER_ALPHA),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -614,6 +614,7 @@ private fun rememberAttachPickers(viewModel: DocChatViewModel): AttachPickers {
 }
 
 private const val MAX_LINES = 6
+private const val COMPOSER_ALPHA = 0.72f
 private val TOUCH_SIZE = 48.dp
 private val VISUAL_SIZE = 40.dp
 private val ICON_SIZE = 24.dp

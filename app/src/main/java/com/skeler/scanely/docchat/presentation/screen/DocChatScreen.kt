@@ -297,8 +297,8 @@ private fun DocChatContent(
             snackbarHost = { SnackbarHost(snackbar) },
             containerColor = MaterialTheme.colorScheme.background
         ) { padding ->
-            // The composer sits over the bottom of the chat; the list ends at its measured top edge,
-            // so no message is ever under it.
+            // The composer floats over the bottom of the chat: the list runs behind it and reserves its measured
+            // height as content padding, so the newest message still rests above it.
             var composerHeight by remember { mutableIntStateOf(0) }
             val composerInset = with(LocalDensity.current) { composerHeight.toDp() }
             Box(
@@ -576,13 +576,11 @@ private fun MessageList(
         LazyColumn(
             state = listState,
             reverseLayout = true,
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 12.dp),
+            // Full height, so messages scroll on behind the translucent composer instead of stopping at a
+            // band of background above it (the user's call, 2026-11-24, reversing ce12cac).
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = bottomInset + 12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            // The list ends where the composer starts, and above the jump button while it shows, so
-            // neither ever covers a message (the composer was see-through over the chat, 2026-10-16).
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = bottomInset + if (jump) JUMP_STRIP else 0.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
             val newestId = content.messages.lastOrNull()?.id
             content.messages.asReversed().forEach { message ->
@@ -614,7 +612,7 @@ private fun MessageList(
                 }
             }
         }
-        // Docked on the composer's top edge, in the strip the list leaves for it.
+        // Docked on the composer's top edge.
         AnimatedVisibility(
             visible = jump,
             enter = ChatMotion.fadeIn(),
@@ -685,7 +683,6 @@ private const val BOTTOM_SLOP_PX = 48
 /** The jump-to-latest button (at least a 48 dp tap target), the gap under it, and the strip the list leaves for both. */
 private val JUMP_SIZE = 48.dp
 private val JUMP_GAP = 4.dp
-private val JUMP_STRIP = JUMP_SIZE + JUMP_GAP * 2
 private const val CHAT_DENSITY_SCALE = 0.9f
 
 /** Past the screen's slide-in (250 ms), so the drawer's first composition lands on an idle frame. */
