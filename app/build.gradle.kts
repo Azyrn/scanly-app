@@ -513,3 +513,12 @@ baselineProfile {
     automaticGenerationDuringBuild = false
     dexLayoutOptimization = true
 }
+
+// Compose compiler stability reports for performance work: scripts/gw assembleRelease -PcomposeReports.
+// Opt-in because toggling it recompiles every Kotlin file.
+if (providers.gradleProperty("composeReports").isPresent) {
+    composeCompiler {
+        reportsDestination = layout.buildDirectory.dir("compose_reports")
+        metricsDestination = layout.buildDirectory.dir("compose_metrics")
+    }
+}

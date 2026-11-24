@@ -75,15 +75,17 @@ fun ScanelyTheme(
     content: @Composable () -> Unit
 ) {
     val darkTheme = LocalDarkMode.current
-    val animatedColorScheme = appColorScheme(darkTheme).animated()
+    // Switched at once, not animated: a 220 ms per-colour animation handed every composable that reads the
+    // scheme a new one each frame, recomposing the whole app ~26 times per switch (frames 20-35 ms on the phone).
+    val colorScheme = appColorScheme(darkTheme)
 
-    // Transparent system bars so the animated Compose surface paints edge-to-edge without bar lag.
+    // Transparent system bars so the Compose surface paints edge-to-edge without bar lag.
     val view = LocalView.current
     if (!view.isInEditMode) {
         val window = (view.context as Activity).window
-        val useDarkSystemBarIcons = animatedColorScheme.background.luminance() > 0.5f
+        val useDarkSystemBarIcons = colorScheme.background.luminance() > 0.5f
         SideEffect {
-            window.decorView.setBackgroundColor(animatedColorScheme.background.toArgb())
+            window.decorView.setBackgroundColor(colorScheme.background.toArgb())
             clearLegacyBarScrims(window)
             WindowCompat.getInsetsController(window, view).apply {
                 isAppearanceLightStatusBars = useDarkSystemBarIcons
@@ -93,7 +95,7 @@ fun ScanelyTheme(
     }
 
     MaterialExpressiveTheme(
-        colorScheme = animatedColorScheme,
+        colorScheme = colorScheme,
         typography = if (LocalConfiguration.current.locales[0].language == "ar") ArabicTypography else Typography,
         shapes = ScanelyShapes,
         motionScheme = ScanlyMotionScheme,
@@ -101,7 +103,7 @@ fun ScanelyTheme(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(animatedColorScheme.background)
+                .background(colorScheme.background)
         ) {
             content()
         }
