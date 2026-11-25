@@ -15,7 +15,7 @@
         <item quantity="other">Осталось %1$d из %2$d кредита в месяц. Оформите Pro.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Больше кредитов, длиннее документы, форматы файлов.</string>
-    <string name="cmp_paywall_ai_scan_credit">ИИ-скан: 1 кредит за страницу. Остальные — из общего баланса.</string>
+    <string name="cmp_paywall_ai_scan_credit">Кредиты тратят только ИИ-скан, сканы PDF (1 за страницу) и помощник по документам.</string>
     <string name="cmp_paywall_plan_active">Тариф активен на этом аккаунте.</string>
     <string name="cmp_paywall_key_active_here">Ключ активен на устройстве.</string>
     <plurals name="cmp_paywall_devices_used">

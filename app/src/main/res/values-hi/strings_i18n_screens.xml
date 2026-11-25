@@ -94,28 +94,19 @@
     <string name="scr_transcribe_discard_recording">रिकॉर्डिंग हटाएं</string>
     <string name="scr_transcribe_stop_and_keep">रोकें और रखें</string>
     <string name="scr_transcribe_reading_file">फ़ाइल पढ़ रहा है…</string>
-    <string name="scr_transcribe_balance">" · आपके पास %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (फ़ॉर्मैटिंग के साथ ऑटो-डिटेक्ट दो बार चलता है)"</string>
     <string name="scr_transcribe_action">ट्रांसक्राइब करें</string>
     <string name="scr_transcribe_save_again">फिर से सेव करें</string>
     <string name="scr_transcribe_discard">हटाएं</string>
     <string name="scr_transcribe_key_terms">मुख्य शब्द</string>
     <string name="scr_transcribe_key_terms_empty">नाम और शब्द जिन्हें सही लिखना है</string>
     <string name="scr_transcribe_key_terms_count">%2$d में से %1$d</string>
-    <string name="scr_transcribe_plan_note">1 क्रेडिट ≈ ऑडियो के %1$d मिनट · आपके प्लान में हर रिकॉर्डिंग तक %2$d मिनट।</string>
-    <string name="scr_transcribe_custom_endpoint_note">ऑडियो से टेक्स्ट हमेशा Scanly AI पर चलता है और आपके क्रेडिट खर्च करता है, भले ही आपका अपना एंडपॉइंट चालू हो।</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d स्पीकर</item>
         <item quantity="other">%1$d स्पीकर</item>
     </plurals>
     <string name="scr_transcribe_language_hint">मुख्य बोली जाने वाली भाषा चुनें। रिकॉर्डिंग की दूसरी भाषाएँ भी जैसी बोली गई हैं वैसी ही ट्रांसक्राइब होंगी; यह चुनाव तय करता है कि नंबर और तारीखें कैसे लिखी जाएंगी।</string>
-    <string name="scr_transcribe_auto_detect_subtitle">भाषा अपने-आप पहचानता है, लेकिन दो बार चलता है, इसलिए क्रेडिट दोगुने लगते हैं।</string>
     <string name="scr_transcribe_key_terms_hint">नाम, प्रोडक्ट के शब्द और जार्गन जिन्हें ट्रांसक्राइबर बिल्कुल सही लिखे। इन्हें हटाने तक हर रिकॉर्डिंग में इस्तेमाल होंगे। कॉमा से अलग करके कई चिपकाएं।</string>
     <string name="scr_transcribe_key_terms_placeholder">उदा. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">लगभग %1$d क्रेडिट</item>
-        <item quantity="other">लगभग %1$d क्रेडिट</item>
-    </plurals>
     <string name="scr_transcript_title_default">ट्रांसक्रिप्ट</string>
     <string name="scr_transcript_copied">ट्रांसक्रिप्ट कॉपी हो गया</string>
     <string name="scr_transcript_copy">ट्रांसक्रिप्ट कॉपी करें</string>

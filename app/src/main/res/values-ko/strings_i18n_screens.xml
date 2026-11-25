@@ -88,26 +88,18 @@
     <string name="scr_transcribe_discard_recording">녹음 버리기</string>
     <string name="scr_transcribe_stop_and_keep">중지하고 저장</string>
     <string name="scr_transcribe_reading_file">파일 읽는 중…</string>
-    <string name="scr_transcribe_balance">" · 남은 크레딧 %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (자동 감지와 서식 적용은 두 번 실행돼요)"</string>
     <string name="scr_transcribe_action">전사</string>
     <string name="scr_transcribe_save_again">다시 저장</string>
     <string name="scr_transcribe_discard">버리기</string>
     <string name="scr_transcribe_key_terms">핵심 용어</string>
     <string name="scr_transcribe_key_terms_empty">정확하게 적어야 할 이름과 단어</string>
     <string name="scr_transcribe_key_terms_count">%1$d/%2$d</string>
-    <string name="scr_transcribe_plan_note">1 크레딧 ≈ 오디오 %1$d분 · 요금제에서 녹음 한 건당 최대 %2$d분.</string>
-    <string name="scr_transcribe_custom_endpoint_note">사용자 지정 엔드포인트를 켜도 오디오→텍스트는 항상 Scanly AI를 쓰고 크레딧을 차감해요.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="other">화자 %1$d명</item>
     </plurals>
     <string name="scr_transcribe_language_hint">주로 쓰는 언어를 고르세요. 녹음 속 다른 언어도 말한 그대로 전사되며, 이 설정은 숫자와 날짜를 쓰는 방식을 정해요.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">언어를 자동으로 찾지만 두 번 실행되므로 크레딧이 두 배 들어요.</string>
     <string name="scr_transcribe_key_terms_hint">전사기가 정확하게 써야 하는 이름, 제품 용어, 전문 용어예요. 삭제할 때까지 모든 녹음에 적용돼요. 쉼표로 구분해 여러 개를 붙여 넣을 수 있어요.</string>
     <string name="scr_transcribe_key_terms_placeholder">예: Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="other">약 %1$d크레딧</item>
-    </plurals>
     <string name="scr_transcript_title_default">전사본</string>
     <string name="scr_transcript_copied">전사본을 복사했어요</string>
     <string name="scr_transcript_copy">전사본 복사</string>

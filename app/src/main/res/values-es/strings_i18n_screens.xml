@@ -109,30 +109,20 @@
     <string name="scr_transcribe_discard_recording">Descartar grabación</string>
     <string name="scr_transcribe_stop_and_keep">Parar y guardar</string>
     <string name="scr_transcribe_reading_file">Leyendo…</string>
-    <string name="scr_transcribe_balance">" · te quedan %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (auto con formato: dos veces)"</string>
     <string name="scr_transcribe_action">Transcribir</string>
     <string name="scr_transcribe_save_again">Reintentar</string>
     <string name="scr_transcribe_discard">Desechar</string>
     <string name="scr_transcribe_key_terms">Vocabulario</string>
     <string name="scr_transcribe_key_terms_empty">Nombres y palabras exactas</string>
     <string name="scr_transcribe_key_terms_count">%1$d de %2$d</string>
-    <string name="scr_transcribe_plan_note">1 crédito ≈ %1$d minutos de audio · hasta %2$d minutos por grabación con tu plan.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Audio a texto siempre usa Scanly AI y tus créditos, incluso con tu endpoint activo.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d hablante</item>
         <item quantity="many">%1$d hablantes</item>
         <item quantity="other">%1$d hablantes</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Elige el idioma principal hablado. Los demás se transcriben como se hablan; este decide cómo se escriben números y fechas.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Detecta el idioma; cuesta el doble de créditos.</string>
     <string name="scr_transcribe_key_terms_hint">Nombres, productos y jerga que se escriben tal cual. Se usan en cada grabación hasta que los quites. Pega varios separados por comas.</string>
     <string name="scr_transcribe_key_terms_placeholder">p. ej. Sebastián, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">Unos %1$d crédito</item>
-        <item quantity="many">Unos %1$d créditos</item>
-        <item quantity="other">Unos %1$d créditos</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Texto</string>
     <string name="scr_transcript_copied">Texto copiado</string>

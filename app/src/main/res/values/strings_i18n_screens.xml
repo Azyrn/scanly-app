@@ -103,8 +103,6 @@
     <string name="scr_transcribe_discard_recording">Discard recording</string>
     <string name="scr_transcribe_stop_and_keep">Stop and keep</string>
     <string name="scr_transcribe_reading_file">Reading file…</string>
-    <string name="scr_transcribe_balance">" · you have %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (auto-detect with formatting runs twice)"</string>
     <string name="scr_transcribe_action">Transcribe</string>
     <string name="scr_transcribe_save_again">Save again</string>
     <string name="scr_transcribe_discard">Discard</string>
@@ -112,20 +110,13 @@
     <string name="scr_transcribe_key_terms_empty">Names and words to spell right</string>
     <string name="scr_transcribe_key_terms_count">%1$d of %2$d</string>
     <!-- Two independent minute counts (per credit, per recording); one plural can follow only one of them. -->
-    <string name="scr_transcribe_plan_note" tools:ignore="PluralsCandidate">1 credit ≈ %1$d minutes of audio · up to %2$d minutes per recording on your plan.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Audio to Text always runs on Scanly AI and uses your credits, even with your own endpoint on.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d speaker</item>
         <item quantity="other">%1$d speakers</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Pick the main language spoken. Other languages in the recording are still transcribed as spoken; this one decides how numbers and dates are written.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Finds the language itself, but runs twice, so it costs twice the credits.</string>
     <string name="scr_transcribe_key_terms_hint">Names, product words and jargon the transcriber should spell exactly. Used for every recording until you remove them. Paste several separated by commas.</string>
     <string name="scr_transcribe_key_terms_placeholder">e.g. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">About %1$d credit</item>
-        <item quantity="other">About %1$d credits</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Transcript</string>
     <string name="scr_transcript_copied">Transcript copied</string>

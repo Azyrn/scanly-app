@@ -526,8 +526,7 @@ private fun CostCaption(paywall: PaywallState, agent: Boolean, emptyChat: Boolea
         agent && paywall.assistantMessagesLeft != null ->
             stringResource(R.string.chat_cost_agent_free, paywall.assistantMessagesLeft)
         agent -> stringResource(R.string.chat_cost_agent).takeIf { emptyChat }
-        !paywall.isQuotaKnown -> null
-        else -> paywall.designPageCost.let { pluralStringResource(R.plurals.chat_cost_hint, it, it) }
+        else -> null
     } ?: return
     Text(
         line,

@@ -301,7 +301,6 @@ fun SettingsScreen(
                         ),
                         SettingsItem(
                             title = stringResource(R.string.set_privacy_policy_title),
-                            subtitle = stringResource(R.string.set_privacy_policy_subtitle),
                             icon = Icons.Rounded.Policy,
                             trailingIcon = Icons.AutoMirrored.Rounded.OpenInNew,
                             onClick = { uriHandler.openUri(LegalLinks.PRIVACY_POLICY) }

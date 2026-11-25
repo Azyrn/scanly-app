@@ -2,6 +2,8 @@ package com.skeler.scanely.core.network
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.skeler.scanely.core.license.cachedInstallId
+import kotlinx.coroutines.runBlocking
 import com.skeler.scanely.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
@@ -28,7 +30,8 @@ class BackendAuthInterceptor @Inject constructor(
 
         // An unconfirmed address is answered with `email_unverified`, and the Worker mails the link
         // itself; the forced refresh below is what lets a just-confirmed address through.
-        return chain.proceedWithToken(context) { forceRefresh ->
+        val installId = runBlocking { cachedInstallId(context, user.uid) }
+        return chain.proceedWithToken(context, installId) { forceRefresh ->
             if (firebaseAuth.currentUser?.uid != user.uid) {
                 throw TokenUnavailableException(context.getString(R.string.net_account_changed))
             }
@@ -38,11 +41,13 @@ class BackendAuthInterceptor @Inject constructor(
     }
 }
 
-internal fun Interceptor.Chain.proceedWithToken(context: Context, token: (Boolean) -> String): Response {
+internal fun Interceptor.Chain.proceedWithToken(context: Context, installId: String? = null, token: (Boolean) -> String): Response {
     fun authorized(forceRefresh: Boolean): okhttp3.Request {
         val idToken = token(forceRefresh)
         if (idToken.isEmpty()) throw TokenUnavailableException(context.getString(R.string.net_session_expired))
-        return request().newBuilder().header("Authorization", "Bearer $idToken").build()
+        return request().newBuilder().header("Authorization", "Bearer $idToken").apply {
+            if (installId != null) header("X-Scanly-Install", installId)
+        }.build()
     }
     val response = proceed(authorized(false))
     if (response.code != HTTP_UNAUTHORIZED) return response

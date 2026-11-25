@@ -103,28 +103,19 @@
     <string name="scr_transcribe_discard_recording">Kaydı at</string>
     <string name="scr_transcribe_stop_and_keep">Durdur ve sakla</string>
     <string name="scr_transcribe_reading_file">Okunuyor…</string>
-    <string name="scr_transcribe_balance">" · %1$d krediniz var"</string>
-    <string name="scr_transcribe_passes_note">" (biçimli otomatik algılama 2 kez çalışır)"</string>
     <string name="scr_transcribe_action">Yazıya dök</string>
     <string name="scr_transcribe_save_again">Kaydet</string>
     <string name="scr_transcribe_discard">At</string>
     <string name="scr_transcribe_key_terms">Terimler</string>
     <string name="scr_transcribe_key_terms_empty">Doğru yazılacak ad ve kelime</string>
     <string name="scr_transcribe_key_terms_count">%1$d/%2$d</string>
-    <string name="scr_transcribe_plan_note">1 kredi ≈ %1$d dakika ses · planınızda kayıt başına en fazla %2$d dakika.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Sesten Metne her zaman Scanly AI ile çalışır ve kredilerinizi kullanır; kendi uç noktanız açık olsa bile.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d konuşmacı</item>
         <item quantity="other">%1$d konuşmacı</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Konuşulan ana dili seçin. Kayıttaki diğer diller konuşulduğu gibi yazılmaya devam eder; bu seçim sayıların ve tarihlerin nasıl yazılacağını belirler.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Dili kendisi bulur, ancak iki kez çalışır; bu yüzden iki kat kredi harcar.</string>
     <string name="scr_transcribe_key_terms_hint">Metin çevirmenin tam olarak yazması gereken adlar, ürün kelimeleri ve terimler. Silene kadar her kayıtta kullanılır. Virgülle ayırarak birkaç tane yapıştırın.</string>
     <string name="scr_transcribe_key_terms_placeholder">örn. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">Yaklaşık %1$d kredi</item>
-        <item quantity="other">Yaklaşık %1$d kredi</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Metin</string>
     <string name="scr_transcript_copied">Metin kopyalandı</string>

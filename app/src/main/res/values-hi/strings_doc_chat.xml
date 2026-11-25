@@ -35,10 +35,6 @@
     <string name="chat_attach">जोड़ें</string>
     <string name="chat_send">भेजें</string>
     <string name="chat_stop">इंतज़ार बंद करें</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d क्रेडिट</item>
-        <item quantity="other">लगभग %d क्रेडिट</item>
-    </plurals>
     <string name="chat_cost_agent">चैट मुफ़्त है · फ़ाइलों में क्रेडिट लगते हैं</string>
     <string name="chat_cost_agent_free">इस महीने मुफ़्त संदेश: %1$d · फ़ाइलें क्रेडिट लेती हैं</string>
     <string name="chat_free_document_used">इस महीने का मुफ़्त दस्तावेज़ इस्तेमाल हो गया। %1$s को लौटेगा।</string>

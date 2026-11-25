@@ -9,7 +9,7 @@
         <item quantity="other">今月の残り %1$d / %2$d クレジット。アップグレードで増量。</item>
     </plurals>
     <string name="cmp_paywall_more_credits">クレジット増量、長い書類、対応形式の追加。</string>
-    <string name="cmp_paywall_ai_scan_credit">AIスキャンは1ページ1クレジット。他のAI機能も残高を共有。</string>
+    <string name="cmp_paywall_ai_scan_credit">クレジットを使うのはAIスキャン、スキャンしたPDF(1ページ1)、ドキュメント作成だけです。</string>
     <string name="cmp_paywall_plan_active">このアカウントでプラン有効。</string>
     <string name="cmp_paywall_key_active_here">この端末でキー有効。</string>
     <plurals name="cmp_paywall_devices_used">

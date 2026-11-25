@@ -44,9 +44,6 @@
     <string name="chat_attach">添付</string>
     <string name="chat_send">送信</string>
     <string name="chat_stop">待機を停止</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="other">%dクレジット</item>
-    </plurals>
     <string name="chat_cost_agent">チャット無料・書類クレジット</string>
     <string name="chat_cost_agent_free">今月の無料メッセージ: %1$d · ファイルはクレジット消費</string>
     <string name="chat_free_document_used">今月の無料ドキュメントは使用済み。%1$sに戻ります。</string>

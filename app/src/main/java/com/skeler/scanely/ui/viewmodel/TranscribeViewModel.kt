@@ -29,7 +29,6 @@ import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.ceil
 
 /** The recording or file waiting to be transcribed, with what it is expected to cost. */
 data class PendingAudio(
@@ -49,20 +48,12 @@ data class TranscribeUiState(
     val recording: AudioRecorder.State = AudioRecorder.State.Idle,
     val job: TranscriptionRunner.State = TranscriptionRunner.State.Idle,
     val recent: List<TranscriptSummary> = emptyList(),
-    val creditsRemaining: Int? = null,
     val maxAudioMinutes: Int = 10,
-    val secondsPerCredit: Int = 180
 ) {
     val options: TranscribeOptions
         // Speakers, number formatting and filler removal are always on: they are what a transcript
         // is expected to look like, and a switch for each only made the screen harder to read.
         get() = TranscribeOptions(language = language, keyTerms = keyTerms)
-
-    /** Credits the pending audio should cost. An estimate: the server bills what it processed. */
-    val estimatedCredits: Int?
-        get() = pending?.takeIf { it.probed && it.durationMs > 0 }?.let {
-            ceil(it.durationMs / 1000.0 * options.passes / secondsPerCredit).toInt().coerceAtLeast(1)
-        }
 
     val isBusy: Boolean get() = job is TranscriptionRunner.State.Working
 }
@@ -105,9 +96,7 @@ class TranscribeViewModel @Inject constructor(
             recording = recording,
             job = job,
             recent = recent,
-            creditsRemaining = me?.pagesRemainingMonth,
             maxAudioMinutes = me?.maxAudioMinutes ?: 10,
-            secondsPerCredit = me?.transcribeSecondsPerCredit?.takeIf { it > 0 } ?: 180
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TranscribeUiState())
 

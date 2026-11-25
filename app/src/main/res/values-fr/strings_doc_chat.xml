@@ -44,11 +44,6 @@
     <string name="chat_attach">Joindre</string>
     <string name="chat_send">Envoi</string>
     <string name="chat_stop">Arrêter</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d crédit</item>
-        <item quantity="many">~%d crédits</item>
-        <item quantity="other">~%d crédits</item>
-    </plurals>
     <string name="chat_cost_agent">Chat gratuit · fichiers : crédits</string>
     <string name="chat_cost_agent_free">Messages gratuits ce mois : %1$d · fichiers en crédits</string>
     <string name="chat_free_document_used">Document gratuit du mois utilisé. Retour le %1$s.</string>

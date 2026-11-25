@@ -9,7 +9,7 @@
         <item quantity="other">本月你还剩 %1$d / %2$d 积分。升级可获得更多积分。</item>
     </plurals>
     <string name="cmp_paywall_more_credits">更多积分、更长的文档，以及更多文件格式。</string>
-    <string name="cmp_paywall_ai_scan_credit">AI 扫描每页消耗 1 积分。其他 AI 工具共用你的积分余额。</string>
+    <string name="cmp_paywall_ai_scan_credit">仅 AI 扫描、扫描版 PDF(每页 1 积分)和文档助手消耗积分。</string>
     <string name="cmp_paywall_plan_active">你的套餐已在此账户上生效。</string>
     <string name="cmp_paywall_key_active_here">你的密钥已在此设备上激活。</string>
     <plurals name="cmp_paywall_devices_used">

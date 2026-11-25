@@ -261,7 +261,6 @@ fun TranscribeScreen() {
                     )
                 }
                 item(key = "plan") {
-                    PlanNote(state = state, usesCustomEndpoint = paywallState.usesCustomEndpoint)
                 }
             }
 
@@ -630,21 +629,6 @@ private fun PendingPanel(state: TranscribeUiState, onTranscribe: () -> Unit, onR
                     Icon(Icons.Rounded.Close, contentDescription = stringResource(R.string.pe_remove))
                 }
             }
-            val estimate = state.estimatedCredits
-            if (estimate != null) {
-                val balance = state.creditsRemaining?.let {
-                    stringResource(
-                        R.string.scr_transcribe_balance,
-                        it
-                    )
-                }.orEmpty()
-                val passes = if (state.options.passes > 1) stringResource(R.string.scr_transcribe_passes_note) else ""
-                Text(
-                    pluralStringResource(R.plurals.scr_transcribe_estimate, estimate, estimate) + balance + passes,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
             Button(
                 onClick = onTranscribe,
                 enabled = pending.probed,
@@ -748,24 +732,6 @@ private fun NavRow(title: String, value: String, onClick: () -> Unit) {
     }
 }
 
-@Composable
-private fun PlanNote(state: TranscribeUiState, usesCustomEndpoint: Boolean) {
-    val minutesPerCredit = state.secondsPerCredit / 60
-    val perCreditNote = stringResource(R.string.scr_transcribe_plan_note, minutesPerCredit, state.maxAudioMinutes)
-    val customEndpointNote = stringResource(R.string.scr_transcribe_custom_endpoint_note)
-    val lines = buildList {
-        add(perCreditNote)
-        if (usesCustomEndpoint) {
-            add(customEndpointNote)
-        }
-    }
-    Text(
-        lines.joinToString("\n"),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(horizontal = 4.dp)
-    )
-}
 
 @Composable
 private fun RecentRow(summary: TranscriptSummary, onOpen: () -> Unit, onDelete: () -> Unit) {
@@ -848,7 +814,7 @@ private fun LanguageSheet(
             item {
                 LanguageRow(
                     title = stringResource(R.string.scr_auto_detect),
-                    subtitle = stringResource(R.string.scr_transcribe_auto_detect_subtitle),
+                    subtitle = null,
                     selected = selected == null,
                     onClick = { onSelect(null) }
                 )

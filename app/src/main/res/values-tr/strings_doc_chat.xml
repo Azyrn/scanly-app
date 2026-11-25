@@ -44,10 +44,6 @@
     <string name="chat_attach">Ekle</string>
     <string name="chat_send">Yolla</string>
     <string name="chat_stop">Beklemeyi kes</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d kredi</item>
-        <item quantity="other">~%d kredi</item>
-    </plurals>
     <string name="chat_cost_agent">Sohbet ücretsiz · dosya kredisi</string>
     <string name="chat_cost_agent_free">Bu ay kalan ücretsiz mesaj: %1$d · dosyalar kredi kullanır</string>
     <string name="chat_free_document_used">Bu ayın ücretsiz belgesi kullanıldı. %1$s tarihinde döner.</string>

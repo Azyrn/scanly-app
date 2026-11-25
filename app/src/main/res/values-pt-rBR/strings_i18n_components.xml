@@ -13,7 +13,7 @@
         <item quantity="other">Restam %1$d de %2$d créditos neste mês. Faça upgrade.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Mais créditos, documentos maiores e mais formatos.</string>
-    <string name="cmp_paywall_ai_scan_credit">Scan com IA: 1 crédito/página. Outras ferramentas usam o mesmo saldo.</string>
+    <string name="cmp_paywall_ai_scan_credit">Só Scan com IA, PDFs escaneados (1 crédito/pág.) e assistente de documentos usam créditos.</string>
     <string name="cmp_paywall_plan_active">Seu plano está ativo nesta conta.</string>
     <string name="cmp_paywall_key_active_here">Sua chave está ativa aqui.</string>
     <plurals name="cmp_paywall_devices_used">

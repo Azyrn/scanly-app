@@ -44,14 +44,6 @@
     <string name="chat_attach">إرفاق</string>
     <string name="chat_send">إرسال</string>
     <string name="chat_stop">إيقاف الانتظار</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="zero">~%d رصيد</item>
-        <item quantity="one">~%d رصيد</item>
-        <item quantity="two">~%d رصيدان</item>
-        <item quantity="few">~%d أرصدة</item>
-        <item quantity="many">~%d رصيدًا</item>
-        <item quantity="other">~%d رصيد</item>
-    </plurals>
     <string name="chat_cost_agent">المحادثة مجانية · الملفات بأرصدة</string>
     <string name="chat_cost_agent_free">الرسائل المجانية المتبقية: %1$d · الملفات تستهلك رصيدًا</string>
     <string name="chat_free_document_used">استُخدم مستند هذا الشهر المجاني. يعود في %1$s.</string>

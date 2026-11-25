@@ -97,26 +97,18 @@
     <string name="scr_transcribe_discard_recording">放弃录音</string>
     <string name="scr_transcribe_stop_and_keep">停止并保存</string>
     <string name="scr_transcribe_reading_file">正在读取文件…</string>
-    <string name="scr_transcribe_balance">" · 你还有 %1$d"</string>
-    <string name="scr_transcribe_passes_note">" （自动检测并进行格式处理会运行两次）"</string>
     <string name="scr_transcribe_action">转录</string>
     <string name="scr_transcribe_save_again">再次保存</string>
     <string name="scr_transcribe_discard">放弃</string>
     <string name="scr_transcribe_key_terms">关键词</string>
     <string name="scr_transcribe_key_terms_empty">需要准确拼写的人名和词语</string>
     <string name="scr_transcribe_key_terms_count">%1$d / %2$d</string>
-    <string name="scr_transcribe_plan_note">1 积分 ≈ %1$d 分钟音频 · 你的套餐每次录音最多 %2$d 分钟。</string>
-    <string name="scr_transcribe_custom_endpoint_note">即使开启了你自己的接口，音频转文字也始终使用 Scanly AI 并消耗你的积分。</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="other">%1$d 位说话人</item>
     </plurals>
     <string name="scr_transcribe_language_hint">请选择主要使用的语言。录音中的其他语言仍会按实际说出的内容转录；此设置决定数字和日期的书写方式。</string>
-    <string name="scr_transcribe_auto_detect_subtitle">自动识别语言，但会运行两次，因此消耗的积分是两倍。</string>
     <string name="scr_transcribe_key_terms_hint">转录时需要准确拼写的人名、产品词和专业术语。在你删除之前，它们会用于每次录音。可用逗号分隔多个词。</string>
     <string name="scr_transcribe_key_terms_placeholder">例如 Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="other">约 %1$d 积分</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">转录文本</string>
     <string name="scr_transcript_copied">转录文本已复制</string>

@@ -44,12 +44,6 @@
     <string name="chat_attach">Прикрепить</string>
     <string name="chat_send">Отправить</string>
     <string name="chat_stop">Не ждать</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d кредит</item>
-        <item quantity="few">~%d кредита</item>
-        <item quantity="many">~%d кредитов</item>
-        <item quantity="other">~%d кредитов</item>
-    </plurals>
     <string name="chat_cost_agent">Чат бесплатно · файлы: кредиты</string>
     <string name="chat_cost_agent_free">Бесплатных сообщений: %1$d · файлы за кредиты</string>
     <string name="chat_free_document_used">Бесплатный документ месяца использован. Вернётся %1$s.</string>

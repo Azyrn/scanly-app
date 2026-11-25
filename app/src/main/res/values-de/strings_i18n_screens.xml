@@ -103,28 +103,19 @@
     <string name="scr_transcribe_discard_recording">Aufnahme löschen</string>
     <string name="scr_transcribe_stop_and_keep">Stopp, behalten</string>
     <string name="scr_transcribe_reading_file">Datei lesen…</string>
-    <string name="scr_transcribe_balance">" · du hast %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (Auto-Erkennung + Formatierung: zweimal)"</string>
     <string name="scr_transcribe_action">Abschreiben</string>
     <string name="scr_transcribe_save_again">Neu sichern</string>
     <string name="scr_transcribe_discard">Löschen</string>
     <string name="scr_transcribe_key_terms">Stichwörter</string>
     <string name="scr_transcribe_key_terms_empty">Namen &amp; Wörter richtig schreiben</string>
     <string name="scr_transcribe_key_terms_count">%1$d von %2$d</string>
-    <string name="scr_transcribe_plan_note">1 Credit ≈ %1$d Minuten Audio · mit deinem Tarif bis zu %2$d Minuten pro Aufnahme.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Audio in Text läuft immer über Scanly AI und verbraucht Credits, auch mit eigenem Endpunkt.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d Sprecher</item>
         <item quantity="other">%1$d Sprecher</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Wähle die Hauptsprache. Andere Sprachen werden wie gesprochen übernommen. Sie legt Zahlen- und Datumsformat fest.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Erkennt die Sprache selbst, läuft zweimal, doppelte Credits.</string>
     <string name="scr_transcribe_key_terms_hint">Namen, Produktbegriffe und Fachwörter, die exakt geschrieben werden sollen. Gilt für alle Aufnahmen, bis du sie entfernst. Mehrere mit Komma trennen.</string>
     <string name="scr_transcribe_key_terms_placeholder">z. B. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">Etwa %1$d Credit</item>
-        <item quantity="other">Etwa %1$d Credits</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Transkript</string>
     <string name="scr_transcript_copied">Transkript kopiert</string>

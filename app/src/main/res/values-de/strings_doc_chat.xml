@@ -44,10 +44,6 @@
     <string name="chat_attach">Anfügen</string>
     <string name="chat_send">Senden</string>
     <string name="chat_stop">Nicht warten</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d Credit</item>
-        <item quantity="other">~%d Credits</item>
-    </plurals>
     <string name="chat_cost_agent">Chat gratis · Dateien: Credits</string>
     <string name="chat_cost_agent_free">Gratis-Nachrichten: %1$d · Dateien kosten Credits</string>
     <string name="chat_free_document_used">Das Gratis-Dokument ist verbraucht. Neu ab %1$s.</string>

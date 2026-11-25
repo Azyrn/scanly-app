@@ -13,7 +13,7 @@
         <item quantity="other">%1$d/%2$d crédits restants ce mois-ci. Passez à un forfait supérieur.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Plus de crédits, documents longs et formats.</string>
-    <string name="cmp_paywall_ai_scan_credit">Scan IA : 1 crédit par page. Les autres outils IA partagent votre solde.</string>
+    <string name="cmp_paywall_ai_scan_credit">Seuls le Scan IA, les PDF scannés (1 crédit/page) et l\'assistant documents utilisent des crédits.</string>
     <string name="cmp_paywall_plan_active">Votre forfait est actif sur ce compte.</string>
     <string name="cmp_paywall_key_active_here">Votre clé est active sur cet appareil.</string>
     <plurals name="cmp_paywall_devices_used">

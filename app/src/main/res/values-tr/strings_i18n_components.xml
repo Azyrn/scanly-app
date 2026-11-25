@@ -11,7 +11,7 @@
         <item quantity="other">Bu ay %2$d kredinizden %1$d kaldı. Daha fazlası için yükseltin.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Daha fazla kredi, uzun belge ve dosya biçimi.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI Tarama sayfa başına 1 kredi. Diğer AI araçları aynı bakiyeyi paylaşır.</string>
+    <string name="cmp_paywall_ai_scan_credit">Yalnızca AI Tarama, taranmış PDF\'ler (sayfa başı 1 kredi) ve belge asistanı kredi kullanır.</string>
     <string name="cmp_paywall_plan_active">Planınız bu hesapta etkin.</string>
     <string name="cmp_paywall_key_active_here">Anahtarınız bu cihazda etkin.</string>
     <plurals name="cmp_paywall_devices_used">

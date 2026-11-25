@@ -44,10 +44,6 @@
     <string name="chat_attach">Attach</string>
     <string name="chat_send">Send</string>
     <string name="chat_stop">Stop waiting</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="one">~%d credit</item>
-        <item quantity="other">~%d credits</item>
-    </plurals>
     <string name="chat_cost_agent">Chat is free · files use credits</string>
     <string name="chat_cost_agent_free">Free messages left this month: %1$d · files use credits</string>
     <string name="chat_free_document_used">This month\'s free document is used. It comes back on %1$s.</string>

@@ -115,16 +115,12 @@
     <string name="scr_transcribe_discard_recording">Відхилити запис</string>
     <string name="scr_transcribe_stop_and_keep">Зберегти</string>
     <string name="scr_transcribe_reading_file">Читаємо…</string>
-    <string name="scr_transcribe_balance">" · у вас %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (автовизначення, форматування — двічі)"</string>
     <string name="scr_transcribe_action">Розшифрувати</string>
     <string name="scr_transcribe_save_again">Зберегти</string>
     <string name="scr_transcribe_discard">Видалити</string>
     <string name="scr_transcribe_key_terms">Терміни</string>
     <string name="scr_transcribe_key_terms_empty">Імена й слова, написані точно</string>
     <string name="scr_transcribe_key_terms_count">%1$d з %2$d</string>
-    <string name="scr_transcribe_plan_note">1 кредит ≈ %1$d хв аудіо · до %2$d хв на запис за вашим планом.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Аудіо в текст завжди йде через Scanly AI і списує кредити, навіть з власною точкою доступу.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">Мовців: %1$d</item>
         <item quantity="few">Мовців: %1$d</item>
@@ -132,15 +128,8 @@
         <item quantity="other">Мовців: %1$d</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Оберіть основну мову розмови. Інші мови в записі все одно розшифровуються як вимовлені; цей вибір визначає, як записувати числа й дати.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Сам визначає мову, але працює двічі: вдвічі більше кредитів.</string>
     <string name="scr_transcribe_key_terms_hint">Імена, назви продуктів і терміни, які треба написати точно. Діють для всіх записів, доки їх не видалите. Вставте кілька через кому.</string>
     <string name="scr_transcribe_key_terms_placeholder">напр. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">≈ %1$d кредит</item>
-        <item quantity="few">≈ %1$d кредити</item>
-        <item quantity="many">≈ %1$d кредитів</item>
-        <item quantity="other">≈ %1$d кредитів</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Розшифровка</string>
     <string name="scr_transcript_copied">Скопійовано</string>

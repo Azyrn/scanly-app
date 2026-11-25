@@ -9,7 +9,7 @@
         <item quantity="other">इस महीने आपके %2$d में से %1$d क्रेडिट बचे हैं। ज़्यादा के लिए अपग्रेड करें।</item>
     </plurals>
     <string name="cmp_paywall_more_credits">ज़्यादा क्रेडिट, लंबे दस्तावेज़ और ज़्यादा फ़ाइल फ़ॉर्मैट।</string>
-    <string name="cmp_paywall_ai_scan_credit">AI स्कैन हर पेज के लिए 1 क्रेडिट लेता है। बाकी AI टूल भी आपका यही क्रेडिट बैलेंस इस्तेमाल करते हैं।</string>
+    <string name="cmp_paywall_ai_scan_credit">क्रेडिट सिर्फ़ AI स्कैन, स्कैन की गई PDF (हर पेज 1) और डॉक्यूमेंट असिस्टेंट में लगते हैं।</string>
     <string name="cmp_paywall_plan_active">इस अकाउंट पर आपका प्लान सक्रिय है।</string>
     <string name="cmp_paywall_key_active_here">इस डिवाइस पर आपकी की सक्रिय है।</string>
     <plurals name="cmp_paywall_devices_used">

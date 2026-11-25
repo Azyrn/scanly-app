@@ -11,7 +11,7 @@
         <item quantity="other">You have %1$d of %2$d credits left this month. Upgrade for more.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">More credits, longer documents, and more file formats.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI Scan uses 1 credit per page. Other AI tools share your credit balance.</string>
+    <string name="cmp_paywall_ai_scan_credit">Only AI Scan, scanned PDFs (1 credit per page) and Build Documents with AI use credits.</string>
     <string name="cmp_paywall_plan_active">Your plan is active on this account.</string>
     <string name="cmp_paywall_key_active_here">Your key is active on this device.</string>
     <plurals name="cmp_paywall_devices_used">

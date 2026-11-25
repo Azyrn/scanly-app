@@ -15,7 +15,7 @@
         <item quantity="other">Лишилося %1$d з %2$d кредиту цього місяця. Оновіть план.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Більше кредитів, довші документи, більше форматів.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI-сканування: 1 кредит на сторінку. Решта ШІ — з тим самим балансом.</string>
+    <string name="cmp_paywall_ai_scan_credit">Кредити йдуть лише на AI-сканування, скановані PDF (1 за стор.) і помічник документів.</string>
     <string name="cmp_paywall_plan_active">План активний на цьому акаунті.</string>
     <string name="cmp_paywall_key_active_here">Ключ діє на цьому пристрої.</string>
     <plurals name="cmp_paywall_devices_used">

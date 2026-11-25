@@ -35,9 +35,6 @@
     <string name="chat_attach">첨부</string>
     <string name="chat_send">보내기</string>
     <string name="chat_stop">기다리기 멈추기</string>
-    <plurals name="chat_cost_hint">
-        <item quantity="other">약 %d 크레딧</item>
-    </plurals>
     <string name="chat_cost_agent">채팅 무료 · 파일은 크레딧 사용</string>
     <string name="chat_cost_agent_free">이번 달 무료 메시지: %1$d개 · 파일은 크레딧 사용</string>
     <string name="chat_free_document_used">이번 달 무료 문서를 썼어요. %1$s에 다시 생겨요.</string>

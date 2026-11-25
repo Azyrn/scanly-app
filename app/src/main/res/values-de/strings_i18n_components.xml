@@ -11,7 +11,7 @@
         <item quantity="other">Noch %1$d von %2$d Credits diesen Monat. Upgrade für mehr.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">Mehr Credits, längere Dokumente und mehr Dateiformate.</string>
-    <string name="cmp_paywall_ai_scan_credit">KI-Scan: 1 Credit pro Seite. Andere KI-Werkzeuge teilen sich dein Guthaben.</string>
+    <string name="cmp_paywall_ai_scan_credit">Credits verbrauchen nur KI-Scan, gescannte PDFs (1 pro Seite) und der Dokument-Assistent.</string>
     <string name="cmp_paywall_plan_active">Dein Tarif ist auf diesem Konto aktiv.</string>
     <string name="cmp_paywall_key_active_here">Schlüssel auf diesem Gerät aktiv.</string>
     <plurals name="cmp_paywall_devices_used">

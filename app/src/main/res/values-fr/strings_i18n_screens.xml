@@ -109,30 +109,20 @@
     <string name="scr_transcribe_discard_recording">Abandonner l\'audio</string>
     <string name="scr_transcribe_stop_and_keep">Arrêter, garder</string>
     <string name="scr_transcribe_reading_file">Lecture…</string>
-    <string name="scr_transcribe_balance">" · vous avez %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (détection auto + mise en forme : x2)"</string>
     <string name="scr_transcribe_action">Transcrire</string>
     <string name="scr_transcribe_save_again">Enregistrer</string>
     <string name="scr_transcribe_discard">Effacer</string>
     <string name="scr_transcribe_key_terms">Termes clés</string>
     <string name="scr_transcribe_key_terms_empty">Noms et mots à orthographier</string>
     <string name="scr_transcribe_key_terms_count">%1$d sur %2$d</string>
-    <string name="scr_transcribe_plan_note">1 crédit ≈ %1$d min d\'audio · %2$d min max par enregistrement.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Audio vers texte utilise toujours Scanly AI et vos crédits, même avec votre point de terminaison.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d locuteur</item>
         <item quantity="many">%1$d locuteurs</item>
         <item quantity="other">%1$d locuteurs</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Langue principale parlée. Les autres langues restent transcrites telles quelles ; elle fixe l\'écriture des nombres et dates.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Détecte la langue, mais deux passes : deux fois plus de crédits.</string>
     <string name="scr_transcribe_key_terms_hint">Noms, produits et jargon à écrire exactement. Utilisés pour tous les enregistrements jusqu\'à suppression. Séparez par virgules.</string>
     <string name="scr_transcribe_key_terms_placeholder">ex. Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">Environ %1$d crédit</item>
-        <item quantity="many">Environ %1$d crédits</item>
-        <item quantity="other">Environ %1$d crédits</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Transcrit</string>
     <string name="scr_transcript_copied">Texte copié</string>

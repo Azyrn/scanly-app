@@ -127,16 +127,12 @@
     <string name="scr_transcribe_discard_recording">تجاهل التسجيل</string>
     <string name="scr_transcribe_stop_and_keep">إيقاف والاحتفاظ</string>
     <string name="scr_transcribe_reading_file">جارٍ قراءة الملف…</string>
-    <string name="scr_transcribe_balance">" · لديك %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (الكشف التلقائي مع التنسيق يعمل مرتين)"</string>
     <string name="scr_transcribe_action">تفريغ</string>
     <string name="scr_transcribe_save_again">حفظ مرة أخرى</string>
     <string name="scr_transcribe_discard">تجاهل</string>
     <string name="scr_transcribe_key_terms">أهم الكلمات</string>
     <string name="scr_transcribe_key_terms_empty">أسماء وكلمات يجب كتابتها بدقة</string>
     <string name="scr_transcribe_key_terms_count">%1$d من %2$d</string>
-    <string name="scr_transcribe_plan_note">1 رصيد ≈ %1$d دقيقة من الصوت · حتى %2$d دقيقة لكل تسجيل في خطتك.</string>
-    <string name="scr_transcribe_custom_endpoint_note">يعمل الصوت إلى نص دائمًا على Scanly AI ويستهلك أرصدتك، حتى مع تفعيل نقطة الاتصال الخاصة بك.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="zero">%1$d متحدث</item>
         <item quantity="one">%1$d متحدث</item>
@@ -146,17 +142,8 @@
         <item quantity="other">%1$d متحدث</item>
     </plurals>
     <string name="scr_transcribe_language_hint">اختر اللغة الرئيسية المنطوقة. تُفرَّغ اللغات الأخرى في التسجيل كما نُطقت؛ أما هذه اللغة فتحدد طريقة كتابة الأرقام والتواريخ.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">يكتشف اللغة بنفسه، لكنه يعمل مرتين، لذلك يكلّف ضعف الأرصدة.</string>
     <string name="scr_transcribe_key_terms_hint">أسماء وكلمات منتجات ومصطلحات يجب أن يكتبها المفرّغ بدقة. تُستخدم مع كل تسجيل حتى تحذفها. الصق عدة كلمات مفصولة بفواصل.</string>
     <string name="scr_transcribe_key_terms_placeholder">مثال: Sebastian، Typst، Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="zero">حوالي %1$d رصيد</item>
-        <item quantity="one">حوالي %1$d رصيد</item>
-        <item quantity="two">حوالي %1$d رصيدان</item>
-        <item quantity="few">حوالي %1$d أرصدة</item>
-        <item quantity="many">حوالي %1$d رصيدًا</item>
-        <item quantity="other">حوالي %1$d رصيد</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">النص المفرّغ</string>
     <string name="scr_transcript_copied">تم نسخ النص المفرّغ</string>

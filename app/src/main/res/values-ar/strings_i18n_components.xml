@@ -19,7 +19,7 @@
         <item quantity="other">بقي لديك %1$d من أصل %2$d رصيد هذا الشهر. رقِّ اشتراكك للمزيد.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">أرصدة أكثر، ومستندات أطول، وصيغ ملفات أكثر.</string>
-    <string name="cmp_paywall_ai_scan_credit">يستهلك المسح بالذكاء الاصطناعي رصيدًا لكل صفحة. الأدوات الأخرى تشترك في رصيدك.</string>
+    <string name="cmp_paywall_ai_scan_credit">الرصيد للمسح بالذكاء الاصطناعي وملفات PDF الممسوحة (رصيد لكل صفحة) ومساعد المستندات فقط.</string>
     <string name="cmp_paywall_plan_active">خطتك مفعّلة على هذا الحساب.</string>
     <string name="cmp_paywall_key_active_here">مفتاحك مفعّل على هذا الجهاز.</string>
     <plurals name="cmp_paywall_devices_used">

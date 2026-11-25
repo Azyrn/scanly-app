@@ -97,26 +97,18 @@
     <string name="scr_transcribe_discard_recording">録音を破棄</string>
     <string name="scr_transcribe_stop_and_keep">停止して保存</string>
     <string name="scr_transcribe_reading_file">読み込み中…</string>
-    <string name="scr_transcribe_balance">" · 残り %1$d"</string>
-    <string name="scr_transcribe_passes_note">" （自動検出+書式は2回実行）"</string>
     <string name="scr_transcribe_action">文字起こし</string>
     <string name="scr_transcribe_save_again">もう一度保存</string>
     <string name="scr_transcribe_discard">破棄</string>
     <string name="scr_transcribe_key_terms">重要な用語</string>
     <string name="scr_transcribe_key_terms_empty">正しく綴る必要のある名前や語句</string>
     <string name="scr_transcribe_key_terms_count">%1$d / %2$d</string>
-    <string name="scr_transcribe_plan_note">1 クレジット ≈ 音声 %1$d 分 · プランでは録音1件あたり最大 %2$d 分。</string>
-    <string name="scr_transcribe_custom_endpoint_note">独自エンドポイントが有効でも、音声→テキストは常に Scanly AI を使い、クレジットを消費します。</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="other">話者 %1$d 人</item>
     </plurals>
     <string name="scr_transcribe_language_hint">話されている主な言語を選択してください。録音内の他の言語も話されたとおりに文字起こしされます。この設定は、数字や日付の表記方法を決めます。</string>
-    <string name="scr_transcribe_auto_detect_subtitle">言語を自動判定。2回処理されるため、クレジットは2倍。</string>
     <string name="scr_transcribe_key_terms_hint">文字起こしで正確に綴るべき名前、製品名、専門用語。削除するまで、すべての録音に使用されます。カンマで区切って複数入力できます。</string>
     <string name="scr_transcribe_key_terms_placeholder">例: Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="other">約 %1$d クレジット</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">文字起こし</string>
     <string name="scr_transcript_copied">コピー済み</string>

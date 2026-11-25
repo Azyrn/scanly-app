@@ -145,6 +145,9 @@ interface ScanlyApi {
      * Binds this device to a license key bought on the website. Re-activating a device that is
      * already bound is free — a reinstall must not burn one of the three slots.
      */
+    @POST("v1/license/install")
+    suspend fun registerInstall(@Body request: InstallRequest): InstallResponse
+
     @POST("v1/license/activate")
     suspend fun activateLicense(@Body request: LicenseRequest): LicenseEntitlementDto
 
@@ -193,6 +196,12 @@ data class VerifyEmailResponse(val sent: Boolean = false, val verified: Boolean 
  * carries [BackendAuthInterceptor] on every call. A license redeemed without it would report
  * success and never resolve to Pro on the OCR path.
  */
+@Serializable
+data class InstallRequest(val clientRef: String)
+
+@Serializable
+data class InstallResponse(val id: String)
+
 @Serializable
 data class LicenseRequest(
     val key: String,

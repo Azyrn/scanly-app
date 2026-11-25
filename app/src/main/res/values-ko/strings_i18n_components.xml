@@ -7,7 +7,7 @@
         <item quantity="other">이번 달 크레딧 %2$d개 중 %1$d개 남음. 업그레이드하세요.</item>
     </plurals>
     <string name="cmp_paywall_more_credits">더 많은 크레딧, 더 긴 문서, 더 많은 파일 형식을 쓸 수 있어요.</string>
-    <string name="cmp_paywall_ai_scan_credit">AI 스캔은 페이지당 크레딧 1개. 다른 AI 도구도 같은 잔액을 써요.</string>
+    <string name="cmp_paywall_ai_scan_credit">크레딧은 AI 스캔, 스캔한 PDF(페이지당 1개), 문서 도우미에만 써요.</string>
     <string name="cmp_paywall_plan_active">이 계정에서 요금제가 활성화되어 있어요.</string>
     <string name="cmp_paywall_key_active_here">이 기기에서 키가 활성화되어 있어요.</string>
     <plurals name="cmp_paywall_devices_used">

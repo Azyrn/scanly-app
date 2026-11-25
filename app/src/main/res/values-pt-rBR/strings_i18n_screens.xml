@@ -109,30 +109,20 @@
     <string name="scr_transcribe_discard_recording">Descartar gravação</string>
     <string name="scr_transcribe_stop_and_keep">Parar e salvar</string>
     <string name="scr_transcribe_reading_file">Lendo…</string>
-    <string name="scr_transcribe_balance">" · você tem %1$d"</string>
-    <string name="scr_transcribe_passes_note">" (detecção e formatação rodam duas vezes)"</string>
     <string name="scr_transcribe_action">Transcrever</string>
     <string name="scr_transcribe_save_again">Resalvar</string>
     <string name="scr_transcribe_discard">Excluir</string>
     <string name="scr_transcribe_key_terms">Termos</string>
     <string name="scr_transcribe_key_terms_empty">Nomes e palavras exatas</string>
     <string name="scr_transcribe_key_terms_count">%1$d de %2$d</string>
-    <string name="scr_transcribe_plan_note">1 crédito ≈ %1$d minutos de áudio · até %2$d minutos por gravação no seu plano.</string>
-    <string name="scr_transcribe_custom_endpoint_note">Áudio para Texto sempre roda no Scanly AI e usa seus créditos, mesmo com o seu endpoint ativado.</string>
     <plurals name="scr_transcribe_speakers">
         <item quantity="one">%1$d falante</item>
         <item quantity="many">%1$d falantes</item>
         <item quantity="other">%1$d falantes</item>
     </plurals>
     <string name="scr_transcribe_language_hint">Escolha o idioma principal falado. Os outros idiomas da gravação continuam sendo transcritos como falados; este define como números e datas são escritos.</string>
-    <string name="scr_transcribe_auto_detect_subtitle">Detecta o idioma, mas roda duas vezes: custa o dobro de créditos.</string>
     <string name="scr_transcribe_key_terms_hint">Nomes, palavras de produtos e jargões que o transcritor deve escrever exatamente. Usados em toda gravação até você remover. Cole vários separados por vírgulas.</string>
     <string name="scr_transcribe_key_terms_placeholder">ex.: Sebastian, Typst, Mistral OCR</string>
-    <plurals name="scr_transcribe_estimate">
-        <item quantity="one">≈ %1$d crédito</item>
-        <item quantity="many">≈ %1$d créditos</item>
-        <item quantity="other">≈ %1$d créditos</item>
-    </plurals>
     <!-- Transcript -->
     <string name="scr_transcript_title_default">Transcrição</string>
     <string name="scr_transcript_copied">Transcrição copiada</string>
