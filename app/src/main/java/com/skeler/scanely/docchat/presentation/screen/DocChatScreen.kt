@@ -310,13 +310,18 @@ private fun DocChatContent(
             ) {
                 Box(Modifier.fillMaxSize()) {
                     if (state.isEmpty) {
-                        ChatEmptyState(
-                            modifier = Modifier.padding(bottom = composerInset),
-                            onExample = {
-                                viewModel.useExample(it)
-                                composerFocus.requestFocus()
-                            }
-                        )
+                        // Centred above the composer, whose height arrives a frame or two late (it joins after
+                        // composerReady, then onSizeChanged). Drawn before that, the greeting jumped up 140 px
+                        // once the fade-in was over whenever frames were slow (debug builds, slow phones).
+                        if (composerHeight > 0) {
+                            ChatEmptyState(
+                                modifier = Modifier.padding(bottom = composerInset),
+                                onExample = {
+                                    viewModel.useExample(it)
+                                    composerFocus.requestFocus()
+                                }
+                            )
+                        }
                     } else {
                         MessageList(
                             showJump = fieldsFor == null,
